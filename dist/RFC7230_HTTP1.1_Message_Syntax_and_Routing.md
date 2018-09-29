@@ -28,10 +28,10 @@
         -   [3.2.4 域解释 (Field Parsing)](#orgb8f7882)
         -   [3.2.5 域限制 (Field Limits)](#org902ee98)
         -   [3.2.6 域值的组成 (Field Value Components)](#org0f8e507)
-    -   [3.3 报文体 (Message Body)](#org27d606a)
+    -   [3.3 报文正文 (Message Body)](#orga872fec)
         -   [3.3.1 传输编码 (Transfer-Encoding)](#org5248f65)
         -   [3.3.2 内容长度 (Content-Length)](#orgc417d3f)
-        -   [3.3.3 报文体的长度 (Message Body Length)](#org49c3093)
+        -   [3.3.3 报文正文的长度 (Message Body Length)](#org91789de)
     -   [3.4 报文不完整的处理 (Handling Incomplete Messages)](#orgaebe17e)
     -   [3.5 报文解释的健壮性 (Message Parsing Robustness)](#org1e4e10d)
 -   [4 传输编码（Transfer Codings）](#orgd5db07b)
@@ -98,12 +98,12 @@
 -   [附录 B：收集的 ABNF（Appendx B. Collected ABNF）](#orgf6cbd21)
 -   [索引（Index）](#org31a7d70)
 
-Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
-Request for Comments: 7230                                         Adobe
-Obsoletes: 2145, 2616                                    J. Reschke, Ed.
-Updates: 2817, 2818                                           greenbytes
-Category: Standards Track                                      June 2014
-ISSN: 2070-1721
+    Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
+    Request for Comments: 7230                                         Adobe
+    Obsoletes: 2145, 2616                                    J. Reschke, Ed.
+    Updates: 2817, 2818                                           greenbytes
+    Category: Standards Track                                      June 2014
+    ISSN: 2070-1721
 
 
 <a id="org0db8dbe"></a>
@@ -913,21 +913,28 @@ For example, the following three URIs are equivalent:
 
 All HTTP/1.1 messages consist of a start-line followed by a sequence of octets in a format similar to the Internet Message Format [RFC5322]: zero or more header fields (collectively referred to as the "headers" or the "header section"), an empty line indicating the end of the header section, and an optional message body.
 
-所有的 HTTP/1.1 报文的由一个“起始行（start-line）”以及随后的报头（Header），然后空一行（表明报头结束），最后是一个可选的报文体（Message Body）组合而成。其中报头由 0 个或多个报头域（Header Fields）组成，报头域的格式类似于
-随后的一系列字符（octets，8位字节的字符）
+所有的 HTTP/1.1 报文的由一个“起始行（start-line）”以及随后的报头（Header），然后空一行（表明报头结束），最后是一个可选的报文正文（Message Body）组合而成。其中报头由 0 个或多个报头域（Header Fields）组成，报头域的格式类似于[互联网消息格式【RFC5322】](https://tools.ietf.org/html/rfc5322)。
+
+（译注：Header 译作“报头”，也有译作“消息头”；Message Body 译作“报文正文”，也有译作“消息体”。）
 
     HTTP-message   = start-line
                      *( header-field CRLF )
                      CRLF
                      [ message-body ]
 
-The normal procedure for parsing an HTTP message is to read the start-line into a structure, read each header field into a hash table by field name until the empty line, and then use the parsed data to determine if a message body is expected. If a message body has been indicated, then it is read as a stream until an amount of octets equal to the message body length is read or the connection is closed.
+The normal procedure for parsing an HTTP message is to read the start-line into a [structure](https://en.wikipedia.org/wiki/Record_(computer_science)), read each header field into a [hash table](https://en.wikipedia.org/wiki/Hash_table) by field name until the empty line, and then use the parsed data to determine if a message body is expected. If a message body has been indicated, then it is read as a [stream](https://en.wikipedia.org/wiki/Stream_(computing)) until an amount of octets equal to the message body length is read or the connection is closed.
 
-A recipient MUST parse an HTTP message as a sequence of octets in an encoding that is a superset of US-ASCII [USASCII]. Parsing an HTTP message as a stream of Unicode characters, without regard for the specific encoding, creates security vulnerabilities due to the varying ways that string processing libraries handle invalid multibyte character sequences that contain the octet LF (%x0A). String-based parsers can only be safely used within protocol elements after the element has been extracted from the message, such as within a header field-value after message parsing has delineated the individual fields.
+解释 HTTP 报文的一般流程是先将起始行（Start Line）读入到一个[构造体](https://baike.baidu.com/item/%25E7%25BB%2593%25E6%259E%2584%25E4%25BD%2593/3709485)中，将所有报头域（Header Fields）读入到一个[哈希表](https://baike.baidu.com/item/%25E5%2593%2588%25E5%25B8%258C%25E8%25A1%25A8)中（以域的名称作为键）直到遇到空行（Empty Line），然后使用以上解释得到的信息来决定是否需要解释报文正文（Message Body）。如果报头表明该报文带有报文正文，那么将报文正文以[流](https://baike.baidu.com/item/IO%25E6%25B5%2581)的方式读入，直到已读字节数（Octets）等于报文正文的长度或者连接已被关闭为止。
+
+A recipient **MUST** parse an HTTP message as a sequence of octets in an encoding that is a superset of US-ASCII [[USASCII](https://en.wikipedia.org/wiki/ASCII)]. Parsing an HTTP message as a stream of Unicode characters, without regard for the specific encoding, creates security vulnerabilities due to the varying ways that string processing libraries handle invalid multibyte character sequences that contain the octet LF (%x0A). String-based parsers can only be safely used within protocol elements after the element has been extracted from the message, such as within a header field-value after message parsing has delineated the individual fields.
+
+接收端 **必须** 将 HTTP 报文解释为以 [US-ASCII](https://baike.baidu.com/item/ASCII/309296?fr=aladdin) 的超集来编码的字符（8位字节）序列。没有考虑具体的编码（Encoding）就将报文解释为 Unicode 字符会引发[安全漏洞](https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats)，这是因为字符串处理库处理包含 `LF` (%x0A) 非法多字节字符序列的方式有很多种。基于字符串的解释器只能工作在报文提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出报文里所有头域（Header Fields）后，对报头中的一个域值（Field-value）使用基于字符串的解释器是可以保证安全的。
 
 An HTTP message can be parsed as a stream for incremental processing or forwarding downstream. However, recipients cannot rely on incremental delivery of partial messages, since some implementations will buffer or delay message forwarding for the sake of network efficiency, security checks, or payload transformations.
 
-A sender MUST NOT send whitespace between the start-line and the first header field. A recipient that receives whitespace between the start-line and the first header field MUST either reject the message as invalid or consume each whitespace-preceded line without further processing of it (i.e., ignore the entire line, along with any subsequent lines preceded by whitespace, until a properly formed header field is received or the header section is terminated).
+HTTP 报文能够解释为用于增量处理或下行转发（Forwarding Downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现会因为网络性能、安全校验或者载荷转换（[Payload Transformation](#org630ebc3)）而对这些不完整的报文进行缓冲或延迟转发。
+
+A sender **MUST NOT** send whitespace between the start-line and the first header field. A recipient that receives whitespace between the start-line and the first header field MUST either reject the message as invalid or consume each whitespace-preceded line without further processing of it (i.e., ignore the entire line, along with any subsequent lines preceded by whitespace, until a properly formed header field is received or the header section is terminated).
 
 The presence of such whitespace in a request might be an attempt to trick a server into ignoring that field or processing the line after it as a new request, either of which might result in a security vulnerability if other implementations within the request chain interpret the same message differently. Likewise, the presence of such whitespace in a response might be ignored by some clients or cause others to cease parsing.
 
@@ -1114,9 +1121,9 @@ The backslash octet ("\\") can be used as a single-octet quoting mechanism withi
 A sender SHOULD NOT generate a quoted-pair in a quoted-string except where necessary to quote DQUOTE and backslash octets occurring within that string. A sender SHOULD NOT generate a quoted-pair in a comment except where necessary to quote parentheses ["(" and ")"] and backslash octets occurring within that comment.
 
 
-<a id="org27d606a"></a>
+<a id="orga872fec"></a>
 
-## 3.3 报文体 (Message Body)
+## 3.3 报文正文 (Message Body)
 
 The message body (if any) of an HTTP message is used to carry the payload body of that request or response. The message body is identical to the payload body unless a transfer coding has been applied, as described in Section 3.3.1.
 
@@ -1189,9 +1196,9 @@ If a message is received that has multiple Content-Length header fields with fie
 **Note:** HTTP's use of Content-Length for message framing differs significantly from the same field's use in MIME, where it is an optional field used only within the "message/external-body" media-type.
 
 
-<a id="org49c3093"></a>
+<a id="org91789de"></a>
 
-### 3.3.3 报文体的长度 (Message Body Length)
+### 3.3.3 报文正文的长度 (Message Body Length)
 
 The length of a message body is determined by one of the following (in order of precedence):
 
@@ -1574,16 +1581,12 @@ When a server listening only for HTTP request messages, or processing what appea
 -   [百科：AccessPoint](https://baike.baidu.com/item/AccessPoint/6762525?fr=aladdin)
 -   [Wikipedia: Wireless access point](https://en.wikipedia.org/wiki/Wireless_access_point)
 
-<sup><a id="fn.2" href="#fnr.2">2</a></sup> Authority
-
-Authority 在文档管理领域中还有“组织、建立规范统一的索引”的意思，例如 Authority Control，即规范控制，通常是指始终如一地使用和维护统一的名称、主题和题名等规范形式，而这些名称、主题和题名等在书目记录文档中用作标目。
+<sup><a id="fn.2" href="#fnr.2">2</a></sup> Authority 在文档管理领域中还有“组织、建立规范统一的索引”的意思，例如 Authority Control，即规范控制，通常是指始终如一地使用和维护统一的名称、主题和题名等规范形式，而这些名称、主题和题名等在书目记录文档中用作标目。
 
 -   [Wikisource: Authority Control](https://en.wikisource.org/wiki/Wikisource:Authority_control) is the practice of creating and maintaining index terms for bibliographic material in a catalogue, and is particularly useful for assigning unique identifiers to people, works or subjects. When applied to Wikisource, it means maintaining links to a set of standard external catalogues.
 -   [Wikipedia: In library science, authority control](https://en.wikipedia.org/wiki/Authority_control#cite_note-tws2NovY333-7) is a process that organizes bibliographic information, for example in library catalogs by using a single, distinct spelling of a name (heading) or a numeric identifier for each topic. The word authority in authority control derives from the idea that the names of people, places, things, and concepts are authorized, i.e., they are established in one particular form.
 
-<sup><a id="fn.3" href="#fnr.3">3</a></sup> Authoritative Access
-
-权威访问，[【RFC7230】章节 5.7.2](https://tools.ietf.org/html/rfc7230#section-5.7.2) 有这样的描述：
+<sup><a id="fn.3" href="#fnr.3">3</a></sup> Authoritative Access，权威访问，[【RFC7230】章节 5.7.2](https://tools.ietf.org/html/rfc7230#section-5.7.2) 有这样的描述：
 
     A proxy that transforms the payload of a 200 (OK) response can further inform downstream recipients that a transformation has been applied by changing the response status code to 203 (Non-Authoritative Information).
 
@@ -1592,6 +1595,4 @@ Authority 在文档管理领域中还有“组织、建立规范统一的索引�
 -   [Section 5.7.2 of {RFC7230}](https://tools.ietf.org/html/rfc7230#section-5.7.2)
 -   [Section 6.3.4 of {RFC7231}](https://tools.ietf.org/html/rfc7231#section-6.3.4)
 
-<sup><a id="fn.4" href="#fnr.4">4</a></sup> Percent-encoded
-
-百分号编码，也叫作 URL 编码。
+<sup><a id="fn.4" href="#fnr.4">4</a></sup> Percent-encoded，百分号编码，也叫作 URL 编码。
