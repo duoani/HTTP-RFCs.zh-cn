@@ -134,9 +134,9 @@ _用最简单的例子来说，可以经由一个在用户代理（UA）和源�
                                    <   response
 #+END_SRC
 
-A client sends an HTTP request to a server in the form of a request message, beginning with a request-line that includes a method, URI, and protocol version (Section 3.1.1), followed by header fields containing request modifiers, client information, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
+A client sends an HTTP request to a server in the form of a *request message*, beginning with a *request-line* that includes a method, URI, and protocol version (Section 3.1.1), followed by *header fields* containing request modifiers, client information, and representation metadata (Section 3.2), an *empty line* to indicate the end of the header section, and finally a *message body* containing the payload body (if any, Section 3.3).
 
-TODO _客户端以请求报文（Request Message）的形式向服务器发送一个 HTTP 请求，请求报文的第一行叫做请求行（见 [[id:c6d80104-6f14-4888-b8bf-262bb389002c][3.1.1 Request Line]]），请求行包含了该请求的方法，URI 和 协议版本。_
+TODO _客户端以请求报文（Request Message）的形式向服务器发送一个 HTTP 请求，请求报文的第一行叫做请求行（Request Line，见[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]），请求行包含了该请求的方法，URI 和 协议版本；紧接请求行的是请求报头（Request Header），请求报头包含了请求，客户端信息以及表现元数据（Representation Metadata，见[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）；接着是一个空行来表明报头结束；最后是一个可选的报文正文，包含了报文的有效载荷（Payload，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]] ）。_
 
 A server responds to a client's request by sending one or more HTTP response messages, each beginning with a status line that includes the protocol version, a success or error code, and textual reason phrase (Section 3.1.2), possibly followed by header fields containing server information, resource metadata, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
 
@@ -490,7 +490,7 @@ _例如，一个源服务器公布了一个非常长的 URI 来引用其自身�
 
 *A* recipient *MUST* interpret a received protocol element according to the semantics defined for it by this specification, including extensions to this specification, unless the recipient has determined (through experience or configuration) that the sender incorrectly implements what is implied by those semantics.
 
-_接收端必须依据本规范（及其后续扩展）所定义的语义来转译其接收到的协议元素，除非接收端已经（通过经验或者配置）确定发送端并没有正确实现那些语义。_
+_接收端必须依据本规范（及其后续扩展）所定义的语义来解读其接收到的协议元素，除非接收端已经（通过经验或者配置）确定发送端并没有正确实现那些语义。_
 
 For example, an origin server might disregard the contents of a received [[https://httpwg.org/specs/rfc7231.html#header.accept-encoding][Accept-Encoding]] header field if inspection of the [[https://httpwg.org/specs/rfc7231.html#header.user-agent][User-Agent]] header field indicates a specific implementation version that is known to fail on receipt of certain content codings.
 
@@ -566,15 +566,15 @@ _本规范明确了接收端使用新功能的版本要求，以便于发送端�
 
 *The* interpretation of a header field does not change between minor versions of the same major HTTP version, though the default behavior of a recipient in the absence of such a field can change.
 
-_对一个报文的头域的转译（Interpretation）并不会改变报文本身的协议主、次版本号，即使接收者的默认行为可能会因为缺少这些域而改变。_
+在规范中，在主版本（Major Version）一致的情况下，不同次版本（Minor Version）并不会对报文头域有不同的解读（Interpretation），虽然接收者在缺少这些域时的默认行为会有所不同。
 
 Unless specified otherwise, header fields defined in HTTP/1.1 are defined for all versions of HTTP/1.x.
 
 _除非具体说明，定义在 HTTP/1.1 版本的头域同样适用于所有 HTTP/1.x 版本。_
 
-In particular, the Host and Connection header fields ought to be implemented by all HTTP/1.x implementations whether or not they advertise conformance with HTTP/1.1.
+In particular, the =Host= and =Connection= header fields ought to be implemented by all HTTP/1.x implementations whether or not they advertise conformance with HTTP/1.1.
 
-_特别是，=Host= 和 =Connection= 头域应该被所有版本（all HTTP/1.x）所实现，无论它们声明是否与 HTTP/1.1 版本一致。_
+_特别是，=Host= 和 =Connection= 头域应该被所有版本（all HTTP/1.x）所实现，无论它们声称是否与 HTTP/1.1 版本一致。_
 
 *New* header fields can be introduced without changing the protocol version if their defined semantics allow them to be safely ignored by recipients that do not recognize them.
 
@@ -785,7 +785,7 @@ http://EXAMPLE.com:/%7esmith/home.html
 * 3 报文格式（Message Format）
 All HTTP/1.1 messages consist of a start-line followed by a sequence of octets in a format similar to the Internet Message Format [RFC5322]: zero or more header fields (collectively referred to as the "headers" or the "header section"), an empty line indicating the end of the header section, and an optional message body.
 
-所有的 HTTP/1.1 报文的由一个“起始行（start-line）”以及随后的报头（Header），然后空一行（表明报头结束），最后是一个可选的报文正文（Message Body）组合而成。其中报头由 0 个或多个报头域（Header Fields）组成，报头域的格式类似于[[https://tools.ietf.org/html/rfc5322][互联网消息格式【RFC5322】]]。
+所有 HTTP/1.1 报文皆由一个“起始行（start-line）”以及随后的报头（Header），然后空一行（表明报头结束），最后是一个可选的报文正文（Message Body）组合而成。其中报头由 0 个或多个报头域（Header Fields）组成，报头域的格式类似于[[https://tools.ietf.org/html/rfc5322][互联网消息格式【RFC5322】]]。
 
 （译注：Header 译作“报头”，也有译作“消息头”；Message Body 译作“报文正文”，也有译作“消息体”。）
 
@@ -808,14 +808,24 @@ An HTTP message can be parsed as a stream for incremental processing or forwardi
 
 HTTP 报文能够解释为用于增量处理或下行转发（Forwarding Downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现会因为网络性能、安全校验或者载荷转换（[[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Payload Transformation]]）而对这些不完整的报文进行缓冲或延迟转发。
 
-A sender *MUST NOT* send whitespace between the start-line and the first header field. A recipient that receives whitespace between the start-line and the first header field MUST either reject the message as invalid or consume each whitespace-preceded line without further processing of it (i.e., ignore the entire line, along with any subsequent lines preceded by whitespace, until a properly formed header field is received or the header section is terminated).
+A sender *MUST NOT* send whitespace between the start-line and the first header field. A recipient that receives whitespace between the start-line and the first header field *MUST* either reject the message as invalid or consume each whitespace-preceded line without further processing of it (i.e., ignore the entire line, along with any subsequent lines preceded by whitespace, until a properly formed header field is received or the header section is terminated).
+
+发送端所发送的报文里，起始行（Start Line）和第一个报头域（Header Field）之间 *不能* 不能带有空格。当接收端发现接收到的报文里起始行与第一个报头域之间带有空格时，*必须* 拒绝处理整个不合法的报文，或者仅忽略这种以空格开头的行（例如，忽略整行，连同后续所有以空格开头的行，直到遇到一个格式正确的报头域（Header Field）或者报头结尾）。
 
 The presence of such whitespace in a request might be an attempt to trick a server into ignoring that field or processing the line after it as a new request, either of which might result in a security vulnerability if other implementations within the request chain interpret the same message differently. Likewise, the presence of such whitespace in a response might be ignored by some clients or cause others to cease parsing.
 
+在一个请求报文中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些报头域或忽略处理某些行，哄骗服务器使其认为这个请求是一个新请求（New Request）。如果在请求链路中其他实现（Implementation）对这种带有非法空格的报文的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应报文中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端终止解释。
+
 ** 3.1 起始行 (Start Line)
-An HTTP message can be either a request from client to server or a response from server to client. Syntactically, the two types of message differ only in the start-line, which is either a request-line (for requests) or a status-line (for responses), and in the algorithm for determining the length of the message body (Section 3.3).
+An HTTP message can be either a request from client to server or a response from server to client. Syntactically, the two types of message differ only in the start-line, which is either a *request-line* (for requests) or a *status-line* (for responses), and in the algorithm for determining the length of the message body (Section 3.3).
+
+一个 HTTP 报文要么是一个从客户端到服务器的请求报文，要么是一个从服务器到客户端的响应报文。从句法上看，这两种类型的报文的区别有两点
+1. 起始行（Start Line）：请求报文的起始行称为请求行（Status Line），响应报文的起始行称为状态行（Status Line）
+2. 测算报文正文的长度的算法
 
 In theory, a client could receive requests and a server could receive responses, distinguishing them by their different start-line formats, but, in practice, servers are implemented to only expect a request (a response is interpreted as an unknown or invalid request method) and clients are implemented to only expect a response.
+
+理论上，客户端能够接收请求报文，服务器能够接收响应报文，只需要让它们区别好报文起始行的不同格式就可以。但在实践中，服务端被实现为仅预期接收请求（而接收到响应的话，服务器会将其解读为一个未知或非法的请求方法），客户端被实现为仅预期接收响应。
 
 #+BEGIN_SRC text
 start-line     = request-line / status-line
@@ -825,13 +835,17 @@ start-line     = request-line / status-line
 :PROPERTIES:
 :ID:       c6d80104-6f14-4888-b8bf-262bb389002c
 :END:
-A request-line begins with a method token, followed by a single space (SP), the request-target, another single space (SP), the protocol version, and ends with CRLF.
+A =request-line= begins with a method token, followed by a single space (SP), the request-target, another single space (SP), the protocol version, and ends with CRLF.
+
+一个请求行 =request-line=，开始于一个方法标识 =method=，紧接着一个空格 =SP=，然后是请求目标 =request-target=，另一个空格 =SP=，之后是协议版本 =HTTP-version=，最后是回车换行符 =CRLF=。
 
 #+BEGIN_SRC text
 request-line   = method SP request-target SP HTTP-version CRLF
 #+END_SRC
 
-The method token indicates the request method to be performed on the target resource. The request method is case-sensitive.
+The method token indicates the request method to be performed on the target resource. The request method is *case-sensitive*.
+
+方法标识 =method= 表明了使用哪一种请求方法（Request Method）去获取目标资源（Target Resource），请求方法是 *大小写敏感* 的。
 
 #+BEGIN_SRC text
 method         = token
@@ -839,7 +853,11 @@ method         = token
 
 The request methods defined by this specification can be found in Section 4 of [RFC7231], along with information regarding the HTTP method registry and considerations for defining new methods.
 
-The request-target identifies the target resource upon which to apply the request, as defined in Section 5.3.
+本规范所定义的请求方法（Request Method）连同关于 HTTP 方法注册（Registry）以及对于定义新方法的考虑的相关信息，见[[https://tools.ietf.org/html/rfc7231#section-4][【RFC7231】章节 4]]。
+
+The request-target identifies the target resource upon which to apply the request, as defined in [[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][Section 5.3]].
+
+请求目标 =request-target= 标识了依据请求所申请的申请目标资源，定义在[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][章节 5.3]]。
 
 Recipients typically parse the request-line into its component parts by splitting on whitespace (see Section 3.5), since no whitespace is allowed in the three components. Unfortunately, some user agents fail to properly encode or exclude whitespace found in hypertext references, resulting in those disallowed characters being sent in a request-target.
 
@@ -869,6 +887,9 @@ reason-phrase  = *( HTAB / SP / VCHAR / obs-text )
 #+END_SRC
 
 ** 3.2 头域 (Header Fields)
+:PROPERTIES:
+:ID:       a6c4dceb-8a19-4799-a39b-b7240755c672
+:END:
 Each header field consists of a case-insensitive field name followed by a colon (":"), optional leading whitespace, the field value, and optional trailing whitespace.
 
 #+BEGIN_SRC text
@@ -985,6 +1006,9 @@ quoted-pair    = "\" ( HTAB / SP / VCHAR / obs-text )
 A sender SHOULD NOT generate a quoted-pair in a quoted-string except where necessary to quote DQUOTE and backslash octets occurring within that string. A sender SHOULD NOT generate a quoted-pair in a comment except where necessary to quote parentheses ["(" and ")"] and backslash octets occurring within that comment.
 
 ** 3.3 报文正文 (Message Body)
+:PROPERTIES:
+:ID:       74ac5c85-d91e-43ab-bb2f-6c5957da5f5c
+:END:
 The message body (if any) of an HTTP message is used to carry the payload body of that request or response. The message body is identical to the payload body unless a transfer coding has been applied, as described in Section 3.3.1.
 
 #+BEGIN_SRC text
@@ -1126,6 +1150,9 @@ When a server listening only for HTTP request messages, or processing what appea
 ** 5.1 标识目标资源 (Identifying a Target Resource)
 ** 5.2 Connecting Inbound
 ** 5.3 请求目标 (Request Target)
+:PROPERTIES:
+:ID:       16a8fba9-40f8-4b2c-ba5f-2f6522362c3a
+:END:
 *** 5.3.1 (origin-form)
 *** 5.3.2 (absolute-form)
 *** 5.3.3 (authority-form)
