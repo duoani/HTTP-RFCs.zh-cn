@@ -414,6 +414,9 @@ These include national hierarchies of proxy caches to save transoceanic bandwidt
 包括用于节省越洋带宽的国家级的代理缓存，广播或多路广播协作系统的缓存条目，用于离线或高延迟环境的预缓存档案条目等等。
 
 ** 2.5 一致性和错误处理 (Conformance and Error Handling)
+:PROPERTIES:
+:ID:       A0441F72-9799-4667-9477-1E05885946A1
+:END:
 *This* specification targets conformance criteria according to the role of a participant in HTTP communication.
 
 _本规范为参与 HTTP 通信的角色制定一致性准则。_
@@ -802,7 +805,7 @@ The normal procedure for parsing an HTTP message is to read the start-line into 
 
 A recipient *MUST* parse an HTTP message as a sequence of octets in an encoding that is a superset of US-ASCII [[[https://en.wikipedia.org/wiki/ASCII][USASCII]]]. Parsing an HTTP message as a stream of Unicode characters, without regard for the specific encoding, creates security vulnerabilities due to the varying ways that string processing libraries handle invalid multibyte character sequences that contain the octet LF (%x0A). String-based parsers can only be safely used within protocol elements after the element has been extracted from the message, such as within a header field-value after message parsing has delineated the individual fields.
 
-接收端 *必须* 将 HTTP 报文解释为以 [[https://baike.baidu.com/item/ASCII/309296?fr=aladdin][US-ASCII]] 的超集来编码的字符（8位字节）序列。没有考虑具体的编码（Encoding）就将报文解释为 Unicode 字符会引发[[https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats][安全漏洞]]，这是因为字符串处理库处理包含 =LF= (%x0A) 非法多字节字符序列的方式有很多种。基于字符串的解释器只能工作在报文提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出报文里所有头域（Header Fields）后，对报头中的一个域值（Field-value）使用基于字符串的解释器是可以保证安全的。
+接收端 *必须* 将 HTTP 报文解释为以 [[https://baike.baidu.com/item/ASCII/309296?fr=aladdin][US-ASCII]] 的超集来编码的字节（8位字节）序列。没有考虑具体的编码（Encoding）就将报文解释为 Unicode 字符会引发[[https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats][安全漏洞]]，这是因为字符串处理库处理包含 =LF= (%x0A) 非法多字节字符序列的方式有很多种。基于字符串的解释器只能工作在报文提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出报文里所有头域（Header Fields）后，对报头中的一个域值（Field-value）使用基于字符串的解释器是可以保证安全的。
 
 An HTTP message can be parsed as a stream for incremental processing or forwarding downstream. However, recipients cannot rely on incremental delivery of partial messages, since some implementations will buffer or delay message forwarding for the sake of network efficiency, security checks, or payload transformations.
 
@@ -859,28 +862,40 @@ The request-target identifies the target resource upon which to apply the reques
 
 请求目标 =request-target= 标识了依据请求所申请的申请目标资源，定义在[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][章节 5.3]]。
 
-Recipients typically parse the request-line into its component parts by splitting on whitespace (see Section 3.5), since no whitespace is allowed in the three components. Unfortunately, some user agents fail to properly encode or exclude whitespace found in hypertext references, resulting in those disallowed characters being sent in a request-target.
+Recipients typically parse the =request-line= into its component parts by splitting on whitespace (see [[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][Section 3.5]]), since no whitespace is allowed in the three components. Unfortunately, some user agents fail to properly encode or exclude whitespace found in [[https://en.wikipedia.org/wiki/Hyperlink][hypertext references]], resulting in those disallowed characters being sent in a =request-target=.
 
-Recipients of an invalid request-line SHOULD respond with either a 400 (Bad Request) error or a 301 (Moved Permanently) redirect with the request-target properly encoded. A recipient SHOULD NOT attempt to autocorrect and then process the request without a redirect, since the invalid request-line might be deliberately crafted to bypass security filters along the request chain.
+接收端在解释请求行 =request-line= 的过程中，通过以空格分割出请求行的各个部件（共有三个部件，分别为方法标识、请求目标以及协议版本），因此，以上三个部件的内容不能带有空格（见[[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][章节 3.5]]）。不幸的是，某些用户代理不能对超文本引用（[[https://en.wikipedia.org/wiki/Hyperlink][Hypertext References]]，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求报文中的请求目标 =request-target= 包含了那些不被允许出现的字符。
 
-HTTP does not place a predefined limit on the length of a request-line, as described in Section 2.5. A server that receives a method longer than any that it implements SHOULD respond with a 501 (Not Implemented) status code. A server that receives a request-target longer than any URI it wishes to parse MUST respond with a 414 (URI Too Long) status code (see Section 6.5.12 of [RFC7231]).
+Recipients of an invalid =request-line= *SHOULD* respond with either a =400 (Bad Request)= error or a =301 (Moved Permanently)= redirect with the =request-target= properly encoded. A recipient *SHOULD NOT* attempt to autocorrect and then process the request without a redirect, since the invalid =request-line= might be deliberately crafted to bypass security filters along the request chain.
 
-Various ad hoc limitations on request-line length are found in practice. It is RECOMMENDED that all HTTP senders and recipients support, at a minimum, request-line lengths of 8000 octets.
+接收端接收到一个不合法的请求行 =request-line= 时，*应当* 响应一个 =400 (Bad Request)= 错误或者 =301 (Move Permanently)= 重定向，编码方式依据 =request-line= 的相应要求。接收端 *不应当* 试图在不重定向的情况下自动修正然后处理这种请求报文，这是因为这种非法的请求行 =request-line= 可能是刻意制造出来用于越过请求链路中的安全过滤机制。
+
+HTTP does not place a predefined limit on the length of a =request-line=, as described in [[id:A0441F72-9799-4667-9477-1E05885946A1][Section 2.5]]. A server that receives a method longer than any that it implements *SHOULD* respond with a =501 (Not Implemented)= status code. A server that receives a =request-target= longer than any URI it wishes to parse *MUST* respond with a =414 (URI Too Long)= status code (see [[https://tools.ietf.org/html/rfc7231#section-6.5.12][Section 6.5.12]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]).
+
+HTTP 并没有对请求行 =request-line= 的长度限制进行预定义，相关原因在[[id:A0441F72-9799-4667-9477-1E05885946A1][章节 2.5]] 已有描述。服务器接收到超出其长度要求的请求方法（Method）时 *应当* 响应一个 =501 (Not Implemented)= 状态码。服务器接收到一个 URI 其长度超出服务器所期望的最大长度时，*必须* 响应一个 =414 (URI Too Long)= 状态码（见[[https://tools.ietf.org/html/rfc7231#section-6.5.12][【RFC7231】章节 6.5.12]]）。
+
+Various [[https://en.wikipedia.org/wiki/Wireless_ad_hoc_network][ad hoc]] limitations on =request-line= length are found in practice. It is *RECOMMENDED* that all HTTP senders and recipients support, at a minimum, *request-line* lengths of 8000 octets.
+
+在实践中发现，ad hoc 网络对于请求行 =request-line= 的长度限制多种多样。本规范 *推荐* 所有 HTTP 发送端和接收端对于请求行 =request-line= 的长度限制不低于 8000 字节（Octets）。
 
 *** 3.1.2 状态行 (Status Line)
-The first line of a response message is the status-line, consisting of the protocol version, a space (SP), the status code, another space, a possibly empty textual phrase describing the status code, and ending with CRLF.
+The first line of a response message is the =status-line=, consisting of the protocol version, a space (SP), the status code, another space, a possibly empty textual phrase describing the status code, and ending with CRLF.
+
+响应报文的第一行称为状态行 status-line，包含协议版本 =HTTP-version=，一个空格 =SP=，状态码 =status-code=，另一个空格 =SP=，一个可能为空的文本短语 =reason-phrase= 来描述该状态码，最后是回车换行符 =CRLF=。
 
 #+BEGIN_SRC text
 status-line = HTTP-version SP status-code SP reason-phrase CRLF
 #+END_SRC
 
-The status-code element is a 3-digit integer code describing the result of the server's attempt to understand and satisfy the client's corresponding request. The rest of the response message is to be interpreted in light of the semantics defined for that status code. See Section 6 of [RFC7231] for information about the semantics of status codes, including the classes of status code (indicated by the first digit), the status codes defined by this specification, considerations for the definition of new status codes, and the IANA registry.
+The =status-code= element is a 3-digit integer code describing the result of the server's attempt to understand and satisfy the client's corresponding request. The rest of the response message is to be interpreted in light of the semantics defined for that status code. See Section 6 of [RFC7231] for information about the semantics of status codes, including the classes of status code (indicated by the first digit), the status codes defined by this specification, considerations for the definition of new status codes, and the IANA registry.
+
+状态码 =status-code= 是一个 3 位整数值，用于描述服务器尝试理解以及满足客户端相应请求的处理结果。
 
 #+BEGIN_SRC text
 status-code    = 3DIGIT
 #+END_SRC
 
-The reason-phrase element exists for the sole purpose of providing a textual description associated with the numeric status code, mostly out of deference to earlier Internet application protocols that were more frequently used with interactive text clients. A client SHOULD ignore the reason-phrase content.
+The =reason-phrase= element exists for the sole purpose of providing a textual description associated with the numeric status code, mostly out of deference to earlier Internet application protocols that were more frequently used with interactive text clients. A client *SHOULD* ignore the reason-phrase content.
 
 #+BEGIN_SRC text
 reason-phrase  = *( HTAB / SP / VCHAR / obs-text )
@@ -891,6 +906,8 @@ reason-phrase  = *( HTAB / SP / VCHAR / obs-text )
 :ID:       a6c4dceb-8a19-4799-a39b-b7240755c672
 :END:
 Each header field consists of a case-insensitive field name followed by a colon (":"), optional leading whitespace, the field value, and optional trailing whitespace.
+
+每一个头域（Header Field）由一个域名（Field Name）及随后的一个分号（“:”）、可选的前置空格、一个域值（Field Value）、一个可选的结尾空格组成。
 
 #+BEGIN_SRC text
 header-field   = field-name ":" OWS field-value OWS
@@ -905,7 +922,9 @@ obs-fold       = CRLF 1*( SP / HTAB )
                ; see Section 3.2.4
 #+END_SRC
 
-The field-name token labels the corresponding field-value as having the semantics defined by that header field. For example, the Date header field is defined in Section 7.1.1.2 of [RFC7231] as containing the origination timestamp for the message in which it appears.
+The =field-name= token labels the corresponding =field-value= as having the semantics defined by that header field. For example, the =Date= header field is defined in [[https://tools.ietf.org/html/rfc7231#section-7.1.1.2][Section 7.1.1.2]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]] as containing the origination timestamp for the message in which it appears.
+
+报头域名 =field-name= 将其对应的报头域值 =field-value= 算作这个报文带有相应报头域的语义。例如，定义在【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-7.1.1.2][章节 7.1.1.2]] 的报文头域 =Date= 的出现说明报文包含了原始时间戳。
 
 *** 3.2.1 域的可扩展性 (Field Extensibility)
 :PROPERTIES:
@@ -913,9 +932,13 @@ The field-name token labels the corresponding field-value as having the semantic
 :END:
 Header fields are fully extensible: there is no limit on the introduction of new field names, each presumably defining new semantics, nor on the number of header fields used in a given message. Existing fields are defined in each part of this specification and in many other specifications outside this document set.
 
+不限制引入新的报头域名，每个报头域都可假定其定义了新的语言，也不限制给定报文中的报头域的数值作限制，因此，报头域是完全可扩展的。已知的报头域定义在本规范的各个部分中，以及超出本文档集的其他规范中。
+
 New header fields can be defined such that, when they are understood by a recipient, they might override or enhance the interpretation of previously defined header fields, define preconditions on request evaluation, or refine the meaning of responses.
 
-A proxy MUST forward unrecognized header fields unless the field-name is listed in the Connection header field (Section 6.1) or the proxy is specifically configured to block, or otherwise transform, such fields. Other recipients SHOULD ignore unrecognized header fields. These requirements allow HTTP's functionality to be enhanced without requiring prior update of deployed intermediaries.
+新报头域能够定义为这样：当新报头域能够被接收端所理解时，它们可以覆盖或增强之前所定义的报头域的解读。
+
+A proxy *MUST* forward unrecognized header fields unless the =field-name= is listed in the =Connection= header field (Section 6.1) or the proxy is specifically configured to block, or otherwise transform, such fields. Other recipients *SHOULD* ignore unrecognized header fields. These requirements allow HTTP's functionality to be enhanced without requiring prior update of deployed intermediaries.
 
 All defined header fields ought to be registered with IANA in the "Message Headers" registry, as described in Section 8.3 of [RFC7231].
 
@@ -1122,15 +1145,28 @@ If a response terminates in the middle of the header section (before the empty l
 A message body that uses the chunked transfer coding is incomplete if the zero-sized chunk that terminates the encoding has not been received. A message that uses a valid Content-Length is incomplete if the size of the message body received (in octets) is less than the value given by Content-Length. A response that has neither chunked transfer coding nor Content-Length is terminated by closure of the connection and, thus, is considered complete regardless of the number of message body octets received, provided that the header section was received intact.
 
 ** 3.5 报文解释的健壮性 (Message Parsing Robustness)
-Older HTTP/1.0 user agent implementations might send an extra CRLF after a POST request as a workaround for some early server applications that failed to read message body content that was not terminated by a line-ending. An HTTP/1.1 user agent MUST NOT preface or follow a request with an extra CRLF. If terminating the request message body with a line-ending is desired, then the user agent MUST count the terminating CRLF octets as part of the message body length.
+:PROPERTIES:
+:ID:       A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517
+:END:
+Older HTTP/1.0 user agent implementations might send an extra CRLF after a POST request as a workaround for some early server applications that failed to read message body content that was not terminated by a line-ending. An HTTP/1.1 user agent *MUST NOT* preface or follow a request with an extra CRLF. If terminating the request message body with a line-ending is desired, then the user agent *MUST* count the terminating CRLF octets as part of the message body length.
 
-In the interest of robustness, a server that is expecting to receive and parse a request-line SHOULD ignore at least one empty line (CRLF) received prior to the request-line.
+在 HTTP/1.0 时代，早期的服务器应用可能不能正确读取那些没有以换行符 =line-ending= 作为结尾的报文正文内容。因此，早期的 HTTP/1.0 版本的用户代理可能会在 POST 请求报文中发送一个额外的回车换行 CRLF 来作为一个变通方案。到了 HTTP/1.1，用户代理 *不能* 在一个请求报文首或尾再添加额外的回车换行 CRLF 了。如果要求以换行符 =line-ending= 作为请求报文正文的结束，那么用户代理 *必须* 对 CRLF 的字节数目进行计数，包含在报文正文的长度之内。
 
-Although the line terminator for the start-line and header fields is the sequence CRLF, a recipient MAY recognize a single LF as a line terminator and ignore any preceding CR.
+In the interest of robustness, a server that is expecting to receive and parse a =request-line= *SHOULD* ignore at least one empty line (CRLF) received prior to the =request-line=.
 
-Although the request-line and status-line grammar rules require that each of the component elements be separated by a single SP octet, recipients MAY instead parse on whitespace-delimited word boundaries and, aside from the CRLF terminator, treat any form of whitespace as the SP separator while ignoring preceding or trailing whitespace; such whitespace includes one or more of the following octets: SP, HTAB, VT (%x0B), FF (%x0C), or bare CR. However, lenient parsing can result in security vulnerabilities if there are multiple recipients of the message and each has its own unique interpretation of robustness (see Section 9.5).
+出于健壮性的考虑，服务器在等待接收和解释一个请求行 =request-line= 的时候，*应该* 忽略至少一个空行（CRLF）。
 
-When a server listening only for HTTP request messages, or processing what appears from the start-line to be an HTTP request message, receives a sequence of octets that does not match the HTTP-message grammar aside from the robustness exceptions listed above, the server SHOULD respond with a 400 (Bad Request) response.
+Although the line terminator for the =start-line= and header fields is the sequence CRLF, a recipient *MAY* recognize a single LF as a line terminator and ignore any preceding CR.
+
+虽然对于起始行 =start-line= 和报文头域（Header Fields）的行终结符（Line Terminator）是 CRLF 字符序列，但接收端 *可以* 单独将一个 LF 作为一行的终结，同时忽略 LF 之前的所有 CR。
+
+Although the =request-line= and =status-line= grammar rules require that each of the component elements be separated by a single SP octet, recipients *MAY* instead parse on whitespace-delimited word boundaries and, aside from the CRLF terminator, treat any form of whitespace as the SP separator while ignoring preceding or trailing whitespace; such whitespace includes one or more of the following octets: SP, HTAB, VT (%x0B), FF (%x0C), or bare CR. However, lenient parsing can result in security vulnerabilities if there are multiple recipients of the message and each has its own unique interpretation of robustness (see [[id:04030107-7AF1-4D23-900E-75FEEB04925C][Section 9.5]]).
+
+虽然请求行（Request Line）和状态行（Status Line）的语法规则要求每一个部件元素需要以一个空格（8位字节） =SP= 分隔，但是接收端 *可以* 改由使用其他空格限定符（Whitespace-delimited Word）来进行分隔，空格限定符由包含一个或多个 =SP=、=HTAB=、=VT= (%x0B)、=FF= (&x0C) 或者单独由 =CR= 组成。但是，如果报文有多个接收端，而且这些接收端都有自己独特的健壮性的解读，那么，不按严格的 =SP= 分隔的方式会引起安全隐患（见[[id:04030107-7AF1-4D23-900E-75FEEB04925C][章节 9.5]]）。
+
+When a server listening only for HTTP request messages, or processing what appears from the =start-line= to be an HTTP request message, receives a sequence of octets that does not match the HTTP-message grammar aside from the robustness exceptions listed above, the server *SHOULD* respond with a =400 (Bad Request)= response.
+
+当一个服务端仅监听 HTTP 请求报文，或者处理 HTTP 请求报文的起始行 =start-line= 具体有什么内容，接到到一个与 HTTP 报文语法不匹配的字符（Octets）序列，除以上列出的非健壮异常以外，服务端 *应该* 响应一个 =400 (Bad Request)= 的响应报文。
 
 * 4 传输编码（Transfer Codings）
 ** 4.1 Chunked Transfer Coding
@@ -1202,6 +1238,9 @@ When a server listening only for HTTP request messages, or processing what appea
 ** 9.3 Attacks via Protocol Element Length
 ** 9.4 Response Splitting
 ** 9.5 Request Smuggling
+:PROPERTIES:
+:ID:       04030107-7AF1-4D23-900E-75FEEB04925C
+:END:
 ** 9.6 Message Integrity
 ** 9.7 Message Confidentiality
 ** 9.8 Privacy of Server Log Information
