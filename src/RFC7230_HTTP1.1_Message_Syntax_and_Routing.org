@@ -268,13 +268,13 @@ The terms "*inbound*" and "*outbound*" are used to describe directional requirem
 
 *A* "proxy" is a message-forwarding agent that is selected by the client, usually via local configuration rules, to receive requests for some type(s) of [[https://tools.ietf.org/html/rfc3986#page-27][absolute URI]] and attempt to satisfy those requests via translation through the HTTP interface.
 
-“代理”，一般是由客户端通过本地设置或规则所选定的，负责报文转发的中介。代理接收绝对 URI 类型的请求并试图经由 HTTP 接口转译来满足这些请求。
+“代理”，一般是由客户端通过本地设置或规则所选定的，负责报文转发的中介。代理接收绝对 URI（Absolute URI）类型的请求并试图经由 HTTP 接口翻译（Translation）报文信息来满足这些请求。
 
 （译注：[[https://en.wikipedia.org/wiki/HTTP_location][Wikipedia 上对绝对 URI 的描述]]）
 
 Some translations are minimal, such as for proxy requests for "http" URIs, whereas other requests might require translation to and from entirely different application-level protocols.
 
-*TODO* 一些转译是以最低限度来进行的，例如
+一些翻译（Translation）是以最低限度来进行的，例如对于代理的“http” URI 请求；与之相反的是，其他请求可能要求翻译（Translation）为或翻译自完全不同的应用层协议。
 
 Proxies are often used to group an organization's HTTP requests through a common intermediary for the sake of security, annotation services, or shared caching. 
 
@@ -286,7 +286,7 @@ Some proxies are designed to apply transformations to selected messages or paylo
 
 *A* "gateway" (a.k.a. "reverse proxy") is an intermediary that acts as an origin server for the outbound connection but translates received requests and forwards them inbound to another server or servers.
 
-_“网关”（又称为“反向代理”），在 Outbound 通信时网关充当一个源服务器，将接收到的请求进行转译，然后转发到其他一个或多个服务器上。_
+_“网关”（又称为“反向代理”），在 Outbound 通信时网关充当一个源服务器，将接收到的请求进行翻译（Translate），然后转发到其他一个或多个服务器上。_
 
 Gateways are often used to encapsulate legacy or untrusted information services, to improve server performance through "accelerator" caching, and to enable partitioning or load balancing of HTTP services across multiple machines.
 
@@ -459,17 +459,17 @@ _在给定的报文中，发送端不能生成只允许在其他规则中生成�
 
 *When* a received protocol element is parsed, the recipient *MUST* be able to parse any value of reasonable length that is applicable to the recipient's role and that matches the grammar defined by the corresponding ABNF rules.
 
-_当一个接收到的协议元素被解释时，接收端必须能够解释任何适用于接收者这一角色以及与相关 ABNF 规则所定义的语法相匹配的、合理长度的值。_
+_当一个接收到的协议元素被解析（Parse）时，接收端必须能够解释任何适用于接收者这一角色以及与相关 ABNF 规则所定义的语法相匹配的、合理长度的值。_
 
 Note, however, that some received protocol elements might not be parsed.
 
-_需要注意的是，某些接收到的协议元素可能不被解释。_
+_需要注意的是，某些接收到的协议元素可能不被解析（Parse）。_
 
 （译注：出于兼容性考虑，当接收者的 HTTP 版本是 HTTP/1.0，假如接到到的报文版本是 HTTP/1.1，那么某些头域可能会被忽略。）
 
 For example, an intermediary forwarding a message might parse a header-field into generic field-name and field-value components, but then forward the header field without further parsing inside the field-value.
 
-_例如，一个中间人在转发报文时可能会将一个头域（Header-field）解释为域名（Field-name）和域值（Field-value），但转发头域时并没有再对域值进一步解释。_
+_例如，一个中间人在转发报文时可能会将一个头域（Header-field）解析（Parse）为域名（Field-name）和域值（Field-value），但转发头域时并没有再对域值进一步解析（Parse）。_
 
 *HTTP* does not have specific length limitations for many of its protocol elements because the lengths that might be appropriate will vary widely, depending on the deployment context and purpose of the implementation.
 
@@ -485,15 +485,15 @@ _此外，对于某些协议元素来说，多少才算是一个通俗合理的�
 
 *At* a minimum, a recipient *MUST* be able to parse and process protocol element lengths that are at least as long as the values that it generates for those same protocol elements in other messages.
 
-_接收端必须能够最低限度地解释和处理协议元素的长度，至少和它在其他报文中生成的同样一个协议元素的长度一致。_
+_接收端必须能够最低限度地解析（Parse）和处理（Process）协议元素的长度，至少和它在其他报文中生成的同样一个协议元素的长度一致。_
 
 For example, an origin server that publishes very long URI references to its own resources needs to be able to parse and process those same references when received as a request target.
 
-_例如，一个源服务器公布了一个非常长的 URI 来引用其自身资源，当它接收到以这个 URI 作为目标资源的请求时， 源服务器必须能够正确地解释和处理这个 URI。_
+_例如，一个源服务器公布了一个非常长的 URI 来引用其自身资源，当它接收到以这个 URI 作为目标资源的请求时， 源服务器必须能够正确地解析（Parse）和处理（Process）这个 URI。_
 
 *A* recipient *MUST* interpret a received protocol element according to the semantics defined for it by this specification, including extensions to this specification, unless the recipient has determined (through experience or configuration) that the sender incorrectly implements what is implied by those semantics.
 
-_接收端必须依据本规范（及其后续扩展）所定义的语义来解读其接收到的协议元素，除非接收端已经（通过经验或者配置）确定发送端并没有正确实现那些语义。_
+_接收端必须依据本规范（及其后续扩展）所定义的语义来解释（Interpret）其接收到的协议元素，除非接收端已经（通过经验或者配置）确定发送端并没有正确实现那些语义。_
 
 For example, an origin server might disregard the contents of a received [[https://httpwg.org/specs/rfc7231.html#header.accept-encoding][Accept-Encoding]] header field if inspection of the [[https://httpwg.org/specs/rfc7231.html#header.user-agent][User-Agent]] header field indicates a specific implementation version that is known to fail on receipt of certain content codings.
 
@@ -509,7 +509,7 @@ _HTTP 协议在不用的应用场景上会有不同的错误处理策略的要�
 
 For example, a Web browser might wish to [[https://en.wikipedia.org/wiki/Failure_transparency][transparently recover]] from a response where the [[https://httpwg.org/specs/rfc7231.html#header.location][Location]] header field doesn't parse according to the ABNF, whereas a systems control client might consider any form of error recovery to be dangerous.
 
-例如，一个网页浏览器接收到一个响应报文，响应报文的 Location 头域依据 ABNF 规则并不能合法解释到，于是浏览器可能希望进行透明恢复；但是对于一个系统控制客户端，可能认为任何方式的错误恢复都是危险的。
+例如，一个网页浏览器接收到一个响应报文，响应报文的 Location 头域依据 ABNF 规则并不能合法解析（Parse）到，于是浏览器可能希望进行透明恢复；但是对于一个系统控制客户端，可能认为任何方式的错误恢复都是危险的。
 
 （译注，这里是拿“Web Browser”与所谓的“Systems Control Client”作对比。）
 
@@ -557,19 +557,19 @@ _次要版本号通告了发送端的通信能力，甚至当发送端仅仅使�
 
 *When* an HTTP/1.1 message is sent to an HTTP/1.0 recipient [[[https://tools.ietf.org/html/rfc1945][RFC1945]]] or a recipient whose version is unknown, the HTTP/1.1 message is constructed such that it can be interpreted as a valid HTTP/1.0 message if all of the newer features are ignored.
 
-_当一个 HTTP/1.1 报文被发送到一个 HTTP/1.0 接收端 [RFC1945] 或者一个接收端的版本号未知，HTTP/1.1 报文会被构建成一个能够被转译为一个合法的 HTTP/1.0 报文，如果忽略掉所有在 HTTP/1.1 新增的功能的话。_
+_当一个 HTTP/1.1 报文被发送到一个 HTTP/1.0 接收端 [RFC1945] 或者一个接收端的版本号未知，HTTP/1.1 报文会被构建成一个能够被解释（Interprete）为一个合法的 HTTP/1.0 报文，如果忽略掉所有在 HTTP/1.1 新增的功能的话。_
 
 （译注：也就是说，HTTP/1.1 是向后兼容的。）
 
 This specification places recipient-version requirements on some new features so that a conformant sender will only use compatible features until it has determined, through configuration or the receipt of a message, that the recipient supports HTTP/1.1.
 
-_本规范明确了接收端使用新功能的版本要求，以便于发送端可以仅仅使用兼容性功能与接收端通信，直到发送端（通过配置，或者解释接收到的报文）已经明确接收端支持 HTTP/1.1。_
+_本规范明确了接收端使用新功能的版本要求，以便于发送端可以仅仅使用兼容性功能与接收端通信，直到发送端（通过配置，或者接收到的报文）已经明确接收端支持 HTTP/1.1。_
 
-（译注：发送端如何得知接收端支持 HTTP/1.1？一个办法是，发送端不管接收端是否支持，强制使用 HTTP/1.1；另一个办法是解释从接收端响应的报文，分析其是否真正实现了 HTTP/1.1。）
+（译注：发送端如何得知接收端支持 HTTP/1.1？一个办法是，发送端不管接收端是否支持，强制使用 HTTP/1.1；另一个办法是解析从接收端响应的报文，分析其是否真正实现了 HTTP/1.1。）
 
 *The* interpretation of a header field does not change between minor versions of the same major HTTP version, though the default behavior of a recipient in the absence of such a field can change.
 
-在规范中，在主版本（Major Version）一致的情况下，不同次版本（Minor Version）并不会对报文头域有不同的解读（Interpretation），虽然接收者在缺少这些域时的默认行为会有所不同。
+在规范中，在主版本（Major Version）一致的情况下，不同次版本（Minor Version）并不会对报文头域有不同的解释（Interpretation），虽然接收者在缺少这些域时的默认行为会有所不同。
 
 Unless specified otherwise, header fields defined in HTTP/1.1 are defined for all versions of HTTP/1.x.
 
@@ -629,7 +629,7 @@ _如果有必要，当服务器不支持客户端所声明的 HTTP 协议主版�
 
 *A* server *MAY* send an HTTP/1.0 response to a request if it is known or suspected that the client incorrectly implements the HTTP specification and is incapable of correctly processing later version responses, such as when a client fails to parse the version number correctly or when an intermediary is known to blindly forward the =HTTP-version= even when it doesn't conform to the given minor version of the protocol.
 
-_如果服务器知道或怀疑客户端没有正确实现 HTTP 规范而且不能够正确处理更高版本的响应的时候，服务器 *可以* 发送一个 HTTP/1.0 响应。例如，当客户端没有正确解释协议版本号，或者已知一个中间人即使自身没有实现给定的 =HTTP-version= 的次版本的规范（即不支持给定版本的 HTTP 协议）仍然盲目转发该 =HTTP-version= 等。_
+_如果服务器知道或怀疑客户端没有正确实现 HTTP 规范而且不能够正确处理更高版本的响应的时候，服务器 *可以* 发送一个 HTTP/1.0 响应。例如，当客户端没有正确解析（Parse）协议版本号，或者已知一个中间人即使自身没有实现给定的 =HTTP-version= 的次版本的规范（即不支持给定版本的 HTTP 协议）仍然盲目转发该 =HTTP-version= 等。_
 
 Such protocol downgrades *SHOULD NOT* be performed unless triggered by specific client attributes, such as when one or more of the request header fields (e.g., [[https://httpwg.org/specs/rfc7231.html#header.user-agent][User-Agent]]) uniquely match the values sent by a client known to be in error.
 
@@ -697,7 +697,7 @@ HTTP 中的每一个允许 URI 引用的协议元素都会在它的 ABNF 产品�
 3. 只能是路径（path）和可选的查询（query）组成部分
 4. 以上一个或多个组合
 
-除非另有说明，URI 引用会解释为相关的“实际请求 URI”（[[id:3265c21d-0d3b-4776-8e28-38278d168779][章节 5.5]]）。
+除非另有说明，URI 引用会解析（Parse）为相关的“实际请求 URI”（[[id:3265c21d-0d3b-4776-8e28-38278d168779][章节 5.5]]）。
 
 *** 2.7.1 http URI Scheme
 The "http" URI scheme is hereby defined for the purpose of minting identifiers according to their association with the hierarchical namespace governed by a potential HTTP origin server listening for TCP ([RFC0793]) connections on a given port.
@@ -722,7 +722,7 @@ A sender *MUST NOT* generate an "http" URI with an empty host identifier. A reci
 
 If the host identifier is provided as an IP address, the origin server is the listener (if any) on the indicated TCP port at that IP address. If host is a registered name, the registered name is an indirect identifier for use with a name resolution service, such as DNS, to find an address for that origin server. If the port subcomponent is empty or not given, TCP port 80 (the reserved port for WWW services) is the default.
 
-如果 =host= 标识符以 IP 地址的形式来提供，表示源服务器就是在那个 IP 地址对应的 TCP 端口的监听器；如果 =host= 是一个已注册的名称（可以理解为域名），所谓“已注册的名称”，是一个用于名称解释服务的间接标识，例如域名系统（DNS）用于查找源服务器的地址；如果 =port=
+如果 =host= 标识符以 IP 地址的形式来提供，表示源服务器就是在那个 IP 地址对应的 TCP 端口的监听器；如果 =host= 是一个已注册的名称（可以理解为域名），所谓“已注册的名称”，是一个用于名称解释服务（Name Resolution Service）的间接标识，例如域名系统（DNS）用于查找源服务器的地址；如果 =port=
 子部件为空或未提供，那么 TCP 默认使用 80（WWW 服务的保留端口）端口。
 
 Note that the presence of a URI with a given authority component does not imply that there is always an HTTP server listening for connections on that host and port. Anyone can mint a URI. What the authority component determines is who has the right to respond authoritatively to requests that target the identified resource. The delegated nature of registered names and IP addresses creates a federated namespace, based on control over the indicated host and port, whether or not an HTTP server is present. See Section 9.1 for security considerations related to establishing authority.
@@ -731,15 +731,15 @@ Note that the presence of a URI with a given authority component does not imply 
 
 When an "http" URI is used within a context that calls for access to the indicated resource, a client *MAY* attempt access by resolving the host to an IP address, establishing a TCP connection to that address on the indicated port, and sending an HTTP request message (Section 3) containing the URI's identifying data (Section 5) to the server. If the server responds to that request with a non-interim HTTP response message, as described in Section 6 of [RFC7231], then that response is considered an authoritative answer to the client's request.
 
-当一个“http” URI 用于一个请求访问目标资源的上下文里，客户端 *可以* 尝试通过解释 =host= 获得 IP 地址，（通过对应的端口）建立一个 TCP 连接到这个地址，然后发送一个包含这个 URI 的识别数据（见[[id:f6881980-16db-4ca2-a3c8-39aa336c954f][章节 5]]）的 HTTP 请求，从而访问到这个目标资源。如果服务器对这个请求响应了一个非过渡（non-interim）的 HTTP 响应报文（见[[https://httpwg.org/specs/rfc7231.html#status.codes][【RFC7231】章节 6]]），那么这个响应可认为是一个对客户端请求的权威应答（authoritative answer）。
+当一个“http” URI 用于一个请求访问目标资源的上下文里，客户端 *可以* 尝试通过解释（Resolve） =host= 获得 IP 地址，（通过对应的端口）建立一个 TCP 连接到这个地址，然后发送一个包含这个 URI 的识别数据（见[[id:f6881980-16db-4ca2-a3c8-39aa336c954f][章节 5]]）的 HTTP 请求，从而访问到这个目标资源。如果服务器对这个请求响应了一个非过渡（non-interim）的 HTTP 响应报文（见[[https://httpwg.org/specs/rfc7231.html#status.codes][【RFC7231】章节 6]]），那么这个响应可认为是一个对客户端请求的权威应答（authoritative answer）。
 
 Although HTTP is independent of the transport protocol, the "http" scheme is specific to TCP-based services because the name delegation process depends on TCP for establishing authority. An HTTP service based on some other underlying connection protocol would presumably be identified using a different URI scheme, just as the "https" scheme (below) is used for resources that require an end-to-end secured connection. Other protocols might also be used to provide access to "http" identified resources — it is only the authoritative interface that is specific to TCP.
 
 虽然 HTTP 并不依赖其他传输协议，但“http” scheme 是特指基于 TCP 的服务的，这是因为名称委派处理（name delegation process?）需要依赖 TCP 来建立授权。一个基于其他多个底层通信协议的 HTTP 服务可能会被标识为使用一个不同的 URI scheme，类似于“https” scheme 是用于要求端到端安全的资源访问一样。其他协议可能也用于提供访问以“http”标识的资源，但这是唯一特定于 TCP 的授权接口。
 
-The URI generic syntax for authority also includes a deprecated userinfo subcomponent ([RFC3986], Section 3.2.1) for including user authentication information in the URI. Some implementations make use of the userinfo component for internal configuration of authentication information, such as within command invocation options, configuration files, or bookmark lists, even though such usage might expose a user identifier or password. A sender *MUST NOT* generate the userinfo subcomponent (and its "@" delimiter) when an "http" URI reference is generated within a message as a request target or header field value. Before making use of an "http" URI reference received from an untrusted source, a recipient *SHOULD* parse for userinfo and treat its presence as an error; it is likely being used to obscure the authority for the sake of phishing attacks.
+The URI generic syntax for authority also includes a deprecated =userinfo= subcomponent ([RFC3986], Section 3.2.1) for including user authentication information in the URI. Some implementations make use of the =userinfo= component for internal configuration of authentication information, such as within command invocation options, configuration files, or bookmark lists, even though such usage might expose a user identifier or password. A sender *MUST NOT* generate the =userinfo= subcomponent (and its "@" delimiter) when an "http" URI reference is generated within a message as a request target or header field value. Before making use of an "http" URI reference received from an untrusted source, a recipient *SHOULD* parse for =userinfo= and treat its presence as an error; it is likely being used to obscure the authority for the sake of phishing attacks.
 
-在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 =userinfo= 子部件（见[[https://tools.ietf.org/html/rfc3986#section-3.2.1][【RFC3986】章节 3.2.1]]），用于包含用户信息到 URI 里。某些实现将 =userinfo= 部件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 报文，包含以 =http= URI 引用作为一个请求目标或者报文头域里的值（例如头域 =Location=）时，发送端 *不能* 生成 =userinfo= 子部件（以及其“@”分隔符）。在使用一个接收自一个非受信的源的 =http= URI 引用时，接收者 *应当* 对 =userinfo= 进行解释并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（Phishing Attach）的威胁。
+在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 =userinfo= 子部件（见[[https://tools.ietf.org/html/rfc3986#section-3.2.1][【RFC3986】章节 3.2.1]]），用于包含用户信息到 URI 里。某些实现将 =userinfo= 部件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 报文，包含以 =http= URI 引用作为一个请求目标或者报文头域里的值（例如头域 =Location=）时，发送端 *不能* 生成 =userinfo= 子部件（以及其“@”分隔符）。在使用一个接收自一个非受信的源的 =http= URI 引用时，接收者 *应当* 对 =userinfo= 进行解析（Parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（Phishing Attach）的威胁。
 
 *** 2.7.2 https URI Scheme
 The "https" URI scheme is hereby defined for the purpose of minting identifiers according to their association with the hierarchical namespace governed by a potential HTTP origin server listening to a given TCP port for TLS-secured connections ([RFC5246]).
@@ -801,15 +801,15 @@ HTTP-message   = start-line
 
 The normal procedure for parsing an HTTP message is to read the start-line into a [[https://en.wikipedia.org/wiki/Record_(computer_science)][structure]], read each header field into a [[https://en.wikipedia.org/wiki/Hash_table][hash table]] by field name until the empty line, and then use the parsed data to determine if a message body is expected. If a message body has been indicated, then it is read as a [[https://en.wikipedia.org/wiki/Stream_(computing)][stream]] until an amount of octets equal to the message body length is read or the connection is closed.
 
-解释 HTTP 报文的一般流程是先将起始行（Start Line）读入到一个[[https://baike.baidu.com/item/%25E7%25BB%2593%25E6%259E%2584%25E4%25BD%2593/3709485][构造体]]中，将所有报头域（Header Fields）读入到一个[[https://baike.baidu.com/item/%25E5%2593%2588%25E5%25B8%258C%25E8%25A1%25A8][哈希表]]中（以域的名称作为键）直到遇到空行（Empty Line），然后使用以上解释得到的信息来决定是否需要解释报文正文（Message Body）。如果报头表明该报文带有报文正文，那么将报文正文以[[https://baike.baidu.com/item/IO%25E6%25B5%2581][流]]的方式读入，直到已读字节数（Octets）等于报文正文的长度或者连接已被关闭为止。
+解析（Parse） HTTP 报文的一般流程是先将起始行（Start Line）读入到一个[[https://baike.baidu.com/item/%25E7%25BB%2593%25E6%259E%2584%25E4%25BD%2593/3709485][构造体]]中，将所有报头域（Header Fields）读入到一个[[https://baike.baidu.com/item/%25E5%2593%2588%25E5%25B8%258C%25E8%25A1%25A8][哈希表]]中（以域的名称作为键）直到遇到空行（Empty Line），然后使用以上解释得到的信息来决定是否需要解释报文正文（Message Body）。如果报头表明该报文带有报文正文，那么将报文正文以[[https://baike.baidu.com/item/IO%25E6%25B5%2581][流]]的方式读入，直到已读字节数（Octets）等于报文正文的长度或者连接已被关闭为止。
 
 A recipient *MUST* parse an HTTP message as a sequence of octets in an encoding that is a superset of US-ASCII [[[https://en.wikipedia.org/wiki/ASCII][USASCII]]]. Parsing an HTTP message as a stream of Unicode characters, without regard for the specific encoding, creates security vulnerabilities due to the varying ways that string processing libraries handle invalid multibyte character sequences that contain the octet LF (%x0A). String-based parsers can only be safely used within protocol elements after the element has been extracted from the message, such as within a header field-value after message parsing has delineated the individual fields.
 
-接收端 *必须* 将 HTTP 报文解释为以 [[https://baike.baidu.com/item/ASCII/309296?fr=aladdin][US-ASCII]] 的超集来编码的字节（8位字节）序列。没有考虑具体的编码（Encoding）就将报文解释为 Unicode 字符会引发[[https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats][安全漏洞]]，这是因为字符串处理库处理包含 =LF= (%x0A) 非法多字节字符序列的方式有很多种。基于字符串的解释器只能工作在报文提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出报文里所有头域（Header Fields）后，对报头中的一个域值（Field-value）使用基于字符串的解释器是可以保证安全的。
+接收端 *必须* 将 HTTP 报文解析（Parse）为以 [[https://baike.baidu.com/item/ASCII/309296?fr=aladdin][US-ASCII]] 的超集来编码的字节（8位字节）序列。没有考虑具体的编码（Encoding）就将报文解释为 Unicode 字符会引发[[https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats][安全漏洞]]，这是因为字符串处理库处理包含 =LF= (%x0A) 非法多字节字符序列的方式有很多种。基于字符串的解释器只能工作在报文提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出报文里所有头域（Header Fields）后，对报头中的一个域值（Field-value）使用基于字符串的解释器是可以保证安全的。
 
 An HTTP message can be parsed as a stream for incremental processing or forwarding downstream. However, recipients cannot rely on incremental delivery of partial messages, since some implementations will buffer or delay message forwarding for the sake of network efficiency, security checks, or payload transformations.
 
-HTTP 报文能够解释为用于增量处理或下行转发（Forwarding Downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现会因为网络性能、安全校验或者载荷转换（[[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Payload Transformation]]）而对这些不完整的报文进行缓冲或延迟转发。
+HTTP 报文能够解析（Parse）为用于增量处理或下行转发（Forwarding Downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现会因为网络性能、安全校验或者载荷转换（[[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Payload Transformation]]）而对这些不完整的报文进行缓冲或延迟转发。
 
 A sender *MUST NOT* send whitespace between the start-line and the first header field. A recipient that receives whitespace between the start-line and the first header field *MUST* either reject the message as invalid or consume each whitespace-preceded line without further processing of it (i.e., ignore the entire line, along with any subsequent lines preceded by whitespace, until a properly formed header field is received or the header section is terminated).
 
@@ -817,7 +817,7 @@ A sender *MUST NOT* send whitespace between the start-line and the first header 
 
 The presence of such whitespace in a request might be an attempt to trick a server into ignoring that field or processing the line after it as a new request, either of which might result in a security vulnerability if other implementations within the request chain interpret the same message differently. Likewise, the presence of such whitespace in a response might be ignored by some clients or cause others to cease parsing.
 
-在一个请求报文中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些报头域或忽略处理某些行，哄骗服务器使其认为这个请求是一个新请求（New Request）。如果在请求链路中其他实现（Implementation）对这种带有非法空格的报文的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应报文中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端终止解释。
+在一个请求报文中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些报头域或忽略处理某些行，哄骗服务器使其认为这个请求是一个新请求（New Request）。如果在请求链路中其他实现（Implementation）对这种带有非法空格的报文的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应报文中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端终止解析（Parse）。
 
 ** 3.1 起始行 (Start Line)
 An HTTP message can be either a request from client to server or a response from server to client. Syntactically, the two types of message differ only in the start-line, which is either a *request-line* (for requests) or a *status-line* (for responses), and in the algorithm for determining the length of the message body (Section 3.3).
@@ -828,7 +828,7 @@ An HTTP message can be either a request from client to server or a response from
 
 In theory, a client could receive requests and a server could receive responses, distinguishing them by their different start-line formats, but, in practice, servers are implemented to only expect a request (a response is interpreted as an unknown or invalid request method) and clients are implemented to only expect a response.
 
-理论上，客户端能够接收请求报文，服务器能够接收响应报文，只需要让它们区别好报文起始行的不同格式就可以。但在实践中，服务端被实现为仅预期接收请求（而接收到响应的话，服务器会将其解读为一个未知或非法的请求方法），客户端被实现为仅预期接收响应。
+理论上，客户端能够接收请求报文，服务器能够接收响应报文，只需要让它们区别好报文起始行的不同格式就可以。但在实践中，服务端被实现为仅预期接收请求（而接收到响应的话，服务器会将其解释（Interpret）为一个未知或非法的请求方法），客户端被实现为仅预期接收响应。
 
 #+BEGIN_SRC text
 start-line     = request-line / status-line
@@ -864,7 +864,7 @@ The request-target identifies the target resource upon which to apply the reques
 
 Recipients typically parse the =request-line= into its component parts by splitting on whitespace (see [[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][Section 3.5]]), since no whitespace is allowed in the three components. Unfortunately, some user agents fail to properly encode or exclude whitespace found in [[https://en.wikipedia.org/wiki/Hyperlink][hypertext references]], resulting in those disallowed characters being sent in a =request-target=.
 
-接收端在解释请求行 =request-line= 的过程中，通过以空格分割出请求行的各个部件（共有三个部件，分别为方法标识、请求目标以及协议版本），因此，以上三个部件的内容不能带有空格（见[[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][章节 3.5]]）。不幸的是，某些用户代理不能对超文本引用（[[https://en.wikipedia.org/wiki/Hyperlink][Hypertext References]]，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求报文中的请求目标 =request-target= 包含了那些不被允许出现的字符。
+接收端在解析（Parse）请求行 =request-line= 的过程中，通过以空格分割出请求行的各个部件（共有三个部件，分别为方法标识、请求目标以及协议版本），因此，以上三个部件的内容不能带有空格（见[[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][章节 3.5]]）。不幸的是，某些用户代理不能对超文本引用（[[https://en.wikipedia.org/wiki/Hyperlink][Hypertext References]]，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求报文中的请求目标 =request-target= 包含了那些不被允许出现的字符。
 
 Recipients of an invalid =request-line= *SHOULD* respond with either a =400 (Bad Request)= error or a =301 (Moved Permanently)= redirect with the =request-target= properly encoded. A recipient *SHOULD NOT* attempt to autocorrect and then process the request without a redirect, since the invalid =request-line= might be deliberately crafted to bypass security filters along the request chain.
 
@@ -936,29 +936,52 @@ Header fields are fully extensible: there is no limit on the introduction of new
 
 New header fields can be defined such that, when they are understood by a recipient, they might override or enhance the interpretation of previously defined header fields, define preconditions on request evaluation, or refine the meaning of responses.
 
-新报头域能够定义为这样：当新报头域能够被接收端所理解时，它们可以覆盖或增强之前所定义的报头域的解读。
+新报头域能够定义为这样：当新报头域能够被接收端所理解时，它们可以覆盖或增强之前所定义的报头域的解释（Interpretation），定义关于评估请求的前置条件，或者提炼响应报文的意思。
 
-A proxy *MUST* forward unrecognized header fields unless the =field-name= is listed in the =Connection= header field (Section 6.1) or the proxy is specifically configured to block, or otherwise transform, such fields. Other recipients *SHOULD* ignore unrecognized header fields. These requirements allow HTTP's functionality to be enhanced without requiring prior update of deployed intermediaries.
+A proxy *MUST* forward unrecognized header fields unless the =field-name= is listed in the =Connection= header field ([[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][Section 6.1]]) or the proxy is specifically configured to block, or otherwise transform, such fields. Other recipients *SHOULD* ignore unrecognized header fields. These requirements allow HTTP's functionality to be enhanced without requiring prior update of deployed intermediaries.
 
-All defined header fields ought to be registered with IANA in the "Message Headers" registry, as described in Section 8.3 of [RFC7231].
+代理（Proxy） *必须* 转发未识别的报头域，除非该报头域名 =field-name= 是 =Connection= （见[[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][章节 6.1]]）系列，或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 *应该* 忽略未识别的报头域。这些要求使得在链路中的中间人还没有前置更新的情况下，HTTP 的功能仍能得到增强。
+
+All defined header fields ought to be registered with [[https://www.iana.org/][IANA]] in the "Message Headers" registry, as described in [[https://tools.ietf.org/html/rfc7231#section-8.3][Section 8.3]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]].
+
+所有已定义的报头域都应该被注册到 IANA 的 “报文头”（Message Headers）注册表中，详细描述见【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-8.3][章节 8.3]]。
 
 *** 3.2.2 域的顺序 (Field Order)
-The order in which header fields with differing field names are received is not significant. However, it is good practice to send header fields that contain control data first, such as Host on requests and Date on responses, so that implementations can decide when not to handle a message as early as possible. A server MUST NOT apply a request to the target resource until the entire request header section is received, since later header fields might include conditionals, authentication credentials, or deliberately misleading duplicate header fields that would impact request processing.
+The order in which header fields with differing field names are received is not significant. However, it is good practice to send header fields that contain control data first, such as =Host= on requests and =Date= on responses, so that implementations can decide when not to handle a message as early as possible. A server *MUST NOT* apply a request to the target resource until the entire request header section is received, since later header fields might include conditionals, authentication credentials, or deliberately misleading duplicate header fields that would impact request processing.
 
-A sender MUST NOT generate multiple header fields with the same field name in a message unless either the entire field value for that header field is defined as a comma-separated list [i.e., #(values)] or the header field is a well-known exception (as noted below).
+不同的报头域名的接收顺序是无关要紧的。但是，最佳的实践是优先发送包含控制的信息（Control Data），例如请求报文中的 =Host= 和 响应报文中的 =Date=，以便于相应的实现（Implementations）能够尽可能简单地决定在什么时候不去处理这个报文。服务端 *禁止* 在整个请求报头块接收完毕之前去申请目标资源，这是因为接后来的请求头域可能包含影响请求处理流程的条件、认证信息或者故意误导性的重复报头域。
 
-A recipient MAY combine multiple header fields with the same field name into one "field-name: field-value" pair, without changing the semantics of the message, by appending each subsequent field value to the combined field value in order, separated by a comma. The order in which header fields with the same field name are received is therefore significant to the interpretation of the combined field value; a proxy MUST NOT change the order of these field values when forwarding a message.
+A sender *MUST NOT* generate multiple header fields with the same field name in a message unless either the entire field value for that header field is defined as a comma-separated list [i.e., #(values)] or the header field is a well-known exception (as noted below).
 
-Note: In practice, the "Set-Cookie" header field ([RFC6265]) often appears multiple times in a response message and does not use the list syntax, violating the above requirements on multiple header fields with the same name. Since it cannot be combined into a single field-value, recipients ought to handle "Set-Cookie" as a special case while processing header fields. (See Appendix A.2.3 of [Kri2001] for details.)
+发送端 *禁止* 在一个报文中生成多个相同名称的的报头域（Header Fields），除非所有这些报头域的报头域值是定义为以英文“逗号”分隔（Comma-separated）的列表（例如，#(values)）或者报头域是公认的例外（如之前所列举的）。
+
+A recipient *MAY* combine multiple header fields with the same field name into one "field-name: field-value" pair, without changing the semantics of the message, by appending each subsequent field value to the combined field value in order, separated by a comma. The order in which header fields with the same field name are received is therefore significant to the interpretation of the combined field value; a proxy *MUST NOT* change the order of these field values when forwarding a message.
+
+在没有改变报文语义的情况下，接收端 *可以* 将多个相同名称的报头域组合成一个报头域键-值对（"field-name: field-value" pair），通过按顺序向要组合的那个域值末尾附加其他子序列的报头域值，并以英文“逗号”分隔。
+
+*Note:* In practice, the "Set-Cookie" header field ([RFC6265]) often appears multiple times in a response message and does not use the list syntax, violating the above requirements on multiple header fields with the same name. Since it cannot be combined into a single field-value, recipients ought to handle "Set-Cookie" as a special case while processing header fields. (See Appendix A.2.3 of [Kri2001] for details.)
+
+*注意：* 在实践中，报头域 =Set-Cookie= （见【[[https://tools.ietf.org/html/rfc6265][RFC6265]]】）在一个响应报文中通常会出现多次，并且不是以列表的句法形式，违背了以上关于多个相同名称的报头域的要求。这是因为它不能组合成一个单一的域值（Field Value），因此，当处理报头域的时候，接收端应该将 =Set-cookie= 作为特殊情况。（详情见【Kri2001】的附件 A.2.3。）
 
 *** 3.2.3 空格 (Whitespace)
-This specification uses three rules to denote the use of linear whitespace: OWS (optional whitespace), RWS (required whitespace), and BWS ("bad" whitespace).
+This specification uses three rules to denote the use of linear whitespace: =OWS= (optional whitespace), =RWS= (required whitespace), and =BWS= ("bad" whitespace).
 
-The OWS rule is used where zero or more linear whitespace octets might appear. For protocol elements where optional whitespace is preferred to improve readability, a sender SHOULD generate the optional whitespace as a single SP; otherwise, a sender SHOULD NOT generate optional whitespace except as needed to white out invalid or unwanted protocol elements during in-place message filtering.
+本规范使用 3 个（ABNF）规则来表示连续空格的使用。
+- =OWS=，Optional Whitespace，可选的空格；
+- =RWS=，Required Whitespace，必要的空格；
+- =BWS=，Bad Whitespace，不可取的空格。
 
-The RWS rule is used when at least one linear whitespace octet is required to separate field tokens. A sender SHOULD generate RWS as a single SP.
+The =OWS= rule is used where zero or more linear whitespace octets might appear. For protocol elements where optional whitespace is preferred to improve readability, a sender *SHOULD* generate the optional whitespace as a single =SP=; otherwise, a sender *SHOULD NOT* generate optional whitespace except as needed to white out invalid or unwanted protocol elements during in-place message filtering.
 
-The BWS rule is used where the grammar allows optional whitespace only for historical reasons. A sender MUST NOT generate BWS in messages. A recipient MUST parse for such bad whitespace and remove it before interpreting the protocol element.
+=OWS= 规则是用在可能出现零个或多个连续空格字符（Octets）的位置上。对于协议元素来说，可选空格的使用有助于提交可读性。发送端 *应该* 将可选空格生成为一个单一的 =SP=；接收端除了在报文就地过滤（In-place Message Filtering）期间因为修正非法或多余的协议元素的需要而生成可选空格以外，接收端 *不应该* 生成可选空格。
+
+The =RWS= rule is used when at least one linear whitespace octet is required to separate field tokens. A sender *SHOULD* generate =RWS= as a single =SP=.
+
+=RWS= 规则是用于当要求有至少一个连续空格字符（Octet）来分隔域标记（Field Tokens）的时候。发送端 *应该* 将 =RWS= 生成为一个单一的 =SP=。
+
+The =BWS= rule is used where the grammar allows optional whitespace only for historical reasons. A sender *MUST NOT* generate =BWS= in messages. A recipient *MUST* parse for such bad whitespace and remove it before interpreting the protocol element.
+
+=BWS= 规则是用在由于历史遗留因素才在语法上允许可选空格的位置上。发送端 *禁止* 在报文中生成 =BWS=。接收端 *必须* 在解释（Interpret）协议元素之前对这些不可取的空格进行解释（Parse）并且移除它们。
 
 #+BEGIN_SRC text
 OWS            = *( SP / HTAB )
@@ -969,22 +992,28 @@ BWS            = OWS
                ; "bad" whitespace
 #+END_SRC
 
-*** 3.2.4 域解释 (Field Parsing)
+*** 3.2.4 域解析 (Field Parsing)
 Messages are parsed using a generic algorithm, independent of the individual header field names. The contents within a given field value are not parsed until a later stage of message interpretation (usually after the message's entire header section has been processed). Consequently, this specification does not use ABNF rules to define each "Field-Name: Field Value" pair, as was done in previous editions. Instead, this specification uses ABNF rules that are named according to each registered field name, wherein the rule defines the valid grammar for that field's corresponding field values (i.e., after the field-value has been extracted from the header section by a generic field parser).
 
-No whitespace is allowed between the header field-name and colon. In the past, differences in the handling of such whitespace have led to security vulnerabilities in request routing and response handling. A server MUST reject any received request message that contains whitespace between a header field-name and colon with a response code of 400 (Bad Request). A proxy MUST remove any such whitespace from a response message before forwarding the message downstream.
+报文使用通用的算法进行解析（Parse），不依赖个别的报头域名。对一个给定的报头域值里的内容进行解析（Parse）会在报文解释（Interpretation）的偏后阶段进行，通常在报文的整个报头域块（Header Section）都已经被处理（Process）好之后。因此，本规范不再使用 ABNF 规则去定义每一个报头域“键-值”对（"Field-Name: Field Value" pair），正如上个版本的做法。取而代之的是，本规范使用以每一个已注册的报头域的名称来命名的 ABNF 规则，每个规则里定义了相应的报头域所对应的域值（也就是说，通过一个通用报头域解析器从报头块中抽取出 =field-value= 以后的内容）的合法语法。
 
-A field value might be preceded and/or followed by optional whitespace (OWS); a single SP preceding the field-value is preferred for consistent readability by humans. The field value does not include any leading or trailing whitespace: OWS occurring before the first non-whitespace octet of the field value or after the last non-whitespace octet of the field value ought to be excluded by parsers when extracting the field value from a header field.
+No whitespace is allowed between the header =field-name= and colon. In the past, differences in the handling of such whitespace have led to security vulnerabilities in request routing and response handling. A server *MUST* reject any received request message that contains whitespace between a header =field-name= and colon with a response code of =400 (Bad Request)=. A proxy *MUST* remove any such whitespace from a response message before forwarding the message downstream.
 
-Historically, HTTP header field values could be extended over multiple lines by preceding each extra line with at least one space or horizontal tab (obs-fold). This specification deprecates such line folding except within the message/http media type (Section 8.3.1). A sender MUST NOT generate a message that includes line folding (i.e., that has any field-value that contains a match to the obs-fold rule) unless the message is intended for packaging within the message/http media type.
+报头域名（Field Name）和冒号之间不允许带有空格。在过去，对于这些空格的各不相同的处理方式已经导致请求路由和响应处理方面的安全隐患。服务器 *必须* 拒绝这种在报头域名和冒号之间包含空格请求报文，并响应一个 =400 (Bad Request)= 的状态码。代理（Proxy） *必须* 在下行转发之前从响应报文中移除所有上述空格。
 
-A server that receives an obs-fold in a request message that is not within a message/http container MUST either reject the message by sending a 400 (Bad Request), preferably with a representation explaining that obsolete line folding is unacceptable, or replace each received obs-fold with one or more SP octets prior to interpreting the field value or forwarding the message downstream.
+A field value might be preceded and/or followed by optional whitespace (=OWS=); a single =SP= preceding the =field-value= is preferred for consistent readability by humans. The field value does not include any leading or trailing whitespace: =OWS= occurring before the first non-whitespace octet of the field value or after the last non-whitespace octet of the field value ought to be excluded by parsers when extracting the field value from a header field.
 
-A proxy or gateway that receives an obs-fold in a response message that is not within a message/http container MUST either discard the message and replace it with a 502 (Bad Gateway) response, preferably with a representation explaining that unacceptable line folding was received, or replace each received obs-fold with one or more SP octets prior to interpreting the field value or forwarding the message downstream.
+在报头域值之前并且（或者）之后可能带有可选空格（=OWS=）；为了遵循人类可读性，在 =field-value= 之前推荐带有一个单一的空格 =SP=。报头域值并不包含任何前置或后置的空格：
 
-A user agent that receives an obs-fold in a response message that is not within a message/http container MUST replace each received obs-fold with one or more SP octets prior to interpreting the field value.
+Historically, HTTP header field values could be extended over multiple lines by preceding each extra line with at least one space or horizontal tab (=obs-fold=). This specification deprecates such line folding except within the message/http media type (Section 8.3.1). A sender *MUST NOT* generate a message that includes line folding (i.e., that has any =field-value= that contains a match to the =obs-fold= rule) unless the message is intended for packaging within the message/http media type.
 
-Historically, HTTP has allowed field content with text in the ISO‑8859‑1 charset [ISO-8859-1], supporting other charsets only through use of [RFC2047] encoding. In practice, most HTTP header field values use only a subset of the US-ASCII charset [USASCII]. Newly defined header fields SHOULD limit their field values to US‑ASCII octets. A recipient SHOULD treat other octets in field content (obs‑text) as opaque data.
+A server that receives an =obs-fold= in a request message that is not within a message/http container *MUST* either reject the message by sending a =400 (Bad Request)=, preferably with a representation explaining that obsolete line folding is unacceptable, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
+
+A proxy or gateway that receives an =obs-fold= in a response message that is not within a message/http container *MUST* either discard the message and replace it with a =502 (Bad Gateway)= response, preferably with a representation explaining that unacceptable line folding was received, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
+
+A user agent that receives an =obs-fold= in a response message that is not within a message/http container *MUST* replace each received =obs-fold= with one or more *SP* octets prior to interpreting the field value.
+
+Historically, HTTP has allowed field content with text in the ISO‑8859‑1 charset [ISO-8859-1], supporting other charsets only through use of [RFC2047] encoding. In practice, most HTTP header field values use only a subset of the US-ASCII charset [USASCII]. Newly defined header fields *SHOULD* limit their field values to US‑ASCII octets. A recipient *SHOULD* treat other octets in field content (=obs‑text=) as opaque data.
 
 *** 3.2.5 域限制 (Field Limits)
 HTTP does not place a predefined limit on the length of each header field or on the length of the header section as a whole, as described in Section 2.5. Various ad hoc limitations on individual header field length are found in practice, often depending on the specific field semantics.
@@ -1144,7 +1173,7 @@ If a response terminates in the middle of the header section (before the empty l
 
 A message body that uses the chunked transfer coding is incomplete if the zero-sized chunk that terminates the encoding has not been received. A message that uses a valid Content-Length is incomplete if the size of the message body received (in octets) is less than the value given by Content-Length. A response that has neither chunked transfer coding nor Content-Length is terminated by closure of the connection and, thus, is considered complete regardless of the number of message body octets received, provided that the header section was received intact.
 
-** 3.5 报文解释的健壮性 (Message Parsing Robustness)
+** 3.5 报文解析的健壮性 (Message Parsing Robustness)
 :PROPERTIES:
 :ID:       A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517
 :END:
@@ -1154,7 +1183,7 @@ Older HTTP/1.0 user agent implementations might send an extra CRLF after a POST 
 
 In the interest of robustness, a server that is expecting to receive and parse a =request-line= *SHOULD* ignore at least one empty line (CRLF) received prior to the =request-line=.
 
-出于健壮性的考虑，服务器在等待接收和解释一个请求行 =request-line= 的时候，*应该* 忽略至少一个空行（CRLF）。
+出于健壮性的考虑，服务器在等待接收和解析（Parse）一个请求行 =request-line= 的时候，*应该* 忽略至少一个空行（CRLF）。
 
 Although the line terminator for the =start-line= and header fields is the sequence CRLF, a recipient *MAY* recognize a single LF as a line terminator and ignore any preceding CR.
 
@@ -1162,7 +1191,7 @@ Although the line terminator for the =start-line= and header fields is the seque
 
 Although the =request-line= and =status-line= grammar rules require that each of the component elements be separated by a single SP octet, recipients *MAY* instead parse on whitespace-delimited word boundaries and, aside from the CRLF terminator, treat any form of whitespace as the SP separator while ignoring preceding or trailing whitespace; such whitespace includes one or more of the following octets: SP, HTAB, VT (%x0B), FF (%x0C), or bare CR. However, lenient parsing can result in security vulnerabilities if there are multiple recipients of the message and each has its own unique interpretation of robustness (see [[id:04030107-7AF1-4D23-900E-75FEEB04925C][Section 9.5]]).
 
-虽然请求行（Request Line）和状态行（Status Line）的语法规则要求每一个部件元素需要以一个空格（8位字节） =SP= 分隔，但是接收端 *可以* 改由使用其他空格限定符（Whitespace-delimited Word）来进行分隔，空格限定符由包含一个或多个 =SP=、=HTAB=、=VT= (%x0B)、=FF= (&x0C) 或者单独由 =CR= 组成。但是，如果报文有多个接收端，而且这些接收端都有自己独特的健壮性的解读，那么，不按严格的 =SP= 分隔的方式会引起安全隐患（见[[id:04030107-7AF1-4D23-900E-75FEEB04925C][章节 9.5]]）。
+虽然请求行（Request Line）和状态行（Status Line）的语法规则要求每一个部件元素需要以一个空格（8位字节） =SP= 分隔，但是接收端 *可以* 改由使用更宽泛的空格限定符（Whitespace-delimited Word）替代 =SP= 来进行解析（Parse），空格限定符由包含一个或多个 =SP=、=HTAB=、=VT= (%x0B)、=FF= (&x0C) 或者单独由 =CR= 组成。但是，如果报文有多个接收端，而且这些接收端都有自己独特的健壮性的解释（Interpretation），那么，这种宽泛解析（Parse）的方式会引起安全隐患（见[[id:04030107-7AF1-4D23-900E-75FEEB04925C][章节 9.5]]）。
 
 When a server listening only for HTTP request messages, or processing what appears from the =start-line= to be an HTTP request message, receives a sequence of octets that does not match the HTTP-message grammar aside from the robustness exceptions listed above, the server *SHOULD* respond with a =400 (Bad Request)= response.
 
@@ -1207,6 +1236,9 @@ When a server listening only for HTTP request messages, or processing what appea
 :END:
 * 6 连接管理（Connection Management）
 ** 6.1 连接 (Connection)
+:PROPERTIES:
+:ID:       40B2B721-F916-41EA-86FB-514FDED5B3A4
+:END:
 ** 6.2 建立 (Establishment)
 ** 6.3 持久性 (Persistence)
 *** 6.3.1 (Retrying Requests)
