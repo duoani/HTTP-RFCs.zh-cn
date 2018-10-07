@@ -1088,7 +1088,9 @@ A sender *SHOULD NOT* generate a =quoted-pair= in a =quoted-string= except where
 :PROPERTIES:
 :ID:       74ac5c85-d91e-43ab-bb2f-6c5957da5f5c
 :END:
-The message body (if any) of an HTTP message is used to carry the payload body of that request or response. The message body is identical to the payload body unless a transfer coding has been applied, as described in Section 3.3.1.
+The message body (if any) of an HTTP message is used to carry the payload body of that request or response. The message body is identical to the payload body unless a transfer coding has been applied, as described in [[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][Section 3.3.1]].
+
+HTTP 报文的报文正文（如果存在的话）是用来运载请求或响应的载荷（Payload Body）的。除非应用了传输编码，报文正文（Message Body）等价于载荷（Payload Body），详情见[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][章节 3.3.1]]。
 
 #+BEGIN_SRC text
 message-body = *OCTET
@@ -1101,6 +1103,9 @@ The presence of a message body in a request is signaled by a Content-Length or T
 The presence of a message body in a response depends on both the request method to which it is responding and the response status code (Section 3.1.2). Responses to the HEAD request method (Section 4.3.2 of [RFC7231]) never include a message body because the associated response header fields (e.g., Transfer-Encoding, Content-Length, etc.), if present, indicate only what their values would have been if the request method had been GET (Section 4.3.1 of [RFC7231]). 2xx (Successful) responses to a CONNECT request method (Section 4.3.6 of [RFC7231]) switch to tunnel mode instead of having a message body. All 1xx (Informational), 204 (No Content), and 304 (Not Modified) responses do not include a message body. All other responses do include a message body, although the body might be of zero length.
 
 *** 3.3.1 传输编码 (Transfer-Encoding)
+:PROPERTIES:
+:ID:       1754823B-D0BC-410F-A17B-E7ADA1AA79BC
+:END:
 The Transfer-Encoding header field lists the transfer coding names corresponding to the sequence of transfer codings that have been (or will be) applied to the payload body in order to form the message body. Transfer codings are defined in Section 4.
 
 #+BEGIN_SRC text
