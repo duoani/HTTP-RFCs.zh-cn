@@ -71,7 +71,7 @@ Conformance criteria and considerations regarding error handling are defined in 
 ** 1.2 句法标记 (Syntax Notation)
 This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7, that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix B shows the collected grammar with all list operators expanded to standard ABNF notation.
 
-The following core rules are included by reference, as defined in [RFC5234], Appendix B.1: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), HTAB (horizontal tab), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible [USASCII] character).
+The following core rules are included by reference, as defined in [RFC5234], Appendix B.1: =ALPHA= (letters), =CR= (carriage return), =CRLF= (CR LF), =CTL= (controls), =DbbIGIT= (decimal 0-9), =DQUOTE= (double quote), =HEXDIG= (hexadecimal 0-9/A-F/a-f), =HTAB= (horizontal tab), =LF= (line feed), =OCTET= (any 8-bit sequence of data), =SP= (space), and =VCHAR= (any visible [USASCII] character).
 
 As a convention, ABNF rule names prefixed with "obs-" denote "obsolete" grammar rules that appear for historical reasons.
 
@@ -771,9 +771,9 @@ Since the "http" and "https" schemes conform to the URI generic syntax, such URI
 
 If the port is equal to the default port for a scheme, the normal form is to omit the port subcomponent. When not being used in absolute form as the request target of an OPTIONS request, an empty path component is equivalent to an absolute path of "/", so the normal form is to provide a path of "/" instead. The scheme and host are case-insensitive and normally provided in lowercase; all other components are compared in a case-sensitive manner. Characters other than those in the "reserved" set are equivalent to their percent-encoded[fn:4] octets: the normal form is to not encode them (see Sections 2.1 and 2.2 of [RFC3986]).
 
-如果一个 scheme 的 =port= 等于其默认端口，那么其通常的形式是省略掉 =port= 子部件。当一个 =OPTIONS= 请求没有使用绝对形式（Absolute Form）作为请求目标（Request Target）时，一个空的 =path= 等价于绝对路径“=/=”，所以通常的形式是使用路径“=/=”来替换。=scheme= 和 =host= 是大小写不敏感的，通常使用小写。除了 =scheme= 和 =host= 以外的所有其外部件都是大小写敏感的。除了“保留”字符以外的所有字符都等价于它的 URL 编码（[[https://en.wikipedia.org/wiki/Percent-encoding][Precent-encoded]]，又叫百分号编码）形式（使用 =%= 加上两位的十六进制 0~F 字符表示）：一般形式是（如非必要）不要对它们进行编码（见[[https://tools.ietf.org/html/rfc3986#section-2.1][【RFC3986】章节 2.1 和 2.2]]）。
+如果一个 scheme 的 =port= 等于其默认端口，那么其通常的形式是省略掉 =port= 子部件。当一个 =OPTIONS= 请求没有使用绝对形式（Absolute Form）作为请求目标（Request Target）时，一个空的 =path= 等价于绝对路径“=/=”，所以通常的形式是使用路径“=/=”来替换。=scheme= 和 =host= 是大小写不敏感的，通常使用小写。除了 =scheme= 和 =host= 以外的所有其外部件都是大小写敏感的。除了“保留”字符集以外的所有字符都等价于它的 URL 编码（[[https://en.wikipedia.org/wiki/Percent-encoding][Precent-encoded]]，又叫百分号编码）形式的八位组（Octet）：一般形式是（如非必要）不要对它们进行编码（见[[https://tools.ietf.org/html/rfc3986#section-2.1][【RFC3986】章节 2.1 和 2.2]]）。
 
-（译注：对于百分号编码还可以参考[[https://www.cnblogs.com/DaoMuRen/p/5695030.html][这篇博文]]。）
+（译注：URL 编码，又叫百分号编码，每个字符由 =%= 加上两位的十六进制 0~F 组成，对于百分号编码还可以参考[[https://www.cnblogs.com/DaoMuRen/p/5695030.html][这篇博文]]。）
 
 For example, the following three URIs are equivalent:
 
@@ -794,7 +794,8 @@ All HTTP/1.1 messages consist of a start-line followed by a sequence of octets i
 
 #+BEGIN_SRC text
 HTTP-message   = start-line
-                 ,*( header-field CRLF )
+
+,*( header-field CRLF )
                  CRLF
                  [ message-body ]
 #+END_SRC
@@ -805,7 +806,7 @@ The normal procedure for parsing an HTTP message is to read the start-line into 
 
 A recipient *MUST* parse an HTTP message as a sequence of octets in an encoding that is a superset of US-ASCII [[[https://en.wikipedia.org/wiki/ASCII][USASCII]]]. Parsing an HTTP message as a stream of Unicode characters, without regard for the specific encoding, creates security vulnerabilities due to the varying ways that string processing libraries handle invalid multibyte character sequences that contain the octet LF (%x0A). String-based parsers can only be safely used within protocol elements after the element has been extracted from the message, such as within a header field-value after message parsing has delineated the individual fields.
 
-接收端 *必须* 将 HTTP 报文解析（Parse）为以 [[https://baike.baidu.com/item/ASCII/309296?fr=aladdin][US-ASCII]] 的超集来编码的字节（8位字节）序列。没有考虑具体的编码（Encoding）就将报文解释为 Unicode 字符会引发[[https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats][安全漏洞]]，这是因为字符串处理库处理包含 =LF= (%x0A) 非法多字节字符序列的方式有很多种。基于字符串的解释器只能工作在报文提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出报文里所有头域（Header Fields）后，对报头中的一个域值（Field-value）使用基于字符串的解释器是可以保证安全的。
+接收端 *必须* 将 HTTP 报文解析（Parse）为以 [[https://baike.baidu.com/item/ASCII/309296?fr=aladdin][US-ASCII]] 的超集来编码的八位组（Octet）序列。没有考虑具体的编码（Encoding）就将报文解释为 Unicode 字符会引发[[https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats][安全漏洞]]，这是因为字符串处理库处理包含 =LF= (%x0A) 非法多字节字符序列的方式有很多种。基于字符串的解释器只能工作在报文提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出报文里所有头域（Header Fields）后，对报头中的一个域值（Field-value）使用基于字符串的解释器是可以保证安全的。
 
 An HTTP message can be parsed as a stream for incremental processing or forwarding downstream. However, recipients cannot rely on incremental delivery of partial messages, since some implementations will buffer or delay message forwarding for the sake of network efficiency, security checks, or payload transformations.
 
@@ -864,7 +865,7 @@ The request-target identifies the target resource upon which to apply the reques
 
 Recipients typically parse the =request-line= into its component parts by splitting on whitespace (see [[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][Section 3.5]]), since no whitespace is allowed in the three components. Unfortunately, some user agents fail to properly encode or exclude whitespace found in [[https://en.wikipedia.org/wiki/Hyperlink][hypertext references]], resulting in those disallowed characters being sent in a =request-target=.
 
-接收端在解析（Parse）请求行 =request-line= 的过程中，通过以空格分割出请求行的各个部件（共有三个部件，分别为方法标识、请求目标以及协议版本），因此，以上三个部件的内容不能带有空格（见[[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][章节 3.5]]）。不幸的是，某些用户代理不能对超文本引用（[[https://en.wikipedia.org/wiki/Hyperlink][Hypertext References]]，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求报文中的请求目标 =request-target= 包含了那些不被允许出现的字符。
+接收端在解析（Parse）请求行 =request-line= 的过程中，通过以空格分割出请求行的各个部件（共有三个部件，分别为方法标识、请求目标以及协议版本），因此，以上三个部件的内容不能带有空格（见[[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][章节 3.5]]）。不幸的是，某些用户代理不能对超文本引用（[[https://en.wikipedia.org/wiki/Hyperlink][Hypertext References]]，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求报文中的请求目标 =request-target= 包含了那些不被允许出现的字符（Character）。
 
 Recipients of an invalid =request-line= *SHOULD* respond with either a =400 (Bad Request)= error or a =301 (Moved Permanently)= redirect with the =request-target= properly encoded. A recipient *SHOULD NOT* attempt to autocorrect and then process the request without a redirect, since the invalid =request-line= might be deliberately crafted to bypass security filters along the request chain.
 
@@ -973,11 +974,11 @@ This specification uses three rules to denote the use of linear whitespace: =OWS
 
 The =OWS= rule is used where zero or more linear whitespace octets might appear. For protocol elements where optional whitespace is preferred to improve readability, a sender *SHOULD* generate the optional whitespace as a single =SP=; otherwise, a sender *SHOULD NOT* generate optional whitespace except as needed to white out invalid or unwanted protocol elements during in-place message filtering.
 
-=OWS= 规则是用在可能出现零个或多个连续空格字符（Octets）的位置上。对于协议元素来说，可选空格的使用有助于提交可读性。发送端 *应该* 将可选空格生成为一个单一的 =SP=；接收端除了在报文就地过滤（In-place Message Filtering）期间因为修正非法或多余的协议元素的需要而生成可选空格以外，接收端 *不应该* 生成可选空格。
+=OWS= 规则是用在可能出现零个或多个连续空格（Octets）的位置上。对于协议元素来说，可选空格的使用有助于提交可读性。发送端 *应该* 将可选空格生成为一个单一的 =SP=；接收端除了在报文就地过滤（In-place Message Filtering）期间因为修正非法或多余的协议元素的需要而生成可选空格以外，接收端 *不应该* 生成可选空格。
 
 The =RWS= rule is used when at least one linear whitespace octet is required to separate field tokens. A sender *SHOULD* generate =RWS= as a single =SP=.
 
-=RWS= 规则是用于当要求有至少一个连续空格字符（Octet）来分隔域标记（Field Tokens）的时候。发送端 *应该* 将 =RWS= 生成为一个单一的 =SP=。
+=RWS= 规则是用于当要求有至少一个连续空格（Octet）来分隔域标记（Field Tokens）的时候。发送端 *应该* 将 =RWS= 生成为一个单一的 =SP=。
 
 The =BWS= rule is used where the grammar allows optional whitespace only for historical reasons. A sender *MUST NOT* generate =BWS= in messages. A recipient *MUST* parse for such bad whitespace and remove it before interpreting the protocol element.
 
@@ -1003,27 +1004,45 @@ No whitespace is allowed between the header =field-name= and colon. In the past,
 
 A field value might be preceded and/or followed by optional whitespace (=OWS=); a single =SP= preceding the =field-value= is preferred for consistent readability by humans. The field value does not include any leading or trailing whitespace: =OWS= occurring before the first non-whitespace octet of the field value or after the last non-whitespace octet of the field value ought to be excluded by parsers when extracting the field value from a header field.
 
-在报头域值之前并且（或者）之后可能带有可选空格（=OWS=）；为了遵循人类可读性，在 =field-value= 之前推荐带有一个单一的空格 =SP=。报头域值并不包含任何前置或后置的空格：
+在报头域值之前并且（或者）之后可能带有可选空格（=OWS=）；为了遵循人类可读性，在 =field-value= 之前推荐带有一个单一的空格 =SP=。报头域值并不包含任何前置或后置的空格：当从一个报头域中抽出报头域值的时候，出现在报头域值的第一个非空格字节之前或者最后一个非空格字节之后的可选空格 =OWS= 应该被解析器所排除。
 
-Historically, HTTP header field values could be extended over multiple lines by preceding each extra line with at least one space or horizontal tab (=obs-fold=). This specification deprecates such line folding except within the message/http media type (Section 8.3.1). A sender *MUST NOT* generate a message that includes line folding (i.e., that has any =field-value= that contains a match to the =obs-fold= rule) unless the message is intended for packaging within the message/http media type.
+Historically, HTTP header field values could be extended over multiple lines by preceding each extra line with at least one space or horizontal tab (=obs-fold=). This specification deprecates such line folding except within the message/http media type ([[id:44492A0E-8B7F-46EC-890D-317BC32E2228][Section 8.3.1]]). A sender *MUST NOT* generate a message that includes line folding (i.e., that has any =field-value= that contains a match to the =obs-fold= rule) unless the message is intended for packaging within the message/http media type.
+
+历史上，HTTP 报头域值能被扩展为多行，通过在每个额外行之前添加至少一个空格或水平制表符（=obs-fold=）来实现。本规范废弃了这些分行（Line Folding）除了在媒体类型（Media Type）“message/http”（见[[id:44492A0E-8B7F-46EC-890D-317BC32E2228][章节 8.3.1]]）之内的。发送端 *禁止* 生成一个包含分行（也就是说，带有任何包含能够匹配 =obs-fold= 规则的报头域值 =field-value=）的报文，除非报文是用于封装媒体类型 “message/http”的内容。
 
 A server that receives an =obs-fold= in a request message that is not within a message/http container *MUST* either reject the message by sending a =400 (Bad Request)=, preferably with a representation explaining that obsolete line folding is unacceptable, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
 
+如果服务端接收到一个在请求报文里的分行 =obs-fold=，但这个分行不在媒体类型“message/http”的容器内，服务端 *必须* 要不拒绝这种报文并响应一个 =400 (Bad Request)= 状态码，更好的展现方式是解释那种已经废弃的分行是不再允许出现在报文中的；要不在解释（Interpret）报头域值（或下行转发报文）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
+
 A proxy or gateway that receives an =obs-fold= in a response message that is not within a message/http container *MUST* either discard the message and replace it with a =502 (Bad Gateway)= response, preferably with a representation explaining that unacceptable line folding was received, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
 
-A user agent that receives an =obs-fold= in a response message that is not within a message/http container *MUST* replace each received =obs-fold= with one or more *SP* octets prior to interpreting the field value.
+如果代理（Proxy）或网关（Gateway）接收到一个响应报文里的分行 =obs-fold=，但这个分行不在媒体类型“message/http”的容器内，这些中间人 *必须* 要不丢弃这个报文改由响应一个 =502 (Bad Gateway)= 状态码，更好的展现方式是解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（Interpret）报头域值（或下行转发报文）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
 
-Historically, HTTP has allowed field content with text in the ISO‑8859‑1 charset [ISO-8859-1], supporting other charsets only through use of [RFC2047] encoding. In practice, most HTTP header field values use only a subset of the US-ASCII charset [USASCII]. Newly defined header fields *SHOULD* limit their field values to US‑ASCII octets. A recipient *SHOULD* treat other octets in field content (=obs‑text=) as opaque data.
+A user agent that receives an =obs-fold= in a response message that is not within a message/http container *MUST* replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value.
+
+如果用户代理（User Agent）接收到一个响应报文里的分行 =obs-fold=，但这个分行不要媒体类型“message/http”的容器内，用户代理 *必须* 在解释（Interpret）报头域值之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
+
+Historically, HTTP has allowed field content with text in the ISO‑8859‑1 charset [ISO-8859-1], supporting other charsets only through use of [[[https://tools.ietf.org/html/rfc2047][RFC2047]]] encoding. In practice, most HTTP header field values use only a subset of the US-ASCII charset [USASCII]. Newly defined header fields *SHOULD* limit their field values to US‑ASCII octets. A recipient *SHOULD* treat other octets in field content (=obs‑text=) as [[https://en.wikipedia.org/wiki/Opaque_data_type][opaque data]].
+
+历史上，HTTP 已允许报头域的内容带有 ISO-8859-1 字符集【ISO-8859-1】的字符，要支持其他字符集，仅能通过使用【[[https://tools.ietf.org/html/rfc2047][RFC2047]]】编码。实践上，大多 HTTP 报头域值仅仅使用 US-ASCII 字符集【USASCII】的子集。新近定义的报头域 *应该* 将它们的域值的内容限制为 US-ASCII 字符八位组（Octets）。接收端 *应该* 将在报头域里的其他字符八位组（=obs-text=）作为不透明数据（[[https://en.wikipedia.org/wiki/Opaque_data_type][Opaque Data]]）对待。
 
 *** 3.2.5 域限制 (Field Limits)
-HTTP does not place a predefined limit on the length of each header field or on the length of the header section as a whole, as described in Section 2.5. Various ad hoc limitations on individual header field length are found in practice, often depending on the specific field semantics.
+HTTP does not place a predefined limit on the length of each header field or on the length of the header section as a whole, as described in [[id:A0441F72-9799-4667-9477-1E05885946A1][Section 2.5]]. Various [[https://en.wikipedia.org/wiki/Wireless_ad_hoc_network][ad hoc]] limitations on individual header field length are found in practice, often depending on the specific field semantics.
 
-A server that receives a request header field, or set of fields, larger than it wishes to process MUST respond with an appropriate 4xx (Client Error) status code. Ignoring such header fields would increase the server's vulnerability to request smuggling attacks (Section 9.5).
+HTTP 并没有预先限制每一个报头域（Header Field）的长度或者整个报头块（Header Section）的长度，详情见[[id:A0441F72-9799-4667-9477-1E05885946A1][章节 2.5]]。实践中已发现各家 ad hoc 网络对于个别报头域的长度有不同的限制，这咱长度限制通常依据具体的报头域的语义。
 
-A client MAY discard or truncate received header fields that are larger than the client wishes to process if the field semantics are such that the dropped value(s) can be safely ignored without changing the message framing or response semantics.
+A server that receives a request header field, or set of fields, larger than it wishes to process *MUST* respond with an appropriate =4xx (Client Error)= status code. Ignoring such header fields would increase the server's vulnerability to request smuggling attacks ([[id:04030107-7AF1-4D23-900E-75FEEB04925C][Section 9.5]]).
+
+服务端接收到一个请求报头域或报头域集合，其长度超出服务器所能处理的最大长度时，服务器 *必须* 响应一个恰当的 =4xx (Client Error)= 状态码。而忽略这些报头域会增加服务器被“Request Smuggling 攻击”（[[id:04030107-7AF1-4D23-900E-75FEEB04925C][章节 9.5]]）的隐患。
+
+A client *MAY* discard or truncate received header fields that are larger than the client wishes to process if the field semantics are such that the dropped value(s) can be safely ignored without changing the message framing or response semantics.
+
+客户端 *可以* 丢弃或拼接所接收到的超出客户端所能处理的最大长度的报头域，如果那个域的语义是那种摘除掉的值能够在没有改变报文的框架或响应语义的情况下被安全地被忽略。
 
 *** 3.2.6 域值的组成 (Field Value Components)
 Most HTTP header field values are defined using common syntax components (token, quoted-string, and comment) separated by whitespace or specific delimiting characters. Delimiters are chosen from the set of US-ASCII visual characters not allowed in a token (DQUOTE and "(),/:;<=>?@[\]{}").
+
+大多数 HTTP 报头域值使用通用句法部件（Common Syntax Components，包括标记 =token=、字符串 =quoted-string=、注释 =comment= ）来进行定义。这些通用句法部件以空格或者特定的定界符（Delimiting Characters）来分隔。定界符选取自 US-ASCII 字符集中的可见字符（Visual Characters），并且这些可见字符是不允许出现在标记（Token）上的（包括 =DQUOTE= 和 "=(),/:;<=>?@[\]{}="）。
 
 #+BEGIN_SRC text
 token          = 1*tchar
@@ -1036,6 +1055,8 @@ tchar          = "!" / "#" / "$" / "%" / "&" / "'" / "*"
 
 A string of text is parsed as a single value if it is quoted using double-quote marks.
 
+一个文本字符串 =quoted-string= 会作为一个单一的值来进行解析（Parse），如果这一文本字符串使用双引号所包裹的话。
+
 #+BEGIN_SRC text
 quoted-string  = DQUOTE *( qdtext / quoted-pair ) DQUOTE
 qdtext         = HTAB / SP /%x21 / %x23-5B / %x5D-7E / obs-text
@@ -1044,18 +1065,24 @@ obs-text       = %x80-FF
 
 Comments can be included in some HTTP header fields by surrounding the comment text with parentheses. Comments are only allowed in fields containing "comment" as part of their field value definition.
 
+可以通过在注释文本两边添加括号的方式将注释包含在某些 HTTP 报头域中。注释能够包含在报头域中，仅当这些报头域值的定义中包含“comment”作为它的一部分。
+
 #+BEGIN_SRC text
 comment        = "(" *( ctext / quoted-pair / comment ) ")"
 ctext          = HTAB / SP / %x21-27 / %x2A-5B / %x5D-7E / obs-text
 #+END_SRC
 
-The backslash octet ("\") can be used as a single-octet quoting mechanism within quoted-string and comment constructs. Recipients that process the value of a quoted-string MUST handle a quoted-pair as if it were replaced by the octet following the backslash.
+The backslash octet ("\") can be used as a single-octet quoting mechanism within quoted-string and comment constructs. Recipients that process the value of a quoted-string *MUST* handle a quoted-pair as if it were replaced by the octet following the backslash.
+
+反斜杠“\”能够在字符串 =quoted-string= 和注释 =comment= 中作为转义字符。接收端处理字符串 =quoted-string= 的值时 *必须* 处理引号对 =quoted-pair=，就像它被替换为反斜杠后面的字符八位组（Octet）一样。
 
 #+BEGIN_SRC text
 quoted-pair    = "\" ( HTAB / SP / VCHAR / obs-text )
 #+END_SRC
 
-A sender SHOULD NOT generate a quoted-pair in a quoted-string except where necessary to quote DQUOTE and backslash octets occurring within that string. A sender SHOULD NOT generate a quoted-pair in a comment except where necessary to quote parentheses ["(" and ")"] and backslash octets occurring within that comment.
+A sender *SHOULD NOT* generate a =quoted-pair= in a =quoted-string= except where necessary to quote =DQUOTE= and backslash octets occurring within that string. A sender *SHOULD NOT* generate a =quoted-pair= in a comment except where necessary to quote parentheses ["=(=" and "=)="] and backslash octets occurring within that comment.
+
+发送端 *不应该* 在一个 =quoted-string= 里生成一个 =quoted-pair=，除非在那个字符串中对所有出现的 =DQUOTE= 以及反斜字符杠八位组（Octet）进行转义。发送端 *不应该* 在注释中生成一个 =quoted-pair=，除非在那个注释中对所有出现的小括号（“(” 和 “)”）以及反斜杠八位组（Octet）进行转义。
 
 ** 3.3 报文正文 (Message Body)
 :PROPERTIES:
@@ -1165,13 +1192,21 @@ A user agent that sends a request containing a message body MUST send a valid Co
 If the final response to the last request on a connection has been completely received and there remains additional data to read, a user agent MAY discard the remaining data or attempt to determine if that data belongs as part of the prior response body, which might be the case if the prior message's Content-Length value is incorrect. A client MUST NOT process, cache, or forward such extra data as a separate response, since such behavior would be vulnerable to cache poisoning.
 
 ** 3.4 报文不完整的处理 (Handling Incomplete Messages)
-A server that receives an incomplete request message, usually due to a canceled request or a triggered timeout exception, MAY send an error response prior to closing the connection.
+A server that receives an incomplete request message, usually due to a canceled request or a triggered timeout exception, *MAY* send an error response prior to closing the connection.
 
-A client that receives an incomplete response message, which can occur when a connection is closed prematurely or when decoding a supposedly chunked transfer coding fails, MUST record the message as incomplete. Cache requirements for incomplete responses are defined in Section 3 of [RFC7234].
+服务器接收到一个不完整的请求报文，通常是因为这是一个已取消的请求，或者一个触发超时的异常，*可以* 在关闭连接前发送一个错误响应。
+
+A client that receives an incomplete response message, which can occur when a connection is closed prematurely or when decoding a supposedly [[https://en.wikipedia.org/wiki/Chunked_transfer_encoding][chunked transfer coding]] fails, *MUST* record the message as incomplete. Cache requirements for incomplete responses are defined in [[https://tools.ietf.org/html/rfc7234#section-3][Section 3]] of [[[https://tools.ietf.org/html/rfc7234][RFC7234]]].
+
+当一个连接被过早地关闭或者当一个推想的分块传输代码（[[https://en.wikipedia.org/wiki/Chunked_transfer_encoding][Chunked Transfer Coding]]）解码失败时会导致客户端接收到一个不完整的响应报文，这时候客户端 *必须* 记录下这个报文是不完整的。缓存（Cache）对于不完整报文的要求定义在【[[https://tools.ietf.org/html/rfc7234][RFC7234]]】[[https://tools.ietf.org/html/rfc7234#section-3][章节 3]] 里。
 
 If a response terminates in the middle of the header section (before the empty line is received) and the status code might rely on header fields to convey the full meaning of the response, then the client cannot assume that meaning has been conveyed; the client might need to repeat the request in order to determine what action to take next.
 
-A message body that uses the chunked transfer coding is incomplete if the zero-sized chunk that terminates the encoding has not been received. A message that uses a valid Content-Length is incomplete if the size of the message body received (in octets) is less than the value given by Content-Length. A response that has neither chunked transfer coding nor Content-Length is terminated by closure of the connection and, thus, is considered complete regardless of the number of message body octets received, provided that the header section was received intact.
+假如一个响应终止在报头块（Header Section）之间（在接收到空行之前），并且状态码可能需要依赖报头域才能传达响应报文的完整意义，那么客户端不能够假设这个“意义”已经传达了；客户端可能需要重复这一次请求，以便于决定下一步将如何行动。
+
+A message body that uses the chunked transfer coding is incomplete if the zero-sized chunk that terminates the encoding has not been received. A message that uses a valid =Content-Length= is incomplete if the size of the message body received (in octets) is less than the value given by =Content-Length=. A response that has neither chunked transfer coding nor =Content-Length= is terminated by closure of the connection and, thus, is considered complete regardless of the number of message body octets received, provided that the header section was received intact.
+
+一个使用分块传输代码的报文正文，如果终止编码的 =zero-sized= 分块没有被接收到，那么这个报文正文是不完整的。一个使用一个合法 =Content-Length= 的报文，如果所接收到的报文正文的大小（按八位组来算）小于给定 =Content-Length= 的大小，那么这个报文是不完整的。一个既没有使用分块传输代码，也没有提供 =Content-Length= 的响应报文，如果因为连接被关闭而终止，只要该报文所提供的报头块已经接收完整，那么可以认为报文是完整的，无论报文正文的内容被接收到多少。
 
 ** 3.5 报文解析的健壮性 (Message Parsing Robustness)
 :PROPERTIES:
@@ -1253,6 +1288,9 @@ When a server listening only for HTTP request messages, or processing what appea
 ** 8.2 URI Scheme Registration
 ** 8.3 Internet Media Type Registration
 *** 8.3.1 Internet Media Type message/http
+:PROPERTIES:
+:ID:       44492A0E-8B7F-46EC-890D-317BC32E2228
+:END:
 *** 8.3.2 Internet Media Type application/http
 ** 8.4 Transfer Coding Registry
 *** 8.4.1 Procedure
