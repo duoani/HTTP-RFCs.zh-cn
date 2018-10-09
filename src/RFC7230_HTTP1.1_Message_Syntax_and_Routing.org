@@ -136,7 +136,7 @@ _用最简单的例子来说，可以经由一个在用户代理（UA）和源�
 
 A client sends an HTTP request to a server in the form of a *request message*, beginning with a *request-line* that includes a method, URI, and protocol version (Section 3.1.1), followed by *header fields* containing request modifiers, client information, and representation metadata (Section 3.2), an *empty line* to indicate the end of the header section, and finally a *message body* containing the payload body (if any, Section 3.3).
 
-TODO _客户端以请求报文（Request Message）的形式向服务器发送一个 HTTP 请求，请求报文的第一行叫做请求行（Request Line，见[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]），请求行包含了该请求的方法，URI 和 协议版本；紧接请求行的是请求报头（Request Header），请求报头包含了请求，客户端信息以及表现元数据（Representation Metadata，见[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）；接着是一个空行来表明报头结束；最后是一个可选的报文正文，包含了报文的有效载荷（Payload，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]] ）。_
+TODO _客户端以请求报文（Request Message）的形式向服务器发送一个 HTTP 请求，请求报文的第一行叫做请求行（Request Line，见[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]），请求行包含了该请求的方法，URI 和 协议版本；紧接请求行的是请求报头（Request Header），请求报头包含了请求，客户端信息以及表现形式元数据（Representation Metadata，见[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）；接着是一个空行来表明报头结束；最后是一个可选的报文正文，包含了报文的有效载荷（Payload，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]] ）。_
 
 A server responds to a client's request by sending one or more HTTP response messages, each beginning with a status line that includes the protocol version, a success or error code, and textual reason phrase (Section 3.1.2), possibly followed by header fields containing server information, resource metadata, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
 
@@ -1015,11 +1015,11 @@ Historically, HTTP header field values could be extended over multiple lines by 
 
 A server that receives an =obs-fold= in a request message that is not within a message/http container *MUST* either reject the message by sending a =400 (Bad Request)=, preferably with a representation explaining that obsolete line folding is unacceptable, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
 
-如果服务端接收到一个在请求报文里的分行 =obs-fold=，但这个分行不在媒体类型“message/http”的容器内，服务端 *必须* 要不拒绝这种报文并响应一个 =400 (Bad Request)= 状态码，更好的展现方式是解释那种已经废弃的分行是不再允许出现在报文中的；要不在解释（Interpret）报头域值（或下行转发报文）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
+如果服务端接收到一个在请求报文里的分行 =obs-fold=，但这个分行不在媒体类型“message/http”的容器内，服务端 *必须* 要不拒绝这种报文并响应一个 =400 (Bad Request)= 状态码，更好的方式是在响应报文中带有一个展现方式来解释那种已经废弃的分行是不再允许出现在报文中的；要不在解释（Interpret）报头域值（或下行转发报文）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
 
 A proxy or gateway that receives an =obs-fold= in a response message that is not within a message/http container *MUST* either discard the message and replace it with a =502 (Bad Gateway)= response, preferably with a representation explaining that unacceptable line folding was received, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
 
-如果代理（Proxy）或网关（Gateway）接收到一个响应报文里的分行 =obs-fold=，但这个分行不在媒体类型“message/http”的容器内，这些中间人 *必须* 要不丢弃这个报文改由响应一个 =502 (Bad Gateway)= 状态码，更好的展现方式是解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（Interpret）报头域值（或下行转发报文）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
+如果代理（Proxy）或网关（Gateway）接收到一个响应报文里的分行 =obs-fold=，但这个分行不在媒体类型“message/http”的容器内，这些中间人 *必须* 要不丢弃这个报文改由响应一个 =502 (Bad Gateway)= 状态码，更好的方式是在响应报文中带有一个展现方式来解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（Interpret）报头域值（或下行转发报文）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
 
 A user agent that receives an =obs-fold= in a response message that is not within a message/http container *MUST* replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value.
 
@@ -1117,7 +1117,7 @@ The presence of a message body in a response depends on both the request method 
 :END:
 The =Transfer-Encoding= header field lists the transfer coding names corresponding to the sequence of transfer codings that have been (or will be) applied to the payload body in order to form the message body. Transfer codings are defined in [[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][Section 4]].
 
-报头域 =Transfer-Encoding= 罗列了一系列的传输编码值（Transfer coding）的名称，这些传输编码值已经（或即将）被应用于对载荷（Payload Body）进行编码，最终形成报文正文（Message Body）。传输编码值（Transfer coding）定义在[[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][章节 4]]。
+报头域 =Transfer-Encoding= 罗列了多个传输编码值（Transfer coding）的名称，这些传输编码值已经（或即将）被应用于对载荷（Payload Body）进行编码，最终形成报文正文（Message Body）。传输编码值（Transfer coding）定义在[[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][章节 4]]。
 
 #+BEGIN_SRC text
 Transfer-Encoding = 1#transfer-coding
@@ -1125,9 +1125,11 @@ Transfer-Encoding = 1#transfer-coding
 
 =Transfer-Encoding= is analogous to the =Content-Transfer-Encoding= field of MIME, which was designed to enable safe transport of binary data over a 7-bit transport service ([RFC2045], Section 6). However, safe transport has a different focus for an 8bit-clean transfer protocol. In HTTP's case, =Transfer-Encoding= is primarily intended to accurately delimit a dynamically generated payload and to distinguish payload encodings that are only applied for transport efficiency or security from those that are characteristics of the selected resource.
 
-A recipient *MUST* be able to parse the chunked transfer coding ([[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][Section 4.1]]) because it plays a crucial role in framing messages when the payload body size is not known in advance. A sender *MUST NOT* apply chunked more than once to a message body (i.e., chunking an already chunked message is not allowed). If any transfer coding other than chunked is applied to a request payload body, the sender *MUST* apply chunked as the final transfer coding to ensure that the message is properly framed. If any transfer coding other than chunked is applied to a response payload body, the sender *MUST* either apply chunked as the final transfer coding or terminate the message by closing the connection.
+多用途互联网邮件扩展类型（MIME）的 =Content-Transfer-Encoding= 被设计为用于对二进制数据在 7 位传输服务中进行安全传输（【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】[[https://tools.ietf.org/html/rfc2045#section-6][章节 6]]），=Transfer-Encoding= 与之类似，但是，安全传输在纯 8 位传输协议中有不同的关注点。在 HTTP 环境下，=Transfer-Encoding= 的主要作用是对一个动态生成的载荷（Payload）进行准确的定界，辨别仅应用于提高载荷的传输效率的编码，以及辨别已选资源的那些特性的安全性。
 
-一个接收端 *必须* 能够解析（Parse）分块传输编码值（Chunked Transfer Coding，见[[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][章节 4.1]]），这是因为它在预先并不知道载荷（Payload Body）的大小的情况下对报文进行分帧中扮演了重要的角色。
+A recipient *MUST* be able to parse the chunked transfer coding ([[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][Section 4.1]]) because it plays a crucial role in framing messages when the payload body size is not known in advance. A sender *MUST NOT* apply =chunked= more than once to a message body (i.e., chunking an already chunked message is not allowed). If any transfer coding other than =chunked= is applied to a request payload body, the sender *MUST* apply =chunked= as the final transfer coding to ensure that the message is properly framed. If any transfer coding other than =chunked= is applied to a response payload body, the sender *MUST* either apply chunked as the final transfer coding or terminate the message by closing the connection.
+
+一个接收端 *必须* 能够解析（Parse）分块传输编码值（Chunked Transfer Coding，见[[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][章节 4.1]]），这是因为它在预先并不知道载荷（Payload Body）的大小的情况下对报文进行分帧的过程中扮演了重要的角色。一个发送端 *禁止* 对一个报文正文进行超过一次的分块（也就是说，不允许对一个已经分好块的报文进行再次分块）。如果任何除 =chunked= 以外的传输编码值被应用到一个请求载荷（Request Payload Body）里，发送端 *必须* 将 =chunked= 作为最后的传输编码值来确保那个报文被正确的分帧。如果任何除 =chunked= 以外的传输编码值被应用到一个响应载荷（Response Payload Body）里，发送端 *必须* 要不将 =chunked= 作为最后的传输编码值，要不关闭连接来终止这个报文的发送。
 
 For example,
 
@@ -1137,48 +1139,80 @@ For example,
 Transfer-Encoding: gzip, chunked
 #+END_EXAMPLE
 
-indicates that the payload body has been compressed using the gzip coding and then chunked using the chunked coding while forming the message body.
+indicates that the payload body has been compressed using the =gzip= coding and then chunked using the =chunked= coding while forming the message body.
 
-Unlike Content-Encoding (Section 3.1.2.1 of [RFC7231]), Transfer-Encoding is a property of the message, not of the representation, and any recipient along the request/response chain MAY decode the received transfer coding(s) or apply additional transfer coding(s) to the message body, assuming that corresponding changes are made to the Transfer-Encoding field-value. Additional information about the encoding parameters can be provided by other header fields not defined by this specification.
+表明载荷（Payload Body）已经使用 =gzip= 编码压缩过，然后在报文正文分帧的时候使用 =chunked= 编码。
 
-Transfer-Encoding MAY be sent in a response to a HEAD request or in a 304 (Not Modified) response (Section 4.1 of [RFC7232]) to a GET request, neither of which includes a message body, to indicate that the origin server would have applied a transfer coding to the message body if the request had been an unconditional GET. This indication is not required, however, because any recipient on the response chain (including the origin server) can remove transfer codings when they are not needed.
+Unlike =Content-Encoding= ([[https://tools.ietf.org/html/rfc7231#section-3.1.2.1][Section 3.1.2.1]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]), =Transfer-Encoding= is a property of the message, not of the representation, and any recipient along the request/response chain *MAY* decode the received transfer coding(s) or apply additional transfer coding(s) to the message body, assuming that corresponding changes are made to the =Transfer-Encoding= field-value. Additional information about the encoding parameters can be provided by other header fields not defined by this specification.
 
-A server MUST NOT send a Transfer-Encoding header field in any response with a status code of 1xx (Informational) or 204 (No Content). A server MUST NOT send a Transfer-Encoding header field in any 2xx (Successful) response to a CONNECT request (Section 4.3.6 of [RFC7231]).
+不像 =Content-Encoding= （【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-3.1.2.1][章节 3.1.2.1]]），=Transfer-Encoding= 是报文（Message）的一个属性，而不是表现形式（Representation）的一个属性，并且在请求/响应链路中的所有接收端都 *可以* 依据所接收到的传输代码值（一个或多个）对报文正文进行解码，或者向报文正文应用额外的传输代码值，假设 =Transfer-Encoding= 的 =field-value= 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的报头域提供。
 
-Transfer-Encoding was added in HTTP/1.1. It is generally assumed that implementations advertising only HTTP/1.0 support will not understand how to process a transfer-encoded payload. A client MUST NOT send a request containing Transfer-Encoding unless it knows the server will handle HTTP/1.1 (or later) requests; such knowledge might be in the form of specific user configuration or by remembering the version of a prior received response. A server MUST NOT send a response containing Transfer-Encoding unless the corresponding request indicates HTTP/1.1 (or later).
+=Transfer-Encoding= *MAY* be sent in a response to a HEAD request or in a =304 (Not Modified)= response (Section 4.1 of [RFC7232]) to a GET request, neither of which includes a message body, to indicate that the origin server would have applied a transfer coding to the message body if the request had been an unconditional GET. This indication is not required, however, because any recipient on the response chain (including the origin server) can remove transfer codings when they are not needed.
 
-A server that receives a request message with a transfer coding it does not understand SHOULD respond with 501 (Not Implemented).
+响应给 HEAD 请求的响应报文，或者响应给 GET 请求的 =304 (Not Modified)= 响应报文，上述两种报文都是没有包含报文正文的，=Transfer-Encoding= *可以* 包含在上述两种响应报文中，来指明如果这个请求曾经是一个无条件 GET 请求[fn:7]的话，源服务器会使用一个传输编码对报文正文进行编码。这种“指明”是非必要的，但是，因为在响应链路中的任何接收端（包括源服务器）都能够在移除传输编码值，如果传输编码值是不需要的话。
+
+A server *MUST NOT* send a =Transfer-Encoding= header field in any response with a status code of =1xx (Informational)= or =204 (No Content)=. A server *MUST NOT* send a =Transfer-Encoding= header field in any =2xx (Successful)= response to a CONNECT request ([[https://tools.ietf.org/html/rfc7231#section-4.3.6][Section 4.3.6]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]).
+
+服务器 *禁止* 在任何带有 =1xx (Informational)= 或者 =204 (No Content)= 状态码的响应报文里包含一个 =Transfer-Encoding= 报头域。一个服务器 *禁止* 将任何带有 =2xx (Successful)= 状态码的，并且带有一个 =Transfer-Encoding= 报头域的响应报文响应给一个 CONNECT 请求（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.6][章节 4.3.6]]）。
+
+=Transfer-Encoding= was added in HTTP/1.1. It is generally assumed that implementations advertising only HTTP/1.0 support will not understand how to process a transfer-encoded payload. A client *MUST NOT* send a request containing =Transfer-Encoding= unless it knows the server will handle HTTP/1.1 (or later) requests; such knowledge might be in the form of specific user configuration or by remembering the version of a prior received response. A server *MUST NOT* send a response containing =Transfer-Encoding= unless the corresponding request indicates HTTP/1.1 (or later).
+
+=Transfer-Encoding= 自 HTTP/1.1 起新增，一般会假设仅支持 HTTP/1.0 的实现并不会理解如何去处理一个经过传输编码过的载荷（Transfer-encoded Payload）。客户端 *禁止* 发送一个包含 =Transfer-ENcoding= 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住上一次服务器的响应报文的版本号的方式知道服务器是否可以处理这种请求。服务器 *禁止* 发送一个包含 =Transfer-Encoding= 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
+
+A server that receives a request message with a transfer coding it does not understand *SHOULD* respond with =501 (Not Implemented)=.
+
+服务器接收到一个带有 =Transfer-Encoding= 的请求报文，但并不理解某个传输编码值的时候，*应该* 响应一个带有 =501 (Not Implemented)= 状态码的报文。
 
 *** 3.3.2 内容长度 (Content-Length)
-When a message does not have a Transfer-Encoding header field, a Content-Length header field can provide the anticipated size, as a decimal number of octets, for a potential payload body. For messages that do include a payload body, the Content-Length field-value provides the framing information necessary for determining where the body (and message) ends. For messages that do not include a payload body, the Content-Length indicates the size of the selected representation (Section 3 of [RFC7231]).
+When a message does not have a =Transfer-Encoding= header field, a =Content-Length= header field can provide the anticipated size, as a decimal number of octets, for a potential payload body. For messages that do include a payload body, the =Content-Length= field-value provides the framing information necessary for determining where the body (and message) ends. For messages that do not include a payload body, the =Content-Length= indicates the size of the selected representation ([[https://tools.ietf.org/html/rfc7231#section-3][Section 3]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]).
 
+当一个报文不带有 =Transfer-Encoding= 报头域时，一个 =Content-Length= 报头域能够提供对于一个潜在的载荷（Payload Body）的预期的大小。=Content-Length= 是一个十进制数字，以八位组形式。对于包含一个载荷的报文，=Content-Length= 的 =field-value=
+提供了决定报文正文在哪里结束的必要的分帧信息。对于没有包含一个载荷的报文，=Content-Length= 指明了已选择的表现方式（Selected Representation【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-3][章节 3]]）的大小。
 #+BEGIN_SRC text
 Content-Length = 1*DIGIT
 #+END_SRC
 
 An example is
 
+一个例子
+
 #+BEGIN_SRC text
 Content-Length: 3495
 #+END_SRC
 
-A sender MUST NOT send a Content-Length header field in any message that contains a Transfer-Encoding header field.
+A sender *MUST NOT* send a =Content-Length= header field in any message that contains a =Transfer-Encoding= header field.
 
-A user agent SHOULD send a Content-Length in a request message when no Transfer-Encoding is sent and the request method defines a meaning for an enclosed payload body. For example, a Content-Length header field is normally sent in a POST request even when the value is 0 (indicating an empty payload body). A user agent SHOULD NOT send a Content-Length header field when the request message does not contain a payload body and the method semantics do not anticipate such a body.
+发送端 *禁止* 在任何带有 =Transfer-Encoding= 报头域的报文里带有一个 =Content-Length= 报头域。
 
-A server MAY send a Content-Length header field in a response to a HEAD request (Section 4.3.2 of [RFC7231]); a server MUST NOT send Content-Length in such a response unless its field-value equals the decimal number of octets that would have been sent in the payload body of a response if the same request had used the GET method.
+A user agent *SHOULD* send a =Content-Length= in a request message when no =Transfer-Encoding= is sent and the request method defines a meaning for an enclosed payload body. For example, a =Content-Length= header field is normally sent in a POST request even when the value is 0 (indicating an empty payload body). A user agent *SHOULD NOT* send a =Content-Length= header field when the request message does not contain a payload body and the method semantics do not anticipate such a body.
 
-A server MAY send a Content-Length header field in a 304 (Not Modified) response to a conditional GET request (Section 4.1 of [RFC7232]); a server MUST NOT send Content-Length in such a response unless its field-value equals the decimal number of octets that would have been sent in the payload body of a 200 (OK) response to the same request.
+当请求报文未带有 =Transfer-Encoding= 报头域，并且报文的请求方法意味着该报文需要带有载荷（Payload Body），那么，用户代理 *应该* 在请求报文里带有一个 =Content-Length= 报头域。例如，通常会在一个 POST 请求中带有一个 =Content-Length= 报头域，即使它的值是 0（指明一个空的载荷）。当请求报文没有包含一个载荷，并且请求方法的语义并不期望报文带有报文正文的时候，用户代理 *不应该* 在请求报文中带有 =Content-Length= 报头域。
 
-A server MUST NOT send a Content-Length header field in any response with a status code of 1xx (Informational) or 204 (No Content). A server MUST NOT send a Content-Length header field in any 2xx (Successful) response to a CONNECT request (Section 4.3.6 of [RFC7231]).
+A server *MAY* send a =Content-Length= header field in a response to a HEAD request (Section 4.3.2 of [RFC7231]); a server *MUST NOT* send =Content-Length= in such a response unless its =field-value= equals the decimal number of octets that would have been sent in the payload body of a response if the same request had used the GET method.
 
-Aside from the cases defined above, in the absence of Transfer-Encoding, an origin server SHOULD send a Content-Length header field when the payload body size is known prior to sending the complete header section. This will allow downstream recipients to measure transfer progress, know when a received message is complete, and potentially reuse the connection for additional requests.
+TODO 服务器 *可以* 在响应给一个 HEAD 请求（【RFC7231】章节 4.3.2）的响应报文中带有一个 =Content-Length= 报头域。服务器 *禁止* 在这种响应报文中带有 =Content-Length=：除非它的 =field-value= 等于会在响应报文的载荷里发送八位组表示的十进制数字。
 
-Any Content-Length field value greater than or equal to zero is valid. Since there is no predefined limit to the length of a payload, a recipient MUST anticipate potentially large decimal numerals and prevent parsing errors due to integer conversion overflows (Section 9.3).
+在一个响应报文的载荷里，如果同样的请求使用的是 GET 请求方法。
 
-If a message is received that has multiple Content-Length header fields with field-values consisting of the same decimal value, or a single Content-Length header field with a field value containing a list of identical decimal values (e.g., "Content-Length: 42, 42"), indicating that duplicate Content-Length header fields have been generated or combined by an upstream message processor, then the recipient MUST either reject the message as invalid or replace the duplicated field-values with a single valid Content-Length field containing that decimal value prior to determining the message body length or forwarding the message.
+A server *MAY* send a =Content-Length= header field in a =304 (Not Modified)= response to a conditional GET request ([[https://tools.ietf.org/html/rfc7232#section-4.1][Section 4.1]] of [[[https://tools.ietf.org/html/rfc7232][RFC7232]]]); a server *MUST NOT* send =Content-Length= in such a response unless its =field-value= equals the decimal number of octets that would have been sent in the payload body of a =200 (OK)= response to the same request.
 
-*Note:* HTTP's use of Content-Length for message framing differs significantly from the same field's use in MIME, where it is an optional field used only within the "message/external-body" media-type.
+TODO 服务器 *可以* 在响应给一个带条件的 GET 请求（【[[https://tools.ietf.org/html/rfc7232][RFC7232]]】[[https://tools.ietf.org/html/rfc7232#section-4.1][章节 4.1]]）的 =304 (Not Modified)= 响应报文里带有一个 =Content-Length= 报头域。服务器 *禁止* 在这种响应报文中带有 =Content-Length=：除非它的 =field-value= 等于八位组表示的十进制数字。
+
+A server *MUST NOT* send a =Content-Length= header field in any response with a status code of =1xx (Informational)= or =204 (No Content)=. A server *MUST NOT* send a =Content-Length= header field in any =2xx (Successful)= response to a CONNECT request ([[https://tools.ietf.org/html/rfc7231#section-4.3.6][Section 4.3.6]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]).
+
+服务器 *禁止* 在任何带有 =1xx (Informational)=、=204 (No Content)= 状态码的报文中带有一个 =Content-Length= 报头域。服务器 *禁止* 在任何响应给一个 CONNECT 请求（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.6][章节 4.3.6]]）的带有 =2xx (Successful)= 状态码的响应报文中带有一个 =Content-Length= 报头域。
+
+Aside from the cases defined above, in the absence of =Transfer-Encoding=, an origin server *SHOULD* send a =Content-Length= header field when the payload body size is known prior to sending the complete header section. This will allow downstream recipients to measure transfer progress, know when a received message is complete, and potentially reuse the connection for additional requests.
+
+除了上述情况以外，在缺少 =Transfer-Encoding= 报头域的情况下，在即将发送完整个报头块之前就知道了载荷（Payload Body）的大小，一个源服务器 *应该* 带有一个 =Content-Length= 报头域。这样能够允许下行（Downstream）接收端去计量传输的进度，了解什么时候一个报文是完整的，而且可以对额外的请求进行复用连接（如果条件允许的话）。
+
+Any =Content-Length= field value greater than or equal to zero is valid. Since there is no predefined limit to the length of a payload, a recipient *MUST* anticipate potentially large decimal numerals and prevent parsing errors due to integer conversion overflows (Section 9.3).
+
+任何大于或等于 0 的 =Content-Length= 的域值都是合法的。因为没有预先定义载荷的长度限制，接收端 *必须* 能预见特大数值（Big Decimal）的可能性，并且避免由于整型类型转换溢出所引起的解析错误（章节 9.3）。
+
+If a message is received that has multiple =Content-Length= header fields with =field-values= consisting of the same decimal value, or a single =Content-Length= header field with a field value containing a list of identical decimal values (e.g., "Content-Length: 42, 42"), indicating that duplicate =Content-Length= header fields have been generated or combined by an upstream message processor, then the recipient *MUST* either reject the message as invalid or replace the duplicated =field-values= with a single valid =Content-Length= field containing that decimal value prior to determining the message body length or forwarding the message.
+
+*Note:* HTTP's use of =Content-Length= for message framing differs significantly from the same field's use in MIME, where it is an optional field used only within the "message/external-body" media-type.
 
 *** 3.3.3 报文正文的长度 (Message Body Length)
 The length of a message body is determined by one of the following (in order of precedence):
@@ -1347,6 +1381,8 @@ When a server listening only for HTTP request messages, or processing what appea
 * 索引（Index）
 
 * Footnotes
+
+[fn:7] 无条件请求（Unconditional Request），即请求报头域内不带有任何条件报头域的请求报文。详情见【[[https://tools.ietf.org/html/rfc7232][RFC7232]]】。
 
 [fn:6] Framing，分帧，将一个消息与下一个进行分离。Separating one message from the next (framing).
 
