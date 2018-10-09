@@ -1206,30 +1206,40 @@ Aside from the cases defined above, in the absence of =Transfer-Encoding=, an or
 
 除了上述情况以外，在缺少 =Transfer-Encoding= 报头域的情况下，在即将发送完整个报头块之前就知道了载荷（Payload Body）的大小，一个源服务器 *应该* 带有一个 =Content-Length= 报头域。这样能够允许下行（Downstream）接收端去计量传输的进度，了解什么时候一个报文是完整的，而且可以对额外的请求进行复用连接（如果条件允许的话）。
 
-Any =Content-Length= field value greater than or equal to zero is valid. Since there is no predefined limit to the length of a payload, a recipient *MUST* anticipate potentially large decimal numerals and prevent parsing errors due to integer conversion overflows (Section 9.3).
+Any =Content-Length= field value greater than or equal to zero is valid. Since there is no predefined limit to the length of a payload, a recipient *MUST* anticipate potentially large decimal numerals and prevent parsing errors due to integer conversion overflows ([[id:131aeb62-94c8-4b26-84eb-29051aac72e2][Section 9.3]]).
 
-任何大于或等于 0 的 =Content-Length= 的域值都是合法的。因为没有预先定义载荷的长度限制，接收端 *必须* 能预见特大数值（Big Decimal）的可能性，并且避免由于整型类型转换溢出所引起的解析错误（章节 9.3）。
+任何大于或等于 0 的 =Content-Length= 的域值都是合法的。因为没有预先定义载荷的长度限制，接收端 *必须* 能预见特大数值（Big Decimal）的可能性，并且避免由于整型类型转换溢出所引起的解析错误（[[id:131aeb62-94c8-4b26-84eb-29051aac72e2][章节 9.3]]）。
 
 If a message is received that has multiple =Content-Length= header fields with =field-values= consisting of the same decimal value, or a single =Content-Length= header field with a field value containing a list of identical decimal values (e.g., "Content-Length: 42, 42"), indicating that duplicate =Content-Length= header fields have been generated or combined by an upstream message processor, then the recipient *MUST* either reject the message as invalid or replace the duplicated =field-values= with a single valid =Content-Length= field containing that decimal value prior to determining the message body length or forwarding the message.
 
+如果接收到一个报文带有多个 =Content-Length= 报头域，并且它们的 =field-value= 由相同的十进制数组成；或者一个 =Content-Length= 报头域带有一个包含一系列十进制数值的域值（例如 "Content-Length: 42 42"），表明生成或通过某个上行（Upstream）报文处理程序合成了重复的 =Content-Length= 报头域，那么，接收端 *必须* 要不将这种报文当作不合法的报文而拒绝接收；要不使用一个单一的合法的包含了决定报文正文长度的十进制值的 =Content-Length= 域来替换掉重复的 =field-value=；要不转发这个报文。
+
 *Note:* HTTP's use of =Content-Length= for message framing differs significantly from the same field's use in MIME, where it is an optional field used only within the "message/external-body" media-type.
+
+*注意：* =Content-Length= 在 HTTP 上关于报文分帧的应用，明显不同于该同名域在 MIME 上的应用，MIME 上的 =Content-Length= 是一个可选域，仅用于“message/external-body”媒体类型中。
 
 *** 3.3.3 报文正文的长度 (Message Body Length)
 The length of a message body is determined by one of the following (in order of precedence):
 
-1. Any response to a HEAD request and any response with a 1xx (Informational), 204 (No Content), or 304 (Not Modified) status code is always terminated by the first empty line after the header fields, regardless of the header fields present in the message, and thus cannot contain a message body.
+报文正文的长度取决于以下其中之一（按优先级排序）：
 
-2. Any 2xx (Successful) response to a CONNECT request implies that the connection will become a tunnel immediately after the empty line that concludes the header fields. A client MUST ignore any Content-Length or Transfer-Encoding header fields received in such a message.
+1. Any response to a HEAD request and any response with a =1xx (Informational)=, =204 (No Content)=, or =304 (Not Modified)= status code is always terminated by the first empty line after the header fields, regardless of the header fields present in the message, and thus cannot contain a message body.
+   
+   响应给一个 HEAD 请求的任何响应报文，以及任何带有 =1xx (Informational)=、=204 (No Content)=、=304 (Not Modified)= 状态码的响应报文总是结止于在报头域之后的第一个空行，无论报文中出现了什么报头域，这个报文不能包含报文正文。
 
-3. If a Transfer-Encoding header field is present and the chunked transfer coding (Section 4.1) is the final encoding, the message body length is determined by reading and decoding the chunked data until the transfer coding indicates the data is complete.
+2. Any =2xx (Successful)= response to a CONNECT request implies that the connection will become a tunnel immediately after the empty line that concludes the header fields. A client *MUST* ignore any =Content-Length= or =Transfer-Encoding= header fields received in such a message.
+   
+   任何响应给一个 CONNECT 请求的带有 =2xx (Successful)= 状态码的响应报文意味着在空行结束报头域之后，这个连接将会变成一个隧道中间人，
 
-   If a Transfer-Encoding header field is present in a response and the chunked transfer coding is not the final encoding, the message body length is determined by reading the connection until it is closed by the server. If a Transfer-Encoding header field is present in a request and the chunked transfer coding is not the final encoding, the message body length cannot be determined reliably; the server MUST respond with the 400 (Bad Request) status code and then close the connection.
+3. If a =Transfer-Encoding= header field is present and the chunked transfer coding (Section 4.1) is the final encoding, the message body length is determined by reading and decoding the chunked data until the transfer coding indicates the data is complete.
 
-   If a message is received with both a Transfer-Encoding and a Content-Length header field, the Transfer-Encoding overrides the Content-Length. Such a message might indicate an attempt to perform request smuggling (Section 9.5) or response splitting (Section 9.4) and ought to be handled as an error. A sender MUST remove the received Content-Length field prior to forwarding such a message downstream.
+   If a =Transfer-Encoding= header field is present in a response and the chunked transfer coding is not the final encoding, the message body length is determined by reading the connection until it is closed by the server. If a =Transfer-Encoding= header field is present in a request and the chunked transfer coding is not the final encoding, the message body length cannot be determined reliably; the server *MUST* respond with the =400 (Bad Request)= status code and then close the connection.
 
-4. If a message is received without Transfer-Encoding and with either multiple Content-Length header fields having differing field-values or a single Content-Length header field having an invalid value, then the message framing is invalid and the recipient MUST treat it as an unrecoverable error. If this is a request message, the server MUST respond with a 400 (Bad Request) status code and then close the connection. If this is a response message received by a proxy, the proxy MUST close the connection to the server, discard the received response, and send a 502 (Bad Gateway) response to the client. If this is a response message received by a user agent, the user agent MUST close the connection to the server and discard the received response.
+   If a message is received with both a =Transfer-Encoding= and a =Content-Length= header field, the =Transfer-Encoding= overrides the =Content-Length=. Such a message might indicate an attempt to perform request smuggling (Section 9.5) or response splitting (Section 9.4) and ought to be handled as an error. A sender *MUST* remove the received =Content-Length= field prior to forwarding such a message downstream.
 
-5. If a valid Content-Length header field is present without Transfer-Encoding, its decimal value defines the expected message body length in octets. If the sender closes the connection or the recipient times out before the indicated number of octets are received, the recipient MUST consider the message to be incomplete and close the connection.
+4. If a message is received without =Transfer-Encoding= and with either multiple =Content-Length= header fields having differing field-values or a single =Content-Length= header field having an invalid value, then the message framing is invalid and the recipient *MUST* treat it as an unrecoverable error. If this is a request message, the server *MUST* respond with a =400 (Bad Request)= status code and then close the connection. If this is a response message received by a proxy, the proxy *MUST* close the connection to the server, discard the received response, and send a =502 (Bad Gateway)= response to the client. If this is a response message received by a user agent, the user agent *MUST* close the connection to the server and discard the received response.
+
+5. If a valid =Content-Length= header field is present without =Transfer-Encoding=, its decimal value defines the expected message body length in octets. If the sender closes the connection or the recipient times out before the indicated number of octets are received, the recipient *MUST* consider the message to be incomplete and close the connection.
 
 6. If this is a request message and none of the above are true, then the message body length is zero (no message body is present).
 
@@ -1237,13 +1247,13 @@ The length of a message body is determined by one of the following (in order of 
 
 Since there is no way to distinguish a successfully completed, close-delimited message from a partially received message interrupted by network failure, a server SHOULD generate encoding or length-delimited messages whenever possible. The close-delimiting feature exists primarily for backwards compatibility with HTTP/1.0.
 
-A server MAY reject a request that contains a message body but not a Content-Length by responding with 411 (Length Required).
+A server *MAY* reject a request that contains a message body but not a =Content-Length= by responding with =411 (Length Required)=.
 
-Unless a transfer coding other than chunked has been applied, a client that sends a request containing a message body SHOULD use a valid Content-Length header field if the message body length is known in advance, rather than the chunked transfer coding, since some existing services respond to chunked with a 411 (Length Required) status code even though they understand the chunked transfer coding. This is typically because such services are implemented via a gateway that requires a content-length in advance of being called and the server is unable or unwilling to buffer the entire request before processing.
+Unless a transfer coding other than chunked has been applied, a client that sends a request containing a message body *SHOULD8 use a valid =Content-Length= header field if the message body length is known in advance, rather than the chunked transfer coding, since some existing services respond to chunked with a =411 (Length Required)= status code even though they understand the chunked transfer coding. This is typically because such services are implemented via a gateway that requires a content-length in advance of being called and the server is unable or unwilling to buffer the entire request before processing.
 
-A user agent that sends a request containing a message body MUST send a valid Content-Length header field if it does not know the server will handle HTTP/1.1 (or later) requests; such knowledge can be in the form of specific user configuration or by remembering the version of a prior received response.
+A user agent that sends a request containing a message body *MUST* send a valid =Content-Length= header field if it does not know the server will handle HTTP/1.1 (or later) requests; such knowledge can be in the form of specific user configuration or by remembering the version of a prior received response.
 
-If the final response to the last request on a connection has been completely received and there remains additional data to read, a user agent MAY discard the remaining data or attempt to determine if that data belongs as part of the prior response body, which might be the case if the prior message's Content-Length value is incorrect. A client MUST NOT process, cache, or forward such extra data as a separate response, since such behavior would be vulnerable to cache poisoning.
+If the final response to the last request on a connection has been completely received and there remains additional data to read, a user agent *MAY* discard the remaining data or attempt to determine if that data belongs as part of the prior response body, which might be the case if the prior message's =Content-Length= value is incorrect. A client *MUST NOT* process, cache, or forward such extra data as a separate response, since such behavior would be vulnerable to cache poisoning.
 
 ** 3.4 报文不完整的处理 (Handling Incomplete Messages)
 A server that receives an incomplete request message, usually due to a canceled request or a triggered timeout exception, *MAY* send an error response prior to closing the connection.
@@ -1366,6 +1376,9 @@ When a server listening only for HTTP request messages, or processing what appea
 :END:
 ** 9.2 Risks of Intermediaries
 ** 9.3 Attacks via Protocol Element Length
+:PROPERTIES:
+:ID:       131aeb62-94c8-4b26-84eb-29051aac72e2
+:END:
 ** 9.4 Response Splitting
 ** 9.5 Request Smuggling
 :PROPERTIES:
