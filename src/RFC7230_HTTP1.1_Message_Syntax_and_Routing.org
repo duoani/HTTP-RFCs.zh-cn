@@ -1225,19 +1225,27 @@ The length of a message body is determined by one of the following (in order of 
 
 1. Any response to a HEAD request and any response with a =1xx (Informational)=, =204 (No Content)=, or =304 (Not Modified)= status code is always terminated by the first empty line after the header fields, regardless of the header fields present in the message, and thus cannot contain a message body.
    
-   响应给一个 HEAD 请求的任何响应报文，以及任何带有 =1xx (Informational)=、=204 (No Content)=、=304 (Not Modified)= 状态码的响应报文总是结止于在报头域之后的第一个空行，无论报文中出现了什么报头域，这个报文不能包含报文正文。
+   任何响应给一个 HEAD 请求的响应报文，以及任何带有 =1xx (Informational)=、=204 (No Content)=、=304 (Not Modified)= 状态码的响应报文总是结止于在报头域之后的第一个空行，无论报文中出现了什么报头域，这个报文不能包含报文正文。
 
 2. Any =2xx (Successful)= response to a CONNECT request implies that the connection will become a tunnel immediately after the empty line that concludes the header fields. A client *MUST* ignore any =Content-Length= or =Transfer-Encoding= header fields received in such a message.
    
-   任何响应给一个 CONNECT 请求的带有 =2xx (Successful)= 状态码的响应报文意味着在空行结束报头域之后，这个连接将会变成一个隧道中间人，
+   任何响应给一个 CONNECT 请求的带有 =2xx (Successful)= 状态码的响应报文，意味着在空行结束报头域之后，这个连接将会变成一个隧道中间人。客户端 *必须* 忽略接收自这种报文里的任何 =Content-Length= 或者 =Transfer-Encoding= 报头域。
 
-3. If a =Transfer-Encoding= header field is present and the chunked transfer coding (Section 4.1) is the final encoding, the message body length is determined by reading and decoding the chunked data until the transfer coding indicates the data is complete.
+3. If a =Transfer-Encoding= header field is present and the chunked transfer coding ([[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][Section 4.1]]) is the final encoding, the message body length is determined by reading and decoding the chunked data until the transfer coding indicates the data is complete.
 
+   如果出现了一个 =Transfer-Encoding= 报头域并且分块传输编码值（Chunked Transfer Coding，[[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][章节 4.1]]）是其最后一个编码值，报文正文的长度通过读取和解码分块数据直到传输编码指明数据已经完整来确定。
+   
    If a =Transfer-Encoding= header field is present in a response and the chunked transfer coding is not the final encoding, the message body length is determined by reading the connection until it is closed by the server. If a =Transfer-Encoding= header field is present in a request and the chunked transfer coding is not the final encoding, the message body length cannot be determined reliably; the server *MUST* respond with the =400 (Bad Request)= status code and then close the connection.
 
-   If a message is received with both a =Transfer-Encoding= and a =Content-Length= header field, the =Transfer-Encoding= overrides the =Content-Length=. Such a message might indicate an attempt to perform request smuggling (Section 9.5) or response splitting (Section 9.4) and ought to be handled as an error. A sender *MUST* remove the received =Content-Length= field prior to forwarding such a message downstream.
+   如果在响应报文中出现一个 =Transfer-Encoding= 报头域并且分块传输编码值不是其最后一个编码值，报文正文的长度通过读取连接直到连接被服务器关闭来确定。如果在请求报文中出现一个 =Transfer-Encoding= 报头域并且分块传输编码值不是其最后一个编码值，报文正文的长度不能被可靠地确定，服务器 *必须* 响应一个带有 =400 (Bad Request)= 状态码的响应报文然后关闭该连接。
+
+   If a message is received with both a =Transfer-Encoding= and a =Content-Length= header field, the =Transfer-Encoding= overrides the =Content-Length=. Such a message might indicate an attempt to perform request smuggling ([[id:04030107-7AF1-4D23-900E-75FEEB04925C][Section 9.5]]) or response splitting ([[id:BE45ADD0-37C3-4726-82F1-AD06D51FFC11][Section 9.4]]) and ought to be handled as an error. A sender *MUST* remove the received =Content-Length= field prior to forwarding such a message downstream.
+   
+   如果接收到一个报文既带有一个 =Transfer-Encoding= 又带有一个 =Content-Length= 报头域，那么 =Transfer-Encoding= 将覆盖 =Content-Length=。这种报文可能意味着一个执行 Request Smuggling 攻击（[[id:04030107-7AF1-4D23-900E-75FEEB04925C][章节 9.5]]）或者 Response Splitting 攻击（[[id:BE45ADD0-37C3-4726-82F1-AD06D51FFC11][章节 9.4]]）的意图，应该被当作一个错误来处理。发送端 *必须* 在下行转发这种报文之前移除所接收到的 =Content-Length= 域。
 
 4. If a message is received without =Transfer-Encoding= and with either multiple =Content-Length= header fields having differing field-values or a single =Content-Length= header field having an invalid value, then the message framing is invalid and the recipient *MUST* treat it as an unrecoverable error. If this is a request message, the server *MUST* respond with a =400 (Bad Request)= status code and then close the connection. If this is a response message received by a proxy, the proxy *MUST* close the connection to the server, discard the received response, and send a =502 (Bad Gateway)= response to the client. If this is a response message received by a user agent, the user agent *MUST* close the connection to the server and discard the received response.
+   
+   如果一个报文没有 =Transfer-Encoding= 报头域，但带有或者多个不同域值的 =Content-Length= 报头域，或者一个域值不合法的 =Content-Length=，那么这个报文的分帧是不合法的，并且接收端 *必须* 以
 
 5. If a valid =Content-Length= header field is present without =Transfer-Encoding=, its decimal value defines the expected message body length in octets. If the sender closes the connection or the recipient times out before the indicated number of octets are received, the recipient *MUST* consider the message to be incomplete and close the connection.
 
@@ -1380,6 +1388,9 @@ When a server listening only for HTTP request messages, or processing what appea
 :ID:       131aeb62-94c8-4b26-84eb-29051aac72e2
 :END:
 ** 9.4 Response Splitting
+:PROPERTIES:
+:ID:       BE45ADD0-37C3-4726-82F1-AD06D51FFC11
+:END:
 ** 9.5 Request Smuggling
 :PROPERTIES:
 :ID:       04030107-7AF1-4D23-900E-75FEEB04925C
