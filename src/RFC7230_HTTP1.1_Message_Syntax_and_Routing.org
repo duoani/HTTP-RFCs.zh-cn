@@ -40,13 +40,15 @@ This document is a product of the Internet Engineering Task Force (IETF). It rep
 
 Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at http://www.rfc-editor.org/info/rfc7230.
 
-* 1 引论（Introduction）
+* 1 引言（Introduction）
 :PROPERTIES:
 :HEADLINE-NUMBERING: 1
 :END:
 #+BEGIN_QUOTE
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level request/response protocol that uses extensible semantics and self-descriptive message payloads for flexible interaction with network-based hypertext information systems. This document is the first in a series of documents that collectively form the HTTP/1.1 specification:
 #+END_QUOTE
+
+超文本传输协议（HTTP）是一种基于请求/响应模式的、无状态的、应用层协议，使用可扩展的语义和自我描述的报文载荷，与基于网络的超文本信息系统进行灵活的交互。本文档是 HTTP/1.1 规范
 
 #+BEGIN_QUOTE
 - "Message Syntax and Routing" (this document)
@@ -106,7 +108,7 @@ used to define HTTP.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支持世界范围内的超文系统的可拓展性。用于定义 HTTP 的术语和句法的产品反映了这一体系结构的方方面面。
+HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支持世界范围内的超文系统的可扩展性。用于定义 HTTP 的术语和句法的产品反映了这一体系结构的方方面面。
 #+END_QUOTE
 
 ** 2.1 客户端/服务器通讯 (Client/Server Messaging)
