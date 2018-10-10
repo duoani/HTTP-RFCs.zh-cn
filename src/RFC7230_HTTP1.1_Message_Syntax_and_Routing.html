@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-10-10 Wed 19:04 -->
+<!-- 2018-10-10 Wed 18:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -328,162 +328,162 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgeba95c1">摘要（Abstract）</a></li>
-<li><a href="#orgc6e551a">备忘状态（Status of This Memo）</a></li>
-<li><a href="#org273cbe9">1 引论（Introduction）</a>
+<li><a href="#orge523588">摘要（Abstract）</a></li>
+<li><a href="#orga26c179">备忘状态（Status of This Memo）</a></li>
+<li><a href="#orgd6478e8">1 引论（Introduction）</a>
 <ul>
-<li><a href="#org83f1b2a">1.1 Requirements Notation</a></li>
-<li><a href="#org5fe70f9">1.2 句法标记 (Syntax Notation)</a></li>
+<li><a href="#org50536fc">1.1 Requirements Notation</a></li>
+<li><a href="#org66ee4f4">1.2 句法标记 (Syntax Notation)</a></li>
 </ul>
 </li>
-<li><a href="#orgd47a5dc">2 体系结构（Architecture）</a>
+<li><a href="#org1473095">2 体系结构（Architecture）</a>
 <ul>
-<li><a href="#orgf59bec3">2.1 客户端/服务器通讯 (Client/Server Messaging)</a></li>
-<li><a href="#org196f150">2.2 实现的差异性（Implementation Diversity）</a></li>
-<li><a href="#org8ac5bff">2.3 中间人 (Intermediaries)</a></li>
-<li><a href="#orgc641c4d">2.4 缓存 (Caches)</a></li>
-<li><a href="#orgf2cebbd">2.5 一致性和错误处理 (Conformance and Error Handling)</a></li>
-<li><a href="#orgbadc4a2">2.6 协议版本管理 (Protocol Versioning)</a></li>
-<li><a href="#org9c908e3">2.7 统一资源标识符 (Uniform Resource Identifiers)</a>
+<li><a href="#org145d7db">2.1 客户端/服务器通讯 (Client/Server Messaging)</a></li>
+<li><a href="#org828221a">2.2 实现的差异性（Implementation Diversity）</a></li>
+<li><a href="#org2f2b1b4">2.3 中间人 (Intermediaries)</a></li>
+<li><a href="#org2fa139c">2.4 缓存 (Caches)</a></li>
+<li><a href="#orga4caf6c">2.5 一致性和错误处理 (Conformance and Error Handling)</a></li>
+<li><a href="#org164ca50">2.6 协议版本管理 (Protocol Versioning)</a></li>
+<li><a href="#org4423899">2.7 统一资源标识符 (Uniform Resource Identifiers)</a>
 <ul>
-<li><a href="#orgdb74f2a">2.7.1 http URI Scheme</a></li>
-<li><a href="#org4faa83e">2.7.2 https URI Scheme</a></li>
-<li><a href="#org948cd4b">2.7.3 http and https URI Normalization and Comparison</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgbeb67cd">3 报文格式（Message Format）</a>
-<ul>
-<li><a href="#orgcd9e5ac">3.1 起始行 (Start Line)</a>
-<ul>
-<li><a href="#orgf38c35a">3.1.1 请求行 (Request Line)</a></li>
-<li><a href="#org351084d">3.1.2 状态行 (Status Line)</a></li>
-</ul>
-</li>
-<li><a href="#org6959401">3.2 头域 (Header Fields)</a>
-<ul>
-<li><a href="#org5bce342">3.2.1 域的可扩展性 (Field Extensibility)</a></li>
-<li><a href="#orgf02c913">3.2.2 域的顺序 (Field Order)</a></li>
-<li><a href="#org97b0def">3.2.3 空格 (Whitespace)</a></li>
-<li><a href="#org89624a2">3.2.4 域解析 (Field Parsing)</a></li>
-<li><a href="#org36a9ec6">3.2.5 域限制 (Field Limits)</a></li>
-<li><a href="#org246a895">3.2.6 域值的组成 (Field Value Components)</a></li>
-</ul>
-</li>
-<li><a href="#org4eef2f8">3.3 报文正文 (Message Body)</a>
-<ul>
-<li><a href="#org79ba587">3.3.1 传输编码 (Transfer-Encoding)</a></li>
-<li><a href="#orgd55a3ad">3.3.2 内容长度 (Content-Length)</a></li>
-<li><a href="#org1dec6a6">3.3.3 报文正文的长度 (Message Body Length)</a></li>
-</ul>
-</li>
-<li><a href="#org2c02b4a">3.4 报文不完整的处理 (Handling Incomplete Messages)</a></li>
-<li><a href="#org8114a2f">3.5 报文解析的健壮性 (Message Parsing Robustness)</a></li>
-</ul>
-</li>
-<li><a href="#orgec8c8de">4 传输编码值（Transfer Codings）</a>
-<ul>
-<li><a href="#org7fd1089">4.1 分块传输编码值 (Chunked Transfer Coding)</a>
-<ul>
-<li><a href="#orgf6a4338">4.1.1 Chunk Extensions</a></li>
-<li><a href="#org94cd96c">4.1.2 Chunked Trailer Part</a></li>
-<li><a href="#orgcacae9a">4.1.3 Decoding Chunked</a></li>
-</ul>
-</li>
-<li><a href="#orgbfef03a">4.2 Compression Codings</a>
-<ul>
-<li><a href="#orgec6de1c">4.2.1 Compress Coding</a></li>
-<li><a href="#org60a35ff">4.2.2 Deflate Coding</a></li>
-<li><a href="#org4719f76">4.2.3 Gzip Coding</a></li>
-</ul>
-</li>
-<li><a href="#orga9f6484">4.3 TE</a></li>
-<li><a href="#org0199055">4.4 Trailer</a></li>
-</ul>
-</li>
-<li><a href="#org947f843">5 报文路由（Message Routing）</a>
-<ul>
-<li><a href="#org5c3fb36">5.1 标识目标资源 (Identifying a Target Resource)</a></li>
-<li><a href="#orgf000793">5.2 Connecting Inbound</a></li>
-<li><a href="#org7eb8949">5.3 请求目标 (Request Target)</a>
-<ul>
-<li><a href="#orgcbdf10e">5.3.1 (origin-form)</a></li>
-<li><a href="#orgb40cdf7">5.3.2 (absolute-form)</a></li>
-<li><a href="#org675a538">5.3.3 (authority-form)</a></li>
-<li><a href="#orgc87dfbf">5.3.4 (asterisk-form)</a></li>
-</ul>
-</li>
-<li><a href="#org07b3b88">5.4 主机 (Host)</a></li>
-<li><a href="#org6f3872a">5.5 Effective Request URI</a></li>
-<li><a href="#org49b7b33">5.6 Associating a Response to a Request</a></li>
-<li><a href="#org64e6e12">5.7 报文转发 (Message Forwarding)</a>
-<ul>
-<li><a href="#org3ee2f59">5.7.1 Via</a></li>
-<li><a href="#orge06b620">5.7.2 Transformations</a></li>
+<li><a href="#orgb6200cc">2.7.1 http URI Scheme</a></li>
+<li><a href="#org999fb9d">2.7.2 https URI Scheme</a></li>
+<li><a href="#orgad01325">2.7.3 http and https URI Normalization and Comparison</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org2d7ae84">6 连接管理（Connection Management）</a>
+<li><a href="#org1655ed4">3 报文格式（Message Format）</a>
 <ul>
-<li><a href="#org7b6b0c7">6.1 连接 (Connection)</a></li>
-<li><a href="#orgfb78f53">6.2 建立 (Establishment)</a></li>
-<li><a href="#orgab2c08a">6.3 持久性 (Persistence)</a>
+<li><a href="#orgc5e3318">3.1 起始行 (Start Line)</a>
 <ul>
-<li><a href="#orgbe12885">6.3.1 (Retrying Requests)</a></li>
-<li><a href="#org4981a7e">6.3.2 (Pipelining)</a></li>
+<li><a href="#org5615a9f">3.1.1 请求行 (Request Line)</a></li>
+<li><a href="#orgec4c9b4">3.1.2 状态行 (Status Line)</a></li>
 </ul>
 </li>
-<li><a href="#org6c93f06">6.4 并发性 (Concurrency)</a></li>
-<li><a href="#org777403a">6.5 失败和超时 (Failures and Timeouts)</a></li>
-<li><a href="#orgda1040c">6.6 销毁 (Tear-down)</a></li>
-<li><a href="#org1ddbda5">6.7 升级 (Upgrade)</a></li>
-</ul>
-</li>
-<li><a href="#org5bc0144">7 ABNF 列表扩展：#rule（ABNF List Extension: #rule）</a></li>
-<li><a href="#org9ead561">8 INAN 考虑（IANA Considerations）</a>
+<li><a href="#org58eec97">3.2 头域 (Header Fields)</a>
 <ul>
-<li><a href="#orgfc468e2">8.1 Header Field Registration</a></li>
-<li><a href="#org4ac2fdb">8.2 URI Scheme Registration</a></li>
-<li><a href="#orgf6790dd">8.3 Internet Media Type Registration</a>
+<li><a href="#org73bf9b3">3.2.1 域的可扩展性 (Field Extensibility)</a></li>
+<li><a href="#org7b630f0">3.2.2 域的顺序 (Field Order)</a></li>
+<li><a href="#org4dc2657">3.2.3 空格 (Whitespace)</a></li>
+<li><a href="#orgb769b96">3.2.4 域解析 (Field Parsing)</a></li>
+<li><a href="#orgb8ba6e4">3.2.5 域限制 (Field Limits)</a></li>
+<li><a href="#org8b62e1e">3.2.6 域值的组成 (Field Value Components)</a></li>
+</ul>
+</li>
+<li><a href="#orga968ed4">3.3 报文正文 (Message Body)</a>
 <ul>
-<li><a href="#orgc4aea74">8.3.1 Internet Media Type message/http</a></li>
-<li><a href="#org5d2d3d3">8.3.2 Internet Media Type application/http</a></li>
+<li><a href="#org2760888">3.3.1 传输编码 (Transfer-Encoding)</a></li>
+<li><a href="#orga3f49c9">3.3.2 内容长度 (Content-Length)</a></li>
+<li><a href="#org85f59c4">3.3.3 报文正文的长度 (Message Body Length)</a></li>
 </ul>
 </li>
-<li><a href="#org32d6174">8.4 Transfer Coding Registry</a>
+<li><a href="#org5fb52da">3.4 报文不完整的处理 (Handling Incomplete Messages)</a></li>
+<li><a href="#org5ca60ac">3.5 报文解析的健壮性 (Message Parsing Robustness)</a></li>
+</ul>
+</li>
+<li><a href="#org8f523a6">4 传输编码值（Transfer Codings）</a>
 <ul>
-<li><a href="#orgd823b80">8.4.1 Procedure</a></li>
-<li><a href="#org3a8fee4">8.4.2 Registration</a></li>
-</ul>
-</li>
-<li><a href="#orga299501">8.5 Content Coding Registration</a></li>
-<li><a href="#orgd7bbb63">8.6 Upgrade Token Registry</a>
+<li><a href="#org730e99a">4.1 分块传输编码值 (Chunked Transfer Coding)</a>
 <ul>
-<li><a href="#org33dafe9">8.6.1 Procedure</a></li>
-<li><a href="#orge8b6b05">8.6.2 Upgrade Token Registration</a></li>
+<li><a href="#org509aa11">4.1.1 Chunk Extensions</a></li>
+<li><a href="#org1e9098c">4.1.2 Chunked Trailer Part</a></li>
+<li><a href="#orgd17f780">4.1.3 Decoding Chunked</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#org5130040">9 安全考虑（Security Considerations）</a>
+<li><a href="#orga3bdd47">4.2 Compression Codings</a>
 <ul>
-<li><a href="#org3f0806f">9.1 Establishing Authority</a></li>
-<li><a href="#org16fb0bd">9.2 Risks of Intermediaries</a></li>
-<li><a href="#orgf5d3ccc">9.3 Attacks via Protocol Element Length</a></li>
-<li><a href="#org92555a4">9.4 Response Splitting</a></li>
-<li><a href="#org88bfde7">9.5 Request Smuggling</a></li>
-<li><a href="#org1a82436">9.6 Message Integrity</a></li>
-<li><a href="#orgcd4354c">9.7 Message Confidentiality</a></li>
-<li><a href="#orgcad3fa7">9.8 Privacy of Server Log Information</a></li>
+<li><a href="#orgb33f1ff">4.2.1 Compress Coding</a></li>
+<li><a href="#org4cf7178">4.2.2 Deflate Coding</a></li>
+<li><a href="#org338f943">4.2.3 Gzip Coding</a></li>
 </ul>
 </li>
-<li><a href="#org00380bd">10 感谢（Acknowledgments）</a></li>
-<li><a href="#org2e86656">11 参考资料（References）</a></li>
-<li><a href="#orgfe9b431">附录 A：HTTP 版本历史（Appendix A. HTTP Version History）</a></li>
-<li><a href="#orge961a52">附录 B：收集的 ABNF（Appendx B. Collected ABNF）</a></li>
-<li><a href="#org2a19b50">索引（Index）</a></li>
+<li><a href="#org953ad12">4.3 TE</a></li>
+<li><a href="#orgfde82e8">4.4 Trailer</a></li>
+</ul>
+</li>
+<li><a href="#org28ed6c1">5 报文路由（Message Routing）</a>
+<ul>
+<li><a href="#org1bb871f">5.1 标识目标资源 (Identifying a Target Resource)</a></li>
+<li><a href="#org451ac33">5.2 Connecting Inbound</a></li>
+<li><a href="#org30e9870">5.3 请求目标 (Request Target)</a>
+<ul>
+<li><a href="#org0ac113d">5.3.1 (origin-form)</a></li>
+<li><a href="#org381586e">5.3.2 (absolute-form)</a></li>
+<li><a href="#org66ef03d">5.3.3 (authority-form)</a></li>
+<li><a href="#org2e40a95">5.3.4 (asterisk-form)</a></li>
+</ul>
+</li>
+<li><a href="#orgc618a5b">5.4 主机 (Host)</a></li>
+<li><a href="#org2611a4b">5.5 Effective Request URI</a></li>
+<li><a href="#orgee58b56">5.6 Associating a Response to a Request</a></li>
+<li><a href="#orga000ef5">5.7 报文转发 (Message Forwarding)</a>
+<ul>
+<li><a href="#org4393b7e">5.7.1 Via</a></li>
+<li><a href="#org259cc67">5.7.2 Transformations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge3312fa">6 连接管理（Connection Management）</a>
+<ul>
+<li><a href="#orgb60aefb">6.1 连接 (Connection)</a></li>
+<li><a href="#orgf6df3c7">6.2 建立 (Establishment)</a></li>
+<li><a href="#org395a8f7">6.3 持久性 (Persistence)</a>
+<ul>
+<li><a href="#org69cbde4">6.3.1 (Retrying Requests)</a></li>
+<li><a href="#org4213c67">6.3.2 (Pipelining)</a></li>
+</ul>
+</li>
+<li><a href="#orgf216bec">6.4 并发性 (Concurrency)</a></li>
+<li><a href="#orgadddf3f">6.5 失败和超时 (Failures and Timeouts)</a></li>
+<li><a href="#orgc5140c1">6.6 销毁 (Tear-down)</a></li>
+<li><a href="#org9ed5f58">6.7 升级 (Upgrade)</a></li>
+</ul>
+</li>
+<li><a href="#orgb40a79d">7 ABNF 列表扩展：#rule（ABNF List Extension: #rule）</a></li>
+<li><a href="#orgcfdd65d">8 INAN 考虑（IANA Considerations）</a>
+<ul>
+<li><a href="#org9b26d60">8.1 Header Field Registration</a></li>
+<li><a href="#orgdeee271">8.2 URI Scheme Registration</a></li>
+<li><a href="#org8dc31a6">8.3 Internet Media Type Registration</a>
+<ul>
+<li><a href="#org52d215c">8.3.1 Internet Media Type message/http</a></li>
+<li><a href="#org83c4424">8.3.2 Internet Media Type application/http</a></li>
+</ul>
+</li>
+<li><a href="#orgf6d34b0">8.4 Transfer Coding Registry</a>
+<ul>
+<li><a href="#org2de9bc1">8.4.1 Procedure</a></li>
+<li><a href="#org2637f08">8.4.2 Registration</a></li>
+</ul>
+</li>
+<li><a href="#orgfd5a60e">8.5 Content Coding Registration</a></li>
+<li><a href="#org8200882">8.6 Upgrade Token Registry</a>
+<ul>
+<li><a href="#org2fe0f03">8.6.1 Procedure</a></li>
+<li><a href="#orgedda04a">8.6.2 Upgrade Token Registration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga8dae6a">9 安全考虑（Security Considerations）</a>
+<ul>
+<li><a href="#orgd4de00d">9.1 Establishing Authority</a></li>
+<li><a href="#orgb64efcd">9.2 Risks of Intermediaries</a></li>
+<li><a href="#org42beb41">9.3 Attacks via Protocol Element Length</a></li>
+<li><a href="#org084d50b">9.4 Response Splitting</a></li>
+<li><a href="#orgb1d2cf9">9.5 Request Smuggling</a></li>
+<li><a href="#org1d8f6bb">9.6 Message Integrity</a></li>
+<li><a href="#orge9c634e">9.7 Message Confidentiality</a></li>
+<li><a href="#org2a5966d">9.8 Privacy of Server Log Information</a></li>
+</ul>
+</li>
+<li><a href="#org75ca1e1">10 感谢（Acknowledgments）</a></li>
+<li><a href="#org5c6f147">11 参考资料（References）</a></li>
+<li><a href="#org9ab68d6">附录 A：HTTP 版本历史（Appendix A. HTTP Version History）</a></li>
+<li><a href="#org55ce909">附录 B：收集的 ABNF（Appendx B. Collected ABNF）</a></li>
+<li><a href="#orgd0b3d20">索引（Index）</a></li>
 </ul>
 </div>
 </div>
@@ -497,9 +497,9 @@ ISSN: 2070-1721
 </pre>
 </div>
 
-<div id="outline-container-orgeba95c1" class="outline-2">
-<h2 id="orgeba95c1">摘要（Abstract）</h2>
-<div class="outline-text-2" id="text-orgeba95c1">
+<div id="outline-container-orge523588" class="outline-2">
+<h2 id="orge523588">摘要（Abstract）</h2>
+<div class="outline-text-2" id="text-orge523588">
 <p>
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document provides an overview of HTTP architecture and its associated terminology, defines the "http" and "https" Uniform Resource Identifier (URI) schemes, defines the HTTP/1.1 message syntax and parsing requirements, and describes related security concerns for implementations.
 </p>
@@ -522,9 +522,9 @@ This document is the first in a series of documents that collectively form the H
 </div>
 </div>
 
-<div id="outline-container-orgc6e551a" class="outline-2">
-<h2 id="orgc6e551a">备忘状态（Status of This Memo）</h2>
-<div class="outline-text-2" id="text-orgc6e551a">
+<div id="outline-container-orga26c179" class="outline-2">
+<h2 id="orga26c179">备忘状态（Status of This Memo）</h2>
+<div class="outline-text-2" id="text-orga26c179">
 <p>
 This is an Internet Standards Track document.
 </p>
@@ -539,9 +539,9 @@ Information about the current status of this document, any errata, and how to pr
 </div>
 </div>
 
-<div id="outline-container-org273cbe9" class="outline-2">
-<h2 id="org273cbe9">1 引论（Introduction）</h2>
-<div class="outline-text-2" id="text-org273cbe9">
+<div id="outline-container-orgd6478e8" class="outline-2">
+<h2 id="orgd6478e8">1 引论（Introduction）</h2>
+<div class="outline-text-2" id="text-orgd6478e8">
 <blockquote>
 <p>
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level request/response protocol that uses extensible semantics and self-descriptive message payloads for flexible interaction with network-based hypertext information systems. This document is the first in a series of documents that collectively form the HTTP/1.1 specification:
@@ -590,9 +590,9 @@ This document describes the architectural elements that are used or referred to 
 </blockquote>
 </div>
 
-<div id="outline-container-org83f1b2a" class="outline-3">
-<h3 id="org83f1b2a">1.1 Requirements Notation</h3>
-<div class="outline-text-3" id="text-org83f1b2a">
+<div id="outline-container-org50536fc" class="outline-3">
+<h3 id="org50536fc">1.1 Requirements Notation</h3>
+<div class="outline-text-3" id="text-org50536fc">
 <blockquote>
 <p>
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
@@ -607,9 +607,9 @@ Conformance criteria and considerations regarding error handling are defined in 
 </div>
 </div>
 
-<div id="outline-container-org5fe70f9" class="outline-3">
-<h3 id="org5fe70f9">1.2 句法标记 (Syntax Notation)</h3>
-<div class="outline-text-3" id="text-org5fe70f9">
+<div id="outline-container-org66ee4f4" class="outline-3">
+<h3 id="org66ee4f4">1.2 句法标记 (Syntax Notation)</h3>
+<div class="outline-text-3" id="text-org66ee4f4">
 <blockquote>
 <p>
 This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7, that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix B shows the collected grammar with all list operators expanded to standard ABNF notation.
@@ -631,9 +631,9 @@ As a convention, ABNF rule names prefixed with "obs-" denote "obsolete" grammar 
 </div>
 </div>
 
-<div id="outline-container-orgd47a5dc" class="outline-2">
-<h2 id="orgd47a5dc">2 体系结构（Architecture）</h2>
-<div class="outline-text-2" id="text-orgd47a5dc">
+<div id="outline-container-org1473095" class="outline-2">
+<h2 id="org1473095">2 体系结构（Architecture）</h2>
+<div class="outline-text-2" id="text-org1473095">
 <blockquote>
 <p>
 HTTP was created for the World Wide Web (WWW) architecture and has evolved over time to support the scalability needs of a worldwide hypertext system. Much of that architecture is reflected in the terminology and syntax productions
@@ -648,9 +648,9 @@ HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支
 </blockquote>
 </div>
 
-<div id="outline-container-orgf59bec3" class="outline-3">
-<h3 id="orgf59bec3">2.1 客户端/服务器通讯 (Client/Server Messaging)</h3>
-<div class="outline-text-3" id="text-orgf59bec3">
+<div id="outline-container-org145d7db" class="outline-3">
+<h3 id="org145d7db">2.1 客户端/服务器通讯 (Client/Server Messaging)</h3>
+<div class="outline-text-3" id="text-org145d7db">
 <blockquote>
 <p>
 HTTP is a stateless request/response protocol that operates by exchanging messages (Section 3) across a reliable transport- or session-layer "connection" (Section 6). An HTTP "client" is a program that establishes a connection to a server for the purpose of sending one or more HTTP requests. An HTTP "server" is a program that accepts connections in order to service HTTP requests by sending HTTP responses.
@@ -705,7 +705,7 @@ A client sends an HTTP request to a server in the form of a <b>request message</
 </blockquote>
 
 <p>
-TODO 客户端以请求报文（Request Message）的形式向服务器发送一个 HTTP 请求，请求报文的第一行叫做请求行（Request Line，见<a href="#orgf38c35a">章节 3.1.1</a>），请求行包含了该请求的方法，URI 和 协议版本；紧接请求行的是请求报头（Request Header），请求报头包含了请求，客户端信息以及表现形式元数据（Representation Metadata，见<a href="#org6959401">章节 3.2</a>）；接着是一个空行来表明报头结束；最后是一个可选的报文正文，包含了报文的有效载荷（Payload，见<a href="#org4eef2f8">章节 3.3</a> ）。
+TODO 客户端以请求报文（Request Message）的形式向服务器发送一个 HTTP 请求，请求报文的第一行叫做请求行（Request Line，见<a href="#org5615a9f">章节 3.1.1</a>），请求行包含了该请求的方法，URI 和 协议版本；紧接请求行的是请求报头（Request Header），请求报头包含了请求，客户端信息以及表现形式元数据（Representation Metadata，见<a href="#org58eec97">章节 3.2</a>）；接着是一个空行来表明报头结束；最后是一个可选的报文正文，包含了报文的有效载荷（Payload，见<a href="#orga968ed4">章节 3.3</a> ）。
 </p>
 
 <blockquote>
@@ -764,9 +764,9 @@ Hello World! My payload includes a trailing CRLF.
 </div>
 </div>
 
-<div id="outline-container-org196f150" class="outline-3">
-<h3 id="org196f150">2.2 实现的差异性（Implementation Diversity）</h3>
-<div class="outline-text-3" id="text-org196f150">
+<div id="outline-container-org828221a" class="outline-3">
+<h3 id="org828221a">2.2 实现的差异性（Implementation Diversity）</h3>
+<div class="outline-text-3" id="text-org828221a">
 <blockquote>
 <p>
 When considering the design of HTTP, it is easy to fall into a trap of thinking that all user agents are general-purpose browsers and all origin servers are large public websites. That is not the case in practice. Common HTTP user agents include household appliances, stereos, scales, firmware update scripts, command-line programs, mobile apps, and communication devices in a multitude of shapes and sizes. Likewise, common HTTP origin servers include home automation units, configurable networking components, office machines, autonomous robots, news feeds, traffic cameras, ad selectors, and video-delivery platforms.
@@ -799,9 +799,9 @@ HTTP 实现上的差异性，表现为不是所有的用户代理都能为用户
 </div>
 </div>
 
-<div id="outline-container-org8ac5bff" class="outline-3">
-<h3 id="org8ac5bff">2.3 中间人 (Intermediaries)</h3>
-<div class="outline-text-3" id="text-org8ac5bff">
+<div id="outline-container-org2f2b1b4" class="outline-3">
+<h3 id="org2f2b1b4">2.3 中间人 (Intermediaries)</h3>
+<div class="outline-text-3" id="text-org2f2b1b4">
 <blockquote>
 <p>
 HTTP enables the use of intermediaries to satisfy requests through a chain of connections. There are three common forms of HTTP intermediary: proxy, gateway, and tunnel. In some cases, a single intermediary might act as an origin server, proxy, gateway, or tunnel, switching behavior based on the nature of each request.
@@ -849,12 +849,12 @@ The terms "<b>upstream</b>" and "<b>downstream</b>" are used to describe directi
 
 <blockquote>
 <p>
-A "proxy" is a message-forwarding agent that is selected by the client, usually via local configuration rules, to receive requests for some type(s) of <a href="https://tools.ietf.org/html/rfc3986#page-27">absolute URI</a> and attempt to satisfy those requests via translation through the HTTP interface. Some translations are minimal, such as for proxy requests for "http" URIs, whereas other requests might require translation to and from entirely different application-level protocols. Proxies are often used to group an organization's HTTP requests through a common intermediary for the sake of security, annotation services, or shared caching. Some proxies are designed to apply transformations to selected messages or payloads while they are being forwarded, as described in <a href="#orge06b620">Section 5.7.2</a>.
+A "proxy" is a message-forwarding agent that is selected by the client, usually via local configuration rules, to receive requests for some type(s) of <a href="https://tools.ietf.org/html/rfc3986#page-27">absolute URI</a> and attempt to satisfy those requests via translation through the HTTP interface. Some translations are minimal, such as for proxy requests for "http" URIs, whereas other requests might require translation to and from entirely different application-level protocols. Proxies are often used to group an organization's HTTP requests through a common intermediary for the sake of security, annotation services, or shared caching. Some proxies are designed to apply transformations to selected messages or payloads while they are being forwarded, as described in <a href="#org259cc67">Section 5.7.2</a>.
 </p>
 </blockquote>
 
 <p>
-“代理”，一般是由客户端通过本地设置或规则所选定的，负责报文转发的中介。代理接收绝对 URI（Absolute URI）类型的请求并试图经由 HTTP 接口翻译（Translation）报文信息来满足这些请求。一些翻译（Translation）是以最低限度来进行的，例如对于代理的“http” URI 请求；与之相反的是，其他请求可能要求翻译（Translation）为或翻译自完全不同的应用层协议。为了安全性、服务标识或者共享缓存，多个代理一般通过一个共同的中间人，将属于同一团体的 HTTP 请求进行分组。某些代理被设计为对选定的报文或载荷在其被转发时进行转换（见 <a href="#orge06b620">5.7.2</a>）。
+“代理”，一般是由客户端通过本地设置或规则所选定的，负责报文转发的中介。代理接收绝对 URI（Absolute URI）类型的请求并试图经由 HTTP 接口翻译（Translation）报文信息来满足这些请求。一些翻译（Translation）是以最低限度来进行的，例如对于代理的“http” URI 请求；与之相反的是，其他请求可能要求翻译（Translation）为或翻译自完全不同的应用层协议。为了安全性、服务标识或者共享缓存，多个代理一般通过一个共同的中间人，将属于同一团体的 HTTP 请求进行分组。某些代理被设计为对选定的报文或载荷在其被转发时进行转换（见 <a href="#org259cc67">5.7.2</a>）。
 </p>
 
 <p>
@@ -939,9 +939,9 @@ HTTP 被定义为一个无状态的协议，意为每一个请求报文都能够
 </div>
 </div>
 
-<div id="outline-container-orgc641c4d" class="outline-3">
-<h3 id="orgc641c4d">2.4 缓存 (Caches)</h3>
-<div class="outline-text-3" id="text-orgc641c4d">
+<div id="outline-container-org2fa139c" class="outline-3">
+<h3 id="org2fa139c">2.4 缓存 (Caches)</h3>
+<div class="outline-text-3" id="text-org2fa139c">
 <blockquote>
 <p>
 A "cache" is a local store of previous response messages and the subsystem that controls its message storage, retrieval, and deletion. A cache stores cacheable responses in order to reduce the response time and network bandwidth consumption on future, equivalent requests. Any client or server <b>MAY</b> employ a cache, though a cache cannot be used by a server while it is acting as a tunnel.
@@ -992,9 +992,9 @@ These include national hierarchies of proxy caches to save transoceanic bandwidt
 </div>
 </div>
 
-<div id="outline-container-orgf2cebbd" class="outline-3">
-<h3 id="orgf2cebbd"><a id="ID-A0441F72-9799-4667-9477-1E05885946A1"></a>2.5 一致性和错误处理 (Conformance and Error Handling)</h3>
-<div class="outline-text-3" id="text-orgf2cebbd">
+<div id="outline-container-orga4caf6c" class="outline-3">
+<h3 id="orga4caf6c"><a id="ID-A0441F72-9799-4667-9477-1E05885946A1"></a>2.5 一致性和错误处理 (Conformance and Error Handling)</h3>
+<div class="outline-text-3" id="text-orga4caf6c">
 <blockquote>
 <p>
 This specification targets conformance criteria according to the role of a participant in HTTP communication. Hence, HTTP requirements are placed on senders, recipients, clients, servers, user agents, intermediaries, origin servers, proxies, gateways, or caches, depending on what behavior is being constrained by the requirement. Additional (social) requirements are placed on implementations, resource owners, and protocol element registrations when they apply beyond the scope of a single communication.
@@ -1100,9 +1100,9 @@ Unless noted otherwise, a recipient <b>MAY</b> attempt to <a href="https://en.wi
 </div>
 </div>
 
-<div id="outline-container-orgbadc4a2" class="outline-3">
-<h3 id="orgbadc4a2">2.6 协议版本管理 (Protocol Versioning)</h3>
-<div class="outline-text-3" id="text-orgbadc4a2">
+<div id="outline-container-org164ca50" class="outline-3">
+<h3 id="org164ca50">2.6 协议版本管理 (Protocol Versioning)</h3>
+<div class="outline-text-3" id="text-org164ca50">
 <blockquote>
 <p>
 HTTP uses a "&lt;major&gt;.&lt;minor&gt;" numbering scheme to indicate versions of the protocol. This specification defines version "1.1". The protocol version as a whole indicates the sender's conformance with the set of requirements laid out in that version's corresponding specification of HTTP.
@@ -1182,7 +1182,7 @@ New header fields can be introduced without changing the protocol version if the
 </blockquote>
 
 <p>
-将来新的头域能够在不改变当前协议版本的情况下被引入，如果定义这些新头域的语义允许它们能够在接收者无法识别的情况下被其安全忽略（Safely ignored）。头域的扩展（Extensibility）会在 <a href="#org5bce342">章节 3.2.1</a> 中讨论。
+将来新的头域能够在不改变当前协议版本的情况下被引入，如果定义这些新头域的语义允许它们能够在接收者无法识别的情况下被其安全忽略（Safely ignored）。头域的扩展（Extensibility）会在 <a href="#org73bf9b3">章节 3.2.1</a> 中讨论。
 </p>
 
 <blockquote>
@@ -1269,9 +1269,9 @@ TODO 当报文发送到接收端但没有指明其支持更高的版本，接收
 </div>
 </div>
 
-<div id="outline-container-org9c908e3" class="outline-3">
-<h3 id="org9c908e3">2.7 统一资源标识符 (Uniform Resource Identifiers)</h3>
-<div class="outline-text-3" id="text-org9c908e3">
+<div id="outline-container-org4423899" class="outline-3">
+<h3 id="org4423899">2.7 统一资源标识符 (Uniform Resource Identifiers)</h3>
+<div class="outline-text-3" id="text-org4423899">
 <blockquote>
 <p>
 Uniform Resource Identifiers (URIs) [RFC3986] are used throughout HTTP as the means for identifying resources (Section 2 of [RFC7231]). URI references are used to target requests, indicate redirects, and define relationships.
@@ -1342,13 +1342,13 @@ HTTP 中的每一个允许 URI 引用的协议元素都会在它的 ABNF 产品�
 </ol>
 
 <p>
-除非另有说明，URI 引用会解析（Parse）为相关的“实际请求 URI”（<a href="#org6f3872a">章节 5.5</a>）。
+除非另有说明，URI 引用会解析（Parse）为相关的“实际请求 URI”（<a href="#org2611a4b">章节 5.5</a>）。
 </p>
 </div>
 
-<div id="outline-container-orgdb74f2a" class="outline-4">
-<h4 id="orgdb74f2a">2.7.1 http URI Scheme</h4>
-<div class="outline-text-4" id="text-orgdb74f2a">
+<div id="outline-container-orgb6200cc" class="outline-4">
+<h4 id="orgb6200cc">2.7.1 http URI Scheme</h4>
+<div class="outline-text-4" id="text-orgb6200cc">
 <blockquote>
 <p>
 The "http" URI scheme is hereby defined for the purpose of minting identifiers according to their association with the hierarchical namespace governed by a potential HTTP origin server listening for TCP ([RFC0793]) connections on a given port.
@@ -1410,7 +1410,7 @@ Note that the presence of a URI with a given authority component does not imply 
 </blockquote>
 
 <p>
-需要注意的是，一个 URI 带有给定的 <code>authority</code> 部件并不意味着这个 URI 一定就是一个监听那个 <code>host</code> 以及对应 <code>port</code> 来等待连接的 HTTP 服务器。任务人都可以建造 URI。而 <code>authority</code> 决定的是谁有权力去响应这个定位目标资源的请求。注册域名和 IP 地址所代表的本质是，基于支配明确的 <code>host</code> 和 <code>port</code> 生成一个联合命名空间，无论最终呈现的是否是一个 HTTP 服务器。见<a href="#org3f0806f">章节 9.1</a>。
+需要注意的是，一个 URI 带有给定的 <code>authority</code> 部件并不意味着这个 URI 一定就是一个监听那个 <code>host</code> 以及对应 <code>port</code> 来等待连接的 HTTP 服务器。任务人都可以建造 URI。而 <code>authority</code> 决定的是谁有权力去响应这个定位目标资源的请求。注册域名和 IP 地址所代表的本质是，基于支配明确的 <code>host</code> 和 <code>port</code> 生成一个联合命名空间，无论最终呈现的是否是一个 HTTP 服务器。见<a href="#orgd4de00d">章节 9.1</a>。
 </p>
 
 <blockquote>
@@ -1420,7 +1420,7 @@ When an "http" URI is used within a context that calls for access to the indicat
 </blockquote>
 
 <p>
-当一个“http” URI 用于一个请求访问目标资源的上下文里，客户端 <b>可以</b> 尝试通过解释（Resolve） <code>host</code> 获得 IP 地址，（通过对应的端口）建立一个 TCP 连接到这个地址，然后发送一个包含这个 URI 的识别数据（见<a href="#org947f843">章节 5</a>）的 HTTP 请求，从而访问到这个目标资源。如果服务器对这个请求响应了一个非过渡（non-interim）的 HTTP 响应报文（见<a href="https://httpwg.org/specs/rfc7231.html#status.codes">【RFC7231】章节 6</a>），那么这个响应可认为是一个对客户端请求的权威应答（authoritative answer）。
+当一个“http” URI 用于一个请求访问目标资源的上下文里，客户端 <b>可以</b> 尝试通过解释（Resolve） <code>host</code> 获得 IP 地址，（通过对应的端口）建立一个 TCP 连接到这个地址，然后发送一个包含这个 URI 的识别数据（见<a href="#org28ed6c1">章节 5</a>）的 HTTP 请求，从而访问到这个目标资源。如果服务器对这个请求响应了一个非过渡（non-interim）的 HTTP 响应报文（见<a href="https://httpwg.org/specs/rfc7231.html#status.codes">【RFC7231】章节 6</a>），那么这个响应可认为是一个对客户端请求的权威应答（authoritative answer）。
 </p>
 
 <blockquote>
@@ -1445,9 +1445,9 @@ The URI generic syntax for authority also includes a deprecated <code>userinfo</
 </div>
 </div>
 
-<div id="outline-container-org4faa83e" class="outline-4">
-<h4 id="org4faa83e">2.7.2 https URI Scheme</h4>
-<div class="outline-text-4" id="text-org4faa83e">
+<div id="outline-container-org999fb9d" class="outline-4">
+<h4 id="org999fb9d">2.7.2 https URI Scheme</h4>
+<div class="outline-text-4" id="text-org999fb9d">
 <blockquote>
 <p>
 The "https" URI scheme is hereby defined for the purpose of minting identifiers according to their association with the hierarchical namespace governed by a potential HTTP origin server listening to a given TCP port for TLS-secured connections ([RFC5246]).
@@ -1499,9 +1499,9 @@ The process for authoritative access to an "https" identified resource is define
 </div>
 </div>
 
-<div id="outline-container-org948cd4b" class="outline-4">
-<h4 id="org948cd4b">2.7.3 http and https URI Normalization and Comparison</h4>
-<div class="outline-text-4" id="text-org948cd4b">
+<div id="outline-container-orgad01325" class="outline-4">
+<h4 id="orgad01325">2.7.3 http and https URI Normalization and Comparison</h4>
+<div class="outline-text-4" id="text-orgad01325">
 <blockquote>
 <p>
 Since the "http" and "https" schemes conform to the URI generic syntax, such URIs are normalized and compared according to the algorithm defined in <a href="https://tools.ietf.org/html/rfc3986#page-38">Section 6 of {RFC3986}</a>, using the defaults described above for each scheme.
@@ -1547,9 +1547,9 @@ http://EXAMPLE.com:/%7esmith/home.html
 </div>
 </div>
 
-<div id="outline-container-orgbeb67cd" class="outline-2">
-<h2 id="orgbeb67cd">3 报文格式（Message Format）</h2>
-<div class="outline-text-2" id="text-orgbeb67cd">
+<div id="outline-container-org1655ed4" class="outline-2">
+<h2 id="org1655ed4">3 报文格式（Message Format）</h2>
+<div class="outline-text-2" id="text-org1655ed4">
 <blockquote>
 <p>
 All HTTP/1.1 messages consist of a start-line followed by a sequence of octets in a format similar to the Internet Message Format [RFC5322]: zero or more header fields (collectively referred to as the "headers" or the "header section"), an empty line indicating the end of the header section, and an optional message body.
@@ -1600,7 +1600,7 @@ An HTTP message can be parsed as a stream for incremental processing or forwardi
 </blockquote>
 
 <p>
-HTTP 报文能够解析（Parse）为用于增量处理或下行转发（Forwarding Downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现会因为网络性能、安全校验或者载荷转换（<a href="#orge06b620">Payload Transformation</a>）而对这些不完整的报文进行缓冲或延迟转发。
+HTTP 报文能够解析（Parse）为用于增量处理或下行转发（Forwarding Downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现会因为网络性能、安全校验或者载荷转换（<a href="#org259cc67">Payload Transformation</a>）而对这些不完整的报文进行缓冲或延迟转发。
 </p>
 
 <blockquote>
@@ -1624,9 +1624,9 @@ The presence of such whitespace in a request might be an attempt to trick a serv
 </p>
 </div>
 
-<div id="outline-container-orgcd9e5ac" class="outline-3">
-<h3 id="orgcd9e5ac">3.1 起始行 (Start Line)</h3>
-<div class="outline-text-3" id="text-orgcd9e5ac">
+<div id="outline-container-orgc5e3318" class="outline-3">
+<h3 id="orgc5e3318">3.1 起始行 (Start Line)</h3>
+<div class="outline-text-3" id="text-orgc5e3318">
 <blockquote>
 <p>
 An HTTP message can be either a request from client to server or a response from server to client. Syntactically, the two types of message differ only in the start-line, which is either a <b>request-line</b> (for requests) or a <b>status-line</b> (for responses), and in the algorithm for determining the length of the message body (Section 3.3).
@@ -1657,9 +1657,9 @@ In theory, a client could receive requests and a server could receive responses,
 </div>
 </div>
 
-<div id="outline-container-orgf38c35a" class="outline-4">
-<h4 id="orgf38c35a"><a id="ID-c6d80104-6f14-4888-b8bf-262bb389002c"></a>3.1.1 请求行 (Request Line)</h4>
-<div class="outline-text-4" id="text-orgf38c35a">
+<div id="outline-container-org5615a9f" class="outline-4">
+<h4 id="org5615a9f"><a id="ID-c6d80104-6f14-4888-b8bf-262bb389002c"></a>3.1.1 请求行 (Request Line)</h4>
+<div class="outline-text-4" id="text-org5615a9f">
 <blockquote>
 <p>
 A <code>request-line</code> begins with a method token, followed by a single space (SP), the request-target, another single space (SP), the protocol version, and ends with CRLF.
@@ -1702,22 +1702,22 @@ The request methods defined by this specification can be found in Section 4 of [
 
 <blockquote>
 <p>
-The <code>request-target</code> identifies the target resource upon which to apply the request, as defined in <a href="#org7eb8949">Section 5.3</a>.
+The <code>request-target</code> identifies the target resource upon which to apply the request, as defined in <a href="#org30e9870">Section 5.3</a>.
 </p>
 </blockquote>
 
 <p>
-请求目标 <code>request-target</code> 标识了依据请求所申请的申请目标资源，定义在<a href="#org7eb8949">章节 5.3</a>。
+请求目标 <code>request-target</code> 标识了依据请求所申请的申请目标资源，定义在<a href="#org30e9870">章节 5.3</a>。
 </p>
 
 <blockquote>
 <p>
-Recipients typically parse the <code>request-line</code> into its component parts by splitting on whitespace (see <a href="#org8114a2f">Section 3.5</a>), since no whitespace is allowed in the three components. Unfortunately, some user agents fail to properly encode or exclude whitespace found in <a href="https://en.wikipedia.org/wiki/Hyperlink">hypertext references</a>, resulting in those disallowed characters being sent in a <code>request-target</code>.
+Recipients typically parse the <code>request-line</code> into its component parts by splitting on whitespace (see <a href="#org5ca60ac">Section 3.5</a>), since no whitespace is allowed in the three components. Unfortunately, some user agents fail to properly encode or exclude whitespace found in <a href="https://en.wikipedia.org/wiki/Hyperlink">hypertext references</a>, resulting in those disallowed characters being sent in a <code>request-target</code>.
 </p>
 </blockquote>
 
 <p>
-接收端在解析（Parse）请求行 <code>request-line</code> 的过程中，通过以空格分割出请求行的各个部件（共有三个部件，分别为方法标识、请求目标以及协议版本），因此，以上三个部件的内容不能带有空格（见<a href="#org8114a2f">章节 3.5</a>）。不幸的是，某些用户代理不能对超文本引用（<a href="https://en.wikipedia.org/wiki/Hyperlink">Hypertext References</a>，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求报文中的请求目标 <code>request-target</code> 包含了那些不被允许出现的字符（Character）。
+接收端在解析（Parse）请求行 <code>request-line</code> 的过程中，通过以空格分割出请求行的各个部件（共有三个部件，分别为方法标识、请求目标以及协议版本），因此，以上三个部件的内容不能带有空格（见<a href="#org5ca60ac">章节 3.5</a>）。不幸的是，某些用户代理不能对超文本引用（<a href="https://en.wikipedia.org/wiki/Hyperlink">Hypertext References</a>，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求报文中的请求目标 <code>request-target</code> 包含了那些不被允许出现的字符（Character）。
 </p>
 
 <blockquote>
@@ -1732,12 +1732,12 @@ Recipients of an invalid <code>request-line</code> <b>SHOULD</b> respond with ei
 
 <blockquote>
 <p>
-HTTP does not place a predefined limit on the length of a <code>request-line</code>, as described in <a href="#orgf2cebbd">Section 2.5</a>. A server that receives a method longer than any that it implements <b>SHOULD</b> respond with a <code>501 (Not Implemented)</code> status code. A server that receives a <code>request-target</code> longer than any URI it wishes to parse <b>MUST</b> respond with a <code>414 (URI Too Long)</code> status code (see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.12">Section 6.5.12</a> of [<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>]).
+HTTP does not place a predefined limit on the length of a <code>request-line</code>, as described in <a href="#orga4caf6c">Section 2.5</a>. A server that receives a method longer than any that it implements <b>SHOULD</b> respond with a <code>501 (Not Implemented)</code> status code. A server that receives a <code>request-target</code> longer than any URI it wishes to parse <b>MUST</b> respond with a <code>414 (URI Too Long)</code> status code (see <a href="https://tools.ietf.org/html/rfc7231#section-6.5.12">Section 6.5.12</a> of [<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>]).
 </p>
 </blockquote>
 
 <p>
-HTTP 并没有对请求行 <code>request-line</code> 的长度限制进行预定义，相关原因在<a href="#orgf2cebbd">章节 2.5</a> 已有描述。服务器接收到超出其长度要求的请求方法（Method）时 <b>应当</b> 响应一个 <code>501 (Not Implemented)</code> 状态码。服务器接收到一个 URI 其长度超出服务器所期望的最大长度时，<b>必须</b> 响应一个 <code>414 (URI Too Long)</code> 状态码（见<a href="https://tools.ietf.org/html/rfc7231#section-6.5.12">【RFC7231】章节 6.5.12</a>）。
+HTTP 并没有对请求行 <code>request-line</code> 的长度限制进行预定义，相关原因在<a href="#orga4caf6c">章节 2.5</a> 已有描述。服务器接收到超出其长度要求的请求方法（Method）时 <b>应当</b> 响应一个 <code>501 (Not Implemented)</code> 状态码。服务器接收到一个 URI 其长度超出服务器所期望的最大长度时，<b>必须</b> 响应一个 <code>414 (URI Too Long)</code> 状态码（见<a href="https://tools.ietf.org/html/rfc7231#section-6.5.12">【RFC7231】章节 6.5.12</a>）。
 </p>
 
 <blockquote>
@@ -1752,9 +1752,9 @@ Various <a href="https://en.wikipedia.org/wiki/Wireless_ad_hoc_network">ad hoc</
 </div>
 </div>
 
-<div id="outline-container-org351084d" class="outline-4">
-<h4 id="org351084d"><a id="ID-B0BBE465-2364-43E3-991F-B090EEF2D7BD"></a>3.1.2 状态行 (Status Line)</h4>
-<div class="outline-text-4" id="text-org351084d">
+<div id="outline-container-orgec4c9b4" class="outline-4">
+<h4 id="orgec4c9b4"><a id="ID-B0BBE465-2364-43E3-991F-B090EEF2D7BD"></a>3.1.2 状态行 (Status Line)</h4>
+<div class="outline-text-4" id="text-orgec4c9b4">
 <blockquote>
 <p>
 The first line of a response message is the <code>status-line</code>, consisting of the protocol version, a space (SP), the status code, another space, a possibly empty textual phrase describing the status code, and ending with CRLF.
@@ -1799,9 +1799,9 @@ The <code>reason-phrase</code> element exists for the sole purpose of providing 
 </div>
 </div>
 
-<div id="outline-container-org6959401" class="outline-3">
-<h3 id="org6959401"><a id="ID-a6c4dceb-8a19-4799-a39b-b7240755c672"></a>3.2 头域 (Header Fields)</h3>
-<div class="outline-text-3" id="text-org6959401">
+<div id="outline-container-org58eec97" class="outline-3">
+<h3 id="org58eec97"><a id="ID-a6c4dceb-8a19-4799-a39b-b7240755c672"></a>3.2 头域 (Header Fields)</h3>
+<div class="outline-text-3" id="text-org58eec97">
 <blockquote>
 <p>
 Each header field consists of a case-insensitive field name followed by a colon (":"), optional leading whitespace, the field value, and optional trailing whitespace.
@@ -1837,9 +1837,9 @@ The <code>field-name</code> token labels the corresponding <code>field-value</co
 </p>
 </div>
 
-<div id="outline-container-org5bce342" class="outline-4">
-<h4 id="org5bce342"><a id="ID-8f9892d5-b8b1-44ee-bcbe-313354cb2e2a"></a>3.2.1 域的可扩展性 (Field Extensibility)</h4>
-<div class="outline-text-4" id="text-org5bce342">
+<div id="outline-container-org73bf9b3" class="outline-4">
+<h4 id="org73bf9b3"><a id="ID-8f9892d5-b8b1-44ee-bcbe-313354cb2e2a"></a>3.2.1 域的可扩展性 (Field Extensibility)</h4>
+<div class="outline-text-4" id="text-org73bf9b3">
 <blockquote>
 <p>
 Header fields are fully extensible: there is no limit on the introduction of new field names, each presumably defining new semantics, nor on the number of header fields used in a given message. Existing fields are defined in each part of this specification and in many other specifications outside this document set.
@@ -1862,12 +1862,12 @@ New header fields can be defined such that, when they are understood by a recipi
 
 <blockquote>
 <p>
-A proxy <b>MUST</b> forward unrecognized header fields unless the <code>field-name</code> is listed in the <code>Connection</code> header field (<a href="#org7b6b0c7">Section 6.1</a>) or the proxy is specifically configured to block, or otherwise transform, such fields. Other recipients <b>SHOULD</b> ignore unrecognized header fields. These requirements allow HTTP's functionality to be enhanced without requiring prior update of deployed intermediaries.
+A proxy <b>MUST</b> forward unrecognized header fields unless the <code>field-name</code> is listed in the <code>Connection</code> header field (<a href="#orgb60aefb">Section 6.1</a>) or the proxy is specifically configured to block, or otherwise transform, such fields. Other recipients <b>SHOULD</b> ignore unrecognized header fields. These requirements allow HTTP's functionality to be enhanced without requiring prior update of deployed intermediaries.
 </p>
 </blockquote>
 
 <p>
-代理（Proxy） <b>必须</b> 转发未识别的报头域，除非该报头域名 <code>field-name</code> 是 <code>Connection</code> （见<a href="#org7b6b0c7">章节 6.1</a>）系列，或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 <b>应该</b> 忽略未识别的报头域。这些要求使得在链路中的中间人还没有前置更新的情况下，HTTP 的功能仍能得到增强。
+代理（Proxy） <b>必须</b> 转发未识别的报头域，除非该报头域名 <code>field-name</code> 是 <code>Connection</code> （见<a href="#orgb60aefb">章节 6.1</a>）系列，或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 <b>应该</b> 忽略未识别的报头域。这些要求使得在链路中的中间人还没有前置更新的情况下，HTTP 的功能仍能得到增强。
 </p>
 
 <blockquote>
@@ -1882,9 +1882,9 @@ All defined header fields ought to be registered with <a href="https://www.iana.
 </div>
 </div>
 
-<div id="outline-container-orgf02c913" class="outline-4">
-<h4 id="orgf02c913">3.2.2 域的顺序 (Field Order)</h4>
-<div class="outline-text-4" id="text-orgf02c913">
+<div id="outline-container-org7b630f0" class="outline-4">
+<h4 id="org7b630f0">3.2.2 域的顺序 (Field Order)</h4>
+<div class="outline-text-4" id="text-org7b630f0">
 <blockquote>
 <p>
 The order in which header fields with differing field names are received is not significant. However, it is good practice to send header fields that contain control data first, such as <code>Host</code> on requests and <code>Date</code> on responses, so that implementations can decide when not to handle a message as early as possible. A server <b>MUST NOT</b> apply a request to the target resource until the entire request header section is received, since later header fields might include conditionals, authentication credentials, or deliberately misleading duplicate header fields that would impact request processing.
@@ -1927,9 +1927,9 @@ A recipient <b>MAY</b> combine multiple header fields with the same field name i
 </div>
 </div>
 
-<div id="outline-container-org97b0def" class="outline-4">
-<h4 id="org97b0def">3.2.3 空格 (Whitespace)</h4>
-<div class="outline-text-4" id="text-org97b0def">
+<div id="outline-container-org4dc2657" class="outline-4">
+<h4 id="org4dc2657">3.2.3 空格 (Whitespace)</h4>
+<div class="outline-text-4" id="text-org4dc2657">
 <blockquote>
 <p>
 This specification uses three rules to denote the use of linear whitespace: <code>OWS</code> (optional whitespace), <code>RWS</code> (required whitespace), and <code>BWS</code> ("bad" whitespace).
@@ -1987,9 +1987,9 @@ BWS            = OWS
 </div>
 </div>
 
-<div id="outline-container-org89624a2" class="outline-4">
-<h4 id="org89624a2">3.2.4 域解析 (Field Parsing)</h4>
-<div class="outline-text-4" id="text-org89624a2">
+<div id="outline-container-orgb769b96" class="outline-4">
+<h4 id="orgb769b96">3.2.4 域解析 (Field Parsing)</h4>
+<div class="outline-text-4" id="text-orgb769b96">
 <blockquote>
 <p>
 Messages are parsed using a generic algorithm, independent of the individual header field names. The contents within a given field value are not parsed until a later stage of message interpretation (usually after the message's entire header section has been processed). Consequently, this specification does not use ABNF rules to define each "Field-Name: Field Value" pair, as was done in previous editions. Instead, this specification uses ABNF rules that are named according to each registered field name, wherein the rule defines the valid grammar for that field's corresponding field values (i.e., after the field-value has been extracted from the header section by a generic field parser).
@@ -2022,12 +2022,12 @@ A field value might be preceded and/or followed by optional whitespace (<code>OW
 
 <blockquote>
 <p>
-Historically, HTTP header field values could be extended over multiple lines by preceding each extra line with at least one space or horizontal tab (<code>obs-fold</code>). This specification deprecates such line folding except within the message/http media type (<a href="#orgc4aea74">Section 8.3.1</a>). A sender <b>MUST NOT</b> generate a message that includes line folding (i.e., that has any <code>field-value</code> that contains a match to the <code>obs-fold</code> rule) unless the message is intended for packaging within the message/http media type.
+Historically, HTTP header field values could be extended over multiple lines by preceding each extra line with at least one space or horizontal tab (<code>obs-fold</code>). This specification deprecates such line folding except within the message/http media type (<a href="#org52d215c">Section 8.3.1</a>). A sender <b>MUST NOT</b> generate a message that includes line folding (i.e., that has any <code>field-value</code> that contains a match to the <code>obs-fold</code> rule) unless the message is intended for packaging within the message/http media type.
 </p>
 </blockquote>
 
 <p>
-历史上，HTTP 报头域值能被扩展为多行，通过在每个额外行之前添加至少一个空格或水平制表符（<code>obs-fold</code>）来实现。本规范废弃了这些分行（Line Folding）除了在媒体类型（Media Type）“message/http”（见<a href="#orgc4aea74">章节 8.3.1</a>）之内的。发送端 <b>禁止</b> 生成一个包含分行（也就是说，带有任何包含能够匹配 <code>obs-fold</code> 规则的报头域值 <code>field-value</code>）的报文，除非报文是用于封装媒体类型 “message/http”的内容。
+历史上，HTTP 报头域值能被扩展为多行，通过在每个额外行之前添加至少一个空格或水平制表符（<code>obs-fold</code>）来实现。本规范废弃了这些分行（Line Folding）除了在媒体类型（Media Type）“message/http”（见<a href="#org52d215c">章节 8.3.1</a>）之内的。发送端 <b>禁止</b> 生成一个包含分行（也就是说，带有任何包含能够匹配 <code>obs-fold</code> 规则的报头域值 <code>field-value</code>）的报文，除非报文是用于封装媒体类型 “message/http”的内容。
 </p>
 
 <blockquote>
@@ -2072,27 +2072,27 @@ Historically, HTTP has allowed field content with text in the ISO‑8859‑1 cha
 </div>
 </div>
 
-<div id="outline-container-org36a9ec6" class="outline-4">
-<h4 id="org36a9ec6">3.2.5 域限制 (Field Limits)</h4>
-<div class="outline-text-4" id="text-org36a9ec6">
+<div id="outline-container-orgb8ba6e4" class="outline-4">
+<h4 id="orgb8ba6e4">3.2.5 域限制 (Field Limits)</h4>
+<div class="outline-text-4" id="text-orgb8ba6e4">
 <blockquote>
 <p>
-HTTP does not place a predefined limit on the length of each header field or on the length of the header section as a whole, as described in <a href="#orgf2cebbd">Section 2.5</a>. Various <a href="https://en.wikipedia.org/wiki/Wireless_ad_hoc_network">ad hoc</a> limitations on individual header field length are found in practice, often depending on the specific field semantics.
+HTTP does not place a predefined limit on the length of each header field or on the length of the header section as a whole, as described in <a href="#orga4caf6c">Section 2.5</a>. Various <a href="https://en.wikipedia.org/wiki/Wireless_ad_hoc_network">ad hoc</a> limitations on individual header field length are found in practice, often depending on the specific field semantics.
 </p>
 </blockquote>
 
 <p>
-HTTP 并没有预先限制每一个报头域（Header Field）的长度或者整个报头块（Header Section）的长度，详情见<a href="#orgf2cebbd">章节 2.5</a>。实践中已发现各家 ad hoc 网络对于个别报头域的长度有不同的限制，这咱长度限制通常依据具体的报头域的语义。
+HTTP 并没有预先限制每一个报头域（Header Field）的长度或者整个报头块（Header Section）的长度，详情见<a href="#orga4caf6c">章节 2.5</a>。实践中已发现各家 ad hoc 网络对于个别报头域的长度有不同的限制，这咱长度限制通常依据具体的报头域的语义。
 </p>
 
 <blockquote>
 <p>
-A server that receives a request header field, or set of fields, larger than it wishes to process <b>MUST</b> respond with an appropriate <code>4xx (Client Error)</code> status code. Ignoring such header fields would increase the server's vulnerability to request smuggling attacks (<a href="#org88bfde7">Section 9.5</a>).
+A server that receives a request header field, or set of fields, larger than it wishes to process <b>MUST</b> respond with an appropriate <code>4xx (Client Error)</code> status code. Ignoring such header fields would increase the server's vulnerability to request smuggling attacks (<a href="#orgb1d2cf9">Section 9.5</a>).
 </p>
 </blockquote>
 
 <p>
-服务端接收到一个请求报头域或报头域集合，其长度超出服务器所能处理的最大长度时，服务器 <b>必须</b> 响应一个恰当的 <code>4xx (Client Error)</code> 状态码。而忽略这些报头域会增加服务器被“Request Smuggling 攻击”（<a href="#org88bfde7">章节 9.5</a>）的隐患。
+服务端接收到一个请求报头域或报头域集合，其长度超出服务器所能处理的最大长度时，服务器 <b>必须</b> 响应一个恰当的 <code>4xx (Client Error)</code> 状态码。而忽略这些报头域会增加服务器被“Request Smuggling 攻击”（<a href="#orgb1d2cf9">章节 9.5</a>）的隐患。
 </p>
 
 <blockquote>
@@ -2107,9 +2107,9 @@ A client <b>MAY</b> discard or truncate received header fields that are larger t
 </div>
 </div>
 
-<div id="outline-container-org246a895" class="outline-4">
-<h4 id="org246a895">3.2.6 域值的组成 (Field Value Components)</h4>
-<div class="outline-text-4" id="text-org246a895">
+<div id="outline-container-org8b62e1e" class="outline-4">
+<h4 id="org8b62e1e">3.2.6 域值的组成 (Field Value Components)</h4>
+<div class="outline-text-4" id="text-org8b62e1e">
 <blockquote>
 <p>
 Most HTTP header field values are defined using common syntax components (token, quoted-string, and comment) separated by whitespace or specific delimiting characters. Delimiters are chosen from the set of US-ASCII visual characters not allowed in a token (DQUOTE and "(),/:;&lt;=&gt;?@[\]{}").
@@ -2191,17 +2191,17 @@ A sender <b>SHOULD NOT</b> generate a <code>quoted-pair</code> in a <code>quoted
 </div>
 </div>
 
-<div id="outline-container-org4eef2f8" class="outline-3">
-<h3 id="org4eef2f8"><a id="ID-74ac5c85-d91e-43ab-bb2f-6c5957da5f5c"></a>3.3 报文正文 (Message Body)</h3>
-<div class="outline-text-3" id="text-org4eef2f8">
+<div id="outline-container-orga968ed4" class="outline-3">
+<h3 id="orga968ed4"><a id="ID-74ac5c85-d91e-43ab-bb2f-6c5957da5f5c"></a>3.3 报文正文 (Message Body)</h3>
+<div class="outline-text-3" id="text-orga968ed4">
 <blockquote>
 <p>
-The message body (if any) of an HTTP message is used to carry the payload body of that request or response. The message body is identical to the payload body unless a transfer coding has been applied, as described in <a href="#org79ba587">Section 3.3.1</a>.
+The message body (if any) of an HTTP message is used to carry the payload body of that request or response. The message body is identical to the payload body unless a transfer coding has been applied, as described in <a href="#org2760888">Section 3.3.1</a>.
 </p>
 </blockquote>
 
 <p>
-HTTP 报文的报文正文（如果存在的话）是用来运载请求或响应的载荷（Payload Body）的。除非应用了传输编码，报文正文（Message Body）等价于载荷（Payload Body），详情见<a href="#org79ba587">章节 3.3.1</a>。
+HTTP 报文的报文正文（如果存在的话）是用来运载请求或响应的载荷（Payload Body）的。除非应用了传输编码，报文正文（Message Body）等价于载荷（Payload Body），详情见<a href="#org2760888">章节 3.3.1</a>。
 </p>
 
 <div class="org-src-container">
@@ -2231,26 +2231,26 @@ The presence of a message body in a request is signaled by a <code>Content-Lengt
 
 <blockquote>
 <p>
-The presence of a message body in a response depends on both the request method to which it is responding and the response status code (<a href="#org351084d">Section 3.1.2</a>). Responses to the HEAD request method (<a href="https://tools.ietf.org/html/rfc7231#section-4.3.2">Section 4.3.2</a> of [<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>]) never include a message body because the associated response header fields (e.g., <code>Transfer-Encoding</code>, <code>Content-Length</code>, etc.), if present, indicate only what their values would have been if the request method had been GET (<a href="https://tools.ietf.org/html/rfc7231#section-4.3.1">Section 4.3.1</a> of [<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>]). 2xx (Successful) responses to a CONNECT request method (<a href="https://tools.ietf.org/html/rfc7231#section-4.3.6">Section 4.3.6</a> of [<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>]) switch to tunnel mode instead of having a message body. All <code>1xx (Informational)</code>, <code>204 (No Content)</code>, and <code>304 (Not Modified)</code> responses do not include a message body. All other responses do include a message body, although the body might be of zero length.
+The presence of a message body in a response depends on both the request method to which it is responding and the response status code (<a href="#orgec4c9b4">Section 3.1.2</a>). Responses to the HEAD request method (<a href="https://tools.ietf.org/html/rfc7231#section-4.3.2">Section 4.3.2</a> of [<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>]) never include a message body because the associated response header fields (e.g., <code>Transfer-Encoding</code>, <code>Content-Length</code>, etc.), if present, indicate only what their values would have been if the request method had been GET (<a href="https://tools.ietf.org/html/rfc7231#section-4.3.1">Section 4.3.1</a> of [<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>]). 2xx (Successful) responses to a CONNECT request method (<a href="https://tools.ietf.org/html/rfc7231#section-4.3.6">Section 4.3.6</a> of [<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>]) switch to tunnel mode instead of having a message body. All <code>1xx (Informational)</code>, <code>204 (No Content)</code>, and <code>304 (Not Modified)</code> responses do not include a message body. All other responses do include a message body, although the body might be of zero length.
 </p>
 </blockquote>
 
 <p>
-在一个响应中是否会出现报文正文，取决于请求方法所对应的响应是什么，且响应状态码是什么（<a href="#org351084d">章节 3.1.2</a>）。响应给请求方法 HEAD（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.2">章节 4.3.2</a>）的报文永远不会包含一个报文正文，这是因为如果出现上述相关的响应报头域（例如，<code>Transfer-Encoding</code>、<code>Content-Length</code> 等），表明仅当这个报文的请求方法被改变为 GET（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.1">章节 4.3.1</a>）的时候，这些报头域才有效<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>。<code>2xx (Successful)</code> 响应给一个请求方法 CONNECT（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.6">章节 4.3.6</a>）。所有 <code>1xx (Informational)</code>、<code>204 (No Content)</code> 和 <code>304 (Not Modified)</code> 的响应报文并不会包含一个报文正文。除上述情况以外，所有其他响应报文都会包含一个报文正文，虽然报文正文的长度可能为零。
+在一个响应中是否会出现报文正文，取决于请求方法所对应的响应是什么，且响应状态码是什么（<a href="#orgec4c9b4">章节 3.1.2</a>）。响应给请求方法 HEAD（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.2">章节 4.3.2</a>）的报文永远不会包含一个报文正文，这是因为如果出现上述相关的响应报头域（例如，<code>Transfer-Encoding</code>、<code>Content-Length</code> 等），表明仅当这个报文的请求方法被改变为 GET（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.1">章节 4.3.1</a>）的时候，这些报头域才有效<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>。<code>2xx (Successful)</code> 响应给一个请求方法 CONNECT（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.6">章节 4.3.6</a>）。所有 <code>1xx (Informational)</code>、<code>204 (No Content)</code> 和 <code>304 (Not Modified)</code> 的响应报文并不会包含一个报文正文。除上述情况以外，所有其他响应报文都会包含一个报文正文，虽然报文正文的长度可能为零。
 </p>
 </div>
 
-<div id="outline-container-org79ba587" class="outline-4">
-<h4 id="org79ba587"><a id="ID-1754823B-D0BC-410F-A17B-E7ADA1AA79BC"></a>3.3.1 传输编码 (Transfer-Encoding)</h4>
-<div class="outline-text-4" id="text-org79ba587">
+<div id="outline-container-org2760888" class="outline-4">
+<h4 id="org2760888"><a id="ID-1754823B-D0BC-410F-A17B-E7ADA1AA79BC"></a>3.3.1 传输编码 (Transfer-Encoding)</h4>
+<div class="outline-text-4" id="text-org2760888">
 <blockquote>
 <p>
-The <code>Transfer-Encoding</code> header field lists the transfer coding names corresponding to the sequence of transfer codings that have been (or will be) applied to the payload body in order to form the message body. Transfer codings are defined in <a href="#orgec8c8de">Section 4</a>.
+The <code>Transfer-Encoding</code> header field lists the transfer coding names corresponding to the sequence of transfer codings that have been (or will be) applied to the payload body in order to form the message body. Transfer codings are defined in <a href="#org8f523a6">Section 4</a>.
 </p>
 </blockquote>
 
 <p>
-报头域 <code>Transfer-Encoding</code> 罗列了多个传输编码值（Transfer coding）的名称，这些传输编码值已经（或即将）被应用于对载荷（Payload Body）进行编码，最终形成报文正文（Message Body）。传输编码值（Transfer coding）定义在<a href="#orgec8c8de">章节 4</a>。
+报头域 <code>Transfer-Encoding</code> 罗列了多个传输编码值（Transfer coding）的名称，这些传输编码值已经（或即将）被应用于对载荷（Payload Body）进行编码，最终形成报文正文（Message Body）。传输编码值（Transfer coding）定义在<a href="#org8f523a6">章节 4</a>。
 </p>
 
 <div class="org-src-container">
@@ -2270,12 +2270,12 @@ The <code>Transfer-Encoding</code> header field lists the transfer coding names 
 
 <blockquote>
 <p>
-A recipient <b>MUST</b> be able to parse the chunked transfer coding (<a href="#org7fd1089">Section 4.1</a>) because it plays a crucial role in framing messages when the payload body size is not known in advance. A sender <b>MUST NOT</b> apply <code>chunked</code> more than once to a message body (i.e., chunking an already chunked message is not allowed). If any transfer coding other than <code>chunked</code> is applied to a request payload body, the sender <b>MUST</b> apply <code>chunked</code> as the final transfer coding to ensure that the message is properly framed. If any transfer coding other than <code>chunked</code> is applied to a response payload body, the sender <b>MUST</b> either apply chunked as the final transfer coding or terminate the message by closing the connection.
+A recipient <b>MUST</b> be able to parse the chunked transfer coding (<a href="#org730e99a">Section 4.1</a>) because it plays a crucial role in framing messages when the payload body size is not known in advance. A sender <b>MUST NOT</b> apply <code>chunked</code> more than once to a message body (i.e., chunking an already chunked message is not allowed). If any transfer coding other than <code>chunked</code> is applied to a request payload body, the sender <b>MUST</b> apply <code>chunked</code> as the final transfer coding to ensure that the message is properly framed. If any transfer coding other than <code>chunked</code> is applied to a response payload body, the sender <b>MUST</b> either apply chunked as the final transfer coding or terminate the message by closing the connection.
 </p>
 </blockquote>
 
 <p>
-一个接收端 <b>必须</b> 能够解析（Parse）分块传输编码值（Chunked Transfer Coding，见<a href="#org7fd1089">章节 4.1</a>），这是因为它在预先并不知道载荷（Payload Body）的大小的情况下对报文进行分帧的过程中扮演了重要的角色。一个发送端 <b>禁止</b> 对一个报文正文进行超过一次的分块（也就是说，不允许对一个已经分好块的报文进行再次分块）。如果任何除 <code>chunked</code> 以外的传输编码值被应用到一个请求载荷（Request Payload Body）里，发送端 <b>必须</b> 将 <code>chunked</code> 作为最后的传输编码值来确保那个报文被正确的分帧。如果任何除 <code>chunked</code> 以外的传输编码值被应用到一个响应载荷（Response Payload Body）里，发送端 <b>必须</b> 要不将 <code>chunked</code> 作为最后的传输编码值，要不关闭连接来终止这个报文的发送。
+一个接收端 <b>必须</b> 能够解析（Parse）分块传输编码值（Chunked Transfer Coding，见<a href="#org730e99a">章节 4.1</a>），这是因为它在预先并不知道载荷（Payload Body）的大小的情况下对报文进行分帧的过程中扮演了重要的角色。一个发送端 <b>禁止</b> 对一个报文正文进行超过一次的分块（也就是说，不允许对一个已经分好块的报文进行再次分块）。如果任何除 <code>chunked</code> 以外的传输编码值被应用到一个请求载荷（Request Payload Body）里，发送端 <b>必须</b> 将 <code>chunked</code> 作为最后的传输编码值来确保那个报文被正确的分帧。如果任何除 <code>chunked</code> 以外的传输编码值被应用到一个响应载荷（Response Payload Body）里，发送端 <b>必须</b> 要不将 <code>chunked</code> 作为最后的传输编码值，要不关闭连接来终止这个报文的发送。
 </p>
 
 <blockquote>
@@ -2354,9 +2354,9 @@ A server that receives a request message with a transfer coding it does not unde
 </div>
 </div>
 
-<div id="outline-container-orgd55a3ad" class="outline-4">
-<h4 id="orgd55a3ad">3.3.2 内容长度 (Content-Length)</h4>
-<div class="outline-text-4" id="text-orgd55a3ad">
+<div id="outline-container-orga3f49c9" class="outline-4">
+<h4 id="orga3f49c9">3.3.2 内容长度 (Content-Length)</h4>
+<div class="outline-text-4" id="text-orga3f49c9">
 <blockquote>
 <p>
 When a message does not have a <code>Transfer-Encoding</code> header field, a <code>Content-Length</code> header field can provide the anticipated size, as a decimal number of octets, for a potential payload body. For messages that do include a payload body, the <code>Content-Length</code> field-value provides the framing information necessary for determining where the body (and message) ends. For messages that do not include a payload body, the <code>Content-Length</code> indicates the size of the selected representation (<a href="https://tools.ietf.org/html/rfc7231#section-3">Section 3</a> of [<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>]).
@@ -2454,12 +2454,12 @@ Aside from the cases defined above, in the absence of <code>Transfer-Encoding</c
 
 <blockquote>
 <p>
-Any <code>Content-Length</code> field value greater than or equal to zero is valid. Since there is no predefined limit to the length of a payload, a recipient <b>MUST</b> anticipate potentially large decimal numerals and prevent parsing errors due to integer conversion overflows (<a href="#orgf5d3ccc">Section 9.3</a>).
+Any <code>Content-Length</code> field value greater than or equal to zero is valid. Since there is no predefined limit to the length of a payload, a recipient <b>MUST</b> anticipate potentially large decimal numerals and prevent parsing errors due to integer conversion overflows (<a href="#org42beb41">Section 9.3</a>).
 </p>
 </blockquote>
 
 <p>
-任何大于或等于 0 的 <code>Content-Length</code> 的域值都是合法的。因为没有预先定义载荷的长度限制，接收端 <b>必须</b> 能预见特大数值（Big Decimal）的可能性，并且避免由于整型类型转换溢出所引起的解析错误（<a href="#orgf5d3ccc">章节 9.3</a>）。
+任何大于或等于 0 的 <code>Content-Length</code> 的域值都是合法的。因为没有预先定义载荷的长度限制，接收端 <b>必须</b> 能预见特大数值（Big Decimal）的可能性，并且避免由于整型类型转换溢出所引起的解析错误（<a href="#org42beb41">章节 9.3</a>）。
 </p>
 
 <blockquote>
@@ -2484,9 +2484,9 @@ If a message is received that has multiple <code>Content-Length</code> header fi
 </div>
 </div>
 
-<div id="outline-container-org1dec6a6" class="outline-4">
-<h4 id="org1dec6a6">3.3.3 报文正文的长度 (Message Body Length)</h4>
-<div class="outline-text-4" id="text-org1dec6a6">
+<div id="outline-container-org85f59c4" class="outline-4">
+<h4 id="org85f59c4">3.3.3 报文正文的长度 (Message Body Length)</h4>
+<div class="outline-text-4" id="text-org85f59c4">
 <blockquote>
 <p>
 The length of a message body is determined by one of the following (in order of precedence):
@@ -2504,7 +2504,7 @@ The length of a message body is determined by one of the following (in order of 
 <li>Any <code>2xx (Successful)</code> response to a CONNECT request implies that the connection will become a tunnel immediately after the empty line that concludes the header fields. A client <b>MUST</b> ignore any <code>Content-Length</code> or <code>Transfer-Encoding</code> header fields received in such a message.</li>
 
 <li><p>
-If a <code>Transfer-Encoding</code> header field is present and the chunked transfer coding (<a href="#org7fd1089">Section 4.1</a>) is the final encoding, the message body length is determined by reading and decoding the chunked data until the transfer coding indicates the data is complete.
+If a <code>Transfer-Encoding</code> header field is present and the chunked transfer coding (<a href="#org730e99a">Section 4.1</a>) is the final encoding, the message body length is determined by reading and decoding the chunked data until the transfer coding indicates the data is complete.
 </p>
 
 <p>
@@ -2512,7 +2512,7 @@ If a <code>Transfer-Encoding</code> header field is present in a response and th
 </p>
 
 <p>
-If a message is received with both a <code>Transfer-Encoding</code> and a <code>Content-Length</code> header field, the <code>Transfer-Encoding</code> overrides the <code>Content-Length</code>. Such a message might indicate an attempt to perform request smuggling (<a href="#org88bfde7">Section 9.5</a>) or response splitting (<a href="#org92555a4">Section 9.4</a>) and ought to be handled as an error. A sender <b>MUST</b> remove the received <code>Content-Length</code> field prior to forwarding such a message downstream.
+If a message is received with both a <code>Transfer-Encoding</code> and a <code>Content-Length</code> header field, the <code>Transfer-Encoding</code> overrides the <code>Content-Length</code>. Such a message might indicate an attempt to perform request smuggling (<a href="#orgb1d2cf9">Section 9.5</a>) or response splitting (<a href="#org084d50b">Section 9.4</a>) and ought to be handled as an error. A sender <b>MUST</b> remove the received <code>Content-Length</code> field prior to forwarding such a message downstream.
 </p></li>
 
 <li>If a message is received without <code>Transfer-Encoding</code> and with either multiple <code>Content-Length</code> header fields having differing field-values or a single <code>Content-Length</code> header field having an invalid value, then the message framing is invalid and the recipient <b>MUST</b> treat it as an unrecoverable error. If this is a request message, the server <b>MUST</b> respond with a <code>400 (Bad Request)</code> status code and then close the connection. If this is a response message received by a proxy, the proxy <b>MUST</b> close the connection to the server, discard the received response, and send a <code>502 (Bad Gateway)</code> response to the client. If this is a response message received by a user agent, the user agent <b>MUST</b> close the connection to the server and discard the received response.</li>
@@ -2531,7 +2531,7 @@ If a message is received with both a <code>Transfer-Encoding</code> and a <code>
 <li>任何响应给一个 CONNECT 请求的带有 <code>2xx (Successful)</code> 状态码的响应报文，意味着在空行结束报头域之后，这个连接将会变成一个隧道中间人。客户端 <b>必须</b> 忽略接收自这种报文里的任何 <code>Content-Length</code> 或者 <code>Transfer-Encoding</code> 报头域。</li>
 
 <li><p>
-如果出现了一个 <code>Transfer-Encoding</code> 报头域并且分块传输编码值（Chunked Transfer Coding，<a href="#org7fd1089">章节 4.1</a>）是其最后一个编码值，报文正文的长度通过读取和解码分块数据直到传输编码指明数据已经完整来确定。
+如果出现了一个 <code>Transfer-Encoding</code> 报头域并且分块传输编码值（Chunked Transfer Coding，<a href="#org730e99a">章节 4.1</a>）是其最后一个编码值，报文正文的长度通过读取和解码分块数据直到传输编码指明数据已经完整来确定。
 </p>
 
 <p>
@@ -2539,7 +2539,7 @@ If a message is received with both a <code>Transfer-Encoding</code> and a <code>
 </p>
 
 <p>
-如果接收到一个报文既带有一个 <code>Transfer-Encoding</code> 又带有一个 <code>Content-Length</code> 报头域，那么 <code>Transfer-Encoding</code> 将覆盖 <code>Content-Length</code>。这种报文可能意味着一个执行 Request Smuggling 攻击（<a href="#org88bfde7">章节 9.5</a>）或者 Response Splitting 攻击（<a href="#org92555a4">章节 9.4</a>）的意图，应该被当作一个错误来处理。发送端 <b>必须</b> 在下行转发这种报文之前移除所接收到的 <code>Content-Length</code> 域。
+如果接收到一个报文既带有一个 <code>Transfer-Encoding</code> 又带有一个 <code>Content-Length</code> 报头域，那么 <code>Transfer-Encoding</code> 将覆盖 <code>Content-Length</code>。这种报文可能意味着一个执行 Request Smuggling 攻击（<a href="#orgb1d2cf9">章节 9.5</a>）或者 Response Splitting 攻击（<a href="#org084d50b">章节 9.4</a>）的意图，应该被当作一个错误来处理。发送端 <b>必须</b> 在下行转发这种报文之前移除所接收到的 <code>Content-Length</code> 域。
 </p></li>
 
 <li>如果一个报文没有 <code>Transfer-Encoding</code> 报头域，但带有或者多个不同域值的 <code>Content-Length</code> 报头域，或者一个域值不合法的 <code>Content-Length</code>，那么这个报文的分帧是不合法的，并且接收端 <b>必须</b> 将其当作一个不可恢复的错误来对待。如果这是一个请求报文，服务器 <b>必须</b> 响应一个带有 <code>400 (Bad Request)</code> 状态码的响应报文然后关闭连接。如果这是一个代理（Proxy）接收到的响应报文，那么这个代理 <b>必须</b> 关闭与服务器的连接，丢弃掉这个报文并且发送一个 <code>502 (Bad Gateway)</code> 状态码的响应报文到客户端。如果这是一个用户代理（User Agent）接收到的响应报文，那么这个用户代理 <b>必须</b> 关闭与服务器的连接，并且丢弃掉这个报文。</li>
@@ -2588,9 +2588,9 @@ If the final response to the last request on a connection has been completely re
 </div>
 </div>
 
-<div id="outline-container-org2c02b4a" class="outline-3">
-<h3 id="org2c02b4a">3.4 报文不完整的处理 (Handling Incomplete Messages)</h3>
-<div class="outline-text-3" id="text-org2c02b4a">
+<div id="outline-container-org5fb52da" class="outline-3">
+<h3 id="org5fb52da">3.4 报文不完整的处理 (Handling Incomplete Messages)</h3>
+<div class="outline-text-3" id="text-org5fb52da">
 <blockquote>
 <p>
 A server that receives an incomplete request message, usually due to a canceled request or a triggered timeout exception, <b>MAY</b> send an error response prior to closing the connection.
@@ -2633,9 +2633,9 @@ A message body that uses the chunked transfer coding is incomplete if the zero-s
 </div>
 </div>
 
-<div id="outline-container-org8114a2f" class="outline-3">
-<h3 id="org8114a2f"><a id="ID-A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517"></a>3.5 报文解析的健壮性 (Message Parsing Robustness)</h3>
-<div class="outline-text-3" id="text-org8114a2f">
+<div id="outline-container-org5ca60ac" class="outline-3">
+<h3 id="org5ca60ac"><a id="ID-A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517"></a>3.5 报文解析的健壮性 (Message Parsing Robustness)</h3>
+<div class="outline-text-3" id="text-org5ca60ac">
 <blockquote>
 <p>
 Older HTTP/1.0 user agent implementations might send an extra CRLF after a POST request as a workaround for some early server applications that failed to read message body content that was not terminated by a line-ending. An HTTP/1.1 user agent <b>MUST NOT</b> preface or follow a request with an extra CRLF. If terminating the request message body with a line-ending is desired, then the user agent <b>MUST</b> count the terminating CRLF octets as part of the message body length.
@@ -2668,12 +2668,12 @@ Although the line terminator for the <code>start-line</code> and header fields i
 
 <blockquote>
 <p>
-Although the <code>request-line</code> and <code>status-line</code> grammar rules require that each of the component elements be separated by a single SP octet, recipients <b>MAY</b> instead parse on whitespace-delimited word boundaries and, aside from the CRLF terminator, treat any form of whitespace as the SP separator while ignoring preceding or trailing whitespace; such whitespace includes one or more of the following octets: SP, HTAB, VT (%x0B), FF (%x0C), or bare CR. However, lenient parsing can result in security vulnerabilities if there are multiple recipients of the message and each has its own unique interpretation of robustness (see <a href="#org88bfde7">Section 9.5</a>).
+Although the <code>request-line</code> and <code>status-line</code> grammar rules require that each of the component elements be separated by a single SP octet, recipients <b>MAY</b> instead parse on whitespace-delimited word boundaries and, aside from the CRLF terminator, treat any form of whitespace as the SP separator while ignoring preceding or trailing whitespace; such whitespace includes one or more of the following octets: SP, HTAB, VT (%x0B), FF (%x0C), or bare CR. However, lenient parsing can result in security vulnerabilities if there are multiple recipients of the message and each has its own unique interpretation of robustness (see <a href="#orgb1d2cf9">Section 9.5</a>).
 </p>
 </blockquote>
 
 <p>
-虽然请求行（Request Line）和状态行（Status Line）的语法规则要求每一个部件元素需要以一个空格（8位字节） <code>SP</code> 分隔，但是接收端 <b>可以</b> 改由使用更宽泛的空格限定符（Whitespace-delimited Word）替代 <code>SP</code> 来进行解析（Parse），空格限定符由包含一个或多个 <code>SP</code>、<code>HTAB</code>、<code>VT</code> (%x0B)、<code>FF</code> (&amp;x0C) 或者单独由 <code>CR</code> 组成。但是，如果报文有多个接收端，而且这些接收端都有自己独特的健壮性的解释（Interpretation），那么，这种宽泛解析（Parse）的方式会引起安全隐患（见<a href="#org88bfde7">章节 9.5</a>）。
+虽然请求行（Request Line）和状态行（Status Line）的语法规则要求每一个部件元素需要以一个空格（8位字节） <code>SP</code> 分隔，但是接收端 <b>可以</b> 改由使用更宽泛的空格限定符（Whitespace-delimited Word）替代 <code>SP</code> 来进行解析（Parse），空格限定符由包含一个或多个 <code>SP</code>、<code>HTAB</code>、<code>VT</code> (%x0B)、<code>FF</code> (&amp;x0C) 或者单独由 <code>CR</code> 组成。但是，如果报文有多个接收端，而且这些接收端都有自己独特的健壮性的解释（Interpretation），那么，这种宽泛解析（Parse）的方式会引起安全隐患（见<a href="#orgb1d2cf9">章节 9.5</a>）。
 </p>
 
 <blockquote>
@@ -2689,236 +2689,236 @@ When a server listening only for HTTP request messages, or processing what appea
 </div>
 </div>
 
-<div id="outline-container-orgec8c8de" class="outline-2">
-<h2 id="orgec8c8de"><a id="ID-F7261A9D-8DF2-4A92-B8E8-D8F346005C6C"></a>4 传输编码值（Transfer Codings）</h2>
-<div class="outline-text-2" id="text-orgec8c8de">
+<div id="outline-container-org8f523a6" class="outline-2">
+<h2 id="org8f523a6"><a id="ID-F7261A9D-8DF2-4A92-B8E8-D8F346005C6C"></a>4 传输编码值（Transfer Codings）</h2>
+<div class="outline-text-2" id="text-org8f523a6">
 </div>
-<div id="outline-container-org7fd1089" class="outline-3">
-<h3 id="org7fd1089"><a id="ID-452E8F0E-0A13-40B4-B7A2-759A30E62D31"></a>4.1 分块传输编码值 (Chunked Transfer Coding)</h3>
-<div class="outline-text-3" id="text-org7fd1089">
+<div id="outline-container-org730e99a" class="outline-3">
+<h3 id="org730e99a"><a id="ID-452E8F0E-0A13-40B4-B7A2-759A30E62D31"></a>4.1 分块传输编码值 (Chunked Transfer Coding)</h3>
+<div class="outline-text-3" id="text-org730e99a">
 </div>
-<div id="outline-container-orgf6a4338" class="outline-4">
-<h4 id="orgf6a4338">4.1.1 Chunk Extensions</h4>
+<div id="outline-container-org509aa11" class="outline-4">
+<h4 id="org509aa11">4.1.1 Chunk Extensions</h4>
 </div>
-<div id="outline-container-org94cd96c" class="outline-4">
-<h4 id="org94cd96c">4.1.2 Chunked Trailer Part</h4>
+<div id="outline-container-org1e9098c" class="outline-4">
+<h4 id="org1e9098c">4.1.2 Chunked Trailer Part</h4>
 </div>
-<div id="outline-container-orgcacae9a" class="outline-4">
-<h4 id="orgcacae9a">4.1.3 Decoding Chunked</h4>
+<div id="outline-container-orgd17f780" class="outline-4">
+<h4 id="orgd17f780">4.1.3 Decoding Chunked</h4>
 </div>
 </div>
-<div id="outline-container-orgbfef03a" class="outline-3">
-<h3 id="orgbfef03a">4.2 Compression Codings</h3>
-<div class="outline-text-3" id="text-orgbfef03a">
+<div id="outline-container-orga3bdd47" class="outline-3">
+<h3 id="orga3bdd47">4.2 Compression Codings</h3>
+<div class="outline-text-3" id="text-orga3bdd47">
 </div>
-<div id="outline-container-orgec6de1c" class="outline-4">
-<h4 id="orgec6de1c">4.2.1 Compress Coding</h4>
+<div id="outline-container-orgb33f1ff" class="outline-4">
+<h4 id="orgb33f1ff">4.2.1 Compress Coding</h4>
 </div>
-<div id="outline-container-org60a35ff" class="outline-4">
-<h4 id="org60a35ff">4.2.2 Deflate Coding</h4>
+<div id="outline-container-org4cf7178" class="outline-4">
+<h4 id="org4cf7178">4.2.2 Deflate Coding</h4>
 </div>
-<div id="outline-container-org4719f76" class="outline-4">
-<h4 id="org4719f76">4.2.3 Gzip Coding</h4>
+<div id="outline-container-org338f943" class="outline-4">
+<h4 id="org338f943">4.2.3 Gzip Coding</h4>
 </div>
 </div>
-<div id="outline-container-orga9f6484" class="outline-3">
-<h3 id="orga9f6484">4.3 TE</h3>
+<div id="outline-container-org953ad12" class="outline-3">
+<h3 id="org953ad12">4.3 TE</h3>
 </div>
-<div id="outline-container-org0199055" class="outline-3">
-<h3 id="org0199055">4.4 Trailer</h3>
+<div id="outline-container-orgfde82e8" class="outline-3">
+<h3 id="orgfde82e8">4.4 Trailer</h3>
 </div>
 </div>
-<div id="outline-container-org947f843" class="outline-2">
-<h2 id="org947f843"><a id="ID-f6881980-16db-4ca2-a3c8-39aa336c954f"></a>5 报文路由（Message Routing）</h2>
-<div class="outline-text-2" id="text-org947f843">
+<div id="outline-container-org28ed6c1" class="outline-2">
+<h2 id="org28ed6c1"><a id="ID-f6881980-16db-4ca2-a3c8-39aa336c954f"></a>5 报文路由（Message Routing）</h2>
+<div class="outline-text-2" id="text-org28ed6c1">
 </div>
-<div id="outline-container-org5c3fb36" class="outline-3">
-<h3 id="org5c3fb36">5.1 标识目标资源 (Identifying a Target Resource)</h3>
+<div id="outline-container-org1bb871f" class="outline-3">
+<h3 id="org1bb871f">5.1 标识目标资源 (Identifying a Target Resource)</h3>
 </div>
-<div id="outline-container-orgf000793" class="outline-3">
-<h3 id="orgf000793">5.2 Connecting Inbound</h3>
+<div id="outline-container-org451ac33" class="outline-3">
+<h3 id="org451ac33">5.2 Connecting Inbound</h3>
 </div>
-<div id="outline-container-org7eb8949" class="outline-3">
-<h3 id="org7eb8949"><a id="ID-16a8fba9-40f8-4b2c-ba5f-2f6522362c3a"></a>5.3 请求目标 (Request Target)</h3>
-<div class="outline-text-3" id="text-org7eb8949">
+<div id="outline-container-org30e9870" class="outline-3">
+<h3 id="org30e9870"><a id="ID-16a8fba9-40f8-4b2c-ba5f-2f6522362c3a"></a>5.3 请求目标 (Request Target)</h3>
+<div class="outline-text-3" id="text-org30e9870">
 </div>
-<div id="outline-container-orgcbdf10e" class="outline-4">
-<h4 id="orgcbdf10e">5.3.1 (origin-form)</h4>
+<div id="outline-container-org0ac113d" class="outline-4">
+<h4 id="org0ac113d">5.3.1 (origin-form)</h4>
 </div>
-<div id="outline-container-orgb40cdf7" class="outline-4">
-<h4 id="orgb40cdf7">5.3.2 (absolute-form)</h4>
+<div id="outline-container-org381586e" class="outline-4">
+<h4 id="org381586e">5.3.2 (absolute-form)</h4>
 </div>
-<div id="outline-container-org675a538" class="outline-4">
-<h4 id="org675a538">5.3.3 (authority-form)</h4>
+<div id="outline-container-org66ef03d" class="outline-4">
+<h4 id="org66ef03d">5.3.3 (authority-form)</h4>
 </div>
-<div id="outline-container-orgc87dfbf" class="outline-4">
-<h4 id="orgc87dfbf">5.3.4 (asterisk-form)</h4>
+<div id="outline-container-org2e40a95" class="outline-4">
+<h4 id="org2e40a95">5.3.4 (asterisk-form)</h4>
 </div>
 </div>
-<div id="outline-container-org07b3b88" class="outline-3">
-<h3 id="org07b3b88">5.4 主机 (Host)</h3>
+<div id="outline-container-orgc618a5b" class="outline-3">
+<h3 id="orgc618a5b">5.4 主机 (Host)</h3>
 </div>
-<div id="outline-container-org6f3872a" class="outline-3">
-<h3 id="org6f3872a"><a id="ID-3265c21d-0d3b-4776-8e28-38278d168779"></a>5.5 Effective Request URI</h3>
-<div class="outline-text-3" id="text-org6f3872a">
+<div id="outline-container-org2611a4b" class="outline-3">
+<h3 id="org2611a4b"><a id="ID-3265c21d-0d3b-4776-8e28-38278d168779"></a>5.5 Effective Request URI</h3>
+<div class="outline-text-3" id="text-org2611a4b">
 </div>
 </div>
-<div id="outline-container-org49b7b33" class="outline-3">
-<h3 id="org49b7b33">5.6 Associating a Response to a Request</h3>
+<div id="outline-container-orgee58b56" class="outline-3">
+<h3 id="orgee58b56">5.6 Associating a Response to a Request</h3>
 </div>
-<div id="outline-container-org64e6e12" class="outline-3">
-<h3 id="org64e6e12">5.7 报文转发 (Message Forwarding)</h3>
-<div class="outline-text-3" id="text-org64e6e12">
+<div id="outline-container-orga000ef5" class="outline-3">
+<h3 id="orga000ef5">5.7 报文转发 (Message Forwarding)</h3>
+<div class="outline-text-3" id="text-orga000ef5">
 </div>
-<div id="outline-container-org3ee2f59" class="outline-4">
-<h4 id="org3ee2f59">5.7.1 Via</h4>
+<div id="outline-container-org4393b7e" class="outline-4">
+<h4 id="org4393b7e">5.7.1 Via</h4>
 </div>
-<div id="outline-container-orge06b620" class="outline-4">
-<h4 id="orge06b620"><a id="ID-b6641b58-3ac6-4fce-9c44-a3715ffdc8a0"></a>5.7.2 Transformations</h4>
-<div class="outline-text-4" id="text-orge06b620">
+<div id="outline-container-org259cc67" class="outline-4">
+<h4 id="org259cc67"><a id="ID-b6641b58-3ac6-4fce-9c44-a3715ffdc8a0"></a>5.7.2 Transformations</h4>
+<div class="outline-text-4" id="text-org259cc67">
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org2d7ae84" class="outline-2">
-<h2 id="org2d7ae84">6 连接管理（Connection Management）</h2>
-<div class="outline-text-2" id="text-org2d7ae84">
+<div id="outline-container-orge3312fa" class="outline-2">
+<h2 id="orge3312fa">6 连接管理（Connection Management）</h2>
+<div class="outline-text-2" id="text-orge3312fa">
 </div>
-<div id="outline-container-org7b6b0c7" class="outline-3">
-<h3 id="org7b6b0c7"><a id="ID-40B2B721-F916-41EA-86FB-514FDED5B3A4"></a>6.1 连接 (Connection)</h3>
-<div class="outline-text-3" id="text-org7b6b0c7">
+<div id="outline-container-orgb60aefb" class="outline-3">
+<h3 id="orgb60aefb"><a id="ID-40B2B721-F916-41EA-86FB-514FDED5B3A4"></a>6.1 连接 (Connection)</h3>
+<div class="outline-text-3" id="text-orgb60aefb">
 </div>
 </div>
-<div id="outline-container-orgfb78f53" class="outline-3">
-<h3 id="orgfb78f53">6.2 建立 (Establishment)</h3>
+<div id="outline-container-orgf6df3c7" class="outline-3">
+<h3 id="orgf6df3c7">6.2 建立 (Establishment)</h3>
 </div>
-<div id="outline-container-orgab2c08a" class="outline-3">
-<h3 id="orgab2c08a">6.3 持久性 (Persistence)</h3>
-<div class="outline-text-3" id="text-orgab2c08a">
+<div id="outline-container-org395a8f7" class="outline-3">
+<h3 id="org395a8f7">6.3 持久性 (Persistence)</h3>
+<div class="outline-text-3" id="text-org395a8f7">
 </div>
-<div id="outline-container-orgbe12885" class="outline-4">
-<h4 id="orgbe12885">6.3.1 (Retrying Requests)</h4>
+<div id="outline-container-org69cbde4" class="outline-4">
+<h4 id="org69cbde4">6.3.1 (Retrying Requests)</h4>
 </div>
-<div id="outline-container-org4981a7e" class="outline-4">
-<h4 id="org4981a7e">6.3.2 (Pipelining)</h4>
+<div id="outline-container-org4213c67" class="outline-4">
+<h4 id="org4213c67">6.3.2 (Pipelining)</h4>
 </div>
 </div>
-<div id="outline-container-org6c93f06" class="outline-3">
-<h3 id="org6c93f06">6.4 并发性 (Concurrency)</h3>
+<div id="outline-container-orgf216bec" class="outline-3">
+<h3 id="orgf216bec">6.4 并发性 (Concurrency)</h3>
 </div>
-<div id="outline-container-org777403a" class="outline-3">
-<h3 id="org777403a">6.5 失败和超时 (Failures and Timeouts)</h3>
+<div id="outline-container-orgadddf3f" class="outline-3">
+<h3 id="orgadddf3f">6.5 失败和超时 (Failures and Timeouts)</h3>
 </div>
-<div id="outline-container-orgda1040c" class="outline-3">
-<h3 id="orgda1040c">6.6 销毁 (Tear-down)</h3>
+<div id="outline-container-orgc5140c1" class="outline-3">
+<h3 id="orgc5140c1">6.6 销毁 (Tear-down)</h3>
 </div>
-<div id="outline-container-org1ddbda5" class="outline-3">
-<h3 id="org1ddbda5">6.7 升级 (Upgrade)</h3>
+<div id="outline-container-org9ed5f58" class="outline-3">
+<h3 id="org9ed5f58">6.7 升级 (Upgrade)</h3>
 </div>
 </div>
-<div id="outline-container-org5bc0144" class="outline-2">
-<h2 id="org5bc0144">7 ABNF 列表扩展：#rule（ABNF List Extension: #rule）</h2>
+<div id="outline-container-orgb40a79d" class="outline-2">
+<h2 id="orgb40a79d">7 ABNF 列表扩展：#rule（ABNF List Extension: #rule）</h2>
 </div>
-<div id="outline-container-org9ead561" class="outline-2">
-<h2 id="org9ead561">8 INAN 考虑（IANA Considerations）</h2>
-<div class="outline-text-2" id="text-org9ead561">
+<div id="outline-container-orgcfdd65d" class="outline-2">
+<h2 id="orgcfdd65d">8 INAN 考虑（IANA Considerations）</h2>
+<div class="outline-text-2" id="text-orgcfdd65d">
 </div>
-<div id="outline-container-orgfc468e2" class="outline-3">
-<h3 id="orgfc468e2">8.1 Header Field Registration</h3>
+<div id="outline-container-org9b26d60" class="outline-3">
+<h3 id="org9b26d60">8.1 Header Field Registration</h3>
 </div>
-<div id="outline-container-org4ac2fdb" class="outline-3">
-<h3 id="org4ac2fdb">8.2 URI Scheme Registration</h3>
+<div id="outline-container-orgdeee271" class="outline-3">
+<h3 id="orgdeee271">8.2 URI Scheme Registration</h3>
 </div>
-<div id="outline-container-orgf6790dd" class="outline-3">
-<h3 id="orgf6790dd">8.3 Internet Media Type Registration</h3>
-<div class="outline-text-3" id="text-orgf6790dd">
+<div id="outline-container-org8dc31a6" class="outline-3">
+<h3 id="org8dc31a6">8.3 Internet Media Type Registration</h3>
+<div class="outline-text-3" id="text-org8dc31a6">
 </div>
-<div id="outline-container-orgc4aea74" class="outline-4">
-<h4 id="orgc4aea74"><a id="ID-44492A0E-8B7F-46EC-890D-317BC32E2228"></a>8.3.1 Internet Media Type message/http</h4>
-<div class="outline-text-4" id="text-orgc4aea74">
+<div id="outline-container-org52d215c" class="outline-4">
+<h4 id="org52d215c"><a id="ID-44492A0E-8B7F-46EC-890D-317BC32E2228"></a>8.3.1 Internet Media Type message/http</h4>
+<div class="outline-text-4" id="text-org52d215c">
 </div>
 </div>
-<div id="outline-container-org5d2d3d3" class="outline-4">
-<h4 id="org5d2d3d3">8.3.2 Internet Media Type application/http</h4>
+<div id="outline-container-org83c4424" class="outline-4">
+<h4 id="org83c4424">8.3.2 Internet Media Type application/http</h4>
 </div>
 </div>
-<div id="outline-container-org32d6174" class="outline-3">
-<h3 id="org32d6174">8.4 Transfer Coding Registry</h3>
-<div class="outline-text-3" id="text-org32d6174">
+<div id="outline-container-orgf6d34b0" class="outline-3">
+<h3 id="orgf6d34b0">8.4 Transfer Coding Registry</h3>
+<div class="outline-text-3" id="text-orgf6d34b0">
 </div>
-<div id="outline-container-orgd823b80" class="outline-4">
-<h4 id="orgd823b80">8.4.1 Procedure</h4>
+<div id="outline-container-org2de9bc1" class="outline-4">
+<h4 id="org2de9bc1">8.4.1 Procedure</h4>
 </div>
-<div id="outline-container-org3a8fee4" class="outline-4">
-<h4 id="org3a8fee4">8.4.2 Registration</h4>
+<div id="outline-container-org2637f08" class="outline-4">
+<h4 id="org2637f08">8.4.2 Registration</h4>
 </div>
 </div>
-<div id="outline-container-orga299501" class="outline-3">
-<h3 id="orga299501">8.5 Content Coding Registration</h3>
+<div id="outline-container-orgfd5a60e" class="outline-3">
+<h3 id="orgfd5a60e">8.5 Content Coding Registration</h3>
 </div>
-<div id="outline-container-orgd7bbb63" class="outline-3">
-<h3 id="orgd7bbb63">8.6 Upgrade Token Registry</h3>
-<div class="outline-text-3" id="text-orgd7bbb63">
+<div id="outline-container-org8200882" class="outline-3">
+<h3 id="org8200882">8.6 Upgrade Token Registry</h3>
+<div class="outline-text-3" id="text-org8200882">
 </div>
-<div id="outline-container-org33dafe9" class="outline-4">
-<h4 id="org33dafe9">8.6.1 Procedure</h4>
+<div id="outline-container-org2fe0f03" class="outline-4">
+<h4 id="org2fe0f03">8.6.1 Procedure</h4>
 </div>
-<div id="outline-container-orge8b6b05" class="outline-4">
-<h4 id="orge8b6b05">8.6.2 Upgrade Token Registration</h4>
+<div id="outline-container-orgedda04a" class="outline-4">
+<h4 id="orgedda04a">8.6.2 Upgrade Token Registration</h4>
 </div>
 </div>
 </div>
-<div id="outline-container-org5130040" class="outline-2">
-<h2 id="org5130040">9 安全考虑（Security Considerations）</h2>
-<div class="outline-text-2" id="text-org5130040">
+<div id="outline-container-orga8dae6a" class="outline-2">
+<h2 id="orga8dae6a">9 安全考虑（Security Considerations）</h2>
+<div class="outline-text-2" id="text-orga8dae6a">
 </div>
-<div id="outline-container-org3f0806f" class="outline-3">
-<h3 id="org3f0806f"><a id="ID-901a19cc-8490-4c06-a515-26eb9b66c173"></a>9.1 Establishing Authority</h3>
-<div class="outline-text-3" id="text-org3f0806f">
+<div id="outline-container-orgd4de00d" class="outline-3">
+<h3 id="orgd4de00d"><a id="ID-901a19cc-8490-4c06-a515-26eb9b66c173"></a>9.1 Establishing Authority</h3>
+<div class="outline-text-3" id="text-orgd4de00d">
 </div>
 </div>
-<div id="outline-container-org16fb0bd" class="outline-3">
-<h3 id="org16fb0bd">9.2 Risks of Intermediaries</h3>
+<div id="outline-container-orgb64efcd" class="outline-3">
+<h3 id="orgb64efcd">9.2 Risks of Intermediaries</h3>
 </div>
-<div id="outline-container-orgf5d3ccc" class="outline-3">
-<h3 id="orgf5d3ccc"><a id="ID-131aeb62-94c8-4b26-84eb-29051aac72e2"></a>9.3 Attacks via Protocol Element Length</h3>
-<div class="outline-text-3" id="text-orgf5d3ccc">
+<div id="outline-container-org42beb41" class="outline-3">
+<h3 id="org42beb41"><a id="ID-131aeb62-94c8-4b26-84eb-29051aac72e2"></a>9.3 Attacks via Protocol Element Length</h3>
+<div class="outline-text-3" id="text-org42beb41">
 </div>
 </div>
-<div id="outline-container-org92555a4" class="outline-3">
-<h3 id="org92555a4"><a id="ID-BE45ADD0-37C3-4726-82F1-AD06D51FFC11"></a>9.4 Response Splitting</h3>
-<div class="outline-text-3" id="text-org92555a4">
+<div id="outline-container-org084d50b" class="outline-3">
+<h3 id="org084d50b"><a id="ID-BE45ADD0-37C3-4726-82F1-AD06D51FFC11"></a>9.4 Response Splitting</h3>
+<div class="outline-text-3" id="text-org084d50b">
 </div>
 </div>
-<div id="outline-container-org88bfde7" class="outline-3">
-<h3 id="org88bfde7"><a id="ID-04030107-7AF1-4D23-900E-75FEEB04925C"></a>9.5 Request Smuggling</h3>
-<div class="outline-text-3" id="text-org88bfde7">
+<div id="outline-container-orgb1d2cf9" class="outline-3">
+<h3 id="orgb1d2cf9"><a id="ID-04030107-7AF1-4D23-900E-75FEEB04925C"></a>9.5 Request Smuggling</h3>
+<div class="outline-text-3" id="text-orgb1d2cf9">
 </div>
 </div>
-<div id="outline-container-org1a82436" class="outline-3">
-<h3 id="org1a82436">9.6 Message Integrity</h3>
+<div id="outline-container-org1d8f6bb" class="outline-3">
+<h3 id="org1d8f6bb">9.6 Message Integrity</h3>
 </div>
-<div id="outline-container-orgcd4354c" class="outline-3">
-<h3 id="orgcd4354c">9.7 Message Confidentiality</h3>
+<div id="outline-container-orge9c634e" class="outline-3">
+<h3 id="orge9c634e">9.7 Message Confidentiality</h3>
 </div>
-<div id="outline-container-orgcad3fa7" class="outline-3">
-<h3 id="orgcad3fa7">9.8 Privacy of Server Log Information</h3>
+<div id="outline-container-org2a5966d" class="outline-3">
+<h3 id="org2a5966d">9.8 Privacy of Server Log Information</h3>
 </div>
 </div>
-<div id="outline-container-org00380bd" class="outline-2">
-<h2 id="org00380bd">10 感谢（Acknowledgments）</h2>
+<div id="outline-container-org75ca1e1" class="outline-2">
+<h2 id="org75ca1e1">10 感谢（Acknowledgments）</h2>
 </div>
-<div id="outline-container-org2e86656" class="outline-2">
-<h2 id="org2e86656">11 参考资料（References）</h2>
+<div id="outline-container-org5c6f147" class="outline-2">
+<h2 id="org5c6f147">11 参考资料（References）</h2>
 </div>
-<div id="outline-container-orgfe9b431" class="outline-2">
-<h2 id="orgfe9b431">附录 A：HTTP 版本历史（Appendix A. HTTP Version History）</h2>
+<div id="outline-container-org9ab68d6" class="outline-2">
+<h2 id="org9ab68d6">附录 A：HTTP 版本历史（Appendix A. HTTP Version History）</h2>
 </div>
-<div id="outline-container-orge961a52" class="outline-2">
-<h2 id="orge961a52">附录 B：收集的 ABNF（Appendx B. Collected ABNF）</h2>
+<div id="outline-container-org55ce909" class="outline-2">
+<h2 id="org55ce909">附录 B：收集的 ABNF（Appendx B. Collected ABNF）</h2>
 </div>
-<div id="outline-container-org2a19b50" class="outline-2">
-<h2 id="org2a19b50">索引（Index）</h2>
+<div id="outline-container-orgd0b3d20" class="outline-2">
+<h2 id="orgd0b3d20">索引（Index）</h2>
 </div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
