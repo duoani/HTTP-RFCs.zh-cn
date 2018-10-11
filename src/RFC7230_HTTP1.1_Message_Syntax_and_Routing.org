@@ -18,17 +18,11 @@ ISSN: 2070-1721
 :PROPERTIES:
 :UNNUMBERED: t
 :END:
+#+BEGIN_QUOTE
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document provides an overview of HTTP architecture and its associated terminology, defines the "http" and "https" Uniform Resource Identifier (URI) schemes, defines the HTTP/1.1 message syntax and parsing requirements, and describes related security concerns for implementations.
+#+END_QUOTE
 
-This document is the first in a series of documents that collectively form the HTTP/1.1 specification:
-1. "Message Syntax and Routing" (this document)
-2. "Semantics and Content" [RFC7231]
-3. "Conditional Requests" [RFC7232]
-4. "Range Requests" [RFC7233]
-5. "Caching" [RFC7234]
-6. "Authentication" [RFC7235]
-
-本 HTTP/1.1 规范淘汰了 RFC 2616 和 RFC 2145。
+超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI schemes，定义了 HTTP/1.1 报文句法和解析要求，以及描述了实现上的安全性相关的关注事项。
 
 * 备忘状态（Status of This Memo）
 :PROPERTIES:
@@ -82,15 +76,19 @@ HTTP 是一种用于信息系统的通用接口协议。它被设计为用于隐
 HTTP is also designed for use as an intermediation protocol for translating communication to and from non-HTTP information systems. HTTP proxies and gateways can provide access to alternative information services by translating their diverse protocols into a hypertext format that can be viewed and manipulated by clients in the same way as HTTP services.
 #+END_QUOTE
 
-HTTP 也被设计为作为一个中间人协议来使用，用于转换为或自非 HTTP（non-HTTP）通信
+HTTP 也被设计为作为一个中间人协议来使用，用于对非 HTTP（non-HTTP）信息系统的相互通信进行翻译（Translate）。HTTP 代理（Proxy）和网关（Gateway）能够提供对可替代的信息服务的访问，具体是通过将它们的驱动协议翻译为一种能够被客户端查看和操作的超文本格式，使之能像访问 HTTP 服务一样的方式被访问。
 
 #+BEGIN_QUOTE
 One consequence of this flexibility is that the protocol cannot be defined in terms of what occurs behind the interface. Instead, we are limited to defining the syntax of communication, the intent of received communication, and the expected behavior of recipients. If the communication is considered in isolation, then successful actions ought to be reflected in corresponding changes to the observable interface provided by servers. However, since multiple clients might act in parallel and perhaps at cross-purposes, we cannot require that such changes be observable beyond the scope of a single response.
 #+END_QUOTE
 
+这种灵活性导致的一个结果是，协议不能依据接口后面出现的内容来定义。反而，我们被限制去定义通信的句法、所接收到的通信的意图，以及接收端的预期行为。如果该通信可认为是孤立的，那么通信成功的作用量应该被反映在对应的由服务器提供的可观察接口的变化上。但是，由于多个客户端可能存在并行工作，而且可能相互矛盾，我们不能要求这种变化在超出单独一次响应的范围以外被观察到。
+
 #+BEGIN_QUOTE
 This document describes the architectural elements that are used or referred to in HTTP, defines the "http" and "https" URI schemes, describes overall network operation and connection management, and defines HTTP message framing[fn:6] and forwarding requirements. Our goal is to define all of the mechanisms necessary for HTTP message handling that are independent of message semantics, thereby defining the complete set of requirements for message parsers and message-forwarding intermediaries.
 #+END_QUOTE
+
+本文档描述了用于或涉及 HTTP 的构筑元素，定义了 "http" 和 "https" 两种 URI schemes，总体上描述了网络操作和连接管理，并且定义了 HTTP 报文在分帧和转发方面的要求。我们的目标是定义所有关于 HTTP 的、独立于报文语义的、处理报文方面的必要方法，从而为报文解析器（Message Parsers）和报文转发中间人(Message-forwarding Intermediaries)定义完整的要求（Requirements）集。
 
 ** 1.1 Requirements Notation
 #+BEGIN_QUOTE
