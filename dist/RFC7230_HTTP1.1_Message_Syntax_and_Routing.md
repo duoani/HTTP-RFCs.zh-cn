@@ -3,11 +3,11 @@
 
 -   [摘要（Abstract）](#org0db8dbe)
 -   [备忘状态（Status of This Memo）](#orgb0cb1da)
--   [1 引论（Introduction）](#org39f0ea3)
-    -   [1.1 Requirements Notation](#org0d3ff06)
+-   [1 引言（Introduction）](#org5172d3c)
+    -   [1.1 要求标记 (Requirements Notation)](#org049e76b)
     -   [1.2 句法标记 (Syntax Notation)](#org8e2ef47)
 -   [2 体系结构（Architecture）](#orgdd453e7)
-    -   [2.1 客户端/服务器通讯 (Client/Server Messaging)](#org089417b)
+    -   [2.1 客户端/服务器通信 (Client/Server Messaging)](#orgccdea26)
     -   [2.2 实现的差异性（Implementation Diversity）](#org903d3d3)
     -   [2.3 中间人 (Intermediaries)](#org86ee91c)
     -   [2.4 缓存 (Caches)](#orgc346344)
@@ -110,18 +110,9 @@
 
 # 摘要（Abstract）
 
-The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document provides an overview of HTTP architecture and its associated terminology, defines the "http" and "https" Uniform Resource Identifier (URI) schemes, defines the HTTP/1.1 message syntax and parsing requirements, and describes related security concerns for implementations.
+> The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document provides an overview of HTTP architecture and its associated terminology, defines the "http" and "https" Uniform Resource Identifier (URI) schemes, defines the HTTP/1.1 message syntax and parsing requirements, and describes related security concerns for implementations.
 
-This document is the first in a series of documents that collectively form the HTTP/1.1 specification:
-
-1.  "Message Syntax and Routing" (this document)
-2.  "Semantics and Content" [RFC7231]
-3.  "Conditional Requests" [RFC7232]
-4.  "Range Requests" [RFC7233]
-5.  "Caching" [RFC7234]
-6.  "Authentication" [RFC7235]
-
-本 HTTP/1.1 规范淘汰了 RFC 2616 和 RFC 2145。
+超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI schemes，定义了 HTTP/1.1 报文句法和解析要求，以及描述了实现上的安全性相关的注意事项。
 
 
 <a id="orgb0cb1da"></a>
@@ -135,37 +126,60 @@ This document is a product of the Internet Engineering Task Force (IETF). It rep
 Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at <http://www.rfc-editor.org/info/rfc7230>.
 
 
-<a id="org39f0ea3"></a>
+<a id="org5172d3c"></a>
 
-# 1 引论（Introduction）
+# 1 引言（Introduction）
 
 > The Hypertext Transfer Protocol (HTTP) is a stateless application-level request/response protocol that uses extensible semantics and self-descriptive message payloads for flexible interaction with network-based hypertext information systems. This document is the first in a series of documents that collectively form the HTTP/1.1 specification:
 
-> -   "Message Syntax and Routing" (this document)
-> -   "Semantics and Content" [RFC7231]
-> -   "Conditional Requests" [RFC7232]
-> -   "Range Requests" [RFC7233]
-> -   "Caching" [RFC7234]
-> -   "Authentication" [RFC7235]
+超文本传输协议（HTTP）是一种基于请求/响应模式的、无状态的、应用层协议，使用可扩展的语义和自我描述的报文载荷，与基于网络的超文本信息系统进行灵活的交互。本文档是 HTTP/1.1 规范系列文档里的第一份。
 
-> This HTTP/1.1 specification obsoletes RFC 2616 and RFC 2145 (on HTTP versioning). This specification also updates the use of CONNECT to establish a tunnel, previously defined in RFC 2817, and defines the "https" URI scheme that was described informally in RFC 2818.
+> -   "Message Syntax and Routing" (this document)
+> -   "Semantics and Content" [[RFC7231](https://tools.ietf.org/html/rfc7231)]
+> -   "Conditional Requests" [[RFC7232](https://tools.ietf.org/html/rfc7232)]
+> -   "Range Requests" [[RFC7233](https://tools.ietf.org/html/rfc7233)]
+> -   "Caching" [[RFC7234](https://tools.ietf.org/html/rfc7234)]
+> -   "Authentication" [[RFC7235](https://tools.ietf.org/html/rfc7235)]
+
+-   《报文句法和路由》（本文档）
+-   《语义和内容》【[RFC7231](https://tools.ietf.org/html/7231)】
+-   《条件请求》【[RFC7232](https://tools.ietf.org/html/rfc7232)】
+-   《范围请求》【[RFC7233](https://tools.ietf.org/html/rfc7233)】
+-   《缓存》【[RFC7234](https://tools.ietf.org/html/rfc7234)】
+-   《认证》【[RFC7235](https://tools.ietf.org/html/rfc7235)】
+
+> This HTTP/1.1 specification obsoletes [RFC 2616](https://tools.ietf.org/html/rfc2616) and [RFC 2145](https://tools.ietf.org/html/rfc2145) (on HTTP versioning). This specification also updates the use of CONNECT to establish a tunnel, previously defined in [RFC 2817](https://tools.ietf.org/html/rfc2817), and defines the "https" URI scheme that was described informally in [RFC 2818](https://tools.ietf.org/html/rfc2818).
+
+本 HTTP/1.1 规范废弃了 [RFC2616](https://tools.ietf.org/html/rfc2616) 以及 [RFC2145](https://tools.ietf.org/html/rfc2145)（关于 HTTP 版本管理）。本规范也更新了之前定义在 [RFC2817](https://tools.ietf.org/html/rfc2817) 里的关于 CONNECT 在建立隧道方面的使用方式，以及定义了原来在 [RFC2818](https://tools.ietf.org/html/rfc2818) 有过非正式描述的 "https" URI scheme。
 
 > HTTP is a generic interface protocol for information systems. It is designed to hide the details of how a service is implemented by presenting a uniform interface to clients that is independent of the types of resources provided. Likewise, servers do not need to be aware of each client's purpose: an HTTP request can be considered in isolation rather than being associated with a specific type of client or a predetermined sequence of application steps. The result is a protocol that can be used effectively in many different contexts and for which implementations can evolve independently over time.
 
+HTTP 是一种用于信息系统的通用接口协议。它被设计为用于隐藏一个服务“是如何向独立于服务所提供的资源类型的客户端呈现一个统一接口”的实现细节。同样，服务器并不需要知道每一个客户端的目的：一个 HTTP 请求能够被看作是独立的，而不是与一个特定的客户端类型或者一连串预先定好的应用步骤相关联。其目的是造就一个能够被有效用于多种不同场景，以及各种实现（Implementations）能够相互独立发展的协议。
+
 > HTTP is also designed for use as an intermediation protocol for translating communication to and from non-HTTP information systems. HTTP proxies and gateways can provide access to alternative information services by translating their diverse protocols into a hypertext format that can be viewed and manipulated by clients in the same way as HTTP services.
+
+HTTP 也被设计为作为一个中间人协议来使用，用于对非 HTTP（non-HTTP）信息系统的相互通信进行翻译（Translate）。HTTP 代理（Proxy）和网关（Gateway）能够提供对可替代的信息服务的访问，具体是通过将它们的驱动协议翻译为一种能够被客户端查看和操作的超文本格式，使之能像访问 HTTP 服务一样的方式被访问。
 
 > One consequence of this flexibility is that the protocol cannot be defined in terms of what occurs behind the interface. Instead, we are limited to defining the syntax of communication, the intent of received communication, and the expected behavior of recipients. If the communication is considered in isolation, then successful actions ought to be reflected in corresponding changes to the observable interface provided by servers. However, since multiple clients might act in parallel and perhaps at cross-purposes, we cannot require that such changes be observable beyond the scope of a single response.
 
+这种灵活性导致的一个结果是，协议不能依据接口后面出现的内容来定义。反而，我们被限制去定义通信的句法、所接收到的通信的意图，以及接收端的预期行为。如果该通信可认为是孤立的，那么通信成功的作用量应该被反映在对应的由服务器提供的可观察接口的变化上。但是，由于多个客户端可能存在并行工作，而且可能相互矛盾，我们不能要求这种变化在超出单独一次响应的范围以外被观察到。
+
 > This document describes the architectural elements that are used or referred to in HTTP, defines the "http" and "https" URI schemes, describes overall network operation and connection management, and defines HTTP message framing<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> and forwarding requirements. Our goal is to define all of the mechanisms necessary for HTTP message handling that are independent of message semantics, thereby defining the complete set of requirements for message parsers and message-forwarding intermediaries.
 
+本文档描述了用于或涉及 HTTP 的构筑元素，定义了 "http" 和 "https" 两种 URI schemes，总体上描述了网络操作和连接管理，并且定义了 HTTP 报文在分帧和转发方面的要求。我们的目标是定义所有关于 HTTP 的、独立于报文语义的、处理报文方面的必要方法，从而为报文解析器（Message Parsers）和报文转发中间人(Message-forwarding Intermediaries)定义完整的要求（Requirements）集。
 
-<a id="org0d3ff06"></a>
 
-## 1.1 Requirements Notation
+<a id="org049e76b"></a>
+
+## 1.1 要求标记 (Requirements Notation)
 
 > The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
 
+关键词 **必须（MUST）**、**禁止（MUST NOT）**、**要求（REQUIRED）**、**必须（SHALL）**、**禁止（SHALL NOT）**、**应该（SHOULD）**、**不应该（SHOULD NOT）**、**推荐（RECOMMENDED）**、**可以（MAY）** 和 **可选（OPTIONAL）** 的意义与【[RFC2119](https://tools.ietf.org/html/rfc2119)】一致。
+
 > Conformance criteria and considerations regarding error handling are defined in Section 2.5.
+
+关于错误处理的一致性标准以及注意事项会在[章节 2.5](#orgbfd4ecc) 中定义。
 
 
 <a id="org8e2ef47"></a>
@@ -174,9 +188,15 @@ Information about the current status of this document, any errata, and how to pr
 
 > This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7, that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '\*' operator indicates repetition). Appendix B shows the collected grammar with all list operators expanded to standard ABNF notation.
 
+本规范使用扩展巴科斯范式（ABNF）标记法【[RFC5234](https://tools.ietf.org/html/rfc5234)】，另外，出于对定义“以逗号分隔的列表”的紧凑性的考虑，本规范新增了一个 ABNF 规则：列扩展（List Extension见[章节 7](#orgb633ea2)），来允许使用一个 `#`  操作符（类似于 `*` 操作符，指代“重复”）。
+
 > The following core rules are included by reference, as defined in [RFC5234], Appendix B.1: `ALPHA` (letters), `CR` (carriage return), `CRLF` (CR LF), `CTL` (controls), `DbbIGIT` (decimal 0-9), `DQUOTE` (double quote), `HEXDIG` (hexadecimal 0-9/A-F/a-f), `HTAB` (horizontal tab), `LF` (line feed), `OCTET` (any 8-bit sequence of data), `SP` (space), and `VCHAR` (any visible [USASCII] character).
 
-> As a convention, ABNF rule names prefixed with "obs-" denote "obsolete" grammar rules that appear for historical reasons.
+本规范引用了下列定义于[【RFC5234】附录 B.1](https://tools.ietf.org/html/rfc5234#appendix-B.1) 中的核心规则：字母 `ALPHA`、回车符 `CR`、回车换行符 `CRLF`、控制字符 `CTL`、十进制数字 0-9 `DbbIGIT`、双引号 `DQUOTE`、十六进制数字 0-9/A-F/a-f `HEXDIG`、水平制表符 `HTAB`、换行符 `LF`、八位组字节 `OCTET`、空格 `SP` 以及【USASCII】可见字符 `VCHAR`。
+
+> As a convention, ABNF rule names prefixed with "`obs-`" denote "obsolete" grammar rules that appear for historical reasons.
+
+按照惯例，名称以 "obs-" 开头的ABNF 规则表示这是已经废弃（Obsolete）的语法，之所以这种规则会出现是为了描述历史遗留的问题。 
 
 
 <a id="orgdd453e7"></a>
@@ -186,12 +206,12 @@ Information about the current status of this document, any errata, and how to pr
 > HTTP was created for the World Wide Web (WWW) architecture and has evolved over time to support the scalability needs of a worldwide hypertext system. Much of that architecture is reflected in the terminology and syntax productions
 > used to define HTTP.
 
-> HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支持世界范围内的超文系统的可拓展性。用于定义 HTTP 的术语和句法的产品反映了这一体系结构的方方面面。
+HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支持世界范围内的超文系统的可扩展性。用于定义 HTTP 的术语和句法的产品反映了这一体系结构的方方面面。
 
 
-<a id="org089417b"></a>
+<a id="orgccdea26"></a>
 
-## 2.1 客户端/服务器通讯 (Client/Server Messaging)
+## 2.1 客户端/服务器通信 (Client/Server Messaging)
 
 > HTTP is a stateless request/response protocol that operates by exchanging messages (Section 3) across a reliable transport- or session-layer "connection" (Section 6). An HTTP "client" is a program that establishes a connection to a server for the purpose of sending one or more HTTP requests. An HTTP "server" is a program that accepts connections in order to service HTTP requests by sending HTTP responses.
 
@@ -201,27 +221,35 @@ HTTP 是一种无状态的请求/响应协议，通过一个可靠的传输层�
 
 > The terms "client" and "server" refer only to the roles that these programs perform for a particular connection. The same program might act as a client on some connections and a server on others. The term "user agent" refers to any of the various client programs that initiate a request, including (but not limited to) browsers, spiders (web-based robots), command-line tools, custom applications, and mobile apps. The term "origin server" refers to the program that can originate authoritative responses for a given target resource. The terms "sender" and "recipient" refer to any implementation that sends or receives a given message, respectively.
 
-> HTTP relies upon the Uniform Resource Identifier (URI) standard [RFC3986] to indicate the target resource (Section 5.1) and relationships between resources. Messages are passed in a format similar to that used by Internet mail [RFC5322] and the Multipurpose Internet Mail Extensions (MIME) [RFC2045] (see Appendix A of [RFC7231] for the differences between HTTP and MIME messages).
+术语“客户端（Client）”和“服务器（Server）”特指在一个具体连接（Connection）中的相关程序所充当的角色。同一个程序可能在某些连接中充当一个客户端，而在其他连接中充当的是一个服务器。术语“用户代理（User Agent）”指的是任何发起请求的各种不同的客户端程序，包括（但不限于）浏览器、爬虫（基于网络的机器人）、命令行工具、定制应用和移动应用。术语“源服务器（Origin Server）”指的是任何为一个给定目标资源产生权威响应（Authoritative Response）的程序。术语“发送端（Sender）”和“接收端（Recipient）”分别指的是任何发送或者接收一个给定报文的实现（Implementation）。
 
-HTTP 依靠“统一资源定位符（URI）标准【RFC3986】”来标识目标资源（Section 5.1）以及资源与资源之间的联系。报文通过类似于电子邮件【RFC5233】和多用途互联网邮件扩展类型（MIME）【RFC2045】的格式进行传输，而 HTTP 与 MIME 报文之间的区别在于两者传输格式上的不同。
+> HTTP relies upon the Uniform Resource Identifier (URI) standard [RFC3986] to indicate the target resource (Section 5.1) and relationships between resources. Messages are passed in a format similar to that used by Internet mail [RFC5322] and the Multipurpose Internet Mail Extensions (MIME) [RFC2045] (see Appendix-A of [RFC7231] for the differences between HTTP and MIME messages).
+
+HTTP 依靠“统一资源定位符（URI）标准【RFC3986】”来标识目标资源（[章节 5.1](#orga306fad)）以及资源与资源之间的关系。报文通过类似于电子邮件【[RFC5233](https://tools.ietf.org/html/rfc5233)】和多用途互联网邮件扩展类型（MIME）【[RFC2045](https://tools.ietf.org/html/rfc2045)】的格式进行传输。对于 HTTP 与 MIME 之间的区别查看【[RFC7231](https://tools.ietf.org/html/rfc7231)】的[附录 A](https://tools.ietf.org/html/rfc7231#appendix-A)。）
 
 > Most HTTP communication consists of a retrieval request (GET) for a representation of some resource identified by a URI. In the simplest case, this might be accomplished via a single bidirectional connection (`=`) between the user agent (UA) and the origin server (O).
 
-大多数 HTTP 的通讯是通过 URI 以检索请求（GET）的形式定位资源。用最简单的例子来说，可以经由一个在用户代理（UA）和源服务器（O）之间的双向连接来完成。
+大多数 HTTP 的通讯是通过 URI 以 GET 请求的形式来定位资源。在最简单的情况下，可以经由一个在用户代理（UA）和源服务器（O）之间的双向连接就能完成。
 
          request   >
     UA ======================================= O
                                 <   response
 
-> A client sends an HTTP request to a server in the form of a **request message**, beginning with a **request-line** that includes a method, URI, and protocol version (Section 3.1.1), followed by **header fields** containing request modifiers, client information, and representation metadata (Section 3.2), an **empty line** to indicate the end of the header section, and finally a **message body** containing the payload body (if any, Section 3.3).
+> A client sends an HTTP request to a server in the form of a request message, beginning with a request-line that includes a method, URI, and protocol version (Section 3.1.1), followed by header fields containing request modifiers, client information, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
 
-TODO 客户端以请求报文（Request Message）的形式向服务器发送一个 HTTP 请求，请求报文的第一行叫做请求行（Request Line，见[章节 3.1.1](#org386c1a2)），请求行包含了该请求的方法，URI 和 协议版本；紧接请求行的是请求报头（Request Header），请求报头包含了请求，客户端信息以及表现形式元数据（Representation Metadata，见[章节 3.2](#org0f4dd4f)）；接着是一个空行来表明报头结束；最后是一个可选的报文正文，包含了报文的有效载荷（Payload，见[章节 3.3](#orga872fec) ）。
+客户端以请求报文（Request Message）的形式向服务器发送一个 HTTP 请求。请求报文以一个包含了方法（Method），URI 和协议版本的请求行（Request Line，见[章节 3.1.1](#org386c1a2)）为开始；随后是包含了请求修饰符，客户端信息以及表现形式元数据（Representation Metadata，见[章节 3.2](#org0f4dd4f)）的报头域（Header Fields）；接着是一个空行，来表示报头块（Header Section）结束；最后是一个包含了有效载荷（如果有的话，见[章节 3.3](#orga872fec)）的报文正文（Message Body）。
 
 > A server responds to a client's request by sending one or more HTTP response messages, each beginning with a status line that includes the protocol version, a success or error code, and textual reason phrase (Section 3.1.2), possibly followed by header fields containing server information, resource metadata, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
 
+一个服务器通过发送一个或多个 HTTP 响应报文（Response Message）来响应客户端的请求。每个响应报文以一个包含协议版本、一个成功或失败的状态码以及一个描述状态码的文本短语（[章节 3.1.2](#org3e53136)）的状态行为开始；随后可能是包含服务器信息、资源元数据以及表现形式元数据（Representation Metadata，见章节 3.2）的报头域（Header Fields）；接着是一个空行，来表示报头块（Header Section）结束；最后是一个包含有效载荷（如果有的话，见[章节 3.3](#orga872fec)）的报文正文（Message Body）。
+
 > A connection might be used for multiple request/response exchanges, as defined in Section 6.3.
 
+一个连接可能用于多次请求/响应的报文交换，其定义见[章节 6.3](#orgccd03a7)。
+
 > The following example illustrates a typical message exchange for a GET request (Section 4.3.1 of [RFC7231]) on the URI "<http://www.example.com/hello.txt>":
+
+下面举例说明对于 URI 为 "<http://www.example.com/hello.txt>" 的一个典型的 GET 请求（【[RFC7231](https://tools.ietf.org/html/rfc7231)】[章节 4.3.1](https://tools.ietf.org/html/rfc7231#section-4.3.1)）的报文交换。
 
 > Client request:
 
@@ -251,15 +279,15 @@ TODO 客户端以请求报文（Request Message）的形式向服务器发送一
 
 > When considering the design of HTTP, it is easy to fall into a trap of thinking that all user agents are general-purpose browsers and all origin servers are large public websites. That is not the case in practice. Common HTTP user agents include household appliances, stereos, scales, firmware update scripts, command-line programs, mobile apps, and communication devices in a multitude of shapes and sizes. Likewise, common HTTP origin servers include home automation units, configurable networking components, office machines, autonomous robots, news feeds, traffic cameras, ad selectors, and video-delivery platforms.
 
-在考虑 HTTP 协议的设计时，很容易陷入一个误区，认为所有的用户代理都是通用的网页浏览器；所有的源服务器都是大型公共站点。然而实践中并不是这么一回事。一般的 HTTP 用户代理包含了家用电器、音响器材、磅秤、固件升级脚本、命令行程序、移动应用以及各种形状和尺寸的通信设备。同样，一般的 HTTP 源服务器包含家庭自动化元件、可配置的网络组件、办公设备、自主学习的机器人、新闻源、交通摄像头、广告选择器以及视频分发平台。 
+在考虑 HTTP 协议的设计时，很容易陷入一个误区，认为所有的用户代理都是通用的网页浏览器；所有的源服务器都是大型公共站点。然而实践中并不是这么一回事。一般的 HTTP 用户代理包含了家用电器、音响器材、磅秤、固件升级脚本、命令行程序、移动应用以及各种形状和尺寸的通信设备。同样，一般的 HTTP 源服务器包含家庭自动化单元、可配置的网络组件、办公设备、自主学习的机器人、新闻源、交通摄像头、广告选择器以及视频分发平台。 
 
 > The term "user agent" does not imply that there is a human user directly interacting with the software agent at the time of a request. In many cases, a user agent is installed or configured to run in the background and save its results for later inspection (or save only a subset of those results that might be interesting or erroneous). Spiders, for example, are typically given a start URI and configured to follow certain behavior while crawling the Web as a hypertext graph.
 
-术语“用户代理”并不是意味着在请求的时候有一个人类用户与软件代理进行直接交互。在许多情况下，用户代理被安装或配置用于后台运行，以及保存其运行结果用于后续检验（或者只保存那些感兴趣的，或者错误的那部分）。例如，爬虫，其典型应用是给定一个起始 URI，然后配置其抓取网页文本的后续行为。
+术语“用户代理（User Agent）”并不是意味着在请求的时候有一个人类用户与软件代理进行直接交互。在许多情况下，用户代理是被安装或配置用于后台运行，并保存其运行结果用于后续检验（或者只保存那些感兴趣的，或者错误的那部分）。例如，爬虫，其典型应用是给定一个起始 URI，然后配置其抓取网页文本的后续行为。
 
 > The implementation diversity of HTTP means that not all user agents can make interactive suggestions to their user or provide adequate warning for security or privacy concerns. In the few cases where this specification requires reporting of errors to the user, it is acceptable for such reporting to only be observable in an error console or log file. Likewise, requirements that an automated action be confirmed by the user before proceeding might be met via advance configuration choices, run-time options, or simple avoidance of the unsafe action; confirmation does not imply any specific user interface or interruption of normal processing if the user has already made that choice.
 
-HTTP 实现上的差异性，表现为不是所有的用户代理都能为用户提供交互性的建议或者对其关注的安全或隐私提供足够的警示。例如，本规范规定了在某些情况下要求向用户报告错误，但在某些实现上，这些报告信息可能只输出到错误控制台或者日志文件里，这也是允许的。同样，用户可以在用户代理里（例如在高级选项、运行时选项或者不安全操作中）预先配置接下来的默认行为，规范要求当遇到这些默认行为时需要用户确认，而这个确认并不意味着任一具体的用户接口，或者用户选择某一选项后正常流程的打断。
+HTTP 实现（Implementations）上的差异性，表现为不是所有的用户代理都能为用户提供交互性的建议或者对其关注的安全或隐私提供足够的警示。例如，本规范规定了在某些情况下要求向用户报告错误，但在某些实现上，这些报告信息可能只输出到错误控制台或者日志文件里，这也是允许的。同样，用户可以在用户代理里（例如在高级选项、运行时选项或者不安全操作中）预先配置接下来的默认行为，规范要求当遇到这些默认行为时需要用户确认，而这个确认并不意味着出现一个特定的用户界面或者正常流程被打断，如果用户已经预先做出了选择的话。
 
 
 <a id="org86ee91c"></a>
@@ -268,7 +296,7 @@ HTTP 实现上的差异性，表现为不是所有的用户代理都能为用户
 
 > HTTP enables the use of intermediaries to satisfy requests through a chain of connections. There are three common forms of HTTP intermediary: proxy, gateway, and tunnel. In some cases, a single intermediary might act as an origin server, proxy, gateway, or tunnel, switching behavior based on the nature of each request.
 
-HTTP 支持中间人的功能，从而使请求能在通信链路各节点之间中转。HTTP 有三种中间人：代理，网关和隧道。在某些情况下，一个中间人可以依据当前接收到的请求来决定是以源服务器、代理、网关还是隧道的方式来处理。
+HTTP 能使用中间人来满足在通信链路里中转请求的需要。HTTP 有三种中间人：代理（Proxy），网关（Gateway）和隧道（Tunnel）。在某些情况下，一个中间人可以依据当前接收到的请求来决定是以源服务器、代理、网关还是隧道的方式来处理这个请求。
 
          >             >             >             >
     UA =========== A =========== B =========== C =========== O
@@ -276,25 +304,25 @@ HTTP 支持中间人的功能，从而使请求能在通信链路各节点之间
 
 > The figure above shows three intermediaries (A, B, and C) between the user agent and origin server. A request or response message that travels the whole chain will pass through four separate connections. Some HTTP communication options might apply only to the connection with the nearest, non-tunnel neighbor, only to the endpoints of the chain, or to all connections along the chain. Although the diagram is linear, each participant might be engaged in multiple, simultaneous communications. For example, B might be receiving requests from many clients other than A, and/or forwarding requests to servers other than C, at the same time that it is handling A's request. Likewise, later requests might be sent through a different path of connections, often based on dynamic configuration for load balancing.
 
-上图展示了在用户代理（UA）和源服务器（O）之间的三个中间人（A、B 和 C）。一个请求报文或者响应报文通过依次建立四个独立的连接走完整条链路。HTTP 的某些通信选项可能仅适用于通信链路上的某些节点上，例如离其最近的非隧道节点、链路的终点，或者适用于链路上的所有节点。虽然上图以线性的方式展示这条链路（但并不一定是线性的），每个节点都可能在处理多个并行的通信。例如，B 在处理来自 A 的请求的同时，还可能接收到来自 A 之外的多个客户端的请求，并（或）将其转发这些请求到 C 之外的服务器。同样，后面接收到的请求可能被节点依据其负载均衡的策略发送至一个不同通信路径上。
+上图演示了在用户代理（UA）和源服务器（O）之间的三个中间人（A、B 和 C）。一个请求报文或者响应报文通过依次建立四个单独的连接来穿越整条链路。HTTP 的某些通信选项可能仅适用于通信链路上的某些节点上，例如离其最近的非隧道节点、链路的终点，或者适用于链路上的所有节点。虽然上图以线性的方式展示这条链路（但并不一定是线性的），每个节点都可能在处理多个并行的通信。例如，B 在处理来自 A 的请求的同时，还可能接收到来自 A 之外的多个客户端的请求，并（或）将其转发这些请求到 C 之外的服务器。同样，后面接收到的请求可能被节点依据其负载均衡的策略发送至一个不同通信路径上。
 
 （译注：例如，来自 A 的请求被 B 转发到 D，而不是上图所示的 C。）
 
-> The terms "**upstream**" and "**downstream**" are used to describe directional requirements in relation to the **message flow**: all messages flow from upstream to downstream. The terms "**inbound**" and "**outbound**" are used to describe directional requirements in relation to the request route: "inbound" means toward the origin server and "outbound" means toward the user agent.
+> The terms "upstream" and "downstream" are used to describe directional requirements in relation to the message flow: all messages flow from upstream to downstream. The terms "inbound" and "outbound" are used to describe directional requirements in relation to the request route: "inbound" means toward the origin server and "outbound" means toward the user agent.
 
-术语“上行”和“下行”用于描述报文（消息）流的方向：所有的报文（消息）都从上行流到下行。术语“入境”和“出境”用于描述请求经过路由的方向：“入境”意为经过路由器的数据流向源服务器，而“出境”意为经过路由器的数据流向用户代理。 
+术语“上行（Upstream）”和“下行（Downstream）”用于描述报文（消息）流的方向：所有的报文（消息）都从上行流到下行。术语“入境（Inbound）”和“出境（Outbound）”用于描述请求经过路由的方向：“入境”意为经过路由器的数据流向源服务器，而“出境”意为经过路由器的数据流向用户代理。 
 
 （译注：路由器是连接互联网的枢纽，数据流入互联网，这叫“入境”，例如文件上传；流出互联网，这叫“出境”，例如文件下载）。
 
 > A "proxy" is a message-forwarding agent that is selected by the client, usually via local configuration rules, to receive requests for some type(s) of [absolute URI](https://tools.ietf.org/html/rfc3986#page-27) and attempt to satisfy those requests via translation through the HTTP interface. Some translations are minimal, such as for proxy requests for "http" URIs, whereas other requests might require translation to and from entirely different application-level protocols. Proxies are often used to group an organization's HTTP requests through a common intermediary for the sake of security, annotation services, or shared caching. Some proxies are designed to apply transformations to selected messages or payloads while they are being forwarded, as described in [Section 5.7.2](#org630ebc3).
 
-“代理”，一般是由客户端通过本地设置或规则所选定的，负责报文转发的中介。代理接收绝对 URI（Absolute URI）类型的请求并试图经由 HTTP 接口翻译（Translation）报文信息来满足这些请求。一些翻译（Translation）是以最低限度来进行的，例如对于代理的“http” URI 请求；与之相反的是，其他请求可能要求翻译（Translation）为或翻译自完全不同的应用层协议。为了安全性、服务标识或者共享缓存，多个代理一般通过一个共同的中间人，将属于同一团体的 HTTP 请求进行分组。某些代理被设计为对选定的报文或载荷在其被转发时进行转换（见 [5.7.2](#org630ebc3)）。
+“代理（Proxy）”，是一种由客户端选定的负责报文转发的中介，一般通过本地设置的规则来接收绝对 URI（Absolute URI）类型的请求并试图经由 HTTP 接口的翻译（Translation）来满足这些请求。某些翻译（Translation）是以最低限度来进行的，例如对“http” URI 进行请求代理；与之相反的是，某些请求可能要求翻译为或翻译自（Translation to and from）完全不同的应用层协议。为了安全性、服务标识或者共享缓存，某些代理一般通过一个共同的中间人，对同一组织的 HTTP 请求进行分组。某些代理被设计为对选定的报文或有效载荷在其被转发时进行转换（见 [5.7.2](#org630ebc3)）。
 
 （译注：[Wikipedia 上对绝对 URI 的描述](https://en.wikipedia.org/wiki/HTTP_location)）
 
 > A "gateway" (a.k.a. "reverse proxy") is an intermediary that acts as an origin server for the outbound connection but translates received requests and forwards them inbound to another server or servers. Gateways are often used to encapsulate legacy or untrusted information services, to improve server performance through "accelerator" caching, and to enable partitioning or load balancing of HTTP services across multiple machines.
 
-“网关”（又称为“反向代理”），在 Outbound 通信时网关充当一个源服务器，将接收到的请求进行翻译（Translate），然后转发到其他一个或多个服务器上。网关通常用于封装遗留或者非信任的信息，通过“加速器”缓存，以及在多机中开启分片或负载均衡来提升 HTTP 服务器的性能。
+“网关”（Gateway，又称为“反向代理”），在 Outbound 通信时网关充当一个源服务器，但它会将接收到的请求进行翻译（Translate），然后转发到其他一个或多个服务器上。网关通常用于封装遗留或者不受信任的信息服务，通过“加速器”缓存，以及在多机中开启分片或负载均衡来提升 HTTP 服务器的性能。
 
 > All HTTP requirements applicable to an origin server also apply to the outbound communication of a gateway. A gateway communicates with inbound servers using any protocol that it desires, including private extensions to HTTP that are outside the scope of this specification. However, an HTTP-to-HTTP gateway that wishes to interoperate with third-party HTTP servers ought to conform to user agent requirements on the gateway's inbound connection.
 
@@ -302,7 +330,7 @@ HTTP 中所有对于源服务器的要求都适用于网关的出境通信（Out
 
 > A "tunnel" acts as a blind relay between two connections without changing the messages. Once active, a tunnel is not considered a party to the HTTP communication, though the tunnel might have been initiated by an HTTP request. A tunnel ceases to exist when both ends of the relayed connection are closed. Tunnels are used to extend a virtual connection through an intermediary, such as when Transport Layer Security (TLS, [RFC5246]) is used to establish confidential communication through a shared firewall proxy.
 
-一个“隧道”在两个连接之间充当盲中继，即隧道并不会对报文进行更改。隧道在激活后，由 HTTP 请求来进行初始化，但隧道并不作为 HTTP 通信的一部分。在隧道两端的连接都关闭后，隧道将不复存在。隧道以中间人的方式用于扩展[虚连接](https://en.wikipedia.org/wiki/Virtual_circuit)，例如传输层安全协议（TLS，[[RFC5246](https://tools.ietf.org/html/rfc5246)]）通过一个共享的防火墙代理，用于建立保密通信。 
+一个“隧道”在两个连接之间充当盲中继，即隧道并不会对报文进行更改。隧道在激活后，由 HTTP 请求来进行初始化，但隧道并不作为 HTTP 通信的一部分。在隧道两端的连接都关闭后，隧道将不复存在。隧道通过一个中间人来扩展[虚连接](https://en.wikipedia.org/wiki/Virtual_circuit)，例如传输层安全协议（TLS，[[RFC5246](https://tools.ietf.org/html/rfc5246)]）通过一个共享的防火墙代理，用于建立保密通信。
 
 （译注：Blind relay，盲中继，只是将字节从一个连接转发到另一个连接中去，不对 Connection 首部进行特殊的处理。）
 
@@ -312,17 +340,15 @@ HTTP 中所有对于源服务器的要求都适用于网关的出境通信（Out
 
 > For example, an "interception proxy" [RFC3040] (also commonly known as a "transparent proxy" [RFC1919] or "captive portal") differs from an HTTP proxy because it is not selected by the client. Instead, an interception proxy filters or redirects outgoing TCP port 80 packets (and occasionally other common port traffic). Interception proxies are commonly found on public network access points, as a means of enforcing account subscription prior to allowing use of non-local Internet services, and within corporate firewalls to enforce network usage policies.
 
-例如，一个“拦截代理”（一般又叫作“透明代理” [[RFC1919](https://tools.ietf.org/html/rfc1919)] 或者“强制网络门户”、“捕获门户”） 
-
-而是，一个拦截代理（Interception Proxy）过滤或者重定向输出的于 TCP 80 端口的数据包（有时还包括其他一般端口的流量）。拦截代理在公有网络访问点<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>里很常见，作为一种在允许使用非本地互联网服务之前的强制认证手段，同样常见于防火墙里，用于实施网络使用策略。
+例如，一个拦截代理（Interception Proxy，一般又叫作“透明代理 Transparent Proxy” [[RFC1919](https://tools.ietf.org/html/rfc1919)] 或者“强制网络门户”、“捕获门户 Captive Portal”）与一个 HTTP 代理的区别在于它不是由客户端选择的，但是，拦截代理（Interception Proxy）会过滤或者重定向 TCP 80  出口端口的数据包（有时还包括其他一般端口的流量）。拦截代理在公有网络访问点<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>里很常见，作为一种在允许使用非本地互联网服务之前的强制认证手段；同样也常见于企业防火墙里，用于强制执行网络使用上的策略。
 
 （译注：强制网络门户，是一个在用户使用无线网络前，先被导向至的 Web 网页，它是使用公共访问网络的用户在被授予访问权限前必须访问和交互的页面。）
 
 > HTTP is defined as a stateless protocol, meaning that each request message can be understood in isolation. Many implementations depend on HTTP's stateless design in order to reuse proxied connections or dynamically load balance requests across multiple servers. Hence, a server **MUST NOT** assume that two requests on the same connection are from the same user agent unless the connection is secured and specific to that agent. Some non-standard HTTP extensions (e.g., [RFC4559]) have been known to violate this requirement, resulting in security and interoperability problems.
 
-HTTP 被定义为一个无状态的协议，意为每一个请求报文都能够被单独理解。许多依托于 HTTP 无状态设计的实现是为了复用代理连接或者通过多台服务器实现对请求的动态负载均衡。因此，除非是针对于特定代理的安全连接，一个服务器不能假设同一个连接里的两个请求是来自于同一个用户代理。某些非标准的 HTTP 扩展（例如 [[RFC4559](https://tools.ietf.org/html/4559)]）已经被发现违反了这一要求，结果就是引发安全性和互操作性的问题。
+HTTP 被定义为一种无状态的协议，意味着每一个请求报文都能够被单独理解。许多实现依托于 HTTP 无状态性来复用代理过的连接或者通过多台服务器实现对请求的动态负载均衡。因此，一个服务器 **不能** 假设同一个连接里的两个请求是来自于同一个用户代理，除非是连接是安全的或者这些请求是该用户代理特有的。某些非标准的 HTTP 扩展（例如 [[RFC4559](https://tools.ietf.org/html/4559)]）已经被发现违反了这一要求，结果就是引发安全性和互操作性的问题。
 
-（译注：源服务器或中间人能够完全理解每一个请求报文的含义，这种理解并不用基于该请求报文的前一个或多个请求报文的内容）
+（译注：源服务器或中间人能够完全理解每一个请求报文的含义，这种理解并不用基于该请求报文的前一个或多个请求报文的内容。）
 
 
 <a id="orgc346344"></a>
@@ -331,11 +357,11 @@ HTTP 被定义为一个无状态的协议，意为每一个请求报文都能够
 
 > A "cache" is a local store of previous response messages and the subsystem that controls its message storage, retrieval, and deletion. A cache stores cacheable responses in order to reduce the response time and network bandwidth consumption on future, equivalent requests. Any client or server **MAY** employ a cache, though a cache cannot be used by a server while it is acting as a tunnel.
 
-“缓存”，是一个保存上一个请求报文的本地存储，以及与之配套的子系统（控制其报文的存储、获取和删除）。缓存响应是为了减少将来的响应时间和网络带宽消耗。任何客户端或者服务器都可以使用缓存，但是，当服务器作为隧道（Tunnel）而使用时，不能使用缓存。
+“缓存（Cache）”，是一个保存之前的响应报文的本地存储，以及控制其报文的存储、获取和删除的子系统。一个缓存（Cache）存储可缓存的（Cacheable）响应是为了减少将来的响应时间和网络带宽消耗。任何客户端或者服务器 **可以** 使用缓存，但是，当服务器作为隧道（Tunnel）而使用时，不能使用缓存。
 
 > The effect of a cache is that the request/response chain is shortened if one of the participants along the chain has a cached response applicable to that request. The following illustrates the resulting chain if B has a cached copy of an earlier response from O (via C) for a request that has not been cached by UA or A.
 
-缓存的作用是缩短请求/响应链，表现为在一个有缓存参与的进请求/响应链中，如果链路中的某个缓存里保存了与该请求相匹配的响应报文。下图的请求响应链的意思是，如果 B 保存了之前从源服务器 O （经过 C）返回的响应报文的副本，而这个响应没有缓存于用户代理 UA 或者 A 中，那么 B 就可以直接返回缓存的响应，而不用再转发至 C。
+缓存（Cache）的作用是缩短请求/响应链，体现为在一个有缓存参与的请求/响应链中，如果链路中的某个缓存（Cache）保存并返回了与该请求相匹配的响应报文。下图的请求响应链的意思是，如果 B 保存了之前从源服务器 O （经过 C）返回的响应报文的副本，而这个响应没有缓存于用户代理 UA 或者 A 中，那么 B 就可以直接返回缓存的响应，而不用再转发至 C。
 
          >             >
     UA =========== A =========== B - - - - - - C - - - - - - O
@@ -343,12 +369,12 @@ HTTP 被定义为一个无状态的协议，意为每一个请求报文都能够
 
 > A response is "cacheable" if a cache is allowed to store a copy of the response message for use in answering subsequent requests. Even when a response is cacheable, there might be additional constraints placed by the client or by the origin server on when that cached response can be used for a particular request. HTTP requirements for cache behavior and cacheable responses are defined in Section 2 of [RFC7234].
 
-如果一个缓存被允许去存储一个响应报文的副本用于应答随后的请求，那么这个响应报文可用于缓存。即使一个响应可用于缓存，也可能存在一些由客户端或服务器设置的额外约束来规定在什么情况下所缓存的响应报文能够用于特定的请求。HTTP 关于缓存的行为（cache behavior）以及可缓存的响应（cacheable reponses）的定义，见 [[RFC7234](https://tools.ietf.org/html/rfc7234)] 第二章。
+如果一个缓存被允许去存储一个响应报文的副本用于应答随后的请求，那么这个响应报文是“可缓存的（Cacheable）”。即使一个响应是可缓存的，也可能存在一些来自客户端或源服务器的额外约束来规定在什么情况下所缓存的响应报文能够用于具体的请求。HTTP 关于缓存的行为（Cache Behavior）以及可缓存的响应（Cacheable Reponses）的定义，见[【RFC7234】第二章](https://tools.ietf.org/html/rfc7234#section-2)。
 
 > There is a wide variety of architectures and configurations of caches deployed across the World Wide Web and inside large organizations.
 > These include national hierarchies of proxy caches to save transoceanic bandwidth, collaborative systems that broadcast or multicast cache entries, archives of pre-fetched cache entries for use in off-line or high-latency environments, and so on.
 
-多种多样的架构和配置的缓存被部署于万维网和大型组织中。包括用于节省越洋带宽的国家级的代理缓存，广播或多路广播协作系统的缓存条目，用于离线或高延迟环境的预缓存档案条目等等。
+缓存（Cache）的各种各样的架构和配置广泛存在于万维网和大型组织中，包括用于节省越洋带宽的国际级的代理缓存，广播或组播缓存项的协作系统，用于离线或高延迟环境的预取的缓存档案等等。
 
 
 <a id="orgbfd4ecc"></a>
@@ -989,7 +1015,7 @@ HTTP 报文的报文正文（如果存在的话）是用来运载请求或响应
 
 > `Transfer-Encoding` was added in HTTP/1.1. It is generally assumed that implementations advertising only HTTP/1.0 support will not understand how to process a transfer-encoded payload. A client **MUST NOT** send a request containing `Transfer-Encoding` unless it knows the server will handle HTTP/1.1 (or later) requests; such knowledge might be in the form of specific user configuration or by remembering the version of a prior received response. A server **MUST NOT** send a response containing `Transfer-Encoding` unless the corresponding request indicates HTTP/1.1 (or later).
 
-`Transfer-Encoding` 自 HTTP/1.1 起新增，一般会假设仅支持 HTTP/1.0 的实现并不会理解如何去处理一个经过传输编码过的载荷（Transfer-encoded Payload）。客户端 **禁止** 发送一个包含 `Transfer-ENcoding` 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住上一次服务器的响应报文的版本号的方式知道服务器是否可以处理这种请求。服务器 **禁止** 发送一个包含 `Transfer-Encoding` 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
+`Transfer-Encoding` 自 HTTP/1.1 起新增，一般会假设仅支持 HTTP/1.0 的实现并不会理解如何去处理一个经过传输编码过的载荷（Transfer-encoded Payload）。客户端 **禁止** 发送一个包含 `Transfer-ENcoding` 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住一个之前接收到的响应报文的版本号的方式知道服务器是否可以处理这种请求。服务器 **禁止** 发送一个包含 `Transfer-Encoding` 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
 
 > A server that receives a request message with a transfer coding it does not understand **SHOULD** respond with `501 (Not Implemented)`.
 
@@ -1098,15 +1124,23 @@ TODO 服务器 **可以** 在响应给一个带条件的 GET 请求（【[RFC723
 
 > Since there is no way to distinguish a successfully completed, close-delimited message from a partially received message interrupted by network failure, a server **SHOULD** generate encoding or length-delimited messages whenever possible. The close-delimiting feature exists primarily for backwards compatibility with HTTP/1.0.
 
-因为没有途径从一个被网络故障打断而只接收到一部分的报文中去辨别出一个完整、带结束定界的报文，因此，服务器 **应该** 生成编码或者
+因为没有途径从一个被网络故障打断而只接收到一部分的报文中去辨别出一个完整、带结束定界（Close-delimited）的报文，因此，服务器 **应该** 尽可能生成编码值（Coding）或者长度限定（Length-delimited）的报文。结束定界（Close-delimited）这一功能存在的主要目的是为了向后兼容 HTTP/1.0。
 
 > A server **MAY** reject a request that contains a message body but not a `Content-Length` by responding with `411 (Length Required)`.
 
-> Unless a transfer coding other than chunked has been applied, a client that sends a request containing a message body **SHOULD** use a valid `Content-Length` header field if the message body length is known in advance, rather than the chunked transfer coding, since some existing services respond to chunked with a `411 (Length Required)` status code even though they understand the chunked transfer coding. This is typically because such services are implemented via a gateway that requires a content-length in advance of being called and the server is unable or unwilling to buffer the entire request before processing.
+服务器 **可以** 通过发送一个带有 `411 (Length Required)` 状态码的响应来拒绝一个包含了一个报文正文但却没有一个 `Content-Length` 报头域的请求。
+
+> Unless a transfer coding other than `chunked` has been applied, a client that sends a request containing a message body **SHOULD** use a valid `Content-Length` header field if the message body length is known in advance, rather than the chunked transfer coding, since some existing services respond to chunked with a `411 (Length Required)` status code even though they understand the chunked transfer coding. This is typically because such services are implemented via a gateway that requires a content-length in advance of being called and the server is unable or unwilling to buffer the entire request before processing.
+
+除非应用了一个除 `chunked` 以外的传输编码值，发送包含一个报文正文的请求的客户端，如果预先知道报文正文的长度，**应该** 使用一个合法的 `Content-Length` 报头域，而不是使用分块传输编码值，这是因为某些现存的服务会使用 `411 (Length Required)` 状态码的响应报文来回应这种分块的请求报文，即使这块服务理解这个分块传输编码值。因为这种服务是经由一个在呼叫（服务）之前要求预先知道内容长度的网关来实现的，并且，服务器并不能或者不愿意在处理之前先去缓冲好整个请求。
 
 > A user agent that sends a request containing a message body **MUST** send a valid `Content-Length` header field if it does not know the server will handle HTTP/1.1 (or later) requests; such knowledge can be in the form of specific user configuration or by remembering the version of a prior received response.
 
+发送了一个包含报文正文的请求报文的用户代理，如果它并不知道服务器能够处理 HTTP/1.1（或之后）的请求的时候，**必须** 发送一个合法的 `Content-Length` 报头域。其中，用户代理可以使用具体的配置，或者通过记住之前接收到的响应报文的版本号的方式知道服务器是否可以处理 HTTP/1.1（或之后）的请求。
+
 > If the final response to the last request on a connection has been completely received and there remains additional data to read, a user agent **MAY** discard the remaining data or attempt to determine if that data belongs as part of the prior response body, which might be the case if the prior message's `Content-Length` value is incorrect. A client **MUST NOT** process, cache, or forward such extra data as a separate response, since such behavior would be vulnerable to cache poisoning.
+
+在一个连接中，如果一个用户代理已经完成了对应最后一个请求的最后一个完整响应报文的接收工作后，发现仍然剩余额外的数据需要读取，那么这个用户代理 **可以** 丢弃这些剩余数据，或者试图辨别这些剩余数据是否属于之前的响应正文，如果之前的报文的 `Content-Length` 的值是不正确的话可能会导致这种情况。客户端 **禁止** 将这种额外的数据作为一个单独的响应来进行处理、缓存或者转发，这是因为这种行为可能会存在[缓存中毒（Cache Poisoning）](https://en.wikipedia.org/w/index.php?search=cache+poisoning&title=Special%253ASearch&fulltext=Search)的隐患。
 
 
 <a id="orgaebe17e"></a>
@@ -1159,55 +1193,170 @@ TODO 服务器 **可以** 在响应给一个带条件的 GET 请求（【[RFC723
 
 # 4 传输编码值（Transfer Codings）
 
+> Transfer coding names are used to indicate an encoding transformation that has been, can be, or might need to be applied to a payload body in order to ensure "safe transport" through the network. This differs from a content coding in that the transfer coding is a property of the message rather than a property of the representation that is being transferred.
+
+传输编码值（Transfer Coding）是用于表示已经、能够或者可能需要应用到一个有效载荷（Payload Body）中以确保网络传输安全的一种编码转换（Encoding Transformation）。与内容编码值（Content Coding）不同的是，传输编码值是一个报文的特性，而不是一个展现方式（Representation）的特定。
+
+    transfer-coding    = "chunked" ; [[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][Section 4.1]]
+                        / "compress" ; [[id:a785a05f-6fdc-44d8-9343-3a66a49cb655][Section 4.2.1]]
+                        / "deflate" ; [[id:fa7b432f-071b-4e26-9d2c-8fc1b95b6b64][Section 4.2.2]]
+                        / "gzip" ; [[id:d1579c8b-312c-414b-b421-960669b0d389][Section 4.2.3]]
+                        / transfer-extension
+    transfer-extension = token *( OWS ";" OWS transfer-parameter )
+
+> Parameters are in the form of a name or name=value pair.
+
+    transfer-parameter = token BWS "=" BWS ( token / quoted-string )
+
+> All transfer-coding names are case-insensitive and ought to be registered within the HTTP Transfer Coding registry, as defined in Section 8.4. They are used in the TE (Section 4.3) and Transfer-Encoding (Section 3.3.1) header fields.
+
 
 <a id="org6ec8637"></a>
 
 ## 4.1 分块传输编码值 (Chunked Transfer Coding)
+
+> The chunked transfer coding wraps the payload body in order to transfer it as a series of chunks, each with its own size indicator, followed by an OPTIONAL trailer containing header fields. Chunked enables content streams of unknown size to be transferred as a sequence of length-delimited buffers, which enables the sender to retain connection persistence and the recipient to know when it has received the entire message.
+
+    chunked-body   = *chunk
+                      last-chunk
+                      trailer-part
+                      CRLF
+    
+    chunk          = chunk-size [ chunk-ext ] CRLF
+                      chunk-data CRLF
+    chunk-size     = 1*HEXDIG
+    last-chunk     = 1*("0") [ chunk-ext ] CRLF
+    
+    chunk-data     = 1*OCTET ; a sequence of chunk-size octets
+
+> The chunk-size field is a string of hex digits indicating the size of the chunk-data in octets. The chunked transfer coding is complete when a chunk with a chunk-size of zero is received, possibly followed by a trailer, and finally terminated by an empty line.
+
+> A recipient **MUST** be able to parse and decode the chunked transfer coding.
 
 
 <a id="org5de3893"></a>
 
 ### 4.1.1 Chunk Extensions
 
+> The chunked encoding allows each chunk to include zero or more chunk extensions, immediately following the chunk-size, for the sake of supplying per-chunk metadata (such as a signature or hash), mid-message control information, or randomization of message body size.
+
+    chunk-ext      = *( ";" chunk-ext-name [ "=" chunk-ext-val ] )
+    
+    chunk-ext-name = token
+    chunk-ext-val  = token / quoted-string
+
+> The chunked encoding is specific to each connection and is likely to be removed or recoded by each recipient (including intermediaries) before any higher-level application would have a chance to inspect the extensions. Hence, use of chunk extensions is generally limited to specialized HTTP services such as "long polling" (where client and server can have shared expectations regarding the use of chunk extensions) or for padding within an end-to-end secured connection.
+
+> A recipient **MUST** ignore unrecognized chunk extensions. A server ought to limit the total length of chunk extensions received in a request to an amount reasonable for the services provided, in the same way that it applies length limitations and timeouts for other parts of a message, and generate an appropriate 4xx (Client Error) response if that amount is exceeded.
+
 
 <a id="org50ba17f"></a>
 
 ### 4.1.2 Chunked Trailer Part
+
+> A trailer allows the sender to include additional fields at the end of a chunked message in order to supply metadata that might be dynamically generated while the message body is sent, such as a message integrity check, digital signature, or post-processing status. The trailer fields are identical to header fields, except they are sent in a chunked trailer instead of the message's header section.
+
+    trailer-part   = *( header-field CRLF )
+
+> A sender MUST NOT generate a trailer that contains a field necessary for message framing (e.g., Transfer-Encoding and Content-Length), routing (e.g., Host), request modifiers (e.g., controls and conditionals in Section 5 of [RFC7231]), authentication (e.g., see [RFC7235] and [RFC6265]), response control data (e.g., see Section 7.1 of [RFC7231]), or determining how to process the payload (e.g., Content-Encoding, Content-Type, Content-Range, and Trailer).
+
+> When a chunked message containing a non-empty trailer is received, the recipient MAY process the fields (aside from those forbidden above) as if they were appended to the message's header section. A recipient MUST ignore (or consider as an error) any fields that are forbidden to be sent in a trailer, since processing them as if they were present in the header section might bypass external security filters.
+
+> Unless the request includes a TE header field indicating "trailers" is acceptable, as described in Section 4.3, a server SHOULD NOT generate trailer fields that it believes are necessary for the user agent to receive. Without a TE containing "trailers", the server ought to assume that the trailer fields might be silently discarded along the path to the user agent. This requirement allows intermediaries to forward a de-chunked message to an HTTP/1.0 recipient without buffering the entire response.
 
 
 <a id="orgc3f78b7"></a>
 
 ### 4.1.3 Decoding Chunked
 
+> A process for decoding the chunked transfer coding can be represented in pseudo-code as:
+
+    length := 0
+    read chunk-size, chunk-ext (if any), and CRLF
+    while (chunk-size > 0) {
+        read chunk-data and CRLF
+        append chunk-data to decoded-body
+        length := length + chunk-size
+        read chunk-size, chunk-ext (if any), and CRLF
+    }
+    read trailer field
+    while (trailer field is not empty) {
+        if (trailer field is allowed to be sent in a trailer) {
+            append trailer field to existing header fields
+        }
+        read trailer-field
+    }
+    Content-Length := length
+    Remove "chunked" from Transfer-Encoding
+    Remove Trailer from existing header fields
+
 
 <a id="orgf7f23d5"></a>
 
 ## 4.2 Compression Codings
+
+> The codings defined below can be used to compress the payload of a message.
 
 
 <a id="org46e4b8b"></a>
 
 ### 4.2.1 Compress Coding
 
+> The "compress" coding is an adaptive Lempel-Ziv-Welch (LZW) coding [Welch] that is commonly produced by the UNIX file compression program "compress". A recipient SHOULD consider "x-compress" to be equivalent to "compress".
+
 
 <a id="org5923bd6"></a>
 
 ### 4.2.2 Deflate Coding
+
+> The "deflate" coding is a "zlib" data format [RFC1950] containing a "deflate" compressed data stream [RFC1951] that uses a combination of the Lempel-Ziv (LZ77) compression algorithm and Huffman coding.
+
+> Note: Some non-conformant implementations send the "deflate" compressed data without the zlib wrapper.
 
 
 <a id="org19d009d"></a>
 
 ### 4.2.3 Gzip Coding
 
+> The "gzip" coding is an LZ77 coding with a 32-bit Cyclic Redundancy Check (CRC) that is commonly produced by the gzip file compression program [RFC1952]. A recipient SHOULD consider "x-gzip" to be equivalent to "gzip".
+
 
 <a id="orgfb316f0"></a>
 
 ## 4.3 TE
 
+> The "TE" header field in a request indicates what transfer codings, besides chunked, the client is willing to accept in response, and whether or not the client is willing to accept trailer fields in a chunked transfer coding.
+
+> The TE field-value consists of a comma-separated list of transfer coding names, each allowing for optional parameters (as described in Section 4), and/or the keyword "trailers". A client MUST NOT send the chunked transfer coding name in TE; chunked is always acceptable for HTTP/1.1 recipients.
+
+    TE        = #t-codings
+    t-codings = "trailers" / ( transfer-coding [ t-ranking ] )
+    t-ranking = OWS ";" OWS "q=" rank
+    rank      = ( "0" [ "." 0*3DIGIT ] )
+                / ( "1" [ "." 0*3("0") ] )
+
+> Three examples of TE use are below.
+
+    TE: deflate
+    TE:
+    TE: trailers, deflate;q=0.5
+
+> The presence of the keyword "trailers" indicates that the client is willing to accept trailer fields in a chunked transfer coding, as defined in Section 4.1.2, on behalf of itself and any downstream clients. For requests from an intermediary, this implies that either: (a) all downstream clients are willing to accept trailer fields in the forwarded response; or, (b) the intermediary will attempt to buffer the response on behalf of downstream recipients. Note that HTTP/1.1 does not define any means to limit the size of a chunked response such that an intermediary can be assured of buffering the entire response.
+
+> When multiple transfer codings are acceptable, the client MAY rank the codings by preference using a case-insensitive "q" parameter (similar to the qvalues used in content negotiation fields, Section 5.3.1 of [RFC7231]). The rank value is a real number in the range 0 through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means "not acceptable".
+
+> If the TE field-value is empty or if no TE field is present, the only acceptable transfer coding is chunked. A message with no transfer coding is always acceptable.
+
+> Since the TE header field only applies to the immediate connection, a sender of TE MUST also send a "TE" connection option within the Connection header field (Section 6.1) in order to prevent the TE field from being forwarded by intermediaries that do not support its semantics.
+
 
 <a id="org53d7545"></a>
 
 ## 4.4 Trailer
+
+> When a message includes a message body encoded with the chunked transfer coding and the sender desires to send metadata in the form of trailer fields at the end of the message, the sender SHOULD generate a Trailer header field before the message body to indicate which fields will be present in the trailers. This allows the recipient to prepare for receipt of that metadata before it starts processing the body, which is useful if the message is being streamed and the recipient wishes to confirm an integrity check on the fly.
+
+    Trailer = 1#field-name
 
 
 <a id="org77574f5"></a>
