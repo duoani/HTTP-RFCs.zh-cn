@@ -22,7 +22,7 @@ ISSN: 2070-1721
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document provides an overview of HTTP architecture and its associated terminology, defines the "http" and "https" Uniform Resource Identifier (URI) schemes, defines the HTTP/1.1 message syntax and parsing requirements, and describes related security concerns for implementations.
 #+END_QUOTE
 
-超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI schemes，定义了 HTTP/1.1 报文句法和解析要求，以及描述了实现上的安全性相关的关注事项。
+超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI schemes，定义了 HTTP/1.1 报文句法和解析要求，以及描述了实现上的安全性相关的注意事项。
 
 * 备忘状态（Status of This Memo）
 :PROPERTIES:
@@ -90,27 +90,37 @@ This document describes the architectural elements that are used or referred to 
 
 本文档描述了用于或涉及 HTTP 的构筑元素，定义了 "http" 和 "https" 两种 URI schemes，总体上描述了网络操作和连接管理，并且定义了 HTTP 报文在分帧和转发方面的要求。我们的目标是定义所有关于 HTTP 的、独立于报文语义的、处理报文方面的必要方法，从而为报文解析器（Message Parsers）和报文转发中间人(Message-forwarding Intermediaries)定义完整的要求（Requirements）集。
 
-** 1.1 Requirements Notation
+** 1.1 要求标记 (Requirements Notation)
 #+BEGIN_QUOTE
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
 #+END_QUOTE
 
+关键词 *必须（MUST）*、*禁止（MUST NOT）*、*要求（REQUIRED）*、*必须（SHALL）*、*禁止（SHALL NOT）*、*应该（SHOULD）*、*不应该（SHOULD NOT）*、*推荐（RECOMMENDED）*、*可以（MAY）* 和 *可选（OPTIONAL）* 的意义与【[[https://tools.ietf.org/html/rfc2119][RFC2119]]】一致。
+
 #+BEGIN_QUOTE
 Conformance criteria and considerations regarding error handling are defined in Section 2.5.
 #+END_QUOTE
+
+关于错误处理的一致性标准以及注意事项会在[[id:A0441F72-9799-4667-9477-1E05885946A1][章节 2.5]] 中定义。
 
 ** 1.2 句法标记 (Syntax Notation)
 #+BEGIN_QUOTE
 This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7, that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix B shows the collected grammar with all list operators expanded to standard ABNF notation.
 #+END_QUOTE
 
+本规范使用扩展巴科斯范式（ABNF）标记法【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】，另外，出于对定义“以逗号分隔的列表”的紧凑性的考虑，本规范新增了一个 ABNF 规则：列扩展（List Extension见[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][章节 7]]），来允许使用一个 =#=  操作符（类似于 =*= 操作符，指代“重复”）。
+
 #+BEGIN_QUOTE
 The following core rules are included by reference, as defined in [RFC5234], Appendix B.1: =ALPHA= (letters), =CR= (carriage return), =CRLF= (CR LF), =CTL= (controls), =DbbIGIT= (decimal 0-9), =DQUOTE= (double quote), =HEXDIG= (hexadecimal 0-9/A-F/a-f), =HTAB= (horizontal tab), =LF= (line feed), =OCTET= (any 8-bit sequence of data), =SP= (space), and =VCHAR= (any visible [USASCII] character).
 #+END_QUOTE
 
+本规范引用了下列定义于[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：字母 =ALPHA=、回车符 =CR=、回车换行符 =CRLF=、控制字符 =CTL=、十进制数字 0-9 =DbbIGIT=、双引号 =DQUOTE=、十六进制数字 0-9/A-F/a-f =HEXDIG=、水平制表符 =HTAB=、换行符 =LF=、八位组字节 =OCTET=、空格 =SP= 以及【USASCII】可见字符 =VCHAR=。
+
 #+BEGIN_QUOTE
-As a convention, ABNF rule names prefixed with "obs-" denote "obsolete" grammar rules that appear for historical reasons.
+As a convention, ABNF rule names prefixed with "=obs-=" denote "obsolete" grammar rules that appear for historical reasons.
 #+END_QUOTE
+
+按照惯例，名称以 "obs-" 开头的ABNF 规则表示这是已经废弃（Obsolete）的语法，之所以这种规则会出现是为了描述历史遗留的问题。 
 
 * 2 体系结构（Architecture）
 #+BEGIN_QUOTE
@@ -1443,6 +1453,9 @@ When a server listening only for HTTP request messages, or processing what appea
 ** 6.6 销毁 (Tear-down)
 ** 6.7 升级 (Upgrade)
 * 7 ABNF 列表扩展：#rule（ABNF List Extension: #rule）
+:PROPERTIES:
+:ID:       b9db011d-fe47-4781-929a-4b1b0aa55aec
+:END:
 * 8 INAN 考虑（IANA Considerations）
 ** 8.1 Header Field Registration
 ** 8.2 URI Scheme Registration
