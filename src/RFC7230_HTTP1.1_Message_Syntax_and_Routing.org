@@ -1178,7 +1178,7 @@ A server *MUST NOT* send a =Transfer-Encoding= header field in any response with
 =Transfer-Encoding= was added in HTTP/1.1. It is generally assumed that implementations advertising only HTTP/1.0 support will not understand how to process a transfer-encoded payload. A client *MUST NOT* send a request containing =Transfer-Encoding= unless it knows the server will handle HTTP/1.1 (or later) requests; such knowledge might be in the form of specific user configuration or by remembering the version of a prior received response. A server *MUST NOT* send a response containing =Transfer-Encoding= unless the corresponding request indicates HTTP/1.1 (or later).
 #+END_QUOTE
 
-=Transfer-Encoding= 自 HTTP/1.1 起新增，一般会假设仅支持 HTTP/1.0 的实现并不会理解如何去处理一个经过传输编码过的载荷（Transfer-encoded Payload）。客户端 *禁止* 发送一个包含 =Transfer-ENcoding= 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住上一次服务器的响应报文的版本号的方式知道服务器是否可以处理这种请求。服务器 *禁止* 发送一个包含 =Transfer-Encoding= 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
+=Transfer-Encoding= 自 HTTP/1.1 起新增，一般会假设仅支持 HTTP/1.0 的实现并不会理解如何去处理一个经过传输编码过的载荷（Transfer-encoded Payload）。客户端 *禁止* 发送一个包含 =Transfer-ENcoding= 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住一个之前接收到的响应报文的版本号的方式知道服务器是否可以处理这种请求。服务器 *禁止* 发送一个包含 =Transfer-Encoding= 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
 
 #+BEGIN_QUOTE
 A server that receives a request message with a transfer coding it does not understand *SHOULD* respond with =501 (Not Implemented)=.
@@ -1313,23 +1313,31 @@ The length of a message body is determined by one of the following (in order of 
 Since there is no way to distinguish a successfully completed, close-delimited message from a partially received message interrupted by network failure, a server *SHOULD* generate encoding or length-delimited messages whenever possible. The close-delimiting feature exists primarily for backwards compatibility with HTTP/1.0.
 #+END_QUOTE
 
-因为没有途径从一个被网络故障打断而只接收到一部分的报文中去辨别出一个完整、带结束定界的报文，因此，服务器 *应该* 生成编码或者
+因为没有途径从一个被网络故障打断而只接收到一部分的报文中去辨别出一个完整、带结束定界（Close-delimited）的报文，因此，服务器 *应该* 尽可能生成编码值（Coding）或者长度限定（Length-delimited）的报文。结束定界（Close-delimited）这一功能存在的主要目的是为了向后兼容 HTTP/1.0。
 
 #+BEGIN_QUOTE
 A server *MAY* reject a request that contains a message body but not a =Content-Length= by responding with =411 (Length Required)=.
 #+END_QUOTE
 
+服务器 *可以* 通过发送一个带有 =411 (Length Required)= 状态码的响应来拒绝一个包含了一个报文正文但却没有一个 =Content-Length= 报头域的请求。
+
 #+BEGIN_QUOTE
-Unless a transfer coding other than chunked has been applied, a client that sends a request containing a message body *SHOULD* use a valid =Content-Length= header field if the message body length is known in advance, rather than the chunked transfer coding, since some existing services respond to chunked with a =411 (Length Required)= status code even though they understand the chunked transfer coding. This is typically because such services are implemented via a gateway that requires a content-length in advance of being called and the server is unable or unwilling to buffer the entire request before processing.
+Unless a transfer coding other than =chunked= has been applied, a client that sends a request containing a message body *SHOULD* use a valid =Content-Length= header field if the message body length is known in advance, rather than the chunked transfer coding, since some existing services respond to chunked with a =411 (Length Required)= status code even though they understand the chunked transfer coding. This is typically because such services are implemented via a gateway that requires a content-length in advance of being called and the server is unable or unwilling to buffer the entire request before processing.
 #+END_QUOTE
+
+除非应用了一个除 =chunked= 以外的传输编码值，发送包含一个报文正文的请求的客户端，如果预先知道报文正文的长度，*应该* 使用一个合法的 =Content-Length= 报头域，而不是使用分块传输编码值，这是因为某些现存的服务会使用 =411 (Length Required)= 状态码的响应报文来回应这种分块的请求报文，即使这块服务理解这个分块传输编码值。因为这种服务是经由一个在呼叫（服务）之前要求预先知道内容长度的网关来实现的，并且，服务器并不能或者不愿意在处理之前先去缓冲好整个请求。
 
 #+BEGIN_QUOTE
 A user agent that sends a request containing a message body *MUST* send a valid =Content-Length= header field if it does not know the server will handle HTTP/1.1 (or later) requests; such knowledge can be in the form of specific user configuration or by remembering the version of a prior received response.
 #+END_QUOTE
 
+发送了一个包含报文正文的请求报文的用户代理，如果它并不知道服务器能够处理 HTTP/1.1（或之后）的请求的时候，*必须* 发送一个合法的 =Content-Length= 报头域。其中，用户代理可以使用具体的配置，或者通过记住之前接收到的响应报文的版本号的方式知道服务器是否可以处理 HTTP/1.1（或之后）的请求。
+
 #+BEGIN_QUOTE
 If the final response to the last request on a connection has been completely received and there remains additional data to read, a user agent *MAY* discard the remaining data or attempt to determine if that data belongs as part of the prior response body, which might be the case if the prior message's =Content-Length= value is incorrect. A client *MUST NOT* process, cache, or forward such extra data as a separate response, since such behavior would be vulnerable to cache poisoning.
 #+END_QUOTE
+
+在一个连接中，如果一个用户代理已经完成了对应最后一个请求的最后一个完整响应报文的接收工作后，发现仍然剩余额外的数据需要读取，那么这个用户代理 *可以* 丢弃这些剩余数据，或者试图辨别这些剩余数据是否属于之前的响应正文，如果之前的报文的 =Content-Length= 的值是不正确的话可能会导致这种情况。客户端 *禁止* 将这种额外的数据作为一个单独的响应来进行处理、缓存或者转发，这是因为这种行为可能会存在[[https://en.wikipedia.org/w/index.php?search=cache+poisoning&title=Special%253ASearch&fulltext=Search][缓存中毒（Cache Poisoning）]]的隐患。
 
 ** 3.4 报文不完整的处理 (Handling Incomplete Messages)
 #+BEGIN_QUOTE
