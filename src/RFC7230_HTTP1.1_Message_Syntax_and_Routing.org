@@ -116,6 +116,8 @@ The following core rules are included by reference, as defined in [RFC5234], App
 
 本规范引用了下列定义于[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：字母 =ALPHA=、回车符 =CR=、回车换行符 =CRLF=、控制字符 =CTL=、十进制数字 0-9 =DbbIGIT=、双引号 =DQUOTE=、十六进制数字 0-9/A-F/a-f =HEXDIG=、水平制表符 =HTAB=、换行符 =LF=、八位组字节 =OCTET=、空格 =SP= 以及【USASCII】可见字符 =VCHAR=。
 
+（译注：除非特别说明，本译文所述的“字节”皆指的是 Octet，而不是 Byte。）
+
 #+BEGIN_QUOTE
 As a convention, ABNF rule names prefixed with "=obs-=" denote "obsolete" grammar rules that appear for historical reasons.
 #+END_QUOTE
@@ -1408,10 +1410,10 @@ Transfer coding names are used to indicate an encoding transformation that has b
 
 #+HEADER: :var chunked-rule-url=123123
 #+BEGIN_SRC org
-  transfer-coding    = "chunked" ; [[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][Section 4.1]]
-                      / "compress" ; [[id:a785a05f-6fdc-44d8-9343-3a66a49cb655][Section 4.2.1]]
-                      / "deflate" ; [[id:fa7b432f-071b-4e26-9d2c-8fc1b95b6b64][Section 4.2.2]]
-                      / "gzip" ; [[id:d1579c8b-312c-414b-b421-960669b0d389][Section 4.2.3]]
+  transfer-coding    = "chunked" ; Section 4.1
+                      / "compress" ; Section 4.2.1
+                      / "deflate" ; Section 4.2.2
+                      / "gzip" ; Section 4.2.3
                       / transfer-extension
   transfer-extension = token *( OWS ";" OWS transfer-parameter )
 #+END_SRC
@@ -1420,21 +1422,27 @@ Transfer coding names are used to indicate an encoding transformation that has b
 Parameters are in the form of a name or name=value pair.
 #+END_QUOTE
 
+参数 =transfer-parameter= 是以一个名称 =name= 或者键值对 =name=value= 的形式存在。
+
 #+BEGIN_SRC text
   transfer-parameter = token BWS "=" BWS ( token / quoted-string )
 #+END_SRC
 
 #+BEGIN_QUOTE
-All transfer-coding names are case-insensitive and ought to be registered within the HTTP Transfer Coding registry, as defined in Section 8.4. They are used in the TE (Section 4.3) and Transfer-Encoding (Section 3.3.1) header fields.
+All transfer-coding names are case-insensitive and ought to be registered within the HTTP Transfer Coding registry, as defined in Section 8.4. They are used in the =TE= (Section 4.3) and =Transfer-Encoding= (Section 3.3.1) header fields.
 #+END_QUOTE
+
+所有 =transfer-coding= 的名称都是大小写不敏感的，并且应该被注册在 "HTTP Transfer Coding" 注册表中，定义在[[id:DA2ABD5F-DFF0-408B-93D4-73D21E20B3CF][章节 8.4]] 中。它们用在报文域 =TE= （[[id:2BA944C9-6215-4B88-8F5F-D5CACA865191][章节 4.3]]）和 =Transfer-Encoding= （[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][章节 3.3.1]]）里。
 
 ** 4.1 分块传输编码值 (Chunked Transfer Coding)
 :PROPERTIES:
 :ID:       452E8F0E-0A13-40B4-B7A2-759A30E62D31
 :END:
 #+BEGIN_QUOTE
-The chunked transfer coding wraps the payload body in order to transfer it as a series of chunks, each with its own size indicator, followed by an OPTIONAL trailer containing header fields. Chunked enables content streams of unknown size to be transferred as a sequence of length-delimited buffers, which enables the sender to retain connection persistence and the recipient to know when it has received the entire message.
+The =chunked= transfer coding wraps the payload body in order to transfer it as a series of chunks, each with its own size indicator, followed by an *OPTIONAL* trailer containing header fields. =Chunked= enables content streams of unknown size to be transferred as a sequence of length-delimited buffers, which enables the sender to retain connection persistence and the recipient to know when it has received the entire message.
 #+END_QUOTE
+
+TODO 使用 =chunked= 传输编码值将有效载荷（Payload body）包裹为一系列的分块来传输。每个分块都带有单独的大小指标，跟随于一个 *可选的* 包含报头域的结尾之后。=chunked= 允许以一系列长度限定的（Length-delimited）缓冲（Buffers）的方式来传输大小未知的内容流。这种缓冲允许发送端去保持连接不关闭，以及使接收端得知在什么时候接收完整个报文。
 
 #+BEGIN_SRC text
   chunked-body   = *chunk
@@ -1454,14 +1462,20 @@ The chunked transfer coding wraps the payload body in order to transfer it as a 
 The chunk-size field is a string of hex digits indicating the size of the chunk-data in octets. The chunked transfer coding is complete when a chunk with a chunk-size of zero is received, possibly followed by a trailer, and finally terminated by an empty line.
 #+END_QUOTE
 
+其中，=chunk-size= 域是一个十六进制数字的字符串，代表 =chunk-data= 的字节大小。当接收到一个带有 =chunk-size= 的值为零的分块（可以位于一个 trailer 之后并以一个空行作为结束），即代表 =chunked= 传输编码值是完整的。
+
 #+BEGIN_QUOTE
 A recipient *MUST* be able to parse and decode the chunked transfer coding.
 #+END_QUOTE
 
-*** 4.1.1 Chunk Extensions
+一个接收端 *必须* 能够解析（Parse）和解码（Decode） =chunked= 传输编码值。
+
+*** 4.1.1 分块扩展 (Chunk Extensions)
 #+BEGIN_QUOTE
 The chunked encoding allows each chunk to include zero or more chunk extensions, immediately following the chunk-size, for the sake of supplying per-chunk metadata (such as a signature or hash), mid-message control information, or randomization of message body size.
 #+END_QUOTE
+
+=chunked= 编码允许每一个分块包含零个或以上分块扩展（Chunk Extensions） =chunk-ext=，紧跟在 =chunk-size= 之后，用于支持 per-chunk 元数据（例如一个签名或哈希值）、mid-message 控制信息，或者随机报文正文大小。
 
 #+BEGIN_SRC text
   chunk-ext      = *( ";" chunk-ext-name [ "=" chunk-ext-val ] )
@@ -1474,35 +1488,47 @@ The chunked encoding allows each chunk to include zero or more chunk extensions,
 The chunked encoding is specific to each connection and is likely to be removed or recoded by each recipient (including intermediaries) before any higher-level application would have a chance to inspect the extensions. Hence, use of chunk extensions is generally limited to specialized HTTP services such as "long polling" (where client and server can have shared expectations regarding the use of chunk extensions) or for padding within an end-to-end secured connection.
 #+END_QUOTE
 
+=chunked= 编码是会对每一个连接而言的，而且它可能会在任何高层应用有机会检测到分块的扩展信息之前就被接收端（包括中间人）所移除或者重新编码。因此，分块扩展的使用通常限定于特定的 HTTP 服务中，例如“长轮询（Long Polling）”（一个客户端和服务端能够对分块扩展的使用达成共同的期望的地方）或者在一个端到端（End-to-end）安全连接之间的填充。
+
 #+BEGIN_QUOTE
 A recipient *MUST* ignore unrecognized chunk extensions. A server ought to limit the total length of chunk extensions received in a request to an amount reasonable for the services provided, in the same way that it applies length limitations and timeouts for other parts of a message, and generate an appropriate 4xx (Client Error) response if that amount is exceeded.
 #+END_QUOTE
 
-*** 4.1.2 Chunked Trailer Part
+一个接收端 *必须* 忽略无法识别的分块扩展。一个服务端应该将所接收到的分块扩展的总长度限制到一个由相应服务提供的合理的值上，就像服务端对一个报文的其他部分应用长度限制和超时一样，并且生成一个合适的 =4xx (Client Error)= 响应，如果超过那个长度限制的话。
+
+*** 4.1.2 分块拖尾部分 (Chunked Trailer Part)
 #+BEGIN_QUOTE
 A trailer allows the sender to include additional fields at the end of a chunked message in order to supply metadata that might be dynamically generated while the message body is sent, such as a message integrity check, digital signature, or post-processing status. The trailer fields are identical to header fields, except they are sent in a chunked trailer instead of the message's header section.
 #+END_QUOTE
+
+一个拖尾（Trailer）允许发送端在一个分块的报文的末尾处包含额外的头域，为了提供可以在报文正文被发送的时候动态生成的元数据，例如一个报文完整性检查（Message Integrity Check, MIC）、数字签名（Digital Signature）或者后处理状态（Post-processing Status）等。拖尾域（Trailer Fields）等价于报头域（Header Fields），除了它们是发送在一个分块拖尾里，而不是在一个报文的报头块里。
 
 #+BEGIN_SRC text
   trailer-part   = *( header-field CRLF )
 #+END_SRC
 
 #+BEGIN_QUOTE
-A sender MUST NOT generate a trailer that contains a field necessary for message framing (e.g., Transfer-Encoding and Content-Length), routing (e.g., Host), request modifiers (e.g., controls and conditionals in Section 5 of [RFC7231]), authentication (e.g., see [RFC7235] and [RFC6265]), response control data (e.g., see Section 7.1 of [RFC7231]), or determining how to process the payload (e.g., Content-Encoding, Content-Type, Content-Range, and Trailer).
+A sender *MUST NOT* generate a trailer that contains a field necessary for message framing (e.g., =Transfer-Encoding= and =Content-Length=), routing (e.g., =Host=), request modifiers (e.g., =controls= and =conditionals= in Section 5 of [RFC7231]), authentication (e.g., see [RFC7235] and [RFC6265]), response control data (e.g., see Section 7.1 of [RFC7231]), or determining how to process the payload (e.g., =Content-Encoding=, =Content-Type=, =Content-Range=, and =Trailer=).
 #+END_QUOTE
+
+发送端 *禁止* 生成一个包含某种用于以下用途的必要域的拖尾：报文分帧（例如，=Transfer-Encoding= 和 =Content-Length=）、路由选择（例如，=Host=）、请求修饰符（例如，【RFC7231】章节 5 里定义的 =controls= 和 =conditionals=）、认证（见【RFC7235】和【RFC6265】）、响应控制数据（见【RFC7231】章节 7.1），以及决定如何处理有效载荷的域（例如，=Content-Encoding=, =Content-Type=, =Content-Range=, and =Trailer=）。
 
 #+BEGIN_QUOTE
 When a chunked message containing a non-empty trailer is received, the recipient MAY process the fields (aside from those forbidden above) as if they were appended to the message's header section. A recipient MUST ignore (or consider as an error) any fields that are forbidden to be sent in a trailer, since processing them as if they were present in the header section might bypass external security filters.
 #+END_QUOTE
 
+
+
 #+BEGIN_QUOTE
 Unless the request includes a TE header field indicating "trailers" is acceptable, as described in Section 4.3, a server SHOULD NOT generate trailer fields that it believes are necessary for the user agent to receive. Without a TE containing "trailers", the server ought to assume that the trailer fields might be silently discarded along the path to the user agent. This requirement allows intermediaries to forward a de-chunked message to an HTTP/1.0 recipient without buffering the entire response.
 #+END_QUOTE
 
-*** 4.1.3 Decoding Chunked
+*** 4.1.3 解码分块 (Decoding Chunked)
 #+BEGIN_QUOTE
 A process for decoding the chunked transfer coding can be represented in pseudo-code as:
 #+END_QUOTE
+
+对分块传输编码进行解码的过程可以使用下列伪代码来表示：
 
 #+BEGIN_SRC text
   length := 0
@@ -1559,6 +1585,9 @@ The "gzip" coding is an LZ77 coding with a 32-bit Cyclic Redundancy Check (CRC) 
 #+END_QUOTE
 
 ** 4.3 TE
+:PROPERTIES:
+:ID:       2BA944C9-6215-4B88-8F5F-D5CACA865191
+:END:
 #+BEGIN_QUOTE
 The "TE" header field in a request indicates what transfer codings, besides chunked, the client is willing to accept in response, and whether or not the client is willing to accept trailer fields in a chunked transfer coding.
 #+END_QUOTE
@@ -1672,6 +1701,9 @@ When a message includes a message body encoded with the chunked transfer coding 
 :END:
 *** 8.3.2 Internet Media Type application/http
 ** 8.4 Transfer Coding Registry
+:PROPERTIES:
+:ID:       DA2ABD5F-DFF0-408B-93D4-73D21E20B3CF
+:END:
 *** 8.4.1 Procedure
 *** 8.4.2 Registration
 ** 8.5 Content Coding Registration
