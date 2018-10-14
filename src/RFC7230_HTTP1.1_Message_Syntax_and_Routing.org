@@ -1514,14 +1514,16 @@ A sender *MUST NOT* generate a trailer that contains a field necessary for messa
 发送端 *禁止* 生成一个包含某种用于以下用途的必要域的拖尾：报文分帧（例如，=Transfer-Encoding= 和 =Content-Length=）、路由选择（例如，=Host=）、请求修饰符（例如，【RFC7231】章节 5 里定义的 =controls= 和 =conditionals=）、认证（见【RFC7235】和【RFC6265】）、响应控制数据（见【RFC7231】章节 7.1），以及决定如何处理有效载荷的域（例如，=Content-Encoding=, =Content-Type=, =Content-Range=, and =Trailer=）。
 
 #+BEGIN_QUOTE
-When a chunked message containing a non-empty trailer is received, the recipient MAY process the fields (aside from those forbidden above) as if they were appended to the message's header section. A recipient MUST ignore (or consider as an error) any fields that are forbidden to be sent in a trailer, since processing them as if they were present in the header section might bypass external security filters.
+When a chunked message containing a non-empty trailer is received, the recipient *MAY* process the fields (aside from those forbidden above) as if they were appended to the message's header section. A recipient *MUST* ignore (or consider as an error) any fields that are forbidden to be sent in a trailer, since processing them as if they were present in the header section might bypass external security filters.
 #+END_QUOTE
 
-
+当接收到一个包含一个非空拖尾（Non-empty Trailer）的分块报文时，接收端 *可以* 像处理报头域一样的方式来处理这些拖尾里的域（除了上述禁止的域以外）。接收端 *必须* 忽略（或者认为是一个错误）任何禁止存放于拖尾里的域，这是因为如果像处理报头域一样处理它们的话可能会越过外部安全过滤机制。
 
 #+BEGIN_QUOTE
-Unless the request includes a TE header field indicating "trailers" is acceptable, as described in Section 4.3, a server SHOULD NOT generate trailer fields that it believes are necessary for the user agent to receive. Without a TE containing "trailers", the server ought to assume that the trailer fields might be silently discarded along the path to the user agent. This requirement allows intermediaries to forward a de-chunked message to an HTTP/1.0 recipient without buffering the entire response.
+Unless the request includes a =TE= header field indicating "trailers" is acceptable, as described in Section 4.3, a server *SHOULD NOT* generate trailer fields that it believes are necessary for the user agent to receive. Without a =TE= containing "trailers", the server ought to assume that the trailer fields might be silently discarded along the path to the user agent. This requirement allows intermediaries to forward a de-chunked message to an HTTP/1.0 recipient without buffering the entire response.
 #+END_QUOTE
+
+除非请求报文里包含一个 =TE= 报头域指明允许 "trailers"（详情见章节 4.3），服务器 *不应该* 生成它相信用户代理必然会接收到的拖尾域（Trailer Fields）。没有包含 "trailers" 的 =TE= 报头域时，服务端应该假设拖尾域可能会在发送到用户代理的链路过程中被隐式地丢弃掉。这样的要求使得中间人能够在不用缓冲（Buffering）整个响应报文的情况下去转发一个 de-chunked 的报文到一个 HTTP/1.0 接收端中去。
 
 *** 4.1.3 解码分块 (Decoding Chunked)
 #+BEGIN_QUOTE
@@ -1551,18 +1553,22 @@ A process for decoding the chunked transfer coding can be represented in pseudo-
   Remove Trailer from existing header fields
 #+END_SRC
 
-** 4.2 Compression Codings
+** 4.2 压缩编码值 (Compression Codings)
 #+BEGIN_QUOTE
 The codings defined below can be used to compress the payload of a message.
 #+END_QUOTE
+
+下列编码值能够用于对一个报文里的有效载荷（Payload）进行压缩。
 
 *** 4.2.1 Compress Coding
 :PROPERTIES:
 :ID:       a785a05f-6fdc-44d8-9343-3a66a49cb655
 :END:
 #+BEGIN_QUOTE
-The "compress" coding is an adaptive Lempel-Ziv-Welch (LZW) coding [Welch] that is commonly produced by the UNIX file compression program "compress". A recipient SHOULD consider "x-compress" to be equivalent to "compress".
+The "compress" coding is an adaptive Lempel-Ziv-Welch (LZW) coding [Welch] that is commonly produced by the UNIX file compression program "compress". A recipient *SHOULD* consider "x-compress" to be equivalent to "compress".
 #+END_QUOTE
+
+编码值 =compress= 是一个用于适配 Lempel-Ziv-Welch (LZW) 算法的编码，LZW 算法编码由 UNIX 文件压缩程序 "compress" 生成。一个接收端 *应该* 将 "x-compress" 等价于 "compress"。
 
 *** 4.2.2 Deflate Coding
 :PROPERTIES:
