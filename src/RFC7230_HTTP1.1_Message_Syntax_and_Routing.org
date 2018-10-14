@@ -1568,7 +1568,7 @@ The codings defined below can be used to compress the payload of a message.
 The "compress" coding is an adaptive Lempel-Ziv-Welch (LZW) coding [Welch] that is commonly produced by the UNIX file compression program "compress". A recipient *SHOULD* consider "x-compress" to be equivalent to "compress".
 #+END_QUOTE
 
-编码值 =compress= 是一种用于适配 [[https://en.wikipedia.org/wiki/Lempel%25E2%2580%2593Ziv%25E2%2580%2593Welch][LZW 无损压缩算法（Lempel-Ziv-Welch）]]的编码，LZW 算法编码由 UNIX 文件压缩程序 "compress" 生成。一个接收端 *应该* 将 "x-compress" 等价于 "compress"。
+编码值 =compress= 是一种用于适配 [[https://en.wikipedia.org/wiki/Lempel%25E2%2580%2593Ziv%25E2%2580%2593Welch][LZW 无损压缩算法（Lempel-Ziv-Welch）]]的编码，LZW 算法编码由 UNIX 文件压缩程序 "compress" 生成。接收端 *应该* 将 =x-compress= 等同于 =compress=。
 
 *** 4.2.2 "deflate" 编码值 (Deflate Coding)
 :PROPERTIES:
@@ -1578,7 +1578,7 @@ The "compress" coding is an adaptive Lempel-Ziv-Welch (LZW) coding [Welch] that 
 The "deflate" coding is a "zlib" data format [RFC1950] containing a "deflate" compressed data stream [RFC1951] that uses a combination of the Lempel-Ziv (LZ77) compression algorithm and Huffman coding.
 #+END_QUOTE
 
-编码值 =deflate= 是一种 "zlib" 数据格式【RFC1950】，该数据格式包含一个使用 "deflate" 来压缩的数据流【RFC1951】，这种数据流是使用 [[https://en.wikipedia.org/wiki/LZ77_and_LZ78][LZ77 压缩算法（LZ77，Lempel-Ziv Compress Algorithm）]]和[[https://en.wikipedia.org/wiki/Huffman_coding][哈夫曼编码（Huffman Coding）]]结合而成的。
+编码值 =deflate= 是一种 "zlib" 数据格式【[[https://tools.ietf.org/html/rfc1950][RFC1950]]】，该数据格式包含一个使用 "deflate" 来压缩的数据流【[[https://tools.ietf.org/html/rfc1951][RFC1951]]】，这种数据流是使用 [[https://en.wikipedia.org/wiki/LZ77_and_LZ78][LZ77 压缩算法（LZ77，Lempel-Ziv Compress Algorithm）]]和[[https://en.wikipedia.org/wiki/Huffman_coding][哈夫曼编码（Huffman Coding）]]结合而成的。
 
 #+BEGIN_QUOTE
 *Note:* Some non-conformant implementations send the "deflate" compressed data without the zlib wrapper.
@@ -1591,10 +1591,10 @@ The "deflate" coding is a "zlib" data format [RFC1950] containing a "deflate" co
 :ID:       d1579c8b-312c-414b-b421-960669b0d389
 :END:
 #+BEGIN_QUOTE
-The "gzip" coding is an LZ77 coding with a 32-bit Cyclic Redundancy Check (CRC) that is commonly produced by the gzip file compression program [RFC1952]. A recipient SHOULD consider "x-gzip" to be equivalent to "gzip".
+The "gzip" coding is an LZ77 coding with a 32-bit Cyclic Redundancy Check (CRC) that is commonly produced by the gzip file compression program [RFC1952]. A recipient =SHOULD= consider "x-gzip" to be equivalent to "gzip".
 #+END_QUOTE
 
-编码值 =gzip= 是一个带有一个 32 位[[https://en.wikipedia.org/wiki/Cyclic_redundancy_check][循环冗余检查（CRC）]]的 LZ77 编码。
+编码值 =gzip= 是一个带有一个通常由 gzip 文件压缩程序【[[https://tools.ietf.org/html/rfc1950][RFC1950]]】生成的 32 位[[https://en.wikipedia.org/wiki/Cyclic_redundancy_check][循环冗余检查（CRC）]]的 LZ77 编码。接收端 *应该* 将 =x-gzip= 等同于 =gzip=。
 
 ** 4.3 TE
 :PROPERTIES:
@@ -1604,9 +1604,13 @@ The "gzip" coding is an LZ77 coding with a 32-bit Cyclic Redundancy Check (CRC) 
 The "TE" header field in a request indicates what transfer codings, besides chunked, the client is willing to accept in response, and whether or not the client is willing to accept trailer fields in a chunked transfer coding.
 #+END_QUOTE
 
+在一个请求报文中的报头域 =TE= 指明了客户端愿意接受使用了除 =chunked= 以外的哪些传输编码的响应报文，以及客户端是否愿意在分块传输编码值中接受拖尾域（Trailer Fields）。
+
 #+BEGIN_QUOTE
-The TE field-value consists of a comma-separated list of transfer coding names, each allowing for optional parameters (as described in Section 4), and/or the keyword "trailers". A client MUST NOT send the chunked transfer coding name in TE; chunked is always acceptable for HTTP/1.1 recipients.
+The TE field-value consists of a comma-separated list of transfer coding names, each allowing for optional parameters (as described in Section 4), and/or the keyword "=trailers=". A client *MUST NOT* send the =chunked= transfer coding name in =TE=; =chunked= is always acceptable for HTTP/1.1 recipients.
 #+END_QUOTE
+
+报头域 =TE= 的域值由一个以逗号分隔的传输编码值的名称列表组成。列表内的每一项都考虑到可选参数（见章节 4）以及/或者关键词 "=trailers="。客户端 *禁止* 在 =TE= 发送 =chunked= 传输编码值名称；对于 HTTP/1.1 接收端来说，=chunked= 总是被允许的。
 
 #+BEGIN_SRC text
   TE        = #t-codings
@@ -1619,6 +1623,8 @@ The TE field-value consists of a comma-separated list of transfer coding names, 
 #+BEGIN_QUOTE
 Three examples of TE use are below.
 #+END_QUOTE
+
+以下是关于 =TE= 的三个例子。
 
 #+BEGIN_SRC text
   TE: deflate
