@@ -171,6 +171,8 @@ A client sends an HTTP request to a server in the form of a request message, beg
 
 客户端以请求报文（Request Message）的形式向服务器发送一个 HTTP 请求。请求报文以一个包含了方法（Method），URI 和协议版本的请求行（Request Line，见[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]）为开始；随后是包含了请求修饰符，客户端信息以及表现形式元数据（Representation Metadata，见[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）的报头域（Header Fields）；接着是一个空行，来表示报头块（Header Section）结束；最后是一个包含了有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（Message Body）。
 
+（译注：Header Fields 通常译作报头域、首部、首部字段等，本文统一译作“报头域”。Message Body 通常译作报文正文、消息正文、消息体等，本文统一译作“报文正文”。）
+
 #+BEGIN_QUOTE
 A server responds to a client's request by sending one or more HTTP response messages, each beginning with a status line that includes the protocol version, a success or error code, and textual reason phrase (Section 3.1.2), possibly followed by header fields containing server information, resource metadata, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
 #+END_QUOTE
@@ -263,7 +265,7 @@ The figure above shows three intermediaries (A, B, and C) between the user agent
 The terms "upstream" and "downstream" are used to describe directional requirements in relation to the message flow: all messages flow from upstream to downstream. The terms "inbound" and "outbound" are used to describe directional requirements in relation to the request route: "inbound" means toward the origin server and "outbound" means toward the user agent.
 #+END_QUOTE
 
-术语“上行（Upstream）”和“下行（Downstream）”用于描述报文（消息）流的方向：所有的报文（消息）都从上行流到下行。术语“入境（Inbound）”和“出境（Outbound）”用于描述请求经过路由的方向：“入境”意为经过路由器的数据流向源服务器，而“出境”意为经过路由器的数据流向用户代理。 
+术语“上游（Upstream）”和“下游（Downstream）”用于描述报文（消息）流的方向：所有的报文（消息）都从上游流到下游。术语“入境（Inbound）”和“出境（Outbound）”用于描述请求经过路由的方向：“入境”意为经过路由器的数据流向源服务器，而“出境”意为经过路由器的数据流向用户代理。 
 
 （译注：路由器是连接互联网的枢纽，数据流入互联网，这叫“入境”，例如文件上传；流出互联网，这叫“出境”，例如文件下载）。
 
@@ -363,7 +365,7 @@ This specification targets conformance criteria according to the role of a parti
 The verb "generate" is used instead of "send" where a requirement differentiates between creating a protocol element and merely forwarding a received element downstream.
 #+END_QUOTE
 
-动词“生成”（Generate）之于“发送”（Send），用于区分“创建一个协议元素”之于“仅仅转发一个接收到的下行元素”。
+动词“生成”（Generate）之于“发送”（Send），用于区分“创建一个协议元素”之于“仅仅将其接收到的元素转发到下游”。
 
 #+BEGIN_QUOTE
 An implementation is considered conformant if it complies with all of the requirements associated with the roles it partakes in HTTP.
@@ -468,7 +470,7 @@ New header fields can be introduced without changing the protocol version if the
 Intermediaries that process HTTP messages (i.e., all intermediaries other than those acting as tunnels) *MUST* send their own HTTP-version in forwarded messages. In other words, they are not allowed to blindly forward the first line of an HTTP message without ensuring that the protocol version in that message matches a version to which that intermediary is conformant for both the receiving and sending of messages. Forwarding an HTTP message without rewriting the HTTP-version might result in communication errors when downstream recipients use the message sender's version to determine what features are safe to use for later communication with that sender.
 #+END_QUOTE
 
-处理 HTTP 报文的中间人（除了作为隧道的中间人） *必须* 在转发报文时发送它们自身的 =HTTP-version=。换句话说，在以上中间人接收和发送报文的时候，它们并不允许在没有确保报文的版本与自身所使用的 HTTP 版本是否一致的情况下盲转发（Blindly Forwarding）HTTP 报文的首行。当下行（Downstream）接收端使用报文的发送端版本来决定“对于接下来与之通信，什么功能能够安全使用”时，在没有重写 =HTTP-version= 的情况下直接转发一个 HTTP 报文可能会导致通信错误。
+处理 HTTP 报文的中间人（除了作为隧道的中间人） *必须* 在转发报文时发送它们自身的 =HTTP-version=。换句话说，在以上中间人接收和发送报文的时候，它们并不允许在没有确保报文的版本与自身所使用的 HTTP 版本是否一致的情况下盲转发（Blindly Forwarding）HTTP 报文的首行。当下游（Downstream）接收端使用报文的发送端版本来决定“对于接下来与之通信，什么功能能够安全使用”时，在没有重写 =HTTP-version= 的情况下直接转发一个 HTTP 报文可能会导致通信错误。
 
 （译注：隧道作为盲中介，它并不会对报文本身作修改。）
 
@@ -715,7 +717,7 @@ A recipient *MUST* parse an HTTP message as a sequence of octets in an encoding 
 An HTTP message can be parsed as a stream for incremental processing or forwarding downstream. However, recipients cannot rely on incremental delivery of partial messages, since some implementations will buffer or delay message forwarding for the sake of network efficiency, security checks, or payload transformations.
 #+END_QUOTE
 
-HTTP 报文能够解析（Parse）为用于增量处理或下行转发（Forwarding Downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现会因为网络性能、安全校验或者载荷转换（[[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Payload Transformation]]）而对这些不完整的报文进行缓冲或延迟转发。
+HTTP 报文能够解析（Parse）为用于增量处理或转发到下游（Forwarding Downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现会因为网络性能、安全校验或者载荷转换（[[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Payload Transformation]]）而对这些不完整的报文进行缓冲或延迟转发。
 
 #+BEGIN_QUOTE
 A sender *MUST NOT* send whitespace between the start-line and the first header field. A recipient that receives whitespace between the start-line and the first header field *MUST* either reject the message as invalid or consume each whitespace-preceded line without further processing of it (i.e., ignore the entire line, along with any subsequent lines preceded by whitespace, until a properly formed header field is received or the header section is terminated).
@@ -970,7 +972,7 @@ Messages are parsed using a generic algorithm, independent of the individual hea
 No whitespace is allowed between the header =field-name= and colon. In the past, differences in the handling of such whitespace have led to security vulnerabilities in request routing and response handling. A server *MUST* reject any received request message that contains whitespace between a header =field-name= and colon with a response code of =400 (Bad Request)=. A proxy *MUST* remove any such whitespace from a response message before forwarding the message downstream.
 #+END_QUOTE
 
-报头域名（Field Name）和冒号之间不允许带有空格。在过去，对于这些空格的各不相同的处理方式已经导致请求路由和响应处理方面的安全隐患。服务器 *必须* 拒绝这种在报头域名和冒号之间包含空格请求报文，并响应一个 =400 (Bad Request)= 的状态码。代理（Proxy） *必须* 在下行转发之前从响应报文中移除所有上述空格。
+报头域名（Field Name）和冒号之间不允许带有空格。在过去，对于这些空格的各不相同的处理方式已经导致请求路由和响应处理方面的安全隐患。服务器 *必须* 拒绝这种在报头域名和冒号之间包含空格请求报文，并响应一个 =400 (Bad Request)= 的状态码。代理（Proxy） *必须* 在转发到下游之前从响应报文中移除所有上述空格。
 
 #+BEGIN_QUOTE
 A field value might be preceded and/or followed by optional whitespace (=OWS=); a single =SP= preceding the =field-value= is preferred for consistent readability by humans. The field value does not include any leading or trailing whitespace: =OWS= occurring before the first non-whitespace octet of the field value or after the last non-whitespace octet of the field value ought to be excluded by parsers when extracting the field value from a header field.
@@ -988,13 +990,13 @@ Historically, HTTP header field values could be extended over multiple lines by 
 A server that receives an =obs-fold= in a request message that is not within a message/http container *MUST* either reject the message by sending a =400 (Bad Request)=, preferably with a representation explaining that obsolete line folding is unacceptable, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
 #+END_QUOTE
 
-如果服务端接收到一个在请求报文里的分行 =obs-fold=，但这个分行不在媒体类型“message/http”的容器内，服务端 *必须* 要不拒绝这种报文并响应一个 =400 (Bad Request)= 状态码，更好的方式是在响应报文中带有一个展现方式来解释那种已经废弃的分行是不再允许出现在报文中的；要不在解释（Interpret）报头域值（或下行转发报文）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
+如果服务端接收到一个在请求报文里的分行 =obs-fold=，但这个分行不在媒体类型“message/http”的容器内，服务端 *必须* 要不拒绝这种报文并响应一个 =400 (Bad Request)= 状态码，更好的方式是在响应报文中带有一个展现方式来解释那种已经废弃的分行是不再允许出现在报文中的；要不在解释（Interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
 
 #+BEGIN_QUOTE
 A proxy or gateway that receives an =obs-fold= in a response message that is not within a message/http container *MUST* either discard the message and replace it with a =502 (Bad Gateway)= response, preferably with a representation explaining that unacceptable line folding was received, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
 #+END_QUOTE
 
-如果代理（Proxy）或网关（Gateway）接收到一个响应报文里的分行 =obs-fold=，但这个分行不在媒体类型“message/http”的容器内，这些中间人 *必须* 要不丢弃这个报文改由响应一个 =502 (Bad Gateway)= 状态码，更好的方式是在响应报文中带有一个展现方式来解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（Interpret）报头域值（或下行转发报文）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
+如果代理（Proxy）或网关（Gateway）接收到一个响应报文里的分行 =obs-fold=，但这个分行不在媒体类型“message/http”的容器内，这些中间人 *必须* 要不丢弃这个报文改由响应一个 =502 (Bad Gateway)= 状态码，更好的方式是在响应报文中带有一个展现方式来解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（Interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
 
 #+BEGIN_QUOTE
 A user agent that receives an =obs-fold= in a response message that is not within a message/http container *MUST* replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value.
@@ -1244,7 +1246,7 @@ A server *MUST NOT* send a =Content-Length= header field in any response with a 
 Aside from the cases defined above, in the absence of =Transfer-Encoding=, an origin server *SHOULD* send a =Content-Length= header field when the payload body size is known prior to sending the complete header section. This will allow downstream recipients to measure transfer progress, know when a received message is complete, and potentially reuse the connection for additional requests.
 #+END_QUOTE
 
-除了上述情况以外，在缺少 =Transfer-Encoding= 报头域的情况下，在即将发送完整个报头块之前就知道了载荷（Payload Body）的大小，一个源服务器 *应该* 带有一个 =Content-Length= 报头域。这样能够允许下行（Downstream）接收端去计量传输的进度，了解什么时候一个报文是完整的，而且可以对额外的请求进行复用连接（如果条件允许的话）。
+除了上述情况以外，在缺少 =Transfer-Encoding= 报头域的情况下，在即将发送完整个报头块之前就知道了载荷（Payload Body）的大小，一个源服务器 *应该* 带有一个 =Content-Length= 报头域。这样能够允许下游（Downstream）的接收端去计量传输的进度，了解什么时候一个报文是完整的，而且可以对额外的请求进行复用连接（如果条件允许的话）。
 
 #+BEGIN_QUOTE
 Any =Content-Length= field value greater than or equal to zero is valid. Since there is no predefined limit to the length of a payload, a recipient *MUST* anticipate potentially large decimal numerals and prevent parsing errors due to integer conversion overflows ([[id:131aeb62-94c8-4b26-84eb-29051aac72e2][Section 9.3]]).
@@ -1256,7 +1258,7 @@ Any =Content-Length= field value greater than or equal to zero is valid. Since t
 If a message is received that has multiple =Content-Length= header fields with =field-values= consisting of the same decimal value, or a single =Content-Length= header field with a field value containing a list of identical decimal values (e.g., "Content-Length: 42, 42"), indicating that duplicate =Content-Length= header fields have been generated or combined by an upstream message processor, then the recipient *MUST* either reject the message as invalid or replace the duplicated =field-values= with a single valid =Content-Length= field containing that decimal value prior to determining the message body length or forwarding the message.
 #+END_QUOTE
 
-如果接收到一个报文带有多个 =Content-Length= 报头域，并且它们的 =field-value= 由相同的十进制数组成；或者一个 =Content-Length= 报头域带有一个包含一系列十进制数值的域值（例如 "Content-Length: 42 42"），表明生成或通过某个上行（Upstream）报文处理程序合成了重复的 =Content-Length= 报头域，那么，接收端 *必须* 要不将这种报文当作不合法的报文而拒绝接收；要不使用一个单一的合法的包含了决定报文正文长度的十进制值的 =Content-Length= 域来替换掉重复的 =field-value=；要不转发这个报文。
+如果接收到一个报文带有多个 =Content-Length= 报头域，并且它们的 =field-value= 由相同的十进制数组成；或者一个 =Content-Length= 报头域带有一个包含一系列十进制数值的域值（例如 "Content-Length: 42 42"），表明透过上游某个报文处理程序生成（Generated）或合成（Combined）了重复的 =Content-Length= 报头域，那么，接收端 *必须* 要不将这种报文当作不合法的报文而拒绝接收；要不使用一个单一的合法的包含了决定报文正文长度的十进制值的 =Content-Length= 域来替换掉重复的 =field-value=；要不转发这个报文。
 
 #+BEGIN_QUOTE
 *Note:* HTTP's use of =Content-Length= for message framing differs significantly from the same field's use in MIME, where it is an optional field used only within the "message/external-body" media-type.
@@ -1299,7 +1301,7 @@ The length of a message body is determined by one of the following (in order of 
    
    如果在响应报文中出现一个 =Transfer-Encoding= 报头域并且分块传输编码值不是其最后一个编码值，报文正文的长度通过读取连接直到连接被服务器关闭来确定。如果在请求报文中出现一个 =Transfer-Encoding= 报头域并且分块传输编码值不是其最后一个编码值，报文正文的长度不能被可靠地确定，服务器 *必须* 响应一个带有 =400 (Bad Request)= 状态码的响应报文然后关闭该连接。
    
-   如果接收到一个报文既带有一个 =Transfer-Encoding= 又带有一个 =Content-Length= 报头域，那么 =Transfer-Encoding= 将覆盖 =Content-Length=。这种报文可能意味着一个执行 Request Smuggling 攻击（[[id:04030107-7AF1-4D23-900E-75FEEB04925C][章节 9.5]]）或者 Response Splitting 攻击（[[id:BE45ADD0-37C3-4726-82F1-AD06D51FFC11][章节 9.4]]）的意图，应该被当作一个错误来处理。发送端 *必须* 在下行转发这种报文之前移除所接收到的 =Content-Length= 域。
+   如果接收到一个报文既带有一个 =Transfer-Encoding= 又带有一个 =Content-Length= 报头域，那么 =Transfer-Encoding= 将覆盖 =Content-Length=。这种报文可能意味着一个执行 Request Smuggling 攻击（[[id:04030107-7AF1-4D23-900E-75FEEB04925C][章节 9.5]]）或者 Response Splitting 攻击（[[id:BE45ADD0-37C3-4726-82F1-AD06D51FFC11][章节 9.4]]）的意图，应该被当作一个错误来处理。发送端 *必须* 在转发这种报文到下游之前移除所接收到的 =Content-Length= 域。
    
 4. 如果一个报文没有 =Transfer-Encoding= 报头域，但带有或者多个不同域值的 =Content-Length= 报头域，或者一个域值不合法的 =Content-Length=，那么这个报文的分帧是不合法的，并且接收端 *必须* 将其当作一个不可恢复的错误来对待。如果这是一个请求报文，服务器 *必须* 响应一个带有 =400 (Bad Request)= 状态码的响应报文然后关闭连接。如果这是一个代理（Proxy）接收到的响应报文，那么这个代理 *必须* 关闭与服务器的连接，丢弃掉这个报文并且发送一个 =502 (Bad Gateway)= 状态码的响应报文到客户端。如果这是一个用户代理（User Agent）接收到的响应报文，那么这个用户代理 *必须* 关闭与服务器的连接，并且丢弃掉这个报文。
 
@@ -1636,22 +1638,32 @@ Three examples of TE use are below.
 The presence of the keyword "trailers" indicates that the client is willing to accept trailer fields in a chunked transfer coding, as defined in Section 4.1.2, on behalf of itself and any downstream clients. For requests from an intermediary, this implies that either: (a) all downstream clients are willing to accept trailer fields in the forwarded response; or, (b) the intermediary will attempt to buffer the response on behalf of downstream recipients. Note that HTTP/1.1 does not define any means to limit the size of a chunked response such that an intermediary can be assured of buffering the entire response.
 #+END_QUOTE
 
+=TE= 报头域里出现关键词 =trailers= 指明该客户端自身及其所有下游客户端都愿意在一个分块传输编码值里接受拖尾域（Trailer Fields，见章节 4.1.2）。对于来自一个中间人的请求，意味着以下两种情况：（a）该中间人的所有下游客户端都愿意接受拖尾域，或者，（b）该中间人为了下游的接收端，将试图先缓冲整个响应报文。需要注意的是，HTTP/1.1 并没有对一个分块的响应报文（Chunked Response）的大小定义任何限制，因此，中间人并不能保证能够缓冲整个报文。
+
 #+BEGIN_QUOTE
-When multiple transfer codings are acceptable, the client MAY rank the codings by preference using a case-insensitive "q" parameter (similar to the qvalues used in content negotiation fields, Section 5.3.1 of [RFC7231]). The rank value is a real number in the range 0 through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means "not acceptable".
+When multiple transfer codings are acceptable, the client *MAY* rank the codings by preference using a case-insensitive "q" parameter (similar to the qvalues used in content negotiation fields, Section 5.3.1 of [RFC7231]). The rank value is a real number in the range 0 through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means "not acceptable".
 #+END_QUOTE
+
+当允许多个传输编码值时，客户端 *可以* 依据其偏爱（优先级），通过使用一个大小写不敏感的参数 =q= （类似于内容协商域里的 =qvalues=，见[[https://tools.ietf.org/html/rfc7231][【RFC7231】章节 5.3.1]]），来对这些编码值进行排序（Rank）。排序值（Rank Value）是一个 0 到 1 之间的实数，最小值是 0.001（最不偏爱），最大值为 1（最偏爱），排序值为 0 代表“不接受这种传输编码”。 
 
 #+BEGIN_QUOTE
 If the TE field-value is empty or if no TE field is present, the only acceptable transfer coding is chunked. A message with no transfer coding is always acceptable.
 #+END_QUOTE
 
+如果报头域 =TE= 不存在或者它的域值为空，意味着仅接受 =chunked= 传输编码值。没有任何传输代码值的报文总是可打接受的。
+
 #+BEGIN_QUOTE
-Since the TE header field only applies to the immediate connection, a sender of TE MUST also send a "TE" connection option within the Connection header field (Section 6.1) in order to prevent the TE field from being forwarded by intermediaries that do not support its semantics.
+Since the TE header field only applies to the immediate connection, a sender of TE *MUST* also send a "TE" connection option within the Connection header field (Section 6.1) in order to prevent the TE field from being forwarded by intermediaries that do not support its semantics.
 #+END_QUOTE
+
+因为报头域 =TE= 仅应用于直接连接（Immediate Connection），因此，为了避免报头域 =TE= 被中间人转发出去（不符合 TE 的语义），=TE= 的发送端 *必须* 还要在 =Connection= 报头域（见[[https://tools.ietf.org/html/rfc7230#section-6.1][章节 6.1]]）里发送一个 "TE" 连接选项（Connection Option）。
 
 ** 4.4 Trailer
 #+BEGIN_QUOTE
-When a message includes a message body encoded with the chunked transfer coding and the sender desires to send metadata in the form of trailer fields at the end of the message, the sender SHOULD generate a Trailer header field before the message body to indicate which fields will be present in the trailers. This allows the recipient to prepare for receipt of that metadata before it starts processing the body, which is useful if the message is being streamed and the recipient wishes to confirm an integrity check on the fly.
+When a message includes a message body encoded with the chunked transfer coding and the sender desires to send metadata in the form of trailer fields at the end of the message, the sender *SHOULD* generate a =Trailer= header field before the message body to indicate which fields will be present in the trailers. This allows the recipient to prepare for receipt of that metadata before it starts processing the body, which is useful if the message is being streamed and the recipient wishes to confirm an integrity check on the fly.
 #+END_QUOTE
+
+当一个报文包含了一个使用 =chunked= 编码的报文正文，并且发送端希望通过在报文末尾附加拖尾域（Trailer Fields）的方式来发送元数据（Metadata），那么发送端 *应该* 在报文正文之前生成一个报头域 =Trailer= 来指定有哪些域将会被出现在拖尾中。这样使得接收端在处理报文正文之前可以做好接收那些元数据的准备，如果这种报文将被流式发送，并且接收端希望在接收报文的同时对其进行完整性检验，那么这种设计将非常有用。
 
 #+BEGIN_SRC text
   Trailer = 1#field-name
