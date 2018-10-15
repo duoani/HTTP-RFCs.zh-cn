@@ -1677,6 +1677,8 @@ When a message includes a message body encoded with the chunked transfer coding 
 HTTP request message routing is determined by each client based on the target resource, the client's proxy configuration, and establishment or reuse of an inbound connection. The corresponding response routing follows the same connection chain back to the client.
 #+END_QUOTE
 
+HTTP 请求报文路由是取决于每个客户端，基于目标资源、客户端的代理配置，以及入境（Inbound）连接的创建或者复用。与之对应的响应路由跟随同样一条链路返回到客户端。
+
 ** 5.1 标识目标资源 (Identifying a Target Resource)
 :PROPERTIES:
 :ID:       9fd57271-c172-4fc0-8678-fa427df02d64
@@ -1684,6 +1686,8 @@ HTTP request message routing is determined by each client based on the target re
 #+BEGIN_QUOTE
 HTTP is used in a wide variety of applications, ranging from general-purpose computers to home appliances. In some cases, communication options are hard-coded in a client's configuration. However, most HTTP clients rely on the same resource identification mechanism and configuration techniques as general-purpose Web browsers.
 #+END_QUOTE
+
+HTTP 使用于各种各样的应用中，从通用计算机到家庭应用都有 HTTP 的身影。在某些情况下，通信选项是写死在客户端的配置里。但是，大多数 HTTP 客户端依靠
 
 #+BEGIN_QUOTE
 HTTP communication is initiated by a user agent for some purpose. The purpose is a combination of request semantics, which are defined in [RFC7231], and a target resource upon which to apply those semantics. A URI reference (Section 2.7) is typically used as an identifier for the "target resource", which a user agent would resolve to its absolute form in order to obtain the "target URI". The target URI excludes the reference's fragment component, if any, since fragment identifiers are reserved for client-side processing ([RFC3986], Section 3.5).
