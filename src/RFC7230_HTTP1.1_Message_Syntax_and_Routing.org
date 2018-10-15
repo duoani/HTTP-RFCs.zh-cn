@@ -1673,62 +1673,828 @@ When a message includes a message body encoded with the chunked transfer coding 
 :PROPERTIES:
 :ID:       f6881980-16db-4ca2-a3c8-39aa336c954f
 :END:
+#+BEGIN_QUOTE
+HTTP request message routing is determined by each client based on the target resource, the client's proxy configuration, and establishment or reuse of an inbound connection. The corresponding response routing follows the same connection chain back to the client.
+#+END_QUOTE
+
 ** 5.1 标识目标资源 (Identifying a Target Resource)
 :PROPERTIES:
 :ID:       9fd57271-c172-4fc0-8678-fa427df02d64
 :END:
+#+BEGIN_QUOTE
+HTTP is used in a wide variety of applications, ranging from general-purpose computers to home appliances. In some cases, communication options are hard-coded in a client's configuration. However, most HTTP clients rely on the same resource identification mechanism and configuration techniques as general-purpose Web browsers.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+HTTP communication is initiated by a user agent for some purpose. The purpose is a combination of request semantics, which are defined in [RFC7231], and a target resource upon which to apply those semantics. A URI reference (Section 2.7) is typically used as an identifier for the "target resource", which a user agent would resolve to its absolute form in order to obtain the "target URI". The target URI excludes the reference's fragment component, if any, since fragment identifiers are reserved for client-side processing ([RFC3986], Section 3.5).
+#+END_QUOTE
+
 ** 5.2 Connecting Inbound
+Once the target URI is determined, a client needs to decide whether a network request is necessary to accomplish the desired semantics and, if so, where that request is to be directed.
+
+If the client has a cache [RFC7234] and the request can be satisfied by it, then the request is usually directed there first.
+
+If the request is not satisfied by a cache, then a typical client will check its configuration to determine whether a proxy is to be used to satisfy the request. Proxy configuration is implementation-dependent, but is often based on URI prefix matching, selective authority matching, or both, and the proxy itself is usually identified by an "http" or "https" URI. If a proxy is applicable, the client connects inbound by establishing (or reusing) a connection to that proxy.
+
+If no proxy is applicable, a typical client will invoke a handler routine, usually specific to the target URI's scheme, to connect directly to an authority for the target resource. How that is accomplished is dependent on the target URI scheme and defined by its associated specification, similar to how this specification defines origin server access for resolution of the "http" (Section 2.7.1) and "https" (Section 2.7.2) schemes.
+
+HTTP requirements regarding connection management are defined in Section 6.
+
 ** 5.3 请求目标 (Request Target)
 :PROPERTIES:
 :ID:       16a8fba9-40f8-4b2c-ba5f-2f6522362c3a
 :END:
+#+BEGIN_QUOTE
+Once an inbound connection is obtained, the client sends an HTTP request message (Section 3) with a request-target derived from the target URI. There are four distinct formats for the request-target, depending on both the method being requested and whether the request is to a proxy.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  request-target = origin-form
+                 / absolute-form
+                 / authority-form
+                 / asterisk-form
+#+END_SRC
+
 *** 5.3.1 (origin-form)
+#+BEGIN_QUOTE
+The most common form of request-target is the =origin-form=.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  origin-form    = absolute-path [ "?" query ]
+#+END_SRC
+
+#+BEGIN_QUOTE
+When making a request directly to an origin server, other than a CONNECT or server-wide OPTIONS request (as detailed below), a client MUST send only the absolute path and query components of the target URI as the request-target. If the target URI's path component is empty, the client MUST send "/" as the path within the origin-form of request-target. A Host header field is also sent, as defined in Section 5.4.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For example, a client wishing to retrieve a representation of the resource identified as
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+http://www.example.org/where?q=now
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+GET /where?q=now HTTP/1.1
+Host: www.example.org
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+followed by the remainder of the request message.
+#+END_QUOTE
+
 *** 5.3.2 (absolute-form)
+#+BEGIN_QUOTE
+When making a request to a proxy, other than a CONNECT or server-wide OPTIONS request (as detailed below), a client MUST send the target URI in absolute-form as the request-target.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  absolute-form  = absolute-URI
+#+END_SRC
+
+#+BEGIN_QUOTE
+The proxy is requested to either service that request from a valid cache, if possible, or make the same request on the client's behalf to either the next inbound proxy server or directly to the origin server indicated by the request-target. Requirements on such "forwarding" of messages are defined in Section 5.7.
+
+An example absolute-form of request-line would be:
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+GET http://www.example.org/pub/WWW/TheProject.html HTTP/1.1
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+To allow for transition to the absolute-form for all requests in some future version of HTTP, a server MUST accept the absolute-form in requests, even though HTTP/1.1 clients will only send them in requests to proxies.
+#+END_QUOTE
+
 *** 5.3.3 (authority-form)
+#+BEGIN_QUOTE
+The authority-form of request-target is only used for CONNECT requests (Section 4.3.6 of [RFC7231]).
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  authority-form = authority
+#+END_SRC
+
+#+BEGIN_QUOTE
+When making a CONNECT request to establish a tunnel through one or more proxies, a client MUST send only the target URI's authority component (excluding any userinfo and its "@" delimiter) as the request-target. For example,
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+CONNECT www.example.com:80 HTTP/1.1
+#+END_EXAMPLE
+
 *** 5.3.4 (asterisk-form)
+#+BEGIN_QUOTE
+The asterisk-form of request-target is only used for a server-wide OPTIONS request (Section 4.3.7 of [RFC7231]).
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  asterisk-form  = "*"
+#+END_SRC
+
+#+BEGIN_QUOTE
+When a client wishes to request OPTIONS for the server as a whole, as opposed to a specific named resource of that server, the client MUST send only "*" (%x2A) as the request-target. For example,
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+OPTIONS * HTTP/1.1
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+If a proxy receives an OPTIONS request with an absolute-form of request-target in which the URI has an empty path and no query component, then the last proxy on the request chain MUST send a request-target of "*" when it forwards the request to the indicated origin server.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For example, the request
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+OPTIONS http://www.example.org:8001 HTTP/1.1
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+would be forwarded by the final proxy as
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+OPTIONS * HTTP/1.1
+Host: www.example.org:8001
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+after connecting to port 8001 of host "www.example.org".
+#+END_QUOTE
+
 ** 5.4 主机 (Host)
+#+BEGIN_QUOTE
+The "Host" header field in a request provides the host and port information from the target URI, enabling the origin server to distinguish among resources while servicing requests for multiple host names on a single IP address.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Host = uri-host [ ":" port ] ; Section 2.7.1
+#+END_SRC
+
+#+BEGIN_QUOTE
+A client *MUST* send a =Host= header field in all HTTP/1.1 request messages. If the target URI includes an authority component, then a client MUST send a field-value for Host that is identical to that authority component, excluding any userinfo subcomponent and its "@" delimiter (Section 2.7.1). If the authority component is missing or undefined for the target URI, then a client MUST send a Host header field with an empty field-value.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Since the =Host= field-value is critical information for handling a request, a user agent *SHOULD* generate Host as the first header field following the request-line.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For example, a GET request to the origin server for <http://www.example.org/pub/WWW/> would begin with:
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  GET /pub/WWW/ HTTP/1.1
+  Host: www.example.org
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+A client MUST send a =Host= header field in an HTTP/1.1 request even if the request-target is in the absolute-form, since this allows the Host information to be forwarded through ancient HTTP/1.0 proxies that might not have implemented Host.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+When a proxy receives a request with an =absolute-form= of request-target, the proxy *MUST* ignore the received =Host= header field (if any) and instead replace it with the host information of the request-target. A proxy that forwards such a request MUST generate a new Host field-value based on the received request-target rather than forward the received Host field-value.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Since the =Host= header field acts as an application-level routing mechanism, it is a frequent target for malware seeking to poison a shared cache or redirect a request to an unintended server. An interception proxy is particularly vulnerable if it relies on the Host field-value for redirecting requests to internal servers, or for use as a cache key in a shared cache, without first verifying that the intercepted connection is targeting a valid IP address for that host.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A server *MUST* respond with a =400 (Bad Request)= status code to any HTTP/1.1 request message that lacks a *Host* header field and to any request message that contains more than one Host header field or a Host header field with an invalid field-value.
+#+END_QUOTE
+
 ** 5.5 Effective Request URI
 :PROPERTIES:
 :ID:       3265c21d-0d3b-4776-8e28-38278d168779
 :END:
+#+BEGIN_QUOTE
+Since the request-target often contains only part of the user agent's target URI, a server reconstructs the intended target as an "effective request URI" to properly service the request. This reconstruction involves both the server's local configuration and information communicated in the request-target, Host header field, and connection context.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For a user agent, the effective request URI is the target URI.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+If the request-target is in absolute-form, the effective request URI is the same as the request-target. Otherwise, the effective request URI is constructed as follows:
+
+        If the server's configuration (or outbound gateway) provides a fixed URI scheme, that scheme is used for the effective request URI. Otherwise, if the request is received over a TLS-secured TCP connection, the effective request URI's scheme is "https"; if not, the scheme is "http".
+
+        If the server's configuration (or outbound gateway) provides a fixed URI authority component, that authority is used for the effective request URI. If not, then if the request-target is in authority-form, the effective request URI's authority component is the same as the request-target. If not, then if a Host header field is supplied with a non-empty field-value, the authority component is the same as the Host field-value. Otherwise, the authority component is assigned the default name configured for the server and, if the connection's incoming TCP port number differs from the default port for the effective request URI's scheme, then a colon (":") and the incoming port number (in decimal form) are appended to the authority component.
+
+        If the request-target is in authority-form or asterisk-form, the effective request URI's combined path and query component is empty. Otherwise, the combined path and query component is the same as the request-target.
+
+        The components of the effective request URI, once determined as above, can be combined into absolute-URI form by concatenating the scheme, "://", authority, and combined path and query component.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Example 1: the following message received over an insecure TCP connection
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  GET /pub/WWW/TheProject.html HTTP/1.1
+  Host: www.example.org:8080
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+has an effective request URI of
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  http://www.example.org:8080/pub/WWW/TheProject.html
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+Example 2: the following message received over a TLS-secured TCP connection
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  OPTIONS * HTTP/1.1
+  Host: www.example.org
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+has an effective request URI of
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+https://www.example.org
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Recipients of an HTTP/1.0 request that lacks a Host header field might need to use heuristics (e.g., examination of the URI path for something unique to a particular host) in order to guess the effective request URI's authority component.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Once the effective request URI has been constructed, an origin server needs to decide whether or not to provide service for that URI via the connection in which the request was received. For example, the request might have been misdirected, deliberately or accidentally, such that the information within a received request-target or Host header field differs from the host or port upon which the connection has been made. If the connection is from a trusted gateway, that inconsistency might be expected; otherwise, it might indicate an attempt to bypass security filters, trick the server into delivering non-public content, or poison a cache. See Section 9 for security considerations regarding message routing.
+#+END_QUOTE
+
 ** 5.6 Associating a Response to a Request
+#+BEGIN_QUOTE
+HTTP does not include a request identifier for associating a given request message with its corresponding one or more response messages. Hence, it relies on the order of response arrival to correspond exactly to the order in which requests are made on the same connection. More than one response message per request only occurs when one or more informational responses (1xx, see Section 6.2 of [RFC7231]) precede a final response to the same request.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A client that has more than one outstanding request on a connection MUST maintain a list of outstanding requests in the order sent and MUST associate each received response message on that connection to the highest ordered request that has not yet received a final (non-1xx) response.
+#+END_QUOTE
+
 ** 5.7 报文转发 (Message Forwarding)
+#+BEGIN_QUOTE
+As described in Section 2.3, intermediaries can serve a variety of roles in the processing of HTTP requests and responses. Some intermediaries are used to improve performance or availability. Others are used for access control or to filter content. Since an HTTP stream has characteristics similar to a pipe-and-filter architecture, there are no inherent limits to the extent an intermediary can enhance (or interfere) with either direction of the stream.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+An intermediary not acting as a tunnel *MUST* implement the Connection header field, as specified in Section 6.1, and exclude fields from being forwarded that are only intended for the incoming connection.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+An intermediary *MUST NOT* forward a message to itself unless it is protected from an infinite request loop. In general, an intermediary ought to recognize its own server names, including any aliases, local variations, or literal IP addresses, and respond to such requests directly.
+#+END_QUOTE
+
 *** 5.7.1 Via
+#+BEGIN_QUOTE
+The "Via" header field indicates the presence of intermediate protocols and recipients between the user agent and the server (on requests) or between the origin server and the client (on responses), similar to the "Received" header field in email (Section 3.6.7 of [RFC5322]). Via can be used for tracking message forwards, avoiding request loops, and identifying the protocol capabilities of senders along the request/response chain.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Via = 1#( received-protocol RWS received-by [ RWS comment ] )
+
+  received-protocol = [ protocol-name "/" ] protocol-version
+                      ; see Section 6.7
+  received-by       = ( uri-host [ ":" port ] ) / pseudonym
+  pseudonym         = token
+#+END_SRC
+
+#+BEGIN_QUOTE
+Multiple Via field values represent each proxy or gateway that has forwarded the message. Each intermediary appends its own information about how the message was received, such that the end result is ordered according to the sequence of forwarding recipients.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A proxy *MUST* send an appropriate Via header field, as described below, in each message that it forwards. An HTTP-to-HTTP gateway MUST send an appropriate Via header field in each inbound request message and MAY send a Via header field in forwarded response messages.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For each intermediary, the received-protocol indicates the protocol and protocol version used by the upstream sender of the message. Hence, the Via field value records the advertised protocol capabilities of the request/response chain such that they remain visible to downstream recipients; this can be useful for determining what backwards-incompatible features might be safe to use in response, or within a later request, as described in Section 2.6. For brevity, the protocol-name is omitted when the received protocol is HTTP.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The =received-by= portion of the field value is normally the host and optional port number of a recipient server or client that subsequently forwarded the message. However, if the real host is considered to be sensitive information, a sender MAY replace it with a pseudonym. If a port is not provided, a recipient MAY interpret that as meaning it was received on the default TCP port, if any, for the received-protocol.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A sender *MAY* generate comments in the Via header field to identify the software of each recipient, analogous to the User-Agent and Server header fields. However, all comments in the Via field are optional, and a recipient MAY remove them prior to forwarding the message.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For example, a request message could be sent from an HTTP/1.0 user agent to an internal proxy code-named "fred", which uses HTTP/1.1 to forward the request to a public proxy at p.example.net, which completes the request by forwarding it to the origin server at www.example.com. The request received by www.example.com would then have the following Via header field:
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  Via: 1.0 fred, 1.1 p.example.net
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+An intermediary used as a portal through a network firewall SHOULD NOT forward the names and ports of hosts within the firewall region unless it is explicitly enabled to do so. If not enabled, such an intermediary SHOULD replace each received-by host of any host behind the firewall by an appropriate pseudonym for that host.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+An intermediary *MAY* combine an ordered subsequence of Via header field entries into a single such entry if the entries have identical received-protocol values. For example,
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  Via: 1.0 ricky, 1.1 ethel, 1.1 fred, 1.0 lucy
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+could be collapsed to
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  Via: 1.0 ricky, 1.1 mertz, 1.0 lucy
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+A sender *SHOULD NOT* combine multiple entries unless they are all under the same organizational control and the hosts have already been replaced by pseudonyms. A sender MUST NOT combine entries that have different received-protocol values.
+#+END_QUOTE
+
 *** 5.7.2 Transformations
 :PROPERTIES:
 :ID:       b6641b58-3ac6-4fce-9c44-a3715ffdc8a0
 :END:
+#+BEGIN_QUOTE
+Some intermediaries include features for transforming messages and their payloads. A proxy might, for example, convert between image formats in order to save cache space or to reduce the amount of traffic on a slow link. However, operational problems might occur when these transformations are applied to payloads intended for critical applications, such as medical imaging or scientific data analysis, particularly when integrity checks or digital signatures are used to ensure that the payload received is identical to the original.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+An HTTP-to-HTTP proxy is called a "transforming proxy" if it is designed or configured to modify messages in a semantically meaningful way (i.e., modifications, beyond those required by normal HTTP processing, that change the message in a way that would be significant to the original sender or potentially significant to downstream recipients). For example, a transforming proxy might be acting as a shared annotation server (modifying responses to include references to a local annotation database), a malware filter, a format transcoder, or a privacy filter. Such transformations are presumed to be desired by whichever client (or client organization) selected the proxy.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+If a proxy receives a request-target with a host name that is not a fully qualified domain name, it MAY add its own domain to the host name it received when forwarding the request. A proxy MUST NOT change the host name if the request-target contains a fully qualified domain name.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A proxy *MUST NOT* modify the "absolute-path" and "query" parts of the received request-target when forwarding it to the next inbound server, except as noted above to replace an empty path with "/" or "*".
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A proxy *MAY* modify the message body through application or removal of a transfer coding (Section 4).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A proxy *MUST NOT* transform the payload (Section 3.3 of [RFC7231]) of a message that contains a no-transform cache-control directive (Section 5.2 of [RFC7234]).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A proxy *MAY* transform the payload of a message that does not contain a no-transform cache-control directive. A proxy that transforms a payload MUST add a Warning header field with the warn-code of 214 ("Transformation Applied") if one is not already in the message (see Section 5.5 of [RFC7234]). A proxy that transforms the payload of a 200 (OK) response can further inform downstream recipients that a transformation has been applied by changing the response status code to 203 (Non-Authoritative Information) (Section 6.3.4 of [RFC7231]).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A proxy *SHOULD NOT* modify header fields that provide information about the endpoints of the communication chain, the resource state, or the selected representation (other than the payload) unless the field's definition specifically allows such modification or the modification is deemed necessary for privacy or security.
+#+END_QUOTE
+
 * 6 连接管理（Connection Management）
+#+BEGIN_QUOTE
+HTTP messaging is independent of the underlying transport- or session-layer connection protocol(s). HTTP only presumes a reliable transport with in-order delivery of requests and the corresponding in-order delivery of responses. The mapping of HTTP request and response structures onto the data units of an underlying transport protocol is outside the scope of this specification.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+As described in Section 5.2, the specific connection protocols to be used for an HTTP interaction are determined by client configuration and the target URI. For example, the "http" URI scheme (Section 2.7.1) indicates a default connection of TCP over IP, with a default TCP port of 80, but the client might be configured to use a proxy via some other connection, port, or protocol.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+HTTP implementations are expected to engage in connection management, which includes maintaining the state of current connections, establishing a new connection or reusing an existing connection, processing messages received on a connection, detecting connection failures, and closing each connection. Most clients maintain multiple connections in parallel, including more than one connection per server endpoint. Most servers are designed to maintain thousands of concurrent connections, while controlling request queues to enable fair use and detect denial-of-service attacks.
+#+END_QUOTE
+
 ** 6.1 连接 (Connection)
 :PROPERTIES:
 :ID:       40B2B721-F916-41EA-86FB-514FDED5B3A4
 :END:
+#+BEGIN_QUOTE
+The "Connection" header field allows the sender to indicate desired control options for the current connection. In order to avoid confusing downstream recipients, a proxy or gateway MUST remove or replace any received connection options before forwarding the message.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+When a header field aside from Connection is used to supply control information for or about the current connection, the sender MUST list the corresponding field-name within the Connection header field. A proxy or gateway MUST parse a received Connection header field before a message is forwarded and, for each connection-option in this field, remove any header field(s) from the message with the same name as the connection-option, and then remove the Connection header field itself (or replace it with the intermediary's own connection options for the forwarded message).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Hence, the Connection header field provides a declarative way of distinguishing header fields that are only intended for the immediate recipient ("hop-by-hop") from those fields that are intended for all recipients on the chain ("end-to-end"), enabling the message to be self-descriptive and allowing future connection-specific extensions to be deployed without fear that they will be blindly forwarded by older intermediaries.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The Connection header field's value has the following grammar:
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Connection        = 1#connection-option
+  connection-option = token
+#+END_SRC
+
+#+BEGIN_QUOTE
+Connection options are case-insensitive.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A sender *MUST NOT* send a connection option corresponding to a header field that is intended for all recipients of the payload. For example, Cache-Control is never appropriate as a connection option (Section 5.2 of [RFC7234]).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The connection options do not always correspond to a header field present in the message, since a connection-specific header field might not be needed if there are no parameters associated with a connection option. In contrast, a connection-specific header field that is received without a corresponding connection option usually indicates that the field has been improperly forwarded by an intermediary and ought to be ignored by the recipient.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+When defining new connection options, specification authors ought to survey existing header field names and ensure that the new connection option does not share the same name as an already deployed header field. Defining a new connection option essentially reserves that potential field-name for carrying additional information related to the connection option, since it would be unwise for senders to use that field-name for anything else.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The "close" connection option is defined for a sender to signal that this connection will be closed after completion of the response. For example,
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  Connection: close
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+in either the request or the response header fields indicates that the sender is going to close the connection after the current request/response is complete (Section 6.6).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A client that does not support persistent connections MUST send the "close" connection option in every request message.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A server that does not support persistent connections MUST send the "close" connection option in every response message that does not have a 1xx (Informational) status code.
+#+END_QUOTE
+
 ** 6.2 建立 (Establishment)
 :PROPERTIES:
 :ID:       4c365de3-b209-49e8-9f31-1cd52c6a85d8
 :END:
+#+BEGIN_QUOTE
+It is beyond the scope of this specification to describe how connections are established via various transport- or session-layer protocols. Each connection applies to only one transport link.
+#+END_QUOTE
+
 ** 6.3 持久性 (Persistence)
 :PROPERTIES:
 :ID:       bc2ed56c-f0a1-4609-bdbd-1c649aeb3681
 :END:
+#+BEGIN_QUOTE
+HTTP/1.1 defaults to the use of "persistent connections", allowing multiple requests and responses to be carried over a single connection. The "close" connection option is used to signal that a connection will not persist after the current request/response. HTTP implementations SHOULD support persistent connections.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A recipient determines whether a connection is persistent or not based on the most recently received message's protocol version and Connection header field (if any):
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+- If the "close" connection option is present, the connection will not persist after the current response; else,
+- If the received protocol is HTTP/1.1 (or later), the connection will persist after the current response; else,
+- If the received protocol is HTTP/1.0, the "keep-alive" connection option is present, the recipient is not a proxy, and the recipient wishes to honor the HTTP/1.0 "keep-alive" mechanism, the connection will persist after the current response; otherwise,
+- The connection will close after the current response.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A client *MAY* send additional requests on a persistent connection until it sends or receives a "close" connection option or receives an HTTP/1.0 response without a "keep-alive" connection option.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+In order to remain persistent, all messages on a connection need to have a self-defined message length (i.e., one not defined by closure of the connection), as described in Section 3.3. A server MUST read the entire request message body or close the connection after sending its response, since otherwise the remaining data on a persistent connection would be misinterpreted as the next request. Likewise, a client MUST read the entire response message body if it intends to reuse the same connection for a subsequent request.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A proxy server *MUST NOT* maintain a persistent connection with an HTTP/1.0 client (see Section 19.7.1 of [RFC2068] for information and discussion of the problems with the Keep-Alive header field implemented by many HTTP/1.0 clients).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+See Appendix A.1.2 for more information on backwards compatibility with HTTP/1.0 clients.
+#+END_QUOTE
+
 *** 6.3.1 (Retrying Requests)
+#+BEGIN_QUOTE
+Connections can be closed at any time, with or without intention. Implementations ought to anticipate the need to recover from asynchronous close events.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+When an inbound connection is closed prematurely, a client *MAY* open a new connection and automatically retransmit an aborted sequence of requests if all of those requests have idempotent methods (Section 4.2.2 of [RFC7231]). A proxy MUST NOT automatically retry non-idempotent requests.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A user agent *MUST NOT* automatically retry a request with a non-idempotent method unless it has some means to know that the request semantics are actually idempotent, regardless of the method, or some means to detect that the original request was never applied. For example, a user agent that knows (through design or configuration) that a POST request to a given resource is safe can repeat that request automatically. Likewise, a user agent designed specifically to operate on a version control repository might be able to recover from partial failure conditions by checking the target resource revision(s) after a failed connection, reverting or fixing any changes that were partially applied, and then automatically retrying the requests that failed.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A client *SHOULD NOT* automatically retry a failed automatic retry.
+#+END_QUOTE
+
 *** 6.3.2 (Pipelining)
+#+BEGIN_QUOTE
+A client that supports persistent connections *MAY* "pipeline" its requests (i.e., send multiple requests without waiting for each response). A server MAY process a sequence of pipelined requests in parallel if they all have safe methods (Section 4.2.1 of [RFC7231]), but it MUST send the corresponding responses in the same order that the requests were received.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A client that pipelines requests *SHOULD* retry unanswered requests if the connection closes before it receives all of the corresponding responses. When retrying pipelined requests after a failed connection (a connection not explicitly closed by the server in its last complete response), a client MUST NOT pipeline immediately after connection establishment, since the first remaining request in the prior pipeline might have caused an error response that can be lost again if multiple requests are sent on a prematurely closed connection (see the TCP reset problem described in Section 6.6).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Idempotent methods (Section 4.2.2 of [RFC7231]) are significant to pipelining because they can be automatically retried after a connection failure. A user agent SHOULD NOT pipeline requests after a non-idempotent method, until the final response status code for that method has been received, unless the user agent has a means to detect and recover from partial failure conditions involving the pipelined sequence.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+An intermediary that receives pipelined requests MAY pipeline those requests when forwarding them inbound, since it can rely on the outbound user agent(s) to determine what requests can be safely pipelined. If the inbound connection fails before receiving a response, the pipelining intermediary MAY attempt to retry a sequence of requests that have yet to receive a response if the requests all have idempotent methods; otherwise, the pipelining intermediary SHOULD forward any received responses and then close the corresponding outbound connection(s) so that the outbound user agent(s) can recover accordingly.
+#+END_QUOTE
+
 ** 6.4 并发性 (Concurrency)
+#+BEGIN_QUOTE
+A client ought to limit the number of simultaneous open connections that it maintains to a given server.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Previous revisions of HTTP gave a specific number of connections as a ceiling, but this was found to be impractical for many applications. As a result, this specification does not mandate a particular maximum number of connections but, instead, encourages clients to be conservative when opening multiple connections.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Multiple connections are typically used to avoid the "head-of-line blocking" problem, wherein a request that takes significant server-side processing and/or has a large payload blocks subsequent requests on the same connection. However, each connection consumes server resources. Furthermore, using multiple connections can cause undesirable side effects in congested networks.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Note that a server might reject traffic that it deems abusive or characteristic of a denial-of-service attack, such as an excessive number of open connections from a single client.
+#+END_QUOTE
+
 ** 6.5 失败和超时 (Failures and Timeouts)
+#+BEGIN_QUOTE
+Servers will usually have some timeout value beyond which they will no longer maintain an inactive connection. Proxy servers might make this a higher value since it is likely that the client will be making more connections through the same proxy server. The use of persistent connections places no requirements on the length (or existence) of this timeout for either the client or the server.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A client or server that wishes to time out *SHOULD* issue a graceful close on the connection. Implementations SHOULD constantly monitor open connections for a received closure signal and respond to it as appropriate, since prompt closure of both sides of a connection enables allocated system resources to be reclaimed.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A client, server, or proxy *MAY* close the transport connection at any time. For example, a client might have started to send a new request at the same time that the server has decided to close the "idle" connection. From the server's point of view, the connection is being closed while it was idle, but from the client's point of view, a request is in progress.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A server *SHOULD* sustain persistent connections, when possible, and allow the underlying transport's flow-control mechanisms to resolve temporary overloads, rather than terminate connections with the expectation that clients will retry. The latter technique can exacerbate network congestion.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A client sending a message body *SHOULD* monitor the network connection for an error response while it is transmitting the request. If the client sees a response that indicates the server does not wish to receive the message body and is closing the connection, the client SHOULD immediately cease transmitting the body and close its side of the connection.
+#+END_QUOTE
+
 ** 6.6 销毁 (Tear-down)
+#+BEGIN_QUOTE
+The =Connection= header field (Section 6.1) provides a "close" connection option that a sender *SHOULD* send when it wishes to close the connection after the current request/response pair.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A client that sends a "close" connection option *MUST NOT* send further requests on that connection (after the one containing "close") and MUST close the connection after reading the final response message corresponding to this request.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A server that receives a "close" connection option *MUST* initiate a close of the connection (see below) after it sends the final response to the request that contained "close". The server SHOULD send a "close" connection option in its final response on that connection. The server MUST NOT process any further requests received on that connection.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A server that sends a "close" connection option *MUST* initiate a close of the connection (see below) after it sends the response containing "close". The server MUST NOT process any further requests received on that connection.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A client that receives a "close" connection option *MUST* cease sending requests on that connection and close the connection after reading the response message containing the "close"; if additional pipelined requests had been sent on the connection, the client SHOULD NOT assume that they will be processed by the server.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+If a server performs an immediate close of a TCP connection, there is a significant risk that the client will not be able to read the last HTTP response. If the server receives additional data from the client on a fully closed connection, such as another request that was sent by the client before receiving the server's response, the server's TCP stack will send a reset packet to the client; unfortunately, the reset packet might erase the client's unacknowledged input buffers before they can be read and interpreted by the client's HTTP parser.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+To avoid the TCP reset problem, servers typically close a connection in stages. First, the server performs a half-close by closing only the write side of the read/write connection. The server then continues to read from the connection until it receives a corresponding close by the client, or until the server is reasonably certain that its own TCP stack has received the client's acknowledgement of the packet(s) containing the server's last response. Finally, the server fully closes the connection.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+It is unknown whether the reset problem is exclusive to TCP or might also be found in other transport connection protocols.
+#+END_QUOTE
+
 ** 6.7 升级 (Upgrade)
+#+BEGIN_QUOTE
+The "Upgrade" header field is intended to provide a simple mechanism for transitioning from HTTP/1.1 to some other protocol on the same connection. A client MAY send a list of protocols in the Upgrade header field of a request to invite the server to switch to one or more of those protocols, in order of descending preference, before sending the final response. A server MAY ignore a received Upgrade header field if it wishes to continue using the current protocol on that connection. Upgrade cannot be used to insist on a protocol change.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Upgrade          = 1#protocol
+
+  protocol         = protocol-name ["/" protocol-version]
+  protocol-name    = token
+  protocol-version = token
+#+END_SRC
+
+#+BEGIN_QUOTE
+A server that sends a =101 (Switching Protocols)= response *MUST* send an Upgrade header field to indicate the new protocol(s) to which the connection is being switched; if multiple protocol layers are being switched, the sender MUST list the protocols in layer-ascending order. A server MUST NOT switch to a protocol that was not indicated by the client in the corresponding request's Upgrade header field. A server MAY choose to ignore the order of preference indicated by the client and select the new protocol(s) based on other factors, such as the nature of the request or the current load on the server.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A server that sends a =426 (Upgrade Required)= response *MUST* send an Upgrade header field to indicate the acceptable protocols, in order of descending preference.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A server *MAY* send an Upgrade header field in any other response to advertise that it implements support for upgrading to the listed protocols, in order of descending preference, when appropriate for a future request.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The following is a hypothetical example sent by a client:
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  GET /hello.txt HTTP/1.1
+  Host: www.example.com
+  Connection: upgrade
+  Upgrade: HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11
+  
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+The capabilities and nature of the application-level communication after the protocol change is entirely dependent upon the new protocol(s) chosen. However, immediately after sending the 101 (Switching Protocols) response, the server is expected to continue responding to the original request as if it had received its equivalent within the new protocol (i.e., the server still has an outstanding request to satisfy after the protocol has been changed, and is expected to do so without requiring the request to be repeated).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For example, if the Upgrade header field is received in a GET request and the server decides to switch protocols, it first responds with a 101 (Switching Protocols) message in HTTP/1.1 and then immediately follows that with the new protocol's equivalent of a response to a GET on the target resource. This allows a connection to be upgraded to protocols with the same semantics as HTTP without the latency cost of an additional round trip. A server MUST NOT switch protocols unless the received message semantics can be honored by the new protocol; an OPTIONS request can be honored by any protocol.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The following is an example response to the above hypothetical request:
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  HTTP/1.1 101 Switching Protocols
+  Connection: upgrade
+  Upgrade: HTTP/2.0
+
+  [... data stream switches to HTTP/2.0 with an appropriate response
+  (as defined by new protocol) to the "GET /hello.txt" request ...]
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+When Upgrade is sent, the sender *MUST* also send a Connection header field (Section 6.1) that contains an "upgrade" connection option, in order to prevent Upgrade from being accidentally forwarded by intermediaries that might not implement the listed protocols. A server MUST ignore an Upgrade header field that is received in an HTTP/1.0 request.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A client cannot begin using an upgraded protocol on the connection until it has completely sent the request message (i.e., the client can't change the protocol it is sending in the middle of a message). If a server receives both an Upgrade and an Expect header field with the "100-continue" expectation (Section 5.1.1 of [RFC7231]), the server MUST send a 100 (Continue) response before sending a 101 (Switching Protocols) response.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The Upgrade header field only applies to switching protocols on top of the existing connection; it cannot be used to switch the underlying connection (transport) protocol, nor to switch the existing communication to a different connection. For those purposes, it is more appropriate to use a 3xx (Redirection) response (Section 6.4 of [RFC7231]).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+This specification only defines the protocol name "HTTP" for use by the family of Hypertext Transfer Protocols, as defined by the HTTP version rules of Section 2.6 and future updates to this specification. Additional tokens ought to be registered with IANA using the registration procedure defined in Section 8.6.
+#+END_QUOTE
+
 * 7 ABNF 列表扩展：#rule（ABNF List Extension: #rule）
 :PROPERTIES:
 :ID:       b9db011d-fe47-4781-929a-4b1b0aa55aec
 :END:
+#+BEGIN_QUOTE
+A =#rule= extension to the ABNF rules of [RFC5234] is used to improve readability in the definitions of some header field values.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A construct "#" is defined, similar to "*", for defining comma-delimited lists of elements. The full form is "<n>#<m>element" indicating at least <n> and at most <m> elements, each separated by a single comma (",") and optional whitespace (OWS).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+In any production that uses the list construct, a sender *MUST NOT* generate empty list elements. In other words, a sender MUST generate lists that satisfy the following syntax:
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  1#element => element *( OWS "," OWS element )
+#+END_SRC
+
+and:
+
+#+BEGIN_SRC text
+  #element => [ 1#element ]
+#+END_SRC
+
+#+BEGIN_QUOTE
+and for n >= 1 and m > 1:
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  <n>#<m>element => element <n-1>*<m-1>( OWS "," OWS element )
+#+END_SRC
+
+#+BEGIN_QUOTE
+For compatibility with legacy list rules, a recipient MUST parse and ignore a reasonable number of empty list elements: enough to handle common mistakes by senders that merge values, but not so much that they could be used as a denial-of-service mechanism. In other words, a recipient MUST accept lists that satisfy the following syntax:
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  #element => [ ( "," / element ) *( OWS "," [ OWS element ] ) ]
+
+  1#element => *( "," OWS ) element *( OWS "," [ OWS element ] )
+#+END_SRC
+
+#+BEGIN_QUOTE
+Empty elements do not contribute to the count of elements present. For example, given these ABNF productions:
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  example-list      = 1#example-list-elmt
+  example-list-elmt = token ; see Section 3.2.6 
+#+END_SRC
+
+#+BEGIN_QUOTE
+Then the following are valid values for example-list (not including the double quotes, which are present for delimitation only):
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  "foo,bar"
+  "foo ,bar,"
+  "foo , ,bar,charlie   "
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+In contrast, the following values would be invalid, since at least one non-empty element is required by the example-list production:
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  ""
+  ","
+  ",   ,"
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+Appendix B shows the collected ABNF for recipients after the list constructs have been expanded.
+#+END_QUOTE
+
 * 8 INAN 考虑（IANA Considerations）
 ** 8.1 Header Field Registration
+#+BEGIN_QUOTE
+HTTP header fields are registered within the "Message Headers" registry maintained at <http://www.iana.org/assignments/message-headers/>.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+This document defines the following HTTP header fields, so the "Permanent Message Header Field Names" registry has been updated accordingly (see [BCP90]).
+#+END_QUOTE
+
+| Header Field Name | Protocol | Status   | Reference     |
+|-------------------+----------+----------+---------------|
+| Connection        | http     | standard | Section 6.1   |
+| Content-Length    | http     | standard | Section 3.3.2 |
+| Host              | http     | standard | Section 5.4   |
+| TE                | http     | standard | Section 4.3   |
+| Trailer           | http     | standard | Section 4.4   |
+| Transfer-Encoding | http     | standard | Section 3.3.1 |
+| Upgrade           | http     | standard | Section 6.7   |
+| Via               | http     | standard | Section 5.7.1 |
+
+#+BEGIN_QUOTE
+Furthermore, the header field-name "Close" has been registered as "reserved", since using that name as an HTTP header field might conflict with the "close" connection option of the Connection header field (Section 6.1).
+#+END_QUOTE
+
+| Header Field Name | Protocol | Status   | Reference   |
+|-------------------+----------+----------+-------------|
+| Close             | http     | reserved | Section 8.1 |
+
+#+BEGIN_QUOTE
+The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
+#+END_QUOTE
+
 ** 8.2 URI Scheme Registration
+#+BEGIN_QUOTE
+IANA maintains the registry of URI Schemes [BCP115] at <http://www.iana.org/assignments/uri-schemes/>.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+This document defines the following URI schemes, so the "Permanent URI Schemes" registry has been updated accordingly.
+#+END_QUOTE
+
+| URI Scheme | Description                        | Reference     |
+|------------+------------------------------------+---------------|
+| http       | Hypertext Transfer Prototol        | Section 2.7.1 |
+| https      | Hypertext Transfer Prototol Secure | Section 2.7.2 |
+
 ** 8.3 Internet Media Type Registration
+#+BEGIN_QUOTE
+IANA maintains the registry of Internet media types [BCP13] at <http://www.iana.org/assignments/media-types>.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+This document serves as the specification for the Internet media types "message/http" and "application/http". The following has been registered with IANA.
+#+END_QUOTE
+
 *** 8.3.1 Internet Media Type message/http
 :PROPERTIES:
 :ID:       44492A0E-8B7F-46EC-890D-317BC32E2228
 :END:
+#+BEGIN_QUOTE
+The message/http type can be used to enclose a single HTTP request or response message, provided that it obeys the MIME restrictions for all "message" types regarding line length and encodings.
+#+END_QUOTE
 *** 8.3.2 Internet Media Type application/http
 ** 8.4 Transfer Coding Registry
 :PROPERTIES:
