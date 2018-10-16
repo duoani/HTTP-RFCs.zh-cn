@@ -1766,7 +1766,7 @@ The most common form of request-target is the =origin-form=.
 When making a request directly to an origin server, other than a CONNECT or server-wide OPTIONS request (as detailed below), a client *MUST* send only the absolute path and query components of the target URI as the request-target. If the target URI's path component is empty, the client *MUST* send "/" as the path within the origin-form of request-target. A =Host= header field is also sent, as defined in Section 5.4.
 #+END_QUOTE
 
-当生成一个直接导向到源服务器的请求时，除了一个 CONNECT 或者服务器范围内的 OPTIONS 请求（见下文）以外，客户端 *必须* 只使用目标 URI 的绝对路径 =absolute-path= 组件以及查询字符串 =query= 组件作为请求目标。如果目标 URI 的 =path= 组件为空，客户端 *必须* 发送 "/" 作为请求目标的原始形式的 =path=。一个 =Host= 报头域同样会被发送，其定义见[[id:f6cd08fd-597f-4b1d-98ad-a1730125abdc][章节 5.4]]。
+当生成一个直接导向到源服务器的请求时，除了一个 CONNECT 或者服务器范围内的 OPTIONS 请求（见下文）以外，客户端 *必须* 仅使用目标 URI 的绝对路径 =absolute-path= 组件以及查询字符串 =query= 组件作为请求目标。如果目标 URI 的 =path= 组件为空，客户端 *必须* 发送 "/" 作为请求目标的原始形式的 =path=。一个 =Host= 报头域同样会被发送，其定义见[[id:f6cd08fd-597f-4b1d-98ad-a1730125abdc][章节 5.4]]。
 
 （译注：请求目标的原始形式由目标 URI 的绝对路径 =absolute-path= 组件以及查询字符串 =query= 组件组成。）
 
@@ -1810,32 +1810,42 @@ When making a request to a proxy, other than a CONNECT or server-wide OPTIONS re
 
 #+BEGIN_QUOTE
 The proxy is requested to either service that request from a valid cache, if possible, or make the same request on the client's behalf to either the next inbound proxy server or directly to the origin server indicated by the request-target. Requirements on such "forwarding" of messages are defined in Section 5.7.
+#+END_QUOTE
 
-代理要不被要求去处理来自一个有效缓存的请求报文（如果可能的话），要不被要求去生成同样的请求来代表客户端向服务器（或者是下一个入站代理服务器，或者是请求目标所指定的源服务器）发送请求。关于报文的这种“转发”的规范要求，定义在[[id:8b8a0096-4891-4f21-b5d3-b796c41443af][章节 5.7]] 中。
+代理要不被要求去处理来自一个有效缓存的请求报文（如果可能的话），要不被要求去生成同样的请求来代表客户端向服务器（或者是下一个入站代理服务器，或者是请求目标所指定的源服务器）发送请求。关于报文的这种“转发”的相关要求，定义在[[id:8b8a0096-4891-4f21-b5d3-b796c41443af][章节 5.7]] 中。
 
+#+BEGIN_QUOTE
 An example absolute-form of request-line would be:
 #+END_QUOTE
+
+一个在请求行（Request Line）里使用绝对形式作为请求目标的例子如下：
 
 #+BEGIN_EXAMPLE
 GET http://www.example.org/pub/WWW/TheProject.html HTTP/1.1
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-To allow for transition to the absolute-form for all requests in some future version of HTTP, a server MUST accept the absolute-form in requests, even though HTTP/1.1 clients will only send them in requests to proxies.
+To allow for transition to the absolute-form for all requests in some future version of HTTP, a server *MUST* accept the absolute-form in requests, even though HTTP/1.1 clients will only send them in requests to proxies.
 #+END_QUOTE
+
+为了允许在将来某个 HTTP 版本里将所有请求的请求目标转换为绝对形式，服务器 *必须* 接受请求目标是绝对形式的请求，即使 HTTP/1.1 客户端将仅向代理（Proxy）发送这种请求。
 
 *** 5.3.3 (authority-form)
 #+BEGIN_QUOTE
 The authority-form of request-target is only used for CONNECT requests (Section 4.3.6 of [RFC7231]).
 #+END_QUOTE
 
+请求目标的 =authority-form= 形式只用于 CONNECT 请求（[[https://tools.ietf.org/html/rfc7231#section-4.3.6][【RFC7231】章节 4.3.6]]）。
+
 #+BEGIN_SRC text
   authority-form = authority
 #+END_SRC
 
 #+BEGIN_QUOTE
-When making a CONNECT request to establish a tunnel through one or more proxies, a client MUST send only the target URI's authority component (excluding any userinfo and its "@" delimiter) as the request-target. For example,
+When making a CONNECT request to establish a tunnel through one or more proxies, a client *MUST* send only the target URI's authority component (excluding any userinfo and its "@" delimiter) as the request-target. For example,
 #+END_QUOTE
+
+当生成一个 CONNECT 请求（用于建立一条贯穿一个或多个代理的隧道）时，客户端 *必须* 仅使用目标 URI 的 =authority= 组件（排除任何 =userinfo= 以及 "@" 分隔符）作为请求目标。例如：
 
 #+BEGIN_EXAMPLE
 CONNECT www.example.com:80 HTTP/1.1
