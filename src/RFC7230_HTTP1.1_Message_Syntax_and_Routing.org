@@ -585,9 +585,11 @@ http-URI = "http:" "//" authority path-abempty [ "?" query ] [ "#" fragment ]
 The origin server for an "http" URI is identified by the authority component, which includes a host identifier and optional TCP port ([RFC3986], Section 3.2.2). The hierarchical path component and optional query component serve as an identifier for a potential target resource within that origin server's name space. The optional fragment component allows for indirect identification of a secondary resource, independent of the URI scheme, as defined in Section 3.5 of [RFC3986].
 #+END_QUOTE
 
-如上所示，对于一个“http” URI，源服务器被标记到 =authority= 部件里，=authority= 包含一个主机（host）标识和一个可选的 TCP 端口（[[https://tools.ietf.org/html/rfc3986#section-3.2.2][【RFC3986】，章节 3.2.2]]）。=path= 部件和可选的 =query= 部件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 =fragment= 部件允许间接标记一个次要资源（Secondary Resource），不依赖于 URI scheme，见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]] 。
+如上所示，对于一个“http” URI，源服务器被标记到 =authority= 组件里，=authority= 包含一个主机（host）标识和一个可选的 TCP 端口（[[https://tools.ietf.org/html/rfc3986#section-3.2.2][【RFC3986】，章节 3.2.2]]）。=path= 组件和可选的 =query= 组件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 =fragment= 组件允许间接标记一个次要资源（Secondary Resource），不依赖于 URI scheme，见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]] 。
 
 （译注：按照[[https://tools.ietf.org/html/rfc3986#section-3.2][【RFC3986】章节 3.2]] 的解释，Authority 是“管理机构”的意思，由域名或 IP，加上一个可选的端口组成，通俗的讲，它的作用是相当于一个房屋的门牌，通过找门牌就可以找到这一间房屋。而 Path 相当于从房屋大门走到特定房间的路径。另外，Authority 除了“权威、权力”的意思以外，在其他文库管理方面还有其他有趣的意思[fn:2]哦）
+
+（译注：component 即组件，代表组成一个完整 URI 的某个单元。）
 
 #+BEGIN_QUOTE
 A sender *MUST NOT* generate an "http" URI with an empty host identifier. A recipient that processes such a URI reference *MUST* reject it as invalid.
@@ -600,13 +602,13 @@ If the host identifier is provided as an IP address, the origin server is the li
 #+END_QUOTE
 
 如果 =host= 标识符以 IP 地址的形式来提供，表示源服务器就是在那个 IP 地址对应的 TCP 端口的监听器；如果 =host= 是一个已注册的名称（可以理解为域名），所谓“已注册的名称”，是一个用于名称解释服务（Name Resolution Service）的间接标识，例如域名系统（DNS）用于查找源服务器的地址；如果 =port=
-子部件为空或未提供，那么 TCP 默认使用 80（WWW 服务的保留端口）端口。
+子组件为空或未提供，那么 TCP 默认使用 80（WWW 服务的保留端口）端口。
 
 #+BEGIN_QUOTE
 Note that the presence of a URI with a given authority component does not imply that there is always an HTTP server listening for connections on that host and port. Anyone can mint a URI. What the authority component determines is who has the right to respond authoritatively to requests that target the identified resource. The delegated nature of registered names and IP addresses creates a federated namespace, based on control over the indicated host and port, whether or not an HTTP server is present. See Section 9.1 for security considerations related to establishing authority.
 #+END_QUOTE
 
-需要注意的是，一个 URI 带有给定的 =authority= 部件并不意味着这个 URI 一定就是一个监听那个 =host= 以及对应 =port= 来等待连接的 HTTP 服务器。任务人都可以建造 URI。而 =authority= 决定的是谁有权力去响应这个定位目标资源的请求。注册域名和 IP 地址所代表的本质是，基于支配明确的 =host= 和 =port= 生成一个联合命名空间，无论最终呈现的是否是一个 HTTP 服务器。见[[id:901a19cc-8490-4c06-a515-26eb9b66c173][章节 9.1]]。
+需要注意的是，一个 URI 带有给定的 =authority= 组件并不意味着这个 URI 一定就是一个监听那个 =host= 以及对应 =port= 来等待连接的 HTTP 服务器。任务人都可以建造 URI。而 =authority= 决定的是谁有权力去响应这个定位目标资源的请求。注册域名和 IP 地址所代表的本质是，基于支配明确的 =host= 和 =port= 生成一个联合命名空间，无论最终呈现的是否是一个 HTTP 服务器。见[[id:901a19cc-8490-4c06-a515-26eb9b66c173][章节 9.1]]。
 
 #+BEGIN_QUOTE
 When an "http" URI is used within a context that calls for access to the indicated resource, a client *MAY* attempt access by resolving the host to an IP address, establishing a TCP connection to that address on the indicated port, and sending an HTTP request message (Section 3) containing the URI's identifying data (Section 5) to the server. If the server responds to that request with a non-interim HTTP response message, as described in Section 6 of [RFC7231], then that response is considered an authoritative answer to the client's request.
@@ -624,7 +626,7 @@ Although HTTP is independent of the transport protocol, the "http" scheme is spe
 The URI generic syntax for authority also includes a deprecated =userinfo= subcomponent ([RFC3986], Section 3.2.1) for including user authentication information in the URI. Some implementations make use of the =userinfo= component for internal configuration of authentication information, such as within command invocation options, configuration files, or bookmark lists, even though such usage might expose a user identifier or password. A sender *MUST NOT* generate the =userinfo= subcomponent (and its "@" delimiter) when an "http" URI reference is generated within a message as a request target or header field value. Before making use of an "http" URI reference received from an untrusted source, a recipient *SHOULD* parse for =userinfo= and treat its presence as an error; it is likely being used to obscure the authority for the sake of phishing attacks.
 #+END_QUOTE
 
-在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 =userinfo= 子部件（见[[https://tools.ietf.org/html/rfc3986#section-3.2.1][【RFC3986】章节 3.2.1]]），用于包含用户信息到 URI 里。某些实现将 =userinfo= 部件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 报文，包含以 =http= URI 引用作为一个请求目标或者报文头域里的值（例如头域 =Location=）时，发送端 *不能* 生成 =userinfo= 子部件（以及其“@”分隔符）。在使用一个接收自一个非受信的源的 =http= URI 引用时，接收者 *应当* 对 =userinfo= 进行解析（Parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（Phishing Attach）的威胁。
+在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 =userinfo= 子组件（见[[https://tools.ietf.org/html/rfc3986#section-3.2.1][【RFC3986】章节 3.2.1]]），用于包含用户信息到 URI 里。某些实现将 =userinfo= 组件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 报文，包含以 =http= URI 引用作为一个请求目标或者报文头域里的值（例如头域 =Location=）时，发送端 *不能* 生成 =userinfo= 子组件（以及其“@”分隔符）。在使用一个接收自一个非受信的源的 =http= URI 引用时，接收者 *应当* 对 =userinfo= 进行解析（Parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（Phishing Attach）的威胁。
 
 *** 2.7.2 https URI Scheme
 #+BEGIN_QUOTE
@@ -649,7 +651,7 @@ Note that the "https" URI scheme depends on both TLS and TCP for establishing au
 
 需要注意的是，“https” URI scheme 依赖于 TLS 以及 TCP 来建立授权。通过“https” scheme 指向的资源与通过“https” scheme 指向的资源两者间并没有关系，即使它们的 =authority= 一样（有相同的 =host= 和相同的 TCP =port=）。它们的命名空间是有区别的，因此指向的是两个不同的源服务器。然而，后来的规范对 HTTP 进行了扩展来（使某些特性）适用于所有主机域名，例如 Cookie 协议[[https://tools.ietf.org/html/rfc6265][【RFC6265】]]，能够允许一个服务设置某些信息，通过一个关于主机域名的匹配规则集合来影响与其他服务的通信。
 
-（译注：即使两个 URI 除了 scheme 不一样以外，其他各部件都一模一样，如 http://www.example.com/path 与 https://www.example/path 这两个 URI 并不一定指向同一个资源，因为这是两个是不同的 URI。）
+（译注：即使两个 URI 除了 scheme 不一样以外，其他各组件都一模一样，如 http://www.example.com/path 与 https://www.example/path 这两个 URI 并不一定指向同一个资源，因为这是两个是不同的 URI。）
 
 #+BEGIN_QUOTE
 The process for authoritative access to an "https" identified resource is defined in [RFC2818].
@@ -668,7 +670,7 @@ Since the "http" and "https" schemes conform to the URI generic syntax, such URI
 If the port is equal to the default port for a scheme, the normal form is to omit the port subcomponent. When not being used in absolute form as the request target of an OPTIONS request, an empty path component is equivalent to an absolute path of "/", so the normal form is to provide a path of "/" instead. The scheme and host are case-insensitive and normally provided in lowercase; all other components are compared in a case-sensitive manner. Characters other than those in the "reserved" set are equivalent to their percent-encoded[fn:4] octets: the normal form is to not encode them (see Sections 2.1 and 2.2 of [RFC3986]).
 #+END_QUOTE
 
-如果一个 scheme 的 =port= 等于其默认端口，那么其通常的形式是省略掉 =port= 子部件。当一个 =OPTIONS= 请求没有使用绝对形式（Absolute Form）作为请求目标（Request Target）时，一个空的 =path= 等价于绝对路径“=/=”，所以通常的形式是使用路径“=/=”来替换。=scheme= 和 =host= 是大小写不敏感的，通常使用小写。除了 =scheme= 和 =host= 以外的所有其外部件都是大小写敏感的。除了“保留”字符集以外的所有字符都等价于它的 URL 编码（[[https://en.wikipedia.org/wiki/Percent-encoding][Precent-encoded]]，又叫百分号编码）形式的八位组（Octet）：一般形式是（如非必要）不要对它们进行编码（见[[https://tools.ietf.org/html/rfc3986#section-2.1][【RFC3986】章节 2.1 和 2.2]]）。
+如果一个 scheme 的 =port= 等于其默认端口，那么其通常的形式是省略掉 =port= 子组件。当一个 =OPTIONS= 请求没有使用绝对形式（Absolute Form）作为请求目标（Request Target）时，一个空的 =path= 等价于绝对路径“=/=”，所以通常的形式是使用路径“=/=”来替换。=scheme= 和 =host= 是大小写不敏感的，通常使用小写。除了 =scheme= 和 =host= 以外的所有其他组件都是大小写敏感的。除了“保留”字符集以外的所有字符都等价于它的 URL 编码（[[https://en.wikipedia.org/wiki/Percent-encoding][Precent-encoded]]，又叫百分号编码）形式的八位组（Octet）：一般形式是（如非必要）不要对它们进行编码（见[[https://tools.ietf.org/html/rfc3986#section-2.1][【RFC3986】章节 2.1 和 2.2]]）。
 
 （译注：URL 编码，又叫百分号编码，每个字符由 =%= 加上两位的十六进制 0~F 组成，对于百分号编码还可以参考[[https://www.cnblogs.com/DaoMuRen/p/5695030.html][这篇博文]]。）
 
@@ -793,7 +795,7 @@ The =request-target= identifies the target resource upon which to apply the requ
 Recipients typically parse the =request-line= into its component parts by splitting on whitespace (see [[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][Section 3.5]]), since no whitespace is allowed in the three components. Unfortunately, some user agents fail to properly encode or exclude whitespace found in [[https://en.wikipedia.org/wiki/Hyperlink][hypertext references]], resulting in those disallowed characters being sent in a =request-target=.
 #+END_QUOTE
 
-接收端在解析（Parse）请求行 =request-line= 的过程中，通过以空格分割出请求行的各个部件（共有三个部件，分别为方法标识、请求目标以及协议版本），因此，以上三个部件的内容不能带有空格（见[[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][章节 3.5]]）。不幸的是，某些用户代理不能对超文本引用（[[https://en.wikipedia.org/wiki/Hyperlink][Hypertext References]]，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求报文中的请求目标 =request-target= 包含了那些不被允许出现的字符（Character）。
+接收端在解析（Parse）请求行 =request-line= 的过程中，通过以空格分割出请求行的各个组件（共有三个组件，分别为方法标识、请求目标以及协议版本），因此，以上三个组件的内容不能带有空格（见[[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][章节 3.5]]）。不幸的是，某些用户代理不能对超文本引用（[[https://en.wikipedia.org/wiki/Hyperlink][Hypertext References]]，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求报文中的请求目标 =request-target= 包含了那些不被允许出现的字符（Character）。
 
 #+BEGIN_QUOTE
 Recipients of an invalid =request-line= *SHOULD* respond with either a =400 (Bad Request)= error or a =301 (Moved Permanently)= redirect with the =request-target= properly encoded. A recipient *SHOULD NOT* attempt to autocorrect and then process the request without a redirect, since the invalid =request-line= might be deliberately crafted to bypass security filters along the request chain.
@@ -1037,7 +1039,7 @@ A client *MAY* discard or truncate received header fields that are larger than t
 Most HTTP header field values are defined using common syntax components (token, quoted-string, and comment) separated by whitespace or specific delimiting characters. Delimiters are chosen from the set of US-ASCII visual characters not allowed in a token (DQUOTE and "(),/:;<=>?@[\]{}").
 #+END_QUOTE
 
-大多数 HTTP 报头域值使用通用句法部件（Common Syntax Components，包括标记 =token=、字符串 =quoted-string=、注释 =comment= ）来进行定义。这些通用句法部件以空格或者特定的定界符（Delimiting Characters）来分隔。定界符选取自 US-ASCII 字符集中的可见字符（Visual Characters），并且这些可见字符是不允许出现在标记（Token）上的（包括 =DQUOTE= 和 "=(),/:;<=>?@[\]{}="）。
+大多数 HTTP 报头域值使用通用句法组件（Common Syntax Components，包括标记 =token=、字符串 =quoted-string=、注释 =comment= ）来进行定义。这些通用句法组件以空格或者特定的定界符（Delimiting Characters）来分隔。定界符选取自 US-ASCII 字符集中的可见字符（Visual Characters），并且这些可见字符是不允许出现在标记（Token）上的（包括 =DQUOTE= 和 "=(),/:;<=>?@[\]{}="）。
 
 #+BEGIN_SRC text
 token          = 1*tchar
@@ -1395,7 +1397,7 @@ Although the line terminator for the =start-line= and header fields is the seque
 Although the =request-line= and =status-line= grammar rules require that each of the component elements be separated by a single SP octet, recipients *MAY* instead parse on whitespace-delimited word boundaries and, aside from the CRLF terminator, treat any form of whitespace as the SP separator while ignoring preceding or trailing whitespace; such whitespace includes one or more of the following octets: SP, HTAB, VT (%x0B), FF (%x0C), or bare CR. However, lenient parsing can result in security vulnerabilities if there are multiple recipients of the message and each has its own unique interpretation of robustness (see [[id:04030107-7AF1-4D23-900E-75FEEB04925C][Section 9.5]]).
 #+END_QUOTE
 
-虽然请求行（Request Line）和状态行（Status Line）的语法规则要求每一个部件元素需要以一个空格（8位字节） =SP= 分隔，但是接收端 *可以* 改由使用更宽泛的空格限定符（Whitespace-delimited Word）替代 =SP= 来进行解析（Parse），空格限定符由包含一个或多个 =SP=、=HTAB=、=VT= (%x0B)、=FF= (&x0C) 或者单独由 =CR= 组成。但是，如果报文有多个接收端，而且这些接收端都有自己独特的健壮性的解释（Interpretation），那么，这种宽泛解析（Parse）的方式会引起安全隐患（见[[id:04030107-7AF1-4D23-900E-75FEEB04925C][章节 9.5]]）。
+虽然请求行（Request Line）和状态行（Status Line）的语法规则要求每一个组件元素需要以一个空格（8位字节） =SP= 分隔，但是接收端 *可以* 改由使用更宽泛的空格限定符（Whitespace-delimited Word）替代 =SP= 来进行解析（Parse），空格限定符由包含一个或多个 =SP=、=HTAB=、=VT= (%x0B)、=FF= (&x0C) 或者单独由 =CR= 组成。但是，如果报文有多个接收端，而且这些接收端都有自己独特的健壮性的解释（Interpretation），那么，这种宽泛解析（Parse）的方式会引起安全隐患（见[[id:04030107-7AF1-4D23-900E-75FEEB04925C][章节 9.5]]）。
 
 #+BEGIN_QUOTE
 When a server listening only for HTTP request messages, or processing what appears from the =start-line= to be an HTTP request message, receives a sequence of octets that does not match the HTTP-message grammar aside from the robustness exceptions listed above, the server *SHOULD* respond with a =400 (Bad Request)= response.
@@ -1749,26 +1751,40 @@ Once an inbound connection is obtained, the client sends an HTTP request message
                  / asterisk-form
 #+END_SRC
 
-*** 5.3.1 (origin-form)
+*** 5.3.1 原始形式 (origin-form)
 #+BEGIN_QUOTE
 The most common form of request-target is the =origin-form=.
 #+END_QUOTE
+
+是请求目标最常见的形式是原始形式（=origin-form=）。
 
 #+BEGIN_SRC text
   origin-form    = absolute-path [ "?" query ]
 #+END_SRC
 
 #+BEGIN_QUOTE
-When making a request directly to an origin server, other than a CONNECT or server-wide OPTIONS request (as detailed below), a client MUST send only the absolute path and query components of the target URI as the request-target. If the target URI's path component is empty, the client MUST send "/" as the path within the origin-form of request-target. A Host header field is also sent, as defined in Section 5.4.
+When making a request directly to an origin server, other than a CONNECT or server-wide OPTIONS request (as detailed below), a client *MUST* send only the absolute path and query components of the target URI as the request-target. If the target URI's path component is empty, the client *MUST* send "/" as the path within the origin-form of request-target. A =Host= header field is also sent, as defined in Section 5.4.
 #+END_QUOTE
+
+当生成一个直接导向到源服务器的请求时，除了一个 CONNECT 或者服务器范围内的 OPTIONS 请求（见下文）以外，客户端 *必须* 只使用目标 URI 的绝对路径 =absolute-path= 组件以及查询字符串 =query= 组件作为请求目标。如果目标 URI 的 =path= 组件为空，客户端 *必须* 发送 "/" 作为请求目标的原始形式的 =path=。一个 =Host= 报头域同样会被发送，其定义见[[id:f6cd08fd-597f-4b1d-98ad-a1730125abdc][章节 5.4]]。
+
+（译注：请求目标的原始形式由目标 URI 的绝对路径 =absolute-path= 组件以及查询字符串 =query= 组件组成。）
 
 #+BEGIN_QUOTE
 For example, a client wishing to retrieve a representation of the resource identified as
 #+END_QUOTE
 
+例如，一个客户端希望从源服务器里获得一个资源的表现形式（Representation），资源对应的 URI 如下：
+
 #+BEGIN_EXAMPLE
 http://www.example.org/where?q=now
 #+END_EXAMPLE
+
+#+BEGIN_QUOTE
+directly from the origin server would open (or reuse) a TCP connection to port 80 of the host "www.example.org" and send the lines:
+#+END_QUOTE
+
+客户端会打开（或者复用）一个 TCP 连接到 "www.example.org" 主机的 80 端口，并且发送以下几行
 
 #+BEGIN_EXAMPLE
 GET /where?q=now HTTP/1.1
@@ -1779,10 +1795,14 @@ Host: www.example.org
 followed by the remainder of the request message.
 #+END_QUOTE
 
-*** 5.3.2 (absolute-form)
+以及随后的请求报文的其余部分。
+
+*** 5.3.2 绝对形式 (absolute-form)
 #+BEGIN_QUOTE
-When making a request to a proxy, other than a CONNECT or server-wide OPTIONS request (as detailed below), a client MUST send the target URI in absolute-form as the request-target.
+When making a request to a proxy, other than a CONNECT or server-wide OPTIONS request (as detailed below), a client *MUST* send the target URI in absolute-form as the request-target.
 #+END_QUOTE
+
+当生成一个发送到一个代理的请求时，除了一个 CONNECT 或者服务器范围内的 OPTIONS 请求（见下文）以外，客户端 *必须* 使用请求目标的绝对形式（=absolute-form=）。
 
 #+BEGIN_SRC text
   absolute-form  = absolute-URI
@@ -1790,6 +1810,8 @@ When making a request to a proxy, other than a CONNECT or server-wide OPTIONS re
 
 #+BEGIN_QUOTE
 The proxy is requested to either service that request from a valid cache, if possible, or make the same request on the client's behalf to either the next inbound proxy server or directly to the origin server indicated by the request-target. Requirements on such "forwarding" of messages are defined in Section 5.7.
+
+代理要不被要求去处理来自一个有效缓存的请求报文（如果可能的话），要不被要求去生成同样的请求来代表客户端向服务器（或者是下一个入站代理服务器，或者是请求目标所指定的源服务器）发送请求。关于报文的这种“转发”的规范要求，定义在[[id:8b8a0096-4891-4f21-b5d3-b796c41443af][章节 5.7]] 中。
 
 An example absolute-form of request-line would be:
 #+END_QUOTE
@@ -1862,6 +1884,9 @@ after connecting to port 8001 of host "www.example.org".
 #+END_QUOTE
 
 ** 5.4 主机 (Host)
+:PROPERTIES:
+:ID:       f6cd08fd-597f-4b1d-98ad-a1730125abdc
+:END:
 #+BEGIN_QUOTE
 The "Host" header field in a request provides the host and port information from the target URI, enabling the origin server to distinguish among resources while servicing requests for multiple host names on a single IP address.
 #+END_QUOTE
@@ -1979,6 +2004,9 @@ A client that has more than one outstanding request on a connection MUST maintai
 #+END_QUOTE
 
 ** 5.7 报文转发 (Message Forwarding)
+:PROPERTIES:
+:ID:       8b8a0096-4891-4f21-b5d3-b796c41443af
+:END:
 #+BEGIN_QUOTE
 As described in Section 2.3, intermediaries can serve a variety of roles in the processing of HTTP requests and responses. Some intermediaries are used to improve performance or availability. Others are used for access control or to filter content. Since an HTTP stream has characteristics similar to a pipe-and-filter architecture, there are no inherent limits to the extent an intermediary can enhance (or interfere) with either direction of the stream.
 #+END_QUOTE
