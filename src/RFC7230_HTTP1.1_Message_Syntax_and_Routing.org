@@ -1830,7 +1830,7 @@ To allow for transition to the absolute-form for all requests in some future ver
 
 为了允许在将来某个 HTTP 版本里将所有请求的请求目标转换为绝对形式，服务器 *必须* 接受请求目标是绝对形式的请求，即使 HTTP/1.1 客户端将仅向代理（Proxy）发送这种请求。
 
-*** 5.3.3 (authority-form)
+*** 5.3.3 Authority 形式 (authority-form)
 #+BEGIN_QUOTE
 The authority-form of request-target is only used for CONNECT requests (Section 4.3.6 of [RFC7231]).
 #+END_QUOTE
@@ -1851,30 +1851,38 @@ When making a CONNECT request to establish a tunnel through one or more proxies,
 CONNECT www.example.com:80 HTTP/1.1
 #+END_EXAMPLE
 
-*** 5.3.4 (asterisk-form)
+*** 5.3.4 星号形式 (asterisk-form)
 #+BEGIN_QUOTE
 The asterisk-form of request-target is only used for a server-wide OPTIONS request (Section 4.3.7 of [RFC7231]).
 #+END_QUOTE
+
+请求目标的 =asterisk-form= 形式只用于服务器范围内的 OPTIONS 请求（[[https://tools.ietf.org/html/rfc7231#section-4.3.7][【RFC7231】章节 4.3.7]]）。
 
 #+BEGIN_SRC text
   asterisk-form  = "*"
 #+END_SRC
 
 #+BEGIN_QUOTE
-When a client wishes to request OPTIONS for the server as a whole, as opposed to a specific named resource of that server, the client MUST send only "*" (%x2A) as the request-target. For example,
+When a client wishes to request OPTIONS for the server as a whole, as opposed to a specific named resource of that server, the client *MUST* send only "*" (%x2A) as the request-target. For example,
 #+END_QUOTE
+
+当一个客户端希望获得服务器整体上的功能选项（与之相反的是该服务器的一个具体的命名资源）时，客户端 *必须* 仅使用 "*" (%x2A) 作为请求目标。例如：
 
 #+BEGIN_EXAMPLE
 OPTIONS * HTTP/1.1
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-If a proxy receives an OPTIONS request with an absolute-form of request-target in which the URI has an empty path and no query component, then the last proxy on the request chain MUST send a request-target of "*" when it forwards the request to the indicated origin server.
+If a proxy receives an OPTIONS request with an absolute-form of request-target in which the URI has an empty path and no query component, then the last proxy on the request chain *MUST* send a request-target of "*" when it forwards the request to the indicated origin server.
 #+END_QUOTE
+
+如果一个代理（Proxy）接收到一个 OPTIONS 请求，该请求的请求目标为绝对形式，URI 的路径 =path= 为空并且没有 =query= 组件，那么，请求链路中的最后一个代理 *必须* 发送一个 "*" 的请求目标，当它将请求转发到指定的源服务器的时候。 
 
 #+BEGIN_QUOTE
 For example, the request
 #+END_QUOTE
+
+例如，请求：
 
 #+BEGIN_EXAMPLE
 OPTIONS http://www.example.org:8001 HTTP/1.1
@@ -1884,6 +1892,8 @@ OPTIONS http://www.example.org:8001 HTTP/1.1
 would be forwarded by the final proxy as
 #+END_QUOTE
 
+会被最后一个代理服务器转发为：
+
 #+BEGIN_EXAMPLE
 OPTIONS * HTTP/1.1
 Host: www.example.org:8001
@@ -1892,6 +1902,8 @@ Host: www.example.org:8001
 #+BEGIN_QUOTE
 after connecting to port 8001 of host "www.example.org".
 #+END_QUOTE
+
+在连接到 "www.example.org" 主机的 8001 接口之后。
 
 ** 5.4 主机 (Host)
 :PROPERTIES:
