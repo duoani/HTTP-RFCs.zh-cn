@@ -132,7 +132,7 @@ used to define HTTP.
 
 HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支持世界范围内的超文系统的可扩展性。用于定义 HTTP 的术语和句法的产品反映了这一体系结构的方方面面。
 
-** 2.1 客户端/服务器通信 (Client/Server Messaging)
+** 2.1 客户端/服务器报文传递 (Client/Server Messaging)
 #+BEGIN_QUOTE
 HTTP is a stateless request/response protocol that operates by exchanging messages (Section 3) across a reliable transport- or session-layer "connection" (Section 6). An HTTP "client" is a program that establishes a connection to a server for the purpose of sending one or more HTTP requests. An HTTP "server" is a program that accepts connections in order to service HTTP requests by sending HTTP responses.
 #+END_QUOTE
@@ -265,9 +265,9 @@ The figure above shows three intermediaries (A, B, and C) between the user agent
 The terms "upstream" and "downstream" are used to describe directional requirements in relation to the message flow: all messages flow from upstream to downstream. The terms "inbound" and "outbound" are used to describe directional requirements in relation to the request route: "inbound" means toward the origin server and "outbound" means toward the user agent.
 #+END_QUOTE
 
-术语“上游（Upstream）”和“下游（Downstream）”用于描述报文（消息）流的方向：所有的报文（消息）都从上游流到下游。术语“入境（Inbound）”和“出境（Outbound）”用于描述请求经过路由的方向：“入境”意为经过路由器的数据流向源服务器，而“出境”意为经过路由器的数据流向用户代理。 
+术语“上游（Upstream）”和“下游（Downstream）”用于描述报文（消息）流的方向：所有的报文（消息）都从上游流到下游。术语“入站（Inbound）”和“出站（Outbound）”用于描述请求经过路由的方向：“入站”意为经过路由器的数据流向源服务器，而“出站”意为经过路由器的数据流向用户代理。 
 
-（译注：路由器是连接互联网的枢纽，数据流入互联网，这叫“入境”，例如文件上传；流出互联网，这叫“出境”，例如文件下载）。
+（译注：路由器是连接互联网的枢纽，数据流入互联网，这叫“入站”，例如文件上传；流出互联网，这叫“出站”，例如文件下载）。
 
 #+BEGIN_QUOTE
 A "proxy" is a message-forwarding agent that is selected by the client, usually via local configuration rules, to receive requests for some type(s) of [[https://tools.ietf.org/html/rfc3986#page-27][absolute URI]] and attempt to satisfy those requests via translation through the HTTP interface. Some translations are minimal, such as for proxy requests for "http" URIs, whereas other requests might require translation to and from entirely different application-level protocols. Proxies are often used to group an organization's HTTP requests through a common intermediary for the sake of security, annotation services, or shared caching. Some proxies are designed to apply transformations to selected messages or payloads while they are being forwarded, as described in [[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Section 5.7.2]].
@@ -287,7 +287,7 @@ A "gateway" (a.k.a. "reverse proxy") is an intermediary that acts as an origin s
 All HTTP requirements applicable to an origin server also apply to the outbound communication of a gateway. A gateway communicates with inbound servers using any protocol that it desires, including private extensions to HTTP that are outside the scope of this specification. However, an HTTP-to-HTTP gateway that wishes to interoperate with third-party HTTP servers ought to conform to user agent requirements on the gateway's inbound connection.
 #+END_QUOTE
 
-HTTP 中所有对于源服务器的要求都适用于网关的出境通信（Outbound Communication）。一个网关可以使用其喜欢的协议与入境网关通信，包括对 HTTP 的私有扩展（已经超出了本标准的范畴）。但是，如果一个 HTTP-to-HTTP 的网关在 Inbound 时想跟第三方 HTTP 服务器交互的话应该遵循本标准对于用户代理的要求。
+HTTP 中所有对于源服务器的要求都适用于网关的出站通信（Outbound Communication）。一个网关可以使用其喜欢的协议与入站网关通信，包括对 HTTP 的私有扩展（已经超出了本标准的范畴）。但是，如果一个 HTTP-to-HTTP 的网关在 Inbound 时想跟第三方 HTTP 服务器交互的话应该遵循本标准对于用户代理的要求。
 
 #+BEGIN_QUOTE
 A "tunnel" acts as a blind relay between two connections without changing the messages. Once active, a tunnel is not considered a party to the HTTP communication, though the tunnel might have been initiated by an HTTP request. A tunnel ceases to exist when both ends of the relayed connection are closed. Tunnels are used to extend a virtual connection through an intermediary, such as when Transport Layer Security (TLS, [RFC5246]) is used to establish confidential communication through a shared firewall proxy.
@@ -685,6 +685,9 @@ http://EXAMPLE.com:/%7esmith/home.html
 #+END_SRC
 
 * 3 报文格式（Message Format）
+:PROPERTIES:
+:ID:       6e9516fa-cde2-4693-b1e1-e763776d3186
+:END:
 #+BEGIN_QUOTE
 All HTTP/1.1 messages consist of a start-line followed by a sequence of octets in a format similar to the Internet Message Format [RFC5322]: zero or more header fields (collectively referred to as the "headers" or the "header section"), an empty line indicating the end of the header section, and an optional message body.
 #+END_QUOTE
@@ -1398,7 +1401,7 @@ Although the =request-line= and =status-line= grammar rules require that each of
 When a server listening only for HTTP request messages, or processing what appears from the =start-line= to be an HTTP request message, receives a sequence of octets that does not match the HTTP-message grammar aside from the robustness exceptions listed above, the server *SHOULD* respond with a =400 (Bad Request)= response.
 #+END_QUOTE
 
-当一个服务端仅监听 HTTP 请求报文，或者处理 HTTP 请求报文的起始行 =start-line= 具体有什么内容，接到到一个与 HTTP 报文语法不匹配的字符（Octets）序列，除以上列出的非健壮异常以外，服务端 *应该* 响应一个 =400 (Bad Request)= 的响应报文。
+当一个服务端只针对 HTTP 请求进行监听，或者正在处理 HTTP 请求报文的起始行 =start-line= 具体有什么内容的时候，接到到一个与 HTTP 报文语法不匹配的字符（Octets）序列，除以上列出的非健壮异常以外，服务端 *应该* 响应一个 =400 (Bad Request)= 的响应报文。
 
 * 4 传输编码值（Transfer Codings）
 :PROPERTIES:
@@ -1408,7 +1411,7 @@ When a server listening only for HTTP request messages, or processing what appea
 Transfer coding names are used to indicate an encoding transformation that has been, can be, or might need to be applied to a payload body in order to ensure "safe transport" through the network. This differs from a content coding in that the transfer coding is a property of the message rather than a property of the representation that is being transferred.
 #+END_QUOTE
 
-传输编码值（Transfer Coding）是用于表示已经、能够或者可能需要应用到一个有效载荷（Payload Body）中以确保网络传输安全的一种编码转换（Encoding Transformation）。与内容编码值（Content Coding）不同的是，传输编码值是一个报文的特性，而不是一个展现方式（Representation）的特定。
+传输编码值（Transfer Coding）是用于表示已经、能够或者可能需要应用到一个有效载荷（Payload Body）中以确保网络传输安全的一种编码转换（Encoding Transformation）。与内容编码值（Content Coding）不同的是，传输编码值是一个报文的特性，而不是一个展现方式（Representation）的特性。
 
 #+HEADER: :var chunked-rule-url=123123
 #+BEGIN_SRC org
@@ -1677,7 +1680,7 @@ When a message includes a message body encoded with the chunked transfer coding 
 HTTP request message routing is determined by each client based on the target resource, the client's proxy configuration, and establishment or reuse of an inbound connection. The corresponding response routing follows the same connection chain back to the client.
 #+END_QUOTE
 
-HTTP 请求报文路由是取决于每个客户端，基于目标资源、客户端的代理配置，以及入境（Inbound）连接的创建或者复用。与之对应的响应路由跟随同样一条链路返回到客户端。
+HTTP 请求报文路由是取决于每个客户端，基于目标资源、客户端的代理配置，以及入站连接（Inbound Connection）的创建或者复用。与之对应的响应路由跟随同样一条链路返回到客户端。
 
 ** 5.1 标识目标资源 (Identifying a Target Resource)
 :PROPERTIES:
@@ -1687,22 +1690,47 @@ HTTP 请求报文路由是取决于每个客户端，基于目标资源、客户
 HTTP is used in a wide variety of applications, ranging from general-purpose computers to home appliances. In some cases, communication options are hard-coded in a client's configuration. However, most HTTP clients rely on the same resource identification mechanism and configuration techniques as general-purpose Web browsers.
 #+END_QUOTE
 
-HTTP 使用于各种各样的应用中，从通用计算机到家庭应用都有 HTTP 的身影。在某些情况下，通信选项是写死在客户端的配置里。但是，大多数 HTTP 客户端依靠
+HTTP 使用于各种各样的应用中，从通用计算机到家庭应用都有 HTTP 的身影。在某些情况下，通信选项是硬编码在客户端的配置里的，但是，大多数 HTTP 客户端依靠相同的资源识别方法以及配置技术，就像通用网页浏览器一样。
 
 #+BEGIN_QUOTE
 HTTP communication is initiated by a user agent for some purpose. The purpose is a combination of request semantics, which are defined in [RFC7231], and a target resource upon which to apply those semantics. A URI reference (Section 2.7) is typically used as an identifier for the "target resource", which a user agent would resolve to its absolute form in order to obtain the "target URI". The target URI excludes the reference's fragment component, if any, since fragment identifiers are reserved for client-side processing ([RFC3986], Section 3.5).
 #+END_QUOTE
 
-** 5.2 Connecting Inbound
+用户代理出于某种目的来初始化 HTTP 通信。该目的是结合请求语义（定义在【RFC7231】），以及一个应用这些语义的目标资源（Target Resource）。一个 URI 引用（URI Reference，章节 2.7）通常用于作为一个目标资源的定位符，用户代理可以将其解析（Resolve）为绝对形式（Absolute Form）来获得“目标 URI（Target URI）”。目标 URI 排除了 URI 引用的段落部分 =fragment= （Fragment Component），如果有的话，这是因为 =fragment= 
+标识是留给客户端处理的（见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]]）。
+
+** 5.2 连接入站 (Connecting Inbound)
+#+BEGIN_QUOTE
 Once the target URI is determined, a client needs to decide whether a network request is necessary to accomplish the desired semantics and, if so, where that request is to be directed.
+#+END_QUOTE
 
+一旦得到了目标 URI，客户端需要决定实现目标 URI 所代表的语义是否需要使用网络请求，如果是的话，请求会被导向到哪里。
+
+#+BEGIN_QUOTE
 If the client has a cache [RFC7234] and the request can be satisfied by it, then the request is usually directed there first.
+#+END_QUOTE
 
+如果客户端启用了缓存（Cache，【RFC7234】）并且满足该请求，那么该请求一般会优先导向到缓存里。
+
+#+BEGIN_QUOTE
 If the request is not satisfied by a cache, then a typical client will check its configuration to determine whether a proxy is to be used to satisfy the request. Proxy configuration is implementation-dependent, but is often based on URI prefix matching, selective authority matching, or both, and the proxy itself is usually identified by an "http" or "https" URI. If a proxy is applicable, the client connects inbound by establishing (or reusing) a connection to that proxy.
+#+END_QUOTE
 
+如果缓存没有满足该请求，那么一个典型的客户端将会检验自身的配置来决定是否需要使用代理（Proxy）来满足该请求。代理配置是依赖于实现的（Implementation-dependent），但是通常基于 URI 前缀匹配（URI Prefix Matching）、选择性的 =authority= 匹配，或者两者皆有。另外，代理自身通常是通过一个 "http" 或者 "https" URI 来标识的。如果代理是适用的，那么客户端通过建立（或复用）与该代理的连接来进行入站连接（Connect Inbound）。
+
+#+BEGIN_QUOTE
 If no proxy is applicable, a typical client will invoke a handler routine, usually specific to the target URI's scheme, to connect directly to an authority for the target resource. How that is accomplished is dependent on the target URI scheme and defined by its associated specification, similar to how this specification defines origin server access for resolution of the "http" (Section 2.7.1) and "https" (Section 2.7.2) schemes.
+#+END_QUOTE
 
+如果没有适用的代理，那么一个典型的客户端将会执行一个处理程序例程，这个例程通常是针对该目标 URI scheme 的，来连接到一个指向到目标资源的 =authority=。
+
+（译注：=authority= 是一个 URI 的组成部分，表现为一个服务的 DNS 主机名称或者是 IP 地址。如果该服务不是使用默认端口的话，=authority= 还会包含具体的端口号，其中 "http" scheme 的默认端口是 80，"https" scheme 的默认端口是 443。而 =host= 就是一个服务的 DNS 主机名称或者 IP 地址，=host= 并不包含端口号。也就是说：当使用默认端口时，=authority = host=；当不使用默认端口时，=authority = =host + port=，两者并不等同。因此，这里将 "Authority" 翻译为“主机”不太合适，索性就不翻译了。）
+
+#+BEGIN_QUOTE
 HTTP requirements regarding connection management are defined in Section 6.
+#+END_QUOTE
+
+关于连接管理的相关 HTTP 规范要求定义在[[id:62632d23-475d-4daa-8efb-3206d370573a][章节 6]]。
 
 ** 5.3 请求目标 (Request Target)
 :PROPERTIES:
@@ -1711,6 +1739,8 @@ HTTP requirements regarding connection management are defined in Section 6.
 #+BEGIN_QUOTE
 Once an inbound connection is obtained, the client sends an HTTP request message (Section 3) with a request-target derived from the target URI. There are four distinct formats for the request-target, depending on both the method being requested and whether the request is to a proxy.
 #+END_QUOTE
+
+一旦获得了一个入站连接（Inbound Connection），客户端发送一个带有一个请求目标（=request-target=）的 HTTP 请求报文（[[id:6e9516fa-cde2-4693-b1e1-e763776d3186][章节 3]]）。请求目标从目标 URI 里推导得出。依据请求方法（Request Method）以及该请求是否是一个发送到代理（Proxy）的请求来分，请求目标一共有四种不同的格式。
 
 #+BEGIN_SRC text
   request-target = origin-form
@@ -1873,7 +1903,7 @@ Since the =Host= header field acts as an application-level routing mechanism, it
 A server *MUST* respond with a =400 (Bad Request)= status code to any HTTP/1.1 request message that lacks a *Host* header field and to any request message that contains more than one Host header field or a Host header field with an invalid field-value.
 #+END_QUOTE
 
-** 5.5 Effective Request URI
+** 5.5 有效请求 URI (Effective Request URI)
 :PROPERTIES:
 :ID:       3265c21d-0d3b-4776-8e28-38278d168779
 :END:
@@ -1939,7 +1969,7 @@ Recipients of an HTTP/1.0 request that lacks a Host header field might need to u
 Once the effective request URI has been constructed, an origin server needs to decide whether or not to provide service for that URI via the connection in which the request was received. For example, the request might have been misdirected, deliberately or accidentally, such that the information within a received request-target or Host header field differs from the host or port upon which the connection has been made. If the connection is from a trusted gateway, that inconsistency might be expected; otherwise, it might indicate an attempt to bypass security filters, trick the server into delivering non-public content, or poison a cache. See Section 9 for security considerations regarding message routing.
 #+END_QUOTE
 
-** 5.6 Associating a Response to a Request
+** 5.6 将响应关联到请求 (Associating a Response to a Request)
 #+BEGIN_QUOTE
 HTTP does not include a request identifier for associating a given request message with its corresponding one or more response messages. Hence, it relies on the order of response arrival to correspond exactly to the order in which requests are made on the same connection. More than one response message per request only occurs when one or more informational responses (1xx, see Section 6.2 of [RFC7231]) precede a final response to the same request.
 #+END_QUOTE
@@ -2245,7 +2275,7 @@ A client, server, or proxy *MAY* close the transport connection at any time. For
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-A server *SHOULD* sustain persistent connections, when possible, and allow the underlying transport's flow-control mechanisms to resolve temporary overloads, rather than terminate connections with the expectation that clients will retry. The latter technique can exacerbate network congestion.
+A server *SHOULD* sustain persistent connections, when possible, and allow the underlying transport's flow-control mechanisms to resolve temporary overloads, rather than terminate connections with the expectation that clients will retry. The latter technique can exacebate network congestion.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -2286,6 +2316,9 @@ It is unknown whether the reset problem is exclusive to TCP or might also be fou
 #+END_QUOTE
 
 ** 6.7 升级 (Upgrade)
+:PROPERTIES:
+:ID:       62632d23-475d-4daa-8efb-3206d370573a
+:END:
 #+BEGIN_QUOTE
 The "Upgrade" header field is intended to provide a simple mechanism for transitioning from HTTP/1.1 to some other protocol on the same connection. A client MAY send a list of protocols in the Upgrade header field of a request to invite the server to switch to one or more of those protocols, in order of descending preference, before sending the final response. A server MAY ignore a received Upgrade header field if it wishes to continue using the current protocol on that connection. Upgrade cannot be used to insist on a protocol change.
 #+END_QUOTE
@@ -2436,8 +2469,8 @@ In contrast, the following values would be invalid, since at least one non-empty
 Appendix B shows the collected ABNF for recipients after the list constructs have been expanded.
 #+END_QUOTE
 
-* 8 INAN 考虑（IANA Considerations）
-** 8.1 Header Field Registration
+* 8 INAN 注意事项（IANA Considerations）
+** 8.1 报头域注册 (Header Field Registration)
 #+BEGIN_QUOTE
 HTTP header fields are registered within the "Message Headers" registry maintained at <http://www.iana.org/assignments/message-headers/>.
 #+END_QUOTE
@@ -2469,7 +2502,7 @@ Furthermore, the header field-name "Close" has been registered as "reserved", si
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 #+END_QUOTE
 
-** 8.2 URI Scheme Registration
+** 8.2 URI Scheme 注册 (URI Scheme Registration)
 #+BEGIN_QUOTE
 IANA maintains the registry of URI Schemes [BCP115] at <http://www.iana.org/assignments/uri-schemes/>.
 #+END_QUOTE
@@ -2483,7 +2516,7 @@ This document defines the following URI schemes, so the "Permanent URI Schemes" 
 | http       | Hypertext Transfer Prototol        | Section 2.7.1 |
 | https      | Hypertext Transfer Prototol Secure | Section 2.7.2 |
 
-** 8.3 Internet Media Type Registration
+** 8.3 互联网媒体类型注册 (Internet Media Type Registration)
 #+BEGIN_QUOTE
 IANA maintains the registry of Internet media types [BCP13] at <http://www.iana.org/assignments/media-types>.
 #+END_QUOTE
@@ -2500,39 +2533,41 @@ This document serves as the specification for the Internet media types "message/
 The message/http type can be used to enclose a single HTTP request or response message, provided that it obeys the MIME restrictions for all "message" types regarding line length and encodings.
 #+END_QUOTE
 *** 8.3.2 Internet Media Type application/http
-** 8.4 Transfer Coding Registry
+** 8.4 传输编码注册 (Transfer Coding Registry)
 :PROPERTIES:
 :ID:       DA2ABD5F-DFF0-408B-93D4-73D21E20B3CF
 :END:
 *** 8.4.1 Procedure
 *** 8.4.2 Registration
-** 8.5 Content Coding Registration
-** 8.6 Upgrade Token Registry
+** 8.5 内容编码注册 (Content Coding Registration)
+** 8.6 升级令牌注册 (Upgrade Token Registry)
 *** 8.6.1 Procedure
 *** 8.6.2 Upgrade Token Registration
-* 9 安全考虑（Security Considerations）
-** 9.1 Establishing Authority
+* 9 安全注意事项（Security Considerations）
+** 9.1 建立 Authority (Establishing Authority)
 :PROPERTIES:
 :ID:       901a19cc-8490-4c06-a515-26eb9b66c173
 :END:
-** 9.2 Risks of Intermediaries
-** 9.3 Attacks via Protocol Element Length
+** 9.2 中间人的风险 (Risks of Intermediaries)
+** 9.3 通过协议元素长度进行攻击 (Attacks via Protocol Element Length)
 :PROPERTIES:
 :ID:       131aeb62-94c8-4b26-84eb-29051aac72e2
 :END:
-** 9.4 Response Splitting
+** 9.4 响应分裂 (Response Splitting)
 :PROPERTIES:
 :ID:       BE45ADD0-37C3-4726-82F1-AD06D51FFC11
 :END:
-** 9.5 Request Smuggling
+** 9.5 请求走私 (Request Smuggling)
 :PROPERTIES:
 :ID:       04030107-7AF1-4D23-900E-75FEEB04925C
 :END:
-** 9.6 Message Integrity
-** 9.7 Message Confidentiality
-** 9.8 Privacy of Server Log Information
-* 10 感谢（Acknowledgments）
+** 9.6 报文完整性 (Message Integrity)
+** 9.7 报文保密性 (Message Confidentiality)
+** 9.8 服务器日志信息的隐私 (Privacy of Server Log Information)
+* 10 鸣谢（Acknowledgments）
 * 11 参考资料（References）
+** 11.1 规范性参考文档 (Normative References)
+** 11.2 信息性参考文档 (Informative References)
 * 附录 A：HTTP 版本历史（Appendix A. HTTP Version History）
 * 附录 B：收集的 ABNF（Appendx B. Collected ABNF）
 * 索引（Index）
