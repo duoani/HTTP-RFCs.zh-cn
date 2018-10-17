@@ -1682,7 +1682,7 @@ When a message includes a message body encoded with the chunked transfer coding 
 HTTP request message routing is determined by each client based on the target resource, the client's proxy configuration, and establishment or reuse of an inbound connection. The corresponding response routing follows the same connection chain back to the client.
 #+END_QUOTE
 
-HTTP 请求报文路由是取决于每个客户端，基于目标资源、客户端的代理配置，以及入站连接（Inbound Connection）的创建或者复用。与之对应的响应路由跟随同样一条链路返回到客户端。
+HTTP 请求报文路由是取决于每个客户端，基于目标资源、客户端的代理配置，以及入站连接（Inbound Connection）的创建或者复用。与之对应的响应路由跟随同样一条链路反向回到客户端。
 
 ** 5.1 标识目标资源 (Identifying a Target Resource)
 :PROPERTIES:
@@ -1698,15 +1698,15 @@ HTTP 使用于各种各样的应用中，从通用计算机到家庭应用都有
 HTTP communication is initiated by a user agent for some purpose. The purpose is a combination of request semantics, which are defined in [RFC7231], and a target resource upon which to apply those semantics. A URI reference (Section 2.7) is typically used as an identifier for the "target resource", which a user agent would resolve to its absolute form in order to obtain the "target URI". The target URI excludes the reference's fragment component, if any, since fragment identifiers are reserved for client-side processing ([RFC3986], Section 3.5).
 #+END_QUOTE
 
-用户代理出于某种目的来初始化 HTTP 通信。该目的是结合请求语义（定义在【RFC7231】），以及一个应用这些语义的目标资源（Target Resource）。一个 URI 引用（URI Reference，章节 2.7）通常用于作为一个目标资源的定位符，用户代理可以将其解析（Resolve）为绝对形式（Absolute Form）来获得“目标 URI（Target URI）”。目标 URI 排除了 URI 引用的段落部分 =fragment= （Fragment Component），如果有的话，这是因为 =fragment= 
-标识是留给客户端处理的（见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]]）。
+用户代理出于某种目的来初始化 HTTP 通信。该目的是由请求语义（定义在【RFC7231】），以及一个应用这些语义的目标资源（Target Resource）两者结合而成的。一个 URI 引用（URI Reference，章节 2.7）通常用于作为一个目标资源的定位符，用户代理可以将其解析（Resolve）为绝对形式（Absolute Form）来获得“目标 URI（Target URI）”。如果 URI 引用里存在段落组件 =fragment= （Fragment Component）的话，目标 URI 会排除掉 =fragment=，这是因为 =fragment= 
+标识是保留给客户端处理的（见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]]）。
 
 ** 5.2 连接入站 (Connecting Inbound)
 #+BEGIN_QUOTE
 Once the target URI is determined, a client needs to decide whether a network request is necessary to accomplish the desired semantics and, if so, where that request is to be directed.
 #+END_QUOTE
 
-一旦得到了目标 URI，客户端需要决定实现目标 URI 所代表的语义是否需要使用网络请求，如果是的话，请求会被导向到哪里。
+一旦确定了目标 URI，客户端需要决定要想实现目标 URI 所代表的语义是否需要使用网络请求，如果是的话，请求会被导向到哪里。
 
 #+BEGIN_QUOTE
 If the client has a cache [RFC7234] and the request can be satisfied by it, then the request is usually directed there first.
@@ -1726,7 +1726,7 @@ If no proxy is applicable, a typical client will invoke a handler routine, usual
 
 如果没有适用的代理，那么一个典型的客户端将会执行一个处理程序例程，这个例程通常是针对该目标 URI scheme 的，来连接到一个指向到目标资源的 =authority=。
 
-（译注：=authority= 是一个 URI 的组成部分，表现为一个服务的 DNS 主机名称或者是 IP 地址。如果该服务不是使用默认端口的话，=authority= 还会包含具体的端口号，其中 "http" scheme 的默认端口是 80，"https" scheme 的默认端口是 443。而 =host= 就是一个服务的 DNS 主机名称或者 IP 地址，=host= 并不包含端口号。也就是说：当使用默认端口时，=authority = host=；当不使用默认端口时，=authority = =host + port=，两者并不等同。因此，这里将 "Authority" 翻译为“主机”不太合适，索性就不翻译了。）
+（译注：=authority= 是一个 URI 的组成部分，表现为一个服务的 DNS 主机名称或者是 IP 地址。如果该服务不是使用默认端口的话，=authority= 还会包含具体的端口号，其中 "http" scheme 的默认端口是 80，"https" scheme 的默认端口是 443。而 =host= 就是一个服务的 DNS 主机名称或者 IP 地址，=host= 并不包含端口号。也就是说：当使用默认端口时，=authority = host=；当不使用默认端口时，=authority = host + port=，两者并不等同。因此，这里将 "Authority" 翻译为“主机”不太合适，索性就不翻译了。）
 
 #+BEGIN_QUOTE
 HTTP requirements regarding connection management are defined in Section 6.
@@ -1742,7 +1742,7 @@ HTTP requirements regarding connection management are defined in Section 6.
 Once an inbound connection is obtained, the client sends an HTTP request message (Section 3) with a request-target derived from the target URI. There are four distinct formats for the request-target, depending on both the method being requested and whether the request is to a proxy.
 #+END_QUOTE
 
-一旦获得了一个入站连接（Inbound Connection），客户端发送一个带有一个请求目标（=request-target=）的 HTTP 请求报文（[[id:6e9516fa-cde2-4693-b1e1-e763776d3186][章节 3]]）。请求目标从目标 URI 里推导得出。依据请求方法（Request Method）以及该请求是否是一个发送到代理（Proxy）的请求来分，请求目标一共有四种不同的格式。
+一旦获得了一个入站连接（Inbound Connection），客户端会发送一个带有一个请求目标（=request-target=）的 HTTP 请求报文（[[id:6e9516fa-cde2-4693-b1e1-e763776d3186][章节 3]]）。请求目标从目标 URI 里推导得出。依据请求方法（Request Method）以及该请求是否是一个发送到代理（Proxy）的请求来分，请求目标一共有四种不同的格式。
 
 #+BEGIN_SRC text
   request-target = origin-form
@@ -1756,7 +1756,7 @@ Once an inbound connection is obtained, the client sends an HTTP request message
 The most common form of request-target is the =origin-form=.
 #+END_QUOTE
 
-是请求目标最常见的形式是原始形式（=origin-form=）。
+请求目标最常见的形式是原始形式（=origin-form=）。
 
 #+BEGIN_SRC text
   origin-form    = absolute-path [ "?" query ]
@@ -1876,7 +1876,7 @@ OPTIONS * HTTP/1.1
 If a proxy receives an OPTIONS request with an absolute-form of request-target in which the URI has an empty path and no query component, then the last proxy on the request chain *MUST* send a request-target of "*" when it forwards the request to the indicated origin server.
 #+END_QUOTE
 
-如果一个代理（Proxy）接收到一个 OPTIONS 请求，该请求的请求目标为绝对形式，URI 的路径 =path= 为空并且没有 =query= 组件，那么，请求链路中的最后一个代理 *必须* 发送一个 "*" 的请求目标，当它将请求转发到指定的源服务器的时候。 
+如果一个代理（Proxy）接收到一个 OPTIONS 请求，该请求的请求目标为绝对形式，URI 的路径 =path= 为空并且没有 =query= 组件，那么，请求链路中的最后一个代理 *必须* 发送一个 "*" 作为请求目标，当它将请求转发到指定的源服务器的时候。 
 
 #+BEGIN_QUOTE
 For example, the request
