@@ -1913,21 +1913,29 @@ after connecting to port 8001 of host "www.example.org".
 The "Host" header field in a request provides the host and port information from the target URI, enabling the origin server to distinguish among resources while servicing requests for multiple host names on a single IP address.
 #+END_QUOTE
 
+在一个请求报文中的 =Host= 报头域提供了来自目标 URI 的主机（Host）以及端口（Port）信息，当源服务器对同一个 IP 地址使用多个不同主机名称来处理众多请求时，=Host= 能够让源服务器可以区分该请求所对应的资源。
+
 #+BEGIN_SRC text
   Host = uri-host [ ":" port ] ; Section 2.7.1
 #+END_SRC
 
 #+BEGIN_QUOTE
-A client *MUST* send a =Host= header field in all HTTP/1.1 request messages. If the target URI includes an authority component, then a client MUST send a field-value for Host that is identical to that authority component, excluding any userinfo subcomponent and its "@" delimiter (Section 2.7.1). If the authority component is missing or undefined for the target URI, then a client MUST send a Host header field with an empty field-value.
+A client *MUST* send a =Host= header field in all HTTP/1.1 request messages. If the target URI includes an =authority= component, then a client *MUST* send a field-value for =Host= that is identical to that =authority= component, excluding any =userinfo= subcomponent and its "@" delimiter (Section 2.7.1). If the =authority= component is missing or undefined for the target URI, then a client *MUST* send a =Host= header field with an empty field-value.
 #+END_QUOTE
 
+客户端 *必须* 在其发送的所有 HTTP/1.1 请求报文里包含一个 =Host= 报头域。如果目标 URI 包含一个 =authority= 组件，那么客户端 *必须* 在其发送的请求报文里将 =Host= 的域值指定为 =authority= 组件的内容，同时，排除掉 =authority= 内任何 =userinfo= 子组件以及它的 "@" 分隔符（章节 2.7.1）。如果目标 URI 里缺少或未定义 =authority= 组件，那么客户端 *必须* 在其发送的请求报文里包含一个域值为空的 =Host= 报头域。
+
 #+BEGIN_QUOTE
-Since the =Host= field-value is critical information for handling a request, a user agent *SHOULD* generate Host as the first header field following the request-line.
+Since the =Host= field-value is critical information for handling a request, a user agent *SHOULD* generate =Host= as the first header field following the request-line.
 #+END_QUOTE
+
+因为对于如何处理一个请求报文来说，=Host= 报头域的内容是一个关键信息，所以用户代理 *应该* 将 =Host= 作为报头的第一个报头域，紧随于请求行（Request Line）之后。
 
 #+BEGIN_QUOTE
 For example, a GET request to the origin server for <http://www.example.org/pub/WWW/> would begin with:
 #+END_QUOTE
+
+例如，一个发送到源服务器的 GET 请求 <http://www.example.org/pub/www/>，其请求报文的开头为：
 
 #+BEGIN_EXAMPLE
   GET /pub/WWW/ HTTP/1.1
@@ -1935,20 +1943,30 @@ For example, a GET request to the origin server for <http://www.example.org/pub/
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-A client MUST send a =Host= header field in an HTTP/1.1 request even if the request-target is in the absolute-form, since this allows the Host information to be forwarded through ancient HTTP/1.0 proxies that might not have implemented Host.
+A client *MUST* send a =Host= header field in an HTTP/1.1 request even if the request-target is in the absolute-form, since this allows the =Host= information to be forwarded through ancient HTTP/1.0 proxies that might not have implemented =Host=.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-When a proxy receives a request with an =absolute-form= of request-target, the proxy *MUST* ignore the received =Host= header field (if any) and instead replace it with the host information of the request-target. A proxy that forwards such a request MUST generate a new Host field-value based on the received request-target rather than forward the received Host field-value.
-#+END_QUOTE
+客户端 *必须* 在其发送的 HTTP/1.1 请求报文里包含一个 =Host= 报头域，即使是绝对形式（=absolute-form=）的请求目标，这是因为这样做使得该 =Host= 的信息能够穿透那些老旧的可能未实现 =Host= 的 HTTP/1.0 的代理而转发出去。
+
+（译注：=Host= 报头域是自 HTTP/1.1 开始引入的，因此对于 HTTP/1.0 的实现而言，它就是那种“未识别的”报头域。按照 HTTP/1.0 规范【RFC1945】，未识别的报头域等同于实体头域，见[[https://tools.ietf.org/html/rfc1945#section-4.3][【RFC1945】章节 4.3]]，而对于未识别的实体头域，接收端应该忽略，代理应该转发，见[[https://tools.ietf.org/html/rfc1945#section-7.1][【RFC1945】章节 7.1]]。）
 
 #+BEGIN_QUOTE
-Since the =Host= header field acts as an application-level routing mechanism, it is a frequent target for malware seeking to poison a shared cache or redirect a request to an unintended server. An interception proxy is particularly vulnerable if it relies on the Host field-value for redirecting requests to internal servers, or for use as a cache key in a shared cache, without first verifying that the intercepted connection is targeting a valid IP address for that host.
+When a proxy receives a request with an =absolute-form= of request-target, the proxy *MUST* ignore the received =Host= header field (if any) and instead replace it with the host information of the request-target. A proxy that forwards such a request *MUST* generate a new =Host= field-value based on the received request-target rather than forward the received =Host= field-value.
 #+END_QUOTE
 
+当一个代理接收到一个带有以绝对形式表示的请求目标的请求报文时，代理 *必须* 忽略其接收到的 =Host= 报头域（如果有的话），并且将其替换为请求目标的主机信息。转发这种请求的代理 *必须* 基于其接收到的请求目标来生成一个新的 =Host= 域值，而不是直接转发原本的 =Host= 域值。
+
 #+BEGIN_QUOTE
-A server *MUST* respond with a =400 (Bad Request)= status code to any HTTP/1.1 request message that lacks a *Host* header field and to any request message that contains more than one Host header field or a Host header field with an invalid field-value.
+Since the =Host= header field acts as an application-level routing mechanism, it is a frequent target for malware seeking to poison a shared cache or redirect a request to an unintended server. An interception proxy is particularly vulnerable if it relies on the =Host= field-value for redirecting requests to internal servers, or for use as a cache key in a shared cache, without first verifying that the intercepted connection is targeting a valid IP address for that host.
 #+END_QUOTE
+
+因为 =Host= 报头域充当一个应用层的路由机制，它是对于恶意软件寻求攻击的一个热点目标，例如，[[https://httpwg.org/specs/rfc7234.html#security.considerations][毒害共享缓存]]，或者暗中将请求重定向其他服务器等。在没有先验证这个被拦截过的连接（Intercepted Connection）是否指向该主机的一个合法的 IP 地址的情况下，如果一个中间人代理服务器依赖 =Host= 的域值来将请求重定向到内部服务器（Internal Server），或者将 =Host= 的域值用于作为一个共享缓存的键（Key）来使用，那么它会特别容易受到攻击。
+
+#+BEGIN_QUOTE
+A server *MUST* respond with a =400 (Bad Request)= status code to any HTTP/1.1 request message that lacks a =Host= header field and to any request message that contains more than one =Host= header field or a =Host= header field with an invalid field-value.
+#+END_QUOTE
+
+如果任何 HTTP/1.1 的请求报文缺少一个 =Host= 报头域，或者包含超过一个以上 =Host= 报头域，或者 =Host= 的域值不合法，那么，服务器 *必须* 对这种请求响应一个带有 =400 (Bad Request)= 状态码的响应报文。
 
 ** 5.5 有效请求 URI (Effective Request URI)
 :PROPERTIES:
