@@ -1698,7 +1698,7 @@ HTTP 使用于各种各样的应用中，从通用计算机到家庭应用都有
 HTTP communication is initiated by a user agent for some purpose. The purpose is a combination of request semantics, which are defined in [RFC7231], and a target resource upon which to apply those semantics. A URI reference (Section 2.7) is typically used as an identifier for the "target resource", which a user agent would resolve to its absolute form in order to obtain the "target URI". The target URI excludes the reference's fragment component, if any, since fragment identifiers are reserved for client-side processing ([RFC3986], Section 3.5).
 #+END_QUOTE
 
-用户代理出于某种目的来初始化 HTTP 通信。该目的是由请求语义（定义在【RFC7231】），以及一个应用这些语义的目标资源（Target Resource）两者结合而成的。一个 URI 引用（URI Reference，章节 2.7）通常用于作为一个目标资源的定位符，用户代理可以将其解析（Resolve）为绝对形式（Absolute Form）来获得“目标 URI（Target URI）”。如果 URI 引用里存在段落组件 =fragment= （Fragment Component）的话，目标 URI 会排除掉 =fragment=，这是因为 =fragment= 
+用户代理出于某种目的来初始化 HTTP 通信。该目的是由请求语义（定义在【RFC7231】），以及一个应用这些语义的目标资源（Target Resource）两者结合而成的。一个 *URI 引用（URI Reference，章节 2.7）* 通常用于作为一个目标资源的定位符，用户代理可以将其解析（Resolve）为绝对形式（Absolute Form）来获得“*目标 URI（Target URI）*”。如果 URI 引用里存在段落组件 =fragment= （Fragment Component）的话，目标 URI 会排除掉 =fragment=，这是因为 =fragment= 
 标识是保留给客户端处理的（见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]]）。
 
 ** 5.2 连接入站 (Connecting Inbound)
@@ -1976,25 +1976,41 @@ A server *MUST* respond with a =400 (Bad Request)= status code to any HTTP/1.1 r
 Since the request-target often contains only part of the user agent's target URI, a server reconstructs the intended target as an "effective request URI" to properly service the request. This reconstruction involves both the server's local configuration and information communicated in the request-target, Host header field, and connection context.
 #+END_QUOTE
 
+因为请求目标（Request Target）通常仅包含用户代理的目标 URI（Target URI）的一部分（见[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][章节 5.3]]），服务器需要重建（Reconstruct）该 URI 的预定目标来正确处理请求，这种经重建的 URI 称之为 *有效请求 URI（Effective Request URI）*。重建的过程涉及到服务器的本地配置信息，以及相关联的请求目标、=Host= 报头域和连接的上下文（Connection Context）。
+
 #+BEGIN_QUOTE
 For a user agent, the effective request URI is the target URI.
 #+END_QUOTE
 
+对于用户代理来说，有效请求 URI 就是[[id:9fd57271-c172-4fc0-8678-fa427df02d64][目标 URI（Target URI）]]。
+
 #+BEGIN_QUOTE
-If the request-target is in absolute-form, the effective request URI is the same as the request-target. Otherwise, the effective request URI is constructed as follows:
+If the request-target is in =absolute-form=, the effective request URI is the same as the request-target. Otherwise, the effective request URI is constructed as follows:
 
-        If the server's configuration (or outbound gateway) provides a fixed URI scheme, that scheme is used for the effective request URI. Otherwise, if the request is received over a TLS-secured TCP connection, the effective request URI's scheme is "https"; if not, the scheme is "http".
+        If the server's configuration (or outbound gateway) provides a fixed URI =scheme=, that =scheme= is used for the effective request URI. Otherwise, if the request is received over a TLS-secured TCP connection, the effective request URI's =scheme= is "https"; if not, the scheme is "http".
 
-        If the server's configuration (or outbound gateway) provides a fixed URI authority component, that authority is used for the effective request URI. If not, then if the request-target is in authority-form, the effective request URI's authority component is the same as the request-target. If not, then if a Host header field is supplied with a non-empty field-value, the authority component is the same as the Host field-value. Otherwise, the authority component is assigned the default name configured for the server and, if the connection's incoming TCP port number differs from the default port for the effective request URI's scheme, then a colon (":") and the incoming port number (in decimal form) are appended to the authority component.
+        If the server's configuration (or outbound gateway) provides a fixed URI =authority= component, that =authority= is used for the effective request URI. If not, then if the request-target is in =authority-form=, the effective request URI's =authority= component is the same as the request-target. If not, then if a =Host= header field is supplied with a non-empty field-value, the =authority= component is the same as the =Host= field-value. Otherwise, the =authority= component is assigned the default name configured for the server and, if the connection's incoming TCP port number differs from the default port for the effective request URI's =scheme=, then a colon (":") and the incoming port number (in decimal form) are appended to the =authority= component.
 
-        If the request-target is in authority-form or asterisk-form, the effective request URI's combined path and query component is empty. Otherwise, the combined path and query component is the same as the request-target.
+        If the request-target is in =authority-form= or =asterisk-form=, the effective request URI's combined =path= and =query= component is empty. Otherwise, the combined =path= and =query= component is the same as the request-target.
 
-        The components of the effective request URI, once determined as above, can be combined into absolute-URI form by concatenating the scheme, "://", authority, and combined path and query component.
+        The components of the effective request URI, once determined as above, can be combined into =absolute-URI= form by concatenating the =scheme=, "://", =authority=, and combined =path= and =query= component.
 #+END_QUOTE
+
+如果请求目标是绝对形式（=absolute-form=），那么有效请求 URI 与[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][请求目标（Request Target）]]相同。否则，有效请求 URI 会使用以下方式来重建：
+
+- 如果服务器的配置信息（或者出站网关）提供了一个固定的 URI =scheme=，那么，这个 URI =scheme= 会用于参与重建有效请求 URI。没有提供固定的 URI =scheme=，如果该请求是在一个 TLS 安全的（TLS-secured）的 TCP 连接，那么有效请求 URI 的 =scheme= 为 "https"，否则，scheme 为 "http"。
+  
+- 如果服务器的配置信息（或者出站网关）提供了一个固定的 URI =authority= 组件，那么，这个 =authority= 会用于参与重建有效请求 URI。如果没有固定的 URI =authority=，并且如果请求目标是 =authority-form= 形式，那么有效请求 URI 的 =authority= 组件与请求目标相同，如果请求目标不是 =authority-form= 形式，并且如果 =Host= 报头域提供了一个非空的域值，那么有效请求 URI 的 =authority= 组件与 =Host= 的域值相同。否则，有效请求 URI 的 =authority= 组件会被赋值为服务器所配置的默认名称，并且如果连接的 TCP 输入端口号不是有效请求 URI 的 =scheme= 所对应的默认端口号，那么需要在有效请求 URI 的 =authority= 组件后附加一个冒号（":"）以及输入端口号（十进制形式）。
+
+- 如果请求目标是 =authority-form= 或者 =asterisk-form=，那么有效请求 URI 的 =path= 和 =query= 组件为空。否则，=path= 和 =query= 组件与请求目标所对应的 =path= 和 =query= 相同。
+
+- 有效请求 URI 的各个组件一旦在上述步骤中确定了，就能够通过依次连结 =scheme=、"://"、=authority=、以及 =path= 和 =query=，组合为绝对 URI（=absolute-form=）形式。
 
 #+BEGIN_QUOTE
 Example 1: the following message received over an insecure TCP connection
 #+END_QUOTE
+
+例一：以下报文接收于一个不安全的 TCP 连接中：
 
 #+BEGIN_EXAMPLE
   GET /pub/WWW/TheProject.html HTTP/1.1
@@ -2005,6 +2021,8 @@ Example 1: the following message received over an insecure TCP connection
 has an effective request URI of
 #+END_QUOTE
 
+它的有效请求 URI 是：
+
 #+BEGIN_EXAMPLE
   http://www.example.org:8080/pub/WWW/TheProject.html
 #+END_EXAMPLE
@@ -2012,6 +2030,8 @@ has an effective request URI of
 #+BEGIN_QUOTE
 Example 2: the following message received over a TLS-secured TCP connection
 #+END_QUOTE
+
+例二：以下报文接收于一个 TLS 安全的 TCP 连接中：
 
 #+BEGIN_EXAMPLE
   OPTIONS * HTTP/1.1
@@ -2022,17 +2042,23 @@ Example 2: the following message received over a TLS-secured TCP connection
 has an effective request URI of
 #+END_QUOTE
 
-#+BEGIN_QUOTE
+它的有效请求 URI 是：
+
+#+BEGIN_EXAMPLE
 https://www.example.org
-#+END_QUOTE
+#+END_EXAMPLE
 
 #+BEGIN_QUOTE
-Recipients of an HTTP/1.0 request that lacks a Host header field might need to use heuristics (e.g., examination of the URI path for something unique to a particular host) in order to guess the effective request URI's authority component.
+Recipients of an HTTP/1.0 request that lacks a =Host= header field might need to use heuristics (e.g., examination of the URI path for something unique to a particular host) in order to guess the effective request URI's =authority= component.
 #+END_QUOTE
 
+一个 HTTP/1.0 接收端，可能需要使用启发式（Heuristics，例如，测试 URI 的路径是否专属于某个具体主机）来猜测有效请求 URI 的 =authority= 组件。
+
 #+BEGIN_QUOTE
-Once the effective request URI has been constructed, an origin server needs to decide whether or not to provide service for that URI via the connection in which the request was received. For example, the request might have been misdirected, deliberately or accidentally, such that the information within a received request-target or Host header field differs from the host or port upon which the connection has been made. If the connection is from a trusted gateway, that inconsistency might be expected; otherwise, it might indicate an attempt to bypass security filters, trick the server into delivering non-public content, or poison a cache. See Section 9 for security considerations regarding message routing.
+Once the effective request URI has been constructed, an origin server needs to decide whether or not to provide service for that URI via the connection in which the request was received. For example, the request might have been misdirected, deliberately or accidentally, such that the information within a received request-target or =Host= header field differs from the host or port upon which the connection has been made. If the connection is from a trusted gateway, that inconsistency might be expected; otherwise, it might indicate an attempt to bypass security filters, trick the server into delivering non-public content, or poison a cache. See Section 9 for security considerations regarding message routing.
 #+END_QUOTE
+
+一旦重建好了有效请求 URI，源服务器需要确定是否对这个 URI 提供服务，通过接收到该请求的连接。例如，该请求可能被误导，刻意或者意外发送到当前服务器中，以致该请求报文的请求目标或者 =Host= 报头域内的信息与该请求报文所对应的发送端所发起的连接（Connection）的信息（主机与端口）不一致。如果该连接是来自一个可信任的网关，那么这种不一致性可能还可以接受，否则，这可能代表一个企图越过安全过滤机制，欺骗服务去分发不公开的内容，或者毒害缓存。关于报文路由的安全注意事项见[[id:aa52d5bd-e2f6-40db-826d-991544eeacb9][章节 9]]。
 
 ** 5.6 将响应关联到请求 (Associating a Response to a Request)
 #+BEGIN_QUOTE
@@ -2612,6 +2638,9 @@ The message/http type can be used to enclose a single HTTP request or response m
 *** 8.6.1 Procedure
 *** 8.6.2 Upgrade Token Registration
 * 9 安全注意事项（Security Considerations）
+:PROPERTIES:
+:ID:       aa52d5bd-e2f6-40db-826d-991544eeacb9
+:END:
 ** 9.1 建立 Authority (Establishing Authority)
 :PROPERTIES:
 :ID:       901a19cc-8490-4c06-a515-26eb9b66c173
