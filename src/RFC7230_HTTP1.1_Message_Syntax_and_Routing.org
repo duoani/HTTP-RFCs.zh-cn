@@ -2065,9 +2065,13 @@ Once the effective request URI has been constructed, an origin server needs to d
 HTTP does not include a request identifier for associating a given request message with its corresponding one or more response messages. Hence, it relies on the order of response arrival to correspond exactly to the order in which requests are made on the same connection. More than one response message per request only occurs when one or more informational responses (1xx, see Section 6.2 of [RFC7231]) precede a final response to the same request.
 #+END_QUOTE
 
+HTTP 并不包含一个请求标记，用于关联一个给定请求报文和与之对应的一个或多个响应报文。因此，HTTP 依靠响应报文到达的顺序来一一对应在同一个连接中生成请求的顺序。出现响应报文数与请求报文数的比值大于 1 的情况仅当对该请求发送最终响应（Final Response，任何非 1xx 状态码的响应报文）之前，对其发送了一个或多个消息性响应报文（Informational Responses，状态码为 1xx 的响应报文，见[[https://tools.ietf.org/html/rfc7231#section-6.2][【RFC7231】章节 6.2]]）。
+
 #+BEGIN_QUOTE
-A client that has more than one outstanding request on a connection MUST maintain a list of outstanding requests in the order sent and MUST associate each received response message on that connection to the highest ordered request that has not yet received a final (non-1xx) response.
+A client that has more than one outstanding request on a connection *MUST* maintain a list of outstanding requests in the order sent and *MUST* associate each received response message on that connection to the highest ordered request that has not yet received a final (non-1xx) response.
 #+END_QUOTE
+
+TODO 在一个连接中，客户端有超过一个未完成的请求（Outstanding Request），*必须* 以发送的顺序维护一个未完成请求的列表，并且 *必须* 关联每一个在该连接中接收到的响应报文到最高级的未接收到一个最终响应的请求。
 
 ** 5.7 报文转发 (Message Forwarding)
 :PROPERTIES:
