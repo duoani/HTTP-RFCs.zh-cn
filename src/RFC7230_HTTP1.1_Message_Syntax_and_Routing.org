@@ -1758,6 +1758,9 @@ Once an inbound connection is obtained, the client sends an HTTP request message
 #+END_SRC
 
 *** 5.3.1 原始形式 (origin-form)
+:PROPERTIES:
+:ID:       c331de19-3207-4e67-867e-ebc89297147f
+:END:
 #+BEGIN_QUOTE
 The most common form of request-target is the =origin-form=.
 #+END_QUOTE
@@ -1857,7 +1860,10 @@ When making a CONNECT request to establish a tunnel through one or more proxies,
 CONNECT www.example.com:80 HTTP/1.1
 #+END_EXAMPLE
 
-*** 5.3.4 星号形式 (asterisk-form)
+5.3.4 星号形式 (asterisk-form)
+:PROPERTIES:
+:ID:       cc6e89fa-287d-4564-b6e3-8c2cfc26d08a
+:END:
 #+BEGIN_QUOTE
 The asterisk-form of request-target is only used for a server-wide OPTIONS request (Section 4.3.7 of [RFC7231]).
 #+END_QUOTE
@@ -2087,7 +2093,8 @@ TODO 在一个连接中，客户端有超过一个未完成的请求（Outstandi
 As described in Section 2.3, intermediaries can serve a variety of roles in the processing of HTTP requests and responses. Some intermediaries are used to improve performance or availability. Others are used for access control or to filter content. Since an HTTP stream has characteristics similar to a pipe-and-filter architecture, there are no inherent limits to the extent an intermediary can enhance (or interfere) with either direction of the stream.
 #+END_QUOTE
 
-TODO 正如[[id:e2d9bed8-d6ca-4b5d-ab4a-6b2b2576393e][章节 2.3]] 所述，中间人能够在处理 HTTP 请求和响应中饰演多种角色。某些中间人是用于提升性能或可用性，另外一些用于访问控制（Access Control）或者内容过滤（Filter Content）。因为一个 HTTP 流具有类似于一个[[https://en.wikipedia.org/wiki/Pipeline_(software)][管道架构（Pipe-and-Filter Architecture）]]的性质，因此，对中间人能够提升（或干扰）流的各个方向的程序没有固定限制。
+正如[[id:e2d9bed8-d6ca-4b5d-ab4a-6b2b2576393e][章节 2.3]] 所述，中间人能够在处理 HTTP 请求和响应中饰演多种角色。某些中间人是用于提升性能或可用性，另外一些用于访问控制（Access Control）或者内容过滤（Filter Content）。因为一个 HTTP 流具有类似于一个[[https://en.wikipedia.org/wiki/Pipeline_(software)][管道架构（Pipe-and-Filter Architecture）]]的性质，因此，中间人对流的任何方向的提升或抑制的程度没有任何固定限制。
+。
 
 #+BEGIN_QUOTE
 An intermediary not acting as a tunnel *MUST* implement the =Connection= header field, as specified in Section 6.1, and exclude fields from being forwarded that are only intended for the incoming connection.
@@ -2197,29 +2204,43 @@ A sender *SHOULD NOT* combine multiple entries unless they are all under the sam
 Some intermediaries include features for transforming messages and their payloads. A proxy might, for example, convert between image formats in order to save cache space or to reduce the amount of traffic on a slow link. However, operational problems might occur when these transformations are applied to payloads intended for critical applications, such as medical imaging or scientific data analysis, particularly when integrity checks or digital signatures are used to ensure that the payload received is identical to the original.
 #+END_QUOTE
 
+革些中间人包含转换报文及其有效载荷（Payload）的功能。代理可能出于节省缓存的存储空间或者在慢速连接中减少流量的总量的目的对报文进行转换，例如，图片格式的转换。但是，当这些转换被应用到提供给关键应用程序（例如医学图像或者科学数据分析）使用的有效载荷上的时候，特别是当使用完整性检验或者数字签名来保证所接收到的有效载荷与原始无异的时候，可能会引发业务上的问题。
+
 #+BEGIN_QUOTE
 An HTTP-to-HTTP proxy is called a "transforming proxy" if it is designed or configured to modify messages in a semantically meaningful way (i.e., modifications, beyond those required by normal HTTP processing, that change the message in a way that would be significant to the original sender or potentially significant to downstream recipients). For example, a transforming proxy might be acting as a shared annotation server (modifying responses to include references to a local annotation database), a malware filter, a format transcoder, or a privacy filter. Such transformations are presumed to be desired by whichever client (or client organization) selected the proxy.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-If a proxy receives a request-target with a host name that is not a fully qualified domain name, it MAY add its own domain to the host name it received when forwarding the request. A proxy MUST NOT change the host name if the request-target contains a fully qualified domain name.
-#+END_QUOTE
+被设计或配置用来通过一种语义上有意义的方式来修改报文（也就是说，超出正常 HTTP 的处理要求的额外更改，以一种可能对于原始发送端有意义或者对于下游接收端有潜在意义的方式改变了报文）的一种 HTTP-to-HTTP 代理，称之为“转换代理（Transforming Proxy）”。例如，转换代理可以充当一个[[https://en.wikipedia.org/wiki/Web_annotation][共享注释服务器]]（通过修改响应报文，让其包含一个本地注释数据库的引用）、一个恶意软件过滤器、一个格式转码器，或者一个隐私过滤器。无论客户端选择哪一种代理，这种转换都被认为是该代理所期望的。
 
 #+BEGIN_QUOTE
-A proxy *MUST NOT* modify the "absolute-path" and "query" parts of the received request-target when forwarding it to the next inbound server, except as noted above to replace an empty path with "/" or "*".
+If a proxy receives a =request-target= with a host name that is not a [[https://en.wikipedia.org/wiki/Fully_qualified_domain_name][fully qualified domain name]], it *MAY* add its own domain to the host name it received when forwarding the request. A proxy *MUST NOT* change the host name if the =request-target= contains a fully qualified domain name.
 #+END_QUOTE
+
+如果代理接收到一个带有一个主机名称不是一个[[https://zh.wikipedia.org/wiki/%25E5%25AE%258C%25E6%2595%25B4%25E7%25B6%25B2%25E5%259F%259F%25E5%2590%258D%25E7%25A8%25B1][完全限定域名（Fully Qualified Domain Name）]]的 =request-target=，它 *可以* 在转发该请求报文的时候添加自已的域名到主机名称上。如果该 =request-target= 包含了一个完全限定域名，那么代理 *禁止* 改变主机名称。
+
+#+BEGIN_QUOTE
+A proxy *MUST NOT* modify the "absolute-path" and "query" parts of the received =request-target= when forwarding it to the next inbound server, except as noted above to replace an empty path with "/" or "*".
+#+END_QUOTE
+
+当代理把接收到的 =request-target= 转发到其后的入站服务器（Inbound Server）的时候，除了上述提及到的使用 "/" 或者 "*" 来替换掉一个空的 =path= 以外（见[[id:c331de19-3207-4e67-867e-ebc89297147f][章节 5.3.1]] 以及[[id:cc6e89fa-287d-4564-b6e3-8c2cfc26d08a][章节 5.3.4]]），代理 *禁止* 修改该 =request-target= 中的 =absolute-path= 以及 =query= 部分。
 
 #+BEGIN_QUOTE
 A proxy *MAY* modify the message body through application or removal of a transfer coding (Section 4).
 #+END_QUOTE
 
+代理 *可以* 通过应用或移除一个传输编码值（Transfer Coding，[[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][章节 4]]）来修改报文正文。
+
 #+BEGIN_QUOTE
 A proxy *MUST NOT* transform the payload (Section 3.3 of [RFC7231]) of a message that contains a no-transform cache-control directive (Section 5.2 of [RFC7234]).
 #+END_QUOTE
 
+代理 *禁止* 对包含有 =no-transform= 缓存控制指令（Cache-Control directive，[[https://tools.ietf.org/html/rfc7234#section-5.2][【RFC7234】章节 5.2]]）的报文中的有效载荷（Payload，[[https://tools.ietf.org/html/rfc7231#section-3.3][【RFC7231】章节 3.3]]）进行转换。
+
 #+BEGIN_QUOTE
-A proxy *MAY* transform the payload of a message that does not contain a no-transform cache-control directive. A proxy that transforms a payload MUST add a Warning header field with the warn-code of 214 ("Transformation Applied") if one is not already in the message (see Section 5.5 of [RFC7234]). A proxy that transforms the payload of a 200 (OK) response can further inform downstream recipients that a transformation has been applied by changing the response status code to 203 (Non-Authoritative Information) (Section 6.3.4 of [RFC7231]).
+A proxy *MAY* transform the payload of a message that does not contain a =no-transform= cache-control directive. A proxy that transforms a payload *MUST* add a =Warning= header field with the warn-code of =214 ("Transformation Applied")= if one is not already in the message (see Section 5.5 of [RFC7234]). A proxy that transforms the payload of a =200 (OK)= response can further inform downstream recipients that a transformation has been applied by changing the response status code to =203 (Non-Authoritative Information)= (Section 6.3.4 of [RFC7231]).
 #+END_QUOTE
+
+代理 *可以* 对并不包含有 =no-transform= 缓存控制指令的报文中的有效载荷进行转换。代理对有效载荷进行转换的时候，如果该报文未包含一个警告码为 =214 ("Transformation Applied")= 的 =Warning= 报头域的话，代理 *必须* 添加上带有该警告码的 =Warning= 报头域（见[[https://tools.ietf.org/html/rfc7234#section-5.5][【RFC7234】章节 5.5]]）。代理在转换一个响应状态码为 =200 (OK)= 的报文中的有效载荷的时候，可以通过改变报文的响应状态码为 =203 (Non-Authoritative Information)= 来进一步通知下游接收端——这个报文已经被转换过（[[https://tools.ietf.org/html/rfc7231#section-6.3.4][【RFC7231】章节 6.3.4]]）。
 
 #+BEGIN_QUOTE
 A proxy *SHOULD NOT* modify header fields that provide information about the endpoints of the communication chain, the resource state, or the selected representation (other than the payload) unless the field's definition specifically allows such modification or the modification is deemed necessary for privacy or security.
