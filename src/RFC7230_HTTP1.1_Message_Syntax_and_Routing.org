@@ -260,9 +260,14 @@ HTTP 能使用中间人来满足在通信链路里中转请求的需要。HTTP �
 The figure above shows three intermediaries (A, B, and C) between the user agent and origin server. A request or response message that travels the whole chain will pass through four separate connections. Some HTTP communication options might apply only to the connection with the nearest, non-tunnel neighbor, only to the endpoints of the chain, or to all connections along the chain. Although the diagram is linear, each participant might be engaged in multiple, simultaneous communications. For example, B might be receiving requests from many clients other than A, and/or forwarding requests to servers other than C, at the same time that it is handling A's request. Likewise, later requests might be sent through a different path of connections, often based on dynamic configuration for load balancing.
 #+END_QUOTE
 
-上图演示了在用户代理（UA）和源服务器（O）之间的三个中间人（A、B 和 C）。一个请求报文或者响应报文通过依次建立四个单独的连接来穿越整条链路。HTTP 的某些通信选项可能仅适用于通信链路上的某些节点上，例如离其最近的非隧道节点、链路的终点，或者适用于链路上的所有节点。虽然上图以线性的方式展示这条链路（但并不一定是线性的），每个节点都可能在处理多个并行的通信。例如，B 在处理来自 A 的请求的同时，还可能接收到来自 A 之外的多个客户端的请求，并（或）将其转发这些请求到 C 之外的服务器。同样，后面接收到的请求可能被节点依据其负载均衡的策略发送至一个不同通信路径上。
+上图演示了在用户代理（UA）和源服务器（O）之间的三个中间人（A、B 和 C）。一个请求报文或者响应报文通过依次建立四个单独的连接来穿越整条链路。HTTP 的某些通信选项可能仅适用于通信链路上的某些节点上，例如离其最近的非隧道节点、链路的端点，或者适用于链路上的所有节点。虽然上图以线性的方式展示这条链路（但并不一定是线性的），每个节点都可能在处理多个并行的通信。例如，B 在处理来自 A 的请求的同时，还可能接收到来自 A 之外的多个客户端的请求，并（或）将其转发这些请求到 C 之外的服务器。同样，后面接收到的请求可能被节点依据其负载均衡的策略发送至一个不同通信路径上（译注：例如，来自 A 的请求被 B 转发到 D，而不是上图所示的 C）。
 
-（译注：例如，来自 A 的请求被 B 转发到 D，而不是上图所示的 C。）
+#+BEGIN_QUOTE
+译注：
+可以将通信链路想像为一条公交线路 A -- B -- C ... X -- Y -- Z，线路两个端点（起始端/终点站）分别为 A 与 Z，之间的所有站点可以认为是中间人。公交车（请求报文）先从 A 站（用户代理）开始发起，途经 B、C……最终到达 Z 终点站（源服务器），然后公交车（响应报文）以 Z 站作为起点，途经 Y、X……最终返回到终点站 A。
+
+其中“A 到 B”、“B 到 C”等，称之为“逐跳（"hop-by-hop"）”；而“A 到 Z”、“Z 到 A”，称之为“端到端”（"end-to-end"）。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 The terms "upstream" and "downstream" are used to describe directional requirements in relation to the message flow: all messages flow from upstream to downstream. The terms "inbound" and "outbound" are used to describe directional requirements in relation to the request route: "inbound" means toward the origin server and "outbound" means toward the user agent.
@@ -270,7 +275,12 @@ The terms "upstream" and "downstream" are used to describe directional requireme
 
 术语“上游（Upstream）”和“下游（Downstream）”用于描述报文（消息）流的方向：所有的报文（消息）都从上游流到下游。术语“入站（Inbound）”和“出站（Outbound）”用于描述请求经过路由的方向：“入站”意为经过路由器的数据流向源服务器，而“出站”意为经过路由器的数据流向用户代理。 
 
-（译注：路由器是连接互联网的枢纽，数据流入互联网，这叫“入站”，例如文件上传；流出互联网，这叫“出站”，例如文件下载）。
+#+BEGIN_QUOTE
+译注：
+上游与下游，拿刚才公交车的例子，在公交车上行时（从 A 到往 Z）：A 是 B、C、……Z 的上游；B 是 A 的下游，是 C……Z 的上游。在公交车下行时（从 Z 到往 A）刚好相反。只要记住，是按公交车（水）的行驶（流动）方向来区分上下游的，它总是从上游开往（流行）下游。
+
+入站与出站，路由器是连接互联网的枢纽，数据流入互联网，这叫“入站”，例如文件上传；流出互联网，这叫“出站”，例如文件下载。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 A "proxy" is a message-forwarding agent that is selected by the client, usually via local configuration rules, to receive requests for some type(s) of [[https://tools.ietf.org/html/rfc3986#page-27][absolute URI]] and attempt to satisfy those requests via translation through the HTTP interface. Some translations are minimal, such as for proxy requests for "http" URIs, whereas other requests might require translation to and from entirely different application-level protocols. Proxies are often used to group an organization's HTTP requests through a common intermediary for the sake of security, annotation services, or shared caching. Some proxies are designed to apply transformations to selected messages or payloads while they are being forwarded, as described in [[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Section 5.7.2]].
@@ -476,7 +486,7 @@ New header fields can be introduced without changing the protocol version if the
 Intermediaries that process HTTP messages (i.e., all intermediaries other than those acting as tunnels) *MUST* send their own HTTP-version in forwarded messages. In other words, they are not allowed to blindly forward the first line of an HTTP message without ensuring that the protocol version in that message matches a version to which that intermediary is conformant for both the receiving and sending of messages. Forwarding an HTTP message without rewriting the HTTP-version might result in communication errors when downstream recipients use the message sender's version to determine what features are safe to use for later communication with that sender.
 #+END_QUOTE
 
-处理 HTTP 报文的中间人（除了作为隧道的中间人） *必须* 在转发报文时发送它们自身的 =HTTP-version=。换句话说，在以上中间人接收和发送报文的时候，它们并不允许在没有确保报文的版本与自身所使用的 HTTP 版本是否一致的情况下盲转发（Blindly Forwarding）HTTP 报文的首行。当下游（Downstream）接收端使用报文的发送端版本来决定“对于接下来与之通信，什么功能能够安全使用”时，在没有重写 =HTTP-version= 的情况下直接转发一个 HTTP 报文可能会导致通信错误。
+处理 HTTP 报文的中间人（除了作为隧道的中间人） *必须* 在转发报文时发送它们自身的 =HTTP-version=。换句话说，在以上中间人接收和发送报文的时候，它们并不允许在没有确保报文的版本与自身所使用的 HTTP 版本是否一致的情况下盲转发（Blindly Forward）HTTP 报文的首行。当下游（Downstream）接收端使用报文的发送端版本来决定“对于接下来与之通信，什么功能能够安全使用”时，在没有重写 =HTTP-version= 的情况下直接转发一个 HTTP 报文可能会导致通信错误。
 
 （译注：隧道作为盲中介，它并不会对报文本身作修改。）
 
@@ -504,7 +514,7 @@ A server *SHOULD* send a response version equal to the highest version to which 
 A server *MAY* send an HTTP/1.0 response to a request if it is known or suspected that the client incorrectly implements the HTTP specification and is incapable of correctly processing later version responses, such as when a client fails to parse the version number correctly or when an intermediary is known to blindly forward the =HTTP-version= even when it doesn't conform to the given minor version of the protocol. Such protocol downgrades *SHOULD NOT* be performed unless triggered by specific client attributes, such as when one or more of the request header fields (e.g., [[https://httpwg.org/specs/rfc7231.html#header.user-agent][User-Agent]]) uniquely match the values sent by a client known to be in error.
 #+END_QUOTE
 
-如果服务器知道或怀疑客户端没有正确实现 HTTP 规范而且不能够正确处理更高版本的响应的时候，服务器 *可以* 发送一个 HTTP/1.0 响应。例如，当客户端没有正确解析（Parse）协议版本号，或者已知一个中间人即使自身没有实现给定的 =HTTP-version= 的次版本的规范（即不支持给定版本的 HTTP 协议）仍然盲目转发该 =HTTP-version= 等。这些协议版本的降级行为 *不应该* 被执行除非服务器（或其他中间人）被特定客户端的特性所触发，例如当唯一匹配到客户端所发送的一个或多个请求头域（例如 [[https://httpwg.org/specs/rfc7231.html#header.user-agent][User-Agent]]）是已知会导致错误。
+如果服务器知道或怀疑客户端没有正确实现 HTTP 规范而且不能够正确处理更高版本的响应的时候，服务器 *可以* 发送一个 HTTP/1.0 响应。例如，当客户端没有正确解析（Parse）协议版本号，或者已知一个中间人即使自身没有实现给定的 =HTTP-version= 的次版本的规范（即不支持给定版本的 HTTP 协议）仍然盲转发该 =HTTP-version= 等。这些协议版本的降级行为 *不应该* 被执行除非服务器（或其他中间人）被特定客户端的特性所触发，例如当唯一匹配到客户端所发送的一个或多个请求头域（例如 [[https://httpwg.org/specs/rfc7231.html#header.user-agent][User-Agent]]）是已知会导致错误。
 
 #+BEGIN_QUOTE
 The intention of HTTP's versioning design is that the major number will only be incremented if an incompatible message syntax is introduced, and that the minor number will only be incremented when changes made to the protocol have the effect of adding to the message semantics or implying additional capabilities of the sender. However, the minor version was not incremented for the changes introduced between [[[https://httpwg.org/specs/rfc7230.html#RFC2068][RFC2068]]] and [[[https://httpwg.org/specs/rfc7230.html#RFC2616][RFC2616]]], and this revision has specifically avoided any such changes to the protocol.
@@ -676,7 +686,7 @@ Since the "http" and "https" schemes conform to the URI generic syntax, such URI
 If the port is equal to the default port for a scheme, the normal form is to omit the port subcomponent. When not being used in absolute form as the request target of an OPTIONS request, an empty path component is equivalent to an absolute path of "/", so the normal form is to provide a path of "/" instead. The scheme and host are case-insensitive and normally provided in lowercase; all other components are compared in a case-sensitive manner. Characters other than those in the "reserved" set are equivalent to their percent-encoded[fn:4] octets: the normal form is to not encode them (see Sections 2.1 and 2.2 of [RFC3986]).
 #+END_QUOTE
 
-如果一个 scheme 的 =port= 等于其默认端口，那么其通常的形式是省略掉 =port= 子组件。当一个 =OPTIONS= 请求没有使用绝对形式（Absolute Form）作为请求目标（Request Target）时，一个空的 =path= 等价于绝对路径“=/=”，所以通常的形式是使用路径“=/=”来替换。=scheme= 和 =host= 是大小写不敏感的，通常使用小写。除了 =scheme= 和 =host= 以外的所有其他组件都是大小写敏感的。除了“保留”字符集以外的所有字符都等价于它的 URL 编码（[[https://en.wikipedia.org/wiki/Percent-encoding][Precent-encoded]]，又叫百分号编码）形式的八位组（Octet）：一般形式是（如非必要）不要对它们进行编码（见[[https://tools.ietf.org/html/rfc3986#section-2.1][【RFC3986】章节 2.1 和 2.2]]）。
+如果一个 scheme 的 =port= 等于其默认端口，那么其通常的形式是省略掉 =port= 子组件。当一个 =OPTIONS= 请求没有使用绝对形式（Absolute Form）作为请求目标（Request Target）时，一个空的 =path= 等价于绝对路径“=/=”，所以通常的形式是使用路径“=/=”来替换。=scheme= 和 =host= 是不区分大小写的，通常使用小写。除了 =scheme= 和 =host= 以外的所有其他组件都是区分大小写的。除了“保留”字符集以外的所有字符都等价于它的 URL 编码（[[https://en.wikipedia.org/wiki/Percent-encoding][Precent-encoded]]，又叫百分号编码）形式的八位组（Octet）：一般形式是（如非必要）不要对它们进行编码（见[[https://tools.ietf.org/html/rfc3986#section-2.1][【RFC3986】章节 2.1 和 2.2]]）。
 
 （译注：URL 编码，又叫百分号编码，每个字符由 =%= 加上两位的十六进制 0~F 组成，对于百分号编码还可以参考[[https://www.cnblogs.com/DaoMuRen/p/5695030.html][这篇博文]]。）
 
@@ -779,7 +789,7 @@ request-line   = method SP request-target SP HTTP-version CRLF
 The method token indicates the request method to be performed on the target resource. The request method is *case-sensitive*.
 #+END_QUOTE
 
-方法标识 =method= 表明了使用哪一种请求方法（Request Method）去获取目标资源（Target Resource），请求方法是 *大小写敏感* 的。
+方法标识 =method= 表明了使用哪一种请求方法（Request Method）去获取目标资源（Target Resource），请求方法是 *区分大小写* 的。
 
 #+BEGIN_SRC text
 method         = token
@@ -1445,7 +1455,7 @@ Parameters are in the form of a name or name=value pair.
 All transfer-coding names are case-insensitive and ought to be registered within the HTTP Transfer Coding registry, as defined in Section 8.4. They are used in the =TE= (Section 4.3) and =Transfer-Encoding= (Section 3.3.1) header fields.
 #+END_QUOTE
 
-所有 =transfer-coding= 的名称都是大小写不敏感的，并且应该被注册在 "HTTP Transfer Coding" 注册表中，定义在[[id:DA2ABD5F-DFF0-408B-93D4-73D21E20B3CF][章节 8.4]] 中。它们用在报文域 =TE= （[[id:2BA944C9-6215-4B88-8F5F-D5CACA865191][章节 4.3]]）和 =Transfer-Encoding= （[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][章节 3.3.1]]）里。
+所有 =transfer-coding= 的名称都是不区分大小写的，并且应该被注册在 "HTTP Transfer Coding" 注册表中，定义在[[id:DA2ABD5F-DFF0-408B-93D4-73D21E20B3CF][章节 8.4]] 中。它们用在报文域 =TE= （[[id:2BA944C9-6215-4B88-8F5F-D5CACA865191][章节 4.3]]）和 =Transfer-Encoding= （[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][章节 3.3.1]]）里。
 
 ** 4.1 分块传输编码值 (Chunked Transfer Coding)
 :PROPERTIES:
@@ -1485,7 +1495,7 @@ A recipient *MUST* be able to parse and decode the chunked transfer coding.
 
 *** 4.1.1 分块扩展 (Chunk Extensions)
 #+BEGIN_QUOTE
-The chunked encoding allows each chunk to include zero or more chunk extensions, immediately following the chunk-size, for the sake of supplying per-chunk metadata (such as a signature or hash), mid-message control information, or randomization of message body size.
+The =chunked= encoding allows each chunk to include zero or more chunk extensions, immediately following the =chunk-size=, for the sake of supplying per-chunk metadata (such as a signature or hash), mid-message control information, or randomization of message body size.
 #+END_QUOTE
 
 =chunked= 编码允许每一个分块包含零个或以上分块扩展（Chunk Extensions） =chunk-ext=，紧跟在 =chunk-size= 之后，用于支持 per-chunk 元数据（例如一个签名或哈希值）、mid-message 控制信息，或者随机报文正文大小。
@@ -1498,13 +1508,13 @@ The chunked encoding allows each chunk to include zero or more chunk extensions,
 #+END_SRC
 
 #+BEGIN_QUOTE
-The chunked encoding is specific to each connection and is likely to be removed or recoded by each recipient (including intermediaries) before any higher-level application would have a chance to inspect the extensions. Hence, use of chunk extensions is generally limited to specialized HTTP services such as "long polling" (where client and server can have shared expectations regarding the use of chunk extensions) or for padding within an end-to-end secured connection.
+The =chunked= encoding is specific to each connection and is likely to be removed or recoded by each recipient (including intermediaries) before any higher-level application would have a chance to inspect the extensions. Hence, use of chunk extensions is generally limited to specialized HTTP services such as "long polling" (where client and server can have shared expectations regarding the use of chunk extensions) or for padding within an end-to-end secured connection.
 #+END_QUOTE
 
 =chunked= 编码是会对每一个连接而言的，而且它可能会在任何高层应用有机会检测到分块的扩展信息之前就被接收端（包括中间人）所移除或者重新编码。因此，分块扩展的使用通常限定于特定的 HTTP 服务中，例如“长轮询（Long Polling）”（一个客户端和服务端能够对分块扩展的使用达成共同的期望的地方）或者在一个端到端（End-to-end）安全连接之间的填充。
 
 #+BEGIN_QUOTE
-A recipient *MUST* ignore unrecognized chunk extensions. A server ought to limit the total length of chunk extensions received in a request to an amount reasonable for the services provided, in the same way that it applies length limitations and timeouts for other parts of a message, and generate an appropriate 4xx (Client Error) response if that amount is exceeded.
+A recipient *MUST* ignore unrecognized chunk extensions. A server ought to limit the total length of chunk extensions received in a request to an amount reasonable for the services provided, in the same way that it applies length limitations and timeouts for other parts of a message, and generate an appropriate =4xx (Client Error)= response if that amount is exceeded.
 #+END_QUOTE
 
 一个接收端 *必须* 忽略无法识别的分块扩展。一个服务端应该将所接收到的分块扩展的总长度限制到一个由相应服务提供的合理的值上，就像服务端对一个报文的其他部分应用长度限制和超时一样，并且生成一个合适的 =4xx (Client Error)= 响应，如果超过那个长度限制的话。
@@ -1655,7 +1665,7 @@ The presence of the keyword "trailers" indicates that the client is willing to a
 When multiple transfer codings are acceptable, the client *MAY* rank the codings by preference using a case-insensitive "q" parameter (similar to the qvalues used in content negotiation fields, Section 5.3.1 of [RFC7231]). The rank value is a real number in the range 0 through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means "not acceptable".
 #+END_QUOTE
 
-当允许多个传输编码值时，客户端 *可以* 依据其偏爱（优先级），通过使用一个大小写不敏感的参数 =q= （类似于内容协商域里的 =qvalues=，见[[https://tools.ietf.org/html/rfc7231][【RFC7231】章节 5.3.1]]），来对这些编码值进行排序（Rank）。排序值（Rank Value）是一个 0 到 1 之间的实数，最小值是 0.001（最不偏爱），最大值为 1（最偏爱），排序值为 0 代表“不接受这种传输编码”。 
+当允许多个传输编码值时，客户端 *可以* 依据其喜好，通过使用一个不区分大小写的参数 =q= （类似于内容协商域里的 =qvalues=，见[[https://tools.ietf.org/html/rfc7231][【RFC7231】章节 5.3.1]]），来对这些编码值分配权重。权重值是一个 0 到 1 之间的实数，最小值是 0.001（优先级最低），最大值为 1（优先级最高），排序值为 0 代表“不接受这种传输编码”。 
 
 #+BEGIN_QUOTE
 If the TE field-value is empty or if no TE field is present, the only acceptable transfer coding is chunked. A message with no transfer coding is always acceptable.
@@ -1708,6 +1718,9 @@ HTTP communication is initiated by a user agent for some purpose. The purpose is
 标识是保留给客户端处理的（见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]]）。
 
 ** 5.2 连接入站 (Connecting Inbound)
+:PROPERTIES:
+:ID:       d18c94f3-ca46-47eb-a26e-7f931765d978
+:END:
 #+BEGIN_QUOTE
 Once the target URI is determined, a client needs to decide whether a network request is necessary to accomplish the desired semantics and, if so, where that request is to be directed.
 #+END_QUOTE
@@ -2246,38 +2259,72 @@ A proxy *MAY* transform the payload of a message that does not contain a =no-tra
 A proxy *SHOULD NOT* modify header fields that provide information about the endpoints of the communication chain, the resource state, or the selected representation (other than the payload) unless the field's definition specifically allows such modification or the modification is deemed necessary for privacy or security.
 #+END_QUOTE
 
+代理 *不应该* 修改提供有关通信链路端点、资源状态，或者选择的展现形式（除了有效载荷）的信息的报头域，除非该域的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
+
 * 6 连接管理（Connection Management）
 #+BEGIN_QUOTE
 HTTP messaging is independent of the underlying transport- or session-layer connection protocol(s). HTTP only presumes a reliable transport with in-order delivery of requests and the corresponding in-order delivery of responses. The mapping of HTTP request and response structures onto the data units of an underlying transport protocol is outside the scope of this specification.
 #+END_QUOTE
 
+HTTP 的报文交换是独立于底层传输层和会话层相关的连接协议。HTTP 仅假定有一个可靠的传输对请求进行按次序发送出去，以及与之对应的响应被按次序发送回来。至于如何将 HTTP 的请求结构以及报应结构映射到底层传输协议的数据单元上，并不在本规范探讨的范围之内。
+
 #+BEGIN_QUOTE
 As described in Section 5.2, the specific connection protocols to be used for an HTTP interaction are determined by client configuration and the target URI. For example, the "http" URI scheme (Section 2.7.1) indicates a default connection of TCP over IP, with a default TCP port of 80, but the client might be configured to use a proxy via some other connection, port, or protocol.
 #+END_QUOTE
 
+正如[[id:d18c94f3-ca46-47eb-a26e-7f931765d978][章节 5.2]] 描述的那样，具体使用哪一种连接协议与 HTTP 交互是取决于客户端的配置以及目标 URI 的。例如，"http" URI scheme 表示一个在 IP 协议之上的 TCP 默认连接，使用默认的 80 TCP 端口，但是，客户端可能被配置为使用代理来途经其他连接、端口以及协议。
+
 #+BEGIN_QUOTE
-HTTP implementations are expected to engage in connection management, which includes maintaining the state of current connections, establishing a new connection or reusing an existing connection, processing messages received on a connection, detecting connection failures, and closing each connection. Most clients maintain multiple connections in parallel, including more than one connection per server endpoint. Most servers are designed to maintain thousands of concurrent connections, while controlling request queues to enable fair use and detect denial-of-service attacks.
+HTTP implementations are expected to engage in connection management, which includes maintaining the state of current connections, establishing a new connection or reusing an existing connection, processing messages received on a connection, detecting connection failures, and closing each connection. Most clients maintain multiple connections in parallel, including more than one connection per server endpoint. Most servers are designed to maintain thousands of concurrent connections, while controlling request queues to enable fair use and detect [[https://en.wikipedia.org/wiki/Denial-of-service_attack][denial-of-service attacks]].
 #+END_QUOTE
+
+HTTP 实现（Implementations）需要从事连接管理（Connection Management），包括维护当前连接的状态，建议新的连接或者复用已有连接，处理在连接中接收到的报文，检测连接错误，以及关闭每个连接。大多数客户端会并行（Parallel）地维护多个连接，包括对同一个服务器端点的多个连接。大多数服务器会设计为能够维护数以千计的并发（Concurrent）连接，同时，通过控制请求队列来合理使用服务和检测[[https://zh.wikipedia.org/wiki/%25E9%2598%25BB%25E6%2596%25B7%25E6%259C%258D%25E5%258B%2599%25E6%2594%25BB%25E6%2593%258A][拒绝服务攻击（Denial-of-service attachs）]]。
 
 ** 6.1 连接 (Connection)
 :PROPERTIES:
 :ID:       40B2B721-F916-41EA-86FB-514FDED5B3A4
 :END:
 #+BEGIN_QUOTE
-The "Connection" header field allows the sender to indicate desired control options for the current connection. In order to avoid confusing downstream recipients, a proxy or gateway MUST remove or replace any received connection options before forwarding the message.
+The "Connection" header field allows the sender to indicate desired control options for the current connection. In order to avoid confusing downstream recipients, a proxy or gateway *MUST* remove or replace any received connection options before forwarding the message.
+#+END_QUOTE
+
+=Connection= 报头域允许发送端去指定希望如何控制当前连接的选项。为了避免下游接收端的困惑，代理或者网关 *必须* 在转发报文的时候移除或替换出现在该报文中的任何连接选项（Connection Options）。
+
+#+BEGIN_QUOTE
+译注：
+连接选项（Connection Options）是一个专有名词，是特指 =Connection= 报头域的域值里的内容。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-When a header field aside from Connection is used to supply control information for or about the current connection, the sender MUST list the corresponding field-name within the Connection header field. A proxy or gateway MUST parse a received Connection header field before a message is forwarded and, for each connection-option in this field, remove any header field(s) from the message with the same name as the connection-option, and then remove the Connection header field itself (or replace it with the intermediary's own connection options for the forwarded message).
+When a header field aside from =Connection= is used to supply control information for or about the current connection, the sender *MUST* list the corresponding field-name within the =Connection= header field. A proxy or gateway *MUST* parse a received =Connection= header field before a message is forwarded and, for each =connection-option= in this field, remove any header field(s) from the message with the same name as the connection-option, and then remove the =Connection= header field itself (or replace it with the intermediary's own connection options for the forwarded message).
+#+END_QUOTE
+
+除了 =Connection= 报头域以外，当存在某个报头域，用于提供应用在（或者仅说明）当前连接的控制信息，发送端 *必须* 在 =Connection= 报头域里列出该报头域的名称。代理或者网关在转发报文之前，*必须* 解析（Parse）报文里的 =Connection= 报头域，并且对于 =Connection= 报头域内的每一个连接选项 =connection-option=，从报文中移除与之同名的报头域，然后再移除 =Connection= 报头域自身（或者将其替换为中间人自己的连接选项，用于转发报文）。
+
+#+BEGIN_QUOTE
+译注：
+原文本段的第一句 "When a header field ... is used to supply control information *for or about* the current connection, the sender MUST ..."，将 "for or about" 扩展为 "*for the current connection* or *about the current connection*"。
+
+对于 "supply control information for the current connection"，我的理解是“对当前连接施加或设置了某些控制，然后将这些控制信息提供出来”，就像对报文的有效正文应用了某种编码，需要将该编码值添加到 =Transfer-Encoding= 报头域上一样。
+
+如果接受上述的解释，那么 "supply control information about the current connection" 就很好理解了，“并没有对当前连接作新的任何控制，只是列出了当前连接有哪些控制信息”。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-Hence, the Connection header field provides a declarative way of distinguishing header fields that are only intended for the immediate recipient ("hop-by-hop") from those fields that are intended for all recipients on the chain ("end-to-end"), enabling the message to be self-descriptive and allowing future connection-specific extensions to be deployed without fear that they will be blindly forwarded by older intermediaries.
+Hence, the =Connection= header field provides a declarative way of distinguishing header fields that are only intended for the immediate recipient ("hop-by-hop") from those fields that are intended for all recipients on the chain ("end-to-end"), enabling the message to be self-descriptive and allowing future connection-specific extensions to be deployed without fear that they will be blindly forwarded by older intermediaries.
+#+END_QUOTE
+
+因此，=Connection= 报头域提供了一种声明式的方式来区分哪些报头域是打算只作用于当前发送端的直接接收端的（"hop-by-hop"，逐跳，即直接与之相连的接收端），哪些报头域是打算作用于链路中的所有接收端（"end-to-end"，端到端）。这样，使报文能够自描述，同时，避免将来新增的连接专用的扩展（Connection-specific Extensions）被旧的（即不支持该扩展的）中间人盲转发（Blindly Forward）。
+
+#+BEGIN_QUOTE
+译注：=Connection= 内指定的报头域是仅作用于直接接收端的。关于 "hop-by-hop" 与 "end-to-end" 的解释见[[id:e2d9bed8-d6ca-4b5d-ab4a-6b2b2576393e][章节 2.1]] 相关的译注。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-The Connection header field's value has the following grammar:
+The =Connection= header field's value has the following grammar:
 #+END_QUOTE
+
+=Connection= 报头域的值的语法如下：
 
 #+BEGIN_SRC text
   Connection        = 1#connection-option
@@ -2288,21 +2335,31 @@ The Connection header field's value has the following grammar:
 Connection options are case-insensitive.
 #+END_QUOTE
 
+其中，连接选项 =connection-option= 是不区分大小写的。
+
 #+BEGIN_QUOTE
-A sender *MUST NOT* send a connection option corresponding to a header field that is intended for all recipients of the payload. For example, Cache-Control is never appropriate as a connection option (Section 5.2 of [RFC7234]).
+A sender *MUST NOT* send a connection option corresponding to a header field that is intended for all recipients of the payload. For example, =Cache-Control= is never appropriate as a connection option (Section 5.2 of [RFC7234]).
 #+END_QUOTE
+
+发送端 *禁止* 发送一个与作用于所有接收端的有效载荷的报头域名称相一致的连接选项。例如，=Cache-Control= 是永远不能作为一个连接选项的（[[https://tools.ietf.org/html/rfc7234#section-5.2][【RFC7234】章节 5.2]]）。
 
 #+BEGIN_QUOTE
 The connection options do not always correspond to a header field present in the message, since a connection-specific header field might not be needed if there are no parameters associated with a connection option. In contrast, a connection-specific header field that is received without a corresponding connection option usually indicates that the field has been improperly forwarded by an intermediary and ought to be ignored by the recipient.
 #+END_QUOTE
 
+连接选项并不总是对应到某个出现在报文中的报头域的，这是因为如果这种报头域并没有域值（即关联到某个连接选项的参数），那么它就不必出现在报头里了。与之相对的是，如果报文中带有某个连接专用的报头域，但并不存在一个与之对应的连接选项（即 =Connection= 里并没有包含与这个报头域名称一致的连接选项），出现这种情况通常表明该报头域是被某个中间人错误地转发过来的，并且应该被接收端所忽略掉。
+
 #+BEGIN_QUOTE
 When defining new connection options, specification authors ought to survey existing header field names and ensure that the new connection option does not share the same name as an already deployed header field. Defining a new connection option essentially reserves that potential field-name for carrying additional information related to the connection option, since it would be unwise for senders to use that field-name for anything else.
 #+END_QUOTE
 
+当定义新的连接选项时，规范的作者们应该审视已有的报头域名称，确保新的连接选项的名称与目前已部署的报头域名称不相冲突。定义一个新的连接选项基本上会一并将同名报头域名作为保留字，用来搭载与该连接选项相关的额外信息，所以，发送端将种该报头域用作他用是很不明智的。
+
 #+BEGIN_QUOTE
 The "close" connection option is defined for a sender to signal that this connection will be closed after completion of the response. For example,
 #+END_QUOTE
+
+连接选项 "close" 用于发送端向接收端发出信号——当前连接将会在完成响应后被关闭。例如：
 
 #+BEGIN_EXAMPLE
   Connection: close
@@ -2312,13 +2369,19 @@ The "close" connection option is defined for a sender to signal that this connec
 in either the request or the response header fields indicates that the sender is going to close the connection after the current request/response is complete (Section 6.6).
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A client that does not support persistent connections MUST send the "close" connection option in every request message.
-#+END_QUOTE
+如果连接选项 "close" 出现在请求报文或者响应报文中，表明发送端将会在完成目前的请求/响应后关闭该连接（[[id:5051d9ad-6b2e-45b0-be58-42b9dce34b89][章节 6.6]]）。
 
 #+BEGIN_QUOTE
-A server that does not support persistent connections MUST send the "close" connection option in every response message that does not have a 1xx (Informational) status code.
+A client that does not support [[https://en.wikipedia.org/wiki/HTTP_persistent_connection][persistent connections]] *MUST* send the "close" connection option in every request message.
 #+END_QUOTE
+
+不支持[[https://zh.wikipedia.org/wiki/HTTP%25E6%258C%2581%25E4%25B9%2585%25E8%25BF%259E%25E6%258E%25A5][长连接（Persistent）]]的客户端 *必须* 在其发送的每个请求报文中包含有 "close" 连接选项。
+
+#+BEGIN_QUOTE
+A server that does not support persistent connections =MUST= send the "close" connection option in every response message that does not have a =1xx (Informational)= status code.
+#+END_QUOTE
+
+不支持长连接服务器 *必须* 在其发送的每个状态码不是 =1xx (Informational)= 的响应报文中包含有 "close" 连接选项。
 
 ** 6.2 建立 (Establishment)
 :PROPERTIES:
@@ -2436,6 +2499,9 @@ A client sending a message body *SHOULD* monitor the network connection for an e
 #+END_QUOTE
 
 ** 6.6 销毁 (Tear-down)
+:PROPERTIES:
+:ID:       5051d9ad-6b2e-45b0-be58-42b9dce34b89
+:END:
 #+BEGIN_QUOTE
 The =Connection= header field (Section 6.1) provides a "close" connection option that a sender *SHOULD* send when it wishes to close the connection after the current request/response pair.
 #+END_QUOTE
