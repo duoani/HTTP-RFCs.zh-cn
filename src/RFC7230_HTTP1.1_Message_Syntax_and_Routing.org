@@ -2391,7 +2391,9 @@ A server that does not support persistent connections =MUST= send the "close" co
 It is beyond the scope of this specification to describe how connections are established via various transport- or session-layer protocols. Each connection applies to only one transport link.
 #+END_QUOTE
 
-** 6.3 持久性 (Persistence)
+关于连接如何经由传输层或会话层协议被建立，并不在本规范探讨的范围之内。每个连接仅适用于一个传输链路。
+
+** 6.3 持久 (Persistence)
 :PROPERTIES:
 :ID:       bc2ed56c-f0a1-4609-bdbd-1c649aeb3681
 :END:
@@ -2460,7 +2462,7 @@ Idempotent methods (Section 4.2.2 of [RFC7231]) are significant to pipelining be
 An intermediary that receives pipelined requests MAY pipeline those requests when forwarding them inbound, since it can rely on the outbound user agent(s) to determine what requests can be safely pipelined. If the inbound connection fails before receiving a response, the pipelining intermediary MAY attempt to retry a sequence of requests that have yet to receive a response if the requests all have idempotent methods; otherwise, the pipelining intermediary SHOULD forward any received responses and then close the corresponding outbound connection(s) so that the outbound user agent(s) can recover accordingly.
 #+END_QUOTE
 
-** 6.4 并发性 (Concurrency)
+** 6.4 并发 (Concurrency)
 #+BEGIN_QUOTE
 A client ought to limit the number of simultaneous open connections that it maintains to a given server.
 #+END_QUOTE
