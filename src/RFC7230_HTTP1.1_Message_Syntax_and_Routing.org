@@ -2437,75 +2437,122 @@ A client *MAY* send additional requests on a persistent connection until it send
 In order to remain persistent, all messages on a connection need to have a self-defined message length (i.e., one not defined by closure of the connection), as described in Section 3.3. A server *MUST* read the entire request message body or close the connection after sending its response, since otherwise the remaining data on a persistent connection would be misinterpreted as the next request. Likewise, a client *MUST* read the entire response message body if it intends to reuse the same connection for a subsequent request.
 #+END_QUOTE
 
-为了保持持久，在一个连接中的所有报文都需要带有一个由自身所定义的（self-defined）报文长度（也就是说，），如[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]] 所述。
+为了保持持久，在一个连接中的所有报文都需要带有一个由自身所定义的（self-defined）报文长度（TODO 也就是说，并不是为连接的关闭所定义的？），如[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]] 所述。服务器 *必须* 在发送响应报文后，读取整个请求报文正文或者关闭该连接，这是因为如果不这样做的话，存在于持久连接中的剩余的数据会被误解为是下一个请求报文的内容。同样，如果客户端打算在接下来的请求中复用同一个连接，那么，客户端 *必须* 读取整个响应报文正文。
 
 #+BEGIN_QUOTE
-A proxy server *MUST NOT* maintain a persistent connection with an HTTP/1.0 client (see Section 19.7.1 of [RFC2068] for information and discussion of the problems with the Keep-Alive header field implemented by many HTTP/1.0 clients).
+A proxy server *MUST NOT* maintain a persistent connection with an HTTP/1.0 client (see Section 19.7.1 of [RFC2068] for information and discussion of the problems with the =Keep-Alive= header field implemented by many HTTP/1.0 clients).
 #+END_QUOTE
+
+代理服务器 *禁止* 与一个 HTTP/1.0 客户端维持一个持久连接（见【RFC2068】章节 19.7.1 关于某些 HTTP/1.0 客户端所实现的 =Keep-Alive= 报头域的问题的信息和讨论）。
 
 #+BEGIN_QUOTE
 See Appendix A.1.2 for more information on backwards compatibility with HTTP/1.0 clients.
 #+END_QUOTE
 
-*** 6.3.1 (Retrying Requests)
+关于向后兼容 HTTP/1.0 客户端的更多信息，见附录 A.1.2。
+
+*** 6.3.1 请求重试 (Retrying Requests)
 #+BEGIN_QUOTE
 Connections can be closed at any time, with or without intention. Implementations ought to anticipate the need to recover from asynchronous close events.
 #+END_QUOTE
 
+连接能够在任何时候有意或无意地被关闭。HTTP 实现（Implementations）应当预见到存在从异步关闭事件中恢复连接的需要。
+
 #+BEGIN_QUOTE
-When an inbound connection is closed prematurely, a client *MAY* open a new connection and automatically retransmit an aborted sequence of requests if all of those requests have idempotent methods (Section 4.2.2 of [RFC7231]). A proxy MUST NOT automatically retry non-idempotent requests.
+When an inbound connection is closed prematurely, a client *MAY* open a new connection and automatically retransmit an aborted sequence of requests if all of those requests have idempotent methods (Section 4.2.2 of [RFC7231]). A proxy *MUST NOT* automatically retry non-idempotent requests.
 #+END_QUOTE
+
+当一个入站连接被过早地关闭，客户端 *可以* 开启一个新的连接并自动重传被中止的请求报文序列，如果所有这些请求报文的请求方法都是幂等（[[https://tools.ietf.org/html/rfc7231#section-4.2.2][【RFC7231】章节 4.2.2]]）的话。代理 *禁止* 自动重试非幂等的请求。
 
 #+BEGIN_QUOTE
 A user agent *MUST NOT* automatically retry a request with a non-idempotent method unless it has some means to know that the request semantics are actually idempotent, regardless of the method, or some means to detect that the original request was never applied. For example, a user agent that knows (through design or configuration) that a POST request to a given resource is safe can repeat that request automatically. Likewise, a user agent designed specifically to operate on a version control repository might be able to recover from partial failure conditions by checking the target resource revision(s) after a failed connection, reverting or fixing any changes that were partially applied, and then automatically retrying the requests that failed.
 #+END_QUOTE
 
+用户代理 *禁止* 自动重试一个带有非幂等请求方法（Non-idempotent Method）的请求，除非用户代理通过某些方式了解到不管请求方法是否幂等，该请求的语义实际上都是幂等的，或者通过某些方式检测到原来的请求未被接收端处理。例如，某个用户代理（通过设计或配置）了解到某个获取给定资源的 POST 请求是能够自动安全地重复请求的。同样，某个用户代理特别设计为对一个版本控制仓库进行操作，可能能够在一次连接失败后，通过测试目标资源的修订版本，撤回或修复部分应用过的更改，然后自动重试失败过的请求，使连接从部分失败条件中恢复过来。
+
 #+BEGIN_QUOTE
 A client *SHOULD NOT* automatically retry a failed automatic retry.
 #+END_QUOTE
 
-*** 6.3.2 (Pipelining)
+对于一个已经自动重试失败的请求，客户端 *不应该* 再次自动重试。
+
+*** 6.3.2 流水线处理 (Pipelining)
 #+BEGIN_QUOTE
-A client that supports persistent connections *MAY* "pipeline" its requests (i.e., send multiple requests without waiting for each response). A server MAY process a sequence of pipelined requests in parallel if they all have safe methods (Section 4.2.1 of [RFC7231]), but it MUST send the corresponding responses in the same order that the requests were received.
+A client that supports persistent connections *MAY* "pipeline" its requests (i.e., send multiple requests without waiting for each response). A server *MAY* process a sequence of pipelined requests in parallel if they all have safe methods (Section 4.2.1 of [RFC7231]), but it *MUST* send the corresponding responses in the same order that the requests were received.
+#+END_QUOTE
+
+支持持久连接的客户端 *可以* 流水线式处理它的请求（也就是说，在不需要等待响应完成的情况下发送多个请求）。服务器 *可以* 并行处理一系列的流水线化的请求，如果它们所有都带有安全的请求方法（[[https://tools.ietf.org/html/rfc7231#section-4.2.1][【RFC7231】章节 4.2.1]]）的话。但服务器 *必须* 以其接收到的请求报文的顺序发送对应的响应报文。
+
+#+BEGIN_QUOTE
+译注：
+Pipeline，译为“流水线”，国内大多数译为“管道”，但我认为“流水线”更容易理解，也更符合意境。试想一下，
+
+pipeline 的优势是并行处理，可将一个大任务按一定顺序细分为一个个串联起来的小任务，pipeline 的并行处理实际上就是每个小任务不关心共他任务的完成进度，只需要不断完成当前任务就可以了。而所有小任务完成了，这个大任务就算完成了。这不就是“流水线作业”吗？
+
+而对于“管道”，我觉得应该更着重它的密封性（安全性）而淡化它的实现细节，即可看为管道里是一个黑盒子，你不管理里面是如何动作的，但外界也不容易影响管道的内部。例如水管的主要作用是输送，其次是隔绝外界污染，同时可以灵活接驳。
+
+有些 pipeline 还可以任意组装、增减操作步骤，这个“流水线”与“管理”都有这个意思。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-A client that pipelines requests *SHOULD* retry unanswered requests if the connection closes before it receives all of the corresponding responses. When retrying pipelined requests after a failed connection (a connection not explicitly closed by the server in its last complete response), a client MUST NOT pipeline immediately after connection establishment, since the first remaining request in the prior pipeline might have caused an error response that can be lost again if multiple requests are sent on a prematurely closed connection (see the TCP reset problem described in Section 6.6).
+A client that pipelines requests *SHOULD* retry unanswered requests if the connection closes before it receives all of the corresponding responses. When retrying pipelined requests after a failed connection (a connection not explicitly closed by the server in its last complete response), a client *MUST NOT* pipeline immediately after connection establishment, since the first remaining request in the prior pipeline might have caused an error response that can be lost again if multiple requests are sent on a prematurely closed connection (see the TCP reset problem described in Section 6.6).
+#+END_QUOTE
+
+客户端流水线处理请求的时候，如果连接在客户端接收到所有对应的响应报文之前被关闭了，客户端 *应该* 重试未应答过的请求。当在连接失败（连接未被服务器发送完最后一个完整响应报文之后显式关闭）后重试流水线化的请求，客户端 *禁止* 在连接建立之后立即进行流水线，这是因为如果多个请求在一个被过早关闭的连接中被发送（见[[id:5051d9ad-6b2e-45b0-be58-42b9dce34b89][章节 6.6]] 所描述的 TCP 重启问题），在之前流水线的第一个剩余的响应报文可能导致一个错误的响应，可能会再一次被丢失。
+
+#+BEGIN_QUOTE
+Idempotent methods (Section 4.2.2 of [RFC7231]) are significant to pipelining because they can be automatically retried after a connection failure. A user agent *SHOULD NOT* pipeline requests after a non-idempotent method, until the final response status code for that method has been received, unless the user agent has a means to detect and recover from partial failure conditions involving the pipelined sequence.
+#+END_QUOTE
+
+幂等请求方法（[[https://tools.ietf.org/html/rfc7231#section-4.2.2][【RFC7231】章节 4.2.2]]）对于流水线处理是有意义的，这是因为在连接失败后它们能够被自动重试。用户代理 *不应该* 对一个非幂等请求方法之后的请求报文进行流水线处理，直到接收到该非幂等请求方法所对应的最终响应状态码（Final Response Status Code），除非该用户代理有某种方法去检测和从部分涉及到流水线序列的失败条件中恢复连接。
+
+#+BEGIN_QUOTE
+译注：最终响应的状态码就是除了过渡性响应状态以外的状态码。过渡性状态码（Interim Response Status Code），即所有 1xx 的信息性状态码，见[[https://httpwg.org/specs/rfc7231.html#rfc.section.6.2][【RFC7231】章节 6.2]]。其对应的响应分别叫最终响应（Final Response）和过渡性响应（Interim Response）。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-Idempotent methods (Section 4.2.2 of [RFC7231]) are significant to pipelining because they can be automatically retried after a connection failure. A user agent SHOULD NOT pipeline requests after a non-idempotent method, until the final response status code for that method has been received, unless the user agent has a means to detect and recover from partial failure conditions involving the pipelined sequence.
+An intermediary that receives pipelined requests *MAY* pipeline those requests when forwarding them inbound, since it can rely on the outbound user agent(s) to determine what requests can be safely pipelined. If the inbound connection fails before receiving a response, the pipelining intermediary *MAY* attempt to retry a sequence of requests that have yet to receive a response if the requests all have idempotent methods; otherwise, the pipelining intermediary *SHOULD* forward any received responses and then close the corresponding outbound connection(s) so that the outbound user agent(s) can recover accordingly.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-An intermediary that receives pipelined requests MAY pipeline those requests when forwarding them inbound, since it can rely on the outbound user agent(s) to determine what requests can be safely pipelined. If the inbound connection fails before receiving a response, the pipelining intermediary MAY attempt to retry a sequence of requests that have yet to receive a response if the requests all have idempotent methods; otherwise, the pipelining intermediary SHOULD forward any received responses and then close the corresponding outbound connection(s) so that the outbound user agent(s) can recover accordingly.
-#+END_QUOTE
+接收流水线化的请求报文的中间人，当转发这些请求到站内（Inbound）的时候 *可以* 流水线处理它们，这是因为中间人能够依靠站外的（Outbound）用户代理来确定哪些请求报文能够被放心地使用流水线处理。如果在接收某个响应之前，入站连接失败，正在进行流水线处理的中间人 *可以* 试图去重试一系列有待接收响应的请求，如果这些请求都带有幂等请求方法的话；否则，该正在进行流水线处理的中间人 *应该* 转发任何接收到的响应，然后关闭对应的出站连接以便那些站外用户代理能够相应地恢复。
 
 ** 6.4 并发 (Concurrency)
 #+BEGIN_QUOTE
 A client ought to limit the number of simultaneous open connections that it maintains to a given server.
 #+END_QUOTE
 
+客户端应该限制与某个给定服务器同时维持打开的连接的数量。
+
 #+BEGIN_QUOTE
 Previous revisions of HTTP gave a specific number of connections as a ceiling, but this was found to be impractical for many applications. As a result, this specification does not mandate a particular maximum number of connections but, instead, encourages clients to be conservative when opening multiple connections.
 #+END_QUOTE
 
+HTTP 早前的修订版给出了一个连接数上限的具体数值，但最终发现对于许多应用来说，这是不切实际的。所以，本规范并不指定一个详细的连接数最大值，但是，取而代之的是，鼓励客户端在开启多连接的时候尽可能的保守。
+
 #+BEGIN_QUOTE
-Multiple connections are typically used to avoid the "head-of-line blocking" problem, wherein a request that takes significant server-side processing and/or has a large payload blocks subsequent requests on the same connection. However, each connection consumes server resources. Furthermore, using multiple connections can cause undesirable side effects in congested networks.
+Multiple connections are typically used to avoid the "[[https://en.wikipedia.org/wiki/Head-of-line_blocking][head-of-line blocking]]" problem, wherein a request that takes significant server-side processing and/or has a large payload blocks subsequent requests on the same connection. However, each connection consumes server resources. Furthermore, using multiple connections can cause undesirable side effects in congested networks.
 #+END_QUOTE
+
+多连接典型用于避免[[https://zh.wikipedia.org/wiki/%25E9%2598%259F%25E5%25A4%25B4%25E9%2598%25BB%25E5%25A1%259E][队头堵塞（"head-of-line blocking"）]]的问题，引起该问题的某个请求可能带有一个巨大的有效载荷，从而耗费了服务端很多处理时间，从而堵塞掉随后的在同一连接中的其他请求。但是，每个连接都消耗服务端资源，而且，在拥堵的网络中使用多连接能够引发不良副作用。
 
 #+BEGIN_QUOTE
 Note that a server might reject traffic that it deems abusive or characteristic of a denial-of-service attack, such as an excessive number of open connections from a single client.
 #+END_QUOTE
+
+需要注意的是，在服务器认为滥用多连接或具有拒绝服务攻击的特征的时候，服务器可能会拒绝该流量，例如，由单独一个客户端对服务器发送了过量的开启连接的请求。
 
 ** 6.5 失败和超时 (Failures and Timeouts)
 #+BEGIN_QUOTE
 Servers will usually have some timeout value beyond which they will no longer maintain an inactive connection. Proxy servers might make this a higher value since it is likely that the client will be making more connections through the same proxy server. The use of persistent connections places no requirements on the length (or existence) of this timeout for either the client or the server.
 #+END_QUOTE
 
+服务器通常会带有某些超时值，如果超过该值时，服务器会不再维持一个可交互的连接。代理服务器可能会提高这些超时值的上限，这是因为很有可能客户端会通过同一个代理服务器创建更多的连接。持久连接的使用并不对客户端或服务器的超时时长（或者超时机制的存在）作任何要求。
+
 #+BEGIN_QUOTE
-A client or server that wishes to time out *SHOULD* issue a graceful close on the connection. Implementations SHOULD constantly monitor open connections for a received closure signal and respond to it as appropriate, since prompt closure of both sides of a connection enables allocated system resources to be reclaimed.
+A client or server that wishes to time out *SHOULD* issue a graceful close on the connection. Implementations *SHOULD* constantly monitor open connections for a received closure signal and respond to it as appropriate, since prompt closure of both sides of a connection enables allocated system resources to be reclaimed.
 #+END_QUOTE
+
+希望超时的客户端或服务器 *应该* 在连接中发出一个优雅关闭信号。所有 HTTP 实现 *应该* 不断监听
 
 #+BEGIN_QUOTE
 A client, server, or proxy *MAY* close the transport connection at any time. For example, a client might have started to send a new request at the same time that the server has decided to close the "idle" connection. From the server's point of view, the connection is being closed while it was idle, but from the client's point of view, a request is in progress.
