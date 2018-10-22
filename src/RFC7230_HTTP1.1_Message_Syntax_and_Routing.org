@@ -130,7 +130,7 @@ HTTP was created for the World Wide Web (WWW) architecture and has evolved over 
 used to define HTTP.
 #+END_QUOTE
 
-HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支持世界范围内的超文系统的可扩展性。用于定义 HTTP 的术语和句法的产品反映了这一体系结构的方方面面。
+HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支持世界范围内的超文系统的可扩展性。用于定义 HTTP 的术语和句法的产生反映了这一体系结构的方方面面。
 
 ** 2.1 客户端/服务器报文传递 (Client/Server Messaging)
 #+BEGIN_QUOTE
@@ -576,7 +576,7 @@ partial-URI   = relative-part [ "?" query ]
 Each protocol element in HTTP that allows a URI reference will indicate in its ABNF production whether the element allows any form of reference (URI-reference), only a URI in absolute form (absolute-URI), only the path and optional query components, or some combination of the above. Unless otherwise indicated, URI references are parsed relative to the effective request URI (Section 5.5).
 #+END_QUOTE
 
-HTTP 中的每一个允许 URI 引用的协议元素都会在它的 ABNF 产品中提及到这个元素允许哪种形式的引用：
+HTTP 中的每一个允许 URI 引用的协议元素都会在它的 ABNF 产生中提及到这个元素允许哪种形式的引用：
 1. 任何形式的引用（URI-reference）
 2. 只能是绝对形式的引用（absolute-URI）
 3. 只能是路径（path）和可选的查询（query）组成部分
@@ -1877,12 +1877,12 @@ When making a CONNECT request to establish a tunnel through one or more proxies,
 CONNECT www.example.com:80 HTTP/1.1
 #+END_EXAMPLE
 
-5.3.4 星号形式 (asterisk-form)
+*** 5.3.4 星号形式 (asterisk-form)
 :PROPERTIES:
 :ID:       cc6e89fa-287d-4564-b6e3-8c2cfc26d08a
 :END:
 #+BEGIN_QUOTE
-The asterisk-form of request-target is only used for a server-wide OPTIONS request (Section 4.3.7 of [RFC7231]).
+The =asterisk-form= of =request-target= is only used for a server-wide OPTIONS request (Section 4.3.7 of [RFC7231]).
 #+END_QUOTE
 
 请求目标的 =asterisk-form= 形式只用于服务器范围内的 OPTIONS 请求（[[https://tools.ietf.org/html/rfc7231#section-4.3.7][【RFC7231】章节 4.3.7]]）。
@@ -2746,19 +2746,29 @@ This specification only defines the protocol name "HTTP" for use by the family o
 A =#rule= extension to the ABNF rules of [RFC5234] is used to improve readability in the definitions of some header field values.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A construct "#" is defined, similar to "*", for defining comma-delimited lists of elements. The full form is "<n>#<m>element" indicating at least <n> and at most <m> elements, each separated by a single comma (",") and optional whitespace (OWS).
-#+END_QUOTE
+=#rule= 是对[[https://tools.ietf.org/html/5234][【RFC5234】ABNF 规则]]的扩展，用于提高某些报头域值的定义可读性。
 
 #+BEGIN_QUOTE
-In any production that uses the list construct, a sender *MUST NOT* generate empty list elements. In other words, a sender MUST generate lists that satisfy the following syntax:
+A construct "#" is defined, similar to "*", for defining comma-delimited lists of elements. The full form is "<n>#<m>element" indicating at least <n> and at most <m> elements, each separated by a single comma (",") and optional whitespace (=OWS=).
 #+END_QUOTE
+
+定义了一个 =#= 结构，类似于 =*=，用于定义以英文逗号分隔的元素列表。完整的形式是 =<n>#<m>element=，表明至少 =<n>= 个，至多 =<m>= 个 =element=，每个 =element= 以单个逗号（","）以及可选的空格（=OWS=）分隔。
+
+#+BEGIN_QUOTE
+In any production that uses the list construct, a sender *MUST NOT* generate empty list elements. In other words, a sender *MUST* generate lists that satisfy the following syntax:
+#+END_QUOTE
+
+在任何使用列表结构的场景中，发送端 *禁止* 生成一个空的列表元素。也就是说，发送端 *必须* 生成一个满足下列句法的列表：
 
 #+BEGIN_SRC text
   1#element => element *( OWS "," OWS element )
 #+END_SRC
 
+#+BEGIN_QUOTE
 and:
+#+END_QUOTE
+
+以及：
 
 #+BEGIN_SRC text
   #element => [ 1#element ]
@@ -2768,13 +2778,17 @@ and:
 and for n >= 1 and m > 1:
 #+END_QUOTE
 
+对于 n >= 1 并且 m > 1，有：
+
 #+BEGIN_SRC text
   <n>#<m>element => element <n-1>*<m-1>( OWS "," OWS element )
 #+END_SRC
 
 #+BEGIN_QUOTE
-For compatibility with legacy list rules, a recipient MUST parse and ignore a reasonable number of empty list elements: enough to handle common mistakes by senders that merge values, but not so much that they could be used as a denial-of-service mechanism. In other words, a recipient MUST accept lists that satisfy the following syntax:
+For compatibility with legacy list rules, a recipient *MUST* parse and ignore a reasonable number of empty list elements: enough to handle common mistakes by senders that merge values, but not so much that they could be used as a [[https://en.wikipedia.org/wiki/Denial-of-service_attack][denial-of-service]] mechanism. In other words, a recipient *MUST* accept lists that satisfy the following syntax:
 #+END_QUOTE
+
+为了兼容历史遗留的列表规则，接收端 *必须* 解析（Parse）并且忽略一个合理数量的空列表元素：足以处理发送端合并域值时出现的常见的错误，但不足以处理用作[[https://zh.wikipedia.org/wiki/%25E9%2598%25BB%25E6%2596%25B7%25E6%259C%258D%25E5%258B%2599%25E6%2594%25BB%25E6%2593%258A][拒绝服务攻击]]。也就是说，接收端 *必须* 接受满足以下句法的列表：
 
 #+BEGIN_SRC text
   #element => [ ( "," / element ) *( OWS "," [ OWS element ] ) ]
@@ -2786,6 +2800,8 @@ For compatibility with legacy list rules, a recipient MUST parse and ignore a re
 Empty elements do not contribute to the count of elements present. For example, given these ABNF productions:
 #+END_QUOTE
 
+空元素不计入元素的数目，例如，给定以下 ABNF 规则：
+
 #+BEGIN_SRC text
   example-list      = 1#example-list-elmt
   example-list-elmt = token ; see Section 3.2.6 
@@ -2794,6 +2810,8 @@ Empty elements do not contribute to the count of elements present. For example, 
 #+BEGIN_QUOTE
 Then the following are valid values for example-list (not including the double quotes, which are present for delimitation only):
 #+END_QUOTE
+
+那么，以下都是合乎 =example-list= 规则的值（不包含双引号，双引号仅用于对数值进行定界）：
 
 #+BEGIN_EXAMPLE
   "foo,bar"
@@ -2805,6 +2823,8 @@ Then the following are valid values for example-list (not including the double q
 In contrast, the following values would be invalid, since at least one non-empty element is required by the example-list production:
 #+END_QUOTE
 
+作为对比，以下都是不合乎 =example-list= 规则的值，这是因为 =example-list= 要求至少存在一个非空元素。
+
 #+BEGIN_EXAMPLE
   ""
   ","
@@ -2814,6 +2834,8 @@ In contrast, the following values would be invalid, since at least one non-empty
 #+BEGIN_QUOTE
 Appendix B shows the collected ABNF for recipients after the list constructs have been expanded.
 #+END_QUOTE
+
+[[id:8a089adc-ec59-476e-92ed-a59470f939d4][附录 B]] 展示了在加入列表结构以后，接收端的 ABNF 规则集合。 
 
 * 8 INAN 注意事项（IANA Considerations）
 ** 8.1 报头域注册 (Header Field Registration)
@@ -2921,7 +2943,10 @@ The message/http type can be used to enclose a single HTTP request or response m
 ** 11.1 规范性参考文档 (Normative References)
 ** 11.2 信息性参考文档 (Informative References)
 * 附录 A：HTTP 版本历史（Appendix A. HTTP Version History）
-* 附录 B：收集的 ABNF（Appendx B. Collected ABNF）
+* 附录 B：ABNF 规则集合（Appendx B. Collected ABNF）
+:PROPERTIES:
+:ID:       8a089adc-ec59-476e-92ed-a59470f939d4
+:END:
 * 索引（Index）
 
 * Footnotes
