@@ -739,7 +739,7 @@ The normal procedure for parsing an HTTP message is to read the start-line into 
 A recipient *MUST* parse an HTTP message as a sequence of octets in an encoding that is a superset of US-ASCII [[[https://en.wikipedia.org/wiki/ASCII][USASCII]]]. Parsing an HTTP message as a stream of Unicode characters, without regard for the specific encoding, creates security vulnerabilities due to the varying ways that string processing libraries handle invalid multibyte character sequences that contain the octet LF (%x0A). String-based parsers can only be safely used within protocol elements after the element has been extracted from the message, such as within a header field-value after message parsing has delineated the individual fields.
 #+END_QUOTE
 
-接收端 *必须* 将 HTTP 报文解析（Parse）为以 [[https://baike.baidu.com/item/ASCII/309296?fr=aladdin][US-ASCII]] 的超集来编码的八位组（Octet）序列。没有考虑具体的编码（Encoding）就将报文解释为 Unicode 字符会引发[[https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats][安全漏洞]]，这是因为字符串处理库处理包含 =LF= (%x0A) 非法多字节字符序列的方式有很多种。基于字符串的解释器只能工作在报文提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出报文里所有头域（Header Fields）后，对报头中的一个域值（Field-value）使用基于字符串的解释器是可以保证安全的。
+接收端 *必须* 将 HTTP 报文解析（Parse）为以 [[https://baike.baidu.com/item/ASCII/309296?fr=aladdin][US-ASCII]] 的超集来编码的八位组（Octet）序列。没有考虑具体的编码（Encoding）就将报文解释为 Unicode 字符会引发[[https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats][安全漏洞]]，这是因为字符串处理库处理包含 =LF= (%x0A) 非法多字节字符序列的方式有很多种。基于字符串的解析器（解析器）只能工作在报文提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出报文里所有头域（Header Fields）后，对报头中的一个域值（Field-value）使用基于字符串的解释器是可以保证安全的。
 
 #+BEGIN_QUOTE
 An HTTP message can be parsed as a stream for incremental processing or forwarding downstream. However, recipients cannot rely on incremental delivery of partial messages, since some implementations will buffer or delay message forwarding for the sake of network efficiency, security checks, or payload transformations.
@@ -757,7 +757,7 @@ A sender *MUST NOT* send whitespace between the start-line and the first header 
 The presence of such whitespace in a request might be an attempt to trick a server into ignoring that field or processing the line after it as a new request, either of which might result in a security vulnerability if other implementations within the request chain interpret the same message differently. Likewise, the presence of such whitespace in a response might be ignored by some clients or cause others to cease parsing.
 #+END_QUOTE
 
-在一个请求报文中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些报头域或忽略处理某些行，哄骗服务器使其认为这个请求是一个新请求（New Request）。如果在请求链路中其他实现（Implementation）对这种带有非法空格的报文的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应报文中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端终止解析（Parse）。
+在一个请求报文中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些报头域或忽略处理某些行，欺骗服务器使其认为这个请求是一个新请求（New Request）。如果在请求链路中其他实现（Implementation）对这种带有非法空格的报文的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应报文中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端终止解析（Parse）。
 
 ** 3.1 起始行 (Start Line)
 #+BEGIN_QUOTE
@@ -3180,25 +3180,33 @@ Recipients ought to carefully limit the extent to which they process other proto
 
 接收端应该小心地限制其处理的除上述以外的其他协议元素的大小，包括（但不限于）请求方法，响应状态短语，报头域的名称，数字值以及报文分块。
 
-** 9.4 响应分裂 (Response Splitting)
+** 9.4 响应分割 (Response Splitting)
 :PROPERTIES:
 :ID:       BE45ADD0-37C3-4726-82F1-AD06D51FFC11
 :END:
 #+BEGIN_QUOTE
-Response splitting (a.k.a, CRLF injection) is a common technique, used in various attacks on Web usage, that exploits the line-based nature of HTTP message framing and the ordered association of requests to responses on persistent connections [Klein]. This technique can be particularly damaging when the requests pass through a shared cache.
+[[https://en.wikipedia.org/wiki/HTTP_response_splitting][Response splitting]] (a.k.a, CRLF injection) is a common technique, used in various attacks on Web usage, that exploits the line-based nature of HTTP message framing and the ordered association of requests to responses on persistent connections [Klein]. This technique can be particularly damaging when the requests pass through a shared cache.
 #+END_QUOTE
+
+响应分割（Response Splitting，也称为“CRLF 注入”）是一种用于对网页进行各种攻击的常见的技术，它利用了 HTTP 基于行来进行报文分帧以及在持久连接中请求与响应的顺序关联的性质【[[http://packetstormsecurity.com/papers/general/whitepaper_httpresponse.pdf][Klein]]】。当请求穿过一个共享缓存的时候，这种技术特别具有破坏性。
 
 #+BEGIN_QUOTE
 Response splitting exploits a vulnerability in servers (usually within an application server) where an attacker can send encoded data within some parameter of the request that is later decoded and echoed within any of the response header fields of the response. If the decoded data is crafted to look like the response has ended and a subsequent response has begun, the response has been split and the content within the apparent second response is controlled by the attacker. The attacker can then make any other request on the same persistent connection and trick the recipients (including intermediaries) into believing that the second half of the split is an authoritative answer to the second request.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-For example, a parameter within the request-target might be read by an application server and reused within a redirect, resulting in the same parameter being echoed in the Location header field of the response. If the parameter is decoded by the application and not properly encoded when placed in the response field, the attacker can send encoded CRLF octets and other content that will make the application's single response look like two or more responses.
-#+END_QUOTE
+响应分割利用了服务器（通常在一个应用服务器内）的一个弱点，攻击者能够在某些请求参数里带有经过编码的数据，而这些参数并不会在服务器立即解码，而是回显（echoe）至对应的响应报文的报头域里。如果解码数据被精心设计得看起来像是该响应报文的结束以及后续的报文开始，那么该响应报文就被“分割”为前后两个响应报文，并且后一个“响应报文”（表面上看像是一个响应报文的原响应报文的后半部分）受控于攻击者。然后攻击者就能够在同一个持久连接中做任何请求并欺骗接收端（包括中间人）让它们相信分割过的后半部分是第二个请求的权威应答（Authoritative Answer）。
 
 #+BEGIN_QUOTE
-A common defense against response splitting is to filter requests for data that looks like encoded CR and LF (e.g., "%0D" and "%0A"). However, that assumes the application server is only performing URI decoding, rather than more obscure data transformations like charset transcoding, XML entity translation, base64 decoding, sprintf reformatting, etc. A more effective mitigation is to prevent anything other than the server's core protocol libraries from sending a CR or LF within the header section, which means restricting the output of header fields to APIs that filter for bad octets and not allowing application servers to write directly to the protocol stream.
+For example, a parameter within the request-target might be read by an application server and reused within a redirect, resulting in the same parameter being echoed in the =Location= header field of the response. If the parameter is decoded by the application and not properly encoded when placed in the response field, the attacker can send encoded =CRLF= octets and other content that will make the application's single response look like two or more responses.
 #+END_QUOTE
+
+例如，在请求目标内的一个参数可能会被一个应用服务器所读取，并复用在一个重定义响应内，导致同一个参数被回显到响应报文的 =Location= 报头域内。如果该参数由客户端应用负责解码，而且服务器在将该参数放置到响应报头域的时候没有正确地对其编码，那么，攻击者能够发送多个编码过的 =CRLF= 字节以及其他内容来让该应用的单一响应报文看起来像是两个或多个响应报文。
+
+#+BEGIN_QUOTE
+A common defense against response splitting is to filter requests for data that looks like encoded =CR= and =LF= (e.g., "%0D" and "%0A"). However, that assumes the application server is only performing URI decoding, rather than more obscure data transformations like charset transcoding, XML entity translation, base64 decoding, =sprintf= reformatting, etc. A more effective mitigation is to prevent anything other than the server's core protocol libraries from sending a =CR= or =LF= within the header section, which means restricting the output of header fields to APIs that filter for bad octets and not allowing application servers to write directly to the protocol stream.
+#+END_QUOTE
+
+对抗响应分割的一个常见方式是去过滤掉请求报文中看起来像是经过编码的 CR 以及 LF 的数据（例如，"%0D" 和 "%0A"）。但是，假设应用服务器仅执行 URI 解码（URI Decoding），而不是更加模糊的数据转换，例如，字符集转码（Charset Transcoding），XML 实体翻译（XML Entity Translation），base64 解码，=sprintf= 字符串格式转换（sprintf Reformatting）等等，一个更有效的缓解方式是阻止任何除了服务器自身的核心协议库以外程序在报头块中发送一个 =CR= 或者 =LF=，这样做意味着将对报头域的输出限制为只能使用 API 的方式，通过这些 API 来过滤掉不好的字节，同时不允许应用服务器越过 API 将数据直接写入到协议流。
 
 ** 9.5 请求走私 (Request Smuggling)
 :PROPERTIES:
