@@ -37,6 +37,7 @@ Information about the current status of this document, any errata, and how to pr
 * 1 引言（Introduction）
 :PROPERTIES:
 :HEADLINE-NUMBERING: 1
+:ID:       bab92860-dc6d-4f65-8eec-9899c22d68c7
 :END:
 #+BEGIN_QUOTE
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level request/response protocol that uses extensible semantics and self-descriptive message payloads for flexible interaction with network-based hypertext information systems. This document is the first in a series of documents that collectively form the HTTP/1.1 specification:
@@ -585,6 +586,9 @@ HTTP 中的每一个允许 URI 引用的协议元素都会在它的 ABNF 产生�
 除非另有说明，URI 引用会解析（Parse）为相关的“实际请求 URI”（[[id:3265c21d-0d3b-4776-8e28-38278d168779][章节 5.5]]）。
 
 *** 2.7.1 http URI Scheme
+:PROPERTIES:
+:ID:       3a2bda95-617a-4b5f-a1f6-21baa76e8a90
+:END:
 #+BEGIN_QUOTE
 The "http" URI scheme is hereby defined for the purpose of minting identifiers according to their association with the hierarchical namespace governed by a potential HTTP origin server listening for TCP ([RFC0793]) connections on a given port.
 #+END_QUOTE
@@ -603,7 +607,7 @@ The origin server for an "http" URI is identified by the authority component, wh
 
 如上所示，对于一个“http” URI，源服务器被标记到 =authority= 组件里，=authority= 包含一个主机（host）标识和一个可选的 TCP 端口（[[https://tools.ietf.org/html/rfc3986#section-3.2.2][【RFC3986】，章节 3.2.2]]）。=path= 组件和可选的 =query= 组件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 =fragment= 组件允许间接标记一个次要资源（Secondary Resource），不依赖于 URI scheme，见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]] 。
 
-（译注：按照[[https://tools.ietf.org/html/rfc3986#section-3.2][【RFC3986】章节 3.2]] 的解释，Authority 是“管理机构”的意思，由域名或 IP，加上一个可选的端口组成，通俗的讲，它的作用是相当于一个房屋的门牌，通过找门牌就可以找到这一间房屋。而 Path 相当于从房屋大门走到特定房间的路径。另外，Authority 除了“权威、权力”的意思以外，在其他文库管理方面还有其他有趣的意思[fn:2]哦）
+（译注：按照[[https://tools.ietf.org/html/rfc3986#section-3.2][【RFC3986】章节 3.2]] 的解释，Authority 是“管理机构”的意思，由域名或 IP，加上一个可选的端口组成，通俗的讲，它的作用是相当于一个房屋的门牌，通过找门牌就可以找到这一间房屋。而 Path 相当于从房屋大门走到特定房间的路径。另外，Authority 除了“权威、权力、当局”的意思以外，在其他文库管理方面还有其他有趣的意思[fn:2]哦）
 
 （译注：component 即组件，代表组成一个完整 URI 的某个单元。）
 
@@ -642,9 +646,12 @@ Although HTTP is independent of the transport protocol, the "http" scheme is spe
 The URI generic syntax for authority also includes a deprecated =userinfo= subcomponent ([RFC3986], Section 3.2.1) for including user authentication information in the URI. Some implementations make use of the =userinfo= component for internal configuration of authentication information, such as within command invocation options, configuration files, or bookmark lists, even though such usage might expose a user identifier or password. A sender *MUST NOT* generate the =userinfo= subcomponent (and its "@" delimiter) when an "http" URI reference is generated within a message as a request target or header field value. Before making use of an "http" URI reference received from an untrusted source, a recipient *SHOULD* parse for =userinfo= and treat its presence as an error; it is likely being used to obscure the authority for the sake of phishing attacks.
 #+END_QUOTE
 
-在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 =userinfo= 子组件（见[[https://tools.ietf.org/html/rfc3986#section-3.2.1][【RFC3986】章节 3.2.1]]），用于包含用户信息到 URI 里。某些实现将 =userinfo= 组件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 报文，包含以 =http= URI 引用作为一个请求目标或者报文头域里的值（例如头域 =Location=）时，发送端 *不能* 生成 =userinfo= 子组件（以及其“@”分隔符）。在使用一个接收自一个非受信的源的 =http= URI 引用时，接收者 *应当* 对 =userinfo= 进行解析（Parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（Phishing Attach）的威胁。
+在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 =userinfo= 子组件（见[[https://tools.ietf.org/html/rfc3986#section-3.2.1][【RFC3986】章节 3.2.1]]），用于包含用户信息到 URI 里。某些实现将 =userinfo= 组件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 报文，包含以 =http= URI 引用作为一个请求目标或者报文头域里的值（例如头域 =Location=）时，发送端 *禁止* 生成 =userinfo= 子组件（以及其“@”分隔符）。在使用一个接收自一个非受信的源的 =http= URI 引用时，接收者 *应当* 对 =userinfo= 进行解析（Parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（Phishing Attach）的威胁。
 
 *** 2.7.2 https URI Scheme
+:PROPERTIES:
+:ID:       25028231-5e21-44b9-ba0c-2f014e5ffcfd
+:END:
 #+BEGIN_QUOTE
 The "https" URI scheme is hereby defined for the purpose of minting identifiers according to their association with the hierarchical namespace governed by a potential HTTP origin server listening to a given TCP port for TLS-secured connections ([RFC5246]).
 #+END_QUOTE
@@ -925,6 +932,9 @@ All defined header fields ought to be registered with [[https://www.iana.org/][I
 所有已定义的报头域都应该被注册到 IANA 的 “报文头”（Message Headers）注册表中，详细描述见【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-8.3][章节 8.3]]。
 
 *** 3.2.2 域的顺序 (Field Order)
+:PROPERTIES:
+:ID:       f5f69e77-1403-4663-852e-b507dcd14a85
+:END:
 #+BEGIN_QUOTE
 The order in which header fields with differing field names are received is not significant. However, it is good practice to send header fields that contain control data first, such as =Host= on requests and =Date= on responses, so that implementations can decide when not to handle a message as early as possible. A server *MUST NOT* apply a request to the target resource until the entire request header section is received, since later header fields might include conditionals, authentication credentials, or deliberately misleading duplicate header fields that would impact request processing.
 #+END_QUOTE
@@ -1214,6 +1224,9 @@ A server that receives a request message with a transfer coding it does not unde
 服务器接收到一个带有 =Transfer-Encoding= 的请求报文，但并不理解某个传输编码值的时候，*应该* 响应一个带有 =501 (Not Implemented)= 状态码的报文。
 
 *** 3.3.2 内容长度 (Content-Length)
+:PROPERTIES:
+:ID:       7b3e90b9-3ae5-402b-922c-2342d361c79f
+:END:
 #+BEGIN_QUOTE
 When a message does not have a =Transfer-Encoding= header field, a =Content-Length= header field can provide the anticipated size, as a decimal number of octets, for a potential payload body. For messages that do include a payload body, the =Content-Length= field-value provides the framing information necessary for determining where the body (and message) ends. For messages that do not include a payload body, the =Content-Length= indicates the size of the selected representation ([[https://tools.ietf.org/html/rfc7231#section-3][Section 3]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]).
 #+END_QUOTE
@@ -1684,6 +1697,9 @@ Since the TE header field only applies to the immediate connection, a sender of 
 因为报头域 =TE= 仅应用于直接连接（Immediate Connection），因此，为了避免报头域 =TE= 被中间人转发出去（不符合 TE 的语义），=TE= 的发送端 *必须* 还要在 =Connection= 报头域（见[[https://tools.ietf.org/html/rfc7230#section-6.1][章节 6.1]]）里发送一个 "TE" 连接选项（Connection Option）。
 
 ** 4.4 Trailer
+:PROPERTIES:
+:ID:       5ecf5800-1004-4acb-ba25-8772abdecd5a
+:END:
 #+BEGIN_QUOTE
 When a message includes a message body encoded with the chunked transfer coding and the sender desires to send metadata in the form of trailer fields at the end of the message, the sender *SHOULD* generate a =Trailer= header field before the message body to indicate which fields will be present in the trailers. This allows the recipient to prepare for receipt of that metadata before it starts processing the body, which is useful if the message is being streamed and the recipient wishes to confirm an integrity check on the fly.
 #+END_QUOTE
@@ -1741,15 +1757,15 @@ If the client has a cache [RFC7234] and the request can be satisfied by it, then
 If the request is not satisfied by a cache, then a typical client will check its configuration to determine whether a proxy is to be used to satisfy the request. Proxy configuration is implementation-dependent, but is often based on URI prefix matching, selective authority matching, or both, and the proxy itself is usually identified by an "http" or "https" URI. If a proxy is applicable, the client connects inbound by establishing (or reusing) a connection to that proxy.
 #+END_QUOTE
 
-如果缓存没有满足该请求，那么一个典型的客户端将会检验自身的配置来决定是否需要使用代理（Proxy）来满足该请求。代理配置是依赖于实现的（Implementation-dependent），但是通常基于 URI 前缀匹配（URI Prefix Matching）、选择性的 =authority= 匹配，或者两者皆有。另外，代理自身通常是通过一个 "http" 或者 "https" URI 来标识的。如果代理是适用的，那么客户端通过建立（或复用）与该代理的连接来进行入站连接（Connect Inbound）。
+如果缓存没有满足该请求，那么一个典型的客户端将会检验自身的配置来决定是否需要使用代理（Proxy）来满足该请求。代理配置是依赖于实现的（Implementation-dependent），但是通常基于 URI 前缀匹配（URI Prefix Matching）、选择的权威机构匹配（Selective Authority Matching），或者两者皆有。另外，代理自身通常是通过一个 "http" 或者 "https" URI 来标识的。如果代理是适用的，那么客户端通过建立（或复用）与该代理的连接来进行入站连接（Connect Inbound）。
 
 #+BEGIN_QUOTE
-If no proxy is applicable, a typical client will invoke a handler routine, usually specific to the target URI's scheme, to connect directly to an authority for the target resource. How that is accomplished is dependent on the target URI scheme and defined by its associated specification, similar to how this specification defines origin server access for resolution of the "http" (Section 2.7.1) and "https" (Section 2.7.2) schemes.
+If no proxy is applicable, a typical client will invoke a handler routine, usually specific to the target URI's scheme, to connect directly to an =authority= for the target resource. How that is accomplished is dependent on the target URI scheme and defined by its associated specification, similar to how this specification defines origin server access for resolution of the "http" (Section 2.7.1) and "https" (Section 2.7.2) schemes.
 #+END_QUOTE
 
-如果没有适用的代理，那么一个典型的客户端将会执行一个处理程序例程，这个例程通常是针对该目标 URI scheme 的，来连接到一个指向到目标资源的 =authority=。
+如果没有适用的代理，那么客户端通常会执行一个处理程序例程，这个例程通常是针对该目标 URI scheme 的，来连接到一个指向到目标资源的 =authority=。这个程序例程如何才算是完成取决于目标 URI 的 scheme 以及定义该 scheme 的相关规范，类似于本规范如何定义对 "http" 和 "https" 这两种 scheme 的解析来访问源服务器。
 
-（译注：=authority= 是一个 URI 的组成部分，表现为一个服务的 DNS 主机名称或者是 IP 地址。如果该服务不是使用默认端口的话，=authority= 还会包含具体的端口号，其中 "http" scheme 的默认端口是 80，"https" scheme 的默认端口是 443。而 =host= 就是一个服务的 DNS 主机名称或者 IP 地址，=host= 并不包含端口号。也就是说：当使用默认端口时，=authority = host=；当不使用默认端口时，=authority = host + port=，两者并不等同。因此，这里将 "Authority" 翻译为“主机”不太合适，索性就不翻译了。）
+（译注：=authority= 是一个 URI 的组成部分，表现为一个服务的 DNS 主机名称或者是 IP 地址。如果该服务不是使用默认端口的话，=authority= 还会包含具体的端口号，其中 "http" scheme 的默认端口是 80，"https" scheme 的默认端口是 443。而 =host= 就是一个服务的 DNS 主机名称或者 IP 地址，=host= 并不包含端口号。也就是说：当使用默认端口时，=authority = host=；当不使用默认端口时，=authority = host + port=，两者并不等同。因此，这里将 "Authority" 翻译为“主机”不合适，索性就不翻译了。）
 
 #+BEGIN_QUOTE
 HTTP requirements regarding connection management are defined in Section 6.
@@ -2126,6 +2142,9 @@ An intermediary *MUST NOT* forward a message to itself unless it is protected fr
 中间人 *禁止* 转发一个报文到自身，除非它具有避免无限请求循环的保护机制。通常情况下，中间人应该了解它自身的服务器名称，包括任何别名、局部变种、文本性的 IP 地址，并将这些信息直接响应到这种请求中去。
 
 *** 5.7.1 Via
+:PROPERTIES:
+:ID:       4a38d632-e412-4122-8ae5-0d58ab8f3d6a
+:END:
 #+BEGIN_QUOTE
 The "Via" header field indicates the presence of intermediate protocols and recipients between the user agent and the server (on requests) or between the origin server and the client (on responses), similar to the "Received" header field in email (Section 3.6.7 of [RFC5322]). =Via= can be used for tracking message forwards, avoiding request loops, and identifying the protocol capabilities of senders along the request/response chain.
 #+END_QUOTE
@@ -2839,6 +2858,9 @@ Appendix B shows the collected ABNF for recipients after the list constructs hav
 
 * 8 INAN 注意事项（IANA Considerations）
 ** 8.1 报头域注册 (Header Field Registration)
+:PROPERTIES:
+:ID:       739d5a3f-9ed6-4667-9ac5-d0ab49951177
+:END:
 #+BEGIN_QUOTE
 HTTP header fields are registered within the "Message Headers" registry maintained at <http://www.iana.org/assignments/message-headers/>.
 #+END_QUOTE
@@ -2849,14 +2871,14 @@ This document defines the following HTTP header fields, so the "Permanent Messag
 
 | Header Field Name | Protocol | Status   | Reference     |
 |-------------------+----------+----------+---------------|
-| Connection        | http     | standard | Section 6.1   |
-| Content-Length    | http     | standard | Section 3.3.2 |
-| Host              | http     | standard | Section 5.4   |
-| TE                | http     | standard | Section 4.3   |
-| Trailer           | http     | standard | Section 4.4   |
-| Transfer-Encoding | http     | standard | Section 3.3.1 |
-| Upgrade           | http     | standard | Section 6.7   |
-| Via               | http     | standard | Section 5.7.1 |
+| Connection        | http     | standard | [[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][Section 6.1]]   |
+| Content-Length    | http     | standard | [[id:7b3e90b9-3ae5-402b-922c-2342d361c79f][Section 3.3.2]] |
+| Host              | http     | standard | [[id:f6cd08fd-597f-4b1d-98ad-a1730125abdc][Section 5.4]]   |
+| TE                | http     | standard | [[id:2BA944C9-6215-4B88-8F5F-D5CACA865191][Section 4.3]]   |
+| Trailer           | http     | standard | [[id:5ecf5800-1004-4acb-ba25-8772abdecd5a][Section 4.4]]   |
+| Transfer-Encoding | http     | standard | [[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][Section 3.3.1]] |
+| Upgrade           | http     | standard | [[id:62632d23-475d-4daa-8efb-3206d370573a][Section 6.7]]   |
+| Via               | http     | standard | [[id:4a38d632-e412-4122-8ae5-0d58ab8f3d6a][Section 5.7.1]] |
 
 #+BEGIN_QUOTE
 Furthermore, the header field-name "Close" has been registered as "reserved", since using that name as an HTTP header field might conflict with the "close" connection option of the Connection header field (Section 6.1).
@@ -2864,7 +2886,7 @@ Furthermore, the header field-name "Close" has been registered as "reserved", si
 
 | Header Field Name | Protocol | Status   | Reference   |
 |-------------------+----------+----------+-------------|
-| Close             | http     | reserved | Section 8.1 |
+| Close             | http     | reserved | [[id:739d5a3f-9ed6-4667-9ac5-d0ab49951177][Section 8.1]] |
 
 #+BEGIN_QUOTE
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
@@ -2881,8 +2903,8 @@ This document defines the following URI schemes, so the "Permanent URI Schemes" 
 
 | URI Scheme | Description                        | Reference     |
 |------------+------------------------------------+---------------|
-| http       | Hypertext Transfer Prototol        | Section 2.7.1 |
-| https      | Hypertext Transfer Prototol Secure | Section 2.7.2 |
+| http       | Hypertext Transfer Prototol        | [[id:3a2bda95-617a-4b5f-a1f6-21baa76e8a90][Section 2.7.1]] |
+| https      | Hypertext Transfer Prototol Secure | [[id:25028231-5e21-44b9-ba0c-2f014e5ffcfd][Section 2.7.2]] |
 
 ** 8.3 互联网媒体类型注册 (Internet Media Type Registration)
 #+BEGIN_QUOTE
@@ -2900,7 +2922,60 @@ This document serves as the specification for the Internet media types "message/
 #+BEGIN_QUOTE
 The message/http type can be used to enclose a single HTTP request or response message, provided that it obeys the MIME restrictions for all "message" types regarding line length and encodings.
 #+END_QUOTE
+
+#+BEGIN_SRC text
+  Type name: message
+  Subtype name: http
+  Required parameters: N/A
+  Optional parameters: version, msgtype
+    version: The HTTP-version number of the enclosed message (e.g., "1.1"). If not present, the version can be determined from the first line of the body.
+    msgtype: The message type — "request" or "response". If not present, the type can be determined from the first line of the body.
+  Encoding considerations: only "7bit", "8bit", or "binary" are permitted
+  Security considerations: see Section 9
+  Interoperability considerations: N/A
+  Published specification: This specification (see Section 8.3.1).
+  Applications that use this media type: N/A
+  Fragment identifier considerations: N/A
+  Additional information: 
+    Magic number(s): N/A
+    Deprecated alias names for this type: N/A
+    File extension(s): N/A
+    Macintosh file type code(s): N/A
+  Person and email address to contact for further information: See Authors' Addresses section.
+  Intended usage: COMMON
+  Restrictions on usage: N/A
+  Author: See Authors' Addresses section.
+  Change controller: IESG
+#+END_SRC
 *** 8.3.2 Internet Media Type application/http
+#+BEGIN_QUOTE
+The application/http type can be used to enclose a pipeline of one or more HTTP request or response messages (not intermixed).
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Type name: application
+  Subtype name: http
+  Required parameters: N/A
+  Optional parameters: version, msgtype
+    version: The HTTP-version number of the enclosed messages (e.g., "1.1"). If not present, the version can be determined from the first line of the body.
+    msgtype: The message type — "request" or "response". If not present, the type can be determined from the first line of the body.
+  Encoding considerations: HTTP messages enclosed by this type are in "binary" format; use of an appropriate Content-Transfer-Encoding is required when transmitted via email.
+  Security considerations: see Section 9
+  Interoperability considerations: N/A
+  Published specification: This specification (see Section 8.3.2).
+  Applications that use this media type: N/A
+  Fragment identifier considerations: N/A
+  Additional information: 
+    Deprecated alias names for this type: N/A
+    Magic number(s): N/A
+    File extension(s): N/A
+    Macintosh file type code(s): N/A
+  Person and email address to contact for further information: See Authors' Addresses section.
+  Intended usage: COMMON
+  Restrictions on usage: N/A
+  Author: See Authors' Addresses section.
+  Change controller: IESG
+#+END_SRC
 ** 8.4 传输编码注册 (Transfer Coding Registry)
 :PROPERTIES:
 :ID:       DA2ABD5F-DFF0-408B-93D4-73D21E20B3CF
@@ -2937,12 +3012,12 @@ The "HTTP Transfer Coding Registry" has been updated with the registrations belo
 
 | Name       | Description                                                                     | Reference     |
 |------------+---------------------------------------------------------------------------------+---------------|
-| chunked    | Transfer in a series of chunks                                                  | Section 4.1   |
-| compress   | UNIX "compress" data format [Welch]                                             | Section 4.2.1 |
-| deflate    | "deflate" compressed data ([RFC1951]) inside the "zlib" data format ([RFC1950]) | Section 4.2.2 |
-| gzip       | GZIP file format [RFC1952]                                                      | Section 4.2.3 |
-| x-compress | Deprecated (alias for compress)                                                 | Section 4.2.1 |
-| x-gzip     | Deprecated (alias for gzip)                                                     | Section 4.2.3 |
+| chunked    | Transfer in a series of chunks                                                  | [[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][Section 4.1]]   |
+| compress   | UNIX "compress" data format [Welch]                                             | [[id:a785a05f-6fdc-44d8-9343-3a66a49cb655][Section 4.2.1]] |
+| deflate    | "deflate" compressed data ([RFC1951]) inside the "zlib" data format ([RFC1950]) | [[id:fa7b432f-071b-4e26-9d2c-8fc1b95b6b64][Section 4.2.2]] |
+| gzip       | GZIP file format [RFC1952]                                                      | [[id:d1579c8b-312c-414b-b421-960669b0d389][Section 4.2.3]] |
+| x-compress | Deprecated (alias for compress)                                                 | [[id:a785a05f-6fdc-44d8-9343-3a66a49cb655][Section 4.2.1]] |
+| x-gzip     | Deprecated (alias for gzip)                                                     | [[id:d1579c8b-312c-414b-b421-960669b0d389][Section 4.2.3]] |
 
 ** 8.5 内容编码注册 (Content Coding Registration)
 #+BEGIN_QUOTE
@@ -2955,11 +3030,11 @@ The "HTTP Content Coding Registry" has been updated with the registrations below
 
 | Name       | Description                                                                     | Reference     |
 |------------+---------------------------------------------------------------------------------+---------------|
-| compress   | UNIX "compress" data format [Welch]                                             | Section 4.2.1 |
-| deflate    | "deflate" compressed data ([RFC1951]) inside the "zlib" data format ([RFC1950]) | Section 4.2.2 |
-| gzip       | GZIP file format [RFC1952]                                                      | Section 4.2.3 |
-| x-compress | Deprecated (alias for compress)                                                 | Section 4.2.1 |
-| x-gzip     | Deprecated (alias for gzip)                                                     | Section 4.2.3 |
+| compress   | UNIX "compress" data format [Welch]                                             | [[id:a785a05f-6fdc-44d8-9343-3a66a49cb655][Section 4.2.1]] |
+| deflate    | "deflate" compressed data ([RFC1951]) inside the "zlib" data format ([RFC1950]) | [[id:fa7b432f-071b-4e26-9d2c-8fc1b95b6b64][Section 4.2.2]] |
+| gzip       | GZIP file format [RFC1952]                                                      | [[id:d1579c8b-312c-414b-b421-960669b0d389][Section 4.2.3]] |
+| x-compress | Deprecated (alias for compress)                                                 | [[id:a785a05f-6fdc-44d8-9343-3a66a49cb655][Section 4.2.1]] |
+| x-gzip     | Deprecated (alias for gzip)                                                     | [[id:d1579c8b-312c-414b-b421-960669b0d389][Section 4.2.3]] |
 
 ** 8.6 升级令牌注册 (Upgrade Token Registry)
 :PROPERTIES:
@@ -2977,12 +3052,12 @@ Each registered protocol name is associated with contact information and an opti
 #+BEGIN_QUOTE
 Registrations happen on a "First Come First Served" basis (see Section 4.1 of [RFC5226]) and are subject to the following rules:
 1. A protocol-name token, once registered, stays registered forever.
-2. The registration MUST name a responsible party for the registration.
-3. The registration MUST name a point of contact.
-4. The registration MAY name a set of specifications associated with that token. Such specifications need not be publicly available.
-5. The registration SHOULD name a set of expected "protocol-version" tokens associated with that token at the time of registration.
-6. The responsible party MAY change the registration at any time. The IANA will keep a record of all such changes, and make them available upon request.
-7. The IESG MAY reassign responsibility for a protocol token. This will normally only be used in the case when a responsible party cannot be contacted.
+2. The registration *MUST* name a responsible party for the registration.
+3. The registration *MUST* name a point of contact.
+4. The registration *MAY* name a set of specifications associated with that token. Such specifications need not be publicly available.
+5. The registration *SHOULD* name a set of expected "protocol-version" tokens associated with that token at the time of registration.
+6. The responsible party *MAY* change the registration at any time. The IANA will keep a record of all such changes, and make them available upon request.
+7. The IESG *MAY* reassign responsibility for a protocol token. This will normally only be used in the case when a responsible party cannot be contacted.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -2996,7 +3071,7 @@ The "HTTP" entry in the upgrade token registry has been updated with the registr
 
 | Value | Description                 | Expected Version Tokens      | Reference   |
 |-------+-----------------------------+------------------------------+-------------|
-| HTTP  | Hypertext Transfer Protocol | any DIGIT.DIGIT (e.g, "2.0") | Section 2.6 |
+| HTTP  | Hypertext Transfer Protocol | any DIGIT.DIGIT (e.g, "2.0") | [[id:d1387674-a388-4ea6-9165-1ded175d90b4][Section 2.6]] |
 
 #+BEGIN_QUOTE
 The responsible party is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
@@ -3010,7 +3085,9 @@ The responsible party is: "IETF (iesg@ietf.org) - Internet Engineering Task Forc
 This section is meant to inform developers, information providers, and users of known security considerations relevant to HTTP message syntax, parsing, and routing. Security considerations about HTTP semantics and payloads are addressed in [RFC7231].
 #+END_QUOTE
 
-** 9.1 建立 Authority (Establishing Authority)
+本章节是打算将已知的与 HTTP 报文句法、解析，以及路由相关的安全注意事项告知开发者、信息提供商，以及用户。关于 HTTP 的语义以及有效载荷的安全注意事项放在[[https://tools.ietf.org/html/rfc7231][【RFC7231】]]处理。
+
+** 9.1 确立权威 (Establishing Authority)
 :PROPERTIES:
 :ID:       901a19cc-8490-4c06-a515-26eb9b66c173
 :END:
@@ -3018,38 +3095,62 @@ This section is meant to inform developers, information providers, and users of 
 HTTP relies on the notion of an authoritative response: a response that has been determined by (or at the direction of) the authority identified within the target URI to be the most appropriate response for that request given the state of the target resource at the time of response message origination. Providing a response from a non-authoritative source, such as a shared cache, is often useful to improve performance and availability, but only to the extent that the source can be trusted or the distrusted response can be safely used.
 #+END_QUOTE
 
+HTTP 提出了一个“权威响应（Authoritative Response）”的概念。权威响应是由请求报文里的目标 URI 所指定的 =authority= （权威机构、官方机构）依据请求所给定的目标资源状态来决定返回的最合适的响应。来自一个非权威来源（Non-authoritative Source）的响应，例如一个共享缓存，对于提升性能和可用性一般有很大作用，但是仅在该来源是受信任的或者该不受信任的响应可以被安全地使用的情况。
+
 #+BEGIN_QUOTE
-Unfortunately, establishing authority can be difficult. For example, phishing is an attack on the user's perception of authority, where that perception can be misled by presenting similar branding in hypertext, possibly aided by userinfo obfuscating the authority component (see Section 2.7.1). User agents can reduce the impact of phishing attacks by enabling users to easily inspect a target URI prior to making an action, by prominently distinguishing (or rejecting) userinfo when present, and by not sending stored credentials and cookies when the referring document is from an unknown or untrusted source.
+译注：
+"Authoritative Response" 译为“权威响应”、“官方响应”，也就是说，这种响应是来自客户端所期望的那一个源服务器的，而且其有效载荷没有被任何中间人修改，编码过的。
+另外，"Authoritative" 是“有权威的，当局的，官方的”的意思，但并没有“授权”、“认证”的意思！某些人将 "Authoritative Response" 译为“授权响应、认证响应”都是错误的，个人认为是弄混了 "authority"，"authentication"，"certification"，"verification" 这几个单词的意思，例如 "certificate authority" 是“认证中心、认证机构”。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-When a registered name is used in the authority component, the "http" URI scheme (Section 2.7.1) relies on the user's local name resolution service to determine where it can find authoritative responses. This means that any attack on a user's network host table, cached names, or name resolution libraries becomes an avenue for attack on establishing authority. Likewise, the user's choice of server for Domain Name Service (DNS), and the hierarchy of servers from which it obtains resolution results, could impact the authenticity of address mappings; DNS Security Extensions (DNSSEC, [RFC4033]) are one way to improve authenticity.
+Unfortunately, establishing authority can be difficult. For example, phishing is an attack on the user's perception of authority, where that perception can be misled by presenting similar branding in hypertext, possibly aided by =userinfo= obfuscating the =authority= component (see Section 2.7.1). User agents can reduce the impact of phishing attacks by enabling users to easily inspect a target URI prior to making an action, by prominently distinguishing (or rejecting) =userinfo= when present, and by not sending stored credentials and cookies when the referring document is from an unknown or untrusted source.
 #+END_QUOTE
+
+不幸的是，确立 authority 不是一个容易的事。例如，钓鱼（Phishing）是一种针对用户对于 authority 的认知（Perception）的攻击，这种认知可能会因为在超文本里出现了相似的品牌（Branding），可能还会辅以 =userinfo= 来对 =authority= 组件进行混淆（见[[id:3a2bda95-617a-4b5f-a1f6-21baa76e8a90][章节 2.7.1]]），从而造成误导。用户代理能够通过提供一种途径，让用户在执行操作之前可以轻易检测某个目标 URI 的真伪，来降低钓鱼攻击的影响。例如，明显区分（或拒绝） =userinfo= 组件的出现，并且当所指向的文档是来自某个未知或不受信任的来源的时候，不对其发送存储在客户端的授权证书和 cookies。
+
+#+BEGIN_QUOTE
+When a registered name is used in the =authority= component, the "http" URI scheme (Section 2.7.1) relies on the user's local name resolution service to determine where it can find authoritative responses. This means that any attack on a user's network host table, cached names, or name resolution libraries becomes an avenue for attack on establishing authority. Likewise, the user's choice of server for Domain Name Service (DNS), and the hierarchy of servers from which it obtains resolution results, could impact the authenticity of address mappings; DNS Security Extensions (DNSSEC, [RFC4033]) are one way to improve authenticity.
+#+END_QUOTE
+
+当某个注册名称用在 =authority= 组件中的时候，"http" URI scheme（[[id:3a2bda95-617a-4b5f-a1f6-21baa76e8a90][章节 2.7.1]]）依靠用户的本地名称解析服务来确定哪里能够找到权威响应（Authoritative Responses）。这意味着任何对于用户的网络主机映射表（Network Host Table）、缓存名称，或者名称解析库的攻击都会成为一个攻击确立权威的隐患。同样，用户选择哪一个服务器用于域名解析服务（Domain Name Service, DNS），以及其获取域名解析结果的服务器所在层级，都有可能影响到地址映射的可靠性。DNS 安全性扩展（DNSSEC，DNS Security Extensions，【[[https://tools.ietf.org/html/rfc4033][RFC4033]]】）是一种提高可靠性的方式。
 
 #+BEGIN_QUOTE
 Furthermore, after an IP address is obtained, establishing authority for an "http" URI is vulnerable to attacks on Internet Protocol routing.
 #+END_QUOTE
 
+另外，在获得一个 IP 地址之后，确立一个 "http" URI 的 authority 在 IP 协议（Internet Protocol）路由方面也存在被攻击的风险。
+
 #+BEGIN_QUOTE
-The "https" scheme (Section 2.7.2) is intended to prevent (or at least reveal) many of these potential attacks on establishing authority, provided that the negotiated TLS connection is secured and the client properly verifies that the communicating server's identity matches the target URI's authority component (see [RFC2818]). Correctly implementing such verification can be difficult (see [Georgiev]).
+The "https" scheme (Section 2.7.2) is intended to prevent (or at least reveal) many of these potential attacks on establishing authority, provided that the negotiated TLS connection is secured and the client properly verifies that the communicating server's identity matches the target URI's =authority= component (see [RFC2818]). Correctly implementing such verification can be difficult (see [Georgiev]).
 #+END_QUOTE
+
+"https" scheme（[[id:25028231-5e21-44b9-ba0c-2f014e5ffcfd][章节 2.7.2]]）是意图避免（或者至少揭露）上述这些对于确立权威方面的潜在攻击，它提供了一种协商的并且安全的 TLS 连接，同时让客户端能够正确验证当前通信的服务器的身份是否与目标 URI 的 =authority= 组件相匹配（见【[[https://tools.ietf.org/html/rfc2818][RFC2818]]】）。正确实现这种验证可能不是一件容易的事（见【[[https://doi.acm.org/10.1145/2382196.2382204][Georgiev]]】）。
 
 ** 9.2 中间人的风险 (Risks of Intermediaries)
 #+BEGIN_QUOTE
 By their very nature, HTTP intermediaries are men-in-the-middle and, thus, represent an opportunity for man-in-the-middle attacks. Compromise of the systems on which the intermediaries run can result in serious security and privacy problems. Intermediaries might have access to security-related information, personal information about individual users and organizations, and proprietary information belonging to users and content providers. A compromised intermediary, or an intermediary implemented or configured without regard to security and privacy considerations, might be used in the commission of a wide range of potential attacks.
 #+END_QUOTE
 
+就其本质而言，HTTP 中间人（Intermediaries）就是一种“中间人（Men-in-the-middle）”，由此，为中间人提供了攻击的机会。如果泄漏了运行于中间人上的系统，可能会导致严重的安全和隐私问题。中间人可能能够访问安全相关的信息、个人用户或组织的个人信息，以及属于用户或内容提供商的专有信息。一个已泄漏出去的中间人，或者一个没有实现或没有配置关于安全和隐私方面的注意事项的中间人，可能会被用于各种潜在攻击。
+
 #+BEGIN_QUOTE
 Intermediaries that contain a shared cache are especially vulnerable to cache poisoning attacks, as described in Section 8 of [RFC7234].
 #+END_QUOTE
+
+包含了一个共享缓存的中间人特别容易受到缓存中毒攻击（Cache Poisoning Attacks），正如[[https://tools.ietf.org/html/rfc7234#section-8][【RFC7234】章节 8]] 所述那样。
 
 #+BEGIN_QUOTE
 Implementers need to consider the privacy and security implications of their design and coding decisions, and of the configuration options they provide to operators (especially the default configuration).
 #+END_QUOTE
 
+实现者（Implementers）需要去思考他们的设计以及编码决策，以及提供给使用者（Operators）的配置选项（特别是默认配置）所蕴含的隐私性和安全性。
+
 #+BEGIN_QUOTE
 Users need to be aware that intermediaries are no more trustworthy than the people who run them; HTTP itself cannot solve this problem.
 #+END_QUOTE
+
+用户需要被告知中间人并不见得比运行它们的人们更加值得信赖。HTTP 本身并不能解决这种问题。
 
 ** 9.3 通过协议元素长度进行攻击 (Attacks via Protocol Element Length)
 :PROPERTIES:
