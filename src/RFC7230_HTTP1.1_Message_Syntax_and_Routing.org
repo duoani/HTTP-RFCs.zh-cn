@@ -408,7 +408,7 @@ When a received protocol element is parsed, the recipient *MUST* be able to pars
 HTTP does not have specific length limitations for many of its protocol elements because the lengths that might be appropriate will vary widely, depending on the deployment context and purpose of the implementation. Hence, interoperability between senders and recipients depends on shared expectations regarding what is a reasonable length for each protocol element. Furthermore, what is commonly understood to be a reasonable length for some protocol elements has changed over the course of the past two decades of HTTP use and is expected to continue changing in the future.
 #+END_QUOTE
 
-HTTP 并没有对其协议元素作具体长度限制，因为“多少的长度才算合适”这个问题过于宽泛，需要依据具体的实现上下文和实现目的去决定。因此，发送端和接收端之间的交互取决于它们“对于每一个协议元素，如何才算是合理长度”的共同期望。此外，对于某些协议元素来说，多少才算是一个通俗合理的长度这个问题已经在过去二十多年来完全变更了，而且在将来仍会继续变更。
+HTTP 并没有对其协议元素作具体长度限制，因为“多少的长度才算合适”这个问题过于宽泛，需要依据具体的实现上下文和实现目的去决定。因此，发送端和接收端之间的互操作性（Interoperability）取决于它们“对于每一个协议元素，如何才算是合理长度”的共同期望。此外，对于某些协议元素来说，多少才算是一个通俗合理的长度这个问题已经在过去二十多年来完全变更了，而且在将来仍会继续变更。
 
 #+BEGIN_QUOTE
 At a minimum, a recipient *MUST* be able to parse and process protocol element lengths that are at least as long as the values that it generates for those same protocol elements in other messages. For example, an origin server that publishes very long URI references to its own resources needs to be able to parse and process those same references when received as a request target.
@@ -3160,17 +3160,25 @@ Users need to be aware that intermediaries are no more trustworthy than the peop
 Because HTTP uses mostly textual, character-delimited fields, parsers are often vulnerable to attacks based on sending very long (or very slow) streams of data, particularly where an implementation is expecting a protocol element with no predefined length.
 #+END_QUOTE
 
+因为 HTTP 使用的主要是文本性的，以字符分隔的域，因此，解析器（Parser）常常受到基于发送非常长（或非常慢）的数据流的方式的攻击，特别是在一个中间人期望某个没有预定义长度的协议元素身上。
+
 #+BEGIN_QUOTE
-To promote interoperability, specific recommendations are made for minimum size limits on request-line (Section 3.1.1) and header fields (Section 3.2). These are minimum recommendations, chosen to be supportable even by implementations with limited resources; it is expected that most implementations will choose substantially higher limits.
+To promote interoperability, specific recommendations are made for minimum size limits on =request-line= (Section 3.1.1) and header fields (Section 3.2). These are minimum recommendations, chosen to be supportable even by implementations with limited resources; it is expected that most implementations will choose substantially higher limits.
 #+END_QUOTE
+
+为了提高互操作性，本规范提出了对于请求行（[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]）以及报头域（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）的最小值限制的具体建议。这些最小值建议，本规范选择的是即使资源受限的实现也能够支持的，期望大多数的实现会选择更大幅度的限制。
 
 #+BEGIN_QUOTE
 A server can reject a message that has a request-target that is too long (Section 6.5.12 of [RFC7231]) or a request payload that is too large (Section 6.5.11 of [RFC7231]). Additional status codes related to capacity limits have been defined by extensions to HTTP [RFC6585].
 #+END_QUOTE
 
+服务器能够拒绝一个带有过长的请求目标（[[https://tools.ietf.org/html/rfc7231#section-6.5.12][【RFC7231】章节 6.5.12]]），或者过大的请求有效载荷（[[https://tools.ietf.org/html/rfc7231#section-6.5.11][【RFC7231】章节 6.5.11]]）的报文。作为对 HTTP 的扩展，额外的关于容量限制的响应状态码已经定义在【[[https://tools.ietf.org/html/rfc6585][RFC6585]]】。
+
 #+BEGIN_QUOTE
 Recipients ought to carefully limit the extent to which they process other protocol elements, including (but not limited to) request methods, response status phrases, header field-names, numeric values, and body chunks. Failure to limit such processing can result in buffer overflows, arithmetic overflows, or increased vulnerability to denial-of-service attacks.
 #+END_QUOTE
+
+接收端应该小心地限制其处理的除上述以外的其他协议元素的大小，包括（但不限于）请求方法，响应状态短语，报头域的名称，数字值以及报文分块。
 
 ** 9.4 响应分裂 (Response Splitting)
 :PROPERTIES:
