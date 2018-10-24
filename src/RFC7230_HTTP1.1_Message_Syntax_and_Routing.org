@@ -22,7 +22,7 @@ ISSN: 2070-1721
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document provides an overview of HTTP architecture and its associated terminology, defines the "http" and "https" Uniform Resource Identifier (URI) schemes, defines the HTTP/1.1 message syntax and parsing requirements, and describes related security concerns for implementations.
 #+END_QUOTE
 
-超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI schemes，定义了 HTTP/1.1 报文句法和解析要求，以及描述了实现上的安全性相关的注意事项。
+超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI 方案（URI Schemes），定义了 HTTP/1.1 报文句法和解析要求，以及描述了实现上的安全性相关的注意事项。
 
 * 备忘状态（Status of This Memo）
 :PROPERTIES:
@@ -65,7 +65,11 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level request/
 This HTTP/1.1 specification obsoletes [[https://tools.ietf.org/html/rfc2616][RFC 2616]] and [[https://tools.ietf.org/html/rfc2145][RFC 2145]] (on HTTP versioning). This specification also updates the use of CONNECT to establish a tunnel, previously defined in [[https://tools.ietf.org/html/rfc2817][RFC 2817]], and defines the "https" URI scheme that was described informally in [[https://tools.ietf.org/html/rfc2818][RFC 2818]].
 #+END_QUOTE
 
-本 HTTP/1.1 规范废弃了 [[https://tools.ietf.org/html/rfc2616][RFC2616]] 以及 [[https://tools.ietf.org/html/rfc2145][RFC2145]]（关于 HTTP 版本管理）。本规范也更新了之前定义在 [[https://tools.ietf.org/html/rfc2817][RFC2817]] 里的关于 CONNECT 在建立隧道方面的使用方式，以及定义了原来在 [[https://tools.ietf.org/html/rfc2818][RFC2818]] 有过非正式描述的 "https" URI scheme。
+本 HTTP/1.1 规范废弃了 [[https://tools.ietf.org/html/rfc2616][RFC2616]] 以及 [[https://tools.ietf.org/html/rfc2145][RFC2145]]（关于 HTTP 版本管理）。本规范也更新了之前定义在 [[https://tools.ietf.org/html/rfc2817][RFC2817]] 里的关于 CONNECT 在建立隧道方面的使用方式，以及定义了原来在 [[https://tools.ietf.org/html/rfc2818][RFC2818]] 有过非正式描述的 "https" URI 方案（URI Scheme）。
+
+#+BEGIN_QUOTE
+译注：除非特别说明，本译文所述的“方案”特指 "URI scheme"，对于 scheme 的详细描述，见[[id:9c45ae18-46b0-4acb-a478-3d3e9a3748ab][章节 2.7]]。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 HTTP is a generic interface protocol for information systems. It is designed to hide the details of how a service is implemented by presenting a uniform interface to clients that is independent of the types of resources provided. Likewise, servers do not need to be aware of each client's purpose: an HTTP request can be considered in isolation rather than being associated with a specific type of client or a predetermined sequence of application steps. The result is a protocol that can be used effectively in many different contexts and for which implementations can evolve independently over time.
@@ -86,10 +90,10 @@ One consequence of this flexibility is that the protocol cannot be defined in te
 这种灵活性导致的一个结果是，协议不能依据接口后面出现的内容来定义。反而，我们被限制去定义通信的句法、所接收到的通信的意图，以及接收端的预期行为。如果该通信可认为是孤立的，那么通信成功的作用量应该被反映在对应的由服务器提供的可观察接口的变化上。但是，由于多个客户端可能存在并行工作，而且可能相互矛盾，我们不能要求这种变化在超出单独一次响应的范围以外被观察到。
 
 #+BEGIN_QUOTE
-This document describes the architectural elements that are used or referred to in HTTP, defines the "http" and "https" URI schemes, describes overall network operation and connection management, and defines HTTP message framing[fn:6] and forwarding requirements. Our goal is to define all of the mechanisms necessary for HTTP message handling that are independent of message semantics, thereby defining the complete set of requirements for message parsers and message-forwarding intermediaries.
+This document describes the architectural elements that are used or referred to in HTTP, defines the "http" and "https" URI schemes, describes overall network operation and connection management, and defines HTTP message framing[fn:1] and forwarding requirements. Our goal is to define all of the mechanisms necessary for HTTP message handling that are independent of message semantics, thereby defining the complete set of requirements for message parsers and message-forwarding intermediaries.
 #+END_QUOTE
 
-本文档描述了用于或涉及 HTTP 的构筑元素，定义了 "http" 和 "https" 两种 URI schemes，总体上描述了网络操作和连接管理，并且定义了 HTTP 报文在分帧和转发方面的要求。我们的目标是定义所有关于 HTTP 的、独立于报文语义的、处理报文方面的必要方法，从而为报文解析器（Message Parsers）和报文转发中间人(Message-forwarding Intermediaries)定义完整的要求（Requirements）集。
+本文档描述了用于或涉及 HTTP 的构筑元素，定义了 "http" 和 "https" 两种 URI 方案，总体上描述了网络操作和连接管理，并且定义了 HTTP 报文在分帧和转发方面的要求。我们的目标是定义所有关于 HTTP 的、独立于报文语义的、处理报文方面的必要方法，从而为报文解析器（Message Parsers）和报文转发中间人(Message-forwarding Intermediaries)定义完整的要求（Requirements）集。
 
 ** 1.1 要求标记 (Requirements Notation)
 #+BEGIN_QUOTE
@@ -321,7 +325,7 @@ The above categories for intermediary only consider those acting as participants
 For example, an "interception proxy" [RFC3040] (also commonly known as a "transparent proxy" [RFC1919] or "captive portal") differs from an HTTP proxy because it is not selected by the client. Instead, an interception proxy filters or redirects outgoing TCP port 80 packets (and occasionally other common port traffic). Interception proxies are commonly found on public network access points, as a means of enforcing account subscription prior to allowing use of non-local Internet services, and within corporate firewalls to enforce network usage policies.
 #+END_QUOTE
 
-例如，一个拦截代理（Interception Proxy，一般又叫作“透明代理 Transparent Proxy” [[[https://tools.ietf.org/html/rfc1919][RFC1919]]] 或者“强制网络门户”、“捕获门户 Captive Portal”）与一个 HTTP 代理的区别在于它不是由客户端选择的，但是，拦截代理（Interception Proxy）会过滤或者重定向 TCP 80  出口端口的数据包（有时还包括其他一般端口的流量）。拦截代理在公有网络访问点[fn:1]里很常见，作为一种在允许使用非本地互联网服务之前的强制认证手段；同样也常见于企业防火墙里，用于强制执行网络使用上的策略。
+例如，一个拦截代理（Interception Proxy，一般又叫作“透明代理 Transparent Proxy” [[[https://tools.ietf.org/html/rfc1919][RFC1919]]] 或者“强制网络门户”、“捕获门户 Captive Portal”）与一个 HTTP 代理的区别在于它不是由客户端选择的，但是，拦截代理（Interception Proxy）会过滤或者重定向 TCP 80  出口端口的数据包（有时还包括其他一般端口的流量）。拦截代理在公有网络访问点[fn:2]里很常见，作为一种在允许使用非本地互联网服务之前的强制认证手段；同样也常见于企业防火墙里，用于强制执行网络使用上的策略。
 
 （译注：强制网络门户，是一个在用户使用无线网络前，先被导向至的 Web 网页，它是使用公共访问网络的用户在被授予访问权限前必须访问和交互的页面。）
 
@@ -438,7 +442,7 @@ Unless noted otherwise, a recipient *MAY* attempt to [[https://en.wikipedia.org/
 HTTP uses a "<major>.<minor>" numbering scheme to indicate versions of the protocol. This specification defines version "1.1". The protocol version as a whole indicates the sender's conformance with the set of requirements laid out in that version's corresponding specification of HTTP.
 #+END_QUOTE
 
-HTTP 使用“<主版本>.<次版本>”的编号方式来表明协议的版本。本规范定义了版本号“1.1”。整体来说，协议版本表明了发送端遵循了哪一个版本的 HTTP 规范。
+HTTP 使用“<主版本>.<次版本>”这种编号方案（Numbering Scheme）来表明协议的版本。本规范定义了版本号“1.1”。整体来说，协议版本表明了发送端遵循了哪一个版本的 HTTP 规范。
 
 #+BEGIN_QUOTE
 The version of an HTTP message is indicated by an HTTP-version field in the first line of the message. HTTP-version is case-sensitive.
@@ -532,6 +536,9 @@ When an HTTP message is received with a major version number that the recipient 
 TODO 当报文发送到接收端但没有指明其支持更高的版本，接收端可以假设这个报文带有更高的次版本，为所有具有相同主版本的实现去安全处理这些报文提供足够的向后兼容性。
 
 ** 2.7 统一资源标识符 (Uniform Resource Identifiers)
+:PROPERTIES:
+:ID:       9c45ae18-46b0-4acb-a478-3d3e9a3748ab
+:END:
 #+BEGIN_QUOTE
 Uniform Resource Identifiers (URIs) [RFC3986] are used throughout HTTP as the means for identifying resources (Section 2 of [RFC7231]). URI references are used to target requests, indicate redirects, and define relationships.
 #+END_QUOTE
@@ -585,7 +592,7 @@ HTTP 中的每一个允许 URI 引用的协议元素都会在它的 ABNF 产生�
 
 除非另有说明，URI 引用会解析（Parse）为相关的“实际请求 URI”（[[id:3265c21d-0d3b-4776-8e28-38278d168779][章节 5.5]]）。
 
-*** 2.7.1 http URI Scheme
+*** 2.7.1 http URI 方案 (http URI Scheme)
 :PROPERTIES:
 :ID:       3a2bda95-617a-4b5f-a1f6-21baa76e8a90
 :END:
@@ -593,7 +600,7 @@ HTTP 中的每一个允许 URI 引用的协议元素都会在它的 ABNF 产生�
 The "http" URI scheme is hereby defined for the purpose of minting identifiers according to their association with the hierarchical namespace governed by a potential HTTP origin server listening for TCP ([RFC0793]) connections on a given port.
 #+END_QUOTE
 
-“http” 这个 URI scheme 专门为建造某种标识而定义的，这种标识的建造规则依据于其与监听给定端口号的 TCP 连接([[[https://tools.ietf.org/html/rfc793][RFC0793]]]) 的源服务器所管理的层级命名空间的关联。
+"http" URI 方案（简称 "http" 方案）专门为建造某种标识而定义的，这种标识的建造规则依据于其与监听给定端口号的 TCP 连接([[[https://tools.ietf.org/html/rfc793][RFC0793]]]) 的源服务器所管理的层级命名空间的关联。
 
 （译注：[[https://en.wikipedia.org/wiki/Namespace][namespace]]，即命名空间，一般我们认为命名空间就是 Java、C# 等编程语言的语法规则，实际上，命名空间是一个广义的概念，它只是一组符号按一定的规则组合而成的用于关联一个对象的字符序列，这个字符序列就组成了一个命名空间（或者叫命名空间的名称），以便于通过这个命名空间来引用相关的对象。觉见的命名空间的例子有文件系统、Java 等编程语言的 namespace 关键字、计算机网络或分布式系统中对资源的命名等）
 
@@ -605,9 +612,9 @@ http-URI = "http:" "//" authority path-abempty [ "?" query ] [ "#" fragment ]
 The origin server for an "http" URI is identified by the authority component, which includes a host identifier and optional TCP port ([RFC3986], Section 3.2.2). The hierarchical path component and optional query component serve as an identifier for a potential target resource within that origin server's name space. The optional fragment component allows for indirect identification of a secondary resource, independent of the URI scheme, as defined in Section 3.5 of [RFC3986].
 #+END_QUOTE
 
-如上所示，对于一个“http” URI，源服务器被标记到 =authority= 组件里，=authority= 包含一个主机（host）标识和一个可选的 TCP 端口（[[https://tools.ietf.org/html/rfc3986#section-3.2.2][【RFC3986】，章节 3.2.2]]）。=path= 组件和可选的 =query= 组件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 =fragment= 组件允许间接标记一个次要资源（Secondary Resource），不依赖于 URI scheme，见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]] 。
+如上所示，对于一个“http” URI，源服务器被标记到 =authority= 组件里，=authority= 包含一个主机（host）标识和一个可选的 TCP 端口（[[https://tools.ietf.org/html/rfc3986#section-3.2.2][【RFC3986】，章节 3.2.2]]）。=path= 组件和可选的 =query= 组件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 =fragment= 组件允许间接标记一个次要资源（Secondary Resource），不依赖于哪一种 URI 方案（"http" 或者 "https"），见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]] 。
 
-（译注：按照[[https://tools.ietf.org/html/rfc3986#section-3.2][【RFC3986】章节 3.2]] 的解释，Authority 是“管理机构”的意思，由域名或 IP，加上一个可选的端口组成，通俗的讲，它的作用是相当于一个房屋的门牌，通过找门牌就可以找到这一间房屋。而 Path 相当于从房屋大门走到特定房间的路径。另外，Authority 除了“权威、权力、当局”的意思以外，在其他文库管理方面还有其他有趣的意思[fn:2]哦）
+（译注：按照[[https://tools.ietf.org/html/rfc3986#section-3.2][【RFC3986】章节 3.2]] 的解释，Authority 是“管理机构”的意思，由域名或 IP，加上一个可选的端口组成，通俗的讲，它的作用是相当于一个房屋的门牌，通过找门牌就可以找到这一间房屋。而 Path 相当于从房屋大门走到特定房间的路径。另外，Authority 除了“权威、权力、当局”的意思以外，在其他文库管理方面还有其他有趣的意思[fn:3]哦）
 
 （译注：component 即组件，代表组成一个完整 URI 的某个单元。）
 
@@ -640,7 +647,7 @@ When an "http" URI is used within a context that calls for access to the indicat
 Although HTTP is independent of the transport protocol, the "http" scheme is specific to TCP-based services because the name delegation process depends on TCP for establishing authority. An HTTP service based on some other underlying connection protocol would presumably be identified using a different URI scheme, just as the "https" scheme (below) is used for resources that require an end-to-end secured connection. Other protocols might also be used to provide access to "http" identified resources — it is only the authoritative interface that is specific to TCP.
 #+END_QUOTE
 
-虽然 HTTP 并不依赖其他传输协议，但“http” scheme 是特指基于 TCP 的服务的，这是因为名称委派处理（name delegation process?）需要依赖 TCP 来建立授权。一个基于其他多个底层通信协议的 HTTP 服务可能会被标识为使用一个不同的 URI scheme，类似于“https” scheme 是用于要求端到端安全的资源访问一样。其他协议可能也用于提供访问以“http”标识的资源，但这是唯一特定于 TCP 的授权接口。
+虽然 HTTP 并不依赖其他传输协议，但 "http" 方案是特指基于 TCP 的服务的，这是因为名称委派处理（name delegation process?）需要依赖 TCP 来确立权威（Establishing Authority，见章节 9.1）。一个基于其他多个底层通信协议的 HTTP 服务可能会被标识为使用一个不同的 URI 方案，就像 "https" 方案是用于要求端到端安全的资源访问一样。其他协议可能也用于提供访问以 "http" 标识的资源，但这是唯一特定于 TCP 的权威接口（官方接口，Authoritative Interface）。
 
 #+BEGIN_QUOTE
 The URI generic syntax for authority also includes a deprecated =userinfo= subcomponent ([RFC3986], Section 3.2.1) for including user authentication information in the URI. Some implementations make use of the =userinfo= component for internal configuration of authentication information, such as within command invocation options, configuration files, or bookmark lists, even though such usage might expose a user identifier or password. A sender *MUST NOT* generate the =userinfo= subcomponent (and its "@" delimiter) when an "http" URI reference is generated within a message as a request target or header field value. Before making use of an "http" URI reference received from an untrusted source, a recipient *SHOULD* parse for =userinfo= and treat its presence as an error; it is likely being used to obscure the authority for the sake of phishing attacks.
@@ -648,7 +655,7 @@ The URI generic syntax for authority also includes a deprecated =userinfo= subco
 
 在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 =userinfo= 子组件（见[[https://tools.ietf.org/html/rfc3986#section-3.2.1][【RFC3986】章节 3.2.1]]），用于包含用户信息到 URI 里。某些实现将 =userinfo= 组件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 报文，包含以 =http= URI 引用作为一个请求目标或者报文头域里的值（例如头域 =Location=）时，发送端 *禁止* 生成 =userinfo= 子组件（以及其“@”分隔符）。在使用一个接收自一个非受信的源的 =http= URI 引用时，接收者 *应当* 对 =userinfo= 进行解析（Parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（Phishing Attach）的威胁。
 
-*** 2.7.2 https URI Scheme
+*** 2.7.2 https URI 方案 (https URI Scheme)
 :PROPERTIES:
 :ID:       25028231-5e21-44b9-ba0c-2f014e5ffcfd
 :END:
@@ -656,13 +663,13 @@ The URI generic syntax for authority also includes a deprecated =userinfo= subco
 The "https" URI scheme is hereby defined for the purpose of minting identifiers according to their association with the hierarchical namespace governed by a potential HTTP origin server listening to a given TCP port for TLS-secured connections ([RFC5246]).
 #+END_QUOTE
 
-“https” 这个 URI scheme 专门为建造某种标识而定义的，这种标识的建造规则依据于其与监听给定端口号用于使用 TLS 安全协议进行 TCP 连接 ([[https://tools.ietf.org/html/rfc5246][【RFC5246】]]）的源服务器所管理的层级命名空间的关联。
+"https" URI 方案（简称 "https" 方案）专门为建造某种标识而定义的，这种标识的建造规则依据于其与监听给定端口号用于使用 TLS 安全协议进行 TCP 连接 ([[https://tools.ietf.org/html/rfc5246][【RFC5246】]]）的源服务器所管理的层级命名空间的关联。
 
 #+BEGIN_QUOTE
 All of the requirements listed above for the "http" scheme are also requirements for the "https" scheme, except that TCP port 443 is the default if the port subcomponent is empty or not given, and the user agent *MUST* ensure that its connection to the origin server is secured through the use of strong encryption, end-to-end, prior to sending the first HTTP request.
 #+END_QUOTE
 
-所有上文罗列过的对于“http” scheme 的要求同样适用于“https” scheme，除了没有明确指明端口号时“https”的默认端口是 443 而“http”的默认端口是 80，以及用户代理 *必须* 保证它与源服务器的端到端连接在发送第一个 HTTP 请求之前已经是使用强加密技术到达安全级别。
+所有上文罗列过的对于 "http" 方案的要求同样适用于 "https" 方案，除了没有明确指明端口号时“https”的默认端口是 443 而“http”的默认端口是 80，以及用户代理 *必须* 保证它与源服务器的端到端连接在发送第一个 HTTP 请求之前已经是使用强加密技术到达安全级别。
 
 #+BEGIN_SRC text
 https-URI = "https:" "//" authority path-abempty [ "?" query ] [ "#" fragment ]
@@ -672,28 +679,28 @@ https-URI = "https:" "//" authority path-abempty [ "?" query ] [ "#" fragment ]
 Note that the "https" URI scheme depends on both TLS and TCP for establishing authority. Resources made available via the "https" scheme have no shared identity with the "http" scheme even if their resource identifiers indicate the same authority (the same host listening to the same TCP port). They are distinct namespaces and are considered to be distinct origin servers. However, an extension to HTTP that is defined to apply to entire host domains, such as the Cookie protocol [RFC6265], can allow information set by one service to impact communication with other services within a matching group of host domains.
 #+END_QUOTE
 
-需要注意的是，“https” URI scheme 依赖于 TLS 以及 TCP 来建立授权。通过“https” scheme 指向的资源与通过“https” scheme 指向的资源两者间并没有关系，即使它们的 =authority= 一样（有相同的 =host= 和相同的 TCP =port=）。它们的命名空间是有区别的，因此指向的是两个不同的源服务器。然而，后来的规范对 HTTP 进行了扩展来（使某些特性）适用于所有主机域名，例如 Cookie 协议[[https://tools.ietf.org/html/rfc6265][【RFC6265】]]，能够允许一个服务设置某些信息，通过一个关于主机域名的匹配规则集合来影响与其他服务的通信。
+需要注意的是，"https" URI 方案依赖于 TLS 以及 TCP 来确立权威（Establishing Authority，见章节 9.1）。通过 "https" 方案标识的资源与通过 "https" 方案标识的资源两者间并没有任何关系，即使它们的 =authority= 组件一样（有相同的 =host= 和相同的 TCP =port=）。它们的命名空间是有区别的，因此指向的是两个不同的源服务器。然而，后来的规范对 HTTP 进行了扩展来（使某些特性）适用于所有主机域名，例如 Cookie 协议[[https://tools.ietf.org/html/rfc6265][【RFC6265】]]，能够允许一个服务设置某些信息，通过一个关于主机域名的匹配规则集合来影响与其他服务的通信。
 
-（译注：即使两个 URI 除了 scheme 不一样以外，其他各组件都一模一样，如 http://www.example.com/path 与 https://www.example/path 这两个 URI 并不一定指向同一个资源，因为这是两个是不同的 URI。）
+（译注：即使两个 URI 除了 scheme 不一样以外，其他各组件都一模一样，如 http://www.example.com/path 与 https://www.example/path 这两个 URI 并不一定标识同一个资源，因为这是两个是不同的 URI。）
 
 #+BEGIN_QUOTE
 The process for authoritative access to an "https" identified resource is defined in [RFC2818].
 #+END_QUOTE
 
-通过“https”标识来权威访问（Authoritative Access）[fn:3]资源的过程定义于[[https://tools.ietf.org/html/rfc2818][【RFC2818】]]。
+通过“https”标识来权威访问（Authoritative Access）[fn:4]资源的过程定义于[[https://tools.ietf.org/html/rfc2818][【RFC2818】]]。
 
 *** 2.7.3 http and https URI Normalization and Comparison
 #+BEGIN_QUOTE
 Since the "http" and "https" schemes conform to the URI generic syntax, such URIs are normalized and compared according to the algorithm defined in [[https://tools.ietf.org/html/rfc3986#page-38][Section 6 of {RFC3986}]], using the defaults described above for each scheme.
 #+END_QUOTE
 
-因为“http”和“https” schemes 都遵循 URI 通用句法，因此这些 URI 都可以依据定义于[[https://tools.ietf.org/html/rfc3986#page-38][【RFC3986】章节 6]] 的算法来进行标准化和对比。
+因为 "http" 和 "https" 两种方案都遵循 URI 通用句法，因此这些 URI 都可以依据定义于[[https://tools.ietf.org/html/rfc3986#page-38][【RFC3986】章节 6]] 的算法来进行标准化和对比。
 
 #+BEGIN_QUOTE
-If the port is equal to the default port for a scheme, the normal form is to omit the port subcomponent. When not being used in absolute form as the request target of an OPTIONS request, an empty path component is equivalent to an absolute path of "/", so the normal form is to provide a path of "/" instead. The scheme and host are case-insensitive and normally provided in lowercase; all other components are compared in a case-sensitive manner. Characters other than those in the "reserved" set are equivalent to their percent-encoded[fn:4] octets: the normal form is to not encode them (see Sections 2.1 and 2.2 of [RFC3986]).
+If the port is equal to the default port for a scheme, the normal form is to omit the port subcomponent. When not being used in absolute form as the request target of an OPTIONS request, an empty path component is equivalent to an absolute path of "/", so the normal form is to provide a path of "/" instead. The scheme and host are case-insensitive and normally provided in lowercase; all other components are compared in a case-sensitive manner. Characters other than those in the "reserved" set are equivalent to their percent-encoded[fn:5] octets: the normal form is to not encode them (see Sections 2.1 and 2.2 of [RFC3986]).
 #+END_QUOTE
 
-如果一个 scheme 的 =port= 等于其默认端口，那么其通常的形式是省略掉 =port= 子组件。当一个 =OPTIONS= 请求没有使用绝对形式（Absolute Form）作为请求目标（Request Target）时，一个空的 =path= 等价于绝对路径“=/=”，所以通常的形式是使用路径“=/=”来替换。=scheme= 和 =host= 是不区分大小写的，通常使用小写。除了 =scheme= 和 =host= 以外的所有其他组件都是区分大小写的。除了“保留”字符集以外的所有字符都等价于它的 URL 编码（[[https://en.wikipedia.org/wiki/Percent-encoding][Precent-encoded]]，又叫百分号编码）形式的八位组（Octet）：一般形式是（如非必要）不要对它们进行编码（见[[https://tools.ietf.org/html/rfc3986#section-2.1][【RFC3986】章节 2.1 和 2.2]]）。
+如果一个 URI =port= 等于其对应方案的默认端口（"http" 方案的默认端口是 80，"https" 方案的默认端口是 443），那么其通常的形式是省略掉 =port= 子组件。当一个 =OPTIONS= 请求没有使用绝对形式（Absolute Form）作为请求目标（Request Target）时，一个空的 =path= 等价于绝对路径“=/=”，所以通常的形式是使用路径“=/=”来替换。=scheme= 和 =host= 是不区分大小写的，通常使用小写。除了 =scheme= 和 =host= 以外的所有其他组件都是区分大小写的。除了“保留”字符集以外的所有字符都等价于它的 URL 编码（[[https://en.wikipedia.org/wiki/Percent-encoding][Precent-encoded]]，又叫百分号编码）形式的八位组（Octet）：一般形式是（如非必要）不要对它们进行编码（见[[https://tools.ietf.org/html/rfc3986#section-2.1][【RFC3986】章节 2.1 和 2.2]]）。
 
 （译注：URL 编码，又叫百分号编码，每个字符由 =%= 加上两位的十六进制 0~F 组成，对于百分号编码还可以参考[[https://www.cnblogs.com/DaoMuRen/p/5695030.html][这篇博文]]。）
 
@@ -1149,7 +1156,7 @@ The presence of a message body in a request is signaled by a =Content-Length= or
 The presence of a message body in a response depends on both the request method to which it is responding and the response status code ([[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][Section 3.1.2]]). Responses to the HEAD request method ([[https://tools.ietf.org/html/rfc7231#section-4.3.2][Section 4.3.2]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]) never include a message body because the associated response header fields (e.g., =Transfer-Encoding=, =Content-Length=, etc.), if present, indicate only what their values would have been if the request method had been GET ([[https://tools.ietf.org/html/rfc7231#section-4.3.1][Section 4.3.1]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]). 2xx (Successful) responses to a CONNECT request method ([[https://tools.ietf.org/html/rfc7231#section-4.3.6][Section 4.3.6]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]) switch to tunnel mode instead of having a message body. All =1xx (Informational)=, =204 (No Content)=, and =304 (Not Modified)= responses do not include a message body. All other responses do include a message body, although the body might be of zero length.
 #+END_QUOTE
 
-在一个响应中是否会出现报文正文，取决于请求方法所对应的响应是什么，且响应状态码是什么（[[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][章节 3.1.2]]）。响应给请求方法 HEAD（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.2][章节 4.3.2]]）的报文永远不会包含一个报文正文，这是因为如果出现上述相关的响应报头域（例如，=Transfer-Encoding=、=Content-Length= 等），表明仅当这个报文的请求方法被改变为 GET（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.1][章节 4.3.1]]）的时候，这些报头域才有效[fn:5]。=2xx (Successful)= 响应给一个请求方法 CONNECT（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.6][章节 4.3.6]]）。所有 =1xx (Informational)=、=204 (No Content)= 和 =304 (Not Modified)= 的响应报文并不会包含一个报文正文。除上述情况以外，所有其他响应报文都会包含一个报文正文，虽然报文正文的长度可能为零。
+在一个响应中是否会出现报文正文，取决于请求方法所对应的响应是什么，且响应状态码是什么（[[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][章节 3.1.2]]）。响应给请求方法 HEAD（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.2][章节 4.3.2]]）的报文永远不会包含一个报文正文，这是因为如果出现上述相关的响应报头域（例如，=Transfer-Encoding=、=Content-Length= 等），表明仅当这个报文的请求方法被改变为 GET（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.1][章节 4.3.1]]）的时候，这些报头域才有效[fn:6]。=2xx (Successful)= 响应给一个请求方法 CONNECT（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.6][章节 4.3.6]]）。所有 =1xx (Informational)=、=204 (No Content)= 和 =304 (Not Modified)= 的响应报文并不会包含一个报文正文。除上述情况以外，所有其他响应报文都会包含一个报文正文，虽然报文正文的长度可能为零。
 
 *** 3.3.1 传输编码 (Transfer-Encoding)
 :PROPERTIES:
@@ -1383,6 +1390,9 @@ If the final response to the last request on a connection has been completely re
 在一个连接中，如果一个用户代理已经完成了对应最后一个请求的最后一个完整响应报文的接收工作后，发现仍然剩余额外的数据需要读取，那么这个用户代理 *可以* 丢弃这些剩余数据，或者试图辨别这些剩余数据是否属于之前的响应正文，如果之前的报文的 =Content-Length= 的值是不正确的话可能会导致这种情况。客户端 *禁止* 将这种额外的数据作为一个单独的响应来进行处理、缓存或者转发，这是因为这种行为可能会存在[[https://en.wikipedia.org/w/index.php?search=cache+poisoning&title=Special%253ASearch&fulltext=Search][缓存中毒（Cache Poisoning）]]的隐患。
 
 ** 3.4 报文不完整的处理 (Handling Incomplete Messages)
+:PROPERTIES:
+:ID:       0905d267-9dcf-4208-acc1-ff7ba9863a95
+:END:
 #+BEGIN_QUOTE
 A server that receives an incomplete request message, usually due to a canceled request or a triggered timeout exception, *MAY* send an error response prior to closing the connection.
 #+END_QUOTE
@@ -1766,9 +1776,9 @@ If the request is not satisfied by a cache, then a typical client will check its
 If no proxy is applicable, a typical client will invoke a handler routine, usually specific to the target URI's scheme, to connect directly to an =authority= for the target resource. How that is accomplished is dependent on the target URI scheme and defined by its associated specification, similar to how this specification defines origin server access for resolution of the "http" (Section 2.7.1) and "https" (Section 2.7.2) schemes.
 #+END_QUOTE
 
-如果没有适用的代理，那么客户端通常会执行一个处理程序例程，这个例程通常是针对该目标 URI scheme 的，来连接到一个指向到目标资源的 =authority=。这个程序例程如何才算是完成取决于目标 URI 的 scheme 以及定义该 scheme 的相关规范，类似于本规范如何定义对 "http" 和 "https" 这两种 scheme 的解析来访问源服务器。
+如果没有适用的代理，那么客户端通常会执行一个处理程序例程，这个例程通常是特定于该目标 URI 的 =scheme= 的，来连接到一个指向到目标资源的 =authority=。这个程序例程如何才算是完成取决于目标 URI 的 =scheme= 以及定义该 =scheme= 的相关规范，类似于本规范如何定义对 "http" 和 "https" 这两种方案的解析来访问源服务器。
 
-（译注：=authority= 是一个 URI 的组成部分，表现为一个服务的 DNS 主机名称或者是 IP 地址。如果该服务不是使用默认端口的话，=authority= 还会包含具体的端口号，其中 "http" scheme 的默认端口是 80，"https" scheme 的默认端口是 443。而 =host= 就是一个服务的 DNS 主机名称或者 IP 地址，=host= 并不包含端口号。也就是说：当使用默认端口时，=authority = host=；当不使用默认端口时，=authority = host + port=，两者并不等同。因此，这里将 "Authority" 翻译为“主机”不合适，索性就不翻译了。）
+（译注：=authority= 是一个 URI 的组成部分，表现为一个服务的 DNS 主机名称或者是 IP 地址。如果该服务不是使用默认端口的话，=authority= 还会包含具体的端口号，其中 "http" 方案的默认端口是 80，"https" 方案的默认端口是 443。而 =host= 就是一个服务的 DNS 主机名称或者 IP 地址，=host= 并不包含端口号。也就是说：当使用默认端口时，=authority = host=；当不使用默认端口时，=authority = host + port=，两者并不等同。因此，这里将 "Authority" 翻译为“主机”不合适，索性就不翻译了。）
 
 #+BEGIN_QUOTE
 HTTP requirements regarding connection management are defined in Section 6.
@@ -2299,7 +2309,7 @@ HTTP 的报文交换是独立于底层传输层和会话层相关的连接协议
 As described in Section 5.2, the specific connection protocols to be used for an HTTP interaction are determined by client configuration and the target URI. For example, the "http" URI scheme (Section 2.7.1) indicates a default connection of TCP over IP, with a default TCP port of 80, but the client might be configured to use a proxy via some other connection, port, or protocol.
 #+END_QUOTE
 
-正如[[id:d18c94f3-ca46-47eb-a26e-7f931765d978][章节 5.2]] 描述的那样，具体使用哪一种连接协议与 HTTP 交互是取决于客户端的配置以及目标 URI 的。例如，"http" URI scheme 表示一个在 IP 协议之上的 TCP 默认连接，使用默认的 80 TCP 端口，但是，客户端可能被配置为使用代理来途经其他连接、端口以及协议。
+正如[[id:d18c94f3-ca46-47eb-a26e-7f931765d978][章节 5.2]] 描述的那样，具体使用哪一种连接协议与 HTTP 交互是取决于客户端的配置以及目标 URI 的。例如，"http" URI 方案表示一个在 IP 协议之上的 TCP 默认连接，使用默认的 80 TCP 端口，但是，客户端可能被配置为使用代理来途经其他连接、端口以及协议。
 
 #+BEGIN_QUOTE
 HTTP implementations are expected to engage in connection management, which includes maintaining the state of current connections, establishing a new connection or reusing an existing connection, processing messages received on a connection, detecting connection failures, and closing each connection. Most clients maintain multiple connections in parallel, including more than one connection per server endpoint. Most servers are designed to maintain thousands of concurrent connections, while controlling request queues to enable fair use and detect [[https://en.wikipedia.org/wiki/Denial-of-service_attack][denial-of-service attacks]].
@@ -2895,7 +2905,7 @@ Furthermore, the header field-name "Close" has been registered as "reserved", si
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 #+END_QUOTE
 
-** 8.2 URI Scheme 注册 (URI Scheme Registration)
+** 8.2 URI 方案注册 (URI Scheme Registration)
 #+BEGIN_QUOTE
 IANA maintains the registry of URI Schemes [BCP115] at <http://www.iana.org/assignments/uri-schemes/>.
 #+END_QUOTE
@@ -3116,7 +3126,7 @@ Unfortunately, establishing authority can be difficult. For example, phishing is
 When a registered name is used in the =authority= component, the "http" URI scheme (Section 2.7.1) relies on the user's local name resolution service to determine where it can find authoritative responses. This means that any attack on a user's network host table, cached names, or name resolution libraries becomes an avenue for attack on establishing authority. Likewise, the user's choice of server for Domain Name Service (DNS), and the hierarchy of servers from which it obtains resolution results, could impact the authenticity of address mappings; DNS Security Extensions (DNSSEC, [RFC4033]) are one way to improve authenticity.
 #+END_QUOTE
 
-当某个注册名称用在 =authority= 组件中的时候，"http" URI scheme（[[id:3a2bda95-617a-4b5f-a1f6-21baa76e8a90][章节 2.7.1]]）依靠用户的本地名称解析服务来确定哪里能够找到权威响应（Authoritative Responses）。这意味着任何对于用户的网络主机映射表（Network Host Table）、缓存名称，或者名称解析库的攻击都会成为一个攻击确立权威的隐患。同样，用户选择哪一个服务器用于域名解析服务（Domain Name Service, DNS），以及其获取域名解析结果的服务器所在层级，都有可能影响到地址映射的可靠性。DNS 安全性扩展（DNSSEC，DNS Security Extensions，【[[https://tools.ietf.org/html/rfc4033][RFC4033]]】）是一种提高可靠性的方式。
+当某个注册名称用在 =authority= 组件中的时候，"http" URI 方案（[[id:3a2bda95-617a-4b5f-a1f6-21baa76e8a90][章节 2.7.1]]）依靠用户的本地名称解析服务来确定哪里能够找到权威响应（Authoritative Responses）。这意味着任何对于用户的网络主机映射表（Network Host Table）、缓存名称，或者名称解析库的攻击都会成为一个攻击确立权威的隐患。同样，用户选择哪一个服务器用于域名解析服务（Domain Name Service, DNS），以及其获取域名解析结果的服务器所在层级，都有可能影响到地址映射的可靠性。DNS 安全性扩展（DNSSEC，DNS Security Extensions，【[[https://tools.ietf.org/html/rfc4033][RFC4033]]】）是一种提高可靠性的方式。
 
 #+BEGIN_QUOTE
 Furthermore, after an IP address is obtained, establishing authority for an "http" URI is vulnerable to attacks on Internet Protocol routing.
@@ -3128,7 +3138,7 @@ Furthermore, after an IP address is obtained, establishing authority for an "htt
 The "https" scheme (Section 2.7.2) is intended to prevent (or at least reveal) many of these potential attacks on establishing authority, provided that the negotiated TLS connection is secured and the client properly verifies that the communicating server's identity matches the target URI's =authority= component (see [RFC2818]). Correctly implementing such verification can be difficult (see [Georgiev]).
 #+END_QUOTE
 
-"https" scheme（[[id:25028231-5e21-44b9-ba0c-2f014e5ffcfd][章节 2.7.2]]）是意图避免（或者至少揭露）上述这些对于确立权威方面的潜在攻击，它提供了一种协商的并且安全的 TLS 连接，同时让客户端能够正确验证当前通信的服务器的身份是否与目标 URI 的 =authority= 组件相匹配（见【[[https://tools.ietf.org/html/rfc2818][RFC2818]]】）。正确实现这种验证可能不是一件容易的事（见【[[https://doi.acm.org/10.1145/2382196.2382204][Georgiev]]】）。
+"https" 方案（[[id:25028231-5e21-44b9-ba0c-2f014e5ffcfd][章节 2.7.2]]）是意图避免（或者至少揭露）上述这些对于确立权威方面的潜在攻击，它提供了一种协商的并且安全的 TLS 连接，同时让客户端能够正确验证当前通信的服务器的身份是否与目标 URI 的 =authority= 组件相匹配（见【[[https://tools.ietf.org/html/rfc2818][RFC2818]]】）。正确实现这种验证可能不是一件容易的事（见【[[https://doi.acm.org/10.1145/2382196.2382204][Georgiev]]】）。
 
 ** 9.2 中间人的风险 (Risks of Intermediaries)
 #+BEGIN_QUOTE
@@ -3232,31 +3242,45 @@ This specification has introduced new requirements on request parsing, particula
 HTTP does not define a specific mechanism for ensuring message integrity, instead relying on the error-detection ability of underlying transport protocols and the use of length or chunk-delimited framing to detect completeness. Additional integrity mechanisms, such as hash functions or digital signatures applied to the content, can be selectively added to messages via extensible metadata header fields. Historically, the lack of a single integrity mechanism has been justified by the informal nature of most HTTP communication. However, the prevalence of HTTP as an information access mechanism has resulted in its increasing use within environments where verification of message integrity is crucial.
 #+END_QUOTE
 
+HTTP 并没有定义一个具体方法来保证报文的完整性，而是依靠底层传输协议的错误检测能力（Error-detection Ability）以及使用长度或块限定的分帧（Chunk-delimited Framing）来检测完整。如果想添加额外的完整性机制，例如对内容应用哈希函数（Hash Functions）或者数字签名（Digital Sinatures），可以通过使用扩展的元数据报头域（Extensible Metadata Header Fields）来选择性地将这些额外的完整性机制应用到报文。
+
 #+BEGIN_QUOTE
-User agents are encouraged to implement configurable means for detecting and reporting failures of message integrity such that those means can be enabled within environments for which integrity is necessary. For example, a browser being used to view medical history or drug interaction information needs to indicate to the user when such information is detected by the protocol to be incomplete, expired, or corrupted during transfer. Such mechanisms might be selectively enabled via user agent extensions or the presence of message integrity metadata in a response. At a minimum, user agents ought to provide some indication that allows a user to distinguish between a complete and incomplete response message (Section 3.4) when such verification is desired.
+User agents are encouraged to implement configurable means for detecting and reporting failures of message integrity such that those means can be enabled within environments for which integrity is necessary. For example, a browser being used to view medical history or drug interaction information needs to indicate to the user when such information is detected by the protocol to be incomplete, expired, or corrupted during transfer. Such mechanisms might be selectively enabled via user agent extensions or the presence of message integrity metadata in a response. At a minimum, user agents ought to provide some indication that allows a user to distinguish between a complete and incomplete response message ([[id:0905d267-9dcf-4208-acc1-ff7ba9863a95][Section 3.4]]) when such verification is desired.
 #+END_QUOTE
+
+鼓励用户代理去实现某些可配置的方式来对报文完整性进行检测和错误报告，以使这些方式能够在必要的情形下被启用。例如，一个浏览器被用于浏览病史，或者药物相互作信息，当协议检测到这些信息在传输过程中因为某些因素导致不完整、过期，或者损坏的时候，浏览器需要向用户指出来。这些方式可能通过用户代理的扩展程序，或者某个响应中的报文完整性元数据的出现，来被选择性地启用。至少在需要进行完整性验证的时候，用户代理应该提供某些指示来让某个用户区分到完整和不完整的响应报文（[[id:0905d267-9dcf-4208-acc1-ff7ba9863a95][章节 3.4]]）
 
 ** 9.7 报文保密性 (Message Confidentiality)
 #+BEGIN_QUOTE
 HTTP relies on underlying transport protocols to provide message confidentiality when that is desired. HTTP has been specifically designed to be independent of the transport protocol, such that it can be used over many different forms of encrypted connection, with the selection of such transports being identified by the choice of URI scheme or within user agent configuration.
 #+END_QUOTE
 
+HTTP 依靠底层传输协议在需要的时候提供报文保密性的保障。HTTP 已被专门设计为不依赖传输协议，使其能够应用在多种不同类型的加密连接之上。与 HTTP 一同被应用的还有由 URI 方案的选取或用户代理的配置所决定的传输方式的相关选项。
+
 #+BEGIN_QUOTE
 The "https" scheme can be used to identify resources that require a confidential connection, as described in Section 2.7.2.
 #+END_QUOTE
+
+"https" 方案能够用于标识那些要求在受信任的连接中使用的资源，正如章节 2.7.2 描述的那样。
 
 ** 9.8 服务器日志信息的隐私 (Privacy of Server Log Information)
 #+BEGIN_QUOTE
 A server is in the position to save personal data about a user's requests over time, which might identify their reading patterns or subjects of interest. In particular, log information gathered at an intermediary often contains a history of user agent interaction, across a multitude of sites, that can be traced to individual users.
 #+END_QUOTE
 
+服务器应该将用户的请求的某些个人信息一直处在保护的状态中，这是由于借由这些信息可以鉴定他们的读取模式或者兴趣订阅。实际上，聚集在中间人里的日志信息通常会包含用户代理与众多网站之间的交互历史，同样可能会被追踪到个人用户。
+
 #+BEGIN_QUOTE
 HTTP log information is confidential in nature; its handling is often constrained by laws and regulations. Log information needs to be securely stored and appropriate guidelines followed for its analysis. Anonymization of personal information within individual entries helps, but it is generally not sufficient to prevent real log traces from being re-identified based on correlation with other access characteristics. As such, access traces that are keyed to a specific client are unsafe to publish even if the key is pseudonymous.
 #+END_QUOTE
 
+HTTP 日志信息如个涉及机密信息，日志信息需要被安全地存储，对它们的分析需要遵循正确的指导方针。对个人信息进行匿名化是有效的，但这样做还不足以阻止通过关联其他访问特征来重新识别出真实的日志痕迹的行为。因此，公布具有唯一定位一个具体客户端的访问痕迹（Access Traces）是危险的，即使这个唯一码只是一个假名。
+
 #+BEGIN_QUOTE
 To minimize the risk of theft or accidental publication, log information ought to be purged of personally identifiable information, including user identifiers, IP addresses, and user-provided query parameters, as soon as that information is no longer necessary to support operational needs for security, auditing, or fraud control.
 #+END_QUOTE
+
+为了最小化的风险，对于日志信息里的可识别信息（Indentifiable Information），包含用户标识符（User Identifiers）、IP 地址，以及用户提供的查询参数（Query Parameters），一旦不再需要运用这些信息来支持安全、审计，或者防欺诈（Fraud Control）需求的运作的时候，应当及时清除掉。
 
 * 10 鸣谢（Acknowledgments）
 #+BEGIN_QUOTE
@@ -3885,23 +3909,17 @@ URI: http://greenbytes.de/tech/webdav/
 
 * Footnotes
 
-[fn:8] 入站请求（Inbound Request），即指向源服务器方向的请求。
+[fn:1] Message Framing，报文分帧、报文组帧，将一个报文与下一个报文进行分离。Separating one message from the next (framing).
 
-[fn:7] 无条件请求（Unconditional Request），即请求报头域内不带有任何条件报头域的请求报文。详情见【[[https://tools.ietf.org/html/rfc7232][RFC7232]]】。
-
-[fn:6] Framing，分帧，将一个消息与下一个进行分离。Separating one message from the next (framing).
-
-[fn:5] HEAD 请求方法在什么情况下会被改变为 GET？
-
-[fn:1] 访问点（AP, Access Point）一般翻译为“无线访问节点”，或“桥接器”。其主要在媒体存取控制层MAC中扮演无线工作站及有线局域网络的桥梁。
+[fn:2] 访问点（AP, Access Point）一般翻译为“无线访问节点”，或“桥接器”。其主要在媒体存取控制层MAC中扮演无线工作站及有线局域网络的桥梁。
 - [[https://baike.baidu.com/item/AccessPoint/6762525?fr=aladdin][百科：AccessPoint]]
 - [[https://en.wikipedia.org/wiki/Wireless_access_point][Wikipedia: Wireless access point]]
 
-[fn:2] Authority 在文档管理领域中还有“组织、建立规范统一的索引”的意思，例如 Authority Control，即规范控制，通常是指始终如一地使用和维护统一的名称、主题和题名等规范形式，而这些名称、主题和题名等在书目记录文档中用作标目。
+[fn:3] Authority 在文档管理领域中还有“组织、建立规范统一的索引”的意思，例如 Authority Control，即规范控制，通常是指始终如一地使用和维护统一的名称、主题和题名等规范形式，而这些名称、主题和题名等在书目记录文档中用作标目。
 - [[https://en.wikisource.org/wiki/Wikisource:Authority_control][Wikisource: Authority Control]] is the practice of creating and maintaining index terms for bibliographic material in a catalogue, and is particularly useful for assigning unique identifiers to people, works or subjects. When applied to Wikisource, it means maintaining links to a set of standard external catalogues.
 - [[https://en.wikipedia.org/wiki/Authority_control#cite_note-tws2NovY333-7][Wikipedia: In library science, authority control]] is a process that organizes bibliographic information, for example in library catalogs by using a single, distinct spelling of a name (heading) or a numeric identifier for each topic. The word authority in authority control derives from the idea that the names of people, places, things, and concepts are authorized, i.e., they are established in one particular form.
 
-[fn:3] Authoritative Access，权威访问，[[https://tools.ietf.org/html/rfc7230#section-5.7.2][【RFC7230】章节 5.7.2]] 有这样的描述：
+[fn:4] Authoritative Access，权威访问，[[https://tools.ietf.org/html/rfc7230#section-5.7.2][【RFC7230】章节 5.7.2]] 有这样的描述：
 
 #+BEGIN_SRC text
 A proxy that transforms the payload of a 200 (OK) response can further inform downstream recipients that a transformation has been applied by changing the response status code to 203 (Non-Authoritative Information).
@@ -3912,5 +3930,11 @@ A proxy that transforms the payload of a 200 (OK) response can further inform do
 - [[https://tools.ietf.org/html/rfc7230#section-5.7.2][Section 5.7.2 of {RFC7230}]]
 - [[https://tools.ietf.org/html/rfc7231#section-6.3.4][Section 6.3.4 of {RFC7231}]]
 
-[fn:4] Percent-encoded，百分号编码，也叫作 URL 编码。
+[fn:5] Percent-encoded，百分号编码，也叫作 URL 编码。
+
+[fn:6] HEAD 请求方法在什么情况下会被改变为 GET？
+
+[fn:7] 无条件请求（Unconditional Request），即请求报头域内不带有任何条件报头域的请求报文。详情见【[[https://tools.ietf.org/html/rfc7232][RFC7232]]】。
+
+[fn:8] 入站请求（Inbound Request），即指向源服务器方向的请求。
 
