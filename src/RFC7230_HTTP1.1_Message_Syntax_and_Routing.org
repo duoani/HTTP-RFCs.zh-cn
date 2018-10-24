@@ -3347,33 +3347,47 @@ See Section 16 of [RFC2616] for additional acknowledgements from prior revisions
 HTTP has been in use since 1990. The first version, later referred to as HTTP/0.9, was a simple protocol for hypertext data transfer across the Internet, using only a single request method (GET) and no metadata. HTTP/1.0, as defined by [RFC1945], added a range of request methods and MIME-like messaging, allowing for metadata to be transferred and modifiers placed on the request/response semantics. However, HTTP/1.0 did not sufficiently take into consideration the effects of hierarchical proxies, caching, the need for persistent connections, or name-based virtual hosts. The proliferation of incompletely implemented applications calling themselves "HTTP/1.0" further necessitated a protocol version change in order for two communicating applications to determine each other's true capabilities.
 #+END_QUOTE
 
+HTTP 自 1990 年开始被使用。第一个版本，也就是后来被称为 HTTP/0.9，是一个用于在互联网中对超文本数据进行转输的简单协议，只能使用单一的请求方法 (GET)，而且还不能带有元数据。HTTP/1.0，由【[[https://tools.ietf.org/html/rfc1945][RFC1945]]】所定义，新增了一系列的请求方法以及与 MIME 相类似的报文通信机制，允许传输元数据，以及请求/响应语言的修饰符。但是，HTTP/1.0 并没有充分考虑代理的层级结构的影响、缓存、持久连接的需要，以及基于名称（name-based）的虚拟主机。这些不完全实现 HTTP 的应用都声称自身版本为 "HTTP/1.0"，并逐渐在网络中扩散，进一步迫使一个协议版本的变更来为两个正在通信的应用来确定彼此的真实的能力。
+
 #+BEGIN_QUOTE
 HTTP/1.1 remains compatible with HTTP/1.0 by including more stringent requirements that enable reliable implementations, adding only those features that can either be safely ignored by an HTTP/1.0 recipient or only be sent when communicating with a party advertising conformance with HTTP/1.1.
 #+END_QUOTE
+
+HTTP/1.1 仍保留了对 HTTP/1.0 的兼容：通过包含更多严格的要求来让实现更加可靠，仅添加那些能够被 HTTP/1.0 接收端安全忽略的，或者只能在通信双方都声明其遵循 HTTP/1.1 语义的时候才会使用的功能。
 
 #+BEGIN_QUOTE
 HTTP/1.1 has been designed to make supporting previous versions easy. A general-purpose HTTP/1.1 server ought to be able to understand any valid request in the format of HTTP/1.0, responding appropriately with an HTTP/1.1 message that only uses features understood (or safely ignored) by HTTP/1.0 clients. Likewise, an HTTP/1.1 client can be expected to understand any valid HTTP/1.0 response.
 #+END_QUOTE
 
+HTTP/1.1 已被设计为使支持以前的版本变得容易。一个通用的 HTTP/1.1 服务器应该能够理解任何合法的 HTTP/1.0 格式的请求报文，并能够 HTTP/1.1 报文正确响应，并且这个响应报文只使用 HTTP/1.0 客户端所能理解（或者安全忽略）的功能。同样，一个 HTTP/1.1 客户端应该能够理解任何合法的 HTTP/1.0 响应。
+
 #+BEGIN_QUOTE
-Since HTTP/0.9 did not support header fields in a request, there is no mechanism for it to support name-based virtual hosts (selection of resource by inspection of the Host header field). Any server that implements name-based virtual hosts ought to disable support for HTTP/0.9. Most requests that appear to be HTTP/0.9 are, in fact, badly constructed HTTP/1.x requests caused by a client failing to properly encode the request-target.
+Since HTTP/0.9 did not support header fields in a request, there is no mechanism for it to support name-based virtual hosts (selection of resource by inspection of the =Host= header field). Any server that implements name-based virtual hosts ought to disable support for HTTP/0.9. Most requests that appear to be HTTP/0.9 are, in fact, badly constructed HTTP/1.x requests caused by a client failing to properly encode the =request-target=.
 #+END_QUOTE
 
-** A.1. Changes from HTTP/1.0
+因为 HTTP/0.9 并不支持在请求报文中带有报头域，因此，没有任何方法来让其支持基于名称的虚拟主机（name-based virtual hosts，通过检查 =Host= 报头域来对资源进行选择）。任何实现基于名称的虚拟主机的服务器应该禁止支持 HTTP/0.9。大多数看起来像是 HTTP/0.9 的请求报文，实际上是因为客户端没有正确对 =request-target= 进行编码导致没有很好的构建出 HTTP/1.x 请求报文。
+
+** A.1. 相对 HTTP/1.0 的变化 (Changes from HTTP/1.0)
 #+BEGIN_QUOTE
 This section summarizes major differences between versions HTTP/1.0 and HTTP/1.1.
 #+END_QUOTE
 
-*** A.1.1. Multihomed Web Servers
+本章节总结了 HTTP/1.0 与 HTTP/1.1 的主要区别。
+
+*** A.1.1. 多宿主网页服务器 (Multihomed Web Servers)
 #+BEGIN_QUOTE
-The requirements that clients and servers support the Host header field (Section 5.4), report an error if it is missing from an HTTP/1.1 request, and accept absolute URIs (Section 5.3) are among the most important changes defined by HTTP/1.1.
+The requirements that clients and servers support the =Host= header field ([[id:f6cd08fd-597f-4b1d-98ad-a1730125abdc][Section 5.4]]), report an error if it is missing from an HTTP/1.1 request, and accept absolute URIs ([[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][Section 5.3]]) are among the most important changes defined by HTTP/1.1.
 #+END_QUOTE
+
+HTTP/1.1 与 HTTP/1.0 最重要的改变有如下：要求客户端和服务器支持 =Host= 报头域（[[id:f6cd08fd-597f-4b1d-98ad-a1730125abdc][章节 5.4]]），如果在一个 HTTP/1.1 请求报文中没有 =Host= 的话要报告错误；接受绝对 URI（absolute URIs，[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][章节 5.3]]）。
 
 #+BEGIN_QUOTE
 Older HTTP/1.0 clients assumed a one-to-one relationship of IP addresses and servers; there was no other established mechanism for distinguishing the intended server of a request than the IP address to which that request was directed. The Host header field was introduced during the development of HTTP/1.1 and, though it was quickly implemented by most HTTP/1.0 browsers, additional requirements were placed on all HTTP/1.1 requests in order to ensure complete adoption. At the time of this writing, most HTTP-based services are dependent upon the Host header field for targeting requests.
 #+END_QUOTE
 
-*** A.1.2. Keep-Alive Connections
+旧的 HTTP/1.0 客户端假设 IP 地址与服务器是一个一对一关系，除了 IP 地址来
+
+*** A.1.2. Keep-Alive 连接 (Keep-Alive Connections)
 #+BEGIN_QUOTE
 In HTTP/1.0, each connection is established by the client prior to the request and closed by the server after sending the response. However, some implementations implement the explicitly negotiated ("Keep-Alive") version of persistent connections described in Section 19.7.1 of [RFC2068].
 #+END_QUOTE
@@ -3394,12 +3408,12 @@ As a result, clients are encouraged not to send the Proxy-Connection header fiel
 Clients are also encouraged to consider the use of Connection: keep-alive in requests carefully; while they can enable persistent connections with HTTP/1.0 servers, clients using them will need to monitor the connection for "hung" requests (which indicate that the client ought stop sending the header field), and this mechanism ought not be used by clients at all when a proxy is being used.
 #+END_QUOTE
 
-*** A.1.3. Introduction of Transfer-Encoding
+*** A.1.3. 引入 Trnasfer-Encoding (Introduction of Transfer-Encoding)
 #+BEGIN_QUOTE
 HTTP/1.1 introduces the Transfer-Encoding header field (Section 3.3.1). Transfer codings need to be decoded prior to forwarding an HTTP message over a MIME-compliant protocol.
 #+END_QUOTE
 
-** A.2. Change from RFC 2616
+** A.2. 相对 RFC 2616 的变化 (Changes from RFC 2616)
 #+BEGIN_QUOTE
 HTTP's approach to error handling has been explained. (Section 2.5)
 #+END_QUOTE
