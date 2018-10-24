@@ -1305,6 +1305,9 @@ If a message is received that has multiple =Content-Length= header fields with =
 *注意：* =Content-Length= 在 HTTP 上关于报文分帧的应用，明显不同于该同名域在 MIME 上的应用，MIME 上的 =Content-Length= 是一个可选域，仅用于“message/external-body”媒体类型中。
 
 *** 3.3.3 报文正文的长度 (Message Body Length)
+:PROPERTIES:
+:ID:       5fee24c5-74b9-4016-b7ed-a4831cafbe69
+:END:
 #+BEGIN_QUOTE
 The length of a message body is determined by one of the following (in order of precedence):
 #+END_QUOTE
@@ -3188,7 +3191,7 @@ Recipients ought to carefully limit the extent to which they process other proto
 [[https://en.wikipedia.org/wiki/HTTP_response_splitting][Response splitting]] (a.k.a, CRLF injection) is a common technique, used in various attacks on Web usage, that exploits the line-based nature of HTTP message framing and the ordered association of requests to responses on persistent connections [Klein]. This technique can be particularly damaging when the requests pass through a shared cache.
 #+END_QUOTE
 
-响应分割（Response Splitting，也称为“CRLF 注入”）是一种用于对网页进行各种攻击的常见的技术，它利用了 HTTP 基于行来进行报文分帧以及在持久连接中请求与响应的顺序关联的性质【[[http://packetstormsecurity.com/papers/general/whitepaper_httpresponse.pdf][Klein]]】。当请求穿过一个共享缓存的时候，这种技术特别具有破坏性。
+响应分割（[[https://en.wikipedia.org/wiki/HTTP_response_splitting][Response Splitting]]，也称为“CRLF 注入”）是一种针对网页用途（Web Usage）而进行各种攻击的常见的技术，它利用了 HTTP 基于行来进行报文分帧以及在持久连接中请求与响应的顺序关联的性质【[[http://packetstormsecurity.com/papers/general/whitepaper_httpresponse.pdf][Klein]]】。当请求穿过一个共享缓存的时候，这种技术特别具有破坏性。
 
 #+BEGIN_QUOTE
 Response splitting exploits a vulnerability in servers (usually within an application server) where an attacker can send encoded data within some parameter of the request that is later decoded and echoed within any of the response header fields of the response. If the decoded data is crafted to look like the response has ended and a subsequent response has begun, the response has been split and the content within the apparent second response is controlled by the attacker. The attacker can then make any other request on the same persistent connection and trick the recipients (including intermediaries) into believing that the second half of the split is an authoritative answer to the second request.
@@ -3206,7 +3209,7 @@ For example, a parameter within the request-target might be read by an applicati
 A common defense against response splitting is to filter requests for data that looks like encoded =CR= and =LF= (e.g., "%0D" and "%0A"). However, that assumes the application server is only performing URI decoding, rather than more obscure data transformations like charset transcoding, XML entity translation, base64 decoding, =sprintf= reformatting, etc. A more effective mitigation is to prevent anything other than the server's core protocol libraries from sending a =CR= or =LF= within the header section, which means restricting the output of header fields to APIs that filter for bad octets and not allowing application servers to write directly to the protocol stream.
 #+END_QUOTE
 
-对抗响应分割的一个常见方式是去过滤掉请求报文中看起来像是经过编码的 CR 以及 LF 的数据（例如，"%0D" 和 "%0A"）。但是，假设应用服务器仅执行 URI 解码（URI Decoding），而不是更加模糊的数据转换，例如，字符集转码（Charset Transcoding），XML 实体翻译（XML Entity Translation），base64 解码，=sprintf= 字符串格式转换（sprintf Reformatting）等等，一个更有效的缓解方式是阻止任何除了服务器自身的核心协议库以外程序在报头块中发送一个 =CR= 或者 =LF=，这样做意味着将对报头域的输出限制为只能使用 API 的方式，通过这些 API 来过滤掉不好的字节，同时不允许应用服务器越过 API 将数据直接写入到协议流。
+预防响应分割的一个常见方式是去过滤掉请求报文中看起来像是经过编码的 CR 以及 LF 的数据（例如，"%0D" 和 "%0A"）。但是，假设应用服务器仅执行 URI 解码（URI Decoding），而不是更加模糊的数据转换，例如，字符集转码（Charset Transcoding），XML 实体翻译（XML Entity Translation），base64 解码，=sprintf= 字符串格式转换（sprintf Reformatting）等等，一个更有效的缓解方式是阻止任何除了服务器自身的核心协议库以外程序在报头块中发送一个 =CR= 或者 =LF=，这样做意味着将对报头域的输出限制为只能使用 API 的方式，通过这些 API 来过滤掉不好的字节，同时不允许应用服务器越过 API 将数据直接写入到协议流。
 
 ** 9.5 请求走私 (Request Smuggling)
 :PROPERTIES:
@@ -3216,9 +3219,13 @@ A common defense against response splitting is to filter requests for data that 
 Request smuggling ([Linhart]) is a technique that exploits differences in protocol parsing among various recipients to hide additional requests (which might otherwise be blocked or disabled by policy) within an apparently harmless request. Like response splitting, request smuggling can lead to a variety of attacks on HTTP usage.
 #+END_QUOTE
 
+请求走私（[[https://www.cgisecurity.com/lib/HTTP-Request-Smuggling.pdf][Request Smuggling]]）是一种利用多个接收端对 HTTP 报文解析的不一致性，来达到在一个表面无害的请求里隐藏（按正常规则来说应该被阻止或者禁止的）额外请求的技术。像响应分割（Response Splitting）一样，请求走私能够引发针对 HTTP 用途的各种攻击。
+
 #+BEGIN_QUOTE
-This specification has introduced new requirements on request parsing, particularly with regard to message framing in Section 3.3.3, to reduce the effectiveness of request smuggling.
+This specification has introduced new requirements on request parsing, particularly with regard to message framing in [[id:5fee24c5-74b9-4016-b7ed-a4831cafbe69][Section 3.3.3]], to reduce the effectiveness of request smuggling.
 #+END_QUOTE
+
+本规范对请求解析（Request Parsing）引入了新的要求，特别是在报文分帧方面（[[id:5fee24c5-74b9-4016-b7ed-a4831cafbe69][章节 3.3.3]]），以降低请求走私的影响。
 
 ** 9.6 报文完整性 (Message Integrity)
 #+BEGIN_QUOTE
