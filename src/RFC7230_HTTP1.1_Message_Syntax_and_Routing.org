@@ -3382,10 +3382,10 @@ The requirements that clients and servers support the =Host= header field ([[id:
 HTTP/1.1 与 HTTP/1.0 最重要的改变有如下：要求客户端和服务器支持 =Host= 报头域（[[id:f6cd08fd-597f-4b1d-98ad-a1730125abdc][章节 5.4]]），如果在一个 HTTP/1.1 请求报文中没有 =Host= 的话要报告错误；接受绝对 URI（absolute URIs，[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][章节 5.3]]）。
 
 #+BEGIN_QUOTE
-Older HTTP/1.0 clients assumed a one-to-one relationship of IP addresses and servers; there was no other established mechanism for distinguishing the intended server of a request than the IP address to which that request was directed. The Host header field was introduced during the development of HTTP/1.1 and, though it was quickly implemented by most HTTP/1.0 browsers, additional requirements were placed on all HTTP/1.1 requests in order to ensure complete adoption. At the time of this writing, most HTTP-based services are dependent upon the Host header field for targeting requests.
+Older HTTP/1.0 clients assumed a one-to-one relationship of IP addresses and servers; there was no other established mechanism for distinguishing the intended server of a request than the IP address to which that request was directed. The =Host= header field was introduced during the development of HTTP/1.1 and, though it was quickly implemented by most HTTP/1.0 browsers, additional requirements were placed on all HTTP/1.1 requests in order to ensure complete adoption. At the time of this writing, most HTTP-based services are dependent upon the Host header field for targeting requests.
 #+END_QUOTE
 
-旧的 HTTP/1.0 客户端假设 IP 地址与服务器是一个一对一关系，除了 IP 地址来
+旧的 HTTP/1.0 客户端假设 IP 地址与服务器是一个一对一关系，除了只能使用 IP 地址这种方式来将一个请求导向到它所期望到达的服务器以外，没有任何其他方式。在 HTTP/1.1 发展过程中引入了 =Host= 报头域，它能够很快被 HTTP/1.0 浏览器所实现，为了确保，额外的要求被附加到 HTTP/1.1 请求里
 
 *** A.1.2. Keep-Alive 连接 (Keep-Alive Connections)
 #+BEGIN_QUOTE
