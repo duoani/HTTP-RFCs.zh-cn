@@ -22,7 +22,7 @@ ISSN: 2070-1721
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document provides an overview of HTTP architecture and its associated terminology, defines the "http" and "https" Uniform Resource Identifier (URI) schemes, defines the HTTP/1.1 message syntax and parsing requirements, and describes related security concerns for implementations.
 #+END_QUOTE
 
-超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI 方案（URI Schemes），定义了 HTTP/1.1 报文句法和解析要求，以及描述了实现上的安全性相关的注意事项。
+超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI 方案（URI Schemes），定义了 HTTP/1.1 报文句法和解析要求，以及描述了对实现（Implementations）的安全性相关的注意事项。
 
 * 备忘状态（Status of This Memo）
 :PROPERTIES:
@@ -135,7 +135,7 @@ HTTP was created for the World Wide Web (WWW) architecture and has evolved over 
 used to define HTTP.
 #+END_QUOTE
 
-HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支持世界范围内的超文系统的可扩展性。用于定义 HTTP 的术语和句法的产生反映了这一体系结构的方方面面。
+HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支持世界范围内的超文系统的可扩展性。用于定义 HTTP 的术语和句法反映了这一体系结构的方方面面。
 
 ** 2.1 客户端/服务器报文传递 (Client/Server Messaging)
 #+BEGIN_QUOTE
@@ -243,7 +243,7 @@ The term "user agent" does not imply that there is a human user directly interac
 The implementation diversity of HTTP means that not all user agents can make interactive suggestions to their user or provide adequate warning for security or privacy concerns. In the few cases where this specification requires reporting of errors to the user, it is acceptable for such reporting to only be observable in an error console or log file. Likewise, requirements that an automated action be confirmed by the user before proceeding might be met via advance configuration choices, run-time options, or simple avoidance of the unsafe action; confirmation does not imply any specific user interface or interruption of normal processing if the user has already made that choice.
 #+END_QUOTE
 
-HTTP 实现（Implementations）上的差异性，表现为不是所有的用户代理都能为用户提供交互性的建议或者对其关注的安全或隐私提供足够的警示。例如，本规范规定了在某些情况下要求向用户报告错误，但在某些实现上，这些报告信息可能只输出到错误控制台或者日志文件里，这也是允许的。同样，用户可以在用户代理里（例如在高级选项、运行时选项或者不安全操作中）预先配置接下来的默认行为，规范要求当遇到这些默认行为时需要用户确认，而这个确认并不意味着出现一个特定的用户界面或者正常流程被打断，如果用户已经预先做出了选择的话。
+HTTP 实现（Implementations）上的差异性，表现为不是所有的用户代理都能为用户提供交互性的建议或者对其关注的安全或隐私提供足够的警示。例如，本规范规定了在某些情况下要求向用户报告错误，但在某些实现（Implementations）上，这些报告信息可能只输出到错误控制台或者日志文件里，这也是允许的。同样，用户可以在用户代理里（例如在高级选项、运行时选项或者不安全操作中）预先配置接下来的默认行为，规范要求当遇到这些默认行为时需要用户确认，而这个确认并不意味着出现一个特定的用户界面或者正常流程被打断，如果用户已经预先做出了选择的话。
 
 ** 2.3 中间人 (Intermediaries)
 :PROPERTIES:
@@ -319,7 +319,7 @@ A "tunnel" acts as a blind relay between two connections without changing the me
 The above categories for intermediary only consider those acting as participants in the HTTP communication. There are also intermediaries that can act on lower layers of the network protocol stack, filtering or redirecting HTTP traffic without the knowledge or permission of message senders. Network intermediaries are indistinguishable (at a protocol level) from a man-in-the-middle attack, often introducing security flaws or interoperability problems due to mistakenly violating HTTP semantics.
 #+END_QUOTE
 
-以上这些类型的中间人仅仅认为是在 HTTP 通信中作为参与者。这些中间人同样能工作在网络协议栈的底层，过滤或重定向 HTTP 流而不必了解报文发送者的权限或逻辑。网络中间人并不能（在协议层面上）识别出（报文）是否来自于[[https://en.wikipedia.org/wiki/Man-in-the-middle_attack][中间人攻击]]，因此，有时会因为中间人的实现有误没有遵循 HTTP 语义从而引入了安全隐患或者互通问题。
+以上这些类型的中间人仅仅认为是在 HTTP 通信中作为参与者。这些中间人同样能工作在网络协议栈的底层，过滤或重定向 HTTP 流而不必了解报文发送者的权限或逻辑。网络中间人并不能（在协议层面上）识别出（报文）是否来自于[[https://en.wikipedia.org/wiki/Man-in-the-middle_attack][中间人攻击]]，因此，有时会因为中间人的实现（Implementations）有误没有遵循 HTTP 语义从而引入了安全隐患或者互通问题。
 
 #+BEGIN_QUOTE
 For example, an "interception proxy" [RFC3040] (also commonly known as a "transparent proxy" [RFC1919] or "captive portal") differs from an HTTP proxy because it is not selected by the client. Instead, an interception proxy filters or redirects outgoing TCP port 80 packets (and occasionally other common port traffic). Interception proxies are commonly found on public network access points, as a means of enforcing account subscription prior to allowing use of non-local Internet services, and within corporate firewalls to enforce network usage policies.
@@ -333,7 +333,7 @@ For example, an "interception proxy" [RFC3040] (also commonly known as a "transp
 HTTP is defined as a stateless protocol, meaning that each request message can be understood in isolation. Many implementations depend on HTTP's stateless design in order to reuse proxied connections or dynamically load balance requests across multiple servers. Hence, a server *MUST NOT* assume that two requests on the same connection are from the same user agent unless the connection is secured and specific to that agent. Some non-standard HTTP extensions (e.g., [RFC4559]) have been known to violate this requirement, resulting in security and interoperability problems.
 #+END_QUOTE
 
-HTTP 被定义为一种无状态的协议，意味着每一个请求报文都能够被单独理解。许多实现依托于 HTTP 无状态性来复用代理过的连接或者通过多台服务器实现对请求的动态负载均衡。因此，一个服务器 *不能* 假设同一个连接里的两个请求是来自于同一个用户代理，除非是连接是安全的或者这些请求是该用户代理特有的。某些非标准的 HTTP 扩展（例如 [[[https://tools.ietf.org/html/4559][RFC4559]]]）已经被发现违反了这一要求，结果就是引发安全性和互操作性的问题。
+HTTP 被定义为一种无状态的协议，意味着每一个请求报文都能够被单独理解。许多实现（Implementations）依托于 HTTP 无状态性来复用代理过的连接或者通过多台服务器实施对请求的动态负载均衡。因此，一个服务器 *不能* 假设同一个连接里的两个请求是来自于同一个用户代理，除非是连接是安全的或者这些请求是该用户代理特有的。某些非标准的 HTTP 扩展（例如 [[[https://tools.ietf.org/html/4559][RFC4559]]]）已经被发现违反了这一要求，结果就是引发安全性和互操作性的问题。
 
 （译注：源服务器或中间人能够完全理解每一个请求报文的含义，这种理解并不用基于该请求报文的前一个或多个请求报文的内容。）
 
@@ -377,7 +377,7 @@ These include national hierarchies of proxy caches to save transoceanic bandwidt
 This specification targets conformance criteria according to the role of a participant in HTTP communication. Hence, HTTP requirements are placed on senders, recipients, clients, servers, user agents, intermediaries, origin servers, proxies, gateways, or caches, depending on what behavior is being constrained by the requirement. Additional (social) requirements are placed on implementations, resource owners, and protocol element registrations when they apply beyond the scope of a single communication.
 #+END_QUOTE
 
-本规范为参与 HTTP 通信的角色制定一致性准则。因此，HTTP 对一致性的要求着眼于发送端、接收端、客户端、服务端、用户代理、中间人、源服务器、代理、网关和缓存，取决于哪些行为被要求所约束。附加的要求着眼于实现、资源所有者以及应用于超出单一通信时的协议元素注册（Protocol element registrations）。
+本规范为参与 HTTP 通信的角色制定一致性准则。因此，HTTP 对一致性的要求着眼于发送端、接收端、客户端、服务端、用户代理、中间人、源服务器、代理、网关和缓存，取决于哪些行为被要求所约束。附加的要求着眼于实现（Implementations）、资源所有者以及应用于超出单一通信时的协议元素注册（Protocol element registrations）。
 
 #+BEGIN_QUOTE
 The verb "generate" is used instead of "send" where a requirement differentiates between creating a protocol element and merely forwarding a received element downstream.
@@ -389,7 +389,7 @@ The verb "generate" is used instead of "send" where a requirement differentiates
 An implementation is considered conformant if it complies with all of the requirements associated with the roles it partakes in HTTP.
 #+END_QUOTE
 
-判断一个实现是否符合本规范，需要判断实现是否遵循了本规范中涉及到对参与 HTTP 通信的所有角色的所有要求。
+判断一个实现（Implementation）是否符合本规范，需要判断它是否遵循了本规范中涉及到对参与 HTTP 通信的所有角色的所有要求。
 
 #+BEGIN_QUOTE
 Conformance includes both the syntax and semantics of protocol elements. A sender *MUST NOT* generate protocol elements that convey a meaning that is known by that sender to be false. A sender *MUST NOT* generate protocol elements that do not match the *grammar* defined by the corresponding ABNF rules. Within a given message, a sender *MUST NOT* generate protocol elements or *syntax* alternatives that are only allowed to be generated by participants in other roles (i.e., a role that the sender does not have for that message).
@@ -412,7 +412,7 @@ When a received protocol element is parsed, the recipient *MUST* be able to pars
 HTTP does not have specific length limitations for many of its protocol elements because the lengths that might be appropriate will vary widely, depending on the deployment context and purpose of the implementation. Hence, interoperability between senders and recipients depends on shared expectations regarding what is a reasonable length for each protocol element. Furthermore, what is commonly understood to be a reasonable length for some protocol elements has changed over the course of the past two decades of HTTP use and is expected to continue changing in the future.
 #+END_QUOTE
 
-HTTP 并没有对其协议元素作具体长度限制，因为“多少的长度才算合适”这个问题过于宽泛，需要依据具体的实现上下文和实现目的去决定。因此，发送端和接收端之间的互操作性（Interoperability）取决于它们“对于每一个协议元素，如何才算是合理长度”的共同期望。此外，对于某些协议元素来说，多少才算是一个通俗合理的长度这个问题已经在过去二十多年来完全变更了，而且在将来仍会继续变更。
+HTTP 并没有对其协议元素作具体长度限制，因为“多少的长度才算合适”这个问题过于宽泛，需要依据实现（Implementations）具体的部署场景和目的来决定。因此，发送端和接收端之间的互操作性（Interoperability）取决于它们“对于每一个协议元素，如何才算是合理长度”的共同期望。此外，对于某些协议元素来说，多少才算是一个通俗合理的长度这个问题已经在过去二十多年来完全变更了，而且在将来仍会继续变更。
 
 #+BEGIN_QUOTE
 At a minimum, a recipient *MUST* be able to parse and process protocol element lengths that are at least as long as the values that it generates for those same protocol elements in other messages. For example, an origin server that publishes very long URI references to its own resources needs to be able to parse and process those same references when received as a request target.
@@ -533,7 +533,7 @@ When an HTTP message is received with a major version number that the recipient 
 
 接收端接收到一个 HTTP 报文，如果接收端兼容该报文的主版本号，但不兼容其次版本号（接收端所支持的次版本号低于该报文所标识的次版本号），那么，接收端 *应当* 以其所能支持的最高次版本（前题是相同主版本）的方式来处理这个报文。
 
-TODO 当报文发送到接收端但没有指明其支持更高的版本，接收端可以假设这个报文带有更高的次版本，为所有具有相同主版本的实现去安全处理这些报文提供足够的向后兼容性。
+TODO 当报文发送到接收端但没有指明其支持更高的版本，接收端可以假设这个报文带有更高的次版本，为所有具有相同主版本的实现（Implementations）去安全处理这些报文提供足够的向后兼容性。
 
 ** 2.7 统一资源标识符 (Uniform Resource Identifiers)
 :PROPERTIES:
@@ -653,7 +653,7 @@ Although HTTP is independent of the transport protocol, the "http" scheme is spe
 The URI generic syntax for authority also includes a deprecated =userinfo= subcomponent ([RFC3986], Section 3.2.1) for including user authentication information in the URI. Some implementations make use of the =userinfo= component for internal configuration of authentication information, such as within command invocation options, configuration files, or bookmark lists, even though such usage might expose a user identifier or password. A sender *MUST NOT* generate the =userinfo= subcomponent (and its "@" delimiter) when an "http" URI reference is generated within a message as a request target or header field value. Before making use of an "http" URI reference received from an untrusted source, a recipient *SHOULD* parse for =userinfo= and treat its presence as an error; it is likely being used to obscure the authority for the sake of phishing attacks.
 #+END_QUOTE
 
-在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 =userinfo= 子组件（见[[https://tools.ietf.org/html/rfc3986#section-3.2.1][【RFC3986】章节 3.2.1]]），用于包含用户信息到 URI 里。某些实现将 =userinfo= 组件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 报文，包含以 =http= URI 引用作为一个请求目标或者报文头域里的值（例如头域 =Location=）时，发送端 *禁止* 生成 =userinfo= 子组件（以及其“@”分隔符）。在使用一个接收自一个非受信的源的 =http= URI 引用时，接收者 *应当* 对 =userinfo= 进行解析（Parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（Phishing Attach）的威胁。
+在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 =userinfo= 子组件（见[[https://tools.ietf.org/html/rfc3986#section-3.2.1][【RFC3986】章节 3.2.1]]），用于包含用户信息到 URI 里。某些实现（Implementations）将 =userinfo= 组件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 报文，包含以 =http= URI 引用作为一个请求目标或者报文头域里的值（例如头域 =Location=）时，发送端 *禁止* 生成 =userinfo= 子组件（以及其“@”分隔符）。在使用一个接收自一个非受信的源的 =http= URI 引用时，接收者 *应当* 对 =userinfo= 进行解析（Parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（Phishing Attach）的威胁。
 
 *** 2.7.2 https URI 方案 (https URI Scheme)
 :PROPERTIES:
@@ -752,7 +752,7 @@ A recipient *MUST* parse an HTTP message as a sequence of octets in an encoding 
 An HTTP message can be parsed as a stream for incremental processing or forwarding downstream. However, recipients cannot rely on incremental delivery of partial messages, since some implementations will buffer or delay message forwarding for the sake of network efficiency, security checks, or payload transformations.
 #+END_QUOTE
 
-HTTP 报文能够解析（Parse）为用于增量处理或转发到下游（Forwarding Downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现会因为网络性能、安全校验或者有效载荷转换（[[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Payload Transformation]]）而对这些不完整的报文进行缓冲或延迟转发。
+HTTP 报文能够解析（Parse）为用于增量处理或转发到下游（Forwarding Downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现（Implementations）会因为网络性能、安全校验或者有效载荷转换（[[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Payload Transformation]]）而对这些不完整的报文进行缓冲或延迟转发。
 
 #+BEGIN_QUOTE
 A sender *MUST NOT* send whitespace between the start-line and the first header field. A recipient that receives whitespace between the start-line and the first header field *MUST* either reject the message as invalid or consume each whitespace-preceded line without further processing of it (i.e., ignore the entire line, along with any subsequent lines preceded by whitespace, until a properly formed header field is received or the header section is terminated).
@@ -967,6 +967,9 @@ A recipient *MAY* combine multiple header fields with the same field name into o
 *注意：* 在实践中，报头域 =Set-Cookie= （见【[[https://tools.ietf.org/html/rfc6265][RFC6265]]】）在一个响应报文中通常会出现多次，并且不是以列表的句法形式，违背了以上关于多个相同名称的报头域的要求。这是因为它不能组合成一个单一的域值（Field Value），因此，当处理报头域的时候，接收端应该将 =Set-cookie= 作为特殊情况。（详情见【Kri2001】的附件 A.2.3。）
 
 *** 3.2.3 空格 (Whitespace)
+:PROPERTIES:
+:ID:       f26527b6-d15c-4967-97e3-acc669609481
+:END:
 #+BEGIN_QUOTE
 This specification uses three rules to denote the use of linear whitespace: =OWS= (optional whitespace), =RWS= (required whitespace), and =BWS= ("bad" whitespace).
 #+END_QUOTE
@@ -1004,6 +1007,9 @@ BWS            = OWS
 #+END_SRC
 
 *** 3.2.4 域解析 (Field Parsing)
+:PROPERTIES:
+:ID:       1bd50237-cd26-4e74-8c0c-7af8d2d6b25f
+:END:
 #+BEGIN_QUOTE
 Messages are parsed using a generic algorithm, independent of the individual header field names. The contents within a given field value are not parsed until a later stage of message interpretation (usually after the message's entire header section has been processed). Consequently, this specification does not use ABNF rules to define each "Field-Name: Field Value" pair, as was done in previous editions. Instead, this specification uses ABNF rules that are named according to each registered field name, wherein the rule defines the valid grammar for that field's corresponding field values (i.e., after the field-value has been extracted from the header section by a generic field parser).
 #+END_QUOTE
@@ -1050,7 +1056,16 @@ A user agent that receives an =obs-fold= in a response message that is not withi
 Historically, HTTP has allowed field content with text in the ISO‑8859‑1 charset [ISO-8859-1], supporting other charsets only through use of [[[https://tools.ietf.org/html/rfc2047][RFC2047]]] encoding. In practice, most HTTP header field values use only a subset of the US-ASCII charset [USASCII]. Newly defined header fields *SHOULD* limit their field values to US‑ASCII octets. A recipient *SHOULD* treat other octets in field content (=obs‑text=) as [[https://en.wikipedia.org/wiki/Opaque_data_type][opaque data]].
 #+END_QUOTE
 
-历史上，HTTP 已允许报头域的内容带有 ISO-8859-1 字符集【ISO-8859-1】的字符，要支持其他字符集，仅能通过使用【[[https://tools.ietf.org/html/rfc2047][RFC2047]]】编码。实践上，大多 HTTP 报头域值仅仅使用 US-ASCII 字符集【USASCII】的子集。新近定义的报头域 *应该* 将它们的域值的内容限制为 US-ASCII 字符八位组（Octets）。接收端 *应该* 将在报头域里的其他字符八位组（=obs-text=）作为不透明数据（[[https://en.wikipedia.org/wiki/Opaque_data_type][Opaque Data]]）对待。
+历史上，HTTP 已允许报头域的内容带有 ISO-8859-1 字符集【ISO-8859-1】的字符，要支持其他字符集，仅能通过使用【[[https://tools.ietf.org/html/rfc2047][RFC2047]]】编码。实际上，大多 HTTP 报头域值仅仅使用 US-ASCII 字符集【USASCII】的子集。新近定义的报头域 *应该* 将它们的域值的内容限制为 US-ASCII 字节（Octets）。接收端 *应该* 将在报头域里的其他字节文本（=obs-text=）作为不透明数据（[[https://en.wikipedia.org/wiki/Opaque_data_type][Opaque Data]]）对待。
+
+#+BEGIN_QUOTE
+译注：计算机领域中 opaque 与 transparent 的区别：
+opaque（不透明的）和 transparent（透明的）都有“隐藏”的意思。
+*opaque:* 表示虽然能看见某物（表象），但看不到它的内部，看不懂它的运作原理，看不清它的本质，另外，opaque 也有一点“封装”的意思，例如 API，你知道如何有哪些 API，也知道如何使用它们，但你不知道它们内部的实现原理，那么，它们的实现原理对你来说就是 opaque。
+*transparent:* 表示某物的存在不被人感知，你看不见，但它确实存在。例如 Java 类的私有成员变量、私有成员方法等，你并不知道它们的存在，但它们确实存在。
+
+简单来说，*opaque* 是“知其然而不知其所以然”，而 *transparent* 就是“我站在你面前，但你却看不见我”。
+#+END_QUOTE
 
 *** 3.2.5 域限制 (Field Limits)
 #+BEGIN_QUOTE
@@ -1072,6 +1087,9 @@ A client *MAY* discard or truncate received header fields that are larger than t
 客户端 *可以* 丢弃或拼接所接收到的超出客户端所能处理的最大长度的报头域，如果那个域的语义是那种摘除掉的值能够在没有改变报文的分帧或响应语义的情况下被安全地被忽略。
 
 *** 3.2.6 域值的组成 (Field Value Components)
+:PROPERTIES:
+:ID:       d0012483-93a3-44cf-b019-29e12725d94a
+:END:
 #+BEGIN_QUOTE
 Most HTTP header field values are defined using common syntax components (token, quoted-string, and comment) separated by whitespace or specific delimiting characters. Delimiters are chosen from the set of US-ASCII visual characters not allowed in a token (DQUOTE and "(),/:;<=>?@[\]{}").
 #+END_QUOTE
@@ -1222,7 +1240,7 @@ A server *MUST NOT* send a =Transfer-Encoding= header field in any response with
 =Transfer-Encoding= was added in HTTP/1.1. It is generally assumed that implementations advertising only HTTP/1.0 support will not understand how to process a transfer-encoded payload. A client *MUST NOT* send a request containing =Transfer-Encoding= unless it knows the server will handle HTTP/1.1 (or later) requests; such knowledge might be in the form of specific user configuration or by remembering the version of a prior received response. A server *MUST NOT* send a response containing =Transfer-Encoding= unless the corresponding request indicates HTTP/1.1 (or later).
 #+END_QUOTE
 
-=Transfer-Encoding= 自 HTTP/1.1 起新增，一般会假设这种声明仅支持到 HTTP/1.0 的实现并不会理解如何去处理一个经过传输编码过的有效载荷（Transfer-encoded Payload）。客户端 *禁止* 发送一个包含 =Transfer-ENcoding= 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住一个之前接收到的响应报文的版本号的方式知道服务器是否可以处理这种请求。服务器 *禁止* 发送一个包含 =Transfer-Encoding= 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
+=Transfer-Encoding= 自 HTTP/1.1 起新增，一般会假设这种声明仅支持到 HTTP/1.0 的实现（Implementations）并不会理解如何去处理一个经过传输编码过的有效载荷（Transfer-encoded Payload）。客户端 *禁止* 发送一个包含 =Transfer-ENcoding= 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住一个之前接收到的响应报文的版本号的方式知道服务器是否可以处理这种请求。服务器 *禁止* 发送一个包含 =Transfer-Encoding= 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
 
 #+BEGIN_QUOTE
 A server that receives a request message with a transfer coding it does not understand *SHOULD* respond with =501 (Not Implemented)=.
@@ -1271,7 +1289,7 @@ A user agent *SHOULD* send a =Content-Length= in a request message when no =Tran
 A server *MAY* send a =Content-Length= header field in a response to a HEAD request (Section 4.3.2 of [RFC7231]); a server *MUST NOT* send =Content-Length= in such a response unless its =field-value= equals the decimal number of octets that would have been sent in the payload body of a response if the same request had used the GET method.
 #+END_QUOTE
 
-TODO 服务器 *可以* 在响应给一个 HEAD 请求（【RFC7231】章节 4.3.2）的响应报文中带有一个 =Content-Length= 报头域。服务器 *禁止* 在这种响应报文中带有 =Content-Length=：除非它的 =field-value= 等于会在响应报文的有效载荷里发送八位组表示的十进制数字。
+TODO 服务器 *可以* 在响应给一个 HEAD 请求（【RFC7231】章节 4.3.2）的响应报文中带有一个 =Content-Length= 报头域。服务器 *禁止* 在这种响应报文中带有 =Content-Length=：除非它的 =field-value= 等于会在响应报文的有效载荷里发送以字节表示的十进制数字。
 
 在一个响应报文的有效载荷里，如果同样的请求使用的是 GET 请求方法。
 
@@ -1637,7 +1655,7 @@ The "deflate" coding is a "zlib" data format [RFC1950] containing a "deflate" co
 *Note:* Some non-conformant implementations send the "deflate" compressed data without the zlib wrapper.
 #+END_QUOTE
 
-*注意：* 某些不兼容 HTTP 规范的实现在发送 "deflate" 压缩数据时并不会包含在 zlib 中。
+*注意：* 某些不兼容 HTTP 规范的实现（Implementations）在发送 "deflate" 压缩数据时并不会包含在 zlib 中。
 
 *** 4.2.3 "gzip" 编码值 (Gzip Coding)
 :PROPERTIES:
@@ -2437,7 +2455,7 @@ It is beyond the scope of this specification to describe how connections are est
 HTTP/1.1 defaults to the use of "[[https://en.wikipedia.org/wiki/HTTP_persistent_connection][persistent connections]]", allowing multiple requests and responses to be carried over a single connection. The "close" connection option is used to signal that a connection will not persist after the current request/response. HTTP implementations *SHOULD* support persistent connections.
 #+END_QUOTE
 
-HTTP/1.1 对[[https://zh.wikipedia.org/wiki/HTTP%25E6%258C%2581%25E4%25B9%2585%25E8%25BF%259E%25E6%258E%25A5][持久连接（Persistent Connections）]]的使用进行了定义，允许在单个连接中搭载多个请求和响应。"close" 连接选项用于作为连接将会在当前请求/响应后不再维持的信号。HTTP 的实现 *应该* 支持持久连接。
+HTTP/1.1 对[[https://zh.wikipedia.org/wiki/HTTP%25E6%258C%2581%25E4%25B9%2585%25E8%25BF%259E%25E6%258E%25A5][持久连接（Persistent Connections）]]的使用进行了定义，允许在单个连接中搭载多个请求和响应。"close" 连接选项用于作为连接将会在当前请求/响应后不再维持的信号。HTTP 的实现（Implementations） *应该* 支持持久连接。
 
 #+BEGIN_QUOTE
 译注：持久连接又称为长连接。
@@ -2588,7 +2606,7 @@ Servers will usually have some timeout value beyond which they will no longer ma
 A client or server that wishes to time out *SHOULD* issue a graceful close on the connection. Implementations *SHOULD* constantly monitor open connections for a received closure signal and respond to it as appropriate, since prompt closure of both sides of a connection enables allocated system resources to be reclaimed.
 #+END_QUOTE
 
-希望超时的客户端或服务器 *应该* 在连接中发出一个优雅的关闭信号。所有 HTTP 实现 *应该* 在已打开的连接中不断监听关闭信号，并且正确地响应该信号，这是因为连接两端的关闭确认可以使系统分配的资源得到回收。
+希望超时的客户端或服务器 *应该* 在连接中发出一个优雅的关闭信号。所有 HTTP 实现（Implementations） *应该* 在已打开的连接中不断监听关闭信号，并且正确地响应该信号，这是因为连接两端的关闭确认可以使系统分配的资源得到回收。
 
 #+BEGIN_QUOTE
 A client, server, or proxy *MAY* close the transport connection at any time. For example, a client might have started to send a new request at the same time that the server has decided to close the "idle" connection. From the server's point of view, the connection is being closed while it was idle, but from the client's point of view, a request is in progress.
@@ -3178,7 +3196,7 @@ Because HTTP uses mostly textual, character-delimited fields, parsers are often 
 To promote interoperability, specific recommendations are made for minimum size limits on =request-line= (Section 3.1.1) and header fields (Section 3.2). These are minimum recommendations, chosen to be supportable even by implementations with limited resources; it is expected that most implementations will choose substantially higher limits.
 #+END_QUOTE
 
-为了提高互操作性，本规范提出了对于请求行（[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]）以及报头域（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）的最小值限制的具体建议。这些最小值建议，本规范选择的是即使资源受限的实现也能够支持的，期望大多数的实现会选择更大幅度的限制。
+为了提高互操作性，本规范提出了对于请求行（[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]）以及报头域（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）的最小值限制的具体建议。这些最小值建议，本规范选择的是即使资源受限的（Implementations）也能够支持的，期望大多数的实现（Implementations）会选择更大幅度的限制。
 
 #+BEGIN_QUOTE
 A server can reject a message that has a request-target that is too long (Section 6.5.12 of [RFC7231]) or a request payload that is too large (Section 6.5.11 of [RFC7231]). Additional status codes related to capacity limits have been defined by extensions to HTTP [RFC6585].
@@ -3352,7 +3370,7 @@ HTTP 自 1990 年开始被使用。第一个版本，也就是后来被称为 HT
 HTTP/1.1 remains compatible with HTTP/1.0 by including more stringent requirements that enable reliable implementations, adding only those features that can either be safely ignored by an HTTP/1.0 recipient or only be sent when communicating with a party advertising conformance with HTTP/1.1.
 #+END_QUOTE
 
-HTTP/1.1 仍保留了对 HTTP/1.0 的兼容：通过包含更多严格的要求来让实现更加可靠，仅添加那些能够被 HTTP/1.0 接收端安全忽略的，或者只能在通信双方都声明其遵循 HTTP/1.1 语义的时候才会使用的功能。
+HTTP/1.1 仍保留了对 HTTP/1.0 的兼容：通过包含更多严格的要求来让实现（Implementations）更加可靠，仅添加那些能够被 HTTP/1.0 接收端安全忽略的，或者只能在通信双方都声明其遵循 HTTP/1.1 语义的时候才会使用的功能。
 
 #+BEGIN_QUOTE
 HTTP/1.1 has been designed to make supporting previous versions easy. A general-purpose HTTP/1.1 server ought to be able to understand any valid request in the format of HTTP/1.0, responding appropriately with an HTTP/1.1 message that only uses features understood (or safely ignored) by HTTP/1.0 clients. Likewise, an HTTP/1.1 client can be expected to understand any valid HTTP/1.0 response.
@@ -3373,7 +3391,7 @@ This section summarizes major differences between versions HTTP/1.0 and HTTP/1.1
 
 本章节总结了 HTTP/1.0 与 HTTP/1.1 的主要区别。
 
-*** A.1.1. 多宿主网页服务器 (Multihomed Web Servers)
+*** A.1.1. 多宿主网络服务器 (Multihomed Web Servers)
 #+BEGIN_QUOTE
 The requirements that clients and servers support the =Host= header field ([[id:f6cd08fd-597f-4b1d-98ad-a1730125abdc][Section 5.4]]), report an error if it is missing from an HTTP/1.1 request, and accept absolute URIs ([[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][Section 5.3]]) are among the most important changes defined by HTTP/1.1.
 #+END_QUOTE
@@ -3381,113 +3399,175 @@ The requirements that clients and servers support the =Host= header field ([[id:
 HTTP/1.1 与 HTTP/1.0 最重要的改变有如下：要求客户端和服务器支持 =Host= 报头域（[[id:f6cd08fd-597f-4b1d-98ad-a1730125abdc][章节 5.4]]），如果在一个 HTTP/1.1 请求报文中没有 =Host= 的话要报告错误；接受绝对 URI（absolute URIs，[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][章节 5.3]]）。
 
 #+BEGIN_QUOTE
-Older HTTP/1.0 clients assumed a one-to-one relationship of IP addresses and servers; there was no other established mechanism for distinguishing the intended server of a request than the IP address to which that request was directed. The =Host= header field was introduced during the development of HTTP/1.1 and, though it was quickly implemented by most HTTP/1.0 browsers, additional requirements were placed on all HTTP/1.1 requests in order to ensure complete adoption. At the time of this writing, most HTTP-based services are dependent upon the Host header field for targeting requests.
+译注：Multihomed 译作多宿主、多重地址，更多介绍请[[https://en.wikipedia.org/wiki/Multihoming][移步这里]]。
 #+END_QUOTE
 
-旧的 HTTP/1.0 客户端假设 IP 地址与服务器是一个一对一关系，除了只能使用 IP 地址这种方式来将一个请求导向到它所期望到达的服务器以外，没有任何其他方式。在 HTTP/1.1 发展过程中引入了 =Host= 报头域，它能够很快被 HTTP/1.0 浏览器所实现，为了确保，额外的要求被附加到 HTTP/1.1 请求里
+#+BEGIN_QUOTE
+Older HTTP/1.0 clients assumed a one-to-one relationship of IP addresses and servers; there was no other established mechanism for distinguishing the intended server of a request than the IP address to which that request was directed. The =Host= header field was introduced during the development of HTTP/1.1 and, though it was quickly implemented by most HTTP/1.0 browsers, additional requirements were placed on all HTTP/1.1 requests in order to ensure complete adoption. At the time of this writing, most HTTP-based services are dependent upon the =Host= header field for targeting requests.
+#+END_QUOTE
+
+旧的 HTTP/1.0 客户端会假定 IP 地址与服务器是一对一的关系，除了只能使用 IP 地址这种方式来将一个请求导向到它所期望到达的服务器以外，没有任何其他的方式。在 HTTP/1.1 发展过程中引入了 =Host= 报头域，它能够很快被 HTTP/1.0 浏览器所实现，另外，还需要对所有 HTTP/1.1 请求报文增加额外的要求，来确保完整采用。在写这份文档的时候，大多数基于 HTTP 的服务都已经由 =Host= 报头域来决定请求目标了。
 
 *** A.1.2. Keep-Alive 连接 (Keep-Alive Connections)
 #+BEGIN_QUOTE
 In HTTP/1.0, each connection is established by the client prior to the request and closed by the server after sending the response. However, some implementations implement the explicitly negotiated ("Keep-Alive") version of persistent connections described in Section 19.7.1 of [RFC2068].
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Some clients and servers might wish to be compatible with these previous approaches to persistent connections, by explicitly negotiating for them with a "Connection: keep-alive" request header field. However, some experimental implementations of HTTP/1.0 persistent connections are faulty; for example, if an HTTP/1.0 proxy server doesn't understand Connection, it will erroneously forward that header field to the next inbound server, which would result in a hung connection.
-#+END_QUOTE
+在 HTTP/1.0 里，每个连接会被客户端在发送请求之前建立，被服务器在发送响应之后关闭。但是，某些实现（Implementations）实现了明确的持久连接的协商版本（"Keep-Alive"），见[[https://tools.ietf.org/html/rfc2068#section-19.7.1][【RFC2068】章节 19.7.1]]。
 
 #+BEGIN_QUOTE
-One attempted solution was the introduction of a Proxy-Connection header field, targeted specifically at proxies. In practice, this was also unworkable, because proxies are often deployed in multiple layers, bringing about the same problem discussed above.
+Some clients and servers might wish to be compatible with these previous approaches to persistent connections, by explicitly negotiating for them with a "Connection: keep-alive" request header field. However, some experimental implementations of HTTP/1.0 persistent connections are faulty; for example, if an HTTP/1.0 proxy server doesn't understand =Connection=, it will erroneously forward that header field to the next inbound server, which would result in a hung connection.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-As a result, clients are encouraged not to send the Proxy-Connection header field in any requests.
-#+END_QUOTE
+某些客户端和服务器可能希望兼容上述这种持久连接的实现方式，通过带有一个 "=Connection: keep-alive=" 请求报头域明确地与通信双方协商。但是，HTTP/1.0 持久连接的某些带实验性质的实现（Implementations）是有缺陷的，例如，如果一个 HTTP/1.0 代理服务器并不理解 =Connection= 报头域而将其错误地转发到下一个入站服务器中，这样会导致连接挂起。
 
 #+BEGIN_QUOTE
-Clients are also encouraged to consider the use of Connection: keep-alive in requests carefully; while they can enable persistent connections with HTTP/1.0 servers, clients using them will need to monitor the connection for "hung" requests (which indicate that the client ought stop sending the header field), and this mechanism ought not be used by clients at all when a proxy is being used.
+One attempted solution was the introduction of a =Proxy-Connection= header field, targeted specifically at proxies. In practice, this was also unworkable, because proxies are often deployed in multiple layers, bringing about the same problem discussed above.
 #+END_QUOTE
+
+一个可尝试的解决方案是引入一个 =Proxy-Connection= 报头域特定针对于代理。实际上这样也是很难实行的，因为代理通过部署于多个通信层上，同样会带来上述的这些问题。
+
+#+BEGIN_QUOTE
+As a result, clients are encouraged not to send the =Proxy-Connection= header field in any requests.
+#+END_QUOTE
+
+所以，鼓励客户端不要在任何请求报文中带有 =Proxy-Connection= 报头域。
+
+#+BEGIN_QUOTE
+Clients are also encouraged to consider the use of =Connection: keep-alive= in requests carefully; while they can enable persistent connections with HTTP/1.0 servers, clients using them will need to monitor the connection for "hung" requests (which indicate that the client ought stop sending the header field), and this mechanism ought not be used by clients at all when a proxy is being used.
+#+END_QUOTE
+
+同样，鼓励客户端在请求报文中小心谨慎地使用 =Connection: keep-alive= 报头域，这是因为该报头域会启用与 HTTP/1.0 服务器的持久连接。客户端使用它的时候需要监听连接是否存在被挂起（hung）的请求（也就是说客户端应该停止发送报头域），并且客户端不应该在有使用代理的场合下使用这种方法。
 
 *** A.1.3. 引入 Trnasfer-Encoding (Introduction of Transfer-Encoding)
 #+BEGIN_QUOTE
-HTTP/1.1 introduces the Transfer-Encoding header field (Section 3.3.1). Transfer codings need to be decoded prior to forwarding an HTTP message over a MIME-compliant protocol.
+HTTP/1.1 introduces the =Transfer-Encoding= header field ([[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][Section 3.3.1]]). Transfer codings need to be decoded prior to forwarding an HTTP message over a MIME-compliant protocol.
 #+END_QUOTE
+
+HTTP/1.1 引入了 =Transfer-Encoding= 报头域（[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][章节 3.3.1]]）。传输编码值需要在 HTTP 报文在某个遵循 MIME 协议的连接上转发之前进行解码。
 
 ** A.2. 相对 RFC 2616 的变化 (Changes from RFC 2616)
 #+BEGIN_QUOTE
-HTTP's approach to error handling has been explained. (Section 2.5)
+HTTP's approach to error handling has been explained. ([[id:A0441F72-9799-4667-9477-1E05885946A1][Section 2.5]])
 #+END_QUOTE
 
+明确了 HTTP 的错误处理方法。（[[id:A0441F72-9799-4667-9477-1E05885946A1][章节 2.5]]）
+
 #+BEGIN_QUOTE
-The HTTP-version ABNF production has been clarified to be case-sensitive. Additionally, version numbers have been restricted to single digits, due to the fact that implementations are known to handle multi-digit version numbers incorrectly. (Section 2.6)
+The =HTTP-version= ABNF production has been clarified to be case-sensitive. Additionally, version numbers have been restricted to single digits, due to the fact that implementations are known to handle multi-digit version numbers incorrectly. (Section 2.6)
 #+END_QUOTE
+
+=HTTP-version= ABNF 规则已经被明确为区分大小写。另外，版本号的数值已经被限制为一位数字（Single Digits），这是基于已知实现（Implementations）不能正确处理版本号为多位数字的事实来做的改动。
 
 #+BEGIN_QUOTE
 Userinfo (i.e., username and password) are now disallowed in HTTP and HTTPS URIs, because of security issues related to their transmission on the wire. (Section 2.7.1)
 #+END_QUOTE
 
+现在，不再允许在 HTTP 和 HTTPS URI 中出现 =userinfo= （也就是说，用户名和密码），因为它在通信线路上传输时存在安全问题。
+
 #+BEGIN_QUOTE
-The HTTPS URI scheme is now defined by this specification; previously, it was done in Section 2.4 of [RFC2818]. Furthermore, it implies end-to-end security. (Section 2.7.2)
+The HTTPS URI scheme is now defined by this specification; previously, it was done in [[https://tools.ietf.org/html/rfc2818#section-2.4][Section 2.4]] of [[[https://tools.ietf.org/html/rfc2818][RFC2818]]]. Furthermore, it implies end-to-end security. ([[id:25028231-5e21-44b9-ba0c-2f014e5ffcfd][Section 2.7.2]])
+#+END_QUOTE
+
+现在，HTTPS URI 方案已经被定义在本规范中。以前，它是定义在[[https://tools.ietf.org/html/rfc2818#section-2.4][【RFC2818】章节 2.4]] 中。此外，HTTPS 意味着端到端安全。（[[id:25028231-5e21-44b9-ba0c-2f014e5ffcfd][章节 2.7.2]]）
+
+#+BEGIN_QUOTE
+HTTP messages can be (and often are) buffered by implementations; despite it sometimes being available as a stream, HTTP is fundamentally a message-oriented protocol. Minimum supported sizes for various protocol elements have been suggested, to improve interoperability. ([[id:6e9516fa-cde2-4693-b1e1-e763776d3186][Section 3]])
+#+END_QUOTE
+
+HTTP 报文能够（而且通常会）被缓冲（buffer），尽管它有时候作为流的形式来提供，HTTP 本质上来说是一种面向报文的协议（Message-oriented Protocol）。为了提高互操作性，本规则建议了各种协议元素的最小可支持的大小。（[[id:6e9516fa-cde2-4693-b1e1-e763776d3186][章节 3]]）
+
+#+BEGIN_QUOTE
+Invalid whitespace around field-names is now required to be rejected, because accepting it represents a security vulnerability. The ABNF productions defining header fields now only list the field value. ([[id:a6c4dceb-8a19-4799-a39b-b7240755c672][Section 3.2]])
+#+END_QUOTE
+
+现在，在域的名称（field-names）两端不能出现非法的空格字符，这是因为允许它们就意味着安全隐患。现在，定义报头域的 ABNF 规则 =header-field= 只列出了 =field-value=。（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）
+
+#+BEGIN_QUOTE
+译注：【RFC2616】对报文域的 ABNF [[https://tools.ietf.org/html/rfc2616#section-4.2][定义在这里（message-header）]]；【RFC7231】对报头域的 ABNF [[id:a6c4dceb-8a19-4799-a39b-b7240755c672][定义在这里（header-field）]]。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-HTTP messages can be (and often are) buffered by implementations; despite it sometimes being available as a stream, HTTP is fundamentally a message-oriented protocol. Minimum supported sizes for various protocol elements have been suggested, to improve interoperability. (Section 3)
+Rules about implicit linear whitespace between certain grammar productions have been removed; now whitespace is only allowed where specifically defined in the ABNF. ([[id:f26527b6-d15c-4967-97e3-acc669609481][Section 3.2.3]])
+#+END_QUOTE
+
+移除了某些暗示连续空格的相关语法规则，现在，空格只允许在 ABNF 中有明确定义的地方。（[[id:f26527b6-d15c-4967-97e3-acc669609481][章节 3.2.3]]）
+
+#+BEGIN_QUOTE
+Header fields that span multiple lines ("line folding") are deprecated. ([[id:1bd50237-cd26-4e74-8c0c-7af8d2d6b25f][Section 3.2.4]])
+#+END_QUOTE
+
+废弃了能够横跨多行（"line folding"）的报头域。（[[id:1bd50237-cd26-4e74-8c0c-7af8d2d6b25f][章节 3.2.4]]）
+
+#+BEGIN_QUOTE
+The NUL octet is no longer allowed in comment and quoted-string text, and handling of backslash-escaping in them has been clarified. The quoted-pair rule no longer allows escaping control characters other than HTAB. Non-US-ASCII content in header fields and the reason phrase has been obsoleted and made opaque (the =TEXT= rule was removed). ([[id:d0012483-93a3-44cf-b019-29e12725d94a][Section 3.2.6]])
+#+END_QUOTE
+
+=NUL= 字节不再允许出现在 =comment= （注释）和 =quoted-string= （以双引号包裹的字符串）里，同时，明确了使用反斜杠转义 =NUL= 字节的处理方式。=quoted-pair= 规则不再允许转义除 =HTAB= 以外的[[https://zh.wikipedia.org/wiki/%25E6%258E%25A7%25E5%2588%25B6%25E5%25AD%2597%25E7%25AC%25A6][控制字符（Control Characters）]]。在报头域（Header Fields）和 =reason-phrase= 中存在的非 USASCII 的内容已被弃用，并将其设置为不透明数据（移除了 =TEXT= 规则）。（[[id:d0012483-93a3-44cf-b019-29e12725d94a][章节 3.2.6]]）
+
+#+BEGIN_QUOTE
+译注：关于不透明数据的解释见[[id:1bd50237-cd26-4e74-8c0c-7af8d2d6b25f][章节 3.2.4]]。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-Invalid whitespace around field-names is now required to be rejected, because accepting it represents a security vulnerability. The ABNF productions defining header fields now only list the field value. (Section 3.2)
+Bogus =Content-Length= header fields are now required to be handled as errors by recipients. ([[id:7b3e90b9-3ae5-402b-922c-2342d361c79f][Section 3.3.2]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Rules about implicit linear whitespace between certain grammar productions have been removed; now whitespace is only allowed where specifically defined in the ABNF. (Section 3.2.3)
-#+END_QUOTE
+现在，伪造的 =Content-Length= 报头域要求接收端作为错误来处理。（[[id:7b3e90b9-3ae5-402b-922c-2342d361c79f][章节 3.3.2]]）
 
 #+BEGIN_QUOTE
-Header fields that span multiple lines ("line folding") are deprecated. (Section 3.2.4)
+The algorithm for determining the message body length has been clarified to indicate all of the special cases (e.g., driven by methods or status codes) that affect it, and that new protocol elements cannot define such special cases. CONNECT is a new, special case in determining message body length. "multipart/byteranges" is no longer a way of determining message body length detection. ([[id:5fee24c5-74b9-4016-b7ed-a4831cafbe69][Section 3.3.3]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The NUL octet is no longer allowed in comment and quoted-string text, and handling of backslash-escaping in them has been clarified. The quoted-pair rule no longer allows escaping control characters other than HTAB. Non-US-ASCII content in header fields and the reason phrase has been obsoleted and made opaque (the TEXT rule was removed). (Section 3.2.6)
-#+END_QUOTE
+明确指出了所有影响确定报文正文长度的算法的所有特殊情况（例如，由方法或状态码决定），并且，将来新增的协议元素不能再定义这种特殊情况。CONNECT 是新加入的影响报文正文长度的特殊情况。"multipart/byteranges" 不再是一种确定报文正文长度的检测方式。（[[id:5fee24c5-74b9-4016-b7ed-a4831cafbe69][章节 3.3.3]]）
 
 #+BEGIN_QUOTE
-Bogus Content-Length header fields are now required to be handled as errors by recipients. (Section 3.3.2)
+The "identity" transfer coding token has been removed. ([[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][Sections 3.3]] and [[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][4]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The algorithm for determining the message body length has been clarified to indicate all of the special cases (e.g., driven by methods or status codes) that affect it, and that new protocol elements cannot define such special cases. CONNECT is a new, special case in determining message body length. "multipart/byteranges" is no longer a way of determining message body length detection. (Section 3.3.3)
-#+END_QUOTE
+移除了 "identity" 传输编码值。（[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]] 以及 [[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][章节 4]]）
 
 #+BEGIN_QUOTE
-The "identity" transfer coding token has been removed. (Sections 3.3 and 4)
+Chunk length does not include the count of the octets in the chunk header and trailer. Line folding in chunk extensions is disallowed. ([[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][Section 4.1]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Chunk length does not include the count of the octets in the chunk header and trailer. Line folding in chunk extensions is disallowed. (Section 4.1)
-#+END_QUOTE
+块头（chunk header）和拖尾（trailer）内的字节不计入分块（chunk）的长度。块扩展（chunk extensions）不允许分行（line folding）。（[[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][章节 4.1]]）
 
 #+BEGIN_QUOTE
-The meaning of the "deflate" content coding has been clarified. (Section 4.2.2)
+The meaning of the "deflate" content coding has been clarified. ([[id:fa7b432f-071b-4e26-9d2c-8fc1b95b6b64][Section 4.2.2]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The segment + query components of RFC 3986 have been used to define the request-target, instead of abs_path from RFC 1808. The asterisk-form of the request-target is only allowed with the OPTIONS method. (Section 5.3)
-#+END_QUOTE
+明确了 "deflate" 内容编码值的意思。（[[id:fa7b432f-071b-4e26-9d2c-8fc1b95b6b64][章节 4.2.2]]）
 
 #+BEGIN_QUOTE
-The term "Effective Request URI" has been introduced. (Section 5.5)
+The =segment= + =query= components of [[id:fa7b432f-071b-4e26-9d2c-8fc1b95b6b64][RFC 3986]] have been used to define the =request-target=, instead of =abs_path= from RFC 1808. The asterisk-form of the =request-target= is only allowed with the OPTIONS method. ([[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][Section 5.3]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Gateways do not need to generate Via header fields anymore. (Section 5.7.1)
-#+END_QUOTE
+[[bibtex:][【RFC3986】]]里的 =segment= 和 =query= 组件已被用于定义 =request-target=，不再是[[https://tools.ietf.org/html/rfc1808][【RFC1808】]]里的 =abs_path=。=request-target= 的星号形式（asterisk-form）仅允许用于 OPTIONS 请求方法。（[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][章节 5.3]]） 
 
 #+BEGIN_QUOTE
-Exactly when "close" connection options have to be sent has been clarified. Also, "hop-by-hop" header fields are required to appear in the Connection header field; just because they're defined as hop-by-hop in this specification doesn't exempt them. (Section 6.1)
+The term "Effective Request URI" has been introduced. ([[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]])
 #+END_QUOTE
+
+引入了术语 *有效请求 URI（Effective Request URI）*。（[[id:3265c21d-0d3b-4776-8e28-38278d168779][章节 5.5]]）
+
+#+BEGIN_QUOTE
+Gateways do not need to generate =Via= header fields anymore. ([[id:4a38d632-e412-4122-8ae5-0d58ab8f3d6a][Section 5.7.1]])
+#+END_QUOTE
+
+网关不再需要生成 =Via= 报头域了。（[[id:4a38d632-e412-4122-8ae5-0d58ab8f3d6a][章节 5.7.1]]）
+
+#+BEGIN_QUOTE
+Exactly when "close" connection options have to be sent has been clarified. Also, "hop-by-hop" header fields are required to appear in the =Connection= header field; just because they're defined as hop-by-hop in this specification doesn't exempt them. ([[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][Section 6.1]])
+#+END_QUOTE
+
+明确了何时需要发送 "close" 连接选项（connection options）。同时，要求逐跳（"hop-by-hop"）类型的报头域出现在 =Connection= 报头域内，被本规范定义为逐跳（"hop-by-hop"）类型的报头域，同样不能豁免这个要求。（[[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][章节 6.1]]）
 
 #+BEGIN_QUOTE
 The limit of two connections per server has been removed. An idempotent sequence of requests is no longer required to be retried. The requirement to retry requests under certain circumstances when the server prematurely closes the connection has been removed. Also, some extraneous requirements about when servers are allowed to close connections prematurely have been removed. (Section 6.3)
 #+END_QUOTE
+
+移除了每个服务器两个连接的限制。一个幂等的请求序列不再需要重试。移除了当服务器过早关闭连接时，在特定环境下要求重试请求的要求。同样，
 
 #+BEGIN_QUOTE
 The semantics of the Upgrade header field is now defined in responses other than 101 (this was incorporated from [RFC2817]). Furthermore, the ordering in the field value is now significant. (Section 6.7)
@@ -3921,6 +4001,7 @@ URI: http://greenbytes.de/tech/webdav/
 #+END_EXAMPLE
 
 * Footnotes
+SCHEDULED: <2018-10-26 Fri>
 
 [fn:1] Message Framing，报文分帧、报文组帧，将一个报文与下一个报文进行分离。Separating one message from the next (framing).
 
