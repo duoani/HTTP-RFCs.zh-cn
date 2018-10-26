@@ -1657,7 +1657,7 @@ The "gzip" coding is an LZ77 coding with a 32-bit Cyclic Redundancy Check (CRC) 
 The "TE" header field in a request indicates what transfer codings, besides chunked, the client is willing to accept in response, and whether or not the client is willing to accept trailer fields in a chunked transfer coding.
 #+END_QUOTE
 
-在一个请求报文中的报头域 =TE= 指明了客户端愿意接受使用了除 =chunked= 以外的哪些传输编码的响应报文，以及客户端是否愿意在分块传输编码值中接受拖尾域（Trailer Fields）。
+在一个请求报文中的报头域 =TE= 指明了客户端除了愿意接受 =chunked= 以外还愿意接受哪些传输编码的响应报文，以及客户端是否愿意在分块传输编码值中接受拖尾域（Trailer Fields）。
 
 #+BEGIN_QUOTE
 The TE field-value consists of a comma-separated list of transfer coding names, each allowing for optional parameters (as described in Section 4), and/or the keyword "=trailers=". A client *MUST NOT* send the =chunked= transfer coding name in =TE=; =chunked= is always acceptable for HTTP/1.1 recipients.
@@ -2315,7 +2315,6 @@ As described in Section 5.2, the specific connection protocols to be used for an
 HTTP implementations are expected to engage in connection management, which includes maintaining the state of current connections, establishing a new connection or reusing an existing connection, processing messages received on a connection, detecting connection failures, and closing each connection. Most clients maintain multiple connections in parallel, including more than one connection per server endpoint. Most servers are designed to maintain thousands of concurrent connections, while controlling request queues to enable fair use and detect [[https://en.wikipedia.org/wiki/Denial-of-service_attack][denial-of-service attacks]].
 #+END_QUOTE
 
-HTTP 实现（Implementations）需要从事连接管理（Connection Management），包括维护当前连接的状态，建议新的连接或者复用已有连接，处理在连接中接收到的报文，检测连接错误，以及关闭每个连接。大多数客户端会并行（Parallel）地维护多个连接，包括对同一个服务器端点的多个连接。大多数服务器会设计为能够维护数以千计的并发（Concurrent）连接，同时，通过控制请求队列来合理使用服务和检测[[https://zh.wikipedia.org/wiki/%25E9%2598%25BB%25E6%2596%25B7%25E6%259C%258D%25E5%258B%2599%25E6%2594%25BB%25E6%2593%258A][拒绝服务攻击（Denial-of-service attachs）]]。
 
 ** 6.1 连接 (Connection)
 :PROPERTIES:
@@ -2390,7 +2389,7 @@ The connection options do not always correspond to a header field present in the
 When defining new connection options, specification authors ought to survey existing header field names and ensure that the new connection option does not share the same name as an already deployed header field. Defining a new connection option essentially reserves that potential field-name for carrying additional information related to the connection option, since it would be unwise for senders to use that field-name for anything else.
 #+END_QUOTE
 
-当定义新的连接选项时，规范的作者们应该审视已有的报头域名称，确保新的连接选项的名称与目前已部署的报头域名称不相冲突。定义一个新的连接选项基本上会一并将同名报头域名作为保留字，用来搭载与该连接选项相关的额外信息，所以，发送端将种该报头域用作他用是很不明智的。
+当定义新的连接选项时，规范的作者们应该审视已有的报头域名称，确保新的连接选项的名称与目前已部署的报头域名称不相冲突。定义一个新的连接选项基本上会一并将同名报头域名作为保留字，用来搭载与该连接选项相关的额外信息，所以，如果发送端将这种报头域用作他用是很不明智的。
 
 #+BEGIN_QUOTE
 The "close" connection option is defined for a sender to signal that this connection will be closed after completion of the response. For example,
@@ -2526,7 +2525,7 @@ Pipeline，译为“流水线”，国内大多数译为“管道”，但我认
 
 pipeline 的优势是并行处理，可将一个大任务按一定顺序细分为一个个串联起来的小任务，pipeline 的并行处理实际上就是每个小任务不关心共他任务的完成进度，只需要不断完成当前任务就可以了。而所有小任务完成了，这个大任务就算完成了。这不就是“流水线作业”吗？
 
-而对于“管道”，我觉得应该更着重它的密封性（安全性）而淡化它的实现细节，即可看为管道里是一个黑盒子，你不管理里面是如何动作的，但外界也不容易影响管道的内部。例如水管的主要作用是输送，其次是隔绝外界污染，同时可以灵活接驳。
+而“管道”就是一条管子，你可以任意连接，而且由于“管道壁”的存在，防止了管子内的流体被外界污染，体现了管道的密封性和隔离性，即可看为管道里是一个黑盒子，你不管理里面是如何动作的，但外界也不容易影响管道的内部。例如水管的主要作用是输送，其次是隔绝外界污染，同时可以灵活接驳。但“管道”并没有体现了并行的意思。
 
 有些 pipeline 还可以任意组装、增减操作步骤，这个“流水线”与“管理”都有这个意思。
 #+END_QUOTE
@@ -2570,7 +2569,7 @@ HTTP 早前的修订版给出了一个连接数上限的具体数值，但最终
 Multiple connections are typically used to avoid the "[[https://en.wikipedia.org/wiki/Head-of-line_blocking][head-of-line blocking]]" problem, wherein a request that takes significant server-side processing and/or has a large payload blocks subsequent requests on the same connection. However, each connection consumes server resources. Furthermore, using multiple connections can cause undesirable side effects in congested networks.
 #+END_QUOTE
 
-多连接典型用于避免[[https://zh.wikipedia.org/wiki/%25E9%2598%259F%25E5%25A4%25B4%25E9%2598%25BB%25E5%25A1%259E][队头堵塞（"head-of-line blocking"）]]的问题，引起该问题的某个请求可能带有一个巨大的有效载荷，从而耗费了服务端很多处理时间，从而堵塞掉随后的在同一连接中的其他请求。但是，每个连接都消耗服务端资源，而且，在拥堵的网络中使用多连接能够引发不良副作用。
+多连接通常用于避免[[https://zh.wikipedia.org/wiki/%25E9%2598%259F%25E5%25A4%25B4%25E9%2598%25BB%25E5%25A1%259E][队头堵塞（"head-of-line blocking"）]]的问题，引起该问题的某个请求可能带有一个巨大的有效载荷，从而耗费了服务端很多处理时间，从而堵塞掉随后的在同一连接中的其他请求。但是，每个连接都消耗服务端资源，而且，在拥堵的网络中使用多连接可能会引发不良副作用。
 
 #+BEGIN_QUOTE
 Note that a server might reject traffic that it deems abusive or characteristic of a denial-of-service attack, such as an excessive number of open connections from a single client.
@@ -2583,7 +2582,7 @@ Note that a server might reject traffic that it deems abusive or characteristic 
 Servers will usually have some timeout value beyond which they will no longer maintain an inactive connection. Proxy servers might make this a higher value since it is likely that the client will be making more connections through the same proxy server. The use of persistent connections places no requirements on the length (or existence) of this timeout for either the client or the server.
 #+END_QUOTE
 
-服务器通常会带有某些超时值，如果超过该值时，服务器会不再维持一个可交互的连接。代理服务器可能会提高这些超时值的上限，这是因为很有可能客户端会通过同一个代理服务器创建更多的连接。持久连接的使用并不对客户端或服务器的超时时长（或者超时机制的存在）作任何要求。
+服务器通常会带有某些超时值，如果超过该值时，服务器将不再维持一个可交互的连接。代理服务器可能会提高这些超时值的上限，这是因为很有可能客户端会通过同一个代理服务器创建更多的连接。持久连接的使用并不对客户端或服务器的超时时长（或者超时机制的存在）作任何要求。
 
 #+BEGIN_QUOTE
 A client or server that wishes to time out *SHOULD* issue a graceful close on the connection. Implementations *SHOULD* constantly monitor open connections for a received closure signal and respond to it as appropriate, since prompt closure of both sides of a connection enables allocated system resources to be reclaimed.
@@ -2778,7 +2777,7 @@ This specification only defines the protocol name "HTTP" for use by the family o
 A =#rule= extension to the ABNF rules of [RFC5234] is used to improve readability in the definitions of some header field values.
 #+END_QUOTE
 
-=#rule= 是对[[https://tools.ietf.org/html/5234][【RFC5234】ABNF 规则]]的扩展，用于提高某些报头域值的定义可读性。
+=#rule= 是对[[https://tools.ietf.org/html/5234][【RFC5234】ABNF 规则]]的扩展，用于提高某些报头域值定义的可读性。
 
 #+BEGIN_QUOTE
 A construct "#" is defined, similar to "*", for defining comma-delimited lists of elements. The full form is "<n>#<m>element" indicating at least <n> and at most <m> elements, each separated by a single comma (",") and optional whitespace (=OWS=).
@@ -3112,7 +3111,7 @@ HTTP 提出了一个“权威响应（Authoritative Response）”的概念。�
 
 #+BEGIN_QUOTE
 译注：
-"Authoritative Response" 译为“权威响应”、“官方响应”，也就是说，这种响应是来自客户端所期望的那一个源服务器的，而且其有效载荷没有被任何中间人修改，编码过的。
+"Authoritative Response" 译为“权威响应”、“官方响应”，也就是说，这种响应是来自客户端所期望的那一个源服务器的，而且其有效载荷没有被任何中间人修改（编码）过的。
 另外，"Authoritative" 是“有权威的，当局的，官方的”的意思，但并没有“授权”、“认证”的意思！某些人将 "Authoritative Response" 译为“授权响应、认证响应”都是错误的，个人认为是弄混了 "authority"，"authentication"，"certification"，"verification" 这几个单词的意思，例如 "certificate authority" 是“认证中心、认证机构”。
 #+END_QUOTE
 
@@ -3138,7 +3137,7 @@ Furthermore, after an IP address is obtained, establishing authority for an "htt
 The "https" scheme (Section 2.7.2) is intended to prevent (or at least reveal) many of these potential attacks on establishing authority, provided that the negotiated TLS connection is secured and the client properly verifies that the communicating server's identity matches the target URI's =authority= component (see [RFC2818]). Correctly implementing such verification can be difficult (see [Georgiev]).
 #+END_QUOTE
 
-"https" 方案（[[id:25028231-5e21-44b9-ba0c-2f014e5ffcfd][章节 2.7.2]]）是意图避免（或者至少揭露）上述这些对于确立权威方面的潜在攻击，它提供了一种协商的并且安全的 TLS 连接，同时让客户端能够正确验证当前通信的服务器的身份是否与目标 URI 的 =authority= 组件相匹配（见【[[https://tools.ietf.org/html/rfc2818][RFC2818]]】）。正确实现这种验证可能不是一件容易的事（见【[[https://doi.acm.org/10.1145/2382196.2382204][Georgiev]]】）。
+"https" 方案（[[id:25028231-5e21-44b9-ba0c-2f014e5ffcfd][章节 2.7.2]]）是意图避免（或者至少揭露）上述这些对于确立权威方面的潜在攻击，它提供了一种协商的的安全 TLS 连接，同时让客户端能够正确验证当前通信的服务器的身份是否与目标 URI 的 =authority= 组件相匹配（见【[[https://tools.ietf.org/html/rfc2818][RFC2818]]】）。正确实现这种验证可能不是一件容易的事（见【[[https://doi.acm.org/10.1145/2382196.2382204][Georgiev]]】）。
 
 ** 9.2 中间人的风险 (Risks of Intermediaries)
 #+BEGIN_QUOTE
@@ -3173,7 +3172,7 @@ Users need to be aware that intermediaries are no more trustworthy than the peop
 Because HTTP uses mostly textual, character-delimited fields, parsers are often vulnerable to attacks based on sending very long (or very slow) streams of data, particularly where an implementation is expecting a protocol element with no predefined length.
 #+END_QUOTE
 
-因为 HTTP 使用的主要是文本性的，以字符分隔的域，因此，解析器（Parser）常常受到基于发送非常长（或非常慢）的数据流的方式的攻击，特别是在一个中间人期望某个没有预定义长度的协议元素身上。
+因为 HTTP 使用的主要是文本性的、以字符分隔的域，因此，解析器（Parser）常常受到基于发送非常长（或非常慢）的数据流的方式的攻击，特别是在一个中间人期望某个没有预定义长度的协议元素身上。
 
 #+BEGIN_QUOTE
 To promote interoperability, specific recommendations are made for minimum size limits on =request-line= (Section 3.1.1) and header fields (Section 3.2). These are minimum recommendations, chosen to be supportable even by implementations with limited resources; it is expected that most implementations will choose substantially higher limits.
@@ -3201,13 +3200,13 @@ Recipients ought to carefully limit the extent to which they process other proto
 [[https://en.wikipedia.org/wiki/HTTP_response_splitting][Response splitting]] (a.k.a, CRLF injection) is a common technique, used in various attacks on Web usage, that exploits the line-based nature of HTTP message framing and the ordered association of requests to responses on persistent connections [Klein]. This technique can be particularly damaging when the requests pass through a shared cache.
 #+END_QUOTE
 
-响应分割（[[https://en.wikipedia.org/wiki/HTTP_response_splitting][Response Splitting]]，也称为“CRLF 注入”）是一种针对网页用途（Web Usage）而进行各种攻击的常见的技术，它利用了 HTTP 基于行来进行报文分帧以及在持久连接中请求与响应的顺序关联的性质【[[http://packetstormsecurity.com/papers/general/whitepaper_httpresponse.pdf][Klein]]】。当请求穿过一个共享缓存的时候，这种技术特别具有破坏性。
+响应分割（[[https://en.wikipedia.org/wiki/HTTP_response_splitting][Response Splitting]]，也称为“CRLF 注入”）是一种针对网页用途（Web Usage）而进行各种攻击的常见的技术，它利用了 HTTP 基于行(line-based)来进行报文分帧，以及在持久连接中请求与响应的顺序关联的性质【[[http://packetstormsecurity.com/papers/general/whitepaper_httpresponse.pdf][Klein]]】。当请求穿过一个共享缓存的时候，这种技术特别具有破坏性。
 
 #+BEGIN_QUOTE
 Response splitting exploits a vulnerability in servers (usually within an application server) where an attacker can send encoded data within some parameter of the request that is later decoded and echoed within any of the response header fields of the response. If the decoded data is crafted to look like the response has ended and a subsequent response has begun, the response has been split and the content within the apparent second response is controlled by the attacker. The attacker can then make any other request on the same persistent connection and trick the recipients (including intermediaries) into believing that the second half of the split is an authoritative answer to the second request.
 #+END_QUOTE
 
-响应分割利用了服务器（通常在一个应用服务器内）的一个弱点，攻击者能够在某些请求参数里带有经过编码的数据，而这些参数并不会在服务器立即解码，而是回显（echoe）至对应的响应报文的报头域里。如果解码数据被精心设计得看起来像是该响应报文的结束以及后续的报文开始，那么该响应报文就被“分割”为前后两个响应报文，并且后一个“响应报文”（表面上看像是一个响应报文的原响应报文的后半部分）受控于攻击者。然后攻击者就能够在同一个持久连接中做任何请求并欺骗接收端（包括中间人）让它们相信分割过的后半部分是第二个请求的权威应答（Authoritative Answer）。
+响应分割利用了服务器（通常在一个应用服务器内）的一个弱点，攻击者能够在某些请求参数里带有经过编码的数据，而这些参数并不会在服务器立即解码，而是回显（echo）至对应的响应报文的报头域里。如果解码数据被精心设计得看起来像是该响应报文的结束以及后续报文的开始，那么该响应报文就被“分割”为前后两个响应报文，并且后一个“响应报文”（表面上看像是一个响应报文，但实际是原响应报文的后半部分）受控于攻击者。然后攻击者就能够在同一个持久连接中做任何请求并欺骗接收端（包括中间人）让它们相信分割过的后半部分是第二个请求的权威应答（Authoritative Answer）。
 
 #+BEGIN_QUOTE
 For example, a parameter within the request-target might be read by an application server and reused within a redirect, resulting in the same parameter being echoed in the =Location= header field of the response. If the parameter is decoded by the application and not properly encoded when placed in the response field, the attacker can send encoded =CRLF= octets and other content that will make the application's single response look like two or more responses.
@@ -3219,7 +3218,7 @@ For example, a parameter within the request-target might be read by an applicati
 A common defense against response splitting is to filter requests for data that looks like encoded =CR= and =LF= (e.g., "%0D" and "%0A"). However, that assumes the application server is only performing URI decoding, rather than more obscure data transformations like charset transcoding, XML entity translation, base64 decoding, =sprintf= reformatting, etc. A more effective mitigation is to prevent anything other than the server's core protocol libraries from sending a =CR= or =LF= within the header section, which means restricting the output of header fields to APIs that filter for bad octets and not allowing application servers to write directly to the protocol stream.
 #+END_QUOTE
 
-预防响应分割的一个常见方式是去过滤掉请求报文中看起来像是经过编码的 CR 以及 LF 的数据（例如，"%0D" 和 "%0A"）。但是，假设应用服务器仅执行 URI 解码（URI Decoding），而不是更加模糊的数据转换，例如，字符集转码（Charset Transcoding），XML 实体翻译（XML Entity Translation），base64 解码，=sprintf= 字符串格式转换（sprintf Reformatting）等等，一个更有效的缓解方式是阻止任何除了服务器自身的核心协议库以外程序在报头块中发送一个 =CR= 或者 =LF=，这样做意味着将对报头域的输出限制为只能使用 API 的方式，通过这些 API 来过滤掉不好的字节，同时不允许应用服务器越过 API 将数据直接写入到协议流。
+预防响应分割的一个常见方式是去过滤掉请求报文中看起来像是经过编码的 CR 以及 LF 的数据（例如，"%0D" 和 "%0A"）。但是，假设应用服务器仅执行 URI 解码（URI Decoding），而不是更加模糊的数据转换，例如，字符集转码（Charset Transcoding），XML 实体翻译（XML Entity Translation），base64 解码，=sprintf= 字符串格式转换（sprintf Reformatting）等等，一个更有效的缓解方式是阻止任何除了服务器自身的核心协议库以外的程序在报头块中发送一个 =CR= 或者 =LF=，这样做意味着将对报头域的输出限制为只能使用 API 的方式，通过这些 API 来过滤掉不好的字节，同时不允许应用服务器越过 API 将数据直接写入到协议流。
 
 ** 9.5 请求走私 (Request Smuggling)
 :PROPERTIES:
