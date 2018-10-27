@@ -22,7 +22,11 @@ ISSN: 2070-1721
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document provides an overview of HTTP architecture and its associated terminology, defines the "http" and "https" Uniform Resource Identifier (URI) schemes, defines the HTTP/1.1 message syntax and parsing requirements, and describes related security concerns for implementations.
 #+END_QUOTE
 
-超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI 方案（URI Schemes），定义了 HTTP/1.1 报文句法和解析要求，以及描述了对实现（Implementations）的安全性相关的注意事项。
+超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI 方案（URI schemes），定义了 HTTP/1.1 报文句法和解析要求，以及描述了对实现（implementations）的安全性相关的注意事项。
+
+#+BEGIN_QUOTE
+译注："implementations" 指的是实现了某种标准、规范的一种产品，例如 "HTTP implementations" 指的是实现了 HTTP 规范的应用程序（客户端、服务器、代理等等）。
+#+END_QUOTE
 
 * 备忘状态（Status of This Memo）
 :PROPERTIES:
@@ -65,7 +69,7 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level request/
 This HTTP/1.1 specification obsoletes [[https://tools.ietf.org/html/rfc2616][RFC 2616]] and [[https://tools.ietf.org/html/rfc2145][RFC 2145]] (on HTTP versioning). This specification also updates the use of CONNECT to establish a tunnel, previously defined in [[https://tools.ietf.org/html/rfc2817][RFC 2817]], and defines the "https" URI scheme that was described informally in [[https://tools.ietf.org/html/rfc2818][RFC 2818]].
 #+END_QUOTE
 
-本 HTTP/1.1 规范废弃了 [[https://tools.ietf.org/html/rfc2616][RFC2616]] 以及 [[https://tools.ietf.org/html/rfc2145][RFC2145]]（关于 HTTP 版本管理）。本规范也更新了之前定义在 [[https://tools.ietf.org/html/rfc2817][RFC2817]] 里的关于 CONNECT 在建立隧道方面的使用方式，以及定义了原来在 [[https://tools.ietf.org/html/rfc2818][RFC2818]] 有过非正式描述的 "https" URI 方案（URI Scheme）。
+本 HTTP/1.1 规范废弃了 [[https://tools.ietf.org/html/rfc2616][RFC2616]] 以及 [[https://tools.ietf.org/html/rfc2145][RFC2145]]（关于 HTTP 版本管理）。本规范也更新了之前定义在 [[https://tools.ietf.org/html/rfc2817][RFC2817]] 里的关于 CONNECT 在建立隧道时的使用方式，以及定义了原来在 [[https://tools.ietf.org/html/rfc2818][RFC2818]] 有过非正式描述的 "https" URI 方案（URI scheme）。
 
 #+BEGIN_QUOTE
 译注：除非特别说明，本译文所述的“方案”特指 "URI scheme"，对于 scheme 的详细描述，见[[id:9c45ae18-46b0-4acb-a478-3d3e9a3748ab][章节 2.7]]。
@@ -75,25 +79,25 @@ This HTTP/1.1 specification obsoletes [[https://tools.ietf.org/html/rfc2616][RFC
 HTTP is a generic interface protocol for information systems. It is designed to hide the details of how a service is implemented by presenting a uniform interface to clients that is independent of the types of resources provided. Likewise, servers do not need to be aware of each client's purpose: an HTTP request can be considered in isolation rather than being associated with a specific type of client or a predetermined sequence of application steps. The result is a protocol that can be used effectively in many different contexts and for which implementations can evolve independently over time.
 #+END_QUOTE
 
-HTTP 是一种用于信息系统的通用接口协议。它被设计为用于隐藏一个服务“是如何向独立于服务所提供的资源类型的客户端呈现一个统一接口”的实现细节。同样，服务器并不需要知道每一个客户端的目的：一个 HTTP 请求能够被看作是独立的，而不是与一个特定的客户端类型或者一连串预先定好的应用步骤相关联。其目的是造就一个能够被有效用于多种不同场景，以及各种实现（Implementations）能够相互独立发展的协议。
+HTTP 是一种用于信息系统的通用接口协议。它的设计思想是通过向客户端呈现一种独立于服务（service）自身所提供的资源类型的通用接口，来隐藏该服务（service）的实现细节。同样，服务器并不需要知道每一个客户端的目的，这是因为可以认为所有 HTTP 请求都是孤立的，而不是与一种特定的客户端类型、或者一连串预先定义好的应用步骤相关联。这样的设计造就了一个能够被有效用于多种不同场景，以及各种实现（Implementations）能够相互独立发展的协议。
 
 #+BEGIN_QUOTE
 HTTP is also designed for use as an intermediation protocol for translating communication to and from non-HTTP information systems. HTTP proxies and gateways can provide access to alternative information services by translating their diverse protocols into a hypertext format that can be viewed and manipulated by clients in the same way as HTTP services.
 #+END_QUOTE
 
-HTTP 也被设计为作为一个中间人协议来使用，用于对非 HTTP（non-HTTP）信息系统的相互通信进行翻译（Translate）。HTTP 代理（Proxy）和网关（Gateway）能够提供对可替代的信息服务的访问，具体是通过将它们的驱动协议翻译为一种能够被客户端查看和操作的超文本格式，使之能像访问 HTTP 服务一样的方式被访问。
+HTTP 也可以作为一种中间人协议来使用，对非 HTTP（non-HTTP）信息系统的相互通信进行翻译（translate）。HTTP 代理（proxy）和网关（gateway）能够提供对可替代的信息服务的访问，具体是通过将它们的驱动协议翻译为一种能够被客户端查看和操作的超文本格式，使之能像访问 HTTP 服务一样的方式来访问。
 
 #+BEGIN_QUOTE
 One consequence of this flexibility is that the protocol cannot be defined in terms of what occurs behind the interface. Instead, we are limited to defining the syntax of communication, the intent of received communication, and the expected behavior of recipients. If the communication is considered in isolation, then successful actions ought to be reflected in corresponding changes to the observable interface provided by servers. However, since multiple clients might act in parallel and perhaps at cross-purposes, we cannot require that such changes be observable beyond the scope of a single response.
 #+END_QUOTE
 
-这种灵活性导致的一个结果是，协议不能依据接口后面出现的内容来定义。反而，我们被限制去定义通信的句法、所接收到的通信的意图，以及接收端的预期行为。如果该通信可认为是孤立的，那么通信成功的作用量应该被反映在对应的由服务器提供的可观察接口的变化上。但是，由于多个客户端可能存在并行工作，而且可能相互矛盾，我们不能要求这种变化在超出单独一次响应的范围以外被观察到。
+这种灵活性的一个结果是，协议不能依据接口背后发生了什么来定义。而是，我们限定在定义通信的句法、接收到的通信的意图，以及接收端的预期行为。如果该通信可认为是孤立的，那么通信成功的作用量应该被反映到对应的由服务器所提供的可观察接口的变化之上。但是，由于多个客户端可能存在并行工作，而且可能相互矛盾，我们不能要求这种变化在超出单独一次响应的范围以外被观察到。
 
 #+BEGIN_QUOTE
 This document describes the architectural elements that are used or referred to in HTTP, defines the "http" and "https" URI schemes, describes overall network operation and connection management, and defines HTTP message framing[fn:1] and forwarding requirements. Our goal is to define all of the mechanisms necessary for HTTP message handling that are independent of message semantics, thereby defining the complete set of requirements for message parsers and message-forwarding intermediaries.
 #+END_QUOTE
 
-本文档描述了用于或涉及 HTTP 的构筑元素，定义了 "http" 和 "https" 两种 URI 方案，总体上描述了网络操作和连接管理，并且定义了 HTTP 报文在分帧和转发方面的要求。我们的目标是定义所有关于 HTTP 的、独立于报文语义的、处理报文方面的必要方法，从而为报文解析器（Message Parsers）和报文转发中间人(Message-forwarding Intermediaries)定义完整的要求（Requirements）集。
+本文档描述了用于或涉及 HTTP 的架构元素（architectural elements），定义了 "http" 和 "https" 两种 URI 方案，总体上描述了网络操作和连接管理，并且定义了 HTTP 报文在分帧（framing）和转发（forwarding）方面的要求。我们的目标是定义独立于报文语义的所有关于处理 HTTP 报文相关的所有必要方法，从而为报文解析器（message parsers）和报文转发中间人(message-forwarding intermediaries)定义完整的要求（requirements）集。
 
 ** 1.1 要求标记 (Requirements Notation)
 #+BEGIN_QUOTE
@@ -113,21 +117,21 @@ Conformance criteria and considerations regarding error handling are defined in 
 This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7, that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix B shows the collected grammar with all list operators expanded to standard ABNF notation.
 #+END_QUOTE
 
-本规范使用扩展巴科斯范式（ABNF）标记法【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】，另外，出于对定义“以逗号分隔的列表”的紧凑性的考虑，本规范新增了一个 ABNF 规则：列扩展（List Extension见[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][章节 7]]），来允许使用一个 =#=  操作符（类似于 =*= 操作符，指代“重复”）。
+本规范使用了扩展巴科斯范式（ABNF）标记法【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][章节 7]]），允许使用一个 =#= 操作符（类似于 =*= 操作符，指代“重复”）来定义一种以逗号分隔的列表。
 
 #+BEGIN_QUOTE
 The following core rules are included by reference, as defined in [RFC5234], Appendix B.1: =ALPHA= (letters), =CR= (carriage return), =CRLF= (CR LF), =CTL= (controls), =DbbIGIT= (decimal 0-9), =DQUOTE= (double quote), =HEXDIG= (hexadecimal 0-9/A-F/a-f), =HTAB= (horizontal tab), =LF= (line feed), =OCTET= (any 8-bit sequence of data), =SP= (space), and =VCHAR= (any visible [USASCII] character).
 #+END_QUOTE
 
-本规范引用了下列定义于[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：字母 =ALPHA=、回车符 =CR=、回车换行符 =CRLF=、控制字符 =CTL=、十进制数字 0-9 =DbbIGIT=、双引号 =DQUOTE=、十六进制数字 0-9/A-F/a-f =HEXDIG=、水平制表符 =HTAB=、换行符 =LF=、八位组字节 =OCTET=、空格 =SP= 以及【USASCII】可见字符 =VCHAR=。
+本规范引用了下列定义在[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：字母 =ALPHA=、回车符 =CR=、回车换行符 =CRLF=、控制字符 =CTL=、十进制数字 0-9 =DbbIGIT=、双引号 =DQUOTE=、十六进制数字 0-9/A-F/a-f =HEXDIG=、水平制表符 =HTAB=、换行符 =LF=、八位组字节 =OCTET=、空格 =SP= 以及【USASCII】可见字符 =VCHAR=。
 
-（译注：除非特别说明，本译文所述的“字节”皆指的是 Octet，而不是 Byte。）
+（译注：除非特别说明，本译文所述的“字节”皆为 Octet，而不是 Byte。）
 
 #+BEGIN_QUOTE
 As a convention, ABNF rule names prefixed with "=obs-=" denote "obsolete" grammar rules that appear for historical reasons.
 #+END_QUOTE
 
-按照惯例，名称以 "obs-" 开头的ABNF 规则表示这是已经废弃（Obsolete）的语法，之所以这种规则会出现是为了描述历史遗留的问题。 
+按照惯例，名称以 "obs-" 开头的 ABNF 规则代表这是已经废弃（obsolete）了的语法，之所以这种规则会出现是为了描述历史遗留的问题。 
 
 * 2 体系结构（Architecture）
 #+BEGIN_QUOTE
@@ -139,10 +143,10 @@ HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支
 
 ** 2.1 客户端/服务器报文传递 (Client/Server Messaging)
 #+BEGIN_QUOTE
-HTTP is a stateless request/response protocol that operates by exchanging messages (Section 3) across a reliable transport- or session-layer "connection" (Section 6). An HTTP "client" is a program that establishes a connection to a server for the purpose of sending one or more HTTP requests. An HTTP "server" is a program that accepts connections in order to service HTTP requests by sending HTTP responses.
+HTTP is a stateless request/response protocol that operates by exchanging messages ([[id:6e9516fa-cde2-4693-b1e1-e763776d3186][Section 3]]) across a reliable transport- or session-layer "connection" ([[id:0CB50B0E-B686-4824-A22A-B4E10CD0BA40][Section 6]]). An HTTP "client" is a program that establishes a connection to a server for the purpose of sending one or more HTTP requests. An HTTP "server" is a program that accepts connections in order to service HTTP requests by sending HTTP responses.
 #+END_QUOTE
 
-HTTP 是一种无状态的请求/响应协议，通过一个可靠的传输层或会话层“连接”来交换报文（Message）。HTTP 客户端是一个用于与服务器建立连接，向其发送一个或多个 HTTP 请求的应用程序。HTTP 服务器是一个接受客户端连接，接收 HTTP 请求，发送 HTTP 响应的应用程序。
+HTTP 是一种无状态的请求/响应协议，通过一个可靠的传输层或会话层“连接”来交换报文（message，见[[id:6e9516fa-cde2-4693-b1e1-e763776d3186][章节 3]]）。HTTP 客户端（client）是一种用于与服务器建立连接（connection，见[[id:0CB50B0E-B686-4824-A22A-B4E10CD0BA40][章节 6]]），向其发送一个或多个 HTTP 请求的应用程序。HTTP 服务器（server）是一个接受客户端连接，接收 HTTP 请求，发送 HTTP 响应的应用程序。
 
 （译注：response 译作“响应”、“应答”，本文统一译为“响应”；message 译作“报文”、“消息”，这里统一译为“报文”，但在如果在某些情况下我认为译为“消息”更通俗的时候，我会特别标注为“消息”。）
 
@@ -150,19 +154,19 @@ HTTP 是一种无状态的请求/响应协议，通过一个可靠的传输层�
 The terms "client" and "server" refer only to the roles that these programs perform for a particular connection. The same program might act as a client on some connections and a server on others. The term "user agent" refers to any of the various client programs that initiate a request, including (but not limited to) browsers, spiders (web-based robots), command-line tools, custom applications, and mobile apps. The term "origin server" refers to the program that can originate authoritative responses for a given target resource. The terms "sender" and "recipient" refer to any implementation that sends or receives a given message, respectively.
 #+END_QUOTE
 
-术语“客户端（Client）”和“服务器（Server）”特指在一个具体连接（Connection）中的相关程序所充当的角色。同一个程序可能在某些连接中充当一个客户端，而在其他连接中充当的是一个服务器。术语“用户代理（User Agent）”指的是任何发起请求的各种不同的客户端程序，包括（但不限于）浏览器、爬虫（基于网络的机器人）、命令行工具、定制应用和移动应用。术语“源服务器（Origin Server）”指的是任何为一个给定目标资源产生权威响应（Authoritative Response）的程序。术语“发送端（Sender）”和“接收端（Recipient）”分别指的是任何发送或者接收一个给定报文的实现（Implementation）。
+术语“客户端（client）”和“服务器（server）”特指在一个具体连接（connection）中的相关程序所充当的角色。同一个程序可能在某些连接中充当一个客户端，而在其他连接中充当的是一个服务器。术语“用户代理（user agent）”指的是任何发起请求的各种不同的客户端程序，包括（但不限于）浏览器、爬虫（基于网络的机器人）、命令行工具、定制应用和移动应用。术语“源服务器（origin server）”指的是任何为一个给定目标资源产生权威响应（authoritative response）的程序。术语“发送端（sender）”和“接收端（recipient）”分别指的是任何发送或者接收一个给定报文的实现（implementation）。
 
 #+BEGIN_QUOTE
-HTTP relies upon the Uniform Resource Identifier (URI) standard [RFC3986] to indicate the target resource (Section 5.1) and relationships between resources. Messages are passed in a format similar to that used by Internet mail [RFC5322] and the Multipurpose Internet Mail Extensions (MIME) [RFC2045] (see Appendix-A of [RFC7231] for the differences between HTTP and MIME messages).
+HTTP relies upon the Uniform Resource Identifier (URI) standard [[[https://tools.ietf.org/html/rfc3986][RFC3986]]] to indicate the target resource ([[id:9fd57271-c172-4fc0-8678-fa427df02d64][Section 5.1]]) and relationships between resources. Messages are passed in a format similar to that used by Internet mail [[[https://tools.ietf.org/html/rfc5233][RFC5322]]] and the Multipurpose Internet Mail Extensions (MIME) [[[https://tools.ietf.org/html/rfc2045][RFC2045]]] (see [[https://tools.ietf.org/html/rfc7231#appendix-A][Appendix-A]] of [RFC7231] for the differences between HTTP and MIME messages).
 #+END_QUOTE
 
-HTTP 依靠“统一资源定位符（URI）标准【RFC3986】”来标识目标资源（[[id:9fd57271-c172-4fc0-8678-fa427df02d64][章节 5.1]]）以及资源与资源之间的关系。报文通过类似于电子邮件【[[https://tools.ietf.org/html/rfc5233][RFC5233]]】和多用途互联网邮件扩展类型（MIME）【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】的格式进行传输。对于 HTTP 与 MIME 之间的区别查看【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】的[[https://tools.ietf.org/html/rfc7231#appendix-A][附录 A]]。）
+HTTP 依靠“统一资源标识符（URI）标准[[https://tools.ietf.org/html/rfc3986][【RFC3986】]]”来标识目标资源（[[id:9fd57271-c172-4fc0-8678-fa427df02d64][章节 5.1]]）以及资源与资源之间的关系。报文通过类似于电子邮件【[[https://tools.ietf.org/html/rfc5233][RFC5233]]】和多用途互联网邮件扩展类型（MIME）【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】的格式来进行传输。对于 HTTP 与 MIME 之间的区别可以查看【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】的[[https://tools.ietf.org/html/rfc7231#appendix-A][附录 A]]。）
 
 #+BEGIN_QUOTE
 Most HTTP communication consists of a retrieval request (GET) for a representation of some resource identified by a URI. In the simplest case, this might be accomplished via a single bidirectional connection (===) between the user agent (UA) and the origin server (O).
 #+END_QUOTE
 
-大多数 HTTP 的通讯是通过 URI 以 GET 请求的形式来定位资源。在最简单的情况下，可以经由一个在用户代理（UA）和源服务器（O）之间的双向连接就能完成。
+大多数 HTTP 的通讯是通过使用一个 URI 以 GET 请求的形式来定位资源。在最简单的情况下，可以经由一个在用户代理（UA）和源服务器（O）之间的双向连接就能完成。
 
 #+BEGIN_SRC text
             request   >
@@ -174,15 +178,15 @@ Most HTTP communication consists of a retrieval request (GET) for a representati
 A client sends an HTTP request to a server in the form of a request message, beginning with a request-line that includes a method, URI, and protocol version (Section 3.1.1), followed by header fields containing request modifiers, client information, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
 #+END_QUOTE
 
-客户端以请求报文（Request Message）的形式向服务器发送一个 HTTP 请求。请求报文以一个包含了方法（Method），URI 和协议版本的请求行（Request Line，见[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]）为开始；随后是包含了请求修饰符，客户端信息以及表现形式元数据（Representation Metadata，见[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）的报头域（Header Fields）；接着是一个空行，来表示报头块（Header Section）结束；最后是一个包含了有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（Message Body）。
+客户端以请求报文（request message）的形式向服务器发送一个 HTTP 请求。请求报文以一个包含了方法（method）、URI 和协议版本（protocol version）的请求行（request line，见[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]）作为开始；随后是包含了请求修饰符，客户端信息以及表现形式元数据（representation metadata，见[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含了有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（message body）。
 
-（译注：Header Fields 通常译作报头域、首部、首部字段等，本文统一译作“报头域”。Message Body 通常译作报文正文、消息正文、消息体等，本文统一译作“报文正文”。）
+（译注："header fields" 通常译作报头域、首部、首部字段等，本文统一译作“报头域”。"message body" 通常译作报文正文、消息正文、消息体等，本文统一译作“报文正文”。）
 
 #+BEGIN_QUOTE
 A server responds to a client's request by sending one or more HTTP response messages, each beginning with a status line that includes the protocol version, a success or error code, and textual reason phrase (Section 3.1.2), possibly followed by header fields containing server information, resource metadata, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
 #+END_QUOTE
 
-一个服务器通过发送一个或多个 HTTP 响应报文（Response Message）来响应客户端的请求。每个响应报文以一个包含协议版本、一个成功或失败的状态码以及一个描述状态码的文本短语（[[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][章节 3.1.2]]）的状态行为开始；随后可能是包含服务器信息、资源元数据以及表现形式元数据（Representation Metadata，见章节 3.2）的报头域（Header Fields）；接着是一个空行，来表示报头块（Header Section）结束；最后是一个包含有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（Message Body）。
+一个服务器通过发送一个或多个 HTTP 响应报文（response message）来响应客户端的请求。每个响应报文以一个包含协议版本（protocol version）、一个成功或失败的状态码（status code）以及一个描述状态码的文本短语（reason phrase）的状态行（status line，[[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][章节 3.1.2]]）作为开始；随后可能是包含服务器信息、资源元数据以及表现形式元数据（representation metadata，见章节 3.2）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（message body）。
 
 #+BEGIN_QUOTE
 A connection might be used for multiple request/response exchanges, as defined in Section 6.3.
@@ -194,11 +198,13 @@ A connection might be used for multiple request/response exchanges, as defined i
 The following example illustrates a typical message exchange for a GET request (Section 4.3.1 of [RFC7231]) on the URI "http://www.example.com/hello.txt":
 #+END_QUOTE
 
-下面举例说明对于 URI 为 "http://www.example.com/hello.txt" 的一个典型的 GET 请求（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.1][章节 4.3.1]]）的报文交换。
+下面举例说明对于 URI 为 "http://www.example.com/hello.txt" 的一个典型的 GET 请求（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.1][章节 4.3.1]]）的报文交换过程。
 
 #+BEGIN_QUOTE
 Client request:
 #+END_QUOTE
+
+客户端请求：
 
 #+BEGIN_SRC text
 GET /hello.txt HTTP/1.1
@@ -211,6 +217,8 @@ Accept-Language: en, mi
 #+BEGIN_QUOTE
 Server response:
 #+END_QUOTE
+
+服务器响应：
 
 #+BEGIN_SRC text
 HTTP/1.1 200 OK
@@ -231,13 +239,13 @@ Hello World! My payload includes a trailing CRLF.
 When considering the design of HTTP, it is easy to fall into a trap of thinking that all user agents are general-purpose browsers and all origin servers are large public websites. That is not the case in practice. Common HTTP user agents include household appliances, stereos, scales, firmware update scripts, command-line programs, mobile apps, and communication devices in a multitude of shapes and sizes. Likewise, common HTTP origin servers include home automation units, configurable networking components, office machines, autonomous robots, news feeds, traffic cameras, ad selectors, and video-delivery platforms.
 #+END_QUOTE
 
-在考虑 HTTP 协议的设计时，很容易陷入一个误区，认为所有的用户代理都是通用的网页浏览器；所有的源服务器都是大型公共站点。然而实践中并不是这么一回事。一般的 HTTP 用户代理包含了家用电器、音响器材、磅秤、固件升级脚本、命令行程序、移动应用以及各种形状和尺寸的通信设备。同样，一般的 HTTP 源服务器包含家庭自动化单元、可配置的网络组件、办公设备、自主学习的机器人、新闻源、交通摄像头、广告选择器以及视频分发平台。 
+在考虑 HTTP 协议的设计时，很容易会陷入一个误区：认为所有的用户代理都是通用的网页浏览器；所有的源服务器都是大型公共站点。然而实践中并不是这么一回事。一般的 HTTP 用户代理包含了家用电器、音响器材、磅秤、固件升级脚本、命令行程序、移动应用以及各种形状和尺寸的通信设备。同样，一般的 HTTP 源服务器包含家庭自动化单元、可配置的网络组件、办公设备、自主学习的机器人、新闻源、交通摄像头、广告选择器以及视频分发平台。 
 
 #+BEGIN_QUOTE
 The term "user agent" does not imply that there is a human user directly interacting with the software agent at the time of a request. In many cases, a user agent is installed or configured to run in the background and save its results for later inspection (or save only a subset of those results that might be interesting or erroneous). Spiders, for example, are typically given a start URI and configured to follow certain behavior while crawling the Web as a hypertext graph.
 #+END_QUOTE
 
-术语“用户代理（User Agent）”并不是意味着在请求的时候有一个人类用户与软件代理进行直接交互。在许多情况下，用户代理是被安装或配置用于后台运行，并保存其运行结果用于后续检验（或者只保存那些感兴趣的，或者错误的那部分）。例如，爬虫，其典型应用是给定一个起始 URI，然后配置其抓取网页文本的后续行为。
+术语“用户代理（user agent）”并不是意味着在请求的时候有一个人类用户与软件代理进行直接交互。在许多情况下，用户代理是被安装或配置用于后台运行，并保存其运行结果用于后续检验（或者只保存那些感兴趣的，或者错误的那部分）。例如，爬虫，其典型应用是给定一个起始 URI，然后配置其抓取网页文本的后续行为。
 
 #+BEGIN_QUOTE
 The implementation diversity of HTTP means that not all user agents can make interactive suggestions to their user or provide adequate warning for security or privacy concerns. In the few cases where this specification requires reporting of errors to the user, it is acceptable for such reporting to only be observable in an error console or log file. Likewise, requirements that an automated action be confirmed by the user before proceeding might be met via advance configuration choices, run-time options, or simple avoidance of the unsafe action; confirmation does not imply any specific user interface or interruption of normal processing if the user has already made that choice.
@@ -2316,6 +2324,9 @@ A proxy *SHOULD NOT* modify header fields that provide information about the end
 代理 *不应该* 修改提供有关通信链路端点、资源状态，或者选择的展现形式（除了有效载荷）的信息的报头域，除非该域的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
 
 * 6 连接管理（Connection Management）
+:PROPERTIES:
+:ID:       0CB50B0E-B686-4824-A22A-B4E10CD0BA40
+:END:
 #+BEGIN_QUOTE
 HTTP messaging is independent of the underlying transport- or session-layer connection protocol(s). HTTP only presumes a reliable transport with in-order delivery of requests and the corresponding in-order delivery of responses. The mapping of HTTP request
 and response structures onto the data units of an underlying transport protocol is outside the scope of this specification.
