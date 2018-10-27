@@ -3360,6 +3360,9 @@ See Section 16 of [RFC2616] for additional acknowledgements from prior revisions
 - [RFC6585] :: Nottingham, M. and R. Fielding, “Additional HTTP Status Codes”, RFC 6585, April 2012.
  
 * 附录 A：HTTP 版本历史（Appendix A. HTTP Version History）
+:PROPERTIES:
+:ID:       D43BFB51-8E22-472D-9BBC-954DF675282A
+:END:
 #+BEGIN_QUOTE
 HTTP has been in use since 1990. The first version, later referred to as HTTP/0.9, was a simple protocol for hypertext data transfer across the Internet, using only a single request method (GET) and no metadata. HTTP/1.0, as defined by [RFC1945], added a range of request methods and MIME-like messaging, allowing for metadata to be transferred and modifiers placed on the request/response semantics. However, HTTP/1.0 did not sufficiently take into consideration the effects of hierarchical proxies, caching, the need for persistent connections, or name-based virtual hosts. The proliferation of incompletely implemented applications calling themselves "HTTP/1.0" further necessitated a protocol version change in order for two communicating applications to determine each other's true capabilities.
 #+END_QUOTE
@@ -3409,6 +3412,9 @@ Older HTTP/1.0 clients assumed a one-to-one relationship of IP addresses and ser
 旧的 HTTP/1.0 客户端会假定 IP 地址与服务器是一对一的关系，除了只能使用 IP 地址这种方式来将一个请求导向到它所期望到达的服务器以外，没有任何其他的方式。在 HTTP/1.1 发展过程中引入了 =Host= 报头域，它能够很快被 HTTP/1.0 浏览器所实现，另外，还需要对所有 HTTP/1.1 请求报文增加额外的要求，来确保完整采用。在写这份文档的时候，大多数基于 HTTP 的服务都已经由 =Host= 报头域来决定请求目标了。
 
 *** A.1.2. Keep-Alive 连接 (Keep-Alive Connections)
+:PROPERTIES:
+:ID:       C9981FAB-36DD-4AD3-848E-6394465D0BDA
+:END:
 #+BEGIN_QUOTE
 In HTTP/1.0, each connection is established by the client prior to the request and closed by the server after sending the response. However, some implementations implement the explicitly negotiated ("Keep-Alive") version of persistent connections described in Section 19.7.1 of [RFC2068].
 #+END_QUOTE
@@ -3454,7 +3460,8 @@ HTTP's approach to error handling has been explained. ([[id:A0441F72-9799-4667-9
 明确了 HTTP 的错误处理方法。（[[id:A0441F72-9799-4667-9477-1E05885946A1][章节 2.5]]）
 
 #+BEGIN_QUOTE
-The =HTTP-version= ABNF production has been clarified to be case-sensitive. Additionally, version numbers have been restricted to single digits, due to the fact that implementations are known to handle multi-digit version numbers incorrectly. (Section 2.6)
+The =HTTP-
+version= ABNF production has been clarified to be case-sensitive. Additionally, version numbers have been restricted to single digits, due to the fact that implementations are known to handle multi-digit version numbers incorrectly. (Section 2.6)
 #+END_QUOTE
 
 =HTTP-version= ABNF 规则已经被明确为区分大小写。另外，版本号的数值已经被限制为一位数字（Single Digits），这是基于已知实现（Implementations）不能正确处理版本号为多位数字的事实来做的改动。
@@ -3564,34 +3571,46 @@ Exactly when "close" connection options have to be sent has been clarified. Also
 明确了何时需要发送 "close" 连接选项（connection options）。同时，要求逐跳（"hop-by-hop"）类型的报头域出现在 =Connection= 报头域内，被本规范定义为逐跳（"hop-by-hop"）类型的报头域，同样不能豁免这个要求。（[[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][章节 6.1]]）
 
 #+BEGIN_QUOTE
-The limit of two connections per server has been removed. An idempotent sequence of requests is no longer required to be retried. The requirement to retry requests under certain circumstances when the server prematurely closes the connection has been removed. Also, some extraneous requirements about when servers are allowed to close connections prematurely have been removed. (Section 6.3)
+The limit of two connections per server has been removed. An idempotent sequence of requests is no longer required to be retried. The requirement to retry requests under certain circumstances when the server prematurely closes the connection has been removed. Also, some extraneous requirements about when servers are allowed to close connections prematurely have been removed. ([[id:bc2ed56c-f0a1-4609-bdbd-1c649aeb3681][Section 6.3]])
 #+END_QUOTE
 
-移除了每个服务器两个连接的限制。一个幂等的请求序列不再需要重试。移除了当服务器过早关闭连接时，在特定环境下要求重试请求的要求。同样，
-
-#+BEGIN_QUOTE
-The semantics of the Upgrade header field is now defined in responses other than 101 (this was incorporated from [RFC2817]). Furthermore, the ordering in the field value is now significant. (Section 6.7)
-#+END_QUOTE
+移除了每个服务器两个连接的限制。一个幂等的请求序列不再需要重试。移除了当服务器过早关闭连接时，在特定环境下要求重试请求的要求。同样，移除了某些关于何时允许服务器能过早地关闭连接的无关的要求。（[[id:bc2ed56c-f0a1-4609-bdbd-1c649aeb3681][章节 6.3]]）
 
 #+BEGIN_QUOTE
-Empty list elements in list productions (e.g., a list header field containing ", ,") have been deprecated. (Section 7)
+The semantics of the =Upgrade= header field is now defined in responses other than 101 (this was incorporated from [RFC2817]). Furthermore, the ordering in the field value is now significant. ([[id:62632d23-475d-4daa-8efb-3206d370573a][Section 6.7]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Registration of Transfer Codings now requires IETF Review (Section 8.4)
-#+END_QUOTE
+=Upgrade= 报头域的语义现在定义在响应里，而不再是 101（来自【RFC2817】，这是不正确的）。而且，它的域值的顺序现在是有意义的。（[[id:62632d23-475d-4daa-8efb-3206d370573a][章节 6.7]]）
 
 #+BEGIN_QUOTE
-This specification now defines the Upgrade Token Registry, previously defined in Section 7.2 of [RFC2817]. (Section 8.6)
+Empty list elements in list productions (e.g., a list header field containing ", ,") have been deprecated. ([[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][Section 7]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The expectation to support HTTP/0.9 requests has been removed. (Appendix A)
-#+END_QUOTE
+废弃了列表类型的值里允许出现空元素的规则（例如，一个列表类型的报头域，包含 ", ,"）。（[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][章节 7]]）
 
 #+BEGIN_QUOTE
-Issues with the Keep-Alive and Proxy-Connection header fields in requests are pointed out, with use of the latter being discouraged altogether. (Appendix A.1.2)
+Registration of Transfer Codings now requires IETF Review ([[id:DA2ABD5F-DFF0-408B-93D4-73D21E20B3CF][Section 8.4]])
 #+END_QUOTE
+
+注册传输编码值（Transfer Codings）现在需要经过 IETF 的复审。（[[id:DA2ABD5F-DFF0-408B-93D4-73D21E20B3CF][章节 8.4]]）
+
+#+BEGIN_QUOTE
+This specification now defines the Upgrade Token Registry, previously defined in Section 7.2 of [RFC2817]. ([[id:0f7982b5-e447-4406-ae69-4f389768f50b][Section 8.6]])
+#+END_QUOTE
+
+本规范现在定义了升级标记注册表（Upgrade Token Registry），之前是定义在[[https://tools.ietf.org/html/rfc2817#section-7.2][【RFC2817】章节 7.2]] 里的。（[[id:0f7982b5-e447-4406-ae69-4f389768f50b][章节 8.6]]）
+
+#+BEGIN_QUOTE
+The expectation to support HTTP/0.9 requests has been removed. ([[id:D43BFB51-8E22-472D-9BBC-954DF675282A][Appendix A]])
+#+END_QUOTE
+
+移除了期望支持 HTTP/0.9 请求的相关描述。（[[id:D43BFB51-8E22-472D-9BBC-954DF675282A][附录 A]]）
+
+#+BEGIN_QUOTE
+Issues with the =Keep-Alive= and =Proxy-Connection= header fields in requests are pointed out, with use of the latter being discouraged altogether. ([[id:C9981FAB-36DD-4AD3-848E-6394465D0BDA][Appendix A.1.2]])
+#+END_QUOTE
+
+指出了与请求里的 =Keep-Alive= 和 =Proxy-Connection= 报头域相关的问题，以及对于后者的使用完全失去信心。（[[id:C9981FAB-36DD-4AD3-848E-6394465D0BDA][附录 A.1.2]]）
 
 * 附录 B：ABNF 规则集合（Appendx B. Collected ABNF）
 :PROPERTIES:
