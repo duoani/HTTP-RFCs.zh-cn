@@ -547,9 +547,7 @@ HTTP 版本编号的设计意图是：主版本号（major number）只会在引
 When an HTTP message is received with a major version number that the recipient implements, but a higher minor version number than what the recipient implements, the recipient *SHOULD* process the message as if it were in the highest minor version within that major version to which the recipient is conformant. A recipient can assume that a message with a higher minor version, when sent to a recipient that has not yet indicated support for that higher version, is sufficiently backwards-compatible to be safely processed by any implementation of the same major version.
 #+END_QUOTE
 
-接收端接收到一个 HTTP 报文，如果接收端兼容该报文的主版本号，但不兼容其次版本号（接收端所支持的次版本号低于该报文所标识的次版本号），那么，接收端 *应当* 以其所能支持的最高次版本（前题是相同主版本）的方式来处理这个报文。
-
-TODO 当报文发送到接收端但没有指明其支持更高的版本，接收端可以假设这个报文带有更高的次版本，为所有具有相同主版本的实现（Implementations）去安全处理这些报文提供足够的向后兼容性。
+接收端接收到一个 HTTP 报文，如果接收端兼容该报文的主版本号，但不兼容其次版本号（接收端所支持的次版本号低于该报文所标识的次版本号），那么，接收端 *应当* 以其所能支持的最高次版本（前题是相同主版本）的方式来处理这个报文。当接收端接收到一个报文，如果该报文的次要版本号高于接收端所实现的，接收端可以假设这个报文能够向后兼容所有具有相同主版本号的实现（implementation），让其被安全处理。 
 
 ** 2.7 统一资源标识符 (Uniform Resource Identifiers)
 :PROPERTIES:
@@ -559,25 +557,13 @@ TODO 当报文发送到接收端但没有指明其支持更高的版本，接收
 Uniform Resource Identifiers (URIs) [RFC3986] are used throughout HTTP as the means for identifying resources (Section 2 of [RFC7231]). URI references are used to target requests, indicate redirects, and define relationships.
 #+END_QUOTE
 
-统一资源标识符（URIs）[[[https://tools.ietf.org/html/rfc3986][RFC3986]]] 作为标识资源（[RFC7231] [[https://tools.ietf.org/html/rfc7231#section-2][第二章]]）的手段，普遍用于 HTTP 中。URI 引用（URI references）用于定位请求，标识重定向以及定义关联。
+统一资源标识符（URIs）[[https://tools.ietf.org/html/rfc3986][【RFC3986】]] 作为标识资源（[[https://tools.ietf.org/html/rfc7231#section-2][【RFC7231】第二章]]）的手段，广泛使用于 HTTP 中。URI 引用（URI references）用于定位请求，标识重定向以及定义关联。
 
 #+BEGIN_QUOTE
 The definitions of "URI-reference", "absolute-URI", "relative-part", "scheme", "authority", "port", "host", "path-abempty", "segment", "query", and "fragment" are adopted from the URI generic syntax. An "absolute-path" rule is defined for protocol elements that can contain a non-empty path component. (This rule differs slightly from the path-abempty rule of RFC 3986, which allows for an empty path to be used in references, and path-absolute rule, which does not allow paths that begin with "//".) A "partial-URI" rule is defined for protocol elements that can contain a relative URI but not a fragment component.
 #+END_QUOTE
 
-=URI-reference=，=absolute-URI=，=relative-part=，=scheme=，=authority=，=port=，=host=，=path-abempty=，=segment=，=query= 和 =fragment= 是引用自 [[[https://tools.ietf.org/html/rfc3986][RFC3986]]]。=absolute-path= 规则用于定义能够包含一个非空路径的协议元素（这个规则在 RFC3986 中与 =path-abempty= 有些微的区别：=path-abempty= 允许在引用中使用空路径，而 =path-absolute= 规则不允许以“//”开头）。=partial-URL= 规则用于定义能包含一个相对 URI 但不能包含一个 =fragment= 的协议元素。
-
-译注：【RFC3986】章节 3 有 URI 的完整图解，如下图所示：
-
-#+BEGIN_SRC text
-  foo://example.com:8042/over/there?name=ferret#nose
-  \_/   \______________/\_________/ \_________/ \__/
-   |           |            |            |        |
-scheme     authority       path        query   fragment
-   |   _____________________|__
-  / \ /                        \
-  urn:example:animal:ferret:nose
-#+END_SRC
+=URI-reference=，=absolute-URI=，=relative-part=，=scheme=，=authority=，=port=，=host=，=path-abempty=，=segment=，=query= 和 =fragment= 是引用自[[https://tools.ietf.org/html/rfc3986][【RFC3986】]]。=absolute-path= 规则用于定义能够包含一个非空路径的协议元素（这个规则在 RFC3986 中与 =path-abempty= 有些微的区别：=path-abempty= 允许在引用中使用空路径，而 =path-absolute= 规则不允许以 "//" 开头）。=partial-URL= 规则用于定义能包含一个相对 URI 但不能包含一个 =fragment= 的协议元素。
 
 #+BEGIN_SRC text
 URI-reference = <URI-reference, see [RFC3986], Section 4.1>
@@ -597,6 +583,20 @@ partial-URI   = relative-part [ "?" query ]
 #+END_SRC
 
 #+BEGIN_QUOTE
+译注：【RFC3986】章节 3 有 URI 的完整图解，如下图所示：
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  foo://example.com:8042/over/there?name=ferret#nose
+  \_/   \______________/\_________/ \_________/ \__/
+   |           |            |            |        |
+scheme     authority       path        query   fragment
+   |   _____________________|__
+  / \ /                        \
+  urn:example:animal:ferret:nose
+#+END_SRC
+
+#+BEGIN_QUOTE
 Each protocol element in HTTP that allows a URI reference will indicate in its ABNF production whether the element allows any form of reference (URI-reference), only a URI in absolute form (absolute-URI), only the path and optional query components, or some combination of the above. Unless otherwise indicated, URI references are parsed relative to the effective request URI (Section 5.5).
 #+END_QUOTE
 
@@ -606,7 +606,7 @@ HTTP 中的每一个允许 URI 引用的协议元素都会在它的 ABNF 产生�
 3. 只能是路径（path）和可选的查询（query）组成部分
 4. 以上一个或多个组合
 
-除非另有说明，URI 引用会解析（Parse）为相关的“实际请求 URI”（[[id:3265c21d-0d3b-4776-8e28-38278d168779][章节 5.5]]）。
+除非另有说明，URI 引用会解析（parse）为相关的“实际请求 URI”（[[id:3265c21d-0d3b-4776-8e28-38278d168779][章节 5.5]]）。
 
 *** 2.7.1 http URI 方案 (http URI Scheme)
 :PROPERTIES:
@@ -616,9 +616,11 @@ HTTP 中的每一个允许 URI 引用的协议元素都会在它的 ABNF 产生�
 The "http" URI scheme is hereby defined for the purpose of minting identifiers according to their association with the hierarchical namespace governed by a potential HTTP origin server listening for TCP ([RFC0793]) connections on a given port.
 #+END_QUOTE
 
-"http" URI 方案（简称 "http" 方案）专门为建造某种标识而定义的，这种标识的建造规则依据于其与监听给定端口号的 TCP 连接([[[https://tools.ietf.org/html/rfc793][RFC0793]]]) 的源服务器所管理的层级命名空间的关联。
+"http" URI 方案（简称 "http" 方案）专门为建造某种标识而定义的，这种标识的建造规则依据于其与监听给定端口号的 TCP 连接([[https://tools.ietf.org/html/rfc793][【RFC0793】]]) 的源服务器所管理的层级命名空间的关联。
 
-（译注：[[https://en.wikipedia.org/wiki/Namespace][namespace]]，即命名空间，一般我们认为命名空间就是 Java、C# 等编程语言的语法规则，实际上，命名空间是一个广义的概念，它只是一组符号按一定的规则组合而成的用于关联一个对象的字符序列，这个字符序列就组成了一个命名空间（或者叫命名空间的名称），以便于通过这个命名空间来引用相关的对象。觉见的命名空间的例子有文件系统、Java 等编程语言的 namespace 关键字、计算机网络或分布式系统中对资源的命名等）
+#+BEGIN_QUOTE
+译注：[[https://en.wikipedia.org/wiki/Namespace][namespace]]，即命名空间，一般我们认为命名空间就是 Java、C# 等编程语言的语法规则，实际上，命名空间是一个广义的概念，它只是一组符号按一定的规则组合而成的用于关联一个对象的字符序列，这个字符序列就组成了一个命名空间（或者叫命名空间的名称），以便于通过这个命名空间来引用相关的对象。觉见的命名空间的例子有文件系统、Java 等编程语言的 namespace 关键字、计算机网络或分布式系统中对资源的命名等
+#+END_QUOTE
 
 #+BEGIN_SRC text
 http-URI = "http:" "//" authority path-abempty [ "?" query ] [ "#" fragment ]
@@ -628,48 +630,51 @@ http-URI = "http:" "//" authority path-abempty [ "?" query ] [ "#" fragment ]
 The origin server for an "http" URI is identified by the authority component, which includes a host identifier and optional TCP port ([RFC3986], Section 3.2.2). The hierarchical path component and optional query component serve as an identifier for a potential target resource within that origin server's name space. The optional fragment component allows for indirect identification of a secondary resource, independent of the URI scheme, as defined in Section 3.5 of [RFC3986].
 #+END_QUOTE
 
-如上所示，对于一个“http” URI，源服务器被标记到 =authority= 组件里，=authority= 包含一个主机（host）标识和一个可选的 TCP 端口（[[https://tools.ietf.org/html/rfc3986#section-3.2.2][【RFC3986】，章节 3.2.2]]）。=path= 组件和可选的 =query= 组件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 =fragment= 组件允许间接标记一个次要资源（Secondary Resource），不依赖于哪一种 URI 方案（"http" 或者 "https"），见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]] 。
+如上所示，对于一个 "http" URI，源服务器被标记到 =authority= 组件里，=authority= 包含一个主机（host）标识和一个可选的 TCP 端口（[[https://tools.ietf.org/html/rfc3986#section-3.2.2][【RFC3986】，章节 3.2.2]]）。=path= 组件和可选的 =query= 组件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 =fragment= 组件允许间接标记一个次要资源（Secondary Resource），不依赖于哪一种 URI 方案（"http" 或者 "https"），见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]] 。
 
-（译注：按照[[https://tools.ietf.org/html/rfc3986#section-3.2][【RFC3986】章节 3.2]] 的解释，Authority 是“管理机构”的意思，由域名或 IP，加上一个可选的端口组成，通俗的讲，它的作用是相当于一个房屋的门牌，通过找门牌就可以找到这一间房屋。而 Path 相当于从房屋大门走到特定房间的路径。另外，Authority 除了“权威、权力、当局”的意思以外，在其他文库管理方面还有其他有趣的意思[fn:3]哦）
+#+BEGIN_QUOTE
+译注：按照[[https://tools.ietf.org/html/rfc3986#section-3.2][【RFC3986】章节 3.2]] 的解释，"authority" 是“管理机构”的意思，由域名或 IP，加上一个可选的端口组成，通俗的讲，它的作用是相当于一个房屋的门牌，通过找门牌就可以找到这一间房屋。而 "path" 相当于从房屋大门走到特定房间的路径。另外，"authority" 除了“机构、权威、权力、当局”的意思以外，在其他文库管理方面还有其他有趣的意思[fn:3]哦
+#+END_QUOTE
 
-（译注：component 即组件，代表组成一个完整 URI 的某个单元。）
+#+BEGIN_QUOTE
+译注：component 即组件，代表组成一个完整 URI 的某个单元。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 A sender *MUST NOT* generate an "http" URI with an empty host identifier. A recipient that processes such a URI reference *MUST* reject it as invalid.
 #+END_QUOTE
 
-发送端 *不能* 生成一个 =host= 为空的“http” URI。接收端 *必须* 以 URI 不合法的原因拒绝处理这种 URI。
+发送端 *禁止* 生成一个 =host= 为空的 "http" URI。接收端 *必须* 以 URI 不合法的原因拒绝处理这种 URI。
 
 #+BEGIN_QUOTE
 If the host identifier is provided as an IP address, the origin server is the listener (if any) on the indicated TCP port at that IP address. If host is a registered name, the registered name is an indirect identifier for use with a name resolution service, such as DNS, to find an address for that origin server. If the port subcomponent is empty or not given, TCP port 80 (the reserved port for WWW services) is the default.
 #+END_QUOTE
 
-如果 =host= 标识符以 IP 地址的形式来提供，表示源服务器就是在那个 IP 地址对应的 TCP 端口的监听器；如果 =host= 是一个已注册的名称（可以理解为域名），所谓“已注册的名称”，是一个用于名称解释服务（Name Resolution Service）的间接标识，例如域名系统（DNS）用于查找源服务器的地址；如果 =port=
-子组件为空或未提供，那么 TCP 默认使用 80（WWW 服务的保留端口）端口。
+如果 =host= 标识符以 IP 地址的形式来提供，表示源服务器就是在那个 IP 地址对应的 TCP 端口的监听器；如果 =host= 是一个已注册的名称（registered name，可以理解为域名），所谓“已注册的名称”，是一个用于名称解释服务（name resolution service）的间接标识，例如域名系统（DNS）用于查找源服务器的地址；如果 =port= 子组件为空或未提供，那么 TCP 默认使用 80（WWW 服务的保留端口）端口。
 
 #+BEGIN_QUOTE
 Note that the presence of a URI with a given authority component does not imply that there is always an HTTP server listening for connections on that host and port. Anyone can mint a URI. What the authority component determines is who has the right to respond authoritatively to requests that target the identified resource. The delegated nature of registered names and IP addresses creates a federated namespace, based on control over the indicated host and port, whether or not an HTTP server is present. See Section 9.1 for security considerations related to establishing authority.
 #+END_QUOTE
 
-需要注意的是，一个 URI 带有给定的 =authority= 组件并不意味着这个 URI 一定就是一个监听那个 =host= 以及对应 =port= 来等待连接的 HTTP 服务器。任务人都可以建造 URI。而 =authority= 决定的是谁有权力去响应这个定位目标资源的请求。注册域名和 IP 地址所代表的本质是，基于支配明确的 =host= 和 =port= 生成一个联合命名空间，无论最终呈现的是否是一个 HTTP 服务器。见[[id:901a19cc-8490-4c06-a515-26eb9b66c173][章节 9.1]]。
+需要注意的是，一个 URI 带有给定的 =authority= 组件并不意味着这个 URI 一定就是某个监听那个 =host= 以及对应 =port= 来等待连接的 HTTP 服务器。任何人都可以建造 URI。而 =authority= 决定的是谁有权力去响应这个定位目标资源的请求。注册域名和 IP 地址所代表的本质是，基于支配明确的 =host= 和 =port= 生成一个联合命名空间，无论最终呈现的是否是一个 HTTP 服务器。见[[id:901a19cc-8490-4c06-a515-26eb9b66c173][章节 9.1]]。
 
 #+BEGIN_QUOTE
 When an "http" URI is used within a context that calls for access to the indicated resource, a client *MAY* attempt access by resolving the host to an IP address, establishing a TCP connection to that address on the indicated port, and sending an HTTP request message (Section 3) containing the URI's identifying data (Section 5) to the server. If the server responds to that request with a non-interim HTTP response message, as described in Section 6 of [RFC7231], then that response is considered an authoritative answer to the client's request.
 #+END_QUOTE
 
-当一个“http” URI 用于一个请求访问目标资源的上下文里，客户端 *可以* 尝试通过解释（Resolve） =host= 获得 IP 地址，（通过对应的端口）建立一个 TCP 连接到这个地址，然后发送一个包含这个 URI 的识别数据（见[[id:f6881980-16db-4ca2-a3c8-39aa336c954f][章节 5]]）的 HTTP 请求，从而访问到这个目标资源。如果服务器对这个请求响应了一个非过渡（non-interim）的 HTTP 响应报文（见[[https://httpwg.org/specs/rfc7231.html#status.codes][【RFC7231】章节 6]]），那么这个响应可认为是一个对客户端请求的权威应答（authoritative answer）。
+当一个 "http" URI 用于一个请求访问目标资源的场合里，客户端 *可以* 尝试通过解释（resolve） =host= 获得 IP 地址，（通过对应的端口）建立一个 TCP 连接到这个地址，然后发送一个包含这个 URI 的识别数据（见[[id:f6881980-16db-4ca2-a3c8-39aa336c954f][章节 5]]）的 HTTP 请求，从而访问到这个目标资源。如果服务器对这个请求响应了一个非过渡（non-interim）的 HTTP 响应报文（见[[https://httpwg.org/specs/rfc7231.html#status.codes][【RFC7231】章节 6]]），那么这个响应可认为是一个对客户端请求的权威应答（authoritative answer）。
 
 #+BEGIN_QUOTE
 Although HTTP is independent of the transport protocol, the "http" scheme is specific to TCP-based services because the name delegation process depends on TCP for establishing authority. An HTTP service based on some other underlying connection protocol would presumably be identified using a different URI scheme, just as the "https" scheme (below) is used for resources that require an end-to-end secured connection. Other protocols might also be used to provide access to "http" identified resources — it is only the authoritative interface that is specific to TCP.
 #+END_QUOTE
 
-虽然 HTTP 并不依赖其他传输协议，但 "http" 方案是特指基于 TCP 的服务的，这是因为名称委派处理（name delegation process?）需要依赖 TCP 来确立权威（Establishing Authority，见章节 9.1）。一个基于其他多个底层通信协议的 HTTP 服务可能会被标识为使用一个不同的 URI 方案，就像 "https" 方案是用于要求端到端安全的资源访问一样。其他协议可能也用于提供访问以 "http" 标识的资源，但这是唯一特定于 TCP 的权威接口（官方接口，Authoritative Interface）。
+虽然 HTTP 并不依赖其他传输协议，但 "http" 方案是特指基于 TCP 的服务的，这是因为名称委派处理（name delegation process?）需要依赖 TCP 来确立权威（establishing authority，见章节 9.1）。一个基于其他多个底层通信协议的 HTTP 服务可能会被标识为使用一个不同的 URI 方案，就像 "https" 方案是用于要求端到端安全的资源访问一样。其他协议可能也用于提供访问以 "http" 标识的资源，但这是唯一特定于 TCP 的权威接口（官方接口，authoritative interface）。
 
 #+BEGIN_QUOTE
 The URI generic syntax for authority also includes a deprecated =userinfo= subcomponent ([RFC3986], Section 3.2.1) for including user authentication information in the URI. Some implementations make use of the =userinfo= component for internal configuration of authentication information, such as within command invocation options, configuration files, or bookmark lists, even though such usage might expose a user identifier or password. A sender *MUST NOT* generate the =userinfo= subcomponent (and its "@" delimiter) when an "http" URI reference is generated within a message as a request target or header field value. Before making use of an "http" URI reference received from an untrusted source, a recipient *SHOULD* parse for =userinfo= and treat its presence as an error; it is likely being used to obscure the authority for the sake of phishing attacks.
 #+END_QUOTE
 
-在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 =userinfo= 子组件（见[[https://tools.ietf.org/html/rfc3986#section-3.2.1][【RFC3986】章节 3.2.1]]），用于包含用户信息到 URI 里。某些实现（Implementations）将 =userinfo= 组件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 报文，包含以 =http= URI 引用作为一个请求目标或者报文头域里的值（例如头域 =Location=）时，发送端 *禁止* 生成 =userinfo= 子组件（以及其“@”分隔符）。在使用一个接收自一个非受信的源的 =http= URI 引用时，接收者 *应当* 对 =userinfo= 进行解析（Parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（Phishing Attach）的威胁。
+在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 =userinfo= 子组件（见[[https://tools.ietf.org/html/rfc3986#section-3.2.1][【RFC3986】章节 3.2.1]]），用于包含用户信息到 URI 里。某些实现（implementations）将 =userinfo= 组件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 报文，包含以 =http= URI 引用作为一个请求目标或者报文头域里的值（例如头域 =Location=）时，发送端 *禁止* 生成 =userinfo= 子组件（以及其“@”分隔符）。在使用一个接收自一个非受信的源的 =http= URI 引用时，接收者 *应当* 对 =userinfo= 进行解析（parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（phishing attach）的威胁。
 
 *** 2.7.2 https URI 方案 (https URI Scheme)
 :PROPERTIES:
@@ -685,7 +690,7 @@ The "https" URI scheme is hereby defined for the purpose of minting identifiers 
 All of the requirements listed above for the "http" scheme are also requirements for the "https" scheme, except that TCP port 443 is the default if the port subcomponent is empty or not given, and the user agent *MUST* ensure that its connection to the origin server is secured through the use of strong encryption, end-to-end, prior to sending the first HTTP request.
 #+END_QUOTE
 
-所有上文罗列过的对于 "http" 方案的要求同样适用于 "https" 方案，除了没有明确指明端口号时“https”的默认端口是 443 而“http”的默认端口是 80，以及用户代理 *必须* 保证它与源服务器的端到端连接在发送第一个 HTTP 请求之前已经是使用强加密技术到达安全级别。
+所有上文罗列过的对于 "http" 方案的要求同样适用于 "https" 方案，除了没有明确指明端口号时 "https" 的默认端口是 443 而 "http" 的默认端口是 80，以及用户代理 *必须* 保证它与源服务器的端到端连接在发送第一个 HTTP 请求之前已经是使用强加密技术到达安全级别以外。
 
 #+BEGIN_SRC text
 https-URI = "https:" "//" authority path-abempty [ "?" query ] [ "#" fragment ]
@@ -695,15 +700,17 @@ https-URI = "https:" "//" authority path-abempty [ "?" query ] [ "#" fragment ]
 Note that the "https" URI scheme depends on both TLS and TCP for establishing authority. Resources made available via the "https" scheme have no shared identity with the "http" scheme even if their resource identifiers indicate the same authority (the same host listening to the same TCP port). They are distinct namespaces and are considered to be distinct origin servers. However, an extension to HTTP that is defined to apply to entire host domains, such as the Cookie protocol [RFC6265], can allow information set by one service to impact communication with other services within a matching group of host domains.
 #+END_QUOTE
 
-需要注意的是，"https" URI 方案依赖于 TLS 以及 TCP 来确立权威（Establishing Authority，见章节 9.1）。通过 "https" 方案标识的资源与通过 "https" 方案标识的资源两者间并没有任何关系，即使它们的 =authority= 组件一样（有相同的 =host= 和相同的 TCP =port=）。它们的命名空间是有区别的，因此指向的是两个不同的源服务器。然而，后来的规范对 HTTP 进行了扩展来（使某些特性）适用于所有主机域名，例如 Cookie 协议[[https://tools.ietf.org/html/rfc6265][【RFC6265】]]，能够允许一个服务设置某些信息，通过一个关于主机域名的匹配规则集合来影响与其他服务的通信。
+需要注意的是，"https" URI 方案依赖于 TLS 以及 TCP 来确立权威（establishing authority，见章节 9.1）。通过 "https" 方案标识的资源与通过 "https" 方案标识的资源两者间并没有任何关系，即使它们的 =authority= 组件一样（有相同的 =host= 和相同的 TCP =port=）。它们的命名空间是有区别的，因此指向的是两个不同的源服务器。然而，后来的规范对 HTTP 进行了扩展来（使某些特性）适用于所有主机域名，例如 Cookie 协议[[https://tools.ietf.org/html/rfc6265][【RFC6265】]]，能够允许一个服务设置某些信息，通过一个关于主机域名的匹配规则集合来影响与其他服务的通信。
 
-（译注：即使两个 URI 除了 scheme 不一样以外，其他各组件都一模一样，如 http://www.example.com/path 与 https://www.example/path 这两个 URI 并不一定标识同一个资源，因为这是两个是不同的 URI。）
+#+BEGIN_QUOTE
+译注：即使两个 URI 除了 scheme 不一样以外，其他各组件都一模一样，如 http://www.example.com/path 与 https://www.example/path 这两个 URI 并不一定标识同一个资源，因为这是两个是不同的 URI。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 The process for authoritative access to an "https" identified resource is defined in [RFC2818].
 #+END_QUOTE
 
-通过“https”标识来权威访问（Authoritative Access）[fn:4]资源的过程定义于[[https://tools.ietf.org/html/rfc2818][【RFC2818】]]。
+权威访问（authoritative access）[fn:4]某个使用 "https" 来标识的资源的过程定义于[[https://tools.ietf.org/html/rfc2818][【RFC2818】]]。
 
 *** 2.7.3 http and https URI Normalization and Comparison
 #+BEGIN_QUOTE
@@ -716,9 +723,11 @@ Since the "http" and "https" schemes conform to the URI generic syntax, such URI
 If the port is equal to the default port for a scheme, the normal form is to omit the port subcomponent. When not being used in absolute form as the request target of an OPTIONS request, an empty path component is equivalent to an absolute path of "/", so the normal form is to provide a path of "/" instead. The scheme and host are case-insensitive and normally provided in lowercase; all other components are compared in a case-sensitive manner. Characters other than those in the "reserved" set are equivalent to their percent-encoded[fn:5] octets: the normal form is to not encode them (see Sections 2.1 and 2.2 of [RFC3986]).
 #+END_QUOTE
 
-如果一个 URI =port= 等于其对应方案的默认端口（"http" 方案的默认端口是 80，"https" 方案的默认端口是 443），那么其通常的形式是省略掉 =port= 子组件。当一个 =OPTIONS= 请求没有使用绝对形式（Absolute Form）作为请求目标（Request Target）时，一个空的 =path= 等价于绝对路径“=/=”，所以通常的形式是使用路径“=/=”来替换。=scheme= 和 =host= 是不区分大小写的，通常使用小写。除了 =scheme= 和 =host= 以外的所有其他组件都是区分大小写的。除了“保留”字符集以外的所有字符都等价于它的 URL 编码（[[https://en.wikipedia.org/wiki/Percent-encoding][Precent-encoded]]，又叫百分号编码）形式的八位组（Octet）：一般形式是（如非必要）不要对它们进行编码（见[[https://tools.ietf.org/html/rfc3986#section-2.1][【RFC3986】章节 2.1 和 2.2]]）。
+如果一个 URI =port= 等于其对应方案的默认端口（"http" 方案的默认端口是 80，"https" 方案的默认端口是 443），那么其通常的形式是省略掉 =port= 子组件。当一个 OPTIONS 请求没有使用绝对形式（absolute form）作为请求目标（request target）时，一个空的 =path= 等价于绝对路径 "/"，所以通常的形式是使用路径 "/" 来代表空路径。=scheme= 和 =host= 是不区分大小写的，通常使用小写。除了 =scheme= 和 =host= 以外的所有其他组件都是区分大小写的。除了“保留”字符集以外的所有字符都等价于它的 URL 编码（[[https://en.wikipedia.org/wiki/Percent-encoding][Precent-encoded]]，又叫百分号编码）形式的字节（Octets）：一般形式是（如非必要）不要对它们进行编码（见[[https://tools.ietf.org/html/rfc3986#section-2.1][【RFC3986】章节 2.1 和 2.2]]）。
 
-（译注：URL 编码，又叫百分号编码，每个字符由 =%= 加上两位的十六进制 0~F 组成，对于百分号编码还可以参考[[https://www.cnblogs.com/DaoMuRen/p/5695030.html][这篇博文]]。）
+#+BEGIN_QUOTE
+译注：URL 编码，又叫百分号编码，每个字符由 =%= 加上两位的十六进制 0~F 组成，对于百分号编码还可以参考[[https://www.cnblogs.com/DaoMuRen/p/5695030.html][这篇博文]]。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 For example, the following three URIs are equivalent:
@@ -740,9 +749,11 @@ http://EXAMPLE.com:/%7esmith/home.html
 All HTTP/1.1 messages consist of a start-line followed by a sequence of octets in a format similar to the Internet Message Format [RFC5322]: zero or more header fields (collectively referred to as the "headers" or the "header section"), an empty line indicating the end of the header section, and an optional message body.
 #+END_QUOTE
 
-所有 HTTP/1.1 报文皆由一个“起始行（start-line）”以及随后的报头（Header），然后空一行（表明报头结束），最后是一个可选的报文正文（Message Body）组合而成。其中报头由 0 个或多个报头域（Header Fields）组成，报头域的格式类似于[[https://tools.ietf.org/html/rfc5322][互联网消息格式【RFC5322】]]。
+所有 HTTP/1.1 报文皆由一个“起始行（start-line）”以及随后的报头（header），然后空一行（表明报头结束），最后是一个可选的报文正文（message Body）组合而成。其中报头由 0 个或多个报头域（header fields）组成，报头域的格式类似于[[https://tools.ietf.org/html/rfc5322][互联网消息格式【RFC5322】]]。
 
-（译注：Header 译作“报头”，也有译作“消息头”；Message Body 译作“报文正文”，也有译作“消息体”。）
+#+BEGIN_QUOTE
+译注：Header 译作“报头”，也有译作“消息头”；Message Body 译作“报文正文”，也有译作“消息体”。
+#+END_QUOTE
 
 #+BEGIN_SRC text
 HTTP-message   = start-line
@@ -756,46 +767,46 @@ HTTP-message   = start-line
 The normal procedure for parsing an HTTP message is to read the start-line into a [[https://en.wikipedia.org/wiki/Record_(computer_science)][structure]], read each header field into a [[https://en.wikipedia.org/wiki/Hash_table][hash table]] by field name until the empty line, and then use the parsed data to determine if a message body is expected. If a message body has been indicated, then it is read as a [[https://en.wikipedia.org/wiki/Stream_(computing)][stream]] until an amount of octets equal to the message body length is read or the connection is closed.
 #+END_QUOTE
 
-解析（Parse） HTTP 报文的一般流程是先将起始行（Start Line）读入到一个[[https://baike.baidu.com/item/%25E7%25BB%2593%25E6%259E%2584%25E4%25BD%2593/3709485][构造体]]中，将所有报头域（Header Fields）读入到一个[[https://baike.baidu.com/item/%25E5%2593%2588%25E5%25B8%258C%25E8%25A1%25A8][哈希表]]中（以域的名称作为键）直到遇到空行（Empty Line），然后使用以上解释得到的信息来决定是否需要解释报文正文（Message Body）。如果报头表明该报文带有报文正文，那么将报文正文以[[https://baike.baidu.com/item/IO%25E6%25B5%2581][流]]的方式读入，直到已读字节数（Octets）等于报文正文的长度或者连接已被关闭为止。
+解析（parse）HTTP 报文的一般流程是先将起始行（start line）读入到一个[[https://baike.baidu.com/item/%25E7%25BB%2593%25E6%259E%2584%25E4%25BD%2593/3709485][构造体]]中，将所有报头域（header fields）读入到一个[[https://baike.baidu.com/item/%25E5%2593%2588%25E5%25B8%258C%25E8%25A1%25A8][哈希表]]中（以域的名称作为键）直到遇到空行（empty line），然后使用以上解释得到的信息来决定是否需要解释报文正文（message body）。如果报头表明该报文带有报文正文，那么将报文正文以[[https://baike.baidu.com/item/IO%25E6%25B5%2581][流]]的方式读入，直到已读字节数（octets）等于报文正文的长度或者连接已被关闭为止。
 
 #+BEGIN_QUOTE
 A recipient *MUST* parse an HTTP message as a sequence of octets in an encoding that is a superset of US-ASCII [[[https://en.wikipedia.org/wiki/ASCII][USASCII]]]. Parsing an HTTP message as a stream of Unicode characters, without regard for the specific encoding, creates security vulnerabilities due to the varying ways that string processing libraries handle invalid multibyte character sequences that contain the octet LF (%x0A). String-based parsers can only be safely used within protocol elements after the element has been extracted from the message, such as within a header field-value after message parsing has delineated the individual fields.
 #+END_QUOTE
 
-接收端 *必须* 将 HTTP 报文解析（Parse）为以 [[https://baike.baidu.com/item/ASCII/309296?fr=aladdin][US-ASCII]] 的超集来编码的八位组（Octet）序列。没有考虑具体的编码（Encoding）就将报文解释为 Unicode 字符会引发[[https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats][安全漏洞]]，这是因为字符串处理库处理包含 =LF= (%x0A) 非法多字节字符序列的方式有很多种。基于字符串的解析器（解析器）只能工作在报文提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出报文里所有头域（Header Fields）后，对报头中的一个域值（Field-value）使用基于字符串的解释器是可以保证安全的。
+接收端 *必须* 将 HTTP 报文解析（parse）为以 [[https://baike.baidu.com/item/ASCII/309296?fr=aladdin][US-ASCII]] 的超集来编码的字节（octet）序列。没有考虑具体的编码（encoding）就将报文解释为 Unicode 字符会引发[[https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats][安全漏洞]]，这是由于字符串处理库（string processing libraries）处理包含 =LF= (%x0A) 非法多字节字符序列的方式有很多种而导致的。基于字符串的解析器（string-based parsers）只能工作在报文提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出报文里所有报头域（header fields）后，对报头中的一个域值（field-value）使用基于字符串的解释器是可以保证安全的。
 
 #+BEGIN_QUOTE
 An HTTP message can be parsed as a stream for incremental processing or forwarding downstream. However, recipients cannot rely on incremental delivery of partial messages, since some implementations will buffer or delay message forwarding for the sake of network efficiency, security checks, or payload transformations.
 #+END_QUOTE
 
-HTTP 报文能够解析（Parse）为用于增量处理或转发到下游（Forwarding Downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现（Implementations）会因为网络性能、安全校验或者有效载荷转换（[[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Payload Transformation]]）而对这些不完整的报文进行缓冲或延迟转发。
+HTTP 报文能够解析（parse）为用于增量处理（incremental processing）或转发到下游（forwarding downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现（implementations）会因为网络性能、安全校验或者有效载荷转换（[[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][payload transformation]]）而对这些不完整的报文进行缓冲或延迟转发。
 
 #+BEGIN_QUOTE
 A sender *MUST NOT* send whitespace between the start-line and the first header field. A recipient that receives whitespace between the start-line and the first header field *MUST* either reject the message as invalid or consume each whitespace-preceded line without further processing of it (i.e., ignore the entire line, along with any subsequent lines preceded by whitespace, until a properly formed header field is received or the header section is terminated).
 #+END_QUOTE
 
-发送端所发送的报文里，起始行（Start Line）和第一个报头域（Header Field）之间 *不能* 不能带有空格。当接收端发现接收到的报文里起始行与第一个报头域之间带有空格时，*必须* 拒绝处理整个不合法的报文，或者仅忽略这种以空格开头的行（例如，忽略整行，连同后续所有以空格开头的行，直到遇到一个格式正确的报头域（Header Field）或者报头结尾）。
+发送端所发送的报文里，起始行（start line）和第一个报头域（header field）之间 *禁止* 带有空格。当接收端发现它所接收到的报文起始行与第一个报头域之间带有空格时，*必须* 拒绝处理整个不合法的报文，或者仅忽略这种以空格开头的行（例如，忽略整行，连同后续所有以空格开头的行，直到遇到一个格式正确的报头域（header field）或者报头结尾）。
 
 #+BEGIN_QUOTE
 The presence of such whitespace in a request might be an attempt to trick a server into ignoring that field or processing the line after it as a new request, either of which might result in a security vulnerability if other implementations within the request chain interpret the same message differently. Likewise, the presence of such whitespace in a response might be ignored by some clients or cause others to cease parsing.
 #+END_QUOTE
 
-在一个请求报文中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些报头域或忽略处理某些行，欺骗服务器使其认为这个请求是一个新请求（New Request）。如果在请求链路中其他实现（Implementation）对这种带有非法空格的报文的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应报文中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端终止解析（Parse）。
+在一个请求报文中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些报头域或忽略处理某些行，欺骗服务器使其认为这个请求是一个新请求（new request）。如果在请求链路中其他实现（implementation）对这种带有非法空格的报文的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应报文中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端终止解析（parse）。
 
 ** 3.1 起始行 (Start Line)
 #+BEGIN_QUOTE
 An HTTP message can be either a request from client to server or a response from server to client. Syntactically, the two types of message differ only in the start-line, which is either a *request-line* (for requests) or a *status-line* (for responses), and in the algorithm for determining the length of the message body (Section 3.3).
 #+END_QUOTE
 
-一个 HTTP 报文要么是一个从客户端到服务器的请求报文，要么是一个从服务器到客户端的响应报文。从句法上看，这两种类型的报文的区别有两点
-1. 起始行（Start Line）：请求报文的起始行称为请求行（Status Line），响应报文的起始行称为状态行（Status Line）
+一个 HTTP 报文要么是一个从客户端到服务器的请求报文，要么是一个从服务器到客户端的响应报文。从句法上看，这两种类型的报文的区别有两点：
+1. 起始行（start line）：请求报文的起始行称为请求行（status line），响应报文的起始行称为状态行（status line）
 2. 测算报文正文的长度的算法
 
 #+BEGIN_QUOTE
 In theory, a client could receive requests and a server could receive responses, distinguishing them by their different start-line formats, but, in practice, servers are implemented to only expect a request (a response is interpreted as an unknown or invalid request method) and clients are implemented to only expect a response.
 #+END_QUOTE
 
-理论上，客户端能够接收请求报文，服务器能够接收响应报文，只需要让它们区别好报文起始行的不同格式就可以。但在实践中，服务端被实现为仅预期接收请求（而接收到响应的话，服务器会将其解释（Interpret）为一个未知或非法的请求方法），客户端被实现为仅预期接收响应。
+理论上，客户端同样能够接收请求报文，服务器同样能够接收响应报文，只需要让它们区别好报文起始行的不同格式就可以了。但实际上，一般将服务端实现为仅预期接收请求（而接收到响应的话，服务器会将其解释（Interpret）为一个未知或非法的请求方法），将客户端实现为仅预期接收响应。
 
 #+BEGIN_SRC text
 start-line     = request-line / status-line
@@ -809,7 +820,7 @@ start-line     = request-line / status-line
 A =request-line= begins with a method token, followed by a single space (SP), the request-target, another single space (SP), the protocol version, and ends with CRLF.
 #+END_QUOTE
 
-一个请求行 =request-line=，开始于一个方法标识 =method=，紧接着一个空格 =SP=，然后是请求目标 =request-target=，另一个空格 =SP=，之后是协议版本 =HTTP-version=，最后是回车换行符 =CRLF=。
+请求行 =request-line=，开始于一个方法标识 =method=，紧接着一个空格 =SP=，然后是请求目标 =request-target=，另一个空格 =SP=，之后是协议版本 =HTTP-version=，最后是回车换行符 =CRLF=。
 
 #+BEGIN_SRC text
 request-line   = method SP request-target SP HTTP-version CRLF
@@ -819,7 +830,7 @@ request-line   = method SP request-target SP HTTP-version CRLF
 The method token indicates the request method to be performed on the target resource. The request method is *case-sensitive*.
 #+END_QUOTE
 
-方法标识 =method= 表明了使用哪一种请求方法（Request Method）去获取目标资源（Target Resource），请求方法是 *区分大小写* 的。
+方法 =method= 标识了使用哪一种请求方法（request method）去获取目标资源（target resource），请求方法是 *区分大小写* 的。
 
 #+BEGIN_SRC text
 method         = token
@@ -829,7 +840,7 @@ method         = token
 The request methods defined by this specification can be found in Section 4 of [RFC7231], along with information regarding the HTTP method registry and considerations for defining new methods.
 #+END_QUOTE
 
-本规范所定义的请求方法（Request Method）连同关于 HTTP 方法注册（Registry）以及对于定义新方法的考虑的相关信息，见[[https://tools.ietf.org/html/rfc7231#section-4][【RFC7231】章节 4]]。
+本规范所定义的请求方法（request method）连同关于 HTTP 方法注册表（HTTP method registry）以及对于定义新方法的注意事项的相关信息，见[[https://tools.ietf.org/html/rfc7231#section-4][【RFC7231】章节 4]]。
 
 #+BEGIN_QUOTE
 The =request-target= identifies the target resource upon which to apply the request, as defined in [[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][Section 5.3]].
@@ -841,7 +852,7 @@ The =request-target= identifies the target resource upon which to apply the requ
 Recipients typically parse the =request-line= into its component parts by splitting on whitespace (see [[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][Section 3.5]]), since no whitespace is allowed in the three components. Unfortunately, some user agents fail to properly encode or exclude whitespace found in [[https://en.wikipedia.org/wiki/Hyperlink][hypertext references]], resulting in those disallowed characters being sent in a =request-target=.
 #+END_QUOTE
 
-接收端在解析（Parse）请求行 =request-line= 的过程中，通过以空格分割出请求行的各个组件（共有三个组件，分别为方法标识、请求目标以及协议版本），因此，以上三个组件的内容不能带有空格（见[[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][章节 3.5]]）。不幸的是，某些用户代理不能对超文本引用（[[https://en.wikipedia.org/wiki/Hyperlink][Hypertext References]]，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求报文中的请求目标 =request-target= 包含了那些不被允许出现的字符（Character）。
+接收端在解析（parse）请求行 =request-line= 的过程中，通过以空格分割出请求行的各个组件（共有三个组件，分别为方法标识、请求目标以及协议版本），因此，以上三个组件的内容不能带有空格（见[[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][章节 3.5]]）。不幸的是，某些用户代理不能对超文本引用（[[https://en.wikipedia.org/wiki/Hyperlink][Hypertext References]]，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求报文中的请求目标 =request-target= 包含了那些不被允许出现的字符（character）。
 
 #+BEGIN_QUOTE
 Recipients of an invalid =request-line= *SHOULD* respond with either a =400 (Bad Request)= error or a =301 (Moved Permanently)= redirect with the =request-target= properly encoded. A recipient *SHOULD NOT* attempt to autocorrect and then process the request without a redirect, since the invalid =request-line= might be deliberately crafted to bypass security filters along the request chain.
@@ -857,13 +868,13 @@ Recipients of an invalid =request-line= *SHOULD* respond with either a =400 (Bad
 HTTP does not place a predefined limit on the length of a =request-line=, as described in [[id:A0441F72-9799-4667-9477-1E05885946A1][Section 2.5]]. A server that receives a method longer than any that it implements *SHOULD* respond with a =501 (Not Implemented)= status code. A server that receives a =request-target= longer than any URI it wishes to parse *MUST* respond with a =414 (URI Too Long)= status code (see [[https://tools.ietf.org/html/rfc7231#section-6.5.12][Section 6.5.12]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]).
 #+END_QUOTE
 
-HTTP 并没有对请求行 =request-line= 的长度限制进行预定义，相关原因在[[id:A0441F72-9799-4667-9477-1E05885946A1][章节 2.5]] 已有描述。服务器接收到超出其长度要求的请求方法（Method）时 *应当* 响应一个 =501 (Not Implemented)= 状态码。服务器接收到一个 URI 其长度超出服务器所期望的最大长度时，*必须* 响应一个 =414 (URI Too Long)= 状态码（见[[https://tools.ietf.org/html/rfc7231#section-6.5.12][【RFC7231】章节 6.5.12]]）。
+HTTP 并没有对请求行 =request-line= 的长度限制进行预定义，相关原因在[[id:A0441F72-9799-4667-9477-1E05885946A1][章节 2.5]] 已有描述。服务器接收到超出其长度要求的请求方法（method）时 *应当* 响应一个 =501 (Not Implemented)= 状态码。服务器接收到一个 URI 其长度超出服务器所期望的最大长度时，*必须* 响应一个 =414 (URI Too Long)= 状态码（见[[https://tools.ietf.org/html/rfc7231#section-6.5.12][【RFC7231】章节 6.5.12]]）。
 
 #+BEGIN_QUOTE
 Various [[https://en.wikipedia.org/wiki/Wireless_ad_hoc_network][ad hoc]] limitations on =request-line= length are found in practice. It is *RECOMMENDED* that all HTTP senders and recipients support, at a minimum, *request-line* lengths of 8000 octets.
 #+END_QUOTE
 
-在实践中发现，ad hoc 网络对于请求行 =request-line= 的长度限制多种多样。本规范 *推荐* 所有 HTTP 发送端和接收端对于请求行 =request-line= 的长度限制不低于 8000 字节（Octets）。
+在实践中发现，ad hoc 网络对于请求行 =request-line= 的长度限制多种多样。本规范 *推荐* 所有 HTTP 发送端和接收端对于请求行 =request-line= 的长度限制不低于 8000 字节（octets）。
 
 *** 3.1.2 状态行 (Status Line)
 :PROPERTIES:
@@ -873,25 +884,27 @@ Various [[https://en.wikipedia.org/wiki/Wireless_ad_hoc_network][ad hoc]] limita
 The first line of a response message is the =status-line=, consisting of the protocol version, a space (SP), the status code, another space, a possibly empty textual phrase describing the status code, and ending with CRLF.
 #+END_QUOTE
 
-响应报文的第一行称为状态行 status-line，包含协议版本 =HTTP-version=，一个空格 =SP=，状态码 =status-code=，另一个空格 =SP=，一个可能为空的文本短语 =reason-phrase= 来描述该状态码，最后是回车换行符 =CRLF=。
+响应报文的第一行称为状态行 =status-line=，包含协议版本 =HTTP-version=，一个空格 =SP=，状态码 =status-code=，另一个空格 =SP=，一个可能为空的文本短语 =reason-phrase= 来描述该状态码，最后是回车换行符 =CRLF=。
 
 #+BEGIN_SRC text
 status-line = HTTP-version SP status-code SP reason-phrase CRLF
 #+END_SRC
 
 #+BEGIN_QUOTE
-The =status-code= element is a 3-digit integer code describing the result of the server's attempt to understand and satisfy the client's corresponding request. The rest of the response message is to be interpreted in light of the semantics defined for that status code. See Section 6 of [RFC7231] for information about the semantics of status codes, including the classes of status code (indicated by the first digit), the status codes defined by this specification, considerations for the definition of new status codes, and the IANA registry.
+The =status-code= element is a 3-digit integer code describing the result of the server's attempt to understand and satisfy the client's corresponding request. The rest of the response message is to be interpreted in light of the semantics defined for that status code. See [[https://tools.ietf.org/html/rfc7231#section-6][Section 6]] of [RFC7231] for information about the semantics of status codes, including the classes of status code (indicated by the first digit), the status codes defined by this specification, considerations for the definition of new status codes, and the IANA registry.
 #+END_QUOTE
 
-状态码 =status-code= 是一个 3 位整数值，用于描述服务器尝试理解以及满足客户端相应请求的处理结果。
+状态码 =status-code= 是一个 3 位整数值，用于描述服务器尝试理解以及满足客户端相应请求的处理结果。接收端应该依据报文的状态码所定义的语义来解释（interprete）报文的剩余部分（即除了状态行以外的部分）。对于状态码的语义的相关信息，包括状态码的分类（由状态码的第一位数字来指定）、本规范所定义的状态码、定义新状态码的注意事项，以及 IANA 注册表，见[[https://tools.ietf.org/html/rfc7231#section-6][【RFC7231】章节 6]]。
 
 #+BEGIN_SRC text
 status-code    = 3DIGIT
 #+END_SRC
 
 #+BEGIN_QUOTE
-The =reason-phrase= element exists for the sole purpose of providing a textual description associated with the numeric status code, mostly out of deference to earlier Internet application protocols that were more frequently used with interactive text clients. A client *SHOULD* ignore the reason-phrase content.
+The =reason-phrase= element exists for the sole purpose of providing a textual description associated with the numeric status code, mostly out of deference to earlier Internet application protocols that were more frequently used with interactive text clients. A client *SHOULD* ignore the =reason-phrase= content.
 #+END_QUOTE
+
+原因短语 =reason-phrase= 的唯一存在目的是为数值型的状态码提供一种文本性的描述，大部都是遵从早期互联网使用频繁的交互术语。客户端 *应当* 忽略掉 =reason-phrase= 的内容。 
 
 #+BEGIN_SRC text
 reason-phrase  = *( HTAB / SP / VCHAR / obs-text )
@@ -905,7 +918,7 @@ reason-phrase  = *( HTAB / SP / VCHAR / obs-text )
 Each header field consists of a case-insensitive field name followed by a colon (":"), optional leading whitespace, the field value, and optional trailing whitespace.
 #+END_QUOTE
 
-每一个头域（Header Field）由一个域名（Field Name）及随后的一个分号（“:”）、可选的前置空格、一个域值（Field Value）、一个可选的结尾空格组成。
+每一个头域（header field）都由一个域名称（field name）及随后的一个分号（":"）、可选的前置空格、一个域值（field value）、一个可选的结尾空格组成。
 
 #+BEGIN_SRC text
 header-field   = field-name ":" OWS field-value OWS
@@ -924,7 +937,7 @@ obs-fold       = CRLF 1*( SP / HTAB )
 The =field-name= token labels the corresponding =field-value= as having the semantics defined by that header field. For example, the =Date= header field is defined in [[https://tools.ietf.org/html/rfc7231#section-7.1.1.2][Section 7.1.1.2]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]] as containing the origination timestamp for the message in which it appears.
 #+END_QUOTE
 
-报头域名 =field-name= 将其对应的报头域值 =field-value= 算作这个报文带有相应报头域的语义。例如，定义在【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-7.1.1.2][章节 7.1.1.2]] 的报文头域 =Date= 的出现说明报文包含了原始时间戳。
+报头域名称 =field-name= 将其对应的报头域值 =field-value= 算作这个报文带有相应报头域的语义。例如，定义在【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-7.1.1.2][章节 7.1.1.2]] 的 =Date= 报头域的出现说明报文包含了原始时间戳。
 
 *** 3.2.1 域的可扩展性 (Field Extensibility)
 :PROPERTIES:
@@ -940,19 +953,23 @@ Header fields are fully extensible: there is no limit on the introduction of new
 New header fields can be defined such that, when they are understood by a recipient, they might override or enhance the interpretation of previously defined header fields, define preconditions on request evaluation, or refine the meaning of responses.
 #+END_QUOTE
 
-新报头域能够定义为这样：当新报头域能够被接收端所理解时，它们可以覆盖或增强之前所定义的报头域的解释（Interpretation），定义关于评估请求的前置条件，或者提炼响应报文的意思。
+新报头域能够定义为这样：当新报头域能够被接收端所理解时，它们可以覆盖或增强之前所定义的报头域的解释（interpretation），定义对解释请求（request evaluation）的前置条件（preconditions），或者提炼响应报文的意思。
+
+#+BEGIN_QUOTE
+译注：计算机或数学领域中一般将 "evaluation" 翻译为“求值”（参考[[https://www.gnu.org/software/emacs/manual/html_node/elisp/Evaluation.html#Evaluation][这里]]），例如，对一个表达式进行求值。"request evaluation"，请求求值？请求评估？没找到合适的词来形容。我的理解是对请求报文进行解释，提取其信息，并转化为接收端所能理解的形式，让接收端理解请求的意图，也说是说，对请求报文进行求值。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 A proxy *MUST* forward unrecognized header fields unless the =field-name= is listed in the =Connection= header field ([[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][Section 6.1]]) or the proxy is specifically configured to block, or otherwise transform, such fields. Other recipients *SHOULD* ignore unrecognized header fields. These requirements allow HTTP's functionality to be enhanced without requiring prior update of deployed intermediaries.
 #+END_QUOTE
 
-代理（Proxy） *必须* 转发未识别的报头域，除非该报头域名 =field-name= 是 =Connection= （见[[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][章节 6.1]]）系列，或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 *应该* 忽略未识别的报头域。这些要求使得在链路中的中间人还没有前置更新的情况下，HTTP 的功能仍能得到增强。
+代理（proxy） *必须* 将未能识别的报头域转发出去，除非 =Connection= 报头域里列出了该报头域名称 =field-name= （见[[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][章节 6.1]]），或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 *应当* 忽略未能识别的报头域。这些要求使得在链路中的中间人还没有预先更新的情况下，HTTP 的功能仍能得到增强。
 
 #+BEGIN_QUOTE
 All defined header fields ought to be registered with [[https://www.iana.org/][IANA]] in the "Message Headers" registry, as described in [[https://tools.ietf.org/html/rfc7231#section-8.3][Section 8.3]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]].
 #+END_QUOTE
 
-所有已定义的报头域都应该被注册到 IANA 的 “报文头”（Message Headers）注册表中，详细描述见【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-8.3][章节 8.3]]。
+所有已定义的报头域都应该被注册到 IANA 的 "Message Headers" 注册表中，详细描述见【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-8.3][章节 8.3]]。
 
 *** 3.2.2 域的顺序 (Field Order)
 :PROPERTIES:
