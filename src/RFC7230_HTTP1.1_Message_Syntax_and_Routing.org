@@ -28,8 +28,6 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol
 译注："implementations" 指的是实现了某种标准、规范的一种产品，例如 "HTTP implementations" 指的是实现了 HTTP 规范的应用程序（客户端、服务器、代理等等）。
 #+END_QUOTE
 
-/斜体/, +line through+, _under line_, *bold*
-
 * 备忘状态（Status of This Memo）
 :PROPERTIES:
 :UNNUMBERED: t
