@@ -1,0 +1,321 @@
+#+FILETAGS: :note:rfc:
+#+TITLE: RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content
+#+SELECT_TAGS: export
+#+OPTIONS: toc:5 ^:{} H:6 num:0
+#+UNNUMBERED: t
+#+bind: org-export-publishing-directory "./docs"
+
+#+BEGIN_EXPORT html
+<a class="github-repo" href="https://github.com/duoani/RFC7230.zh-cn">
+  <svg height="18" width="18" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+  <span>View Repo</span>
+</a>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<a href="https://github.com/duoani/RFC7230.zh-cn">
+  <img alt="" src="https://img.shields.io/github/license/duoani/RFC7230.zh-cn.svg?style=social"/>
+</a>
+<a href="https://github.com/duoani/RFC7230.zh-cn">
+  <img src="https://img.shields.io/github/stars/duoani/RFC7230.zh-cn.svg?style=social&label=Stars"/>
+</a>
+#+END_EXPORT
+
+#+BEGIN_SRC text
+  Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
+  Request for Comments: 7231                                         Adobe
+  Obsoletes: 2616                                          J. Reschke, Ed.
+  Updates: 2817                                                 greenbytes
+  Category: Standards Track                                      June 2014
+  ISSN: 2070-1721
+#+END_SRC
+
+* Abstract
+#+BEGIN_QUOTE
+The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document defines the semantics of HTTP/1.1 messages, as expressed by request methods, request header fields, response status codes, and response header fields, along with the payload of messages (metadata and body content) and mechanisms for content negotiation.
+#+END_QUOTE
+
+* Status of This Memo
+This is an Internet Standards Track document.
+
+This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in Section 2 of RFC 5741.
+
+Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at http://www.rfc-editor.org/info/rfc7231.
+
+* Copyright Notice
+Copyright © 2014 IETF Trust and the persons identified as the document authors. All rights reserved.
+
+This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document. Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.
+
+This document may contain material from IETF Documents or IETF Contributions published or made publicly available before November 10, 2008. The person(s) controlling the copyright in some of this material may not have granted the IETF Trust the right to allow modifications of such material outside the IETF Standards Process. Without obtaining an adequate license from the person(s) controlling the copyright in such materials, this document may not be modified outside the IETF Standards Process, and derivative works of it may not be created outside the IETF Standards Process, except to format it for publication as an RFC or to translate it into languages other than English.
+
+* 1. Introduction
+Each Hypertext Transfer Protocol (HTTP) message is either a request or a response. A server listens on a connection for a request, parses each message received, interprets the message semantics in relation to the identified request target, and responds to that request with one or more response messages. A client constructs request messages to communicate specific intentions, examines received responses to see if the intentions were carried out, and determines how to interpret the results. This document defines HTTP/1.1 request and response semantics in terms of the architecture defined in [RFC7230].
+
+HTTP provides a uniform interface for interacting with a resource (Section 2), regardless of its type, nature, or implementation, via the manipulation and transfer of representations (Section 3).
+
+HTTP semantics include the intentions defined by each request method (Section 4), extensions to those semantics that might be described in request header fields (Section 5), the meaning of status codes to indicate a machine-readable response (Section 6), and the meaning of other control data and resource metadata that might be given in response header fields (Section 7).
+
+This document also defines representation metadata that describe how a payload is intended to be interpreted by a recipient, the request header fields that might influence content selection, and the various selection algorithms that are collectively referred to as "content negotiation" (Section 3.4).
+
+** 1.1. Conformance and Error Handling
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
+
+Conformance criteria and considerations regarding error handling are defined in Section 2.5 of [RFC7230].
+
+** 1.2. Syntax Notation
+This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7 of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix C describes rules imported from other documents. Appendix D shows the collected grammar with all list operators expanded to standard ABNF notation.
+
+This specification uses the terms "character", "character encoding scheme", "charset", and "protocol element" as they are defined in [RFC6365].
+
+* 2. Resources
+The target of an HTTP request is called a "resource". HTTP does not limit the nature of a resource; it merely defines an interface that might be used to interact with resources. Each resource is identified by a Uniform Resource Identifier (URI), as described in Section 2.7 of [RFC7230].
+
+When a client constructs an HTTP/1.1 request message, it sends the target URI in one of various forms, as defined in (Section 5.3 of [RFC7230]). When a request is received, the server reconstructs an effective request URI for the target resource (Section 5.5 of [RFC7230]).
+
+One design goal of HTTP is to separate resource identification from request semantics, which is made possible by vesting the request semantics in the request method (Section 4) and a few request-modifying header fields (Section 5). If there is a conflict between the method semantics and any semantic implied by the URI itself, as described in Section 4.2.1, the method semantics take precedence.
+
+* 3. Representations
+Considering that a resource could be anything, and that the uniform interface provided by HTTP is similar to a window through which one can observe and act upon such a thing only through the communication of messages to some independent actor on the other side, an abstraction is needed to represent ("take the place of") the current or desired state of that thing in our communications. That abstraction is called a representation [REST].
+
+For the purposes of HTTP, a "representation" is information that is intended to reflect a past, current, or desired state of a given resource, in a format that can be readily communicated via the protocol, and that consists of a set of representation metadata and a potentially unbounded stream of representation data.
+
+An origin server might be provided with, or be capable of generating, multiple representations that are each intended to reflect the current state of a target resource. In such cases, some algorithm is used by the origin server to select one of those representations as most applicable to a given request, usually based on content negotiation. This "selected representation" is used to provide the data and metadata for evaluating conditional requests [RFC7232] and constructing the payload for 200 (OK) and 304 (Not Modified) responses to GET (Section 4.3.1).
+
+** 3.1. Representation Metadata
+Representation header fields provide metadata about the representation. When a message includes a payload body, the representation header fields describe how to interpret the representation data enclosed in the payload body. In a response to a HEAD request, the representation header fields describe the representation data that would have been enclosed in the payload body if the same request had been a GET.
+
+The following header fields convey representation metadata:
+
+| header Field Name | Defined in...   |
+|-------------------+-----------------|
+| Content-Type      | Section 3.1.1.5 |
+| Content-Encoding  | Section 3.1.2.2 |
+| Content-Language  | Section 3.1.3.2 |
+| Content-Location  | Section 3.1.4.2 |
+
+*** 3.1.1. Processing Representation Data
+**** 3.1.1.1. Media Type
+#+BEGIN_QUOTE
+HTTP uses Internet media types [RFC2046] in the Content-Type (Section 3.1.1.5) and Accept (Section 5.3.2) header fields in order to provide open and extensible data typing and type negotiation. Media types define both a data format and various processing models: how to process that data in accordance with each context in which it is received.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  media-type = type "/" subtype *( OWS ";" OWS parameter )
+  type       = token
+  subtype    = token
+#+END_SRC
+
+#+BEGIN_QUOTE
+The type/subtype *MAY* be followed by parameters in the form of name=value pairs.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  parameter      = token "=" ( token / quoted-string )
+#+END_SRC
+
+#+BEGIN_QUOTE
+The type, subtype, and parameter name tokens are case-insensitive. Parameter values might or might not be case-sensitive, depending on the semantics of the parameter name. The presence or absence of a parameter might be significant to the processing of a media-type, depending on its definition within the media type registry.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A parameter value that matches the token production can be transmitted either as a token or within a quoted-string. The quoted and unquoted values are equivalent. For example, the following examples are all equivalent, but the first is preferred for consistency:
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  text/html;charset=utf-8
+  text/html;charset=UTF-8
+  Text/HTML;Charset="utf-8"
+  text/html; charset="utf-8"
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+Internet media types ought to be registered with IANA according to the procedures defined in [BCP13].
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+*Note:* Unlike some similar constructs in other header fields, media type parameters do not allow whitespace (even "bad" whitespace) around the "=" character.
+#+END_QUOTE
+
+**** 3.1.1.2. Charset
+#+BEGIN_QUOTE
+HTTP uses charset names to indicate or negotiate the character encoding scheme of a textual representation [RFC6365]. A charset is identified by a case-insensitive token.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  charset = token
+#+END_SRC
+
+#+BEGIN_QUOTE
+Charset names ought to be registered in the IANA "Character Sets" registry (<http://www.iana.org/assignments/character-sets>) according to the procedures defined in [RFC2978].
+#+END_QUOTE
+
+**** 3.1.1.3. Canonicalization and Text Defaults
+Internet media types are registered with a canonical form in order to be interoperable among systems with varying native encoding formats. Representations selected or transferred via HTTP ought to be in canonical form, for many of the same reasons described by the Multipurpose Internet Mail Extensions (MIME) [RFC2045]. However, the performance characteristics of email deployments (i.e., store and forward messages to peers) are significantly different from those common to HTTP and the Web (server-based information services). Furthermore, MIME's constraints for the sake of compatibility with older mail transfer protocols do not apply to HTTP (see Appendix A).
+
+MIME's canonical form requires that media subtypes of the "text" type use CRLF as the text line break. HTTP allows the transfer of text media with plain CR or LF alone representing a line break, when such line breaks are consistent for an entire representation. An HTTP sender MAY generate, and a recipient MUST be able to parse, line breaks in text media that consist of CRLF, bare CR, or bare LF. In addition, text media in HTTP is not limited to charsets that use octets 13 and 10 for CR and LF, respectively. This flexibility regarding line breaks applies only to text within a representation that has been assigned a "text" media type; it does not apply to "multipart" types or HTTP elements outside the payload body (e.g., header fields).
+
+If a representation is encoded with a content-coding, the underlying data ought to be in a form defined above prior to being encoded.
+
+**** 3.1.1.4. Multipart Types
+MIME provides for a number of "multipart" types — encapsulations of one or more representations within a single message body. All multipart types share a common syntax, as defined in Section 5.1.1 of [RFC2046], and include a boundary parameter as part of the media type value. The message body is itself a protocol element; a sender MUST generate only CRLF to represent line breaks between body parts.
+
+HTTP message framing does not use the multipart boundary as an indicator of message body length, though it might be used by implementations that generate or process the payload. For example, the "multipart/form-data" type is often used for carrying form data in a request, as described in [RFC2388], and the "multipart/byteranges" type is defined by this specification for use in some 206 (Partial Content) responses [RFC7233].
+
+**** 3.1.1.5. Content-Type
+#+BEGIN_QUOTE
+The "Content-Type" header field indicates the media type of the associated representation: either the representation enclosed in the message payload or the selected representation, as determined by the message semantics. The indicated media type defines both the data format and how that data is intended to be processed by a recipient, within the scope of the received message semantics, after any content codings indicated by Content-Encoding are decoded.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Content-Type = media-type
+#+END_SRC
+
+#+BEGIN_QUOTE
+Media types are defined in Section 3.1.1.1. An example of the field is
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Content-Type: text/html; charset=ISO-8859-4
+#+END_SRC
+
+#+BEGIN_QUOTE
+A sender that generates a message containing a payload body SHOULD generate a Content-Type header field in that message unless the intended media type of the enclosed representation is unknown to the sender. If a Content-Type header field is not present, the recipient MAY either assume a media type of "application/octet-stream" ([RFC2046], Section 4.5.1) or examine the data to determine its type.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+In practice, resource owners do not always properly configure their origin server to provide the correct Content-Type for a given representation, with the result that some clients will examine a payload's content and override the specified type. Clients that do so risk drawing incorrect conclusions, which might expose additional security risks (e.g., "privilege escalation"). Furthermore, it is impossible to determine the sender's intent by examining the data format: many data formats match multiple media types that differ only in processing semantics. Implementers are encouraged to provide a means of disabling such "content sniffing" when it is used.
+#+END_QUOTE
+
+*** 3.1.2. Encoding for Compression or Integrity
+*** 3.1.3. Audience Language
+*** 3.1.4. Identification
+** 3.2. Representation Data
+** 3.3. Payload Semantics
+** 3.4. Content Negotiation
+*** 3.4.1. Proactive Negotiation
+*** 3.4.2. Reactive Negotiation
+* 4. Request Methods
+** 4.1. Overview
+** 4.2. Common Method Properties
+*** 4.2.1. Safe Methods
+*** 4.2.2. Idempotent Methods
+*** 4.2.3. Cacheable Methods
+** 4.3. Method Definitions
+*** 4.3.1. GET
+*** 4.3.2. HEAD
+*** 4.3.3. POST
+*** 4.3.4. PUT
+*** 4.3.5. DELETE
+*** 4.3.6. CONNECT
+*** 4.3.7. OPTIONS
+*** 4.3.8. TRACE
+* 5. Request Header Fields
+** 5.1. Controls
+*** 5.1.1. Expect
+*** 5.1.2. Max-Forwards
+** 5.2. Conditionals
+** 5.3. Content Negotiation
+*** 5.3.1. Quality Values
+*** 5.3.2. Accept
+*** 5.3.3. Accept-Charset
+*** 5.3.4. Accept-Encoding
+*** 5.3.5. Accept-Language
+** 5.4. Authentication Credentials
+** 5.5. Request Context
+*** 5.5.1. Form
+*** 5.5.2. Referer
+*** 5.5.3. User-Agent
+* 6. Response Status Codes
+** 6.1. Overview of Status Codes
+** 6.2. Informational 1xx
+*** 6.2.1. 100 Continue
+*** 6.2.2. 101 Switching Protocols
+** 6.3. Successful 2xx
+*** 6.3.1. 200 OK
+*** 6.3.2. 201 Created
+*** 6.3.3. 202 Accepted
+*** 6.3.4. 203 Non-Authoritative Information
+*** 6.3.5. 204 No Content
+*** 6.3.6. 205 Reset Content
+** 6.4. Redirection 3xx
+*** 6.4.1. 300 Multiple Choices
+*** 6.4.2. 301 Moved Permanently
+*** 6.4.3. 302 Found
+*** 6.4.4. 303 See Other
+*** 6.4.5. 305 Use Proxy
+*** 6.4.6. 306 (Unused)
+*** 6.4.7. 307 Temporary Redirect
+** 6.5. Client Error 4xx
+*** 6.5.1. 400 Bad Request
+*** 6.5.2. 402 Payment Required
+*** 6.5.3. 403 Forbidden
+*** 6.5.4. 404 Not Found
+*** 6.5.5. 405 Method Not Allowed
+*** 6.5.6. 406 Not Acceptable
+*** 6.5.7. 408 Request Timeout
+*** 6.5.8. 409 Conflict
+*** 6.5.9. 410 Gone
+*** 6.5.10. 411 Length Required
+*** 6.5.11. 413 Payload Too Large
+*** 6.5.12. 414 URI Too Long
+*** 6.5.13. 415 Unsupported Media Type
+*** 6.5.14. 417 Expectation Failed
+*** 6.5.15. 426 Upgrade Required
+** 6.6 Server Error 5xx
+*** 6.6.1. 500 Internal Server Error
+*** 6.6.2. 501 Not Implemented
+*** 6.6.3. 502 Bad Gateway
+*** 6.6.4. 503 Service Unavailable
+*** 6.6.5. 504 Gateway Timeout
+*** 6.6.6. 505 HTTP Version Not Supported
+* 7. Response Header Fields
+** 7.1. Control Data
+*** 7.1.1. Origination Date
+*** 7.1.2. Location
+*** 7.1.3. Retry-After
+*** 7.1.4. Vary
+** 7.2. Validator Header Fields
+** 7.3. Authentication Challenges
+** 7.4. Response Context
+*** 7.4.1. Allow
+*** 7.4.2. Server
+* 8. IANA Considerations
+** 8.1. Method Registry
+*** 8.1.1. Procedure
+*** 8.1.2. Considerations for New Methods
+*** 8.1.3. Registrations
+** 8.2. Status Code Registry
+*** 8.2.1. Procedure
+*** 8.2.2. Considerations for New Status Codes
+*** 8.2.3. Registrations
+** 8.3. Header Field Registry
+*** 8.3.1. Considerations for New Header Fields
+*** 8.3.2. Registrations
+** 8.4. Content Coding Registry
+*** 8.4.1. Procedure
+*** 8.4.2. Registrations
+* 9. Security Considerations
+** 9.1. Attacks Based on File and Path Names
+** 9.2. Attacks Based on Command, Code, or Query Injection
+** 9.3. Disclosure of Personal Information
+** 9.4. Disclosure of Sensitive Information in URLs
+** 9.5. Disclosure of Fragment after Redirects
+** 9.6. Disclosure of Product Information
+** 9.7. Browser Fingerprinting
+* 10. Acknowledgements
+* 11. References
+** 11.1. Normative References
+** 11.2. Informative References
+* A. Defferences between HTTP and MIME
+** A.1. MIME-VERSION
+** A.2. Conversion to Canonical Form
+** A.3. Conversion of Date Formats
+** A.4. Conversion of Content-Encoding
+** A.5. Conversion of Content-Transfer-Encoding
+** A.6. MHTML and Line Length Limitations
+* B. Changes from RFC 2616
+* C. Imported ABNF
+* D. Collected ABNF
+* Index
+* Author' Addresses
