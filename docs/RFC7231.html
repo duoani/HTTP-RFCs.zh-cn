@@ -1,0 +1,1493 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-10-30 Tue 19:16 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+* {
+  box-sizing: border-box;
+}
+
+html {
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 0;
+  margin: 0;
+  color: #24292e;
+  word-wrap: break-word;
+}
+
+b, strong {
+  font-weight: 700;
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active, a:hover {
+  outline-width: 0;
+}
+
+.underline{
+  text-decoration: underline;
+}
+
+del{
+  text-decoration: line-through;
+}
+
+i {
+  font-style: italic;
+}
+
+ul, ol {
+  padding-left: 1em;
+}
+
+ruby {
+  border-bottom: 1px solid #d9d9d9;
+}
+
+rt {
+  color: #6a737d;
+}
+
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1.title {
+  padding-bottom: 0.3em;
+  font-size: 2em;
+  border-bottom: 1px solid #eaecef;
+}
+
+.outline-2 h1 {
+  font-size: 2.5em;
+}
+
+.outline-2 h2 {
+  padding-bottom: 0.3em;
+  font-size: 2em;
+  border-bottom: 1px solid #eaecef;
+}
+
+.outline-2 h3 {
+  padding-bottom: 0.3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid #eaecef;
+}
+
+.outline-2 h4 {
+  font-size: 1.25em
+}
+
+.outline-2 h5 {
+  font-size: 1.1em
+}
+
+.outline-2 h6 {
+  font-size: 1.1em
+}
+
+.outline-2 code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 3px;
+
+  color: #c7254e;
+  background-color: #f9f2f4;
+  white-space: normal;
+  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+}
+
+.outline-2 table{
+  width: 100%;
+}
+
+.outline-2 p,
+.outline-2 blockquote,
+.outline-2 ul,
+.outline-2 ol,
+.outline-2 dl,
+.outline-2 table,
+.outline-2 pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.outline-2 ul,
+.outline-2 ol {
+  padding-left: 2em;
+}
+
+table tbody tr:nth-child(odd){
+  background-color: #efefef;
+}
+
+pre,
+blockquote {
+  margin-bottom: 1em;
+}
+
+pre {
+  margin: 0;
+  padding: 1em;
+  line-height: 1.45;
+  font-size: 95%;
+  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+  border-radius: 3px;
+  overflow: auto;
+}
+
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+  margin: 0;
+}
+
+.org-src-container, .example {
+  width: 100%;
+  overflow-x: auto;
+  border-left: 0.25em solid #dfe2e5;
+  border-radius: 0.5rem;
+  background-color: #f6f8fa;
+  margin-bottom: 2em;
+}
+
+.timestamp {
+  font-family: Courier New;
+  color: #888888;
+}
+
+dd {
+  text-align: justify;
+  margin-bottom: 14pt;
+}
+
+dt {
+  font-size: 110%;
+  font-family: Courier New;
+  color: #1c3030;
+  padding: 3px;
+  margin-bottom: 3px;
+}
+
+#table-of-contents {
+  font-size: 9pt;
+  position: fixed;
+  right: 0em;
+  top: 0em;
+  background: white;
+  -webkit-box-shadow: 0 0 1em #777777;
+  -moz-box-shadow: 0 0 1em #777777;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  text-align: right;
+  max-height: 80%;
+  overflow: auto;
+  z-index: 200;
+}
+
+#table-of-contents h2 {
+  font-size: 14px;
+  font-weight: normal;
+  padding: 0 .5em;
+  margin: 16px 0;
+  text-align: left;
+}
+
+#table-of-contents ul {
+  margin-left: 14pt;
+  margin-bottom: 10pt;
+  padding: 0
+}
+
+#table-of-contents li {
+  padding: 0;
+  margin: 1px;
+  list-style: none;
+}
+
+#table-of-contents ul>:first-child {
+  color: blue;
+}
+
+#table-of-contents #text-table-of-contents {
+  display: none;
+  text-align: left;
+}
+
+#table-of-contents:hover #text-table-of-contents {
+  display: block;
+  padding: 0.5em;
+  margin-top: -1.5em;
+}
+
+#content {
+  width: 980px;
+  padding: 45px 15px 15px 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media screen and (max-width: 980px) {
+  #content {
+    width: 100%;
+  }
+  #table-of-contents {
+    float: right;
+    border: 1px solid #CCC;
+    max-width: 50%;
+    overflow: auto;
+  }
+}
+
+.footdef {
+}
+.footdef sup {
+  float: left;
+  width: 3em;
+}
+.footdef > .footpara {
+  margin-left: 3em;
+  overflow-x: hidden;
+}
+.org-src-container {
+  width: 100%;
+  overflow-x: auto;
+}
+.github-repo {
+  position: absolute;
+  top: 0;
+  left: -24px;
+  margin-top: 32px;
+  padding: 0 20px 0 40px;
+  background-color: rgba(0,0,0,.2);
+  height: 22px;
+  line-height: 22px;
+  padding-left: 42px;
+  transform: rotate(-45deg);
+  transform-origin: 40% 50%;
+}
+.github-repo:hover,
+.github-repo:active {
+  text-decoration: none;
+}
+.github-repo svg {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 20px;
+  top: 2px;
+}
+.github-repo span {
+  color: #fff;
+}
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org2d83d31">摘要 / Abstract</a></li>
+<li><a href="#org52bd10e">备忘录状态 / Status of This Memo</a></li>
+<li><a href="#orgbad70c5">版权声明 / Copyright Notice</a></li>
+<li><a href="#orgd11e1d3">1. 引言 / Introduction</a>
+<ul>
+<li><a href="#org35e266d">1.1. 一致性和错误处理 / Conformance and Error Handling</a></li>
+<li><a href="#orgeee7433">1.2. 句法标记 / Syntax Notation</a></li>
+</ul>
+</li>
+<li><a href="#org9f71cd0">2. 资源 / Resources</a></li>
+<li><a href="#orgcec0da7">3. 资源表示 / Representations</a>
+<ul>
+<li><a href="#orga265b20">3.1. Representation Metadata</a>
+<ul>
+<li><a href="#orgabdeb5f">3.1.1. Processing Representation Data</a>
+<ul>
+<li><a href="#org764e324">3.1.1.1. Media Type</a></li>
+<li><a href="#org9dd0da7">3.1.1.2. Charset</a></li>
+<li><a href="#orgf2aa91a">3.1.1.3. Canonicalization and Text Defaults</a></li>
+<li><a href="#orga152030">3.1.1.4. Multipart Types</a></li>
+<li><a href="#org0f391b1">3.1.1.5. Content-Type</a></li>
+</ul>
+</li>
+<li><a href="#org7dbe5ea">3.1.2. Encoding for Compression or Integrity</a></li>
+<li><a href="#org4fb7f1f">3.1.3. Audience Language</a></li>
+<li><a href="#orge3eac44">3.1.4. Identification</a></li>
+</ul>
+</li>
+<li><a href="#org380bc33">3.2. Representation Data</a></li>
+<li><a href="#org20e1b11">3.3. Payload Semantics</a></li>
+<li><a href="#org2d8822d">3.4. Content Negotiation</a>
+<ul>
+<li><a href="#org0961dd5">3.4.1. Proactive Negotiation</a></li>
+<li><a href="#org716289d">3.4.2. Reactive Negotiation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org39c2e37">4. Request Methods</a>
+<ul>
+<li><a href="#orgfe4bf41">4.1. Overview</a></li>
+<li><a href="#orgeaa7a8c">4.2. Common Method Properties</a>
+<ul>
+<li><a href="#org2db19a0">4.2.1. Safe Methods</a></li>
+<li><a href="#orgfe0b058">4.2.2. Idempotent Methods</a></li>
+<li><a href="#org916c61c">4.2.3. Cacheable Methods</a></li>
+</ul>
+</li>
+<li><a href="#org00a30b9">4.3. Method Definitions</a>
+<ul>
+<li><a href="#org7274a5b">4.3.1. GET</a></li>
+<li><a href="#orge7ff25a">4.3.2. HEAD</a></li>
+<li><a href="#orgbff5b73">4.3.3. POST</a></li>
+<li><a href="#org1a85b71">4.3.4. PUT</a></li>
+<li><a href="#org6a3be7a">4.3.5. DELETE</a></li>
+<li><a href="#org105b72a">4.3.6. CONNECT</a></li>
+<li><a href="#org1bd1d9d">4.3.7. OPTIONS</a></li>
+<li><a href="#orgf9cc00d">4.3.8. TRACE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org8f617f3">5. Request Header Fields</a>
+<ul>
+<li><a href="#org6edd265">5.1. Controls</a>
+<ul>
+<li><a href="#org5453d33">5.1.1. Expect</a></li>
+<li><a href="#org5045b53">5.1.2. Max-Forwards</a></li>
+</ul>
+</li>
+<li><a href="#orgbef9c22">5.2. Conditionals</a></li>
+<li><a href="#orgbca3b8e">5.3. Content Negotiation</a>
+<ul>
+<li><a href="#org7ea089c">5.3.1. Quality Values</a></li>
+<li><a href="#orgd841bd6">5.3.2. Accept</a></li>
+<li><a href="#orge87ab9c">5.3.3. Accept-Charset</a></li>
+<li><a href="#org9519ebc">5.3.4. Accept-Encoding</a></li>
+<li><a href="#org4d86c29">5.3.5. Accept-Language</a></li>
+</ul>
+</li>
+<li><a href="#org50ae2cf">5.4. Authentication Credentials</a></li>
+<li><a href="#org45f2045">5.5. Request Context</a>
+<ul>
+<li><a href="#org390aaf4">5.5.1. Form</a></li>
+<li><a href="#org6ed2590">5.5.2. Referer</a></li>
+<li><a href="#org59d9de8">5.5.3. User-Agent</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgfcea63f">6. Response Status Codes</a>
+<ul>
+<li><a href="#orgb205b87">6.1. Overview of Status Codes</a></li>
+<li><a href="#org8bfbcf3">6.2. Informational 1xx</a>
+<ul>
+<li><a href="#org2ba2aea">6.2.1. 100 Continue</a></li>
+<li><a href="#org882836a">6.2.2. 101 Switching Protocols</a></li>
+</ul>
+</li>
+<li><a href="#org4782b0c">6.3. Successful 2xx</a>
+<ul>
+<li><a href="#org181666b">6.3.1. 200 OK</a></li>
+<li><a href="#org6532db2">6.3.2. 201 Created</a></li>
+<li><a href="#orgb4bd9f2">6.3.3. 202 Accepted</a></li>
+<li><a href="#org8732d7a">6.3.4. 203 Non-Authoritative Information</a></li>
+<li><a href="#org2baf0de">6.3.5. 204 No Content</a></li>
+<li><a href="#orgee54c80">6.3.6. 205 Reset Content</a></li>
+</ul>
+</li>
+<li><a href="#org966a9fd">6.4. Redirection 3xx</a>
+<ul>
+<li><a href="#org7fffb4c">6.4.1. 300 Multiple Choices</a></li>
+<li><a href="#orgc8b3b9e">6.4.2. 301 Moved Permanently</a></li>
+<li><a href="#org268f986">6.4.3. 302 Found</a></li>
+<li><a href="#org50b14d8">6.4.4. 303 See Other</a></li>
+<li><a href="#org92974fb">6.4.5. 305 Use Proxy</a></li>
+<li><a href="#orgc5b6774">6.4.6. 306 (Unused)</a></li>
+<li><a href="#orgc74ced1">6.4.7. 307 Temporary Redirect</a></li>
+</ul>
+</li>
+<li><a href="#org66abaa4">6.5. Client Error 4xx</a>
+<ul>
+<li><a href="#orgac88356">6.5.1. 400 Bad Request</a></li>
+<li><a href="#orgb69e09b">6.5.2. 402 Payment Required</a></li>
+<li><a href="#org7157d81">6.5.3. 403 Forbidden</a></li>
+<li><a href="#org98cbf1b">6.5.4. 404 Not Found</a></li>
+<li><a href="#org2e3f43d">6.5.5. 405 Method Not Allowed</a></li>
+<li><a href="#orgd7d0bd1">6.5.6. 406 Not Acceptable</a></li>
+<li><a href="#orgd9d16e8">6.5.7. 408 Request Timeout</a></li>
+<li><a href="#org9cb905d">6.5.8. 409 Conflict</a></li>
+<li><a href="#org6c2cde3">6.5.9. 410 Gone</a></li>
+<li><a href="#orge59d6d7">6.5.10. 411 Length Required</a></li>
+<li><a href="#org09a7a0f">6.5.11. 413 Payload Too Large</a></li>
+<li><a href="#org6256a4d">6.5.12. 414 URI Too Long</a></li>
+<li><a href="#org9f93580">6.5.13. 415 Unsupported Media Type</a></li>
+<li><a href="#org1e15c82">6.5.14. 417 Expectation Failed</a></li>
+<li><a href="#orgc2f9264">6.5.15. 426 Upgrade Required</a></li>
+</ul>
+</li>
+<li><a href="#orgdab7324">6.6 Server Error 5xx</a>
+<ul>
+<li><a href="#org77cdd00">6.6.1. 500 Internal Server Error</a></li>
+<li><a href="#org37a8840">6.6.2. 501 Not Implemented</a></li>
+<li><a href="#org538c15a">6.6.3. 502 Bad Gateway</a></li>
+<li><a href="#orgb81d130">6.6.4. 503 Service Unavailable</a></li>
+<li><a href="#org0625b78">6.6.5. 504 Gateway Timeout</a></li>
+<li><a href="#org5e364c1">6.6.6. 505 HTTP Version Not Supported</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb693e2b">7. Response Header Fields</a>
+<ul>
+<li><a href="#org3462a18">7.1. Control Data</a>
+<ul>
+<li><a href="#org11e1edf">7.1.1. Origination Date</a></li>
+<li><a href="#org62c1c73">7.1.2. Location</a></li>
+<li><a href="#orgab97bf2">7.1.3. Retry-After</a></li>
+<li><a href="#org08e4786">7.1.4. Vary</a></li>
+</ul>
+</li>
+<li><a href="#org2172371">7.2. Validator Header Fields</a></li>
+<li><a href="#orgbc18d67">7.3. Authentication Challenges</a></li>
+<li><a href="#org394eda8">7.4. Response Context</a>
+<ul>
+<li><a href="#org61a6f1b">7.4.1. Allow</a></li>
+<li><a href="#org1c102a1">7.4.2. Server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9aee821">8. IANA Considerations</a>
+<ul>
+<li><a href="#org969f43c">8.1. Method Registry</a>
+<ul>
+<li><a href="#org7cbb069">8.1.1. Procedure</a></li>
+<li><a href="#orgeea01e0">8.1.2. Considerations for New Methods</a></li>
+<li><a href="#org28d801c">8.1.3. Registrations</a></li>
+</ul>
+</li>
+<li><a href="#orga65bbe2">8.2. Status Code Registry</a>
+<ul>
+<li><a href="#org6b72767">8.2.1. Procedure</a></li>
+<li><a href="#org4036464">8.2.2. Considerations for New Status Codes</a></li>
+<li><a href="#orga9b2961">8.2.3. Registrations</a></li>
+</ul>
+</li>
+<li><a href="#org6dd1cad">8.3. Header Field Registry</a>
+<ul>
+<li><a href="#org9085598">8.3.1. Considerations for New Header Fields</a></li>
+<li><a href="#org3470772">8.3.2. Registrations</a></li>
+</ul>
+</li>
+<li><a href="#orgc0865e5">8.4. Content Coding Registry</a>
+<ul>
+<li><a href="#org3d05aa7">8.4.1. Procedure</a></li>
+<li><a href="#orge19008d">8.4.2. Registrations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgbbe6a5c">9. Security Considerations</a>
+<ul>
+<li><a href="#org8cb38a4">9.1. Attacks Based on File and Path Names</a></li>
+<li><a href="#orgf158e37">9.2. Attacks Based on Command, Code, or Query Injection</a></li>
+<li><a href="#org51fb3e0">9.3. Disclosure of Personal Information</a></li>
+<li><a href="#org1dda648">9.4. Disclosure of Sensitive Information in URLs</a></li>
+<li><a href="#org4b3e3ea">9.5. Disclosure of Fragment after Redirects</a></li>
+<li><a href="#orgfbeb177">9.6. Disclosure of Product Information</a></li>
+<li><a href="#orgbbe3fa0">9.7. Browser Fingerprinting</a></li>
+</ul>
+</li>
+<li><a href="#org652b4e2">10. Acknowledgements</a></li>
+<li><a href="#org4d68da3">11. References</a>
+<ul>
+<li><a href="#orgd94ed9e">11.1. Normative References</a></li>
+<li><a href="#org26cba34">11.2. Informative References</a></li>
+</ul>
+</li>
+<li><a href="#org8ab5cea">A. Defferences between HTTP and MIME</a>
+<ul>
+<li><a href="#org843e297">A.1. MIME-VERSION</a></li>
+<li><a href="#org2e91947">A.2. Conversion to Canonical Form</a></li>
+<li><a href="#orgb731aa5">A.3. Conversion of Date Formats</a></li>
+<li><a href="#org4b057bc">A.4. Conversion of Content-Encoding</a></li>
+<li><a href="#orgc205699">A.5. Conversion of Content-Transfer-Encoding</a></li>
+<li><a href="#orge0baf2b">A.6. MHTML and Line Length Limitations</a></li>
+</ul>
+</li>
+<li><a href="#org49e15c0">B. Changes from RFC 2616</a></li>
+<li><a href="#org91dcfbc">C. Imported ABNF</a></li>
+<li><a href="#org9fd2cee">D. Collected ABNF</a></li>
+<li><a href="#orgc87003d">Index</a></li>
+<li><a href="#org7340057">Author' Addresses</a></li>
+</ul>
+</div>
+</div>
+<a class="github-repo" href="https://github.com/duoani/RFC7230.zh-cn">
+  <svg height="18" width="18" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+  <span>View Repo</span>
+</a>
+
+<a href="https://github.com/duoani/RFC7230.zh-cn">
+  <img alt="" src="https://img.shields.io/github/license/duoani/RFC7230.zh-cn.svg?style=social"/>
+</a>
+<a href="https://github.com/duoani/RFC7230.zh-cn">
+  <img src="https://img.shields.io/github/stars/duoani/RFC7230.zh-cn.svg?style=social&label=Stars"/>
+</a>
+
+<div class="org-src-container">
+<pre class="src src-text">Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
+Request for Comments: 7231                                         Adobe
+Obsoletes: 2616                                          J. Reschke, Ed.
+Updates: 2817                                                 greenbytes
+Category: Standards Track                                      June 2014
+ISSN: 2070-1721
+</pre>
+</div>
+
+<div id="outline-container-org2d83d31" class="outline-2">
+<h2 id="org2d83d31">摘要 / Abstract</h2>
+<div class="outline-text-2" id="text-org2d83d31">
+<blockquote>
+<p>
+The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document defines the semantics of HTTP/1.1 messages, as expressed by request methods, request header fields, response status codes, and response header fields, along with the payload of messages (metadata and body content) and mechanisms for content negotiation.
+</p>
+</blockquote>
+
+<p>
+超文本传输协议（HTTP）是一种<ruby>无状态<rt>stateless</rt></ruby>的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 报文的语义，引申为<ruby>请求方法<rt>request methods</rt></ruby>、<ruby>请求报头域<rt>request header fields</rt></ruby>、<ruby>响应状态码<rt>response status codes</rt></ruby>、<ruby>响应报头域<rt>response header fields</rt></ruby>，连同报文的<ruby>有效载荷<rt>payload</rt></ruby>（元数据以及报文正文内容）以及<ruby>内容协商<rt>content negotiation</rt></ruby>的机制。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org52bd10e" class="outline-2">
+<h2 id="org52bd10e">备忘录状态 / Status of This Memo</h2>
+<div class="outline-text-2" id="text-org52bd10e">
+<p>
+This is an Internet Standards Track document.
+</p>
+
+<p>
+This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in Section 2 of RFC 5741.
+</p>
+
+<p>
+Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at <a href="http://www.rfc-editor.org/info/rfc7231">http://www.rfc-editor.org/info/rfc7231</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbad70c5" class="outline-2">
+<h2 id="orgbad70c5">版权声明 / Copyright Notice</h2>
+<div class="outline-text-2" id="text-orgbad70c5">
+<p>
+Copyright © 2014 IETF Trust and the persons identified as the document authors. All rights reserved.
+</p>
+
+<p>
+This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (<a href="http://trustee.ietf.org/license-info">http://trustee.ietf.org/license-info</a>) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document. Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.
+</p>
+
+<p>
+This document may contain material from IETF Documents or IETF Contributions published or made publicly available before November 10, 2008. The person(s) controlling the copyright in some of this material may not have granted the IETF Trust the right to allow modifications of such material outside the IETF Standards Process. Without obtaining an adequate license from the person(s) controlling the copyright in such materials, this document may not be modified outside the IETF Standards Process, and derivative works of it may not be created outside the IETF Standards Process, except to format it for publication as an RFC or to translate it into languages other than English.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd11e1d3" class="outline-2">
+<h2 id="orgd11e1d3">1. 引言 / Introduction</h2>
+<div class="outline-text-2" id="text-orgd11e1d3">
+<blockquote>
+<p>
+Each Hypertext Transfer Protocol (HTTP) message is either a request or a response. A server listens on a connection for a request, parses each message received, interprets the message semantics in relation to the identified request target, and responds to that request with one or more response messages. A client constructs request messages to communicate specific intentions, examines received responses to see if the intentions were carried out, and determines how to interpret the results. This document defines HTTP/1.1 request and response semantics in terms of the architecture defined in [RFC7230].
+</p>
+</blockquote>
+
+<p>
+每一个超文本传输协议（HTTP）报文要不是一个请求，要不就是一个响应。服务器监听某个连接的请求，<ruby>解析<rt>parse</rt></ruby>每个其接收到的报文，<ruby>解释<rt>interpret</rt></ruby>报文内关于请求目标的语义，最后使用一个或多个响应报文来回应该请求。客户端构建请求报文来传达特定的意图，检查接收到的响应来观察其意图是否得到贯彻执行，并确定如何去<ruby>解释<rt>interpret</rt></ruby>该结果。本文档依据<a href="RFC7230.html">【RFC7230】</a>所定义的架构，定义了 HTTP/1.1 请求和响应的语义。
+</p>
+
+<blockquote>
+<p>
+HTTP provides a uniform interface for interacting with a resource (<a href="#org9f71cd0">Section 2</a>), regardless of its type, nature, or implementation, via the manipulation and transfer of representations (<a href="#orgcec0da7">Section 3</a>).
+</p>
+</blockquote>
+
+<p>
+HTTP 提供了一种统一的接口来对<ruby>资源<rt>resource</rt></ruby>（<a href="#org9f71cd0">章节 2</a>）进行交互，而不必理会资源的类型、性质或者<ruby>实现<rt>implementation</rt></ruby>，具体是经由<ruby>表示方法<rt>representations</rt></ruby>（<a href="#orgcec0da7">章节 3</a>）的操作和传输的方式来实现的。
+</p>
+
+<blockquote>
+<p>
+HTTP semantics include the intentions defined by each request method (<a href="#org39c2e37">Section 4</a>), extensions to those semantics that might be described in request header fields (<a href="#org8f617f3">Section 5</a>), the meaning of status codes to indicate a machine-readable response (<a href="#orgfcea63f">Section 6</a>), and the meaning of other control data and resource metadata that might be given in response header fields (<a href="#orgb693e2b">Section 7</a>).
+</p>
+</blockquote>
+
+<p>
+HTTP 的语义包含了每个<ruby>请求方法<rt>request method</rt></ruby>所定义的意图（<a href="#org39c2e37">章节 4</a>）、<ruby>请求报头域<rt>request header fields</rt></ruby>对这些语义的扩展（<a href="#org8f617f3">章节 5</a>）、<ruby>状态码<rt>status codes</rt></ruby>的含义（用于指定一种机器可阅读的响应，<a href="#orgfcea63f">章节 6</a>）、以及出现在<ruby>响应报头域<rt>response header fields</rt></ruby>里的其他控制数据和资源元数据的含义（<a href="#orgb693e2b">章节 7</a>）。
+</p>
+
+<blockquote>
+<p>
+This document also defines representation metadata that describe how a payload is intended to be interpreted by a recipient, the request header fields that might influence content selection, and the various selection algorithms that are collectively referred to as "content negotiation" (<a href="#org2d8822d">Section 3.4</a>).
+</p>
+</blockquote>
+
+<p>
+本文档还定义了以下内容：描述打算让接收端怎样<ruby>解释<rt>interpret</rt></ruby>一个<ruby>有效载荷<rt>payload</rt></ruby>的<ruby>表示方法元数据<rt>representation metadata</rt></ruby>；可能影响<ruby>内容选择<rt>content selection</rt></ruby>的请求报头域；统称为“<ruby>内容协商<rt>content negotiation</rt></ruby>”的各种选择算法（<a href="#org2d8822d">章节 3.4</a>）。
+</p>
+</div>
+
+<div id="outline-container-org35e266d" class="outline-3">
+<h3 id="org35e266d">1.1. 一致性和错误处理 / Conformance and Error Handling</h3>
+<div class="outline-text-3" id="text-org35e266d">
+<blockquote>
+<p>
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [<a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>].
+</p>
+</blockquote>
+
+<p>
+关键词 <b><ruby>必须<rt>MUST</rt></ruby></b>、<b><ruby>禁止<rt>MUST NOT</rt></ruby></b>、<b><ruby>要求<rt>REQUIRED</rt></ruby></b>、<b><ruby>必须<rt>SHALL</rt></ruby></b>、<b><ruby>禁止<rt>SHALL NOT</rt></ruby></b>、<b><ruby>应该<rt>SHOULD</rt></ruby></b>、<b><ruby>不应当<rt>SHOULD NOT</rt></ruby></b>、<b><ruby>推荐<rt>RECOMMENDED</rt></ruby></b>、<b><ruby>可以<rt>MAY</rt></ruby></b> 和 <b><ruby>可选<rt>OPTIONAL</rt></ruby></b> 的意义与【<a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>】一致。
+</p>
+
+<blockquote>
+<p>
+Conformance criteria and considerations regarding error handling are defined in Section 2.5 of [RFC7230].
+</p>
+</blockquote>
+
+<p>
+关于错误处理的一致性标准以及注意事项会在<a href="RFC7230.html#ID-A0441F72-9799-4667-9477-1E05885946A1">【RFC7230】章节 2.5</a> 中定义。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgeee7433" class="outline-3">
+<h3 id="orgeee7433">1.2. 句法标记 / Syntax Notation</h3>
+<div class="outline-text-3" id="text-orgeee7433">
+<blockquote>
+<p>
+This specification uses the Augmented Backus-Naur Form (ABNF) notation of [<a href="https://tools.ietf.org/html/rfc5234">RFC5234</a>] with a list extension, defined in <a href="RFC7230.html#ID-b9db011d-fe47-4781-929a-4b1b0aa55aec">Section 7</a> of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix C describes rules imported from other documents. Appendix D shows the collected grammar with all list operators expanded to standard ABNF notation.
+</p>
+</blockquote>
+
+<p>
+本规范使用了扩展巴科斯范式（ABNF）标记法【<a href="https://tools.ietf.org/html/rfc5234">RFC5234</a>】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见<a href="RFC7230.html#ID-b9db011d-fe47-4781-929a-4b1b0aa55aec">【RFC7230】章节 7</a>），允许使用一个 <code>#</code> 操作符（类似于 <code>*</code> 操作符，指代“重复”）来定义一种以逗号分隔的列表。
+</p>
+
+<blockquote>
+<p>
+This specification uses the terms "character", "character encoding scheme", "charset", and "protocol element" as they are defined in [<a href="https://tools.ietf.org/html/rfc6365">RFC6365</a>].
+</p>
+</blockquote>
+
+<p>
+本规范使用了术语“<ruby>字符<rt>character</rt></ruby>”、“<ruby>字符编码方案<rt>character encoding scheme</rt></ruby>”、“<ruby>字符集<rt>charset</rt></ruby>”、“<ruby>协议元素<rt>protocol element</rt></ruby>”，其定义见<a href="https://tools.ietf.org/html/rfc6365">【RFC6365】</a>。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9f71cd0" class="outline-2">
+<h2 id="org9f71cd0"><a id="ID-304453f4-a250-4f73-b82c-2825a0bda464"></a>2. 资源 / Resources</h2>
+<div class="outline-text-2" id="text-org9f71cd0">
+<p>
+The target of an HTTP request is called a "resource". HTTP does not limit the nature of a resource; it merely defines an interface that might be used to interact with resources. Each resource is identified by a Uniform Resource Identifier (URI), as described in <a href="RFC7230.html#ID-9c45ae18-46b0-4acb-a478-3d3e9a3748ab">Section 2.7</a> of [RFC7230].
+</p>
+
+<p>
+HTTP 请求的目标，称为“<ruby>资源<rt>resource</rt></ruby>”。HTTP 并不限制一个资源的性质，它仅仅定义了一个可以用于对资源进行交互的接口。每一个资源都被一个<ruby>统一资源标识符（URI）<rt>Uniform Resource Identifier</rt></ruby>所标识，见<a href="RFC7230.html#ID-9c45ae18-46b0-4acb-a478-3d3e9a3748ab">【RFC7230】章节 2.7</a>。
+</p>
+
+<p>
+When a client constructs an HTTP/1.1 request message, it sends the target URI in one of various forms, as defined in (<a href="RFC7230.html#ID-16a8fba9-40f8-4b2c-ba5f-2f6522362c3a">Section 5.3</a> of [RFC7230]). When a request is received, the server reconstructs an effective request URI for the target resource (<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">Section 5.5</a> of [RFC7230]).
+</p>
+
+<p>
+当客户端<ruby>构建<rt>construct</rt></ruby>一个 HTTP/1.1 请求报文的时候，它将某种形式的<ruby>目标 URI<rt>target URI</rt></ruby> 包含在报文中，见<a href="RFC7230.html#ID-16a8fba9-40f8-4b2c-ba5f-2f6522362c3a">【RFC7230】章节 5.3</a>。当服务器接收到一个请求的时候，它将<ruby>重新构建<rt>reconstruct</rt></ruby>出一个有效请求 URI（见<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）来定位<ruby>目标资源<rt>target resource</rt></ruby>。
+</p>
+
+<p>
+One design goal of HTTP is to separate resource identification from request semantics, which is made possible by vesting the request semantics in the request method (<a href="#org39c2e37">Section 4</a>) and a few request-modifying header fields (<a href="#org8f617f3">Section 5</a>). If there is a conflict between the method semantics and any semantic implied by the URI itself, as described in Section 4.2.1, the method semantics take precedence.
+</p>
+
+<p>
+HTTP 的设计目标之一将<ruby>资源识别<rt>resource identification</rt></ruby>与请求语义相分离，使得请求语义全部归属于<ruby>请求方法<rt>request method</rt></ruby>（<a href="#org39c2e37">章节 4</a>）以及几个<ruby>请求修饰报头域<rt>request-modifying header fields</rt></ruby>（<a href="#org8f617f3">章节 5</a>）。如果方法语义与 URI 自身所暗含的语义相冲突，正如<a href="#org2db19a0">章节 4.2.1</a> 所述，优先使用方法语义。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcec0da7" class="outline-2">
+<h2 id="orgcec0da7"><a id="ID-7dd837af-fd6a-4918-9c62-cf12a4c31522"></a>3. 资源表示 / Representations</h2>
+<div class="outline-text-2" id="text-orgcec0da7">
+<p>
+Considering that a resource could be anything, and that the uniform interface provided by HTTP is similar to a window through which one can observe and act upon such a thing only through the communication of messages to some independent actor on the other side, an abstraction is needed to represent ("take the place of") the current or desired state of that thing in our communications. That abstraction is called a representation [REST].
+</p>
+
+<p>
+考虑到<ruby>资源<rt>resource</rt></ruby>可以是任何事物，而 HTTP 所提供的统一接口类似于一个窗口，在窗口的一边我们能够对该事物进行观察；而要想对该事物采取行动的话，只能通过消息沟通来让窗口另一边的某个独立的动作执行者来完成。因此，在沟通过程中，我们需要一种“抽象”来<ruby>表示<rt>represent</rt></ruby>（代替）该事物的当前状态或期望状态。而这种“抽象”被称为 representation（资源表示）。
+</p>
+
+<blockquote>
+<p>
+译注："representation" 勉强可以翻译为“资源表示”、“资源表示法”、“资源的代表”，但下文提及的 "representation metadata", "representation data" 就很难统一翻译了，索性就不翻译了，大家意会就好。
+</p>
+</blockquote>
+
+<p>
+For the purposes of HTTP, a "representation" is information that is intended to reflect a past, current, or desired state of a given resource, in a format that can be readily communicated via the protocol, and that consists of a set of representation metadata and a potentially unbounded stream of representation data.
+</p>
+
+<p>
+基于 HTTP 的目的，representation 就是一种的信息，用于反映某个给定资源的过去、现在、或将来期望的状态，它以一种能够轻易地经由协议进行传达的格式，并由一系列 <ruby>representation 元数据<rt>representation metadata</rt></ruby>以及一个可能是无限大的 <ruby>representation 数据<rt>representation data</rt></ruby>流组成。
+</p>
+
+<p>
+An origin server might be provided with, or be capable of generating, multiple representations that are each intended to reflect the current state of a target resource. In such cases, some algorithm is used by the origin server to select one of those representations as most applicable to a given request, usually based on content negotiation. This "selected representation" is used to provide the data and metadata for evaluating conditional requests [RFC7232] and constructing the payload for 200 (OK) and 304 (Not Modified) responses to GET (<a href="#org7274a5b">Section 4.3.1</a>).
+</p>
+
+<p>
+<ruby>源服务器<rt>origin server</rt></ruby>可能提供或能够生成多种 representations，每种 representation 旨在反映<ruby>目标资源<rt>target resource</rt></ruby>的当前状态。在这种情况下，源服务器会使用某些算法（通常会基于<ruby>内容协商<rt>content negotiation</rt></ruby>）来选择其中一种对于给定请求来说最适合的 representation。这个“<ruby>已选定的 representation<rt>selected representation</rt></ruby>”是用来为<ruby>评估带条件的请求<rt>evaluating conditional requests</rt></ruby>提供数据和元数据，以及为响应给 GET 请求（<a href="#org7274a5b">章节 4.3.1</a>）的 <code>200 (OK)</code> 和 <code>304 (Not Modified)</code> 响应报文构建<ruby>有效载荷<rt>payload</rt></ruby>。
+</p>
+</div>
+
+<div id="outline-container-orga265b20" class="outline-3">
+<h3 id="orga265b20">3.1. Representation Metadata</h3>
+<div class="outline-text-3" id="text-orga265b20">
+<p>
+Representation header fields provide metadata about the representation. When a message includes a payload body, the representation header fields describe how to interpret the representation data enclosed in the payload body. In a response to a HEAD request, the representation header fields describe the representation data that would have been enclosed in the payload body if the same request had been a GET.
+</p>
+
+<p>
+The following header fields convey representation metadata:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">header Field Name</th>
+<th scope="col" class="org-left">Defined in&#x2026;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Content-Type</td>
+<td class="org-left">Section 3.1.1.5</td>
+</tr>
+
+<tr>
+<td class="org-left">Content-Encoding</td>
+<td class="org-left">Section 3.1.2.2</td>
+</tr>
+
+<tr>
+<td class="org-left">Content-Language</td>
+<td class="org-left">Section 3.1.3.2</td>
+</tr>
+
+<tr>
+<td class="org-left">Content-Location</td>
+<td class="org-left">Section 3.1.4.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orgabdeb5f" class="outline-4">
+<h4 id="orgabdeb5f">3.1.1. Processing Representation Data</h4>
+<div class="outline-text-4" id="text-orgabdeb5f">
+</div>
+<div id="outline-container-org764e324" class="outline-5">
+<h5 id="org764e324">3.1.1.1. Media Type</h5>
+<div class="outline-text-5" id="text-org764e324">
+<blockquote>
+<p>
+HTTP uses Internet media types [RFC2046] in the Content-Type (Section 3.1.1.5) and Accept (Section 5.3.2) header fields in order to provide open and extensible data typing and type negotiation. Media types define both a data format and various processing models: how to process that data in accordance with each context in which it is received.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">media-type = type "/" subtype *( OWS ";" OWS parameter )
+type       = token
+subtype    = token
+</pre>
+</div>
+
+<blockquote>
+<p>
+The type/subtype <b>MAY</b> be followed by parameters in the form of name=value pairs.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">parameter      = token "=" ( token / quoted-string )
+</pre>
+</div>
+
+<blockquote>
+<p>
+The type, subtype, and parameter name tokens are case-insensitive. Parameter values might or might not be case-sensitive, depending on the semantics of the parameter name. The presence or absence of a parameter might be significant to the processing of a media-type, depending on its definition within the media type registry.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A parameter value that matches the token production can be transmitted either as a token or within a quoted-string. The quoted and unquoted values are equivalent. For example, the following examples are all equivalent, but the first is preferred for consistency:
+</p>
+</blockquote>
+
+<pre class="example">
+text/html;charset=utf-8
+text/html;charset=UTF-8
+Text/HTML;Charset="utf-8"
+text/html; charset="utf-8"
+</pre>
+
+<blockquote>
+<p>
+Internet media types ought to be registered with IANA according to the procedures defined in [BCP13].
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> Unlike some similar constructs in other header fields, media type parameters do not allow whitespace (even "bad" whitespace) around the "=" character.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org9dd0da7" class="outline-5">
+<h5 id="org9dd0da7">3.1.1.2. Charset</h5>
+<div class="outline-text-5" id="text-org9dd0da7">
+<blockquote>
+<p>
+HTTP uses charset names to indicate or negotiate the character encoding scheme of a textual representation [RFC6365]. A charset is identified by a case-insensitive token.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">charset = token
+</pre>
+</div>
+
+<blockquote>
+<p>
+Charset names ought to be registered in the IANA "Character Sets" registry (<a href="http://www.iana.org/assignments/character-sets">http://www.iana.org/assignments/character-sets</a>) according to the procedures defined in [RFC2978].
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgf2aa91a" class="outline-5">
+<h5 id="orgf2aa91a">3.1.1.3. Canonicalization and Text Defaults</h5>
+<div class="outline-text-5" id="text-orgf2aa91a">
+<p>
+Internet media types are registered with a canonical form in order to be interoperable among systems with varying native encoding formats. Representations selected or transferred via HTTP ought to be in canonical form, for many of the same reasons described by the Multipurpose Internet Mail Extensions (MIME) [RFC2045]. However, the performance characteristics of email deployments (i.e., store and forward messages to peers) are significantly different from those common to HTTP and the Web (server-based information services). Furthermore, MIME's constraints for the sake of compatibility with older mail transfer protocols do not apply to HTTP (see Appendix A).
+</p>
+
+<p>
+MIME's canonical form requires that media subtypes of the "text" type use CRLF as the text line break. HTTP allows the transfer of text media with plain CR or LF alone representing a line break, when such line breaks are consistent for an entire representation. An HTTP sender MAY generate, and a recipient MUST be able to parse, line breaks in text media that consist of CRLF, bare CR, or bare LF. In addition, text media in HTTP is not limited to charsets that use octets 13 and 10 for CR and LF, respectively. This flexibility regarding line breaks applies only to text within a representation that has been assigned a "text" media type; it does not apply to "multipart" types or HTTP elements outside the payload body (e.g., header fields).
+</p>
+
+<p>
+If a representation is encoded with a content-coding, the underlying data ought to be in a form defined above prior to being encoded.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga152030" class="outline-5">
+<h5 id="orga152030">3.1.1.4. Multipart Types</h5>
+<div class="outline-text-5" id="text-orga152030">
+<p>
+MIME provides for a number of "multipart" types — encapsulations of one or more representations within a single message body. All multipart types share a common syntax, as defined in Section 5.1.1 of [RFC2046], and include a boundary parameter as part of the media type value. The message body is itself a protocol element; a sender MUST generate only CRLF to represent line breaks between body parts.
+</p>
+
+<p>
+HTTP message framing does not use the multipart boundary as an indicator of message body length, though it might be used by implementations that generate or process the payload. For example, the "multipart/form-data" type is often used for carrying form data in a request, as described in [RFC2388], and the "multipart/byteranges" type is defined by this specification for use in some 206 (Partial Content) responses [RFC7233].
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0f391b1" class="outline-5">
+<h5 id="org0f391b1">3.1.1.5. Content-Type</h5>
+<div class="outline-text-5" id="text-org0f391b1">
+<blockquote>
+<p>
+The "Content-Type" header field indicates the media type of the associated representation: either the representation enclosed in the message payload or the selected representation, as determined by the message semantics. The indicated media type defines both the data format and how that data is intended to be processed by a recipient, within the scope of the received message semantics, after any content codings indicated by Content-Encoding are decoded.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Content-Type = media-type
+</pre>
+</div>
+
+<blockquote>
+<p>
+Media types are defined in Section 3.1.1.1. An example of the field is
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Content-Type: text/html; charset=ISO-8859-4
+</pre>
+</div>
+
+<blockquote>
+<p>
+A sender that generates a message containing a payload body SHOULD generate a Content-Type header field in that message unless the intended media type of the enclosed representation is unknown to the sender. If a Content-Type header field is not present, the recipient MAY either assume a media type of "application/octet-stream" ([RFC2046], Section 4.5.1) or examine the data to determine its type.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+In practice, resource owners do not always properly configure their origin server to provide the correct Content-Type for a given representation, with the result that some clients will examine a payload's content and override the specified type. Clients that do so risk drawing incorrect conclusions, which might expose additional security risks (e.g., "privilege escalation"). Furthermore, it is impossible to determine the sender's intent by examining the data format: many data formats match multiple media types that differ only in processing semantics. Implementers are encouraged to provide a means of disabling such "content sniffing" when it is used.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7dbe5ea" class="outline-4">
+<h4 id="org7dbe5ea">3.1.2. Encoding for Compression or Integrity</h4>
+</div>
+<div id="outline-container-org4fb7f1f" class="outline-4">
+<h4 id="org4fb7f1f">3.1.3. Audience Language</h4>
+</div>
+<div id="outline-container-orge3eac44" class="outline-4">
+<h4 id="orge3eac44">3.1.4. Identification</h4>
+</div>
+</div>
+<div id="outline-container-org380bc33" class="outline-3">
+<h3 id="org380bc33">3.2. Representation Data</h3>
+</div>
+<div id="outline-container-org20e1b11" class="outline-3">
+<h3 id="org20e1b11">3.3. Payload Semantics</h3>
+</div>
+<div id="outline-container-org2d8822d" class="outline-3">
+<h3 id="org2d8822d"><a id="ID-c45cb9ca-1e51-4738-8c43-231e7316ea86"></a>3.4. Content Negotiation</h3>
+<div class="outline-text-3" id="text-org2d8822d">
+</div>
+<div id="outline-container-org0961dd5" class="outline-4">
+<h4 id="org0961dd5">3.4.1. Proactive Negotiation</h4>
+</div>
+<div id="outline-container-org716289d" class="outline-4">
+<h4 id="org716289d">3.4.2. Reactive Negotiation</h4>
+</div>
+</div>
+</div>
+<div id="outline-container-org39c2e37" class="outline-2">
+<h2 id="org39c2e37"><a id="ID-e6ec0aa0-3e4d-4367-bffd-423e028210b0"></a>4. Request Methods</h2>
+<div class="outline-text-2" id="text-org39c2e37">
+</div>
+<div id="outline-container-orgfe4bf41" class="outline-3">
+<h3 id="orgfe4bf41">4.1. Overview</h3>
+</div>
+<div id="outline-container-orgeaa7a8c" class="outline-3">
+<h3 id="orgeaa7a8c">4.2. Common Method Properties</h3>
+<div class="outline-text-3" id="text-orgeaa7a8c">
+</div>
+<div id="outline-container-org2db19a0" class="outline-4">
+<h4 id="org2db19a0"><a id="ID-2f967e3d-8694-430b-ad06-e748fd39b281"></a>4.2.1. Safe Methods</h4>
+<div class="outline-text-4" id="text-org2db19a0">
+</div>
+</div>
+<div id="outline-container-orgfe0b058" class="outline-4">
+<h4 id="orgfe0b058">4.2.2. Idempotent Methods</h4>
+</div>
+<div id="outline-container-org916c61c" class="outline-4">
+<h4 id="org916c61c">4.2.3. Cacheable Methods</h4>
+</div>
+</div>
+<div id="outline-container-org00a30b9" class="outline-3">
+<h3 id="org00a30b9">4.3. Method Definitions</h3>
+<div class="outline-text-3" id="text-org00a30b9">
+</div>
+<div id="outline-container-org7274a5b" class="outline-4">
+<h4 id="org7274a5b"><a id="ID-698bab73-07b1-4349-8a03-5a4a89d966d8"></a>4.3.1. GET</h4>
+<div class="outline-text-4" id="text-org7274a5b">
+</div>
+</div>
+<div id="outline-container-orge7ff25a" class="outline-4">
+<h4 id="orge7ff25a">4.3.2. HEAD</h4>
+</div>
+<div id="outline-container-orgbff5b73" class="outline-4">
+<h4 id="orgbff5b73">4.3.3. POST</h4>
+</div>
+<div id="outline-container-org1a85b71" class="outline-4">
+<h4 id="org1a85b71">4.3.4. PUT</h4>
+</div>
+<div id="outline-container-org6a3be7a" class="outline-4">
+<h4 id="org6a3be7a">4.3.5. DELETE</h4>
+</div>
+<div id="outline-container-org105b72a" class="outline-4">
+<h4 id="org105b72a">4.3.6. CONNECT</h4>
+</div>
+<div id="outline-container-org1bd1d9d" class="outline-4">
+<h4 id="org1bd1d9d">4.3.7. OPTIONS</h4>
+</div>
+<div id="outline-container-orgf9cc00d" class="outline-4">
+<h4 id="orgf9cc00d">4.3.8. TRACE</h4>
+</div>
+</div>
+</div>
+<div id="outline-container-org8f617f3" class="outline-2">
+<h2 id="org8f617f3"><a id="ID-f8e7b063-496f-473e-95e8-88ec76f21582"></a>5. Request Header Fields</h2>
+<div class="outline-text-2" id="text-org8f617f3">
+</div>
+<div id="outline-container-org6edd265" class="outline-3">
+<h3 id="org6edd265">5.1. Controls</h3>
+<div class="outline-text-3" id="text-org6edd265">
+</div>
+<div id="outline-container-org5453d33" class="outline-4">
+<h4 id="org5453d33">5.1.1. Expect</h4>
+</div>
+<div id="outline-container-org5045b53" class="outline-4">
+<h4 id="org5045b53">5.1.2. Max-Forwards</h4>
+</div>
+</div>
+<div id="outline-container-orgbef9c22" class="outline-3">
+<h3 id="orgbef9c22">5.2. Conditionals</h3>
+</div>
+<div id="outline-container-orgbca3b8e" class="outline-3">
+<h3 id="orgbca3b8e">5.3. Content Negotiation</h3>
+<div class="outline-text-3" id="text-orgbca3b8e">
+</div>
+<div id="outline-container-org7ea089c" class="outline-4">
+<h4 id="org7ea089c">5.3.1. Quality Values</h4>
+</div>
+<div id="outline-container-orgd841bd6" class="outline-4">
+<h4 id="orgd841bd6">5.3.2. Accept</h4>
+</div>
+<div id="outline-container-orge87ab9c" class="outline-4">
+<h4 id="orge87ab9c">5.3.3. Accept-Charset</h4>
+</div>
+<div id="outline-container-org9519ebc" class="outline-4">
+<h4 id="org9519ebc">5.3.4. Accept-Encoding</h4>
+</div>
+<div id="outline-container-org4d86c29" class="outline-4">
+<h4 id="org4d86c29">5.3.5. Accept-Language</h4>
+</div>
+</div>
+<div id="outline-container-org50ae2cf" class="outline-3">
+<h3 id="org50ae2cf">5.4. Authentication Credentials</h3>
+</div>
+<div id="outline-container-org45f2045" class="outline-3">
+<h3 id="org45f2045">5.5. Request Context</h3>
+<div class="outline-text-3" id="text-org45f2045">
+</div>
+<div id="outline-container-org390aaf4" class="outline-4">
+<h4 id="org390aaf4">5.5.1. Form</h4>
+</div>
+<div id="outline-container-org6ed2590" class="outline-4">
+<h4 id="org6ed2590">5.5.2. Referer</h4>
+</div>
+<div id="outline-container-org59d9de8" class="outline-4">
+<h4 id="org59d9de8">5.5.3. User-Agent</h4>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfcea63f" class="outline-2">
+<h2 id="orgfcea63f"><a id="ID-5a69d0cc-628c-4897-a089-45f906b94a92"></a>6. Response Status Codes</h2>
+<div class="outline-text-2" id="text-orgfcea63f">
+</div>
+<div id="outline-container-orgb205b87" class="outline-3">
+<h3 id="orgb205b87">6.1. Overview of Status Codes</h3>
+</div>
+<div id="outline-container-org8bfbcf3" class="outline-3">
+<h3 id="org8bfbcf3">6.2. Informational 1xx</h3>
+<div class="outline-text-3" id="text-org8bfbcf3">
+</div>
+<div id="outline-container-org2ba2aea" class="outline-4">
+<h4 id="org2ba2aea">6.2.1. 100 Continue</h4>
+</div>
+<div id="outline-container-org882836a" class="outline-4">
+<h4 id="org882836a">6.2.2. 101 Switching Protocols</h4>
+</div>
+</div>
+<div id="outline-container-org4782b0c" class="outline-3">
+<h3 id="org4782b0c">6.3. Successful 2xx</h3>
+<div class="outline-text-3" id="text-org4782b0c">
+</div>
+<div id="outline-container-org181666b" class="outline-4">
+<h4 id="org181666b">6.3.1. 200 OK</h4>
+</div>
+<div id="outline-container-org6532db2" class="outline-4">
+<h4 id="org6532db2">6.3.2. 201 Created</h4>
+</div>
+<div id="outline-container-orgb4bd9f2" class="outline-4">
+<h4 id="orgb4bd9f2">6.3.3. 202 Accepted</h4>
+</div>
+<div id="outline-container-org8732d7a" class="outline-4">
+<h4 id="org8732d7a">6.3.4. 203 Non-Authoritative Information</h4>
+</div>
+<div id="outline-container-org2baf0de" class="outline-4">
+<h4 id="org2baf0de">6.3.5. 204 No Content</h4>
+</div>
+<div id="outline-container-orgee54c80" class="outline-4">
+<h4 id="orgee54c80">6.3.6. 205 Reset Content</h4>
+</div>
+</div>
+<div id="outline-container-org966a9fd" class="outline-3">
+<h3 id="org966a9fd">6.4. Redirection 3xx</h3>
+<div class="outline-text-3" id="text-org966a9fd">
+</div>
+<div id="outline-container-org7fffb4c" class="outline-4">
+<h4 id="org7fffb4c">6.4.1. 300 Multiple Choices</h4>
+</div>
+<div id="outline-container-orgc8b3b9e" class="outline-4">
+<h4 id="orgc8b3b9e">6.4.2. 301 Moved Permanently</h4>
+</div>
+<div id="outline-container-org268f986" class="outline-4">
+<h4 id="org268f986">6.4.3. 302 Found</h4>
+</div>
+<div id="outline-container-org50b14d8" class="outline-4">
+<h4 id="org50b14d8">6.4.4. 303 See Other</h4>
+</div>
+<div id="outline-container-org92974fb" class="outline-4">
+<h4 id="org92974fb">6.4.5. 305 Use Proxy</h4>
+</div>
+<div id="outline-container-orgc5b6774" class="outline-4">
+<h4 id="orgc5b6774">6.4.6. 306 (Unused)</h4>
+</div>
+<div id="outline-container-orgc74ced1" class="outline-4">
+<h4 id="orgc74ced1">6.4.7. 307 Temporary Redirect</h4>
+</div>
+</div>
+<div id="outline-container-org66abaa4" class="outline-3">
+<h3 id="org66abaa4">6.5. Client Error 4xx</h3>
+<div class="outline-text-3" id="text-org66abaa4">
+</div>
+<div id="outline-container-orgac88356" class="outline-4">
+<h4 id="orgac88356">6.5.1. 400 Bad Request</h4>
+</div>
+<div id="outline-container-orgb69e09b" class="outline-4">
+<h4 id="orgb69e09b">6.5.2. 402 Payment Required</h4>
+</div>
+<div id="outline-container-org7157d81" class="outline-4">
+<h4 id="org7157d81">6.5.3. 403 Forbidden</h4>
+</div>
+<div id="outline-container-org98cbf1b" class="outline-4">
+<h4 id="org98cbf1b">6.5.4. 404 Not Found</h4>
+</div>
+<div id="outline-container-org2e3f43d" class="outline-4">
+<h4 id="org2e3f43d">6.5.5. 405 Method Not Allowed</h4>
+</div>
+<div id="outline-container-orgd7d0bd1" class="outline-4">
+<h4 id="orgd7d0bd1">6.5.6. 406 Not Acceptable</h4>
+</div>
+<div id="outline-container-orgd9d16e8" class="outline-4">
+<h4 id="orgd9d16e8">6.5.7. 408 Request Timeout</h4>
+</div>
+<div id="outline-container-org9cb905d" class="outline-4">
+<h4 id="org9cb905d">6.5.8. 409 Conflict</h4>
+</div>
+<div id="outline-container-org6c2cde3" class="outline-4">
+<h4 id="org6c2cde3">6.5.9. 410 Gone</h4>
+</div>
+<div id="outline-container-orge59d6d7" class="outline-4">
+<h4 id="orge59d6d7">6.5.10. 411 Length Required</h4>
+</div>
+<div id="outline-container-org09a7a0f" class="outline-4">
+<h4 id="org09a7a0f">6.5.11. 413 Payload Too Large</h4>
+</div>
+<div id="outline-container-org6256a4d" class="outline-4">
+<h4 id="org6256a4d">6.5.12. 414 URI Too Long</h4>
+</div>
+<div id="outline-container-org9f93580" class="outline-4">
+<h4 id="org9f93580">6.5.13. 415 Unsupported Media Type</h4>
+</div>
+<div id="outline-container-org1e15c82" class="outline-4">
+<h4 id="org1e15c82">6.5.14. 417 Expectation Failed</h4>
+</div>
+<div id="outline-container-orgc2f9264" class="outline-4">
+<h4 id="orgc2f9264">6.5.15. 426 Upgrade Required</h4>
+</div>
+</div>
+<div id="outline-container-orgdab7324" class="outline-3">
+<h3 id="orgdab7324">6.6 Server Error 5xx</h3>
+<div class="outline-text-3" id="text-orgdab7324">
+</div>
+<div id="outline-container-org77cdd00" class="outline-4">
+<h4 id="org77cdd00">6.6.1. 500 Internal Server Error</h4>
+</div>
+<div id="outline-container-org37a8840" class="outline-4">
+<h4 id="org37a8840">6.6.2. 501 Not Implemented</h4>
+</div>
+<div id="outline-container-org538c15a" class="outline-4">
+<h4 id="org538c15a">6.6.3. 502 Bad Gateway</h4>
+</div>
+<div id="outline-container-orgb81d130" class="outline-4">
+<h4 id="orgb81d130">6.6.4. 503 Service Unavailable</h4>
+</div>
+<div id="outline-container-org0625b78" class="outline-4">
+<h4 id="org0625b78">6.6.5. 504 Gateway Timeout</h4>
+</div>
+<div id="outline-container-org5e364c1" class="outline-4">
+<h4 id="org5e364c1">6.6.6. 505 HTTP Version Not Supported</h4>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb693e2b" class="outline-2">
+<h2 id="orgb693e2b"><a id="ID-30e7b781-4a14-4519-abb9-63ec43516b98"></a>7. Response Header Fields</h2>
+<div class="outline-text-2" id="text-orgb693e2b">
+</div>
+<div id="outline-container-org3462a18" class="outline-3">
+<h3 id="org3462a18">7.1. Control Data</h3>
+<div class="outline-text-3" id="text-org3462a18">
+</div>
+<div id="outline-container-org11e1edf" class="outline-4">
+<h4 id="org11e1edf">7.1.1. Origination Date</h4>
+</div>
+<div id="outline-container-org62c1c73" class="outline-4">
+<h4 id="org62c1c73">7.1.2. Location</h4>
+</div>
+<div id="outline-container-orgab97bf2" class="outline-4">
+<h4 id="orgab97bf2">7.1.3. Retry-After</h4>
+</div>
+<div id="outline-container-org08e4786" class="outline-4">
+<h4 id="org08e4786">7.1.4. Vary</h4>
+</div>
+</div>
+<div id="outline-container-org2172371" class="outline-3">
+<h3 id="org2172371">7.2. Validator Header Fields</h3>
+</div>
+<div id="outline-container-orgbc18d67" class="outline-3">
+<h3 id="orgbc18d67">7.3. Authentication Challenges</h3>
+</div>
+<div id="outline-container-org394eda8" class="outline-3">
+<h3 id="org394eda8">7.4. Response Context</h3>
+<div class="outline-text-3" id="text-org394eda8">
+</div>
+<div id="outline-container-org61a6f1b" class="outline-4">
+<h4 id="org61a6f1b">7.4.1. Allow</h4>
+</div>
+<div id="outline-container-org1c102a1" class="outline-4">
+<h4 id="org1c102a1">7.4.2. Server</h4>
+</div>
+</div>
+</div>
+<div id="outline-container-org9aee821" class="outline-2">
+<h2 id="org9aee821">8. IANA Considerations</h2>
+<div class="outline-text-2" id="text-org9aee821">
+</div>
+<div id="outline-container-org969f43c" class="outline-3">
+<h3 id="org969f43c">8.1. Method Registry</h3>
+<div class="outline-text-3" id="text-org969f43c">
+</div>
+<div id="outline-container-org7cbb069" class="outline-4">
+<h4 id="org7cbb069">8.1.1. Procedure</h4>
+</div>
+<div id="outline-container-orgeea01e0" class="outline-4">
+<h4 id="orgeea01e0">8.1.2. Considerations for New Methods</h4>
+</div>
+<div id="outline-container-org28d801c" class="outline-4">
+<h4 id="org28d801c">8.1.3. Registrations</h4>
+</div>
+</div>
+<div id="outline-container-orga65bbe2" class="outline-3">
+<h3 id="orga65bbe2">8.2. Status Code Registry</h3>
+<div class="outline-text-3" id="text-orga65bbe2">
+</div>
+<div id="outline-container-org6b72767" class="outline-4">
+<h4 id="org6b72767">8.2.1. Procedure</h4>
+</div>
+<div id="outline-container-org4036464" class="outline-4">
+<h4 id="org4036464">8.2.2. Considerations for New Status Codes</h4>
+</div>
+<div id="outline-container-orga9b2961" class="outline-4">
+<h4 id="orga9b2961">8.2.3. Registrations</h4>
+</div>
+</div>
+<div id="outline-container-org6dd1cad" class="outline-3">
+<h3 id="org6dd1cad">8.3. Header Field Registry</h3>
+<div class="outline-text-3" id="text-org6dd1cad">
+</div>
+<div id="outline-container-org9085598" class="outline-4">
+<h4 id="org9085598">8.3.1. Considerations for New Header Fields</h4>
+</div>
+<div id="outline-container-org3470772" class="outline-4">
+<h4 id="org3470772">8.3.2. Registrations</h4>
+</div>
+</div>
+<div id="outline-container-orgc0865e5" class="outline-3">
+<h3 id="orgc0865e5">8.4. Content Coding Registry</h3>
+<div class="outline-text-3" id="text-orgc0865e5">
+</div>
+<div id="outline-container-org3d05aa7" class="outline-4">
+<h4 id="org3d05aa7">8.4.1. Procedure</h4>
+</div>
+<div id="outline-container-orge19008d" class="outline-4">
+<h4 id="orge19008d">8.4.2. Registrations</h4>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbbe6a5c" class="outline-2">
+<h2 id="orgbbe6a5c">9. Security Considerations</h2>
+<div class="outline-text-2" id="text-orgbbe6a5c">
+</div>
+<div id="outline-container-org8cb38a4" class="outline-3">
+<h3 id="org8cb38a4">9.1. Attacks Based on File and Path Names</h3>
+</div>
+<div id="outline-container-orgf158e37" class="outline-3">
+<h3 id="orgf158e37">9.2. Attacks Based on Command, Code, or Query Injection</h3>
+</div>
+<div id="outline-container-org51fb3e0" class="outline-3">
+<h3 id="org51fb3e0">9.3. Disclosure of Personal Information</h3>
+</div>
+<div id="outline-container-org1dda648" class="outline-3">
+<h3 id="org1dda648">9.4. Disclosure of Sensitive Information in URLs</h3>
+</div>
+<div id="outline-container-org4b3e3ea" class="outline-3">
+<h3 id="org4b3e3ea">9.5. Disclosure of Fragment after Redirects</h3>
+</div>
+<div id="outline-container-orgfbeb177" class="outline-3">
+<h3 id="orgfbeb177">9.6. Disclosure of Product Information</h3>
+</div>
+<div id="outline-container-orgbbe3fa0" class="outline-3">
+<h3 id="orgbbe3fa0">9.7. Browser Fingerprinting</h3>
+</div>
+</div>
+<div id="outline-container-org652b4e2" class="outline-2">
+<h2 id="org652b4e2">10. Acknowledgements</h2>
+</div>
+<div id="outline-container-org4d68da3" class="outline-2">
+<h2 id="org4d68da3">11. References</h2>
+<div class="outline-text-2" id="text-org4d68da3">
+</div>
+<div id="outline-container-orgd94ed9e" class="outline-3">
+<h3 id="orgd94ed9e">11.1. Normative References</h3>
+</div>
+<div id="outline-container-org26cba34" class="outline-3">
+<h3 id="org26cba34">11.2. Informative References</h3>
+</div>
+</div>
+<div id="outline-container-org8ab5cea" class="outline-2">
+<h2 id="org8ab5cea">A. Defferences between HTTP and MIME</h2>
+<div class="outline-text-2" id="text-org8ab5cea">
+</div>
+<div id="outline-container-org843e297" class="outline-3">
+<h3 id="org843e297">A.1. MIME-VERSION</h3>
+</div>
+<div id="outline-container-org2e91947" class="outline-3">
+<h3 id="org2e91947">A.2. Conversion to Canonical Form</h3>
+</div>
+<div id="outline-container-orgb731aa5" class="outline-3">
+<h3 id="orgb731aa5">A.3. Conversion of Date Formats</h3>
+</div>
+<div id="outline-container-org4b057bc" class="outline-3">
+<h3 id="org4b057bc">A.4. Conversion of Content-Encoding</h3>
+</div>
+<div id="outline-container-orgc205699" class="outline-3">
+<h3 id="orgc205699">A.5. Conversion of Content-Transfer-Encoding</h3>
+</div>
+<div id="outline-container-orge0baf2b" class="outline-3">
+<h3 id="orge0baf2b">A.6. MHTML and Line Length Limitations</h3>
+</div>
+</div>
+<div id="outline-container-org49e15c0" class="outline-2">
+<h2 id="org49e15c0">B. Changes from RFC 2616</h2>
+</div>
+<div id="outline-container-org91dcfbc" class="outline-2">
+<h2 id="org91dcfbc">C. Imported ABNF</h2>
+</div>
+<div id="outline-container-org9fd2cee" class="outline-2">
+<h2 id="org9fd2cee">D. Collected ABNF</h2>
+</div>
+<div id="outline-container-orgc87003d" class="outline-2">
+<h2 id="orgc87003d">Index</h2>
+</div>
+<div id="outline-container-org7340057" class="outline-2">
+<h2 id="org7340057">Author' Addresses</h2>
+</div>
+</div>
+</body>
+</html>

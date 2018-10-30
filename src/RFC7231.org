@@ -30,57 +30,113 @@
   ISSN: 2070-1721
 #+END_SRC
 
-* Abstract
+* 摘要 / Abstract
 #+BEGIN_QUOTE
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document defines the semantics of HTTP/1.1 messages, as expressed by request methods, request header fields, response status codes, and response header fields, along with the payload of messages (metadata and body content) and mechanisms for content negotiation.
 #+END_QUOTE
 
-* Status of This Memo
+超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 报文的语义，引申为[[ruby:request%20methods][请求方法]]、[[ruby:request%20header%20fields][请求报头域]]、[[ruby:response%20status%20codes][响应状态码]]、[[ruby:response%20header%20fields][响应报头域]]，连同报文的[[ruby:payload][有效载荷]]（元数据以及报文正文内容）以及[[ruby:content%20negotiation][内容协商]]的机制。
+
+* 备忘录状态 / Status of This Memo
 This is an Internet Standards Track document.
 
 This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in Section 2 of RFC 5741.
 
 Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at http://www.rfc-editor.org/info/rfc7231.
 
-* Copyright Notice
+* 版权声明 / Copyright Notice
 Copyright © 2014 IETF Trust and the persons identified as the document authors. All rights reserved.
 
 This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document. Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.
 
 This document may contain material from IETF Documents or IETF Contributions published or made publicly available before November 10, 2008. The person(s) controlling the copyright in some of this material may not have granted the IETF Trust the right to allow modifications of such material outside the IETF Standards Process. Without obtaining an adequate license from the person(s) controlling the copyright in such materials, this document may not be modified outside the IETF Standards Process, and derivative works of it may not be created outside the IETF Standards Process, except to format it for publication as an RFC or to translate it into languages other than English.
 
-* 1. Introduction
+* 1. 引言 / Introduction
+#+BEGIN_QUOTE
 Each Hypertext Transfer Protocol (HTTP) message is either a request or a response. A server listens on a connection for a request, parses each message received, interprets the message semantics in relation to the identified request target, and responds to that request with one or more response messages. A client constructs request messages to communicate specific intentions, examines received responses to see if the intentions were carried out, and determines how to interpret the results. This document defines HTTP/1.1 request and response semantics in terms of the architecture defined in [RFC7230].
+#+END_QUOTE
 
-HTTP provides a uniform interface for interacting with a resource (Section 2), regardless of its type, nature, or implementation, via the manipulation and transfer of representations (Section 3).
+每一个超文本传输协议（HTTP）报文要不是一个请求，要不就是一个响应。服务器监听某个连接的请求，[[ruby:parse][解析]]每个其接收到的报文，[[ruby:interpret][解释]]报文内关于请求目标的语义，最后使用一个或多个响应报文来回应该请求。客户端构建请求报文来传达特定的意图，检查接收到的响应来观察其意图是否得到贯彻执行，并确定如何去[[ruby:interpret][解释]]该结果。本文档依据[[file:RFC7230.org][【RFC7230】]]所定义的架构，定义了 HTTP/1.1 请求和响应的语义。
 
-HTTP semantics include the intentions defined by each request method (Section 4), extensions to those semantics that might be described in request header fields (Section 5), the meaning of status codes to indicate a machine-readable response (Section 6), and the meaning of other control data and resource metadata that might be given in response header fields (Section 7).
+#+BEGIN_QUOTE
+HTTP provides a uniform interface for interacting with a resource ([[id:304453f4-a250-4f73-b82c-2825a0bda464][Section 2]]), regardless of its type, nature, or implementation, via the manipulation and transfer of representations ([[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][Section 3]]).
+#+END_QUOTE
 
-This document also defines representation metadata that describe how a payload is intended to be interpreted by a recipient, the request header fields that might influence content selection, and the various selection algorithms that are collectively referred to as "content negotiation" (Section 3.4).
+HTTP 提供了一种统一的接口来对[[ruby:resource][资源]]（[[id:304453f4-a250-4f73-b82c-2825a0bda464][章节 2]]）进行交互，而不必理会资源的类型、性质或者[[ruby:implementation][实现]]，具体是经由[[ruby:representations][表示方法]]（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][章节 3]]）的操作和传输的方式来实现的。
 
-** 1.1. Conformance and Error Handling
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
+#+BEGIN_QUOTE
+HTTP semantics include the intentions defined by each request method ([[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][Section 4]]), extensions to those semantics that might be described in request header fields ([[id:f8e7b063-496f-473e-95e8-88ec76f21582][Section 5]]), the meaning of status codes to indicate a machine-readable response ([[id:5a69d0cc-628c-4897-a089-45f906b94a92][Section 6]]), and the meaning of other control data and resource metadata that might be given in response header fields ([[id:30e7b781-4a14-4519-abb9-63ec43516b98][Section 7]]).
+#+END_QUOTE
 
+HTTP 的语义包含了每个[[ruby:request%20method][请求方法]]所定义的意图（[[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][章节 4]]）、[[ruby:request%20header%20fields][请求报头域]]对这些语义的扩展（[[id:f8e7b063-496f-473e-95e8-88ec76f21582][章节 5]]）、[[ruby:status%20codes][状态码]]的含义（用于指定一种机器可阅读的响应，[[id:5a69d0cc-628c-4897-a089-45f906b94a92][章节 6]]）、以及出现在[[ruby:response%20header%20fields][响应报头域]]里的其他控制数据和资源元数据的含义（[[id:30e7b781-4a14-4519-abb9-63ec43516b98][章节 7]]）。
+
+#+BEGIN_QUOTE
+This document also defines representation metadata that describe how a payload is intended to be interpreted by a recipient, the request header fields that might influence content selection, and the various selection algorithms that are collectively referred to as "content negotiation" ([[id:c45cb9ca-1e51-4738-8c43-231e7316ea86][Section 3.4]]).
+#+END_QUOTE
+
+本文档还定义了以下内容：描述打算让接收端怎样[[ruby:interpret][解释]]一个[[ruby:payload][有效载荷]]的[[ruby:representation%20metadata][表示方法元数据]]；可能影响[[ruby:content%20selection][内容选择]]的请求报头域；统称为“[[ruby:content%20negotiation][内容协商]]”的各种选择算法（[[id:c45cb9ca-1e51-4738-8c43-231e7316ea86][章节 3.4]]）。
+
+** 1.1. 一致性和错误处理 / Conformance and Error Handling
+#+BEGIN_QUOTE
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [[[https://tools.ietf.org/html/rfc2119][RFC2119]]].
+#+END_QUOTE
+
+关键词 *[[ruby:MUST][必须]]*、*[[ruby:MUST%20NOT][禁止]]*、*[[ruby:REQUIRED][要求]]*、*[[ruby:SHALL][必须]]*、*[[ruby:SHALL%20NOT][禁止]]*、*[[ruby:SHOULD][应该]]*、*[[ruby:SHOULD%20NOT][不应当]]*、*[[ruby:RECOMMENDED][推荐]]*、*[[ruby:MAY][可以]]* 和 *[[ruby:OPTIONAL][可选]]* 的意义与【[[https://tools.ietf.org/html/rfc2119][RFC2119]]】一致。
+
+#+BEGIN_QUOTE
 Conformance criteria and considerations regarding error handling are defined in Section 2.5 of [RFC7230].
+#+END_QUOTE
 
-** 1.2. Syntax Notation
-This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7 of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix C describes rules imported from other documents. Appendix D shows the collected grammar with all list operators expanded to standard ABNF notation.
+关于错误处理的一致性标准以及注意事项会在[[id:A0441F72-9799-4667-9477-1E05885946A1][【RFC7230】章节 2.5]] 中定义。
 
-This specification uses the terms "character", "character encoding scheme", "charset", and "protocol element" as they are defined in [RFC6365].
+** 1.2. 句法标记 / Syntax Notation
+#+BEGIN_QUOTE
+This specification uses the Augmented Backus-Naur Form (ABNF) notation of [[[https://tools.ietf.org/html/rfc5234][RFC5234]]] with a list extension, defined in [[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][Section 7]] of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix C describes rules imported from other documents. Appendix D shows the collected grammar with all list operators expanded to standard ABNF notation.
+#+END_QUOTE
 
-* 2. Resources
-The target of an HTTP request is called a "resource". HTTP does not limit the nature of a resource; it merely defines an interface that might be used to interact with resources. Each resource is identified by a Uniform Resource Identifier (URI), as described in Section 2.7 of [RFC7230].
+本规范使用了扩展巴科斯范式（ABNF）标记法【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][【RFC7230】章节 7]]），允许使用一个 =#= 操作符（类似于 =*= 操作符，指代“重复”）来定义一种以逗号分隔的列表。
 
-When a client constructs an HTTP/1.1 request message, it sends the target URI in one of various forms, as defined in (Section 5.3 of [RFC7230]). When a request is received, the server reconstructs an effective request URI for the target resource (Section 5.5 of [RFC7230]).
+#+BEGIN_QUOTE
+This specification uses the terms "character", "character encoding scheme", "charset", and "protocol element" as they are defined in [[[https://tools.ietf.org/html/rfc6365][RFC6365]]].
+#+END_QUOTE
 
-One design goal of HTTP is to separate resource identification from request semantics, which is made possible by vesting the request semantics in the request method (Section 4) and a few request-modifying header fields (Section 5). If there is a conflict between the method semantics and any semantic implied by the URI itself, as described in Section 4.2.1, the method semantics take precedence.
+本规范使用了术语“[[ruby:character][字符]]”、“[[ruby:character%20encoding%20scheme][字符编码方案]]”、“[[ruby:charset][字符集]]”、“[[ruby:protocol%20element][协议元素]]”，其定义见[[https://tools.ietf.org/html/rfc6365][【RFC6365】]]。
 
-* 3. Representations
+* 2. 资源 / Resources
+:PROPERTIES:
+:ID:       304453f4-a250-4f73-b82c-2825a0bda464
+:END:
+The target of an HTTP request is called a "resource". HTTP does not limit the nature of a resource; it merely defines an interface that might be used to interact with resources. Each resource is identified by a Uniform Resource Identifier (URI), as described in [[id:9c45ae18-46b0-4acb-a478-3d3e9a3748ab][Section 2.7]] of [RFC7230].
+
+HTTP 请求的目标，称为“[[ruby:resource][资源]]”。HTTP 并不限制一个资源的性质，它仅仅定义了一个可以用于对资源进行交互的接口。每一个资源都被一个[[ruby:Uniform%20Resource%20Identifier][统一资源标识符（URI）]]所标识，见[[id:9c45ae18-46b0-4acb-a478-3d3e9a3748ab][【RFC7230】章节 2.7]]。
+
+When a client constructs an HTTP/1.1 request message, it sends the target URI in one of various forms, as defined in ([[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][Section 5.3]] of [RFC7230]). When a request is received, the server reconstructs an effective request URI for the target resource ([[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]).
+
+当客户端[[ruby:construct][构建]]一个 HTTP/1.1 请求报文的时候，它将某种形式的[[ruby:target%20URI][目标 URI]] 包含在报文中，见[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][【RFC7230】章节 5.3]]。当服务器接收到一个请求的时候，它将[[ruby:reconstruct][重新构建]]出一个有效请求 URI（见[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）来定位[[ruby:target%20resource][目标资源]]。
+
+One design goal of HTTP is to separate resource identification from request semantics, which is made possible by vesting the request semantics in the request method ([[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][Section 4]]) and a few request-modifying header fields ([[id:f8e7b063-496f-473e-95e8-88ec76f21582][Section 5]]). If there is a conflict between the method semantics and any semantic implied by the URI itself, as described in Section 4.2.1, the method semantics take precedence.
+
+HTTP 的设计目标之一将[[ruby:resource%20identification][资源识别]]与请求语义相分离，使得请求语义全部归属于[[ruby:request%20method][请求方法]]（[[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][章节 4]]）以及几个[[ruby:request-modifying%20header%20fields][请求修饰报头域]]（[[id:f8e7b063-496f-473e-95e8-88ec76f21582][章节 5]]）。如果方法语义与 URI 自身所暗含的语义相冲突，正如[[id:2f967e3d-8694-430b-ad06-e748fd39b281][章节 4.2.1]] 所述，优先使用方法语义。
+
+* 3. 资源表示 / Representations
+:PROPERTIES:
+:ID:       7dd837af-fd6a-4918-9c62-cf12a4c31522
+:END:
 Considering that a resource could be anything, and that the uniform interface provided by HTTP is similar to a window through which one can observe and act upon such a thing only through the communication of messages to some independent actor on the other side, an abstraction is needed to represent ("take the place of") the current or desired state of that thing in our communications. That abstraction is called a representation [REST].
+
+考虑到[[ruby:resource][资源]]可以是任何事物，而 HTTP 所提供的统一接口类似于一个窗口，在窗口的一边我们能够对该事物进行观察；而要想对该事物采取行动的话，只能通过消息沟通来让窗口另一边的某个独立的动作执行者来完成。因此，在沟通过程中，我们需要一种“抽象”来[[ruby:represent][表示]]（代替）该事物的当前状态或期望状态。而这种“抽象”被称为 representation（资源表示）。
+
+#+BEGIN_QUOTE
+译注："representation" 勉强可以翻译为“资源表示”、“资源表示法”、“资源的代表”，但下文提及的 "representation metadata", "representation data" 就很难统一翻译了，索性就不翻译了，大家意会就好。
+#+END_QUOTE
 
 For the purposes of HTTP, a "representation" is information that is intended to reflect a past, current, or desired state of a given resource, in a format that can be readily communicated via the protocol, and that consists of a set of representation metadata and a potentially unbounded stream of representation data.
 
-An origin server might be provided with, or be capable of generating, multiple representations that are each intended to reflect the current state of a target resource. In such cases, some algorithm is used by the origin server to select one of those representations as most applicable to a given request, usually based on content negotiation. This "selected representation" is used to provide the data and metadata for evaluating conditional requests [RFC7232] and constructing the payload for 200 (OK) and 304 (Not Modified) responses to GET (Section 4.3.1).
+基于 HTTP 的目的，representation 就是一种的信息，用于反映某个给定资源的过去、现在、或将来期望的状态，它以一种能够轻易地经由协议进行传达的格式，并由一系列 [[ruby:representation%20metadata][representation 元数据]]以及一个可能是无限大的 [[ruby:representation%20data][representation 数据]]流组成。
+
+An origin server might be provided with, or be capable of generating, multiple representations that are each intended to reflect the current state of a target resource. In such cases, some algorithm is used by the origin server to select one of those representations as most applicable to a given request, usually based on content negotiation. This "selected representation" is used to provide the data and metadata for evaluating conditional requests [RFC7232] and constructing the payload for 200 (OK) and 304 (Not Modified) responses to GET ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]]).
+
+[[ruby:origin%20server][源服务器]]可能提供或能够生成多种 representations，每种 representation 旨在反映[[ruby:target%20resource][目标资源]]的当前状态。在这种情况下，源服务器会使用某些算法（通常会基于[[ruby:content%20negotiation][内容协商]]）来选择其中一种对于给定请求来说最适合的 representation。这个“[[ruby:selected%20representation][已选定的 representation]]”是用来为[[ruby:evaluating%20conditional%20requests][评估带条件的请求]]提供数据和元数据，以及为响应给 GET 请求（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）的 =200 (OK)= 和 =304 (Not Modified)= 响应报文构建[[ruby:payload][有效载荷]]。
 
 ** 3.1. Representation Metadata
 Representation header fields provide metadata about the representation. When a message includes a payload body, the representation header fields describe how to interpret the representation data enclosed in the payload body. In a response to a HEAD request, the representation header fields describe the representation data that would have been enclosed in the payload body if the same request had been a GET.
@@ -193,16 +249,28 @@ In practice, resource owners do not always properly configure their origin serve
 ** 3.2. Representation Data
 ** 3.3. Payload Semantics
 ** 3.4. Content Negotiation
+:PROPERTIES:
+:ID:       c45cb9ca-1e51-4738-8c43-231e7316ea86
+:END:
 *** 3.4.1. Proactive Negotiation
 *** 3.4.2. Reactive Negotiation
 * 4. Request Methods
+:PROPERTIES:
+:ID:       e6ec0aa0-3e4d-4367-bffd-423e028210b0
+:END:
 ** 4.1. Overview
 ** 4.2. Common Method Properties
 *** 4.2.1. Safe Methods
+:PROPERTIES:
+:ID:       2f967e3d-8694-430b-ad06-e748fd39b281
+:END:
 *** 4.2.2. Idempotent Methods
 *** 4.2.3. Cacheable Methods
 ** 4.3. Method Definitions
 *** 4.3.1. GET
+:PROPERTIES:
+:ID:       698bab73-07b1-4349-8a03-5a4a89d966d8
+:END:
 *** 4.3.2. HEAD
 *** 4.3.3. POST
 *** 4.3.4. PUT
@@ -211,6 +279,9 @@ In practice, resource owners do not always properly configure their origin serve
 *** 4.3.7. OPTIONS
 *** 4.3.8. TRACE
 * 5. Request Header Fields
+:PROPERTIES:
+:ID:       f8e7b063-496f-473e-95e8-88ec76f21582
+:END:
 ** 5.1. Controls
 *** 5.1.1. Expect
 *** 5.1.2. Max-Forwards
@@ -227,6 +298,9 @@ In practice, resource owners do not always properly configure their origin serve
 *** 5.5.2. Referer
 *** 5.5.3. User-Agent
 * 6. Response Status Codes
+:PROPERTIES:
+:ID:       5a69d0cc-628c-4897-a089-45f906b94a92
+:END:
 ** 6.1. Overview of Status Codes
 ** 6.2. Informational 1xx
 *** 6.2.1. 100 Continue
@@ -270,6 +344,9 @@ In practice, resource owners do not always properly configure their origin serve
 *** 6.6.5. 504 Gateway Timeout
 *** 6.6.6. 505 HTTP Version Not Supported
 * 7. Response Header Fields
+:PROPERTIES:
+:ID:       30e7b781-4a14-4519-abb9-63ec43516b98
+:END:
 ** 7.1. Control Data
 *** 7.1.1. Origination Date
 *** 7.1.2. Location

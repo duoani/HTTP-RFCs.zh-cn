@@ -95,7 +95,7 @@ This HTTP/1.1 specification obsoletes [[https://tools.ietf.org/html/rfc2616][RFC
 HTTP is a generic interface protocol for information systems. It is designed to hide the details of how a service is implemented by presenting a uniform interface to clients that is independent of the types of resources provided. Likewise, servers do not need to be aware of each client's purpose: an HTTP request can be considered in isolation rather than being associated with a specific type of client or a predetermined sequence of application steps. The result is a protocol that can be used effectively in many different contexts and for which implementations can evolve independently over time.
 #+END_QUOTE
 
-HTTP 是一种用于信息系统的通用接口协议。它的设计思想是通过向客户端呈现一种独立于服务（service）自身所提供的资源类型的通用接口，来隐藏该服务（service）的实现细节。同样，服务器并不需要知道每一个客户端的目的，这是因为可以认为所有 HTTP 请求都是孤立的，而不是与一种特定的客户端类型、或者一连串预先定义好的应用步骤相关联。这样的设计造就了一个能够被有效用于多种不同场景，以及各种实现（Implementations）能够相互独立发展的协议。
+HTTP 是一种用于信息系统的通用接口协议。它的设计思想是通过向客户端呈现一种独立于服务（service）自身所提供的资源类型的统一接口，来隐藏该服务（service）的实现细节。同样，服务器并不需要知道每一个客户端的目的，这是因为可以认为所有 HTTP 请求都是孤立的，而不是与一种特定的客户端类型、或者一连串预先定义好的应用步骤相关联。这样的设计造就了一个能够被有效用于多种不同场景，以及各种实现（Implementations）能够相互独立发展的协议。
 
 #+BEGIN_QUOTE
 HTTP is also designed for use as an intermediation protocol for translating communication to and from non-HTTP information systems. HTTP proxies and gateways can provide access to alternative information services by translating their diverse protocols into a hypertext format that can be viewed and manipulated by clients in the same way as HTTP services.
@@ -120,7 +120,7 @@ This document describes the architectural elements that are used or referred to 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
 #+END_QUOTE
 
-关键词 *必须（MUST）*、*禁止（MUST NOT）*、*要求（REQUIRED）*、*必须（SHALL）*、*禁止（SHALL NOT）*、*应该（SHOULD）*、*不应该（SHOULD NOT）*、*推荐（RECOMMENDED）*、*可以（MAY）* 和 *可选（OPTIONAL）* 的意义与【[[https://tools.ietf.org/html/rfc2119][RFC2119]]】一致。
+关键词 *必须（MUST）*、*禁止（MUST NOT）*、*要求（REQUIRED）*、*必须（SHALL）*、*禁止（SHALL NOT）*、*应当（SHOULD）*、*不应当（SHOULD NOT）*、*推荐（RECOMMENDED）*、*可以（MAY）* 和 *可选（OPTIONAL）* 的意义与【[[https://tools.ietf.org/html/rfc2119][RFC2119]]】一致。
 
 #+BEGIN_QUOTE
 Conformance criteria and considerations regarding error handling are defined in Section 2.5.
@@ -164,7 +164,9 @@ HTTP is a stateless request/response protocol that operates by exchanging messag
 
 HTTP 是一种无状态的请求/响应协议，通过一个可靠的传输层或会话层“连接”来交换报文（message，见[[id:6e9516fa-cde2-4693-b1e1-e763776d3186][章节 3]]）。HTTP 客户端（client）是一种用于与服务器建立连接（connection，见[[id:0CB50B0E-B686-4824-A22A-B4E10CD0BA40][章节 6]]），向其发送一个或多个 HTTP 请求的应用程序。HTTP 服务器（server）是一个接受客户端连接，接收 HTTP 请求，发送 HTTP 响应的应用程序。
 
-（译注：response 译作“响应”、“应答”，本文统一译为“响应”；message 译作“报文”、“消息”，这里统一译为“报文”，但在如果在某些情况下我认为译为“消息”更通俗的时候，我会特别标注为“消息”。）
+#+BEGIN_QUOTE
+译注：response 译作“响应”、“应答”，本文统一译为“响应”；message 译作“报文”、“消息”，这里统一译为“报文”，但在如果在某些情况下我认为译为“消息”更通俗的时候，我会特别标注为“消息”。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 The terms "client" and "server" refer only to the roles that these programs perform for a particular connection. The same program might act as a client on some connections and a server on others. The term "user agent" refers to any of the various client programs that initiate a request, including (but not limited to) browsers, spiders (web-based robots), command-line tools, custom applications, and mobile apps. The term "origin server" refers to the program that can originate authoritative responses for a given target resource. The terms "sender" and "recipient" refer to any implementation that sends or receives a given message, respectively.
@@ -194,15 +196,17 @@ Most HTTP communication consists of a retrieval request (GET) for a representati
 A client sends an HTTP request to a server in the form of a request message, beginning with a request-line that includes a method, URI, and protocol version (Section 3.1.1), followed by header fields containing request modifiers, client information, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
 #+END_QUOTE
 
-客户端以请求报文（request message）的形式向服务器发送一个 HTTP 请求。请求报文以一个包含了方法（method）、URI 和协议版本（protocol version）的请求行（request line，见[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]）作为开始；随后是包含了请求修饰符，客户端信息以及表现形式元数据（representation metadata，见[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含了有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（message body）。
+客户端以请求报文（request message）的形式向服务器发送一个 HTTP 请求。请求报文以一个包含了方法（method）、URI 和协议版本（protocol version）的请求行（request line，见[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]）作为开始；随后是包含了请求修饰符，客户端信息以及 representation 元数据（representation metadata，见[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含了有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（message body）。
 
-（译注："header fields" 通常译作报头域、首部、首部字段等，本文统一译作“报头域”。"message body" 通常译作报文正文、消息正文、消息体等，本文统一译作“报文正文”。）
+#+BEGIN_QUOTE
+译注："header fields" 通常译作报头域、首部、首部字段等，本文统一译作“报头域”。"message body" 通常译作报文正文、消息正文、消息体等，本文统一译作“报文正文”。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 A server responds to a client's request by sending one or more HTTP response messages, each beginning with a status line that includes the protocol version, a success or error code, and textual reason phrase (Section 3.1.2), possibly followed by header fields containing server information, resource metadata, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
 #+END_QUOTE
 
-服务器通过发送一个或多个 HTTP 响应报文（response message）来响应客户端的请求。每个响应报文以一个包含协议版本（protocol version）、一个成功或失败的状态码（status code）以及一个描述状态码的文本短语（reason phrase）的状态行（status line，[[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][章节 3.1.2]]）作为开始；随后可能是包含服务器信息、资源元数据以及表现形式元数据（representation metadata，见章节 3.2）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（message body）。
+服务器通过发送一个或多个 HTTP 响应报文（response message）来响应客户端的请求。每个响应报文以一个包含协议版本（protocol version）、一个成功或失败的状态码（status code）以及一个描述状态码的文本短语（reason phrase）的状态行（status line，[[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][章节 3.1.2]]）作为开始；随后可能是包含服务器信息、资源元数据以及 representation 元数据（representation metadata，见章节 3.2）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（message body）。
 
 #+BEGIN_QUOTE
 A connection might be used for multiple request/response exchanges, as defined in Section 6.3.
@@ -318,13 +322,15 @@ A "proxy" is a message-forwarding agent that is selected by the client, usually 
 
 代理（proxy），是一种由客户端选定的负责报文转发的中介，一般通过本地设置的规则来接收绝对 URI（absolute URI）类型的请求并试图经由 HTTP 接口的翻译（translation）来满足这些请求。某些翻译（translation）是以最低限度来进行的，例如对 "http" URI 进行请求代理；与之相反的是，某些请求可能要求翻译为或翻译自（translation to and from）完全不同的应用层协议。为了安全性、服务标识或者共享缓存，某些代理一般通过一个共同的中间人，对同一组织的 HTTP 请求进行分组。某些代理被设计为对选定的报文或有效载荷在其被转发时进行转换（见 [[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][5.7.2]]）。
 
-（译注：[[https://en.wikipedia.org/wiki/HTTP_location][Wikipedia 上对绝对 URI 的描述]]）
+#+BEGIN_QUOTE
+译注：[[https://en.wikipedia.org/wiki/HTTP_location][Wikipedia 上对绝对 URI 的描述]]
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 A "gateway" (a.k.a. "reverse proxy") is an intermediary that acts as an origin server for the outbound connection but translates received requests and forwards them inbound to another server or servers. Gateways are often used to encapsulate legacy or untrusted information services, to improve server performance through "accelerator" caching, and to enable partitioning or load balancing of HTTP services across multiple machines.
 #+END_QUOTE
 
-网关（gateway，又称为“反向代理”），在出站通信（outbound connection）时网关充当一个源服务器，但它会将接收到的请求进行翻译（translate），然后转发到其他一个或多个服务器上。网关通常用于封装遗留或者不受信任的信息服务，通过“加速器”缓存，以及在多机中开启分片或负载均衡来提升 HTTP 服务器的性能。
+网关（gateway，又称为“反向代理”），对于出站通信（outbound connection）来说网关充当一个源服务器，它会将接收到的请求进行翻译（translate），然后转发到站内（inbound）的一个或多个服务器上。网关通常用于封装遗留或者不受信任的信息服务，通过“加速器”缓存，以及在多机中开启分片或负载均衡来提升 HTTP 服务器的性能。
 
 #+BEGIN_QUOTE
 All HTTP requirements applicable to an origin server also apply to the outbound communication of a gateway. A gateway communicates with inbound servers using any protocol that it desires, including private extensions to HTTP that are outside the scope of this specification. However, an HTTP-to-HTTP gateway that wishes to interoperate with third-party HTTP servers ought to conform to user agent requirements on the gateway's inbound connection.
@@ -409,6 +415,10 @@ This specification targets conformance criteria according to the role of a parti
 #+END_QUOTE
 
 本规范旨在为参与 HTTP 通信的角色制定一致性准则。因此，HTTP 对一致性的要求着眼于发送端、接收端、客户端、服务端、用户代理、中间人、源服务器、代理、网关和缓存，取决于哪些行为被要求所约束。附加的要求着眼于实现（implementations）、资源所有者以及应用于超出单一通信时的协议元素注册（protocol element registrations）。
+
+#+BEGIN_QUOTE
+译注：本文多处提及“协议元素”这一术语，它指代组成一个完整协议的某个部分。为了方便描述一个协议的组成，我们会对协议的各个组成部分进行命名，这个经过命名的组成部分就是一个协议元素。例如，URI 由 scheme、authority、path、query、fragment 等元素组合而成。更多详情见[[https://tools.ietf.org/html/rfc6365#section-6][【RFC6365】章节 6]]。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 The verb "generate" is used instead of "send" where a requirement differentiates between creating a protocol element and merely forwarding a received element downstream.
@@ -1103,13 +1113,13 @@ Historically, HTTP header field values could be extended over multiple lines by 
 A server that receives an =obs-fold= in a request message that is not within a message/http container *MUST* either reject the message by sending a =400 (Bad Request)=, preferably with a representation explaining that obsolete line folding is unacceptable, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
 #+END_QUOTE
 
-如果服务端接收到一个在请求报文里的分行 =obs-fold=，但这个分行不在媒体类型 "message/http" 的容器内，服务端 *必须* 要不拒绝这种报文并响应一个 =400 (Bad Request)= 状态码，更好的方式是在响应报文中带有一个展现方式来解释那种已经废弃的分行是不再允许出现在报文中的；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
+如果服务端接收到一个在请求报文里的分行 =obs-fold=，但这个分行不在媒体类型 "message/http" 的容器内，服务端 *必须* 要不拒绝这种报文并响应一个 =400 (Bad Request)= 状态码，更好的方式是在响应报文中带有一个 representation 来解释那种已经废弃的分行是不再允许出现在报文中的；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
 
 #+BEGIN_QUOTE
 A proxy or gateway that receives an =obs-fold= in a response message that is not within a message/http container *MUST* either discard the message and replace it with a =502 (Bad Gateway)= response, preferably with a representation explaining that unacceptable line folding was received, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
 #+END_QUOTE
 
-如果代理（proxy）或网关（gateway）接收到一个响应报文里的分行 =obs-fold=，但这个分行不在媒体类型 "message/http" 的容器内，这些中间人 *必须* 要不丢弃这个报文改由响应一个 =502 (Bad Gateway)= 状态码，更好的方式是在响应报文中带有一个展现方式来解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
+如果代理（proxy）或网关（gateway）接收到一个响应报文里的分行 =obs-fold=，但这个分行不在媒体类型 "message/http" 的容器内，这些中间人 *必须* 要不丢弃这个报文改由响应一个 =502 (Bad Gateway)= 状态码，更好的方式是在响应报文中带有一个 representation 来解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
 
 #+BEGIN_QUOTE
 A user agent that receives an =obs-fold= in a response message that is not within a message/http container *MUST* replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value.
@@ -1259,7 +1269,7 @@ Transfer-Encoding = 1#transfer-coding
 =Transfer-Encoding= is analogous to the =Content-Transfer-Encoding= field of MIME, which was designed to enable safe transport of binary data over a 7-bit transport service ([RFC2045], Section 6). However, safe transport has a different focus for an 8bit-clean transfer protocol. In HTTP's case, =Transfer-Encoding= is primarily intended to accurately delimit a dynamically generated payload and to distinguish payload encodings that are only applied for transport efficiency or security from those that are characteristics of the selected resource.
 #+END_QUOTE
 
-多用途互联网邮件扩展类型（MIME）的 =Content-Transfer-Encoding= 被设计为用于对二进制数据在 7 位传输服务中进行安全传输（【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】[[https://tools.ietf.org/html/rfc2045#section-6][章节 6]]），=Transfer-Encoding= 与之类似，但是，安全传输在纯 8 位传输协议中有不同的关注点。在 HTTP 环境下，=Transfer-Encoding= 的主要作用是对一个动态生成的有效载荷（payload）进行准确的定界，辨别仅应用于提高有效载荷的传输效率的编码，以及辨别已选资源的那些特性的安全性。
+多用途互联网邮件扩展类型（MIME）的 =Content-Transfer-Encoding= 被设计为用于对二进制数据在 7 位传输服务中进行安全传输（【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】[[https://tools.ietf.org/html/rfc2045#section-6][章节 6]]），=Transfer-Encoding= 与之类似，但是，安全传输在纯 8 位传输协议中有不同的关注点。在 HTTP 环境下，=Transfer-Encoding= 的主要作用是对一个动态生成的有效载荷（payload）进行准确的定界，辨别仅应用于提高有效载荷的传输效率的编码，以及辨别选定资源的那些特性的安全性。
 
 #+BEGIN_QUOTE
 A recipient *MUST* be able to parse the chunked transfer coding ([[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][Section 4.1]]) because it plays a crucial role in framing messages when the payload body size is not known in advance. A sender *MUST NOT* apply =chunked= more than once to a message body (i.e., chunking an already chunked message is not allowed). If any transfer coding other than =chunked= is applied to a request payload body, the sender *MUST* apply =chunked= as the final transfer coding to ensure that the message is properly framed. If any transfer coding other than =chunked= is applied to a response payload body, the sender *MUST* either apply chunked as the final transfer coding or terminate the message by closing the connection.
@@ -1287,7 +1297,7 @@ indicates that the payload body has been compressed using the =gzip= coding and 
 Unlike =Content-Encoding= ([[https://tools.ietf.org/html/rfc7231#section-3.1.2.1][Section 3.1.2.1]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]), =Transfer-Encoding= is a property of the message, not of the representation, and any recipient along the request/response chain *MAY* decode the received transfer coding(s) or apply additional transfer coding(s) to the message body, assuming that corresponding changes are made to the =Transfer-Encoding= field-value. Additional information about the encoding parameters can be provided by other header fields not defined by this specification.
 #+END_QUOTE
 
-与 =Content-Encoding= 报头域（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-3.1.2.1][章节 3.1.2.1]]）不同的是，=Transfer-Encoding= 报头域是报文（message）的一个属性，而不是表现形式（representation）的一个属性，并且在请求/响应链路中的所有接收端都 *可以* 依据所接收到的传输代码值（一个或多个）对报文正文进行解码，或者向报文正文应用额外的传输代码值，假设 =Transfer-Encoding= 的 =field-value= 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的报头域提供。
+与 =Content-Encoding= 报头域（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-3.1.2.1][章节 3.1.2.1]]）不同的是，=Transfer-Encoding= 报头域是报文（message）的一个属性，而不是 representation 的一个属性，并且在请求/响应链路中的所有接收端都 *可以* 依据所接收到的传输代码值（一个或多个）对报文正文进行解码，或者向报文正文应用额外的传输代码值，假设 =Transfer-Encoding= 的 =field-value= 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的报头域提供。
 
 #+BEGIN_QUOTE
 =Transfer-Encoding= *MAY* be sent in a response to a HEAD request or in a =304 (Not Modified)= response (Section 4.1 of [RFC7232]) to a GET request, neither of which includes a message body, to indicate that the origin server would have applied a transfer coding to the message body if the request had been an unconditional GET. This indication is not required, however, because any recipient on the response chain (including the origin server) can remove transfer codings when they are not needed.
@@ -1305,7 +1315,7 @@ A server *MUST NOT* send a =Transfer-Encoding= header field in any response with
 =Transfer-Encoding= was added in HTTP/1.1. It is generally assumed that implementations advertising only HTTP/1.0 support will not understand how to process a transfer-encoded payload. A client *MUST NOT* send a request containing =Transfer-Encoding= unless it knows the server will handle HTTP/1.1 (or later) requests; such knowledge might be in the form of specific user configuration or by remembering the version of a prior received response. A server *MUST NOT* send a response containing =Transfer-Encoding= unless the corresponding request indicates HTTP/1.1 (or later).
 #+END_QUOTE
 
-=Transfer-Encoding= 报头域自 HTTP/1.1 起新增，一般会作如下假定：声明仅支持到 HTTP/1.0 的实现（implementations）并不会理解如何去处理一个经过传输编码过的有效载荷（transfer-encoded payload）。客户端 *禁止* 发送一个包含 =Transfer-ENcoding= 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住一个之前接收到的响应报文的版本号的方式知道服务器是否可以处理这种请求。服务器 *禁止* 发送一个包含 =Transfer-Encoding= 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
+=Transfer-Encoding= 报头域自 HTTP/1.1 起新增，一般会作如下假定：声明仅支持到 HTTP/1.0 的实现（implementations）并不会理解如何去处理一个经过传输编码过的有效载荷（transfer-encoded payload）。客户端 *禁止* 发送一个包含 =Transfer-Encoding= 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住一个之前接收到的响应报文的版本号的方式知道服务器是否可以处理这种请求。服务器 *禁止* 发送一个包含 =Transfer-Encoding= 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
 
 #+BEGIN_QUOTE
 A server that receives a request message with a transfer coding it does not understand *SHOULD* respond with =501 (Not Implemented)=.
@@ -1322,7 +1332,7 @@ When a message does not have a =Transfer-Encoding= header field, a =Content-Leng
 #+END_QUOTE
 
 当一个报文不带有 =Transfer-Encoding= 报头域的时候，=Content-Length= 报头域能够提供对于一个潜在的有效载荷（payload body）的预期的大小。=Content-Length= 是一个十进制数字，以字节（octets）形式。对于包含一个有效载荷的报文，=Content-Length= 的 =field-value=
-提供了决定报文正文在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的报文，=Content-Length= 指明了已选择的表现方式（selected representation【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-3][章节 3]]）的大小。
+提供了决定报文正文在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的报文，=Content-Length= 指明了已选定的 representation（selected representation【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-3][章节 3]]）的大小。
 
 #+BEGIN_SRC text
 Content-Length = 1*DIGIT
@@ -1542,7 +1552,7 @@ When a server listening only for HTTP request messages, or processing what appea
 Transfer coding names are used to indicate an encoding transformation that has been, can be, or might need to be applied to a payload body in order to ensure "safe transport" through the network. This differs from a content coding in that the transfer coding is a property of the message rather than a property of the representation that is being transferred.
 #+END_QUOTE
 
-传输编码值（transfer coding）是用于表示已经、能够或者可能需要应用到一个有效载荷（payload body）中以确保网络传输安全的一种编码转换（encoding transformation）。与内容编码值（content coding）不同的是，传输编码值是一个报文的特性，而不是一个展现方式（representation）的特性。
+传输编码值（transfer coding）是用于表示已经、能够或者可能需要应用到一个有效载荷（payload body）中以确保网络传输安全的一种编码转换（encoding transformation）。与内容编码值（content coding）不同的是，传输编码值是一个报文的特性，而不是一个 representation 的特性。
 
 #+HEADER: :var chunked-rule-url=123123
 #+BEGIN_SRC org
@@ -1912,7 +1922,7 @@ When making a request directly to an origin server, other than a CONNECT or serv
 For example, a client wishing to retrieve a representation of the resource identified as
 #+END_QUOTE
 
-例如，一个客户端希望从源服务器里获得一个资源的表现形式（representation），资源对应的 URI 如下：
+例如，一个客户端希望从源服务器里获得一个资源的 representation，资源对应的 URI 如下：
 
 #+BEGIN_EXAMPLE
 http://www.example.org/where?q=now
@@ -2380,7 +2390,7 @@ A proxy *MAY* transform the payload of a message that does not contain a =no-tra
 A proxy *SHOULD NOT* modify header fields that provide information about the endpoints of the communication chain, the resource state, or the selected representation (other than the payload) unless the field's definition specifically allows such modification or the modification is deemed necessary for privacy or security.
 #+END_QUOTE
 
-代理 *不应当* 修改提供有关通信链路端点、资源状态，或者选择的展现形式（除了有效载荷）的信息的报头域，除非该域的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
+代理 *不应当* 修改提供有关通信链路端点、资源状态，或者已选定的 representation（除了有效载荷）的信息的报头域，除非该域的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
 
 * 6. 连接管理（Connection Management）
 :PROPERTIES:
