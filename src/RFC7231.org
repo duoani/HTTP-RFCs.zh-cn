@@ -74,7 +74,7 @@ HTTP 的语义包含了每个[[ruby:request%20method][请求方法]]所定义的
 This document also defines representation metadata that describe how a payload is intended to be interpreted by a recipient, the request header fields that might influence content selection, and the various selection algorithms that are collectively referred to as "content negotiation" ([[id:c45cb9ca-1e51-4738-8c43-231e7316ea86][Section 3.4]]).
 #+END_QUOTE
 
-本文档还定义了以下内容：描述打算让接收端怎样[[ruby:interpret][解释]]一个[[ruby:payload][有效载荷]]的[[ruby:representation%20metadata][表示方法元数据]]；可能影响[[ruby:content%20selection][内容选择]]的请求报头域；统称为“[[ruby:content%20negotiation][内容协商]]”的各种选择算法（[[id:c45cb9ca-1e51-4738-8c43-231e7316ea86][章节 3.4]]）。
+本文档还定义了以下内容：描述打算让接收端怎样[[ruby:interpret][解释]]一个[[ruby:payload][有效载荷]]的[[ruby:representation%20metadata][资源的表示元数据]]、可能影响[[ruby:content%20selection][内容选择]]的请求报头域、统称为“[[ruby:content%20negotiation][内容协商]]”的各种选择算法（[[id:c45cb9ca-1e51-4738-8c43-231e7316ea86][章节 3.4]]）。
 
 ** 1.1. 一致性和错误处理 / Conformance and Error Handling
 #+BEGIN_QUOTE
@@ -112,49 +112,69 @@ HTTP 请求的目标，称为“[[ruby:resource][资源]]”。HTTP 并不限制
 
 When a client constructs an HTTP/1.1 request message, it sends the target URI in one of various forms, as defined in ([[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][Section 5.3]] of [RFC7230]). When a request is received, the server reconstructs an effective request URI for the target resource ([[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]).
 
-当客户端[[ruby:construct][构建]]一个 HTTP/1.1 请求报文的时候，它将某种形式的[[ruby:target%20URI][目标 URI]] 包含在报文中，见[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][【RFC7230】章节 5.3]]。当服务器接收到一个请求的时候，它将[[ruby:reconstruct][重新构建]]出一个有效请求 URI（见[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）来定位[[ruby:target%20resource][目标资源]]。
+当客户端[[ruby:construct][构建]]一个 HTTP/1.1 请求报文的时候，它将某种形式的[[ruby:target%20URI][目标 URI]] 包含在报文中，见[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][【RFC7230】章节 5.3]]。当服务器接收到一个请求的时候，它将[[ruby:reconstruct][重新构建]]出一个[[ruby:effective%20request%20URI][有效请求 URI]]（见[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）来定位[[ruby:target%20resource][目标资源]]。
 
 One design goal of HTTP is to separate resource identification from request semantics, which is made possible by vesting the request semantics in the request method ([[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][Section 4]]) and a few request-modifying header fields ([[id:f8e7b063-496f-473e-95e8-88ec76f21582][Section 5]]). If there is a conflict between the method semantics and any semantic implied by the URI itself, as described in Section 4.2.1, the method semantics take precedence.
 
-HTTP 的设计目标之一将[[ruby:resource%20identification][资源识别]]与请求语义相分离，使得请求语义全部归属于[[ruby:request%20method][请求方法]]（[[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][章节 4]]）以及几个[[ruby:request-modifying%20header%20fields][请求修饰报头域]]（[[id:f8e7b063-496f-473e-95e8-88ec76f21582][章节 5]]）。如果方法语义与 URI 自身所暗含的语义相冲突，正如[[id:2f967e3d-8694-430b-ad06-e748fd39b281][章节 4.2.1]] 所述，优先使用方法语义。
+HTTP 的设计目标之一是将[[ruby:resource%20identification][资源识别]]与请求语义相分离，使得请求语义全部归属于[[ruby:request%20method][请求方法]]（[[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][章节 4]]）以及几个[[ruby:request-modifying%20header%20fields][请求修饰报头域]]（[[id:f8e7b063-496f-473e-95e8-88ec76f21582][章节 5]]）。如果方法语义与 URI 自身所暗含的语义相冲突，正如[[id:2f967e3d-8694-430b-ad06-e748fd39b281][章节 4.2.1]] 所述，优先使用方法语义。
 
-* 3. 资源表示 / Representations
+* 3. 资源的表示 / Representations
 :PROPERTIES:
 :ID:       7dd837af-fd6a-4918-9c62-cf12a4c31522
 :END:
-Considering that a resource could be anything, and that the uniform interface provided by HTTP is similar to a window through which one can observe and act upon such a thing only through the communication of messages to some independent actor on the other side, an abstraction is needed to represent ("take the place of") the current or desired state of that thing in our communications. That abstraction is called a representation [REST].
-
-考虑到[[ruby:resource][资源]]可以是任何事物，而 HTTP 所提供的统一接口类似于一个窗口，在窗口的一边我们能够对该事物进行观察；而要想对该事物采取行动的话，只能通过消息沟通来让窗口另一边的某个独立的动作执行者来完成。因此，在沟通过程中，我们需要一种“抽象”来[[ruby:represent][表示]]（代替）该事物的当前状态或期望状态。而这种“抽象”被称为 representation（资源表示）。
-
 #+BEGIN_QUOTE
-译注："representation" 勉强可以翻译为“资源表示”、“资源表示法”、“资源的代表”，但下文提及的 "representation metadata", "representation data" 就很难统一翻译了，索性就不翻译了，大家意会就好。
+Considering that a resource could be anything, and that the uniform interface provided by HTTP is similar to a window through which one can observe and act upon such a thing only through the communication of messages to some independent actor on the other side, an abstraction is needed to represent ("take the place of") the current or desired state of that thing in our communications. That abstraction is called a representation [REST].
 #+END_QUOTE
 
+考虑到[[ruby:resource][资源]]可以是任何事物，而 HTTP 所提供的统一接口类似于一个窗口，在窗口的一边我们能够对该事物进行观察；而要想对该事物采取行动的话，只能通过消息沟通来让窗口另一边的某个独立的动作执行者来完成。因此，在沟通过程中，我们需要一种“抽象”来[[ruby:represent][表示]]（代替）该事物的当前状态或期望状态。而这种“抽象”被称为 [[ruby:representation][资源的表示]]【[[http://roy.gbiv.com/pubs/dissertation/top.htm][REST]]】。
+
+#+BEGIN_QUOTE
+译注："representation" 一词源自一种软件架构风格的术语，也就是我们常常听到的 RESTful 风格。[[ruby:representation][资源的表示]]是[[ruby:resource][资源]]的抽象，资源一般是唯一的，而资源的表示方式可以多种多样，例如，一份银行流水账单可以认为是一种资源，它的表示形式可以有 JSON、XML 或者二进制格式等，更详细的介绍可以[[http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm][查看这里]]。
+#+END_QUOTE
+
+#+BEGIN_QUOTE
 For the purposes of HTTP, a "representation" is information that is intended to reflect a past, current, or desired state of a given resource, in a format that can be readily communicated via the protocol, and that consists of a set of representation metadata and a potentially unbounded stream of representation data.
+#+END_QUOTE
 
-基于 HTTP 的目的，representation 就是一种的信息，用于反映某个给定资源的过去、现在、或将来期望的状态，它以一种能够轻易地经由协议进行传达的格式，并由一系列 [[ruby:representation%20metadata][representation 元数据]]以及一个可能是无限大的 [[ruby:representation%20data][representation 数据]]流组成。
+基于 HTTP 的目的，[[ruby:representation][资源的表示]]是一种信息，该信息用于反映某个给定资源的过去、现在、或将来期望的状态。它以一种能够轻易地经由协议进行传达的格式，并由一系列 [[ruby:representation%20metadata][元数据]]以及一个可能是无限大的 [[ruby:representation%20data][数据]]（流）组成。
 
+#+BEGIN_QUOTE
+译注："representation" 由 "representation data" 和 "representation metadata" 组成。"representation data"，即资源本身；"representation metadata"，是用来描述 "representation" 的。为了表述的准确，以后将不再对 "representation"、"representation data" 以及 "representation metadata" 进行翻译。
+#+END_QUOTE
+
+#+BEGIN_QUOTE
 An origin server might be provided with, or be capable of generating, multiple representations that are each intended to reflect the current state of a target resource. In such cases, some algorithm is used by the origin server to select one of those representations as most applicable to a given request, usually based on content negotiation. This "selected representation" is used to provide the data and metadata for evaluating conditional requests [RFC7232] and constructing the payload for 200 (OK) and 304 (Not Modified) responses to GET ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]]).
+#+END_QUOTE
 
 [[ruby:origin%20server][源服务器]]可能提供或能够生成多种 representations，每种 representation 旨在反映[[ruby:target%20resource][目标资源]]的当前状态。在这种情况下，源服务器会使用某些算法（通常会基于[[ruby:content%20negotiation][内容协商]]）来选择其中一种对于给定请求来说最适合的 representation。这个“[[ruby:selected%20representation][已选定的 representation]]”是用来为[[ruby:evaluating%20conditional%20requests][评估带条件的请求]]提供数据和元数据，以及为响应给 GET 请求（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）的 =200 (OK)= 和 =304 (Not Modified)= 响应报文构建[[ruby:payload][有效载荷]]。
 
 ** 3.1. Representation Metadata
+#+BEGIN_QUOTE
 Representation header fields provide metadata about the representation. When a message includes a payload body, the representation header fields describe how to interpret the representation data enclosed in the payload body. In a response to a HEAD request, the representation header fields describe the representation data that would have been enclosed in the payload body if the same request had been a GET.
+#+END_QUOTE
 
+与 representation 相关的报头域提供了 representation 的元数据。当一个[[ruby:message][报文]]包含一个[[ruby:payload%20body][有效载荷]]，与 representation 相关的报头域描述了如何解释这个包含在有效载荷里的 representation data。在一个回应给 HEAD 请求的响应报文里，与 representation 相关的报头域描述了如果相同的请求是一个 GET 请求的话，将会如何解释这个包含在有效载荷里的 representation data。
+
+#+BEGIN_QUOTE
 The following header fields convey representation metadata:
+#+END_QUOTE
+
+以下报头域负责传达 representation metadata：
 
 | header Field Name | Defined in...   |
 |-------------------+-----------------|
-| Content-Type      | Section 3.1.1.5 |
-| Content-Encoding  | Section 3.1.2.2 |
-| Content-Language  | Section 3.1.3.2 |
-| Content-Location  | Section 3.1.4.2 |
+| Content-Type      | [[id:fcfdf1e4-f733-4305-9ad4-761271a3dd69][Section 3.1.1.5]] |
+| Content-Encoding  | [[id:a10adb00-e955-42a6-8d28-ed6f942db085][Section 3.1.2.2]] |
+| Content-Language  | [[id:80f3e8e8-dabb-49b8-b7e6-45f83648a732][Section 3.1.3.2]] |
+| Content-Location  | [[id:91650144-4bfc-4362-b628-f96578a5c756][Section 3.1.4.2]] |
 
 *** 3.1.1. Processing Representation Data
-**** 3.1.1.1. Media Type
+**** 3.1.1.1. 媒体类型 / Media Type
 #+BEGIN_QUOTE
-HTTP uses Internet media types [RFC2046] in the Content-Type (Section 3.1.1.5) and Accept (Section 5.3.2) header fields in order to provide open and extensible data typing and type negotiation. Media types define both a data format and various processing models: how to process that data in accordance with each context in which it is received.
+HTTP uses Internet media types [[[https://tools.ietf.org/html/rfc2046][RFC2046]]] in the =Content-Type= ([[id:fcfdf1e4-f733-4305-9ad4-761271a3dd69][Section 3.1.1.5]]) and =Accept= ([[id:95575604-c3d4-48d6-a061-325bd7798970][Section 5.3.2]]) header fields in order to provide open and extensible data typing and type negotiation. Media types define both a data format and various processing models: how to process that data in accordance with each context in which it is received.
 #+END_QUOTE
+
+为了提供开放、可扩展的[[ruby:data%20typing][数据分类]]和[[ruby:type%20negotiation][类型协商]]，HTTP 在 =Content-Type= （[[id:fcfdf1e4-f733-4305-9ad4-761271a3dd69][章节 3.1.1.5]]）和 =Accept= （[[id:95575604-c3d4-48d6-a061-325bd7798970][章节 5.3.2]]）报头域中使用[[ruby:Internet%20media%20types][互联网媒体类型]][[https://tools.ietf.org/html/rfc2046][【RFC2046】]]。媒体类型定义了数据的格式及其各种处理模型，即如何根据接收数据的各个场景来处理该数据。
 
 #+BEGIN_SRC text
   media-type = type "/" subtype *( OWS ";" OWS parameter )
@@ -163,19 +183,29 @@ HTTP uses Internet media types [RFC2046] in the Content-Type (Section 3.1.1.5) a
 #+END_SRC
 
 #+BEGIN_QUOTE
-The type/subtype *MAY* be followed by parameters in the form of name=value pairs.
+The =type/subtype= *MAY* be followed by parameters in the form of =name=value= pairs.
 #+END_QUOTE
+
+=type/subtype= 后面 *可以* 跟着键值对 =name=value= 形式的多个参数。
 
 #+BEGIN_SRC text
   parameter      = token "=" ( token / quoted-string )
 #+END_SRC
 
 #+BEGIN_QUOTE
-The type, subtype, and parameter name tokens are case-insensitive. Parameter values might or might not be case-sensitive, depending on the semantics of the parameter name. The presence or absence of a parameter might be significant to the processing of a media-type, depending on its definition within the media type registry.
+The =type=, =subtype=, and =parameter name= tokens are case-insensitive. Parameter values might or might not be case-sensitive, depending on the semantics of the parameter name. The presence or absence of a parameter might be significant to the processing of a media-type, depending on its definition within the media type registry.
 #+END_QUOTE
+
+上面 ABNF 列出的规则里，=type=、=subtype= 以及 =parameter= 的 =name= 这三个 token（标记）是不区分大小写的。=parameter= 的 =value= 不一定区分大小写，取决于 =parameter= 的 =name= 的语义。一个 =parameter= 的出现与否可能会对一个媒体类型的处理有重要意义，取决于该 =parameter= 在[[ruby:media%20type%20registry][媒体类型注册表]]里的定义。
 
 #+BEGIN_QUOTE
 A parameter value that matches the token production can be transmitted either as a token or within a quoted-string. The quoted and unquoted values are equivalent. For example, the following examples are all equivalent, but the first is preferred for consistency:
+#+END_QUOTE
+
+如果 =parameter= 的 =value= 符合 [[id:d0012483-93a3-44cf-b019-29e12725d94a][token]] 的语法规则的话，那么，它既可以直接作为标记来传输，也可以用在[[ruby:quoted-string][双引号字符串]]里。使用双引号包裹与否都是等价的。例如，以下例子都是等价的，但是为了一致性，应优先使用第一种：
+
+#+BEGIN_QUOTE
+译注：token，标记、记号，编程语言中的变量名、常量名就是 token，token 在 ABNF 中有明确的定义，它的命名不能出现某些特殊字符，详情见[[id:d0012483-93a3-44cf-b019-29e12725d94a][【RFC7230】章节 3.2.6]]。
 #+END_QUOTE
 
 #+BEGIN_EXAMPLE
@@ -186,17 +216,23 @@ A parameter value that matches the token production can be transmitted either as
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-Internet media types ought to be registered with IANA according to the procedures defined in [BCP13].
+Internet media types ought to be registered with IANA according to the procedures defined in [[[https://tools.ietf.org/html/rfc6838][BCP13]]].
 #+END_QUOTE
+
+应该按照定义在[[https://tools.ietf.org/html/rfc6838][【BCP13】]]的流程，将[[ruby:Internet%20media%20types][互联网媒体类型]]注册在 IANA 里。
 
 #+BEGIN_QUOTE
 *Note:* Unlike some similar constructs in other header fields, media type parameters do not allow whitespace (even "bad" whitespace) around the "=" character.
 #+END_QUOTE
 
-**** 3.1.1.2. Charset
+*注意：* 不像其他报头域里的某些类似结构，媒体类型的参数不允许在 "=" 两边带有空格（即使是 [[id:f26527b6-d15c-4967-97e3-acc669609481][BWS]] 也不允许）。
+
+**** 3.1.1.2. 字符集 / Charset
 #+BEGIN_QUOTE
-HTTP uses charset names to indicate or negotiate the character encoding scheme of a textual representation [RFC6365]. A charset is identified by a case-insensitive token.
+HTTP uses charset names to indicate or negotiate the character encoding scheme of a textual representation [[[https://tools.ietf.org/html/rfc2978][RFC6365]]]. A charset is identified by a case-insensitive token.
 #+END_QUOTE
+
+HTTP 使用[[ruby:charset%20names][字符集名称]]来指定或协商一个文本类型的 representation 的[[ruby:character%20encoding%20scheme][字符的编码方案]]【[[https://tools.ietf.org/html/rfc6365][RFC6365]]】。字符集由一个不区分大小写的 token 来指定。
 
 #+BEGIN_SRC text
   charset = token
@@ -206,19 +242,42 @@ HTTP uses charset names to indicate or negotiate the character encoding scheme o
 Charset names ought to be registered in the IANA "Character Sets" registry (<http://www.iana.org/assignments/character-sets>) according to the procedures defined in [RFC2978].
 #+END_QUOTE
 
-**** 3.1.1.3. Canonicalization and Text Defaults
-Internet media types are registered with a canonical form in order to be interoperable among systems with varying native encoding formats. Representations selected or transferred via HTTP ought to be in canonical form, for many of the same reasons described by the Multipurpose Internet Mail Extensions (MIME) [RFC2045]. However, the performance characteristics of email deployments (i.e., store and forward messages to peers) are significantly different from those common to HTTP and the Web (server-based information services). Furthermore, MIME's constraints for the sake of compatibility with older mail transfer protocols do not apply to HTTP (see Appendix A).
+应该按照定义在[[https://tools.ietf.org/html/rfc2978][【RFC2978】]]的流程，将[[ruby:charset%20names][字符集名称]]注册在 IANA 的 "Character Sets" 注册表里。
 
-MIME's canonical form requires that media subtypes of the "text" type use CRLF as the text line break. HTTP allows the transfer of text media with plain CR or LF alone representing a line break, when such line breaks are consistent for an entire representation. An HTTP sender MAY generate, and a recipient MUST be able to parse, line breaks in text media that consist of CRLF, bare CR, or bare LF. In addition, text media in HTTP is not limited to charsets that use octets 13 and 10 for CR and LF, respectively. This flexibility regarding line breaks applies only to text within a representation that has been assigned a "text" media type; it does not apply to "multipart" types or HTTP elements outside the payload body (e.g., header fields).
+**** 3.1.1.3. 规范化和文本缺省 / Canonicalization and Text Defaults
+#+BEGIN_QUOTE
+Internet media types are registered with a canonical form in order to be interoperable among systems with varying native encoding formats. Representations selected or transferred via HTTP ought to be in canonical form, for many of the same reasons described by the Multipurpose Internet Mail Extensions (MIME) [[[https://tools.ietf.org/html/rfc2045][RFC2045]]]. However, the performance characteristics of email deployments (i.e., store and forward messages to peers) are significantly different from those common to HTTP and the Web (server-based information services). Furthermore, MIME's constraints for the sake of compatibility with older mail transfer protocols do not apply to HTTP (see [[id:84208afd-e458-4f40-97cc-2e9535523797][Appendix A]]).
+#+END_QUOTE
 
+[[ruby:Internet%20media%20types][互联网媒体类型]]是使用一种[[ruby:canonical%20form][规范形式]]来注册的，以便于在具有不同的本地编码格式的系统之间能够相互操作。经由 HTTP 来选择或传输的 representations 应该使用规范形式，其原因已经在[[ruby:Multipurpose%20Internet%20Mail%20Extensions][多用途互联网邮件扩展]]（MIME）【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】里描述过了。但是，电子邮件调度（即存储和转发报文到其他对方）的性能特征跟在 HTTP 和 Web（其于服务器的信息服务）中常见的调度有明显的区别。而且，在 MIME 里为了兼容旧的邮件传输协议所设计的约束并不适用于 HTTP（见[[id:84208afd-e458-4f40-97cc-2e9535523797][附录 A]]）。
+
+#+BEGIN_QUOTE
+译注：canonical form (or normal form, or standard form) 的解释见 [[https://en.wikipedia.org/wiki/Canonical_form][wikipedia: Canonical form]]。
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+MIME's canonical form requires that media subtypes of the "text" type use =CRLF= as the text line break. HTTP allows the transfer of text media with plain =CR= or =LF= alone representing a line break, when such line breaks are consistent for an entire representation. An HTTP sender *MAY* generate, and a recipient *MUST* be able to parse, line breaks in text media that consist of =CRLF=, bare =CR=, or bare =LF=. In addition, text media in HTTP is not limited to charsets that use octets 13 and 10 for =CR= and =LF=, respectively. This flexibility regarding line breaks applies only to text within a representation that has been assigned a "text" media type; it does not apply to "multipart" types or HTTP elements outside the payload body (e.g., header fields).
+#+END_QUOTE
+
+MIME 的规范形式要求文本（"text"）类型媒体的子类型使用 =CRLF= 来作为换行符。HTTP 允许文本类型媒体单独使用 =CR= 或者 =LF= 来表示一个换行符，只要求所使用的换行符在整个 representation 中是统一的。HTTP 发送端 *可以* 在文本类型媒体中生成由 =CRLF=、或者单纯是 =CR=、或者单纯是为 =LF= 组成的换行符。HTTP 接收端 *必须* 能够解析文本类型媒体中的由 =CRLF=、或者单纯是 =CR=、或者单纯是 =LF= 组成的换行符。而且，在 HTTP 里的文本类型媒体并不限于使用 13 作为 =CR=，10 作为 =LF= 的字符集。这种对于换行符的灵活性仅适用于一个声明为一个 "text" 媒体类型的 representation 以内的文本，它并不适用于 "multipart" 类型或者有效载荷以外的 HTTP 元素。
+
+#+BEGIN_QUOTE
 If a representation is encoded with a content-coding, the underlying data ought to be in a form defined above prior to being encoded.
+#+END_QUOTE
 
-**** 3.1.1.4. Multipart Types
-MIME provides for a number of "multipart" types — encapsulations of one or more representations within a single message body. All multipart types share a common syntax, as defined in Section 5.1.1 of [RFC2046], and include a boundary parameter as part of the media type value. The message body is itself a protocol element; a sender MUST generate only CRLF to represent line breaks between body parts.
+如果一个 representation 使用了一种[[ruby:content-coding][内容编码值]]来编码，[[ruby:underlying%20data][基础数据]] 应该在编码之前处于上述定义的那种规范形式。
+
+**** 3.1.1.4. Multipart 类型 / Multipart Types
+MIME provides for a number of "multipart" types — encapsulations of one or more representations within a single message body. All multipart types share a common syntax, as defined in [[https://tools.ietf.org/html/rfc2046#section-5.1.1][Section 5.1.1]] of [RFC2046], and include a =boundary= parameter as part of the media type value. The message body is itself a protocol element; a sender *MUST* generate only =CRLF= to represent line breaks between body parts.
+
+MIME 提供了大量的 "multipart" 类型——在单独一个[[ruby:message%20body][报文正文]]里封装了一个或多个 representations。所有 multipart 类型共享一个通用的句法（见[[https://tools.ietf.org/html/rfc2046#section-5.1.1][【RFC2046】章节 5.1.1]]），并且包含一个 =boundary= 参数作为媒体类型的值的一部分。报文正文本身是一个协议元素，发送端 *必须* 在报文正文的各个分块之间仅生成 =CRLF= 来表示换行符。
 
 HTTP message framing does not use the multipart boundary as an indicator of message body length, though it might be used by implementations that generate or process the payload. For example, the "multipart/form-data" type is often used for carrying form data in a request, as described in [RFC2388], and the "multipart/byteranges" type is defined by this specification for use in some 206 (Partial Content) responses [RFC7233].
 
 **** 3.1.1.5. Content-Type
+:PROPERTIES:
+:ID:       fcfdf1e4-f733-4305-9ad4-761271a3dd69
+:END:
 #+BEGIN_QUOTE
 The "Content-Type" header field indicates the media type of the associated representation: either the representation enclosed in the message payload or the selected representation, as determined by the message semantics. The indicated media type defines both the data format and how that data is intended to be processed by a recipient, within the scope of the received message semantics, after any content codings indicated by Content-Encoding are decoded.
 #+END_QUOTE
@@ -244,8 +303,23 @@ In practice, resource owners do not always properly configure their origin serve
 #+END_QUOTE
 
 *** 3.1.2. Encoding for Compression or Integrity
+**** 3.1.2.1. Content Codings
+**** 3.1.2.2. Content-Encoding
+:PROPERTIES:
+:ID:       a10adb00-e955-42a6-8d28-ed6f942db085
+:END:
 *** 3.1.3. Audience Language
+**** 3.1.3.1. Language Tags
+**** 3.1.3.2. Content-Language
+:PROPERTIES:
+:ID:       80f3e8e8-dabb-49b8-b7e6-45f83648a732
+:END:
 *** 3.1.4. Identification
+**** 3.1.4.1. Identifying a Representation
+**** 3.1.4.2. Content-Location
+:PROPERTIES:
+:ID:       91650144-4bfc-4362-b628-f96578a5c756
+:END:
 ** 3.2. Representation Data
 ** 3.3. Payload Semantics
 ** 3.4. Content Negotiation
@@ -289,6 +363,9 @@ In practice, resource owners do not always properly configure their origin serve
 ** 5.3. Content Negotiation
 *** 5.3.1. Quality Values
 *** 5.3.2. Accept
+:PROPERTIES:
+:ID:       95575604-c3d4-48d6-a061-325bd7798970
+:END:
 *** 5.3.3. Accept-Charset
 *** 5.3.4. Accept-Encoding
 *** 5.3.5. Accept-Language
@@ -385,6 +462,9 @@ In practice, resource owners do not always properly configure their origin serve
 ** 11.1. Normative References
 ** 11.2. Informative References
 * A. Defferences between HTTP and MIME
+:PROPERTIES:
+:ID:       84208afd-e458-4f40-97cc-2e9535523797
+:END:
 ** A.1. MIME-VERSION
 ** A.2. Conversion to Canonical Form
 ** A.3. Conversion of Date Formats

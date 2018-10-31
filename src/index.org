@@ -1,2 +1,5 @@
 * 已翻译完成的 RFC：
 - [[file:RFC7230.org][RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing]]
+
+* 正在翻译的 RFC：
+- [[file:RFC7231.org][RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content]]
