@@ -87,7 +87,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 Conformance criteria and considerations regarding error handling are defined in Section 2.5 of [RFC7230].
 #+END_QUOTE
 
-关于错误处理的一致性标准以及注意事项会在[[id:A0441F72-9799-4667-9477-1E05885946A1][【RFC7230】章节 2.5]] 中定义。
+关于错误处理的一致性标准以及注意事项已在[[id:A0441F72-9799-4667-9477-1E05885946A1][【RFC7230】章节 2.5]] 中定义了。
 
 ** 1.2. 句法标记 / Syntax Notation
 #+BEGIN_QUOTE
@@ -153,7 +153,7 @@ An origin server might be provided with, or be capable of generating, multiple r
 Representation header fields provide metadata about the representation. When a message includes a payload body, the representation header fields describe how to interpret the representation data enclosed in the payload body. In a response to a HEAD request, the representation header fields describe the representation data that would have been enclosed in the payload body if the same request had been a GET.
 #+END_QUOTE
 
-与 representation 相关的报头域提供了 representation 的元数据。当一个[[ruby:message][报文]]包含一个[[ruby:payload%20body][有效载荷]]，与 representation 相关的报头域描述了如何解释这个包含在有效载荷里的 representation data。在一个回应给 HEAD 请求的响应报文里，与 representation 相关的报头域描述了如果相同的请求是一个 GET 请求的话，将会如何解释这个包含在有效载荷里的 representation data。
+与 representation 相关的报头域提供了 representation 的元数据。当一个[[ruby:message][报文]]包含一个[[ruby:payload%20body][有效载荷]]时，与 representation 相关的报头域描述了如何解释这个包含在有效载荷里的 representation data。在一个回应给 HEAD 请求的响应报文里，与 representation 相关的报头域描述了如果相同的请求是一个 GET 请求的话，将会如何解释这个包含在有效载荷里的 representation data。
 
 #+BEGIN_QUOTE
 The following header fields convey representation metadata:
@@ -168,8 +168,11 @@ The following header fields convey representation metadata:
 | Content-Language  | [[id:80f3e8e8-dabb-49b8-b7e6-45f83648a732][Section 3.1.3.2]] |
 | Content-Location  | [[id:91650144-4bfc-4362-b628-f96578a5c756][Section 3.1.4.2]] |
 
-*** 3.1.1. Processing Representation Data
+*** 3.1.1. 处理 Representation Data / Processing Representation Data
 **** 3.1.1.1. 媒体类型 / Media Type
+:PROPERTIES:
+:ID:       bc05d462-378f-4743-a1ee-543e01064a09
+:END:
 #+BEGIN_QUOTE
 HTTP uses Internet media types [[[https://tools.ietf.org/html/rfc2046][RFC2046]]] in the =Content-Type= ([[id:fcfdf1e4-f733-4305-9ad4-761271a3dd69][Section 3.1.1.5]]) and =Accept= ([[id:95575604-c3d4-48d6-a061-325bd7798970][Section 5.3.2]]) header fields in order to provide open and extensible data typing and type negotiation. Media types define both a data format and various processing models: how to process that data in accordance with each context in which it is received.
 #+END_QUOTE
@@ -232,7 +235,7 @@ Internet media types ought to be registered with IANA according to the procedure
 HTTP uses charset names to indicate or negotiate the character encoding scheme of a textual representation [[[https://tools.ietf.org/html/rfc2978][RFC6365]]]. A charset is identified by a case-insensitive token.
 #+END_QUOTE
 
-HTTP 使用[[ruby:charset%20names][字符集名称]]来指定或协商一个文本类型的 representation 的[[ruby:character%20encoding%20scheme][字符的编码方案]]【[[https://tools.ietf.org/html/rfc6365][RFC6365]]】。字符集由一个不区分大小写的 token 来指定。
+HTTP 使用[[ruby:charset%20names][字符集名称]]来指定或协商一个文本类型的 representation 的[[ruby:character%20encoding%20scheme][字符编码方案]]【[[https://tools.ietf.org/html/rfc6365][RFC6365]]】。字符集由一个不区分大小写的 token 来指定。
 
 #+BEGIN_SRC text
   charset = token
@@ -249,7 +252,7 @@ Charset names ought to be registered in the IANA "Character Sets" registry (<htt
 Internet media types are registered with a canonical form in order to be interoperable among systems with varying native encoding formats. Representations selected or transferred via HTTP ought to be in canonical form, for many of the same reasons described by the Multipurpose Internet Mail Extensions (MIME) [[[https://tools.ietf.org/html/rfc2045][RFC2045]]]. However, the performance characteristics of email deployments (i.e., store and forward messages to peers) are significantly different from those common to HTTP and the Web (server-based information services). Furthermore, MIME's constraints for the sake of compatibility with older mail transfer protocols do not apply to HTTP (see [[id:84208afd-e458-4f40-97cc-2e9535523797][Appendix A]]).
 #+END_QUOTE
 
-[[ruby:Internet%20media%20types][互联网媒体类型]]是使用一种[[ruby:canonical%20form][规范形式]]来注册的，以便于在具有不同的本地编码格式的系统之间能够相互操作。经由 HTTP 来选择或传输的 representations 应该使用规范形式，其原因已经在[[ruby:Multipurpose%20Internet%20Mail%20Extensions][多用途互联网邮件扩展]]（MIME）【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】里描述过了。但是，电子邮件调度（即存储和转发报文到其他对方）的性能特征跟在 HTTP 和 Web（其于服务器的信息服务）中常见的调度有明显的区别。而且，在 MIME 里为了兼容旧的邮件传输协议所设计的约束并不适用于 HTTP（见[[id:84208afd-e458-4f40-97cc-2e9535523797][附录 A]]）。
+[[ruby:Internet%20media%20types][互联网媒体类型]]是使用一种[[ruby:canonical%20form][规范形式]]来注册的，以便于在具有不同本地编码格式的系统之间能够相互操作。经由 HTTP 来选择或传输的 representations 应该使用规范形式，其原因已经在[[ruby:Multipurpose%20Internet%20Mail%20Extensions][多用途互联网邮件扩展]]（MIME）【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】里描述过了。但是，电子邮件调度（即存储和转发报文到其他对方）的性能特征跟在 HTTP 和 Web（其于服务器的信息服务）中常见的调度有明显的区别。而且，在 MIME 里为了兼容旧的邮件传输协议所设计的约束并不适用于 HTTP（见[[id:84208afd-e458-4f40-97cc-2e9535523797][附录 A]]）。
 
 #+BEGIN_QUOTE
 译注：canonical form (or normal form, or standard form) 的解释见 [[https://en.wikipedia.org/wiki/Canonical_form][wikipedia: Canonical form]]。
@@ -259,7 +262,7 @@ Internet media types are registered with a canonical form in order to be interop
 MIME's canonical form requires that media subtypes of the "text" type use =CRLF= as the text line break. HTTP allows the transfer of text media with plain =CR= or =LF= alone representing a line break, when such line breaks are consistent for an entire representation. An HTTP sender *MAY* generate, and a recipient *MUST* be able to parse, line breaks in text media that consist of =CRLF=, bare =CR=, or bare =LF=. In addition, text media in HTTP is not limited to charsets that use octets 13 and 10 for =CR= and =LF=, respectively. This flexibility regarding line breaks applies only to text within a representation that has been assigned a "text" media type; it does not apply to "multipart" types or HTTP elements outside the payload body (e.g., header fields).
 #+END_QUOTE
 
-MIME 的规范形式要求文本（"text"）类型媒体的子类型使用 =CRLF= 来作为换行符。HTTP 允许文本类型媒体单独使用 =CR= 或者 =LF= 来表示一个换行符，只要求所使用的换行符在整个 representation 中是统一的。HTTP 发送端 *可以* 在文本类型媒体中生成由 =CRLF=、或者单纯是 =CR=、或者单纯是为 =LF= 组成的换行符。HTTP 接收端 *必须* 能够解析文本类型媒体中的由 =CRLF=、或者单纯是 =CR=、或者单纯是 =LF= 组成的换行符。而且，在 HTTP 里的文本类型媒体并不限于使用 13 作为 =CR=，10 作为 =LF= 的字符集。这种对于换行符的灵活性仅适用于一个声明为一个 "text" 媒体类型的 representation 以内的文本，它并不适用于 "multipart" 类型或者有效载荷以外的 HTTP 元素。
+MIME 的规范形式要求文本（"text"）类型媒体的子类型使用 =CRLF= 来作为换行符。HTTP 允许文本类型媒体单独使用 =CR= 或者 =LF= 来表示一个换行符，只要求所使用的换行符在整个 representation 中是统一的。HTTP 发送端 *可以* 在文本类型媒体中生成由 =CRLF=、或者单纯是 =CR=、或者单纯是为 =LF= 组成的换行符。HTTP 接收端 *必须* 能够解析文本类型媒体中的由 =CRLF=、或者单纯是 =CR=、或者单纯是 =LF= 组成的换行符。而且，在 HTTP 里的文本类型媒体并不限于使用 13 作为 =CR=，10 作为 =LF= 的字符集。这种对于换行符的灵活性仅适用于一个声明为 "text" 媒体类型的 representation 以内的文本，它并不适用于 "multipart" 类型或者有效载荷以外的 HTTP 元素。
 
 #+BEGIN_QUOTE
 If a representation is encoded with a content-coding, the underlying data ought to be in a form defined above prior to being encoded.
@@ -270,64 +273,359 @@ If a representation is encoded with a content-coding, the underlying data ought 
 **** 3.1.1.4. Multipart 类型 / Multipart Types
 MIME provides for a number of "multipart" types — encapsulations of one or more representations within a single message body. All multipart types share a common syntax, as defined in [[https://tools.ietf.org/html/rfc2046#section-5.1.1][Section 5.1.1]] of [RFC2046], and include a =boundary= parameter as part of the media type value. The message body is itself a protocol element; a sender *MUST* generate only =CRLF= to represent line breaks between body parts.
 
-MIME 提供了大量的 "multipart" 类型——在单独一个[[ruby:message%20body][报文正文]]里封装了一个或多个 representations。所有 multipart 类型共享一个通用的句法（见[[https://tools.ietf.org/html/rfc2046#section-5.1.1][【RFC2046】章节 5.1.1]]），并且包含一个 =boundary= 参数作为媒体类型的值的一部分。报文正文本身是一个协议元素，发送端 *必须* 在报文正文的各个分块之间仅生成 =CRLF= 来表示换行符。
+MIME 提供了大量的 "multipart" 类型——在单独一个[[ruby:message%20body][报文正文]]里封装了一个或多个 representations。所有 multipart 类型共享一个通用的句法（见[[https://tools.ietf.org/html/rfc2046#section-5.1.1][【RFC2046】章节 5.1.1]]），并且包含一个 =boundary= 参数作为媒体类型的值的一部分。报文正文本身是一个协议元素，发送端 *必须* 在报文正文的各个[[ruby:parts][分部]]之间仅生成 =CRLF= 来表示换行符。
 
-HTTP message framing does not use the multipart boundary as an indicator of message body length, though it might be used by implementations that generate or process the payload. For example, the "multipart/form-data" type is often used for carrying form data in a request, as described in [RFC2388], and the "multipart/byteranges" type is defined by this specification for use in some 206 (Partial Content) responses [RFC7233].
+#+BEGIN_QUOTE
+译注：multipart 允许在一个报文正文里包含多个 representation，每个 representation 之间使用 =boundary= 所指定的定界符来分隔，这样就使得报文正文被分割为多个分部，分部与分部之间的内容仍然只能使用 =CRLF= 作为换行符。multipart 的一个例子可以参考[[https://tools.ietf.org/html/rfc2049#page-15][【RFC2049】附录 A]]。
+#+END_QUOTE
+
+HTTP message framing does not use the multipart boundary as an indicator of message body length, though it might be used by implementations that generate or process the payload. For example, the "multipart/form-data" type is often used for carrying form data in a request, as described in [[[https://tools.ietf.org/html/rfc2388][RFC2388]]], and the "multipart/byteranges" type is defined by this specification for use in some =206 (Partial Content)= responses [[[https://tools.ietf.org/html/rfc7233][RFC7233]]].
+
+HTTP [[ruby:message%20framing][报文分帧]] 并不会使用 multipart 的 =boundary= 作为报文正文长度的一个标识符，虽然它可能被[[ruby:implementations][实现]]用于生成或处理有效载荷。例如，"multipart/form-data" 类型通常用于在一个请求里携带表单数据，如【[[https://tools.ietf.org/html/rfc2388][RFC2388]]】所述。"multipart/byteranges" 类型是由本规范所定义的，用在某些 =206 (Partial Content)= 响应里【[[https://tools.ietf.org/html/rfc7233][RFC7233]]】。
 
 **** 3.1.1.5. Content-Type
 :PROPERTIES:
 :ID:       fcfdf1e4-f733-4305-9ad4-761271a3dd69
 :END:
 #+BEGIN_QUOTE
-The "Content-Type" header field indicates the media type of the associated representation: either the representation enclosed in the message payload or the selected representation, as determined by the message semantics. The indicated media type defines both the data format and how that data is intended to be processed by a recipient, within the scope of the received message semantics, after any content codings indicated by Content-Encoding are decoded.
+The "Content-Type" header field indicates the media type of the associated representation: either the representation enclosed in the message payload or the selected representation, as determined by the message semantics. The indicated media type defines both the data format and how that data is intended to be processed by a recipient, within the scope of the received message semantics, after any content codings indicated by =Content-Encoding= are decoded.
 #+END_QUOTE
+
+=Content-Type= 报头域指明了它所关联的 representation 的媒体类型。所述“关联的 representation”，要不是包含在报文有效载荷里的 representation，要不是已选定的 representation，由报文语义所决定。=Content-Type= 所指定的媒体类型定义了 representation 的数据格式以及期望该数据被接收端如何处理，在该报文的语义范围之内，在依照 =Content-Encoding= 里的所有内容编码进行解码之后。
 
 #+BEGIN_SRC text
   Content-Type = media-type
 #+END_SRC
 
 #+BEGIN_QUOTE
-Media types are defined in Section 3.1.1.1. An example of the field is
+Media types are defined in [[id:bc05d462-378f-4743-a1ee-543e01064a09][Section 3.1.1.1]]. An example of the field is
 #+END_QUOTE
+
+媒体类型定义在[[id:bc05d462-378f-4743-a1ee-543e01064a09][章节 3.1.1.1]]。以下是 =Content-Type= 报头域的一个例子：
 
 #+BEGIN_SRC text
   Content-Type: text/html; charset=ISO-8859-4
 #+END_SRC
 
 #+BEGIN_QUOTE
-A sender that generates a message containing a payload body SHOULD generate a Content-Type header field in that message unless the intended media type of the enclosed representation is unknown to the sender. If a Content-Type header field is not present, the recipient MAY either assume a media type of "application/octet-stream" ([RFC2046], Section 4.5.1) or examine the data to determine its type.
+A sender that generates a message containing a payload body *SHOULD* generate a =Content-Type= header field in that message unless the intended media type of the enclosed representation is unknown to the sender. If a =Content-Type= header field is not present, the recipient *MAY* either assume a media type of "application/octet-stream" ([RFC2046], [[https://tools.ietf.org/html/rfc2046#section-4.5.1][Section 4.5.1]]) or examine the data to determine its type.
 #+END_QUOTE
+
+发送端在生成包含有一个有效载荷的报文的时候，*应当* 在该报文里生成一个 =Content-Type= 报头域，除非它并不知道应该对有效载荷内的 representation 的指定哪一种媒体类型。如果没有出现 =Content-Type= 报头域，接收端 *可以* 要不假定为 "application/octet-stream" 媒体类型（[[https://tools.ietf.org/html/rfc2046#section-4.5.1][【RFC2046】章节 4.5.1]]），要不检查该数据来确定它的媒体类型。
 
 #+BEGIN_QUOTE
-In practice, resource owners do not always properly configure their origin server to provide the correct Content-Type for a given representation, with the result that some clients will examine a payload's content and override the specified type. Clients that do so risk drawing incorrect conclusions, which might expose additional security risks (e.g., "privilege escalation"). Furthermore, it is impossible to determine the sender's intent by examining the data format: many data formats match multiple media types that differ only in processing semantics. Implementers are encouraged to provide a means of disabling such "content sniffing" when it is used.
+In practice, resource owners do not always properly configure their origin server to provide the correct =Content-Type= for a given representation, with the result that some clients will examine a payload's content and override the specified type. Clients that do so risk drawing incorrect conclusions, which might expose additional security risks (e.g., "privilege escalation"). Furthermore, it is impossible to determine the sender's intent by examining the data format: many data formats match multiple media types that differ only in processing semantics. Implementers are encouraged to provide a means of disabling such "content sniffing" when it is used.
 #+END_QUOTE
 
-*** 3.1.2. Encoding for Compression or Integrity
+实际上，[[ruby:resource%20owners][资源所有者]]并不总是能恰当地配置它们的源服务器来为一个给定的 representation 提供正确的 =Content-Type=，出于这种原因，某些客户端会检查有效载荷的内容然后[[ruby:override][重写]]指定的类型。但是，客户端这样做可能会得出错误的论断，从而可能会暴露出额外的安全风险（例如，[[ruby:privilege%20escalation][特权提升]]）。而且，通过检查数据格式是不可能确定发送端的真正意图的，这是由于某些数据格式能够匹配多种媒体类型，而仅在语义处理会有所不同。鼓励实现者提供一种方法，当启用这种方法的时候可以禁用上述这种“[[ruby:content%20sniffing][内容嗅探]]”。
+
+#+BEGIN_QUOTE
+译注：特权提升的详细介绍见 [[https://en.wikipedia.org/wiki/Privilege_escalation][Wikipedia: Privilege escalation]] 或者 [[https://zh.wikipedia.org/wiki/%25E7%2589%25B9%25E6%259D%2583%25E6%258F%2590%25E5%258D%2587][维基百科（中文）]]。
+#+END_QUOTE
+
+*** 3.1.2. 为压缩或完整性而编码 / Encoding for Compression or Integrity
 **** 3.1.2.1. Content Codings
+#+BEGIN_QUOTE
+Content coding values indicate an encoding transformation that has been or can be applied to a representation. Content codings are primarily used to allow a representation to be compressed or otherwise usefully transformed without losing the identity of its underlying media type and without loss of information. Frequently, the representation is stored in coded form, transmitted directly, and only decoded by the final recipient.
+#+END_QUOTE
+
+content coding 的值指明了一种已经或能够应用到一个 representation 的[[ruby:encoding%20transformation][编码转换]]。content coding 主要用来允许在没有丢失 representation 之前的媒体类型的身份以及没有丢失信息的情况下，对该 representation 进行压缩或者进行其他方式的转换。representation 常常被存储为[[ruby:code%20form][编码过的形式]]，然后将其直接进行传输，最后仅到达最终接收端才会进行解码。
+
+#+BEGIN_QUOTE
+译文：本译文将 "encoding" 翻译为“编码”，为了与之区分，不会对 "content coding" 进行翻译（实际上是我不知道怎么翻译才好，意会，意会）。
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  content-coding   = token
+#+END_SRC
+
+#+BEGIN_QUOTE
+All content-coding values are case-insensitive and ought to be registered within the "HTTP Content Coding Registry", as defined in [[id:87f2ed30-a48b-4c31-a181-8e3a33ba1080][Section 8.4]]. They are used in the =Accept-Encoding= ([[id:a8fcc101-3782-4ed0-aec0-561b933e6a5f][Section 5.3.4]]) and =Content-Encoding= ([[id:a10adb00-e955-42a6-8d28-ed6f942db085][Section 3.1.2.2]]) header fields.
+#+END_QUOTE
+
+所有 =content-coding= 的值都是不区分大小写的，并且应该注册到 "HTTP Content Coding Registry" 注册表里，如[[id:87f2ed30-a48b-4c31-a181-8e3a33ba1080][章节 8.4]] 所述。它们用在 =Accept-Encoding= （[[id:a8fcc101-3782-4ed0-aec0-561b933e6a5f][章节 5.3.4]]）和 =Content-Encoding= （[[id:a10adb00-e955-42a6-8d28-ed6f942db085][章节 3.1.2.2]]）报头域里。
+
+#+BEGIN_QUOTE
+The following content-coding values are defined by this specification:
+- compress (and x-compress): See [[id:a785a05f-6fdc-44d8-9343-3a66a49cb655][Section 4.2.1]] of [RFC7230].
+- deflate: See [[id:fa7b432f-071b-4e26-9d2c-8fc1b95b6b64][Section 4.2.2]] of [RFC7230].
+- gzip (and x-gzip): See [[id:d1579c8b-312c-414b-b421-960669b0d389][Section 4.2.3]] of [RFC7230].
+#+END_QUOTE
+
+本规范定义了以下 =content-coding= 值：
+- compress（以及 x-compress）：见[[id:a785a05f-6fdc-44d8-9343-3a66a49cb655][【RFC7230】章节 4.2.1]]。
+- deflate：见[[id:fa7b432f-071b-4e26-9d2c-8fc1b95b6b64][【RFC7230】章节4.2.2]]。
+- gzip（以及 x-gzip）：[[id:d1579c8b-312c-414b-b421-960669b0d389][【RFC7230】见章节 4.2.3]]。
+
 **** 3.1.2.2. Content-Encoding
 :PROPERTIES:
 :ID:       a10adb00-e955-42a6-8d28-ed6f942db085
 :END:
-*** 3.1.3. Audience Language
-**** 3.1.3.1. Language Tags
+#+BEGIN_QUOTE
+The "Content-Encoding" header field indicates what content codings have been applied to the representation, beyond those inherent in the media type, and thus what decoding mechanisms have to be applied in order to obtain data in the media type referenced by the =Content-Type= header field. =Content-Encoding= is primarily used to allow a representation's data to be compressed without losing the identity of its underlying media type.
+#+END_QUOTE
+
+=Content-Encoding= 报头域指明了已经对 representation 应用了哪些突破其固有的媒体类型的 content codings，因此得知，为了获得 =Content-Type= 报头域所提及的那种媒体类型的数据，需要应用哪一种解码机制。=Content-Encoding= 主要用来允许在没有丢失 representation 之前的媒体类型的身份的情况下，对一个 representation 的数据进行压缩。
+
+#+BEGIN_SRC text
+  Content-Encoding = 1#content-coding
+#+END_SRC
+
+#+BEGIN_QUOTE
+An example of its use is
+#+END_QUOTE
+
+它的用法见下面这个例子：
+
+#+BEGIN_EXAMPLE
+  Content-Encoding: gzip
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+If one or more encodings have been applied to a representation, the sender that applied the encodings *MUST* generate a =Content-Encoding= header field that lists the content codings in the order in which they were applied. Additional information about the encoding parameters can be provided by other header fields not defined by this specification.
+#+END_QUOTE
+
+如果对一个 representation 应用了一种或多种编码，应用这些编码的发送端 *必须* 生成一个 =Content-Encoding= 报头域，以它们被应用的先后顺序来一一列出对应的 content codings。如果某种编码需要附带额外的参数信息的话，可以由其他未在本规范上定义过的报头域来提供。
+
+#+BEGIN_QUOTE
+Unlike =Transfer-Encoding= ([[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][Section 3.3.1]] of [RFC7230]), the codings listed in =Content-Encoding= are a characteristic of the representation; the representation is defined in terms of the coded form, and all other metadata about the representation is about the coded form unless otherwise noted in the metadata definition. Typically, the representation is only decoded just prior to rendering or analogous usage.
+#+END_QUOTE
+
+不像 =Transfer-Encoding= （[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][【RFC7230】章节 3.3.1]]），列在 =Content-Encoding= 报头域上的 codings 是 representation 的特性。representation 是依据其编码过的形式来进行定义的，所有其他关于 representation 的元数据是对该形式进行描述的，除非在元数据的定义中另有注明。
+
+#+BEGIN_QUOTE
+If the media type includes an inherent encoding, such as a data format that is always compressed, then that encoding would not be restated in =Content-Encoding= even if it happens to be the same algorithm as one of the content codings. Such a content coding would only be listed if, for some bizarre reason, it is applied a second time to form the representation. Likewise, an origin server might choose to publish the same data as multiple representations that differ only in whether the coding is defined as part of =Content-Type= or =Content-Encoding=, since some user agents will behave differently in their handling of each response (e.g., open a "Save as ..." dialog instead of automatic decompression and rendering of content).
+#+END_QUOTE
+
+如果媒体类型包含有一种[[ruby:inherent%20encoding][固有的编码]]，例如一种一直是压缩过的数据格式，那么，这种编码不要在 =Content-Encoding= 里重申，哪怕它恰巧与其中一个 content codings 的算法一致。这种 content coding 只会在以下这种情况下才需要在 =Content-Encoding= 列出：出于某些怪异的原因，需要应用该 content coding 两次才能形成正确的 representation。同样，原服务器可能选择将该同样的数据作为 multiple representations 来发布，其区别仅在于 coding 是作为 Content-Type 的一部分还是作为 Content-Encoding 的一部分 ，这是因为某些用户代理处理各个响应的行为会有所不同（例如，打开一个“另存为...”对话框，而不是自动解缩并渲染内容）。
+
+#+BEGIN_QUOTE
+An origin server *MAY* respond with a status code of =415 (Unsupported Media Type)= if a representation in the request message has a content coding that is not acceptable.
+#+END_QUOTE
+
+如果请求报文里的某个 representation 应用了服务器不支持的 content coding，源服务器 *可以* 以 =415 (Unsupported Media Type)= 作为响应。
+
+*** 3.1.3. 受众语言 / Audience Language
+**** 3.1.3.1. 语言标签 / Language Tags
+#+BEGIN_QUOTE
+A language tag, as defined in [[[https://tools.ietf.org/html/rfc5646][RFC5646]]], identifies a natural language spoken, written, or otherwise conveyed by human beings for communication of information to other human beings. Computer languages are explicitly excluded.
+#+END_QUOTE
+
+正如【[[https://tools.ietf.org/html/rfc5646][RFC5646]]】所定义，[[ruby:language%20tag][语言标签]]标识了一种人类出于交流信息的目的而通过说、写或其他方式来传达的自然语言。计算机语言被明确排除在外。
+
+#+BEGIN_QUOTE
+HTTP uses language tags within the =Accept-Language= and =Content-Language= header fields. =Accept-Language= uses the broader =language-range= production defined in Section 5.3.5, whereas =Content-Language= uses the =language-tag= production defined below.
+#+END_QUOTE
+
+HTTP 在 =Accept-Language= 和 =Content-Language= 报头域里使用语言标签。=Accept-Language= 使用了更广义的 =language-range= 规则（定义在章节 5.3.5），而 =Content-Language= 使用了 =language-tag=，其定义如下：
+
+#+BEGIN_SRC text
+  language-tag = <Language-Tag, see [RFC5646], Section 2.1>
+#+END_SRC
+
+#+BEGIN_QUOTE
+A language tag is a sequence of one or more case-insensitive subtags, each separated by a hyphen character ("-", %x2D). In most cases, a language tag consists of a primary language subtag that identifies a broad family of related languages (e.g., "en" = English), which is optionally followed by a series of subtags that refine or narrow that language's range (e.g., "en-CA" = the variety of English as communicated in Canada). Whitespace is not allowed within a language tag. Example tags include:
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  fr, en-US, es-419, az-Arab, x-pig-latin, man-Nkoo-GN
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+See [RFC5646] for further information.
+#+END_QUOTE
+
 **** 3.1.3.2. Content-Language
 :PROPERTIES:
 :ID:       80f3e8e8-dabb-49b8-b7e6-45f83648a732
 :END:
+#+BEGIN_QUOTE
+The "Content-Language" header field describes the natural language(s) of the intended audience for the representation. Note that this might not be equivalent to all the languages used within the representation.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Content-Language = 1#language-tag
+#+END_SRC
+
+#+BEGIN_QUOTE
+Language tags are defined in Section 3.1.3.1. The primary purpose of Content-Language is to allow a user to identify and differentiate representations according to the users' own preferred language. Thus, if the content is intended only for a Danish-literate audience, the appropriate field is
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  Content-Language: da
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+If no Content-Language is specified, the default is that the content is intended for all language audiences. This might mean that the sender does not consider it to be specific to any natural language, or that the sender does not know for which language it is intended.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Multiple languages MAY be listed for content that is intended for multiple audiences. For example, a rendition of the "Treaty of Waitangi", presented simultaneously in the original Maori and English versions, would call for
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  Content-Language: mi, en
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+However, just because multiple languages are present within a representation does not mean that it is intended for multiple linguistic audiences. An example would be a beginner's language primer, such as "A First Lesson in Latin", which is clearly intended to be used by an English-literate audience. In this case, the Content-Language would properly only include "en".
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Content-Language MAY be applied to any media type — it is not limited to textual documents.
+#+END_QUOTE
+
 *** 3.1.4. Identification
 **** 3.1.4.1. Identifying a Representation
+#+BEGIN_QUOTE
+When a complete or partial representation is transferred in a message payload, it is often desirable for the sender to supply, or the recipient to determine, an identifier for a resource corresponding to that representation.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For a request message:
+- If the request has a Content-Location header field, then the sender asserts that the payload is a representation of the resource identified by the Content-Location field-value. However, such an assertion cannot be trusted unless it can be verified by other means (not defined by this specification). The information might still be useful for revision history links.
+- Otherwise, the payload is unidentified.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For a response message, the following rules are applied in order until a match is found:
+1. If the request method is GET or HEAD and the response status code is 200 (OK), 204 (No Content), 206 (Partial Content), or 304 (Not Modified), the payload is a representation of the resource identified by the effective request URI (Section 5.5 of [RFC7230]).
+2. If the request method is GET or HEAD and the response status code is 203 (Non-Authoritative Information), the payload is a potentially modified or enhanced representation of the target resource as provided by an intermediary.
+3. If the response has a Content-Location header field and its field-value is a reference to the same URI as the effective request URI, the payload is a representation of the resource identified by the effective request URI.
+4. If the response has a Content-Location header field and its field-value is a reference to a URI different from the effective request URI, then the sender asserts that the payload is a representation of the resource identified by the Content-Location field-value. However, such an assertion cannot be trusted unless it can be verified by other means (not defined by this specification).
+5. Otherwise, the payload is unidentified.
+#+END_QUOTE
 **** 3.1.4.2. Content-Location
 :PROPERTIES:
 :ID:       91650144-4bfc-4362-b628-f96578a5c756
 :END:
+#+BEGIN_QUOTE
+The "Content-Location" header field references a URI that can be used as an identifier for a specific resource corresponding to the representation in this message's payload. In other words, if one were to perform a GET request on this URI at the time of this message's generation, then a 200 (OK) response would contain the same representation that is enclosed as payload in this message.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Content-Location = absolute-URI / partial-URI
+#+END_SRC
+
+#+BEGIN_QUOTE
+The =Content-Location= value is not a replacement for the effective Request URI (Section 5.5 of [RFC7230]). It is representation metadata. It has the same syntax and semantics as the header field of the same name defined for MIME body parts in Section 4 of [RFC2557]. However, its appearance in an HTTP message has some special implications for HTTP recipients.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+If =Content-Location= is included in a 2xx (Successful) response message and its value refers (after conversion to absolute form) to a URI that is the same as the effective request URI, then the recipient MAY consider the payload to be a current representation of that resource at the time indicated by the message origination date. For a GET (Section 4.3.1) or HEAD (Section 4.3.2) request, this is the same as the default semantics when no Content-Location is provided by the server. For a state-changing request like PUT (Section 4.3.4) or POST (Section 4.3.3), it implies that the server's response contains the new representation of that resource, thereby distinguishing it from representations that might only report about the action (e.g., "It worked!"). This allows authoring applications to update their local copies without the need for a subsequent GET request.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+If =Content-Location= is included in a 2xx (Successful) response message and its field-value refers to a URI that differs from the effective request URI, then the origin server claims that the URI is an identifier for a different resource corresponding to the enclosed representation. Such a claim can only be trusted if both identifiers share the same resource owner, which cannot be programmatically determined via HTTP.
+#+END_QUOTE
+
+- For a response to a GET or HEAD request, this is an indication that the effective request URI refers to a resource that is subject to content negotiation and the Content-Location field-value is a more specific identifier for the selected representation.
+- For a 201 (Created) response to a state-changing method, a Content-Location field-value that is identical to the Location field-value indicates that this payload is a current representation of the newly created resource.
+- Otherwise, such a Content-Location indicates that this payload is a representation reporting on the requested action's status and that the same report is available (for future access with GET) at the given URI. For example, a purchase transaction made via a POST request might include a receipt document as the payload of the 200 (OK) response; the Content-Location field-value provides an identifier for retrieving a copy of that same receipt in the future.
+
+#+BEGIN_QUOTE
+A user agent that sends Content-Location in a request message is stating that its value refers to where the user agent originally obtained the content of the enclosed representation (prior to any modifications made by that user agent). In other words, the user agent is providing a back link to the source of the original representation.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+An origin server that receives a Content-Location field in a request message MUST treat the information as transitory request context rather than as metadata to be saved verbatim as part of the representation. An origin server MAY use that context to guide in processing the request or to save it for other uses, such as within source links or versioning metadata. However, an origin server MUST NOT use such context information to alter the request semantics.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For example, if a client makes a PUT request on a negotiated resource and the origin server accepts that PUT (without redirection), then the new state of that resource is expected to be consistent with the one representation supplied in that PUT; the Content-Location cannot be used as a form of reverse content selection identifier to update only one of the negotiated representations. If the user agent had wanted the latter semantics, it would have applied the PUT directly to the Content-Location URI.
+#+END_QUOTE
+
 ** 3.2. Representation Data
+#+BEGIN_QUOTE
+The representation data associated with an HTTP message is either provided as the payload body of the message or referred to by the message semantics and the effective request URI. The representation data is in a format and encoding defined by the representation metadata header fields.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The data type of the representation data is determined via the header fields Content-Type and Content-Encoding. These define a two-layer, ordered encoding model:
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  representation-data := Content-Encoding( Content-Type( bits ) )
+#+END_SRC
+
 ** 3.3. Payload Semantics
+Some HTTP messages transfer a complete or partial representation as the message "payload". In some cases, a payload might contain only the associated representation's header fields (e.g., responses to HEAD) or only some part(s) of the representation data (e.g., the 206 (Partial Content) status code).
+
+The purpose of a payload in a request is defined by the method semantics. For example, a representation in the payload of a PUT request (Section 4.3.4) represents the desired state of the target resource if the request is successfully applied, whereas a representation in the payload of a POST request (Section 4.3.3) represents information to be processed by the target resource.
+
+In a response, the payload's purpose is defined by both the request method and the response status code. For example, the payload of a 200 (OK) response to GET (Section 4.3.1) represents the current state of the target resource, as observed at the time of the message origination date (Section 7.1.1.2), whereas the payload of the same status code in a response to POST might represent either the processing result or the new state of the target resource after applying the processing. Response messages with an error status code usually contain a payload that represents the error condition, such that it describes the error state and what next steps are suggested for resolving it.
+
+Header fields that specifically describe the payload, rather than the associated representation, are referred to as "payload header fields". Payload header fields are defined in other parts of this specification, due to their impact on message parsing.
+
+| Header Field Name | Defined in...              |
+|-------------------+----------------------------|
+| Content-Length    | Section 3.3.2 of [RFC7230] |
+| Content-Range     | Section 4.2 of [RFC7233]   |
+| Trailer           | Section 4.4 of [RFC7230]   |
+| Transfer-Encoding | Section 3.3.1 of [RFC7230] |
+
 ** 3.4. Content Negotiation
 :PROPERTIES:
 :ID:       c45cb9ca-1e51-4738-8c43-231e7316ea86
 :END:
+#+BEGIN_QUOTE
+When responses convey payload information, whether indicating a success or an error, the origin server often has different ways of representing that information; for example, in different formats, languages, or encodings. Likewise, different users or user agents might have differing capabilities, characteristics, or preferences that could influence which representation, among those available, would be best to deliver. For this reason, HTTP provides mechanisms for content negotiation.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+This specification defines two patterns of content negotiation that can be made visible within the protocol: "proactive", where the server selects the representation based upon the user agent's stated preferences, and "reactive" negotiation, where the server provides a list of representations for the user agent to choose from. Other patterns of content negotiation include "conditional content", where the representation consists of multiple parts that are selectively rendered based on user agent parameters, "active content", where the representation contains a script that makes additional (more specific) requests based on the user agent characteristics, and "Transparent Content Negotiation" ([RFC2295]), where content selection is performed by an intermediary. These patterns are not mutually exclusive, and each has trade-offs in applicability and practicality.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Note that, in all cases, HTTP is not aware of the resource semantics. The consistency with which an origin server responds to requests, over time and over the varying dimensions of content negotiation, and thus the "sameness" of a resource's observed representations over time, is determined entirely by whatever entity or algorithm selects or generates those responses. HTTP pays no attention to the man behind the curtain.
+#+END_QUOTE
+
 *** 3.4.1. Proactive Negotiation
+#+BEGIN_QUOTE
+When content negotiation preferences are sent by the user agent in a request to encourage an algorithm located at the server to select the preferred representation, it is called proactive negotiation (a.k.a., server-driven negotiation). Selection is based on the available representations for a response (the dimensions over which it might vary, such as language, content-coding, etc.) compared to various information supplied in the request, including both the explicit negotiation fields of Section 5.3 and implicit characteristics, such as the client's network address or parts of the User-Agent field.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Proactive negotiation is advantageous when the algorithm for selecting from among the available representations is difficult to describe to a user agent, or when the server desires to send its "best guess" to the user agent along with the first response (hoping to avoid the round trip delay of a subsequent request if the "best guess" is good enough for the user). In order to improve the server's guess, a user agent MAY send request header fields that describe its preferences.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Proactive negotiation has serious disadvantages:
+- It is impossible for the server to accurately determine what might be "best" for any given user, since that would require complete knowledge of both the capabilities of the user agent and the intended use for the response (e.g., does the user want to view it on screen or print it on paper?);
+- Having the user agent describe its capabilities in every request can be both very inefficient (given that only a small percentage of responses have multiple representations) and a potential risk to the user's privacy;
+- It complicates the implementation of an origin server and the algorithms for generating responses to a request; and,
+- It limits the reusability of responses for shared caching.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A user agent cannot rely on proactive negotiation preferences being consistently honored, since the origin server might not implement proactive negotiation for the requested resource or might decide that sending a response that doesn't conform to the user agent's preferences is better than sending a 406 (Not Acceptable) response.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A Vary header field (Section 7.1.4) is often sent in a response subject to proactive negotiation to indicate what parts of the request information were used in the selection algorithm.
+#+END_QUOTE
+
 *** 3.4.2. Reactive Negotiation
+#+BEGIN_QUOTE
+With reactive negotiation (a.k.a., agent-driven negotiation), selection of the best response representation (regardless of the status code) is performed by the user agent after receiving an initial response from the origin server that contains a list of resources for alternative representations. If the user agent is not satisfied by the initial response representation, it can perform a GET request on one or more of the alternative resources, selected based on metadata included in the list, to obtain a different form of representation for that response. Selection of alternatives might be performed automatically by the user agent or manually by the user selecting from a generated (possibly hypertext) menu.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Note that the above refers to representations of the response, in general, not representations of the resource. The alternative representations are only considered representations of the target resource if the response in which those alternatives are provided has the semantics of being a representation of the target resource (e.g., a 200 (OK) response to a GET request) or has the semantics of providing links to alternative representations for the target resource (e.g., a 300 (Multiple Choices) response to a GET request).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A server might choose not to send an initial representation, other than the list of alternatives, and thereby indicate that reactive negotiation by the user agent is preferred. For example, the alternatives listed in responses with the 300 (Multiple Choices) and 406 (Not Acceptable) status codes include information about the available representations so that the user or user agent can react by making a selection.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Reactive negotiation is advantageous when the response would vary over commonly used dimensions (such as type, language, or encoding), when the origin server is unable to determine a user agent's capabilities from examining the request, and generally when public caches are used to distribute server load and reduce network usage.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Reactive negotiation suffers from the disadvantages of transmitting a list of alternatives to the user agent, which degrades user-perceived latency if transmitted in the header section, and needing a second request to obtain an alternate representation. Furthermore, this specification does not define a mechanism for supporting automatic selection, though it does not prevent such a mechanism from being developed as an extension.
+#+END_QUOTE
+
 * 4. Request Methods
 :PROPERTIES:
 :ID:       e6ec0aa0-3e4d-4367-bffd-423e028210b0
@@ -368,6 +666,9 @@ In practice, resource owners do not always properly configure their origin serve
 :END:
 *** 5.3.3. Accept-Charset
 *** 5.3.4. Accept-Encoding
+:PROPERTIES:
+:ID:       a8fcc101-3782-4ed0-aec0-561b933e6a5f
+:END:
 *** 5.3.5. Accept-Language
 ** 5.4. Authentication Credentials
 ** 5.5. Request Context
@@ -447,6 +748,9 @@ In practice, resource owners do not always properly configure their origin serve
 *** 8.3.1. Considerations for New Header Fields
 *** 8.3.2. Registrations
 ** 8.4. Content Coding Registry
+:PROPERTIES:
+:ID:       87f2ed30-a48b-4c31-a181-8e3a33ba1080
+:END:
 *** 8.4.1. Procedure
 *** 8.4.2. Registrations
 * 9. Security Considerations
