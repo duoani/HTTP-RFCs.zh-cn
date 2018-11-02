@@ -385,7 +385,7 @@ An example of its use is
 If one or more encodings have been applied to a representation, the sender that applied the encodings *MUST* generate a =Content-Encoding= header field that lists the content codings in the order in which they were applied. Additional information about the encoding parameters can be provided by other header fields not defined by this specification.
 #+END_QUOTE
 
-如果对一个 representation 应用了一种或多种编码，应用这些编码的发送端 *必须* 生成一个 =Content-Encoding= 报头域，以它们被应用的先后顺序来一一列出对应的 content codings。如果某种编码需要附带额外的参数信息的话，可以由其他未在本规范上定义过的报头域来提供。
+如果对一个 representation 应用了一种或多种编码，应用这些编码的发送端 *必须* 生成一个 =Content-Encoding= 报头域，以它们被应用的先后顺序来一一列出对应的 content codings。如果某种编码需要附带额外的参数信息，可以由其他未在本规范上定义过的报头域来提供。
 
 #+BEGIN_QUOTE
 Unlike =Transfer-Encoding= ([[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][Section 3.3.1]] of [RFC7230]), the codings listed in =Content-Encoding= are a characteristic of the representation; the representation is defined in terms of the coded form, and all other metadata about the representation is about the coded form unless otherwise noted in the metadata definition. Typically, the representation is only decoded just prior to rendering or analogous usage.
@@ -397,7 +397,7 @@ Unlike =Transfer-Encoding= ([[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][Section 3
 If the media type includes an inherent encoding, such as a data format that is always compressed, then that encoding would not be restated in =Content-Encoding= even if it happens to be the same algorithm as one of the content codings. Such a content coding would only be listed if, for some bizarre reason, it is applied a second time to form the representation. Likewise, an origin server might choose to publish the same data as multiple representations that differ only in whether the coding is defined as part of =Content-Type= or =Content-Encoding=, since some user agents will behave differently in their handling of each response (e.g., open a "Save as ..." dialog instead of automatic decompression and rendering of content).
 #+END_QUOTE
 
-如果媒体类型包含有一种[[ruby:inherent%20encoding][固有的编码]]，例如一种一直是压缩过的数据格式，那么，这种编码不要在 =Content-Encoding= 里重申，哪怕它恰巧与其中一个 content codings 的算法一致。这种 content coding 只会在以下这种情况下才需要在 =Content-Encoding= 列出：出于某些怪异的原因，需要应用该 content coding 两次才能形成正确的 representation。同样，原服务器可能选择将该同样的数据作为 multiple representations 来发布，其区别仅在于 coding 是作为 Content-Type 的一部分还是作为 Content-Encoding 的一部分 ，这是因为某些用户代理处理各个响应的行为会有所不同（例如，打开一个“另存为...”对话框，而不是自动解缩并渲染内容）。
+如果媒体类型包含有一种[[ruby:inherent%20encoding][固有的编码]]，例如一种总是以压缩方式来表示的数据格式，那么，这种编码不要在 =Content-Encoding= 里重申，哪怕它恰巧与其中一个 content codings 的算法一致。这种 content coding 只会在以下这种情况下才需要在 =Content-Encoding= 列出：出于某些怪异的原因，需要应用该 content coding 两次才能形成正确的 representation。同样，原服务器可能选择将该同样的数据作为 multiple representations 来发布，其区别仅在于 coding 是作为 Content-Type 的一部分还是作为 Content-Encoding 的一部分 ，这是因为某些用户代理处理各个响应的行为会有所不同（例如，打开一个“另存为...”对话框，而不是自动解缩并渲染内容）。
 
 #+BEGIN_QUOTE
 An origin server *MAY* respond with a status code of =415 (Unsupported Media Type)= if a representation in the request message has a content coding that is not acceptable.
@@ -407,6 +407,9 @@ An origin server *MAY* respond with a status code of =415 (Unsupported Media Typ
 
 *** 3.1.3. 受众语言 / Audience Language
 **** 3.1.3.1. 语言标签 / Language Tags
+:PROPERTIES:
+:ID:       0a52652d-e5e8-40f9-ba1a-f96c45969b85
+:END:
 #+BEGIN_QUOTE
 A language tag, as defined in [[[https://tools.ietf.org/html/rfc5646][RFC5646]]], identifies a natural language spoken, written, or otherwise conveyed by human beings for communication of information to other human beings. Computer languages are explicitly excluded.
 #+END_QUOTE
@@ -427,13 +430,17 @@ HTTP 在 =Accept-Language= 和 =Content-Language= 报头域里使用语言标签
 A language tag is a sequence of one or more case-insensitive subtags, each separated by a hyphen character ("-", %x2D). In most cases, a language tag consists of a primary language subtag that identifies a broad family of related languages (e.g., "en" = English), which is optionally followed by a series of subtags that refine or narrow that language's range (e.g., "en-CA" = the variety of English as communicated in Canada). Whitespace is not allowed within a language tag. Example tags include:
 #+END_QUOTE
 
+一个[[ruby:language%20tag][语言标签]]是由一个或多个不区分大小写的子标签组成的，每个子标签之间使用连接符（"-"，"%x2D"）分隔。大多数情况下，一个语言标签包含一个标识一种相关语系的[[primary language subtag][主要语言子标签]]（例如，"en" 代表[[ruby:English][英语]]），另外还可以选择性地附加一连串的子标签来优化或缩小语言范围（例如，"en-CA" 代表一种[[ruby:Canada][加拿大]]英语）。语言标签里不允许存在空格。语言标签的几个例子如下：
+
 #+BEGIN_EXAMPLE
   fr, en-US, es-419, az-Arab, x-pig-latin, man-Nkoo-GN
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-See [RFC5646] for further information.
+See [[[https://tools.ietf.org/html/rfc5646][RFC5646]]] for further information.
 #+END_QUOTE
+
+更多信息见【[[https://tools.ietf.org/html/rfc5646][RFC5616]]】。
 
 **** 3.1.3.2. Content-Language
 :PROPERTIES:
@@ -443,58 +450,81 @@ See [RFC5646] for further information.
 The "Content-Language" header field describes the natural language(s) of the intended audience for the representation. Note that this might not be equivalent to all the languages used within the representation.
 #+END_QUOTE
 
+=Content-Language= 报头域描述了 representation 的目标受众的（一种或多种）自然语言。需要注意的是，它可能并不等价于用在 representation 里的所有语言。
+
 #+BEGIN_SRC text
   Content-Language = 1#language-tag
 #+END_SRC
 
 #+BEGIN_QUOTE
-Language tags are defined in Section 3.1.3.1. The primary purpose of Content-Language is to allow a user to identify and differentiate representations according to the users' own preferred language. Thus, if the content is intended only for a Danish-literate audience, the appropriate field is
+Language tags are defined in [[id:0a52652d-e5e8-40f9-ba1a-f96c45969b85][Section 3.1.3.1]]. The primary purpose of =Content-Language= is to allow a user to identify and differentiate representations according to the users' own preferred language. Thus, if the content is intended only for a Danish-literate audience, the appropriate field is
 #+END_QUOTE
+
+[[ruby:language%20tag][语言标签]]定义在[[id:0a52652d-e5e8-40f9-ba1a-f96c45969b85][章节 3.1.3.1]] 里。=Content-Language= 的主要目的是允许一个用户依据用户自身的首选语言来标识和区分 representations。所以，如果只想将[[ruby:Danish-literate][懂丹麦语]]的人作为内容的目标受众，那么报头域可以这样设置：
 
 #+BEGIN_EXAMPLE
   Content-Language: da
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-If no Content-Language is specified, the default is that the content is intended for all language audiences. This might mean that the sender does not consider it to be specific to any natural language, or that the sender does not know for which language it is intended.
+If no =Content-Language= is specified, the default is that the content is intended for all language audiences. This might mean that the sender does not consider it to be specific to any natural language, or that the sender does not know for which language it is intended.
 #+END_QUOTE
 
+如果没有指定 =Content-Language= 报头域，那么就默认内容是面向所有语言受众的。这可能意味着发送端并不认为它自已是面向具体任一种自然语言的，或者发送端并不知道它自己打算使用哪一种语言。
+
 #+BEGIN_QUOTE
-Multiple languages MAY be listed for content that is intended for multiple audiences. For example, a rendition of the "Treaty of Waitangi", presented simultaneously in the original Maori and English versions, would call for
+Multiple languages *MAY* be listed for content that is intended for multiple audiences. For example, a rendition of the "Treaty of Waitangi", presented simultaneously in the original Maori and English versions, would call for
 #+END_QUOTE
+
+对于面向多种受众的内容，*可以* 在 =Content-Language= 列出多种语言，多种语言，例如，一份“[[ruby:Treaty%20of%20Waitangi][怀唐伊条约]]”的译文，会同时出现[[ruby:original%20Maori][毛利语原文]]以及英文版本，那么可以这样设置：
 
 #+BEGIN_EXAMPLE
   Content-Language: mi, en
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-However, just because multiple languages are present within a representation does not mean that it is intended for multiple linguistic audiences. An example would be a beginner's language primer, such as "A First Lesson in Latin", which is clearly intended to be used by an English-literate audience. In this case, the Content-Language would properly only include "en".
+However, just because multiple languages are present within a representation does not mean that it is intended for multiple linguistic audiences. An example would be a beginner's language primer, such as "A First Lesson in Latin", which is clearly intended to be used by an English-literate audience. In this case, the =Content-Language= would properly only include "en".
 #+END_QUOTE
+
+然而，只因为在一个 representation 里出现了多种语言就认为它是打算面向认识多种语言的受众，这是错误的。举个例子，一本面向新手的语言入门读物，就称为《第一堂拉丁语课》吧，是明确打算面向懂英语的读者的，那么，最恰当的做法是 =Content-Language= 只包含 "en"。
 
 #+BEGIN_QUOTE
-Content-Language MAY be applied to any media type — it is not limited to textual documents.
+=Content-Language= *MAY* be applied to any media type — it is not limited to textual documents.
 #+END_QUOTE
 
+=Content-Language= 可以应用于任意[[ruby:media%20type][媒体类型]] 的 representation 里，也就是说，它并不仅限于[[ruby:textual%20documents][文本类的文档]]。
+
 *** 3.1.4. Identification
-**** 3.1.4.1. Identifying a Representation
+**** 3.1.4.1. 标识一个 Representation / Identifying a Representation
 #+BEGIN_QUOTE
 When a complete or partial representation is transferred in a message payload, it is often desirable for the sender to supply, or the recipient to determine, an identifier for a resource corresponding to that representation.
 #+END_QUOTE
 
+当一个完整的或部分的 representation 被传入到一个[[ruby:message%20payload][报文的有效载荷]]里，该 representation 所对应的资源标识符通常交由发送端去提供，或者交由接收端去决定会更好一些。
+
 #+BEGIN_QUOTE
 For a request message:
-- If the request has a Content-Location header field, then the sender asserts that the payload is a representation of the resource identified by the Content-Location field-value. However, such an assertion cannot be trusted unless it can be verified by other means (not defined by this specification). The information might still be useful for revision history links.
+- If the request has a =Content-Location= header field, then the sender asserts that the payload is a representation of the resource identified by the =Content-Location= field-value. However, such an assertion cannot be trusted unless it can be verified by other means (not defined by this specification). The information might still be useful for revision history links.
 - Otherwise, the payload is unidentified.
 #+END_QUOTE
 
+对于一个请求报文来说：
+- *如果* 该请求有一个 =Content-Location= 报头域，意味着发送端[[ruby:assert][断言]]请求报文的有效载荷是某个资源的一个 representation，而该资源是由 =Content-Location= 的值所标识的。但是，除非这种[[ruby:assertion][断言]]能够通过其他途径（本规则并没有定义有什么途径）来验证，否则不能相信该断言。对于修正历史链接，该信息还是有用的。
+- *否则*，该请求报文的有效载荷是[[ruby:unidentified][未标识]]的。
+
 #+BEGIN_QUOTE
 For a response message, the following rules are applied in order until a match is found:
-1. If the request method is GET or HEAD and the response status code is 200 (OK), 204 (No Content), 206 (Partial Content), or 304 (Not Modified), the payload is a representation of the resource identified by the effective request URI (Section 5.5 of [RFC7230]).
-2. If the request method is GET or HEAD and the response status code is 203 (Non-Authoritative Information), the payload is a potentially modified or enhanced representation of the target resource as provided by an intermediary.
-3. If the response has a Content-Location header field and its field-value is a reference to the same URI as the effective request URI, the payload is a representation of the resource identified by the effective request URI.
-4. If the response has a Content-Location header field and its field-value is a reference to a URI different from the effective request URI, then the sender asserts that the payload is a representation of the resource identified by the Content-Location field-value. However, such an assertion cannot be trusted unless it can be verified by other means (not defined by this specification).
+1. If the request method is GET or HEAD and the response status code is =200 (OK)=, =204 (No Content)=, =206 (Partial Content)=, or =304 (Not Modified)=, the payload is a representation of the resource identified by the effective request URI ([[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]).
+2. If the request method is GET or HEAD and the response status code is =203 (Non-Authoritative Information)=, the payload is a potentially modified or enhanced representation of the target resource as provided by an intermediary.
+3. If the response has a =Content-Location= header field and its field-value is a reference to the same URI as the effective request URI, the payload is a representation of the resource identified by the effective request URI.
+4. If the response has a =Content-Location= header field and its field-value is a reference to a URI different from the effective request URI, then the sender asserts that the payload is a representation of the resource identified by the =Content-Location= field-value. However, such an assertion cannot be trusted unless it can be verified by other means (not defined by this specification).
 5. Otherwise, the payload is unidentified.
 #+END_QUOTE
+
+对于一个响应报文来说：
+1. *如果* 请求方法是 GET 或者 HEAD，且响应状态码是 =200 (OK)=、=204 (No Content)=、=206 (Partial Content)= 或者 =304 (Not Modified)=，那么，响应报文的有效载荷是某个资源的 representation，而该资源是由[[ruby:effective%20request%20URI][有效请求 URI]] 所标识的（[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）。
+2. *如果* 请求方法是 GET 或者 HEAD，且响应状态码是 =203 (Non-Authoritative Information)=，那么，响应报文的有效载荷是某个资源的 representation， 的可能被修改过或某个资源的，该资源由一个中间人提供
+
 **** 3.1.4.2. Content-Location
 :PROPERTIES:
 :ID:       91650144-4bfc-4362-b628-f96578a5c756
