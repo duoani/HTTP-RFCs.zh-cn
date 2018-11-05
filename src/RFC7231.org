@@ -430,7 +430,7 @@ HTTP 在 =Accept-Language= 和 =Content-Language= 报头域里使用语言标签
 A language tag is a sequence of one or more case-insensitive subtags, each separated by a hyphen character ("-", %x2D). In most cases, a language tag consists of a primary language subtag that identifies a broad family of related languages (e.g., "en" = English), which is optionally followed by a series of subtags that refine or narrow that language's range (e.g., "en-CA" = the variety of English as communicated in Canada). Whitespace is not allowed within a language tag. Example tags include:
 #+END_QUOTE
 
-一个[[ruby:language%20tag][语言标签]]是由一个或多个不区分大小写的子标签组成的，每个子标签之间使用连接符（"-"，"%x2D"）分隔。大多数情况下，一个语言标签包含一个标识一种相关语系的[[primary language subtag][主要语言子标签]]（例如，"en" 代表[[ruby:English][英语]]），另外还可以选择性地附加一连串的子标签来优化或缩小语言范围（例如，"en-CA" 代表一种[[ruby:Canada][加拿大]]英语）。语言标签里不允许存在空格。语言标签的几个例子如下：
+一个[[ruby:language%20tag][语言标签]]是由一个或多个不区分大小写的子标签组成的，每个子标签之间使用连接符（"-"，"%x2D"）分隔。大多数情况下，一个语言标签包含一个标识一种相关语系的[[ruby:primary%20language%20subtag][主要语言子标签]]（例如，"en" 代表[[ruby:English][英语]]），另外还可以选择性地附加一连串的子标签来优化或缩小语言范围（例如，"en-CA" 代表一种[[ruby:Canada][加拿大]]英语）。语言标签里不允许存在空格。语言标签的几个例子如下：
 
 #+BEGIN_EXAMPLE
   fr, en-US, es-419, az-Arab, x-pig-latin, man-Nkoo-GN
@@ -562,7 +562,7 @@ If =Content-Location= is included in a =2xx (Successful)= response message and i
 #+END_QUOTE
 
 如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应报文里，且它的域值指向于一个与有效请求 URI 不相同的 URI，那么，源服务器[[ruby:claim][声称]]该 URI 是一个与封装在该有效载荷内的 representation 相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
-- 对于回应给 GET 或 HEAD 请求的一个响应，它表明了[[effective request URI][有效请求 URI]] 指向到一个服从[[ruby:content%20negotiation][内容协商]]的资源，并且针对[[ruby:selective%20representation][已选定的 representation]]  来说，=Content-Location= 的域值是一个更加具体的标识符。
+- 对于回应给 GET 或 HEAD 请求的一个响应，它表明了[[ruby:effective%20request%20URI][有效请求 URI]] 指向到一个服从[[ruby:content%20negotiation][内容协商]]的资源，并且针对[[ruby:selective%20representation][已选定的 representation]]  来说，=Content-Location= 的域值是一个更加具体的标识符。
 - 对于回应给[[ruby:state-changing%20method][状态改变的请求方法]]的一个 =201 (Created)= 响应，如果 =Content-Location= 的域值与 =Location= 的域值相同，那么，这表明这个有效载荷是新近被创建的资源的[[ruby:current%20representation][当前 representation]]。
 - 否则，这个 =Content-Location= 表明了这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对 representation 进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 =200 (OK)= 响应的有效载荷，=Content-Location= 的域值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。
 
@@ -630,7 +630,7 @@ Header fields that specifically describe the payload, rather than the associated
 特定用于描述有效载荷而不是描述相关的 representation 的报头域，被称为“[[ruby:payload%20header%20fields][有效载荷报头域]]”。有效载荷报头域被定义在本规范的其他部分中，由它们对[[ruby:message%20parsing][报文解析]]的影响来决定。
 
 #+BEGIN_QUOTE
-译注：有效载荷报头域并不是说这些报头域在有效载荷里，它们依然被放置在[[header section][报头块]]里。
+译注：有效载荷报头域并不是说这些报头域在有效载荷里，它们依然被放置在[[ruby:header%20section][报头块]]里。
 #+END_QUOTE
 
 | Header Field Name | Defined in...              |

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-01 Thu 19:10 -->
+<!-- 2018-11-05 Mon 19:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -407,18 +407,18 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#org5e306f7">3.1.4. Identification</a>
 <ul>
-<li><a href="#org9aeefce">3.1.4.1. Identifying a Representation</a></li>
+<li><a href="#orgc47d26b">3.1.4.1. 标识一个 Representation / Identifying a Representation</a></li>
 <li><a href="#org6190703">3.1.4.2. Content-Location</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#orge0c7f3b">3.2. Representation Data</a></li>
-<li><a href="#org3d03469">3.3. Payload Semantics</a></li>
-<li><a href="#orgf0d3e2d">3.4. Content Negotiation</a>
+<li><a href="#orgb3d98f9">3.3. 有效载荷的语义 / Payload Semantics</a></li>
+<li><a href="#org7e87af6">3.4. 内容协商 / Content Negotiation</a>
 <ul>
-<li><a href="#org1a2c1e0">3.4.1. Proactive Negotiation</a></li>
-<li><a href="#orgb263106">3.4.2. Reactive Negotiation</a></li>
+<li><a href="#orgcc6adb1">3.4.1. 主动型协商 / Proactive Negotiation</a></li>
+<li><a href="#orgb6b9e23">3.4.2. 被动型协商 / Reactive Negotiation</a></li>
 </ul>
 </li>
 </ul>
@@ -540,7 +540,12 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orge68fb41">7.1. Control Data</a>
 <ul>
-<li><a href="#org67adfb6">7.1.1. Origination Date</a></li>
+<li><a href="#org67adfb6">7.1.1. Origination Date</a>
+<ul>
+<li><a href="#org8c425df">7.1.1.1. Date/Time Formats</a></li>
+<li><a href="#org8e5ec45">7.1.1.2. Data</a></li>
+</ul>
+</li>
 <li><a href="#orgad9277e">7.1.2. Location</a></li>
 <li><a href="#orgbf05a48">7.1.3. Retry-After</a></li>
 <li><a href="#org5ddc30c">7.1.4. Vary</a></li>
@@ -728,12 +733,12 @@ HTTP 的语义包含了每个<ruby>请求方法<rt>request method</rt></ruby>所
 
 <blockquote>
 <p>
-This document also defines representation metadata that describe how a payload is intended to be interpreted by a recipient, the request header fields that might influence content selection, and the various selection algorithms that are collectively referred to as "content negotiation" (<a href="#orgf0d3e2d">Section 3.4</a>).
+This document also defines representation metadata that describe how a payload is intended to be interpreted by a recipient, the request header fields that might influence content selection, and the various selection algorithms that are collectively referred to as "content negotiation" (<a href="#org7e87af6">Section 3.4</a>).
 </p>
 </blockquote>
 
 <p>
-本文档还定义了以下内容：描述打算让接收端怎样<ruby>解释<rt>interpret</rt></ruby>一个<ruby>有效载荷<rt>payload</rt></ruby>的<ruby>资源的表示元数据<rt>representation metadata</rt></ruby>、可能影响<ruby>内容选择<rt>content selection</rt></ruby>的请求报头域、统称为“<ruby>内容协商<rt>content negotiation</rt></ruby>”的各种选择算法（<a href="#orgf0d3e2d">章节 3.4</a>）。
+本文档还定义了以下内容：描述打算让接收端怎样<ruby>解释<rt>interpret</rt></ruby>一个<ruby>有效载荷<rt>payload</rt></ruby>的<ruby>资源的表示元数据<rt>representation metadata</rt></ruby>、可能影响<ruby>内容选择<rt>content selection</rt></ruby>的请求报头域、统称为“<ruby>内容协商<rt>content negotiation</rt></ruby>”的各种选择算法（<a href="#org7e87af6">章节 3.4</a>）。
 </p>
 </div>
 
@@ -873,7 +878,7 @@ Representation header fields provide metadata about the representation. When a m
 </blockquote>
 
 <p>
-与 representation 相关的报头域提供了 representation 的元数据。当一个<ruby>报文<rt>message</rt></ruby>包含一个<ruby>有效载荷<rt>payload body</rt></ruby>时，与 representation 相关的报头域描述了如何解释这个包含在有效载荷里的 representation data。在一个回应给 HEAD 请求的响应报文里，与 representation 相关的报头域描述了如果相同的请求是一个 GET 请求的话，将会如何解释这个包含在有效载荷里的 representation data。
+与 representation 相关的报头域提供了 representation 的元数据。当一个<ruby>报文<rt>message</rt></ruby>包含一个<ruby>有效载荷<rt>payload body</rt></ruby>时，与 representation 相关的报头域描述了如何解释这个封装在有效载荷内的 representation data。在一个回应给 HEAD 请求的响应报文里，与 representation 相关的报头域描述了如果相同的请求是一个 GET 请求的话，将会如何解释这个封装在有效载荷内的 representation data。
 </p>
 
 <blockquote>
@@ -1126,7 +1131,7 @@ The "Content-Type" header field indicates the media type of the associated repre
 </blockquote>
 
 <p>
-<code>Content-Type</code> 报头域指明了它所关联的 representation 的媒体类型。所述“关联的 representation”，要不是包含在报文有效载荷里的 representation，要不是已选定的 representation，由报文语义所决定。<code>Content-Type</code> 所指定的媒体类型定义了 representation 的数据格式以及期望该数据被接收端如何处理，在该报文的语义范围之内，在依照 <code>Content-Encoding</code> 里的所有内容编码进行解码之后。
+<code>Content-Type</code> 报头域指明了它所关联的 representation 的媒体类型。所述“关联的 representation”，要不是封装在报文有效载荷内的 representation，要不是已选定的 representation，由报文语义所决定。<code>Content-Type</code> 所指定的媒体类型定义了 representation 的数据格式以及期望该数据被接收端如何处理，在该报文的语义范围之内，在依照 <code>Content-Encoding</code> 里的所有内容编码进行解码之后。
 </p>
 
 <div class="org-src-container">
@@ -1156,7 +1161,7 @@ A sender that generates a message containing a payload body <b>SHOULD</b> genera
 </blockquote>
 
 <p>
-发送端在生成包含有一个有效载荷的报文的时候，<b>应当</b> 在该报文里生成一个 <code>Content-Type</code> 报头域，除非它并不知道应该对有效载荷内的 representation 的指定哪一种媒体类型。如果没有出现 <code>Content-Type</code> 报头域，接收端 <b>可以</b> 要不假定为 "application/octet-stream" 媒体类型（<a href="https://tools.ietf.org/html/rfc2046#section-4.5.1">【RFC2046】章节 4.5.1</a>），要不检查该数据来确定它的媒体类型。
+发送端在生成包含有一个有效载荷的报文的时候，<b>应当</b> 在该报文里生成一个 <code>Content-Type</code> 报头域，除非它并不知道应该对封装在有效载荷内的 representation 的指定哪一种媒体类型。如果没有出现 <code>Content-Type</code> 报头域，接收端 <b>可以</b> 要不假定为 "application/octet-stream" 媒体类型（<a href="https://tools.ietf.org/html/rfc2046#section-4.5.1">【RFC2046】章节 4.5.1</a>），要不检查该数据来确定它的媒体类型。
 </p>
 
 <blockquote>
@@ -1277,7 +1282,7 @@ If one or more encodings have been applied to a representation, the sender that 
 </blockquote>
 
 <p>
-如果对一个 representation 应用了一种或多种编码，应用这些编码的发送端 <b>必须</b> 生成一个 <code>Content-Encoding</code> 报头域，以它们被应用的先后顺序来一一列出对应的 content codings。如果某种编码需要附带额外的参数信息的话，可以由其他未在本规范上定义过的报头域来提供。
+如果对一个 representation 应用了一种或多种编码，应用这些编码的发送端 <b>必须</b> 生成一个 <code>Content-Encoding</code> 报头域，以它们被应用的先后顺序来一一列出对应的 content codings。如果某种编码需要附带额外的参数信息，可以由其他未在本规范上定义过的报头域来提供。
 </p>
 
 <blockquote>
@@ -1287,7 +1292,7 @@ Unlike <code>Transfer-Encoding</code> (<a href="RFC7230.html#ID-1754823B-D0BC-41
 </blockquote>
 
 <p>
-不像 <code>Transfer-Encoding</code> （<a href="RFC7230.html#ID-1754823B-D0BC-410F-A17B-E7ADA1AA79BC">【RFC7230】章节 3.3.1</a>），列在 <code>Content-Encoding</code> 报头域上的 codings 是 representation 的特性。representation 是依据其编码过的形式来进行定义的，所有其他关于 representation 的元数据是对该形式进行描述的，除非在元数据的定义中另有注明。
+不像 <code>Transfer-Encoding</code> （<a href="RFC7230.html#ID-1754823B-D0BC-410F-A17B-E7ADA1AA79BC">【RFC7230】章节 3.3.1</a>），列在 <code>Content-Encoding</code> 报头域上的 codings 是 representation 的特性。representation 是依据其编码过的形式来进行定义的，除非在元数据的定义中另有注明，所有其他关于 representation 的元数据是对该形式进行描述的。通常，representation 仅在渲染呈现或类似的用途之前才会被解码。
 </p>
 
 <blockquote>
@@ -1297,7 +1302,7 @@ If the media type includes an inherent encoding, such as a data format that is a
 </blockquote>
 
 <p>
-如果媒体类型包含有一种<ruby>固有的编码<rt>inherent encoding</rt></ruby>，例如一种一直是压缩过的数据格式，那么，这种编码不要在 <code>Content-Encoding</code> 里重申，哪怕它恰巧与其中一个 content codings 的算法一致。这种 content coding 只会在以下这种情况下才需要在 <code>Content-Encoding</code> 列出：出于某些怪异的原因，需要应用该 content coding 两次才能形成正确的 representation。同样，原服务器可能选择将该同样的数据作为 multiple representations 来发布，其区别仅在于 coding 是作为 Content-Type 的一部分还是作为 Content-Encoding 的一部分 ，这是因为某些用户代理处理各个响应的行为会有所不同（例如，打开一个“另存为&#x2026;”对话框，而不是自动解缩并渲染内容）。
+如果媒体类型包含有一种<ruby>固有的编码<rt>inherent encoding</rt></ruby>，例如一种总是以压缩方式来表示的数据格式，那么，这种编码不要在 <code>Content-Encoding</code> 里重申，哪怕它恰巧与其中一个 content codings 的算法一致。这种 content coding 只会在以下这种情况下才需要在 <code>Content-Encoding</code> 列出：出于某些怪异的原因，需要应用该 content coding 两次才能形成正确的 representation。同样，原服务器可能选择将该同样的数据作为 multiple representations 来发布，其区别仅在于 coding 是作为 Content-Type 的一部分还是作为 Content-Encoding 的一部分 ，这是因为某些用户代理处理各个响应的行为会有所不同（例如，打开一个“另存为&#x2026;”对话框，而不是自动解缩并渲染内容）。
 </p>
 
 <blockquote>
@@ -1318,7 +1323,7 @@ An origin server <b>MAY</b> respond with a status code of <code>415 (Unsupported
 <div class="outline-text-4" id="text-orgb14a20b">
 </div>
 <div id="outline-container-org2f3fd1f" class="outline-5">
-<h5 id="org2f3fd1f">3.1.3.1. 语言标签 / Language Tags</h5>
+<h5 id="org2f3fd1f"><a id="ID-0a52652d-e5e8-40f9-ba1a-f96c45969b85"></a>3.1.3.1. 语言标签 / Language Tags</h5>
 <div class="outline-text-5" id="text-org2f3fd1f">
 <blockquote>
 <p>
@@ -1351,15 +1356,23 @@ A language tag is a sequence of one or more case-insensitive subtags, each separ
 </p>
 </blockquote>
 
+<p>
+一个<ruby>语言标签<rt>language tag</rt></ruby>是由一个或多个不区分大小写的子标签组成的，每个子标签之间使用连接符（"-"，"%x2D"）分隔。大多数情况下，一个语言标签包含一个标识一种相关语系的<ruby>主要语言子标签<rt>primary language subtag</rt></ruby>（例如，"en" 代表<ruby>英语<rt>English</rt></ruby>），另外还可以选择性地附加一连串的子标签来优化或缩小语言范围（例如，"en-CA" 代表一种<ruby>加拿大<rt>Canada</rt></ruby>英语）。语言标签里不允许存在空格。语言标签的几个例子如下：
+</p>
+
 <pre class="example">
 fr, en-US, es-419, az-Arab, x-pig-latin, man-Nkoo-GN
 </pre>
 
 <blockquote>
 <p>
-See [RFC5646] for further information.
+See [<a href="https://tools.ietf.org/html/rfc5646">RFC5646</a>] for further information.
 </p>
 </blockquote>
+
+<p>
+更多信息见【<a href="https://tools.ietf.org/html/rfc5646">RFC5616</a>】。
+</p>
 </div>
 </div>
 
@@ -1372,6 +1385,10 @@ The "Content-Language" header field describes the natural language(s) of the int
 </p>
 </blockquote>
 
+<p>
+<code>Content-Language</code> 报头域描述了 representation 的目标受众的（一种或多种）自然语言。需要注意的是，它可能并不等价于用在 representation 里的所有语言。
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">Content-Language = 1#language-tag
 </pre>
@@ -1379,9 +1396,13 @@ The "Content-Language" header field describes the natural language(s) of the int
 
 <blockquote>
 <p>
-Language tags are defined in Section 3.1.3.1. The primary purpose of Content-Language is to allow a user to identify and differentiate representations according to the users' own preferred language. Thus, if the content is intended only for a Danish-literate audience, the appropriate field is
+Language tags are defined in <a href="#org2f3fd1f">Section 3.1.3.1</a>. The primary purpose of <code>Content-Language</code> is to allow a user to identify and differentiate representations according to the users' own preferred language. Thus, if the content is intended only for a Danish-literate audience, the appropriate field is
 </p>
 </blockquote>
+
+<p>
+<ruby>语言标签<rt>language tag</rt></ruby>定义在<a href="#org2f3fd1f">章节 3.1.3.1</a> 里。<code>Content-Language</code> 的主要目的是允许一个用户依据用户自身的首选语言来标识和区分 representations。所以，如果只想将<ruby>懂丹麦语<rt>Danish-literate</rt></ruby>的人作为内容的目标受众，那么报头域可以这样设置：
+</p>
 
 <pre class="example">
 Content-Language: da
@@ -1389,15 +1410,23 @@ Content-Language: da
 
 <blockquote>
 <p>
-If no Content-Language is specified, the default is that the content is intended for all language audiences. This might mean that the sender does not consider it to be specific to any natural language, or that the sender does not know for which language it is intended.
+If no <code>Content-Language</code> is specified, the default is that the content is intended for all language audiences. This might mean that the sender does not consider it to be specific to any natural language, or that the sender does not know for which language it is intended.
 </p>
 </blockquote>
 
+<p>
+如果没有指定 <code>Content-Language</code> 报头域，那么就默认内容是面向所有语言受众的。这可能意味着发送端并不认为它自已是面向具体任一种自然语言的，或者发送端并不知道它自己打算使用哪一种语言。
+</p>
+
 <blockquote>
 <p>
-Multiple languages MAY be listed for content that is intended for multiple audiences. For example, a rendition of the "Treaty of Waitangi", presented simultaneously in the original Maori and English versions, would call for
+Multiple languages <b>MAY</b> be listed for content that is intended for multiple audiences. For example, a rendition of the "Treaty of Waitangi", presented simultaneously in the original Maori and English versions, would call for
 </p>
 </blockquote>
+
+<p>
+对于面向多种受众的内容，<b>可以</b> 在 <code>Content-Language</code> 列出多种语言，多种语言，例如，一份“<ruby>怀唐伊条约<rt>Treaty of Waitangi</rt></ruby>”的译文，会同时出现<ruby>毛利语原文<rt>original Maori</rt></ruby>以及英文版本，那么可以这样设置：
+</p>
 
 <pre class="example">
 Content-Language: mi, en
@@ -1405,15 +1434,23 @@ Content-Language: mi, en
 
 <blockquote>
 <p>
-However, just because multiple languages are present within a representation does not mean that it is intended for multiple linguistic audiences. An example would be a beginner's language primer, such as "A First Lesson in Latin", which is clearly intended to be used by an English-literate audience. In this case, the Content-Language would properly only include "en".
+However, just because multiple languages are present within a representation does not mean that it is intended for multiple linguistic audiences. An example would be a beginner's language primer, such as "A First Lesson in Latin", which is clearly intended to be used by an English-literate audience. In this case, the <code>Content-Language</code> would properly only include "en".
 </p>
 </blockquote>
 
+<p>
+然而，只因为在一个 representation 里出现了多种语言就认为它是打算面向认识多种语言的受众，这是错误的。举个例子，一本面向新手的语言入门读物，就称为《第一堂拉丁语课》吧，是明确打算面向懂英语的读者的，那么，最恰当的做法是 <code>Content-Language</code> 只包含 "en"。
+</p>
+
 <blockquote>
 <p>
-Content-Language MAY be applied to any media type — it is not limited to textual documents.
+<code>Content-Language</code> <b>MAY</b> be applied to any media type — it is not limited to textual documents.
 </p>
 </blockquote>
+
+<p>
+<code>Content-Language</code> 可以应用于任意<ruby>媒体类型<rt>media type</rt></ruby> 的 representation 里，也就是说，它并不仅限于<ruby>文本类的文档<rt>textual documents</rt></ruby>。
+</p>
 </div>
 </div>
 </div>
@@ -1422,39 +1459,63 @@ Content-Language MAY be applied to any media type — it is not limited to textu
 <h4 id="org5e306f7">3.1.4. Identification</h4>
 <div class="outline-text-4" id="text-org5e306f7">
 </div>
-<div id="outline-container-org9aeefce" class="outline-5">
-<h5 id="org9aeefce">3.1.4.1. Identifying a Representation</h5>
-<div class="outline-text-5" id="text-org9aeefce">
+<div id="outline-container-orgc47d26b" class="outline-5">
+<h5 id="orgc47d26b">3.1.4.1. 标识一个 Representation / Identifying a Representation</h5>
+<div class="outline-text-5" id="text-orgc47d26b">
 <blockquote>
 <p>
 When a complete or partial representation is transferred in a message payload, it is often desirable for the sender to supply, or the recipient to determine, an identifier for a resource corresponding to that representation.
 </p>
 </blockquote>
 
+<p>
+当一个完整的或部分的 representation 被传入到一个<ruby>报文的有效载荷<rt>message payload</rt></ruby>里，该 representation 所对应的资源标识符通常交由发送端去提供，或者交由接收端去决定会更好一些。
+</p>
+
 <blockquote>
 <p>
 For a request message:
 </p>
 <ul class="org-ul">
-<li>If the request has a Content-Location header field, then the sender asserts that the payload is a representation of the resource identified by the Content-Location field-value. However, such an assertion cannot be trusted unless it can be verified by other means (not defined by this specification). The information might still be useful for revision history links.</li>
+<li>If the request has a <code>Content-Location</code> header field, then the sender asserts that the payload is a representation of the resource identified by the <code>Content-Location</code> field-value. However, such an assertion cannot be trusted unless it can be verified by other means (not defined by this specification). The information might still be useful for revision history links.</li>
 <li>Otherwise, the payload is unidentified.</li>
 </ul>
 </blockquote>
+
+<p>
+对于一个请求报文来说：
+</p>
+<ul class="org-ul">
+<li><b>如果</b> 该请求有一个 <code>Content-Location</code> 报头域，意味着发送端<ruby>断言<rt>assert</rt></ruby>请求报文的有效载荷是某个资源的一个 representation，而该资源是由 <code>Content-Location</code> 的值所标识的。但是，除非这种<ruby>断言<rt>assertion</rt></ruby>能够通过其他途径（本规则并没有定义有什么途径）来验证，否则不能相信该断言。对于修正历史链接，该信息还是有用的。</li>
+<li><b>否则</b>，该请求报文的有效载荷是<ruby>未标识<rt>unidentified</rt></ruby>的。</li>
+</ul>
 
 <blockquote>
 <p>
 For a response message, the following rules are applied in order until a match is found:
 </p>
 <ol class="org-ol">
-<li>If the request method is GET or HEAD and the response status code is 200 (OK), 204 (No Content), 206 (Partial Content), or 304 (Not Modified), the payload is a representation of the resource identified by the effective request URI (Section 5.5 of [RFC7230]).</li>
-<li>If the request method is GET or HEAD and the response status code is 203 (Non-Authoritative Information), the payload is a potentially modified or enhanced representation of the target resource as provided by an intermediary.</li>
-<li>If the response has a Content-Location header field and its field-value is a reference to the same URI as the effective request URI, the payload is a representation of the resource identified by the effective request URI.</li>
-<li>If the response has a Content-Location header field and its field-value is a reference to a URI different from the effective request URI, then the sender asserts that the payload is a representation of the resource identified by the Content-Location field-value. However, such an assertion cannot be trusted unless it can be verified by other means (not defined by this specification).</li>
+<li>If the request method is GET or HEAD and the response status code is <code>200 (OK)</code>, <code>204 (No Content)</code>, <code>206 (Partial Content)</code>, or <code>304 (Not Modified)</code>, the payload is a representation of the resource identified by the effective request URI (<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">Section 5.5</a> of [RFC7230]).</li>
+<li>If the request method is GET or HEAD and the response status code is <code>203 (Non-Authoritative Information)</code>, the payload is a potentially modified or enhanced representation of the target resource as provided by an intermediary.</li>
+<li>If the response has a <code>Content-Location</code> header field and its field-value is a reference to the same URI as the effective request URI, the payload is a representation of the resource identified by the effective request URI.</li>
+<li>If the response has a <code>Content-Location</code> header field and its field-value is a reference to a URI different from the effective request URI, then the sender asserts that the payload is a representation of the resource identified by the <code>Content-Location</code> field-value. However, such an assertion cannot be trusted unless it can be verified by other means (not defined by this specification).</li>
 <li>Otherwise, the payload is unidentified.</li>
 </ol>
 </blockquote>
+
+<p>
+对于一个响应报文来说：
+</p>
+<ol class="org-ol">
+<li><b>如果</b> 请求方法是 GET 或者 HEAD，且响应状态码是 <code>200 (OK)</code>、<code>204 (No Content)</code>、<code>206 (Partial Content)</code> 或者 <code>304 (Not Modified)</code>，那么，响应报文的有效载荷是某个资源的 representation，而该资源是由<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 所标识的（<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）。</li>
+<li><b>如果</b> 请求方法是 GET 或者 HEAD，且响应状态码是 <code>203 (Non-Authoritative Information)</code>，那么，响应报文的有效载荷是某个资源的 可能被修改过或增强过的 representation，该 representation 由某个中间人提供。</li>
+<li><b>如果</b> 响应带有一个 <code>Content-Location</code> 报头域并且它的域值是一个跟<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 相同的 URI 引用，那么，响应报文的有效载荷是某个资源的 representation，而该资源是由有效请求 URI 所标识的。</li>
+<li><b>如果</b> 响应带有一个 <code>Content-Location</code> 报头域并且它的域值是一个跟<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 不相同的 URI 引用，那么，发送端断言该有效载荷是某个资源的 representation，而该资源是由 <code>Content-Location</code> 的域值所标识的。但是，除非这种<ruby>断言<rt>assertion</rt></ruby>能够通过其他途径（本规则并没有定义有什么途径）来验证，否则不能相信该断言。</li>
+<li><b>否则</b>，该响应报文的有效载荷是未标识的。</li>
+</ol>
 </div>
 </div>
+
 <div id="outline-container-org6190703" class="outline-5">
 <h5 id="org6190703"><a id="ID-91650144-4bfc-4362-b628-f96578a5c756"></a>3.1.4.2. Content-Location</h5>
 <div class="outline-text-5" id="text-org6190703">
@@ -1464,6 +1525,10 @@ The "Content-Location" header field references a URI that can be used as an iden
 </p>
 </blockquote>
 
+<p>
+<code>Content-Location</code> 报头域是一个 URI，该 URI 能够用于作为一个与封装在报文有效载荷内的 representation 所对应的具体资源的标识符。换句话说，如果某个用户代理对这个 URI 执行了 GET 请求，那么会回应一个 200 (OK) 响应报文，该响应报文的有效载荷会封装相同的 representation。
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">Content-Location = absolute-URI / partial-URI
 </pre>
@@ -1471,45 +1536,73 @@ The "Content-Location" header field references a URI that can be used as an iden
 
 <blockquote>
 <p>
-The <code>Content-Location</code> value is not a replacement for the effective Request URI (Section 5.5 of [RFC7230]). It is representation metadata. It has the same syntax and semantics as the header field of the same name defined for MIME body parts in Section 4 of [RFC2557]. However, its appearance in an HTTP message has some special implications for HTTP recipients.
+The <code>Content-Location</code> value is not a replacement for the effective Request URI (<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">Section 5.5</a> of [RFC7230]). It is representation metadata. It has the same syntax and semantics as the header field of the same name defined for MIME body parts in <a href="https://tools.ietf.org/html/rfc2557#section-4">Section 4</a> of [RFC2557]. However, its appearance in an HTTP message has some special implications for HTTP recipients.
 </p>
 </blockquote>
+
+<p>
+<code>Content-Location</code> 的值并不是用来替换<ruby>有效请求 URI<rt>effective request URI</rt></ruby>（<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）的。它是一个 representation metadata。它具有与定义在 MIME 的同名报头域（<a href="https://tools.ietf.org/html/rfc2557#section-4">【RFC2557】章节 4</a>）相同的句法和语义。但是，这个报头域出现在一个 HTTP 报头里是具有特殊含义的。
+</p>
 
 <blockquote>
 <p>
-If <code>Content-Location</code> is included in a 2xx (Successful) response message and its value refers (after conversion to absolute form) to a URI that is the same as the effective request URI, then the recipient MAY consider the payload to be a current representation of that resource at the time indicated by the message origination date. For a GET (Section 4.3.1) or HEAD (Section 4.3.2) request, this is the same as the default semantics when no Content-Location is provided by the server. For a state-changing request like PUT (Section 4.3.4) or POST (Section 4.3.3), it implies that the server's response contains the new representation of that resource, thereby distinguishing it from representations that might only report about the action (e.g., "It worked!"). This allows authoring applications to update their local copies without the need for a subsequent GET request.
+If <code>Content-Location</code> is included in a <code>2xx (Successful)</code> response message and its value refers (after conversion to absolute form) to a URI that is the same as the effective request URI, then the recipient <b>MAY</b> consider the payload to be a current representation of that resource at the time indicated by the message origination date. For a GET (<a href="#org479e86d">Section 4.3.1</a>) or HEAD (<a href="#org607980d">Section 4.3.2</a>) request, this is the same as the default semantics when no <code>Content-Location</code> is provided by the server. For a state-changing request like PUT (<a href="#org2e14fb1">Section 4.3.4</a>) or POST (<a href="#org24c5a01">Section 4.3.3</a>), it implies that the server's response contains the new representation of that resource, thereby distinguishing it from representations that might only report about the action (e.g., "It worked!"). This allows authoring applications to update their local copies without the need for a subsequent GET request.
 </p>
 </blockquote>
+
+<p>
+如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应报文里，且它的值指向于（在转换为<ruby>绝对形式<rt>absolute form</rt></ruby>之后）一个与有效请求 URI 相同的 URI，那么，接收端 <b>可以</b> 将该有效载荷认为是一个在特定时间里的资源的 current representation，所述特定时间是由<ruby>报文始发日期<rt>message origination date</rt></ruby>所指定的时间。对于 GET（<a href="#org479e86d">章节 4.3.1</a>）或者 HEAD（<a href="#org607980d">章节 4.3.2</a>）请求来说，这与在服务器没有提供 <code>Content-Location</code> 报头域的情况下的默认语义相一致。对于类似 PUT（<a href="#org2e14fb1">章节 4.3.4</a>）或者 POST（<a href="#org24c5a01">章节 4.3.3</a>）这些会<ruby>改变状态<rt>state-changing</rt></ruby>的请求来说，这意味着服务器的响应包含了该资源的新的 representation，由此与那些只报告动作方面的信息（例如，“<ruby>它生效了！<rt>It worked!</rt></ruby>”）的 representations 作区分。
+</p>
 
 <blockquote>
 <p>
-If <code>Content-Location</code> is included in a 2xx (Successful) response message and its field-value refers to a URI that differs from the effective request URI, then the origin server claims that the URI is an identifier for a different resource corresponding to the enclosed representation. Such a claim can only be trusted if both identifiers share the same resource owner, which cannot be programmatically determined via HTTP.
+If <code>Content-Location</code> is included in a <code>2xx (Successful)</code> response message and its field-value refers to a URI that differs from the effective request URI, then the origin server claims that the URI is an identifier for a different resource corresponding to the enclosed representation. Such a claim can only be trusted if both identifiers share the same resource owner, which cannot be programmatically determined via HTTP.
 </p>
-</blockquote>
-
 <ul class="org-ul">
-<li>For a response to a GET or HEAD request, this is an indication that the effective request URI refers to a resource that is subject to content negotiation and the Content-Location field-value is a more specific identifier for the selected representation.</li>
-<li>For a 201 (Created) response to a state-changing method, a Content-Location field-value that is identical to the Location field-value indicates that this payload is a current representation of the newly created resource.</li>
-<li>Otherwise, such a Content-Location indicates that this payload is a representation reporting on the requested action's status and that the same report is available (for future access with GET) at the given URI. For example, a purchase transaction made via a POST request might include a receipt document as the payload of the 200 (OK) response; the Content-Location field-value provides an identifier for retrieving a copy of that same receipt in the future.</li>
+<li>For a response to a GET or HEAD request, this is an indication that the effective request URI refers to a resource that is subject to content negotiation and the <code>Content-Location</code> field-value is a more specific identifier for the selected representation.</li>
+<li>For a <code>201 (Created)</code> response to a state-changing method, a <code>Content-Location</code> field-value that is identical to the <code>Location</code> field-value indicates that this payload is a current representation of the newly created resource.</li>
+<li>Otherwise, such a <code>Content-Location</code> indicates that this payload is a representation reporting on the requested action's status and that the same report is available (for future access with GET) at the given URI. For example, a purchase transaction made via a POST request might include a receipt document as the payload of the <code>200 (OK)</code> response; the <code>Content-Location</code> field-value provides an identifier for retrieving a copy of that same receipt in the future.</li>
+</ul>
+</blockquote>
+
+<p>
+如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应报文里，且它的域值指向于一个与有效请求 URI 不相同的 URI，那么，源服务器<ruby>声称<rt>claim</rt></ruby>该 URI 是一个与封装在该有效载荷内的 representation 相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
+</p>
+<ul class="org-ul">
+<li>对于回应给 GET 或 HEAD 请求的一个响应，它表明了<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 指向到一个服从<ruby>内容协商<rt>content negotiation</rt></ruby>的资源，并且针对<ruby>已选定的 representation<rt>selective representation</rt></ruby>  来说，<code>Content-Location</code> 的域值是一个更加具体的标识符。</li>
+<li>对于回应给<ruby>状态改变的请求方法<rt>state-changing method</rt></ruby>的一个 <code>201 (Created)</code> 响应，如果 <code>Content-Location</code> 的域值与 <code>Location</code> 的域值相同，那么，这表明这个有效载荷是新近被创建的资源的<ruby>当前 representation<rt>current representation</rt></ruby>。</li>
+<li>否则，这个 <code>Content-Location</code> 表明了这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对 representation 进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 <code>200 (OK)</code> 响应的有效载荷，<code>Content-Location</code> 的域值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。</li>
 </ul>
 
 <blockquote>
 <p>
-A user agent that sends Content-Location in a request message is stating that its value refers to where the user agent originally obtained the content of the enclosed representation (prior to any modifications made by that user agent). In other words, the user agent is providing a back link to the source of the original representation.
+A user agent that sends <code>Content-Location</code> in a request message is stating that its value refers to where the user agent originally obtained the content of the enclosed representation (prior to any modifications made by that user agent). In other words, the user agent is providing a back link to the source of the original representation.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-An origin server that receives a Content-Location field in a request message MUST treat the information as transitory request context rather than as metadata to be saved verbatim as part of the representation. An origin server MAY use that context to guide in processing the request or to save it for other uses, such as within source links or versioning metadata. However, an origin server MUST NOT use such context information to alter the request semantics.
+用户代理在其发送的请求报文里带有 <code>Content-Location</code> 是想表达它的域值里的 URI 指的是用户代理最开始是在哪里获得这个封装在有效载荷内的 representation 的内容的（在该用户代理对这个 representation 所作的任何更改之前）。也就是说，该用户代理提供了一种对于原始 representation 的<ruby>来源<rt>source</rt></ruby>的<ruby>反向链接<rt>back link</rt></ruby><sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-For example, if a client makes a PUT request on a negotiated resource and the origin server accepts that PUT (without redirection), then the new state of that resource is expected to be consistent with the one representation supplied in that PUT; the Content-Location cannot be used as a form of reverse content selection identifier to update only one of the negotiated representations. If the user agent had wanted the latter semantics, it would have applied the PUT directly to the Content-Location URI.
+An origin server that receives a <code>Content-Location</code> field in a request message <b>MUST</b> treat the information as transitory request context rather than as metadata to be saved verbatim as part of the representation. An origin server <b>MAY</b> use that context to guide in processing the request or to save it for other uses, such as within source links or versioning metadata. However, an origin server <b>MUST NOT</b> use such context information to alter the request semantics.
 </p>
 </blockquote>
+
+<p>
+源服务器在一个请求报文中接收到 <code>Content-Location</code> 报头域的时候，<b>必须</b> 将该报头域的信息作为<ruby>暂时的请求上下文<rt>transitory request context</rt></ruby>来对待，而不是作为 representation metadata 来逐字保存。源服务器 <b>可以</b> 使用该上下文来引导请求的处理，或者将其保存起来留作其他用途，例如，用于<ruby>来源链接<rt>source links</rt></ruby>或<ruby>元数据的版本管理<rt>versioning metadata</rt></ruby>。但是，源服务器 <b>禁止</b> 使用这种上下文信息来改变该请求的语义。
+</p>
+
+<blockquote>
+<p>
+For example, if a client makes a PUT request on a negotiated resource and the origin server accepts that PUT (without redirection), then the new state of that resource is expected to be consistent with the one representation supplied in that PUT; the <code>Content-Location</code> cannot be used as a form of reverse content selection identifier to update only one of the negotiated representations. If the user agent had wanted the latter semantics, it would have applied the PUT directly to the <code>Content-Location</code> URI.
+</p>
+</blockquote>
+
+<p>
+例如，如果一个客户端对一个<ruby>协商过的资源<rt>negotiated resource</rt></ruby>发起一个 PUT 请求，并且源服务器接受了这个 PUT（没有经过<ruby>重定向<rt>redirection</rt></ruby>），那么，资源的新状态预期将与提供自该 PUT 请求的 representation 相一致；PUT 请求里的 <code>Content-Location</code> 报头域不能当作是一种<ruby>反向内容选择标识符<rt>reverse content selection identifier</rt></ruby>来仅对协商的 representations 中的其中一种进行更新。如果客户端想要后者这种语义，它可以直接对 <code>Content-Location</code> 的 URI 应用 PUT 请求。
+</p>
 </div>
 </div>
 </div>
@@ -1524,11 +1617,19 @@ The representation data associated with an HTTP message is either provided as th
 </p>
 </blockquote>
 
+<p>
+一个 HTTP 报文相关联的 representation data 或者提供作为报文有效载荷，或者通过报文的语义和有效请求 URI 来引用它。representation data 是处于某种格式和编码中，这种格式和编码由 representation metadata 相关的报头域来定义。
+</p>
+
 <blockquote>
 <p>
-The data type of the representation data is determined via the header fields Content-Type and Content-Encoding. These define a two-layer, ordered encoding model:
+The data type of the representation data is determined via the header fields <code>Content-Type</code> and <code>Content-Encoding</code>. These define a two-layer, ordered encoding model:
 </p>
 </blockquote>
+
+<p>
+representation data 的数据类型是经由 <code>Content-Type</code> 和 <code>Content-Encoding</code> 报头域决定的。它们共同定义了一种<ruby>双层的、顺序编码的模型<rt>two-layer, ordered encoding model</rt></ruby>：
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">representation-data := Content-Encoding( Content-Type( bits ) )
@@ -1537,24 +1638,54 @@ The data type of the representation data is determined via the header fields Con
 </div>
 </div>
 
-<div id="outline-container-org3d03469" class="outline-3">
-<h3 id="org3d03469">3.3. Payload Semantics</h3>
-<div class="outline-text-3" id="text-org3d03469">
+<div id="outline-container-orgb3d98f9" class="outline-3">
+<h3 id="orgb3d98f9"><a id="ID-4c395bab-baa6-4895-b677-5daa1584da6e"></a>3.3. 有效载荷的语义 / Payload Semantics</h3>
+<div class="outline-text-3" id="text-orgb3d98f9">
+<blockquote>
 <p>
-Some HTTP messages transfer a complete or partial representation as the message "payload". In some cases, a payload might contain only the associated representation's header fields (e.g., responses to HEAD) or only some part(s) of the representation data (e.g., the 206 (Partial Content) status code).
+Some HTTP messages transfer a complete or partial representation as the message "payload". In some cases, a payload might contain only the associated representation's header fields (e.g., responses to HEAD) or only some part(s) of the representation data (e.g., the <code>206 (Partial Content)</code> status code).
 </p>
+</blockquote>
 
 <p>
-The purpose of a payload in a request is defined by the method semantics. For example, a representation in the payload of a PUT request (Section 4.3.4) represents the desired state of the target resource if the request is successfully applied, whereas a representation in the payload of a POST request (Section 4.3.3) represents information to be processed by the target resource.
+某些 HTTP 报文传输一个完整或部分的 representation 作为报文的“<ruby>有效载荷<rt>payload</rt></ruby>”。在某些情况下，一个有效载荷可能只包含 representation 相关的报头域（例如，回应给 HEAD 的响应报文），或者只有 representation 的某（几）部分（例如，<code>206 (Partial Content)</code> 状态码）。
 </p>
+
+<blockquote>
+<p>
+The purpose of a payload in a request is defined by the method semantics. For example, a representation in the payload of a PUT request (<a href="#org2e14fb1">Section 4.3.4</a>) represents the desired state of the target resource if the request is successfully applied, whereas a representation in the payload of a POST request (<a href="#org24c5a01">Section 4.3.3</a>) represents information to be processed by the target resource.
+</p>
+</blockquote>
 
 <p>
-In a response, the payload's purpose is defined by both the request method and the response status code. For example, the payload of a 200 (OK) response to GET (Section 4.3.1) represents the current state of the target resource, as observed at the time of the message origination date (Section 7.1.1.2), whereas the payload of the same status code in a response to POST might represent either the processing result or the new state of the target resource after applying the processing. Response messages with an error status code usually contain a payload that represents the error condition, such that it describes the error state and what next steps are suggested for resolving it.
+对于请求报文里的有效载荷，其目的是由<ruby>请求方法的语义<rt>request method semantics</rt></ruby>来定义的。例如，在一个 PUT 请求（<a href="#org2e14fb1">章节 4.3.4</a>）的有效载荷内的 representation 表示如果成功应用该请求以后，<ruby>目标资源<rt>target resource</rt></ruby>的预期的状态。而一个 POST 请求（<a href="#org24c5a01">章节 4.3.3</a>）的有效载荷内的 representation 表示将由目标资源来处理的信息。
 </p>
 
+<blockquote>
+<p>
+In a response, the payload's purpose is defined by both the request method and the response status code. For example, the payload of a <code>200 (OK)</code> response to GET (<a href="#org479e86d">Section 4.3.1</a>) represents the current state of the target resource, as observed at the time of the message origination date (<a href="#org8e5ec45">Section 7.1.1.2</a>), whereas the payload of the same status code in a response to POST might represent either the processing result or the new state of the target resource after applying the processing. Response messages with an error status code usually contain a payload that represents the error condition, such that it describes the error state and what next steps are suggested for resolving it.
+</p>
+</blockquote>
+
+<p>
+在一个响应报文里，有效载荷的目标是由<ruby>请求方法<rt>request method</rt></ruby>和<ruby>响应状态码<rt>reponse status code</rt></ruby>两者共同来定义的。例如，一个回应给 GET 请求（<a href="#org479e86d">章节 4.3.1</a>）的 <code>200 (OK)</code> 响应报文表示在<ruby>报文发起日期<rt>message origination date</rt></ruby>（<a href="#org8e5ec45">章节 7.1.1.2</a>）所观察到的<ruby>目标资源<rt>target resource</rt></ruby>的目前状态。而一个回应给 POST 请求的 <code>200 (OK)</code> 响应报文可能表示：或者是在应用该请求以后的处理结果，或者是在应用该请求以后目标资源的新状态。带有一个错误状态码的响应报文通常会包含一个表示该错误条件的有效载荷来，以描述错误状态以及如何解决错误的下一步建议。
+</p>
+
+<blockquote>
 <p>
 Header fields that specifically describe the payload, rather than the associated representation, are referred to as "payload header fields". Payload header fields are defined in other parts of this specification, due to their impact on message parsing.
 </p>
+</blockquote>
+
+<p>
+特定用于描述有效载荷而不是描述相关的 representation 的报头域，被称为“<ruby>有效载荷报头域<rt>payload header fields</rt></ruby>”。有效载荷报头域被定义在本规范的其他部分中，由它们对<ruby>报文解析<rt>message parsing</rt></ruby>的影响来决定。
+</p>
+
+<blockquote>
+<p>
+译注：有效载荷报头域并不是说这些报头域在有效载荷里，它们依然被放置在<ruby>报头块<rt>header section</rt></ruby>里。
+</p>
+</blockquote>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1573,58 +1704,74 @@ Header fields that specifically describe the payload, rather than the associated
 <tbody>
 <tr>
 <td class="org-left">Content-Length</td>
-<td class="org-left">Section 3.3.2 of [RFC7230]</td>
+<td class="org-left"><a href="RFC7230.html#ID-7b3e90b9-3ae5-402b-922c-2342d361c79f">Section 3.3.2</a> of [RFC7230]</td>
 </tr>
 
 <tr>
 <td class="org-left">Content-Range</td>
-<td class="org-left">Section 4.2 of [RFC7233]</td>
+<td class="org-left"><a href="https://tools.ietf.org/html/rfc7233">Section 4.2</a> of [RFC7233]</td>
 </tr>
 
 <tr>
 <td class="org-left">Trailer</td>
-<td class="org-left">Section 4.4 of [RFC7230]</td>
+<td class="org-left"><a href="RFC7230.html#ID-5ecf5800-1004-4acb-ba25-8772abdecd5a">Section 4.4</a> of [RFC7230]</td>
 </tr>
 
 <tr>
 <td class="org-left">Transfer-Encoding</td>
-<td class="org-left">Section 3.3.1 of [RFC7230]</td>
+<td class="org-left"><a href="RFC7230.html#ID-1754823B-D0BC-410F-A17B-E7ADA1AA79BC">Section 3.3.1</a> of [RFC7230]</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 
-<div id="outline-container-orgf0d3e2d" class="outline-3">
-<h3 id="orgf0d3e2d"><a id="ID-c45cb9ca-1e51-4738-8c43-231e7316ea86"></a>3.4. Content Negotiation</h3>
-<div class="outline-text-3" id="text-orgf0d3e2d">
+<div id="outline-container-org7e87af6" class="outline-3">
+<h3 id="org7e87af6"><a id="ID-c45cb9ca-1e51-4738-8c43-231e7316ea86"></a>3.4. 内容协商 / Content Negotiation</h3>
+<div class="outline-text-3" id="text-org7e87af6">
 <blockquote>
 <p>
 When responses convey payload information, whether indicating a success or an error, the origin server often has different ways of representing that information; for example, in different formats, languages, or encodings. Likewise, different users or user agents might have differing capabilities, characteristics, or preferences that could influence which representation, among those available, would be best to deliver. For this reason, HTTP provides mechanisms for content negotiation.
 </p>
 </blockquote>
 
+<p>
+响应在传达有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器——在所有可用的 representations 中，究竟响应哪一个 representation 才是最合适的。出于上述原因，HTTP 提供了<ruby>内容协商<rt>content negotiation</rt></ruby>的机制。
+</p>
+
 <blockquote>
 <p>
-This specification defines two patterns of content negotiation that can be made visible within the protocol: "proactive", where the server selects the representation based upon the user agent's stated preferences, and "reactive" negotiation, where the server provides a list of representations for the user agent to choose from. Other patterns of content negotiation include "conditional content", where the representation consists of multiple parts that are selectively rendered based on user agent parameters, "active content", where the representation contains a script that makes additional (more specific) requests based on the user agent characteristics, and "Transparent Content Negotiation" ([RFC2295]), where content selection is performed by an intermediary. These patterns are not mutually exclusive, and each has trade-offs in applicability and practicality.
+This specification defines two patterns of content negotiation that can be made visible within the protocol: "proactive", where the server selects the representation based upon the user agent's stated preferences, and "reactive" negotiation, where the server provides a list of representations for the user agent to choose from. Other patterns of content negotiation include "conditional content", where the representation consists of multiple parts that are selectively rendered based on user agent parameters, "active content", where the representation contains a script that makes additional (more specific) requests based on the user agent characteristics, and "Transparent Content Negotiation" ([<a href="https://tools.ietf.org/html/rfc2295">RFC2295</a>]), where content selection is performed by an intermediary. These patterns are not mutually exclusive, and each has trade-offs in applicability and practicality.
 </p>
 </blockquote>
+
+<p>
+本规范定义了两种内容协商的模式，使之能够在协议里可见：“<ruby>主动型<rt>proactive</rt></ruby>”和“<ruby>被动型<rt>reactive</rt></ruby>”。对于主动型内容协商，服务器会依据用户代理申明的偏好来选择 representation。对于被动型内容协商，服务会提供一系列的 representations 供用户代理选择。其他的内容协商的模式包括：“<ruby>条件内容<rt>conditional content</rt></ruby>”，representation 由多个部分组成，源服务器基于用户代理的参数来选择性地渲染各个部分；“<ruby>活动内容<rt>active content</rt></ruby>”，representation 包含有一个脚本，该脚本可以基于用户代理的特性来生成额外的（更加具体的）请求；“<ruby>透明内容协商<rt>Transparent Content Negotiation</rt></ruby>”（【<a href="https://tools.ietf.org/html/rfc2295">RFC2295</a>】），由一个中间人来执行内容选择。这些模式不是<ruby>互斥的<rt>mutually exclusive</rt></ruby>，每种都有其<ruby>适应性<rt>applicability</rt></ruby>和<ruby>实用性<rt>practicality</rt></ruby>。
+</p>
 
 <blockquote>
 <p>
 Note that, in all cases, HTTP is not aware of the resource semantics. The consistency with which an origin server responds to requests, over time and over the varying dimensions of content negotiation, and thus the "sameness" of a resource's observed representations over time, is determined entirely by whatever entity or algorithm selects or generates those responses. HTTP pays no attention to the man behind the curtain.
 </p>
 </blockquote>
+
+<p>
+TODO 需要注意的是，不管什么情况下，HTTP 都不知道资源的语义。HTTP 并不在意幕后的人物。
+</p>
 </div>
 
-<div id="outline-container-org1a2c1e0" class="outline-4">
-<h4 id="org1a2c1e0">3.4.1. Proactive Negotiation</h4>
-<div class="outline-text-4" id="text-org1a2c1e0">
+<div id="outline-container-orgcc6adb1" class="outline-4">
+<h4 id="orgcc6adb1">3.4.1. 主动型协商 / Proactive Negotiation</h4>
+<div class="outline-text-4" id="text-orgcc6adb1">
 <blockquote>
 <p>
-When content negotiation preferences are sent by the user agent in a request to encourage an algorithm located at the server to select the preferred representation, it is called proactive negotiation (a.k.a., server-driven negotiation). Selection is based on the available representations for a response (the dimensions over which it might vary, such as language, content-coding, etc.) compared to various information supplied in the request, including both the explicit negotiation fields of Section 5.3 and implicit characteristics, such as the client's network address or parts of the User-Agent field.
+When content negotiation preferences are sent by the user agent in a request to encourage an algorithm located at the server to select the preferred representation, it is called proactive negotiation (a.k.a., server-driven negotiation). Selection is based on the available representations for a response (the dimensions over which it might vary, such as language, content-coding, etc.) compared to various information supplied in the request, including both the explicit negotiation fields of Section 5.3 and implicit characteristics, such as the client's network address or parts of the <code>User-Agent</code> field.
 </p>
 </blockquote>
+
+<p>
+用户代理发送包含内容协商的偏好信息的请求到服务器，让服务器中的某个算法来选择偏好 representation，称之为<ruby>主动型协商<rt>proactive negotiation</rt></ruby>（也称<ruby>服务器驱动型协商<rt>server-driven negotiation</rt></ruby>）。这种选择是基于供响应使用的 representations （维度有很多，例如语言、内容编码等），对比多种由请求提供的信息，包括显式协商报头域（章节 5.3）和隐式特性两者，例如客户端的网络地址或者 <code>User-Agent</code> 报头域的部分信息。
+</p>
 
 <blockquote>
 <p>
@@ -1658,9 +1805,9 @@ A Vary header field (Section 7.1.4) is often sent in a response subject to proac
 </div>
 </div>
 
-<div id="outline-container-orgb263106" class="outline-4">
-<h4 id="orgb263106">3.4.2. Reactive Negotiation</h4>
-<div class="outline-text-4" id="text-orgb263106">
+<div id="outline-container-orgb6b9e23" class="outline-4">
+<h4 id="orgb6b9e23">3.4.2. 被动型协商 / Reactive Negotiation</h4>
+<div class="outline-text-4" id="text-orgb6b9e23">
 <blockquote>
 <p>
 With reactive negotiation (a.k.a., agent-driven negotiation), selection of the best response representation (regardless of the status code) is performed by the user agent after receiving an initial response from the origin server that contains a list of resources for alternative representations. If the user agent is not satisfied by the initial response representation, it can perform a GET request on one or more of the alternative resources, selected based on metadata included in the list, to obtain a different form of representation for that response. Selection of alternatives might be performed automatically by the user agent or manually by the user selecting from a generated (possibly hypertext) menu.
@@ -1728,13 +1875,19 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 </div>
 </div>
 <div id="outline-container-org607980d" class="outline-4">
-<h4 id="org607980d">4.3.2. HEAD</h4>
+<h4 id="org607980d"><a id="ID-d00f1692-2d40-4b09-a634-9c87fce07bc4"></a>4.3.2. HEAD</h4>
+<div class="outline-text-4" id="text-org607980d">
+</div>
 </div>
 <div id="outline-container-org24c5a01" class="outline-4">
-<h4 id="org24c5a01">4.3.3. POST</h4>
+<h4 id="org24c5a01"><a id="ID-d672d01b-615b-416a-a750-0442a6901ed0"></a>4.3.3. POST</h4>
+<div class="outline-text-4" id="text-org24c5a01">
+</div>
 </div>
 <div id="outline-container-org2e14fb1" class="outline-4">
-<h4 id="org2e14fb1">4.3.4. PUT</h4>
+<h4 id="org2e14fb1"><a id="ID-28f69be8-26e9-4dd7-930e-7c683d7bcf8a"></a>4.3.4. PUT</h4>
+<div class="outline-text-4" id="text-org2e14fb1">
+</div>
 </div>
 <div id="outline-container-orgf7b2242" class="outline-4">
 <h4 id="orgf7b2242">4.3.5. DELETE</h4>
@@ -1961,6 +2114,16 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 </div>
 <div id="outline-container-org67adfb6" class="outline-4">
 <h4 id="org67adfb6">7.1.1. Origination Date</h4>
+<div class="outline-text-4" id="text-org67adfb6">
+</div>
+<div id="outline-container-org8c425df" class="outline-5">
+<h5 id="org8c425df">7.1.1.1. Date/Time Formats</h5>
+</div>
+<div id="outline-container-org8e5ec45" class="outline-5">
+<h5 id="org8e5ec45"><a id="ID-5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1"></a>7.1.1.2. Data</h5>
+<div class="outline-text-5" id="text-org8e5ec45">
+</div>
+</div>
 </div>
 <div id="outline-container-orgad9277e" class="outline-4">
 <h4 id="orgad9277e">7.1.2. Location</h4>
@@ -2123,6 +2286,16 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 <div id="outline-container-org40e7e5d" class="outline-2">
 <h2 id="org40e7e5d">Author' Addresses</h2>
 </div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+Backlink，反向连接，参考 <a href="https://en.wikipedia.org/wiki/Backlink">Wikipedia: Backlink</a>。
+</p></div></div>
+
+
 </div>
+</div></div>
 </body>
 </html>
