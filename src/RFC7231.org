@@ -601,23 +601,46 @@ representation data 的数据类型是经由 =Content-Type= 和 =Content-Encodin
   representation-data := Content-Encoding( Content-Type( bits ) )
 #+END_SRC
 
-** 3.3. Payload Semantics
-Some HTTP messages transfer a complete or partial representation as the message "payload". In some cases, a payload might contain only the associated representation's header fields (e.g., responses to HEAD) or only some part(s) of the representation data (e.g., the 206 (Partial Content) status code).
+** 3.3. 有效载荷的语义 / Payload Semantics
+:PROPERTIES:
+:ID:       4c395bab-baa6-4895-b677-5daa1584da6e
+:END:
+#+BEGIN_QUOTE
+Some HTTP messages transfer a complete or partial representation as the message "payload". In some cases, a payload might contain only the associated representation's header fields (e.g., responses to HEAD) or only some part(s) of the representation data (e.g., the =206 (Partial Content)= status code).
+#+END_QUOTE
 
-The purpose of a payload in a request is defined by the method semantics. For example, a representation in the payload of a PUT request (Section 4.3.4) represents the desired state of the target resource if the request is successfully applied, whereas a representation in the payload of a POST request (Section 4.3.3) represents information to be processed by the target resource.
+某些 HTTP 报文传输一个完整或部分的 representation 作为报文的“[[ruby:payload][有效载荷]]”。在某些情况下，一个有效载荷可能只包含 representation 相关的报头域（例如，回应给 HEAD 的响应报文），或者只有 representation 的某（几）部分（例如，=206 (Partial Content)= 状态码）。
 
-In a response, the payload's purpose is defined by both the request method and the response status code. For example, the payload of a 200 (OK) response to GET (Section 4.3.1) represents the current state of the target resource, as observed at the time of the message origination date (Section 7.1.1.2), whereas the payload of the same status code in a response to POST might represent either the processing result or the new state of the target resource after applying the processing. Response messages with an error status code usually contain a payload that represents the error condition, such that it describes the error state and what next steps are suggested for resolving it.
+#+BEGIN_QUOTE
+The purpose of a payload in a request is defined by the method semantics. For example, a representation in the payload of a PUT request ([[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][Section 4.3.4]]) represents the desired state of the target resource if the request is successfully applied, whereas a representation in the payload of a POST request ([[id:d672d01b-615b-416a-a750-0442a6901ed0][Section 4.3.3]]) represents information to be processed by the target resource.
+#+END_QUOTE
 
+对于请求报文里的有效载荷，其目的是由[[ruby:request%20method%20semantics][请求方法的语义]]来定义的。例如，在一个 PUT 请求（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）的有效载荷内的 representation 表示如果成功应用该请求以后，[[ruby:target%20resource][目标资源]]的预期的状态。而一个 POST 请求（[[id:d672d01b-615b-416a-a750-0442a6901ed0][章节 4.3.3]]）的有效载荷内的 representation 表示将由目标资源来处理的信息。
+
+#+BEGIN_QUOTE
+In a response, the payload's purpose is defined by both the request method and the response status code. For example, the payload of a =200 (OK)= response to GET ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]]) represents the current state of the target resource, as observed at the time of the message origination date ([[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][Section 7.1.1.2]]), whereas the payload of the same status code in a response to POST might represent either the processing result or the new state of the target resource after applying the processing. Response messages with an error status code usually contain a payload that represents the error condition, such that it describes the error state and what next steps are suggested for resolving it.
+#+END_QUOTE
+
+在一个响应报文里，有效载荷的目标是由[[ruby:request%20method][请求方法]]和[[ruby:reponse%20status%20code][响应状态码]]两者共同来定义的。例如，一个回应给 GET 请求（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）的 =200 (OK)= 响应报文表示在[[ruby:message%20origination%20date][报文发起日期]]（[[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][章节 7.1.1.2]]）所观察到的[[ruby:target%20resource][目标资源]]的目前状态。而一个回应给 POST 请求的 =200 (OK)= 响应报文可能表示：或者是在应用该请求以后的处理结果，或者是在应用该请求以后目标资源的新状态。带有一个错误状态码的响应报文通常会包含一个表示该错误条件的有效载荷来，以描述错误状态以及如何解决错误的下一步建议。
+
+#+BEGIN_QUOTE
 Header fields that specifically describe the payload, rather than the associated representation, are referred to as "payload header fields". Payload header fields are defined in other parts of this specification, due to their impact on message parsing.
+#+END_QUOTE
+
+特定用于描述有效载荷而不是描述相关的 representation 的报头域，被称为“[[ruby:payload%20header%20fields][有效载荷报头域]]”。有效载荷报头域被定义在本规范的其他部分中，由它们对[[ruby:message%20parsing][报文解析]]的影响来决定。
+
+#+BEGIN_QUOTE
+译注：有效载荷报头域并不是说这些报头域在有效载荷里，它们依然被放置在[[header section][报头块]]里。
+#+END_QUOTE
 
 | Header Field Name | Defined in...              |
 |-------------------+----------------------------|
-| Content-Length    | Section 3.3.2 of [RFC7230] |
-| Content-Range     | Section 4.2 of [RFC7233]   |
-| Trailer           | Section 4.4 of [RFC7230]   |
-| Transfer-Encoding | Section 3.3.1 of [RFC7230] |
+| Content-Length    | [[id:7b3e90b9-3ae5-402b-922c-2342d361c79f][Section 3.3.2]] of [RFC7230] |
+| Content-Range     | [[https://tools.ietf.org/html/rfc7233][Section 4.2]] of [RFC7233]   |
+| Trailer           | [[id:5ecf5800-1004-4acb-ba25-8772abdecd5a][Section 4.4]] of [RFC7230]   |
+| Transfer-Encoding | [[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][Section 3.3.1]] of [RFC7230] |
 
-** 3.4. Content Negotiation
+** 3.4. 内容协商 / Content Negotiation
 :PROPERTIES:
 :ID:       c45cb9ca-1e51-4738-8c43-231e7316ea86
 :END:
@@ -789,6 +812,11 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 :END:
 ** 7.1. Control Data
 *** 7.1.1. Origination Date
+**** 7.1.1.1. Date/Time Formats
+**** 7.1.1.2. Data
+:PROPERTIES:
+:ID:       5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1
+:END:
 *** 7.1.2. Location
 *** 7.1.3. Retry-After
 *** 7.1.4. Vary
