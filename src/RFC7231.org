@@ -589,9 +589,13 @@ For example, if a client makes a PUT request on a negotiated resource and the or
 The representation data associated with an HTTP message is either provided as the payload body of the message or referred to by the message semantics and the effective request URI. The representation data is in a format and encoding defined by the representation metadata header fields.
 #+END_QUOTE
 
+一个 HTTP 报文相关联的 representation data 或者提供作为报文有效载荷，或者通过报文的语义和有效请求 URI 来引用它。representation data 是处于某种格式和编码中，这种格式和编码由 representation metadata 相关的报头域来定义。
+
 #+BEGIN_QUOTE
-The data type of the representation data is determined via the header fields Content-Type and Content-Encoding. These define a two-layer, ordered encoding model:
+The data type of the representation data is determined via the header fields =Content-Type= and =Content-Encoding=. These define a two-layer, ordered encoding model:
 #+END_QUOTE
+
+representation data 的数据类型是经由 =Content-Type= 和 =Content-Encoding= 报头域决定的。它们共同定义了一种[[ruby:two-layer,%20ordered%20encoding%20model][双层的、顺序编码的模型]]：
 
 #+BEGIN_SRC text
   representation-data := Content-Encoding( Content-Type( bits ) )
