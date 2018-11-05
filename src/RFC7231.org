@@ -391,7 +391,7 @@ If one or more encodings have been applied to a representation, the sender that 
 Unlike =Transfer-Encoding= ([[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][Section 3.3.1]] of [RFC7230]), the codings listed in =Content-Encoding= are a characteristic of the representation; the representation is defined in terms of the coded form, and all other metadata about the representation is about the coded form unless otherwise noted in the metadata definition. Typically, the representation is only decoded just prior to rendering or analogous usage.
 #+END_QUOTE
 
-不像 =Transfer-Encoding= （[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][【RFC7230】章节 3.3.1]]），列在 =Content-Encoding= 报头域上的 codings 是 representation 的特性。representation 是依据其编码过的形式来进行定义的，所有其他关于 representation 的元数据是对该形式进行描述的，除非在元数据的定义中另有注明。
+不像 =Transfer-Encoding= （[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][【RFC7230】章节 3.3.1]]），列在 =Content-Encoding= 报头域上的 codings 是 representation 的特性。representation 是依据其编码过的形式来进行定义的，除非在元数据的定义中另有注明，所有其他关于 representation 的元数据是对该形式进行描述的。通常，representation 仅在渲染呈现或类似的用途之前才会被解码。
 
 #+BEGIN_QUOTE
 If the media type includes an inherent encoding, such as a data format that is always compressed, then that encoding would not be restated in =Content-Encoding= even if it happens to be the same algorithm as one of the content codings. Such a content coding would only be listed if, for some bizarre reason, it is applied a second time to form the representation. Likewise, an origin server might choose to publish the same data as multiple representations that differ only in whether the coding is defined as part of =Content-Type= or =Content-Encoding=, since some user agents will behave differently in their handling of each response (e.g., open a "Save as ..." dialog instead of automatic decompression and rendering of content).
@@ -582,7 +582,7 @@ An origin server that receives a =Content-Location= field in a request message *
 For example, if a client makes a PUT request on a negotiated resource and the origin server accepts that PUT (without redirection), then the new state of that resource is expected to be consistent with the one representation supplied in that PUT; the =Content-Location= cannot be used as a form of reverse content selection identifier to update only one of the negotiated representations. If the user agent had wanted the latter semantics, it would have applied the PUT directly to the =Content-Location= URI.
 #+END_QUOTE
 
-例如，如果一个客户端对一个[[ruby:negotiated%20resource][协商过的资源]]发起一个 PUT 请求，并且源服务器接受了这个 PUT（没有经过[[ruby:redirection][重定向]]），那么，资源的新状态预期将与提供自该 PUT 请求的 representation 相一致；PUT 请求里的 =Content-Location= 报头域不能当作是一种[[ruby:reverse%20content%20selection%20identifier][反向内容选择标识符]]的方式来仅对协商的 representations 中的其中一种进行更新。如果客户端想要后者这种语义，它可以直接对 =Content-Location= 的 URI 应用 PUT 请求。
+例如，如果一个客户端对一个[[ruby:negotiated%20resource][协商过的资源]]发起一个 PUT 请求，并且源服务器接受了这个 PUT（没有经过[[ruby:redirection][重定向]]），那么，资源的新状态预期将与提供自该 PUT 请求的 representation 相一致；PUT 请求里的 =Content-Location= 报头域不能当作是一种[[ruby:reverse%20content%20selection%20identifier][反向内容选择标识符]]来仅对协商的 representations 中的其中一种进行更新。如果客户端想要后者这种语义，它可以直接对 =Content-Location= 的 URI 应用 PUT 请求。
 
 ** 3.2. Representation Data
 #+BEGIN_QUOTE
@@ -648,18 +648,26 @@ Header fields that specifically describe the payload, rather than the associated
 When responses convey payload information, whether indicating a success or an error, the origin server often has different ways of representing that information; for example, in different formats, languages, or encodings. Likewise, different users or user agents might have differing capabilities, characteristics, or preferences that could influence which representation, among those available, would be best to deliver. For this reason, HTTP provides mechanisms for content negotiation.
 #+END_QUOTE
 
+响应在传达有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器——在所有可用的 representations 中，究竟响应哪一个 representation 才是最合适的。出于上述原因，HTTP 提供了[[ruby:content%20negotiation][内容协商]]的机制。
+
 #+BEGIN_QUOTE
-This specification defines two patterns of content negotiation that can be made visible within the protocol: "proactive", where the server selects the representation based upon the user agent's stated preferences, and "reactive" negotiation, where the server provides a list of representations for the user agent to choose from. Other patterns of content negotiation include "conditional content", where the representation consists of multiple parts that are selectively rendered based on user agent parameters, "active content", where the representation contains a script that makes additional (more specific) requests based on the user agent characteristics, and "Transparent Content Negotiation" ([RFC2295]), where content selection is performed by an intermediary. These patterns are not mutually exclusive, and each has trade-offs in applicability and practicality.
+This specification defines two patterns of content negotiation that can be made visible within the protocol: "proactive", where the server selects the representation based upon the user agent's stated preferences, and "reactive" negotiation, where the server provides a list of representations for the user agent to choose from. Other patterns of content negotiation include "conditional content", where the representation consists of multiple parts that are selectively rendered based on user agent parameters, "active content", where the representation contains a script that makes additional (more specific) requests based on the user agent characteristics, and "Transparent Content Negotiation" ([[[https://tools.ietf.org/html/rfc2295][RFC2295]]]), where content selection is performed by an intermediary. These patterns are not mutually exclusive, and each has trade-offs in applicability and practicality.
 #+END_QUOTE
+
+本规范定义了两种内容协商的模式，使之能够在协议里可见：“[[ruby:proactive][主动型]]”和“[[ruby:reactive][被动型]]”。对于主动型内容协商，服务器会依据用户代理申明的偏好来选择 representation。对于被动型内容协商，服务会提供一系列的 representations 供用户代理选择。其他的内容协商的模式包括：“[[ruby:conditional%20content][条件内容]]”，representation 由多个部分组成，源服务器基于用户代理的参数来选择性地渲染各个部分；“[[ruby:active%20content][活动内容]]”，representation 包含有一个脚本，该脚本可以基于用户代理的特性来生成额外的（更加具体的）请求；“[[ruby:Transparent%20Content%20Negotiation][透明内容协商]]”（【[[https://tools.ietf.org/html/rfc2295][RFC2295]]】），由一个中间人来执行内容选择。这些模式不是[[ruby:mutually%20exclusive][互斥的]]，每种都有其[[ruby:applicability][适应性]]和[[ruby:practicality][实用性]]。
 
 #+BEGIN_QUOTE
 Note that, in all cases, HTTP is not aware of the resource semantics. The consistency with which an origin server responds to requests, over time and over the varying dimensions of content negotiation, and thus the "sameness" of a resource's observed representations over time, is determined entirely by whatever entity or algorithm selects or generates those responses. HTTP pays no attention to the man behind the curtain.
 #+END_QUOTE
 
-*** 3.4.1. Proactive Negotiation
+TODO 需要注意的是，不管什么情况下，HTTP 都不知道资源的语义。HTTP 并不在意幕后的人物。
+
+*** 3.4.1. 主动型协商 / Proactive Negotiation
 #+BEGIN_QUOTE
-When content negotiation preferences are sent by the user agent in a request to encourage an algorithm located at the server to select the preferred representation, it is called proactive negotiation (a.k.a., server-driven negotiation). Selection is based on the available representations for a response (the dimensions over which it might vary, such as language, content-coding, etc.) compared to various information supplied in the request, including both the explicit negotiation fields of Section 5.3 and implicit characteristics, such as the client's network address or parts of the User-Agent field.
+When content negotiation preferences are sent by the user agent in a request to encourage an algorithm located at the server to select the preferred representation, it is called proactive negotiation (a.k.a., server-driven negotiation). Selection is based on the available representations for a response (the dimensions over which it might vary, such as language, content-coding, etc.) compared to various information supplied in the request, including both the explicit negotiation fields of Section 5.3 and implicit characteristics, such as the client's network address or parts of the =User-Agent= field.
 #+END_QUOTE
+
+用户代理发送包含内容协商的偏好信息的请求到服务器，让服务器中的某个算法来选择偏好 representation，称之为[[ruby:proactive%20negotiation][主动型协商]]（也称[[ruby:server-driven%20negotiation][服务器驱动型协商]]）。这种选择是基于供响应使用的 representations （维度有很多，例如语言、内容编码等），对比多种由请求提供的信息，包括显式协商报头域（章节 5.3）和隐式特性两者，例如客户端的网络地址或者 =User-Agent= 报头域的部分信息。
 
 #+BEGIN_QUOTE
 Proactive negotiation is advantageous when the algorithm for selecting from among the available representations is difficult to describe to a user agent, or when the server desires to send its "best guess" to the user agent along with the first response (hoping to avoid the round trip delay of a subsequent request if the "best guess" is good enough for the user). In order to improve the server's guess, a user agent MAY send request header fields that describe its preferences.
@@ -681,7 +689,7 @@ A user agent cannot rely on proactive negotiation preferences being consistently
 A Vary header field (Section 7.1.4) is often sent in a response subject to proactive negotiation to indicate what parts of the request information were used in the selection algorithm.
 #+END_QUOTE
 
-*** 3.4.2. Reactive Negotiation
+*** 3.4.2. 被动型协商 / Reactive Negotiation
 #+BEGIN_QUOTE
 With reactive negotiation (a.k.a., agent-driven negotiation), selection of the best response representation (regardless of the status code) is performed by the user agent after receiving an initial response from the origin server that contains a list of resources for alternative representations. If the user agent is not satisfied by the initial response representation, it can perform a GET request on one or more of the alternative resources, selected based on metadata included in the list, to obtain a different form of representation for that response. Selection of alternatives might be performed automatically by the user agent or manually by the user selecting from a generated (possibly hypertext) menu.
 #+END_QUOTE
