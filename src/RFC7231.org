@@ -153,7 +153,7 @@ An origin server might be provided with, or be capable of generating, multiple r
 Representation header fields provide metadata about the representation. When a message includes a payload body, the representation header fields describe how to interpret the representation data enclosed in the payload body. In a response to a HEAD request, the representation header fields describe the representation data that would have been enclosed in the payload body if the same request had been a GET.
 #+END_QUOTE
 
-与 representation 相关的报头域提供了 representation 的元数据。当一个[[ruby:message][报文]]包含一个[[ruby:payload%20body][有效载荷]]时，与 representation 相关的报头域描述了如何解释这个包含在有效载荷里的 representation data。在一个回应给 HEAD 请求的响应报文里，与 representation 相关的报头域描述了如果相同的请求是一个 GET 请求的话，将会如何解释这个包含在有效载荷里的 representation data。
+与 representation 相关的报头域提供了 representation 的元数据。当一个[[ruby:message][报文]]包含一个[[ruby:payload%20body][有效载荷]]时，与 representation 相关的报头域描述了如何解释这个封装在有效载荷内的 representation data。在一个回应给 HEAD 请求的响应报文里，与 representation 相关的报头域描述了如果相同的请求是一个 GET 请求的话，将会如何解释这个封装在有效载荷内的 representation data。
 
 #+BEGIN_QUOTE
 The following header fields convey representation metadata:
@@ -291,7 +291,7 @@ HTTP [[ruby:message%20framing][报文分帧]] 并不会使用 multipart 的 =bou
 The "Content-Type" header field indicates the media type of the associated representation: either the representation enclosed in the message payload or the selected representation, as determined by the message semantics. The indicated media type defines both the data format and how that data is intended to be processed by a recipient, within the scope of the received message semantics, after any content codings indicated by =Content-Encoding= are decoded.
 #+END_QUOTE
 
-=Content-Type= 报头域指明了它所关联的 representation 的媒体类型。所述“关联的 representation”，要不是包含在报文有效载荷里的 representation，要不是已选定的 representation，由报文语义所决定。=Content-Type= 所指定的媒体类型定义了 representation 的数据格式以及期望该数据被接收端如何处理，在该报文的语义范围之内，在依照 =Content-Encoding= 里的所有内容编码进行解码之后。
+=Content-Type= 报头域指明了它所关联的 representation 的媒体类型。所述“关联的 representation”，要不是封装在报文有效载荷内的 representation，要不是已选定的 representation，由报文语义所决定。=Content-Type= 所指定的媒体类型定义了 representation 的数据格式以及期望该数据被接收端如何处理，在该报文的语义范围之内，在依照 =Content-Encoding= 里的所有内容编码进行解码之后。
 
 #+BEGIN_SRC text
   Content-Type = media-type
@@ -311,7 +311,7 @@ Media types are defined in [[id:bc05d462-378f-4743-a1ee-543e01064a09][Section 3.
 A sender that generates a message containing a payload body *SHOULD* generate a =Content-Type= header field in that message unless the intended media type of the enclosed representation is unknown to the sender. If a =Content-Type= header field is not present, the recipient *MAY* either assume a media type of "application/octet-stream" ([RFC2046], [[https://tools.ietf.org/html/rfc2046#section-4.5.1][Section 4.5.1]]) or examine the data to determine its type.
 #+END_QUOTE
 
-发送端在生成包含有一个有效载荷的报文的时候，*应当* 在该报文里生成一个 =Content-Type= 报头域，除非它并不知道应该对有效载荷内的 representation 的指定哪一种媒体类型。如果没有出现 =Content-Type= 报头域，接收端 *可以* 要不假定为 "application/octet-stream" 媒体类型（[[https://tools.ietf.org/html/rfc2046#section-4.5.1][【RFC2046】章节 4.5.1]]），要不检查该数据来确定它的媒体类型。
+发送端在生成包含有一个有效载荷的报文的时候，*应当* 在该报文里生成一个 =Content-Type= 报头域，除非它并不知道应该对封装在有效载荷内的 representation 的指定哪一种媒体类型。如果没有出现 =Content-Type= 报头域，接收端 *可以* 要不假定为 "application/octet-stream" 媒体类型（[[https://tools.ietf.org/html/rfc2046#section-4.5.1][【RFC2046】章节 4.5.1]]），要不检查该数据来确定它的媒体类型。
 
 #+BEGIN_QUOTE
 In practice, resource owners do not always properly configure their origin server to provide the correct =Content-Type= for a given representation, with the result that some clients will examine a payload's content and override the specified type. Clients that do so risk drawing incorrect conclusions, which might expose additional security risks (e.g., "privilege escalation"). Furthermore, it is impossible to determine the sender's intent by examining the data format: many data formats match multiple media types that differ only in processing semantics. Implementers are encouraged to provide a means of disabling such "content sniffing" when it is used.
@@ -523,7 +523,10 @@ For a response message, the following rules are applied in order until a match i
 
 对于一个响应报文来说：
 1. *如果* 请求方法是 GET 或者 HEAD，且响应状态码是 =200 (OK)=、=204 (No Content)=、=206 (Partial Content)= 或者 =304 (Not Modified)=，那么，响应报文的有效载荷是某个资源的 representation，而该资源是由[[ruby:effective%20request%20URI][有效请求 URI]] 所标识的（[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）。
-2. *如果* 请求方法是 GET 或者 HEAD，且响应状态码是 =203 (Non-Authoritative Information)=，那么，响应报文的有效载荷是某个资源的 representation， 的可能被修改过或某个资源的，该资源由一个中间人提供
+2. *如果* 请求方法是 GET 或者 HEAD，且响应状态码是 =203 (Non-Authoritative Information)=，那么，响应报文的有效载荷是某个资源的 可能被修改过或增强过的 representation，该 representation 由某个中间人提供。
+3. *如果* 响应带有一个 =Content-Location= 报头域并且它的域值是一个跟[[ruby:effective%20request%20URI][有效请求 URI]] 相同的 URI 引用，那么，响应报文的有效载荷是某个资源的 representation，而该资源是由有效请求 URI 所标识的。
+4. *如果* 响应带有一个 =Content-Location= 报头域并且它的域值是一个跟[[ruby:effective%20request%20URI][有效请求 URI]] 不相同的 URI 引用，那么，发送端断言该有效载荷是某个资源的 representation，而该资源是由 =Content-Location= 的域值所标识的。但是，除非这种[[ruby:assertion][断言]]能够通过其他途径（本规则并没有定义有什么途径）来验证，否则不能相信该断言。
+5. *否则*，该响应报文的有效载荷是未标识的。
 
 **** 3.1.4.2. Content-Location
 :PROPERTIES:
@@ -533,37 +536,53 @@ For a response message, the following rules are applied in order until a match i
 The "Content-Location" header field references a URI that can be used as an identifier for a specific resource corresponding to the representation in this message's payload. In other words, if one were to perform a GET request on this URI at the time of this message's generation, then a 200 (OK) response would contain the same representation that is enclosed as payload in this message.
 #+END_QUOTE
 
+=Content-Location= 报头域是一个 URI，该 URI 能够用于作为一个与封装在报文有效载荷内的 representation 所对应的具体资源的标识符。换句话说，如果某个用户代理对这个 URI 执行了 GET 请求，那么会回应一个 200 (OK) 响应报文，该响应报文的有效载荷会封装相同的 representation。
+
 #+BEGIN_SRC text
   Content-Location = absolute-URI / partial-URI
 #+END_SRC
 
 #+BEGIN_QUOTE
-The =Content-Location= value is not a replacement for the effective Request URI (Section 5.5 of [RFC7230]). It is representation metadata. It has the same syntax and semantics as the header field of the same name defined for MIME body parts in Section 4 of [RFC2557]. However, its appearance in an HTTP message has some special implications for HTTP recipients.
+The =Content-Location= value is not a replacement for the effective Request URI ([[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]). It is representation metadata. It has the same syntax and semantics as the header field of the same name defined for MIME body parts in [[https://tools.ietf.org/html/rfc2557#section-4][Section 4]] of [RFC2557]. However, its appearance in an HTTP message has some special implications for HTTP recipients.
 #+END_QUOTE
+
+=Content-Location= 的值并不是用来替换[[ruby:effective%20request%20URI][有效请求 URI]]（[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）的。它是一个 representation metadata。它具有与定义在 MIME 的同名报头域（[[https://tools.ietf.org/html/rfc2557#section-4][【RFC2557】章节 4]]）相同的句法和语义。但是，这个报头域出现在一个 HTTP 报头里是具有特殊含义的。
 
 #+BEGIN_QUOTE
-If =Content-Location= is included in a 2xx (Successful) response message and its value refers (after conversion to absolute form) to a URI that is the same as the effective request URI, then the recipient MAY consider the payload to be a current representation of that resource at the time indicated by the message origination date. For a GET (Section 4.3.1) or HEAD (Section 4.3.2) request, this is the same as the default semantics when no Content-Location is provided by the server. For a state-changing request like PUT (Section 4.3.4) or POST (Section 4.3.3), it implies that the server's response contains the new representation of that resource, thereby distinguishing it from representations that might only report about the action (e.g., "It worked!"). This allows authoring applications to update their local copies without the need for a subsequent GET request.
+If =Content-Location= is included in a =2xx (Successful)= response message and its value refers (after conversion to absolute form) to a URI that is the same as the effective request URI, then the recipient *MAY* consider the payload to be a current representation of that resource at the time indicated by the message origination date. For a GET ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]]) or HEAD ([[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][Section 4.3.2]]) request, this is the same as the default semantics when no =Content-Location= is provided by the server. For a state-changing request like PUT ([[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][Section 4.3.4]]) or POST ([[id:d672d01b-615b-416a-a750-0442a6901ed0][Section 4.3.3]]), it implies that the server's response contains the new representation of that resource, thereby distinguishing it from representations that might only report about the action (e.g., "It worked!"). This allows authoring applications to update their local copies without the need for a subsequent GET request.
 #+END_QUOTE
+
+如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应报文里，且它的值指向于（在转换为[[ruby:absolute%20form][绝对形式]]之后）一个与有效请求 URI 相同的 URI，那么，接收端 *可以* 将该有效载荷认为是一个在特定时间里的资源的 current representation，所述特定时间是由[[ruby:message%20origination%20date][报文始发日期]]所指定的时间。对于 GET（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）或者 HEAD（[[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][章节 4.3.2]]）请求来说，这与在服务器没有提供 =Content-Location= 报头域的情况下的默认语义相一致。对于类似 PUT（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）或者 POST（[[id:d672d01b-615b-416a-a750-0442a6901ed0][章节 4.3.3]]）这些会[[ruby:state-changing][改变状态]]的请求来说，这意味着服务器的响应包含了该资源的新的 representation，由此与那些只报告动作方面的信息（例如，“[[ruby:It%20worked!][它生效了！]]”）的 representations 作区分。
 
 #+BEGIN_QUOTE
-If =Content-Location= is included in a 2xx (Successful) response message and its field-value refers to a URI that differs from the effective request URI, then the origin server claims that the URI is an identifier for a different resource corresponding to the enclosed representation. Such a claim can only be trusted if both identifiers share the same resource owner, which cannot be programmatically determined via HTTP.
+If =Content-Location= is included in a =2xx (Successful)= response message and its field-value refers to a URI that differs from the effective request URI, then the origin server claims that the URI is an identifier for a different resource corresponding to the enclosed representation. Such a claim can only be trusted if both identifiers share the same resource owner, which cannot be programmatically determined via HTTP.
+- For a response to a GET or HEAD request, this is an indication that the effective request URI refers to a resource that is subject to content negotiation and the =Content-Location= field-value is a more specific identifier for the selected representation.
+- For a =201 (Created)= response to a state-changing method, a =Content-Location= field-value that is identical to the =Location= field-value indicates that this payload is a current representation of the newly created resource.
+- Otherwise, such a =Content-Location= indicates that this payload is a representation reporting on the requested action's status and that the same report is available (for future access with GET) at the given URI. For example, a purchase transaction made via a POST request might include a receipt document as the payload of the =200 (OK)= response; the =Content-Location= field-value provides an identifier for retrieving a copy of that same receipt in the future.
 #+END_QUOTE
 
-- For a response to a GET or HEAD request, this is an indication that the effective request URI refers to a resource that is subject to content negotiation and the Content-Location field-value is a more specific identifier for the selected representation.
-- For a 201 (Created) response to a state-changing method, a Content-Location field-value that is identical to the Location field-value indicates that this payload is a current representation of the newly created resource.
-- Otherwise, such a Content-Location indicates that this payload is a representation reporting on the requested action's status and that the same report is available (for future access with GET) at the given URI. For example, a purchase transaction made via a POST request might include a receipt document as the payload of the 200 (OK) response; the Content-Location field-value provides an identifier for retrieving a copy of that same receipt in the future.
-
-#+BEGIN_QUOTE
-A user agent that sends Content-Location in a request message is stating that its value refers to where the user agent originally obtained the content of the enclosed representation (prior to any modifications made by that user agent). In other words, the user agent is providing a back link to the source of the original representation.
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-An origin server that receives a Content-Location field in a request message MUST treat the information as transitory request context rather than as metadata to be saved verbatim as part of the representation. An origin server MAY use that context to guide in processing the request or to save it for other uses, such as within source links or versioning metadata. However, an origin server MUST NOT use such context information to alter the request semantics.
-#+END_QUOTE
+如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应报文里，且它的域值指向于一个与有效请求 URI 不相同的 URI，那么，源服务器[[ruby:claim][声称]]该 URI 是一个与封装在该有效载荷内的 representation 相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
+- 对于回应给 GET 或 HEAD 请求的一个响应，它表明了[[effective request URI][有效请求 URI]] 指向到一个服从[[ruby:content%20negotiation][内容协商]]的资源，并且针对[[ruby:selective%20representation][已选定的 representation]]  来说，=Content-Location= 的域值是一个更加具体的标识符。
+- 对于回应给[[ruby:state-changing%20method][状态改变的请求方法]]的一个 =201 (Created)= 响应，如果 =Content-Location= 的域值与 =Location= 的域值相同，那么，这表明这个有效载荷是新近被创建的资源的[[ruby:current%20representation][当前 representation]]。
+- 否则，这个 =Content-Location= 表明了这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对 representation 进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 =200 (OK)= 响应的有效载荷，=Content-Location= 的域值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。
 
 #+BEGIN_QUOTE
-For example, if a client makes a PUT request on a negotiated resource and the origin server accepts that PUT (without redirection), then the new state of that resource is expected to be consistent with the one representation supplied in that PUT; the Content-Location cannot be used as a form of reverse content selection identifier to update only one of the negotiated representations. If the user agent had wanted the latter semantics, it would have applied the PUT directly to the Content-Location URI.
+A user agent that sends =Content-Location= in a request message is stating that its value refers to where the user agent originally obtained the content of the enclosed representation (prior to any modifications made by that user agent). In other words, the user agent is providing a back link to the source of the original representation.
 #+END_QUOTE
+
+用户代理在其发送的请求报文里带有 =Content-Location= 是想表达它的域值里的 URI 指的是用户代理最开始是在哪里获得这个封装在有效载荷内的 representation 的内容的（在该用户代理对这个 representation 所作的任何更改之前）。也就是说，该用户代理提供了一种对于原始 representation 的[[ruby:source][来源]]的[[ruby:back%20link][反向链接]][fn:1]。
+
+#+BEGIN_QUOTE
+An origin server that receives a =Content-Location= field in a request message *MUST* treat the information as transitory request context rather than as metadata to be saved verbatim as part of the representation. An origin server *MAY* use that context to guide in processing the request or to save it for other uses, such as within source links or versioning metadata. However, an origin server *MUST NOT* use such context information to alter the request semantics.
+#+END_QUOTE
+
+源服务器在一个请求报文中接收到 =Content-Location= 报头域的时候，*必须* 将该报头域的信息作为[[ruby:transitory%20request%20context][暂时的请求上下文]]来对待，而不是作为 representation metadata 来逐字保存。源服务器 *可以* 使用该上下文来引导请求的处理，或者将其保存起来留作其他用途，例如，用于[[ruby:source%20links][来源链接]]或[[ruby:versioning%20metadata][元数据的版本管理]]。但是，源服务器 *禁止* 使用这种上下文信息来改变该请求的语义。
+
+#+BEGIN_QUOTE
+For example, if a client makes a PUT request on a negotiated resource and the origin server accepts that PUT (without redirection), then the new state of that resource is expected to be consistent with the one representation supplied in that PUT; the =Content-Location= cannot be used as a form of reverse content selection identifier to update only one of the negotiated representations. If the user agent had wanted the latter semantics, it would have applied the PUT directly to the =Content-Location= URI.
+#+END_QUOTE
+
+例如，如果一个客户端对一个[[ruby:negotiated%20resource][协商过的资源]]发起一个 PUT 请求，并且源服务器接受了这个 PUT（没有经过[[ruby:redirection][重定向]]），那么，资源的新状态预期将与提供自该 PUT 请求的 representation 相一致；PUT 请求里的 =Content-Location= 报头域不能当作是一种[[ruby:reverse%20content%20selection%20identifier][反向内容选择标识符]]的方式来仅对协商的 representations 中的其中一种进行更新。如果客户端想要后者这种语义，它可以直接对 =Content-Location= 的 URI 应用 PUT 请求。
 
 ** 3.2. Representation Data
 #+BEGIN_QUOTE
@@ -674,8 +693,17 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 :ID:       698bab73-07b1-4349-8a03-5a4a89d966d8
 :END:
 *** 4.3.2. HEAD
+:PROPERTIES:
+:ID:       d00f1692-2d40-4b09-a634-9c87fce07bc4
+:END:
 *** 4.3.3. POST
+:PROPERTIES:
+:ID:       d672d01b-615b-416a-a750-0442a6901ed0
+:END:
 *** 4.3.4. PUT
+:PROPERTIES:
+:ID:       28f69be8-26e9-4dd7-930e-7c683d7bcf8a
+:END:
 *** 4.3.5. DELETE
 *** 4.3.6. CONNECT
 *** 4.3.7. OPTIONS
@@ -810,3 +838,7 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 * D. Collected ABNF
 * Index
 * Author' Addresses
+
+* Footnotes
+
+[fn:1] Backlink，反向连接，参考 [[https://en.wikipedia.org/wiki/Backlink][Wikipedia: Backlink]]。
