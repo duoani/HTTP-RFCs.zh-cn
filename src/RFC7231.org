@@ -740,40 +740,240 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 译注：[[https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation][MDN web docs]] 里对内容协商有更详细的描述。
 #+END_QUOTE
 
-* 4. Request Methods
+* 4. 请求方法 / Request Methods
 :PROPERTIES:
 :ID:       e6ec0aa0-3e4d-4367-bffd-423e028210b0
 :END:
-** 4.1. Overview
-** 4.2. Common Method Properties
-*** 4.2.1. Safe Methods
+** 4.1. 概况 / Overview
+#+BEGIN_QUOTE
+The request method token is the primary source of request semantics; it indicates the purpose for which the client has made this request and what is expected by the client as a successful result.
+#+END_QUOTE
+
+请求方法的[[ruby:token][标记]]是请求语义的主要来源，它指明了客户端发起这次请求的目的以及它期望什么作为成功结果。
+
+#+BEGIN_QUOTE
+The request method's semantics might be further specialized by the semantics of some header fields when present in a request ([[id:f8e7b063-496f-473e-95e8-88ec76f21582][Section 5]]) if those additional semantics do not conflict with the method. For example, a client can send conditional request header fields ([[id:b21923d5-a8f9-4560-8592-92fd9a098bf4][Section 5.2]]) to make the requested action conditional on the current state of the target resource ([[[https://tools.ietf.org/html/rfc7232][RFC7232]]]).
+#+END_QUOTE
+
+请求方法的语义可能由于某些请求报头域（[[id:f8e7b063-496f-473e-95e8-88ec76f21582][章节 5]]）的出现而被[[ruby:further%20specialized][进一步深化]]，如果这些报头域的语义与方法的语义并不冲突的话。例如，客户端能够发送[[ruby:conditional%20request%20header%20fields][条件请求报头域]]（[[id:b21923d5-a8f9-4560-8592-92fd9a098bf4][章节 5.2]]）以使对目标资源的当前状态的请求动作[[ruby:conditional][条件化]]（【[[https://tools.ietf.org/html/rfc7232][RFC7232]]】）。
+
+#+BEGIN_SRC text
+  method = token
+#+END_SRC
+
+#+BEGIN_QUOTE
+HTTP was originally designed to be usable as an interface to distributed object systems. The request method was envisioned as applying semantics to a target resource in much the same way as invoking a defined method on an identified object would apply semantics. The method token is case-sensitive because it might be used as a gateway to object-based systems with case-sensitive method names.
+#+END_QUOTE
+
+HTTP 最初是被设计为用来作为[[ruby:distributed%20object%20systems][分布式对象系统]]的一种接口。请求方法被设想为向某个目标资源应用语义，这就跟在某个被标识的对象上执行某个已定义的方法会应用语义大致一样。[[ruby:method%20tokens][方法标记]]是区分大小写的，这是因为它可能用作一个使用区分方法名称大小写的基于对象的系统的网关。
+
+#+BEGIN_QUOTE
+Unlike distributed objects, the standardized request methods in HTTP are not resource-specific, since uniform interfaces provide for better visibility and reuse in network-based systems [REST]. Once defined, a standardized method ought to have the same semantics when applied to any resource, though each resource determines for itself whether those semantics are implemented or allowed.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+This specification defines a number of standardized methods that are commonly used in HTTP, as outlined by the following table. By convention, standardized methods are defined in all-uppercase US-ASCII letters.
+#+END_QUOTE
+
+| 方法    | 描述                                                         |  章节 |
+|---------+--------------------------------------------------------------+-------|
+| GET     | 传输目标资源的一种 current representation                    | 4.3.1 |
+| HEAD    | 与 GET 相同，除了仅传输状态行和报头块                        | 4.3.2 |
+| POST    | 对请求有效载荷执行特定资源的处理                             | 4.3.3 |
+| PUT     | 使用请求有效载荷来替换目标资源的所有 current representations | 4.3.4 |
+| DELETE  | 删除目标资源的所有 current representations                   | 4.3.5 |
+| CONNECT | 与目标资源所标识的服务器建立隧道                             | 4.3.6 |
+| OPTIONS | 描述关于目标资源的通信选项                                   | 4.3.7 |
+| TRACE   | 执行一种沿着目标资源的路径的报文（消息）loop-back 测试       | 4.3.8 |
+
+#+BEGIN_QUOTE
+All general-purpose servers MUST support the methods GET and HEAD. All other methods are OPTIONAL.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Additional methods, outside the scope of this specification, have been standardized for use in HTTP. All such methods ought to be registered within the "Hypertext Transfer Protocol (HTTP) Method Registry" maintained by IANA, as defined in Section 8.1.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The set of methods allowed by a target resource can be listed in an Allow header field (Section 7.4.1). However, the set of allowed methods can change dynamically. When a request method is received that is unrecognized or not implemented by an origin server, the origin server SHOULD respond with the 501 (Not Implemented) status code. When a request method is received that is known by an origin server but not allowed for the target resource, the origin server SHOULD respond with the 405 (Method Not Allowed) status code.
+#+END_QUOTE
+
+** 4.2. 公共方法属性 / Common Method Properties
+*** 4.2.1. 安全的方法 / Safe Methods
 :PROPERTIES:
 :ID:       2f967e3d-8694-430b-ad06-e748fd39b281
 :END:
-*** 4.2.2. Idempotent Methods
-*** 4.2.3. Cacheable Methods
-** 4.3. Method Definitions
+Request methods are considered "safe" if their defined semantics are essentially read-only; i.e., the client does not request, and does not expect, any state change on the origin server as a result of applying a safe method to a target resource. Likewise, reasonable use of a safe method is not expected to cause any harm, loss of property, or unusual burden on the origin server.
+
+This definition of safe methods does not prevent an implementation from including behavior that is potentially harmful, that is not entirely read-only, or that causes side effects while invoking a safe method. What is important, however, is that the client did not request that additional behavior and cannot be held accountable for it. For example, most servers append request information to access log files at the completion of every response, regardless of the method, and that is considered safe even though the log storage might become full and crash the server. Likewise, a safe request initiated by selecting an advertisement on the Web will often have the side effect of charging an advertising account.
+
+Of the request methods defined by this specification, the GET, HEAD, OPTIONS, and TRACE methods are defined to be safe.
+
+The purpose of distinguishing between safe and unsafe methods is to allow automated retrieval processes (spiders) and cache performance optimization (pre-fetching) to work without fear of causing harm. In addition, it allows a user agent to apply appropriate constraints on the automated use of unsafe methods when processing potentially untrusted content.
+
+A user agent SHOULD distinguish between safe and unsafe methods when presenting potential actions to a user, such that the user can be made aware of an unsafe action before it is requested.
+
+When a resource is constructed such that parameters within the effective request URI have the effect of selecting an action, it is the resource owner's responsibility to ensure that the action is consistent with the request method semantics. For example, it is common for Web-based content editing software to use actions within query parameters, such as "page?do=delete". If the purpose of such a resource is to perform an unsafe action, then the resource owner MUST disable or disallow that action when it is accessed using a safe request method. Failure to do so will result in unfortunate side effects when automated processes perform a GET on every URI reference for the sake of link maintenance, pre-fetching, building a search index, etc.
+
+*** 4.2.2. 幂等的方法 / Idempotent Methods
+A request method is considered "idempotent" if the intended effect on the server of multiple identical requests with that method is the same as the effect for a single such request. Of the request methods defined by this specification, PUT, DELETE, and safe request methods are idempotent.
+
+Like the definition of safe, the idempotent property only applies to what has been requested by the user; a server is free to log each request separately, retain a revision control history, or implement other non-idempotent side effects for each idempotent request.
+
+Idempotent methods are distinguished because the request can be repeated automatically if a communication failure occurs before the client is able to read the server's response. For example, if a client sends a PUT request and the underlying connection is closed before any response is received, then the client can establish a new connection and retry the idempotent request. It knows that repeating the request will have the same intended effect, even if the original request succeeded, though the response might differ.
+
+*** 4.2.3. 可缓存的方法 / Cacheable Methods
+Request methods can be defined as "cacheable" to indicate that responses to them are allowed to be stored for future reuse; for specific requirements see [RFC7234]. In general, safe methods that do not depend on a current or authoritative response are defined as cacheable; this specification defines GET, HEAD, and POST as cacheable, although the overwhelming majority of cache implementations only support GET and HEAD.
+
+** 4.3. 方法的定义 / Method Definitions
 *** 4.3.1. GET
 :PROPERTIES:
 :ID:       698bab73-07b1-4349-8a03-5a4a89d966d8
 :END:
+The GET method requests transfer of a current selected representation for the target resource. GET is the primary mechanism of information retrieval and the focus of almost all performance optimizations. Hence, when people speak of retrieving some identifiable information via HTTP, they are generally referring to making a GET request.
+
+It is tempting to think of resource identifiers as remote file system pathnames and of representations as being a copy of the contents of such files. In fact, that is how many resources are implemented (see Section 9.1 for related security considerations). However, there are no such limitations in practice. The HTTP interface for a resource is just as likely to be implemented as a tree of content objects, a programmatic view on various database records, or a gateway to other information systems. Even when the URI mapping mechanism is tied to a file system, an origin server might be configured to execute the files with the request as input and send the output as the representation rather than transfer the files directly. Regardless, only the origin server needs to know how each of its resource identifiers corresponds to an implementation and how each implementation manages to select and send a current representation of the target resource in a response to GET.
+
+A client can alter the semantics of GET to be a "range request", requesting transfer of only some part(s) of the selected representation, by sending a Range header field in the request ([RFC7233]).
+
+A payload within a GET request message has no defined semantics; sending a payload body on a GET request might cause some existing implementations to reject the request.
+
+The response to a GET request is cacheable; a cache MAY use it to satisfy subsequent GET and HEAD requests unless otherwise indicated by the Cache-Control header field (Section 5.2 of [RFC7234]).
+
 *** 4.3.2. HEAD
 :PROPERTIES:
 :ID:       d00f1692-2d40-4b09-a634-9c87fce07bc4
 :END:
+The HEAD method is identical to GET except that the server MUST NOT send a message body in the response (i.e., the response terminates at the end of the header section). The server SHOULD send the same header fields in response to a HEAD request as it would have sent if the request had been a GET, except that the payload header fields (Section 3.3) MAY be omitted. This method can be used for obtaining metadata about the selected representation without transferring the representation data and is often used for testing hypertext links for validity, accessibility, and recent modification.
+
+A payload within a HEAD request message has no defined semantics; sending a payload body on a HEAD request might cause some existing implementations to reject the request.
+
+The response to a HEAD request is cacheable; a cache MAY use it to satisfy subsequent HEAD requests unless otherwise indicated by the Cache-Control header field (Section 5.2 of [RFC7234]). A HEAD response might also have an effect on previously cached responses to GET; see Section 4.3.5 of [RFC7234].
+
 *** 4.3.3. POST
 :PROPERTIES:
 :ID:       d672d01b-615b-416a-a750-0442a6901ed0
 :END:
+The POST method requests that the target resource process the representation enclosed in the request according to the resource's own specific semantics. For example, POST is used for the following functions (among others):
+
+- Providing a block of data, such as the fields entered into an HTML form, to a data-handling process;
+- Posting a message to a bulletin board, newsgroup, mailing list, blog, or similar group of articles;
+- Creating a new resource that has yet to be identified by the origin server; and
+- Appending data to a resource's existing representation(s).
+
+An origin server indicates response semantics by choosing an appropriate status code depending on the result of processing the POST request; almost all of the status codes defined by this specification might be received in a response to POST (the exceptions being 206 (Partial Content), 304 (Not Modified), and 416 (Range Not Satisfiable)).
+
+If one or more resources has been created on the origin server as a result of successfully processing a POST request, the origin server SHOULD send a 201 (Created) response containing a Location header field that provides an identifier for the primary resource created (Section 7.1.2) and a representation that describes the status of the request while referring to the new resource(s).
+
+Responses to POST requests are only cacheable when they include explicit freshness information (see Section 4.2.1 of [RFC7234]). However, POST caching is not widely implemented. For cases where an origin server wishes the client to be able to cache the result of a POST in a way that can be reused by a later GET, the origin server MAY send a 200 (OK) response containing the result and a Content-Location header field that has the same value as the POST's effective request URI (Section 3.1.4.2).
+
+If the result of processing a POST would be equivalent to a representation of an existing resource, an origin server MAY redirect the user agent to that resource by sending a 303 (See Other) response with the existing resource's identifier in the Location field. This has the benefits of providing the user agent a resource identifier and transferring the representation via a method more amenable to shared caching, though at the cost of an extra request if the user agent does not already have the representation cached.
+
 *** 4.3.4. PUT
 :PROPERTIES:
 :ID:       28f69be8-26e9-4dd7-930e-7c683d7bcf8a
 :END:
+The PUT method requests that the state of the target resource be created or replaced with the state defined by the representation enclosed in the request message payload. A successful PUT of a given representation would suggest that a subsequent GET on that same target resource will result in an equivalent representation being sent in a 200 (OK) response. However, there is no guarantee that such a state change will be observable, since the target resource might be acted upon by other user agents in parallel, or might be subject to dynamic processing by the origin server, before any subsequent GET is received. A successful response only implies that the user agent's intent was achieved at the time of its processing by the origin server.
+
+If the target resource does not have a current representation and the PUT successfully creates one, then the origin server MUST inform the user agent by sending a 201 (Created) response. If the target resource does have a current representation and that representation is successfully modified in accordance with the state of the enclosed representation, then the origin server MUST send either a 200 (OK) or a 204 (No Content) response to indicate successful completion of the request.
+
+An origin server SHOULD ignore unrecognized header fields received in a PUT request (i.e., do not save them as part of the resource state).
+
+An origin server SHOULD verify that the PUT representation is consistent with any constraints the server has for the target resource that cannot or will not be changed by the PUT. This is particularly important when the origin server uses internal configuration information related to the URI in order to set the values for representation metadata on GET responses. When a PUT representation is inconsistent with the target resource, the origin server SHOULD either make them consistent, by transforming the representation or changing the resource configuration, or respond with an appropriate error message containing sufficient information to explain why the representation is unsuitable. The 409 (Conflict) or 415 (Unsupported Media Type) status codes are suggested, with the latter being specific to constraints on Content-Type values.
+
+For example, if the target resource is configured to always have a Content-Type of "text/html" and the representation being PUT has a Content-Type of "image/jpeg", the origin server ought to do one of:
+
+reconfigure the target resource to reflect the new media type;
+transform the PUT representation to a format consistent with that of the resource before saving it as the new resource state; or,
+reject the request with a 415 (Unsupported Media Type) response indicating that the target resource is limited to "text/html", perhaps including a link to a different resource that would be a suitable target for the new representation.
+HTTP does not define exactly how a PUT method affects the state of an origin server beyond what can be expressed by the intent of the user agent request and the semantics of the origin server response. It does not define what a resource might be, in any sense of that word, beyond the interface provided via HTTP. It does not define how resource state is "stored", nor how such storage might change as a result of a change in resource state, nor how the origin server translates resource state into representations. Generally speaking, all implementation details behind the resource interface are intentionally hidden by the server.
+
+An origin server MUST NOT send a validator header field (Section 7.2), such as an ETag or Last-Modified field, in a successful response to PUT unless the request's representation data was saved without any transformation applied to the body (i.e., the resource's new representation data is identical to the representation data received in the PUT request) and the validator field value reflects the new representation. This requirement allows a user agent to know when the representation body it has in memory remains current as a result of the PUT, thus not in need of being retrieved again from the origin server, and that the new validator(s) received in the response can be used for future conditional requests in order to prevent accidental overwrites (Section 5.2).
+
+The fundamental difference between the POST and PUT methods is highlighted by the different intent for the enclosed representation. The target resource in a POST request is intended to handle the enclosed representation according to the resource's own semantics, whereas the enclosed representation in a PUT request is defined as replacing the state of the target resource. Hence, the intent of PUT is idempotent and visible to intermediaries, even though the exact effect is only known by the origin server.
+
+Proper interpretation of a PUT request presumes that the user agent knows which target resource is desired. A service that selects a proper URI on behalf of the client, after receiving a state-changing request, SHOULD be implemented using the POST method rather than PUT. If the origin server will not make the requested PUT state change to the target resource and instead wishes to have it applied to a different resource, such as when the resource has been moved to a different URI, then the origin server MUST send an appropriate 3xx (Redirection) response; the user agent MAY then make its own decision regarding whether or not to redirect the request.
+
+A PUT request applied to the target resource can have side effects on other resources. For example, an article might have a URI for identifying "the current version" (a resource) that is separate from the URIs identifying each particular version (different resources that at one point shared the same state as the current version resource). A successful PUT request on "the current version" URI might therefore create a new version resource in addition to changing the state of the target resource, and might also cause links to be added between the related resources.
+
+An origin server that allows PUT on a given target resource MUST send a 400 (Bad Request) response to a PUT request that contains a Content-Range header field (Section 4.2 of [RFC7233]), since the payload is likely to be partial content that has been mistakenly PUT as a full representation. Partial content updates are possible by targeting a separately identified resource with state that overlaps a portion of the larger resource, or by using a different method that has been specifically defined for partial updates (for example, the PATCH method defined in [RFC5789]).
+
+Responses to the PUT method are not cacheable. If a successful PUT request passes through a cache that has one or more stored responses for the effective request URI, those stored responses will be invalidated (see Section 4.4 of [RFC7234]).
+
 *** 4.3.5. DELETE
+The DELETE method requests that the origin server remove the association between the target resource and its current functionality. In effect, this method is similar to the rm command in UNIX: it expresses a deletion operation on the URI mapping of the origin server rather than an expectation that the previously associated information be deleted.
+
+If the target resource has one or more current representations, they might or might not be destroyed by the origin server, and the associated storage might or might not be reclaimed, depending entirely on the nature of the resource and its implementation by the origin server (which are beyond the scope of this specification). Likewise, other implementation aspects of a resource might need to be deactivated or archived as a result of a DELETE, such as database or gateway connections. In general, it is assumed that the origin server will only allow DELETE on resources for which it has a prescribed mechanism for accomplishing the deletion.
+
+Relatively few resources allow the DELETE method — its primary use is for remote authoring environments, where the user has some direction regarding its effect. For example, a resource that was previously created using a PUT request, or identified via the Location header field after a 201 (Created) response to a POST request, might allow a corresponding DELETE request to undo those actions. Similarly, custom user agent implementations that implement an authoring function, such as revision control clients using HTTP for remote operations, might use DELETE based on an assumption that the server's URI space has been crafted to correspond to a version repository.
+
+If a DELETE method is successfully applied, the origin server SHOULD send a 202 (Accepted) status code if the action will likely succeed but has not yet been enacted, a 204 (No Content) status code if the action has been enacted and no further information is to be supplied, or a 200 (OK) status code if the action has been enacted and the response message includes a representation describing the status.
+
+A payload within a DELETE request message has no defined semantics; sending a payload body on a DELETE request might cause some existing implementations to reject the request.
+
+Responses to the DELETE method are not cacheable. If a DELETE request passes through a cache that has one or more stored responses for the effective request URI, those stored responses will be invalidated (see Section 4.4 of [RFC7234]).
+
 *** 4.3.6. CONNECT
+The CONNECT method requests that the recipient establish a tunnel to the destination origin server identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the tunnel is closed. Tunnels are commonly used to create an end-to-end virtual connection, through one or more proxies, which can then be secured using TLS (Transport Layer Security, [RFC5246]).
+
+CONNECT is intended only for use in requests to a proxy. An origin server that receives a CONNECT request for itself MAY respond with a 2xx (Successful) status code to indicate that a connection is established. However, most origin servers do not implement CONNECT.
+
+A client sending a CONNECT request MUST send the authority form of request-target (Section 5.3 of [RFC7230]); i.e., the request-target consists of only the host name and port number of the tunnel destination, separated by a colon. For example,
+
+#+BEGIN_EXAMPLE
+CONNECT server.example.com:80 HTTP/1.1
+Host: server.example.com:80
+
+#+END_EXAMPLE
+
+The recipient proxy can establish a tunnel either by directly connecting to the request-target or, if configured to use another proxy, by forwarding the CONNECT request to the next inbound proxy. Any 2xx (Successful) response indicates that the sender (and all inbound proxies) will switch to tunnel mode immediately after the blank line that concludes the successful response's header section; data received after that blank line is from the server identified by the request-target. Any response other than a successful response indicates that the tunnel has not yet been formed and that the connection remains governed by HTTP.
+
+A tunnel is closed when a tunnel intermediary detects that either side has closed its connection: the intermediary MUST attempt to send any outstanding data that came from the closed side to the other side, close both connections, and then discard any remaining data left undelivered.
+
+Proxy authentication might be used to establish the authority to create a tunnel. For example,
+
+#+BEGIN_EXAMPLE
+CONNECT server.example.com:80 HTTP/1.1
+Host: server.example.com:80
+Proxy-Authorization: basic aGVsbG86d29ybGQ=
+
+#+END_EXAMPLE
+
+There are significant risks in establishing a tunnel to arbitrary servers, particularly when the destination is a well-known or reserved TCP port that is not intended for Web traffic. For example, a CONNECT to a request-target of "example.com:25" would suggest that the proxy connect to the reserved port for SMTP traffic; if allowed, that could trick the proxy into relaying spam email. Proxies that support CONNECT SHOULD restrict its use to a limited set of known ports or a configurable whitelist of safe request targets.
+
+A server MUST NOT send any Transfer-Encoding or Content-Length header fields in a 2xx (Successful) response to CONNECT. A client MUST ignore any Content-Length or Transfer-Encoding header fields received in a successful response to CONNECT.
+
+A payload within a CONNECT request message has no defined semantics; sending a payload body on a CONNECT request might cause some existing implementations to reject the request.
+
+Responses to the CONNECT method are not cacheable.
+
 *** 4.3.7. OPTIONS
+The OPTIONS method requests information about the communication options available for the target resource, at either the origin server or an intervening intermediary. This method allows a client to determine the options and/or requirements associated with a resource, or the capabilities of a server, without implying a resource action.
+
+An OPTIONS request with an asterisk ("*") as the request-target (Section 5.3 of [RFC7230]) applies to the server in general rather than to a specific resource. Since a server's communication options typically depend on the resource, the "*" request is only useful as a "ping" or "no-op" type of method; it does nothing beyond allowing the client to test the capabilities of the server. For example, this can be used to test a proxy for HTTP/1.1 conformance (or lack thereof).
+
+If the request-target is not an asterisk, the OPTIONS request applies to the options that are available when communicating with the target resource.
+
+A server generating a successful response to OPTIONS SHOULD send any header fields that might indicate optional features implemented by the server and applicable to the target resource (e.g., Allow), including potential extensions not defined by this specification. The response payload, if any, might also describe the communication options in a machine or human-readable representation. A standard format for such a representation is not defined by this specification, but might be defined by future extensions to HTTP. A server MUST generate a Content-Length field with a value of "0" if no payload body is to be sent in the response.
+
+A client MAY send a Max-Forwards header field in an OPTIONS request to target a specific recipient in the request chain (see Section 5.1.2). A proxy MUST NOT generate a Max-Forwards header field while forwarding a request unless that request was received with a Max-Forwards field.
+
+A client that generates an OPTIONS request containing a payload body MUST send a valid Content-Type header field describing the representation media type. Although this specification does not define any use for such a payload, future extensions to HTTP might use the OPTIONS body to make more detailed queries about the target resource.
+
+Responses to the OPTIONS method are not cacheable.
+
 *** 4.3.8. TRACE
-* 5. Request Header Fields
+The TRACE method requests a remote, application-level loop-back of the request message. The final recipient of the request SHOULD reflect the message received, excluding some fields described below, back to the client as the message body of a 200 (OK) response with a Content-Type of "message/http" (Section 8.3.1 of [RFC7230]). The final recipient is either the origin server or the first server to receive a Max-Forwards value of zero (0) in the request (Section 5.1.2).
+
+A client MUST NOT generate header fields in a TRACE request containing sensitive data that might be disclosed by the response. For example, it would be foolish for a user agent to send stored user credentials [RFC7235] or cookies [RFC6265] in a TRACE request. The final recipient of the request SHOULD exclude any request header fields that are likely to contain sensitive data when that recipient generates the response body.
+
+TRACE allows the client to see what is being received at the other end of the request chain and use that data for testing or diagnostic information. The value of the Via header field (Section 5.7.1 of [RFC7230]) is of particular interest, since it acts as a trace of the request chain. Use of the Max-Forwards header field allows the client to limit the length of the request chain, which is useful for testing a chain of proxies forwarding messages in an infinite loop.
+
+A client MUST NOT send a message body in a TRACE request.
+
+Responses to the TRACE method are not cacheable.
+
+* 5. 请求报头域 / Request Header Fields
 :PROPERTIES:
 :ID:       f8e7b063-496f-473e-95e8-88ec76f21582
 :END:
@@ -781,6 +981,9 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 *** 5.1.1. Expect
 *** 5.1.2. Max-Forwards
 ** 5.2. Conditionals
+:PROPERTIES:
+:ID:       b21923d5-a8f9-4560-8592-92fd9a098bf4
+:END:
 ** 5.3. Content Negotiation
 *** 5.3.1. Quality Values
 *** 5.3.2. Accept
@@ -798,22 +1001,22 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 *** 5.5.1. Form
 *** 5.5.2. Referer
 *** 5.5.3. User-Agent
-* 6. Response Status Codes
+* 6. 响应状态码 / Response Status Codes
 :PROPERTIES:
 :ID:       5a69d0cc-628c-4897-a089-45f906b94a92
 :END:
-** 6.1. Overview of Status Codes
-** 6.2. Informational 1xx
+** 6.1. 状态码概况 / Overview of Status Codes
+** 6.2. 信息性 1xx / Informational 1xx
 *** 6.2.1. 100 Continue
 *** 6.2.2. 101 Switching Protocols
-** 6.3. Successful 2xx
+** 6.3. 成功 2xx / Successful 2xx
 *** 6.3.1. 200 OK
 *** 6.3.2. 201 Created
 *** 6.3.3. 202 Accepted
 *** 6.3.4. 203 Non-Authoritative Information
 *** 6.3.5. 204 No Content
 *** 6.3.6. 205 Reset Content
-** 6.4. Redirection 3xx
+** 6.4. 重定向 3xx / Redirection 3xx
 *** 6.4.1. 300 Multiple Choices
 *** 6.4.2. 301 Moved Permanently
 *** 6.4.3. 302 Found
@@ -821,7 +1024,7 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 *** 6.4.5. 305 Use Proxy
 *** 6.4.6. 306 (Unused)
 *** 6.4.7. 307 Temporary Redirect
-** 6.5. Client Error 4xx
+** 6.5. 客户端错误 / Client Error 4xx
 *** 6.5.1. 400 Bad Request
 *** 6.5.2. 402 Payment Required
 *** 6.5.3. 403 Forbidden
@@ -837,14 +1040,14 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 *** 6.5.13. 415 Unsupported Media Type
 *** 6.5.14. 417 Expectation Failed
 *** 6.5.15. 426 Upgrade Required
-** 6.6 Server Error 5xx
+** 6.6 服务器错误 / Server Error 5xx
 *** 6.6.1. 500 Internal Server Error
 *** 6.6.2. 501 Not Implemented
 *** 6.6.3. 502 Bad Gateway
 *** 6.6.4. 503 Service Unavailable
 *** 6.6.5. 504 Gateway Timeout
 *** 6.6.6. 505 HTTP Version Not Supported
-* 7. Response Header Fields
+* 7. 响应报头域 / Response Header Fields
 :PROPERTIES:
 :ID:       30e7b781-4a14-4519-abb9-63ec43516b98
 :END:
@@ -866,37 +1069,37 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 ** 7.4. Response Context
 *** 7.4.1. Allow
 *** 7.4.2. Server
-* 8. IANA Considerations
-** 8.1. Method Registry
+* 8. IANA 注意事项 / IANA Considerations
+** 8.1. 方法注册表 / Method Registry
 *** 8.1.1. Procedure
 *** 8.1.2. Considerations for New Methods
 *** 8.1.3. Registrations
-** 8.2. Status Code Registry
+** 8.2. 状态码注册表 / Status Code Registry
 *** 8.2.1. Procedure
 *** 8.2.2. Considerations for New Status Codes
 *** 8.2.3. Registrations
-** 8.3. Header Field Registry
+** 8.3. 报头域注册表 / Header Field Registry
 *** 8.3.1. Considerations for New Header Fields
 *** 8.3.2. Registrations
-** 8.4. Content Coding Registry
+** 8.4. 内容编码值注册表 / Content Coding Registry
 :PROPERTIES:
 :ID:       87f2ed30-a48b-4c31-a181-8e3a33ba1080
 :END:
 *** 8.4.1. Procedure
 *** 8.4.2. Registrations
-* 9. Security Considerations
-** 9.1. Attacks Based on File and Path Names
-** 9.2. Attacks Based on Command, Code, or Query Injection
-** 9.3. Disclosure of Personal Information
-** 9.4. Disclosure of Sensitive Information in URLs
+* 9. 安全注意事项 / Security Considerations
+** 9.1. 基于文件和路径名称的攻击 / Attacks Based on File and Path Names
+** 9.2. 基于命令、代码、查询注入 / Attacks Based on Command, Code, or Query Injection
+** 9.3. 个人信息的披露 / Disclosure of Personal Information
+** 9.4. URLs 敏感信息的披露 / Disclosure of Sensitive Information in URLs
 ** 9.5. Disclosure of Fragment after Redirects
 ** 9.6. Disclosure of Product Information
-** 9.7. Browser Fingerprinting
-* 10. Acknowledgements
-* 11. References
+** 9.7. 浏览器指纹识别 / Browser Fingerprinting
+* 10. 鸣谢 / Acknowledgements
+* 11. 参考资料 / References
 ** 11.1. Normative References
 ** 11.2. Informative References
-* A. Defferences between HTTP and MIME
+* A. HTTP 与 MIME 的区别 / Defferences between HTTP and MIME
 :PROPERTIES:
 :ID:       84208afd-e458-4f40-97cc-2e9535523797
 :END:
@@ -906,9 +1109,9 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 ** A.4. Conversion of Content-Encoding
 ** A.5. Conversion of Content-Transfer-Encoding
 ** A.6. MHTML and Line Length Limitations
-* B. Changes from RFC 2616
-* C. Imported ABNF
-* D. Collected ABNF
+* B. 相对 RFC 2616 的变化 / Changes from RFC 2616
+* C. 引入的 ABNF 规则 / Imported ABNF
+* D. ABNF 规则集合 Collected ABNF
 * Index
 * Author' Addresses
 
