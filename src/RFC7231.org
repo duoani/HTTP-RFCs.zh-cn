@@ -291,7 +291,7 @@ HTTP [[ruby:message%20framing][报文分帧]] 并不会使用 multipart 的 =bou
 The "Content-Type" header field indicates the media type of the associated representation: either the representation enclosed in the message payload or the selected representation, as determined by the message semantics. The indicated media type defines both the data format and how that data is intended to be processed by a recipient, within the scope of the received message semantics, after any content codings indicated by =Content-Encoding= are decoded.
 #+END_QUOTE
 
-=Content-Type= 报头域指明了它所关联的 representation 的媒体类型。所述“关联的 representation”，要不是封装在报文有效载荷内的 representation，要不是已选定的 representation，由报文语义所决定。=Content-Type= 所指定的媒体类型定义了 representation 的数据格式以及期望该数据被接收端如何处理，在该报文的语义范围之内，在依照 =Content-Encoding= 里的所有内容编码进行解码之后。
+=Content-Type= 报头域指明了它所关联的 representation 的媒体类型。所述“关联的 representation”，要不是封装在报文有效载荷内的 representation，要不是已选定的 representation，由报文语义所决定。 =Content-Type= 所指定的媒体类型定义了 representation 的数据格式以及期望该数据被接收端如何处理，在该报文的语义范围之内，在依照 =Content-Encoding= 里的所有内容编码进行解码之后。
 
 #+BEGIN_SRC text
   Content-Type = media-type
@@ -397,7 +397,7 @@ Unlike =Transfer-Encoding= ([[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][Section 3
 If the media type includes an inherent encoding, such as a data format that is always compressed, then that encoding would not be restated in =Content-Encoding= even if it happens to be the same algorithm as one of the content codings. Such a content coding would only be listed if, for some bizarre reason, it is applied a second time to form the representation. Likewise, an origin server might choose to publish the same data as multiple representations that differ only in whether the coding is defined as part of =Content-Type= or =Content-Encoding=, since some user agents will behave differently in their handling of each response (e.g., open a "Save as ..." dialog instead of automatic decompression and rendering of content).
 #+END_QUOTE
 
-如果媒体类型包含有一种[[ruby:inherent%20encoding][固有的编码]]，例如一种总是以压缩方式来表示的数据格式，那么，这种编码不要在 =Content-Encoding= 里重申，哪怕它恰巧与其中一个 content codings 的算法一致。这种 content coding 只会在以下这种情况下才需要在 =Content-Encoding= 列出：出于某些怪异的原因，需要应用该 content coding 两次才能形成正确的 representation。同样，原服务器可能选择将该同样的数据作为 multiple representations 来发布，其区别仅在于 coding 是作为 Content-Type 的一部分还是作为 Content-Encoding 的一部分 ，这是因为某些用户代理处理各个响应的行为会有所不同（例如，打开一个“另存为...”对话框，而不是自动解缩并渲染内容）。
+如果媒体类型包含有一种[[ruby:inherent%20encoding][固有的编码]]，例如一种总是以压缩方式来表示的数据格式，那么，这种编码不要在 =Content-Encoding= 里重申，哪怕它恰巧与其中一个 content codings 的算法一致。这种 content coding 只会在以下这种情况下才需要在 =Content-Encoding= 列出：出于某些怪异的原因，需要应用该 content coding 两次才能形成正确的 representation。同样，原服务器可能选择将该同样的数据作为[[ruby:multiple%20representations][多种 representations]] 来发布，其区别仅在于 coding 是作为 Content-Type 的一部分还是作为 Content-Encoding 的一部分 ，这是因为某些用户代理处理各个响应的行为会有所不同（例如，打开一个“另存为...”对话框，而不是自动解缩并渲染内容）。
 
 #+BEGIN_QUOTE
 An origin server *MAY* respond with a status code of =415 (Unsupported Media Type)= if a representation in the request message has a content coding that is not acceptable.
@@ -576,7 +576,7 @@ A user agent that sends =Content-Location= in a request message is stating that 
 An origin server that receives a =Content-Location= field in a request message *MUST* treat the information as transitory request context rather than as metadata to be saved verbatim as part of the representation. An origin server *MAY* use that context to guide in processing the request or to save it for other uses, such as within source links or versioning metadata. However, an origin server *MUST NOT* use such context information to alter the request semantics.
 #+END_QUOTE
 
-源服务器在一个请求报文中接收到 =Content-Location= 报头域的时候，*必须* 将该报头域的信息作为[[ruby:transitory%20request%20context][暂时的请求上下文]]来对待，而不是作为 representation metadata 来逐字保存。源服务器 *可以* 使用该上下文来引导请求的处理，或者将其保存起来留作其他用途，例如，用于[[ruby:source%20links][来源链接]]或[[ruby:versioning%20metadata][元数据的版本管理]]。但是，源服务器 *禁止* 使用这种上下文信息来改变该请求的语义。
+源服务器在一个请求报文中接收到 =Content-Location= 报头域的时候，*必须* 将该报头域的信息作为[[ruby:transitory%20request%20context][暂时的请求上下文]]来对待，而不是作为 representation metadata 来逐字保存。源服务器 *可以* 使用该上下文来指导请求的处理，或者将其保存起来留作其他用途，例如，用于[[ruby:source%20links][来源链接]]或[[ruby:versioning%20metadata][元数据的版本管理]]。但是，源服务器 *禁止* 使用这种上下文信息来改变该请求的语义。
 
 #+BEGIN_QUOTE
 For example, if a client makes a PUT request on a negotiated resource and the origin server accepts that PUT (without redirection), then the new state of that resource is expected to be consistent with the one representation supplied in that PUT; the =Content-Location= cannot be used as a form of reverse content selection identifier to update only one of the negotiated representations. If the user agent had wanted the latter semantics, it would have applied the PUT directly to the =Content-Location= URI.
@@ -615,13 +615,13 @@ Some HTTP messages transfer a complete or partial representation as the message 
 The purpose of a payload in a request is defined by the method semantics. For example, a representation in the payload of a PUT request ([[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][Section 4.3.4]]) represents the desired state of the target resource if the request is successfully applied, whereas a representation in the payload of a POST request ([[id:d672d01b-615b-416a-a750-0442a6901ed0][Section 4.3.3]]) represents information to be processed by the target resource.
 #+END_QUOTE
 
-对于请求报文里的有效载荷，其目的是由[[ruby:request%20method%20semantics][请求方法的语义]]来定义的。例如，在一个 PUT 请求（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）的有效载荷内的 representation 表示如果成功应用该请求以后，[[ruby:target%20resource][目标资源]]的预期的状态。而一个 POST 请求（[[id:d672d01b-615b-416a-a750-0442a6901ed0][章节 4.3.3]]）的有效载荷内的 representation 表示将由目标资源来处理的信息。
+对于请求报文里的有效载荷，其目的是由[[ruby:request%20method%20semantics][请求方法的语义]]来定义的。例如，在一个 PUT 请求（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）的有效载荷内的 representation 表示如果成功应用该请求以后，[[ruby:target%20resource][目标资源]]的预期的状态。而一个 POST 请求（[[id:d672d01b-615b-416a-a750-0442a6901ed0][章节 4.3.3]]）的有效载荷内的 representation 表示交由目标资源来处理的信息。
 
 #+BEGIN_QUOTE
 In a response, the payload's purpose is defined by both the request method and the response status code. For example, the payload of a =200 (OK)= response to GET ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]]) represents the current state of the target resource, as observed at the time of the message origination date ([[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][Section 7.1.1.2]]), whereas the payload of the same status code in a response to POST might represent either the processing result or the new state of the target resource after applying the processing. Response messages with an error status code usually contain a payload that represents the error condition, such that it describes the error state and what next steps are suggested for resolving it.
 #+END_QUOTE
 
-在一个响应报文里，有效载荷的目标是由[[ruby:request%20method][请求方法]]和[[ruby:reponse%20status%20code][响应状态码]]两者共同来定义的。例如，一个回应给 GET 请求（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）的 =200 (OK)= 响应报文表示在[[ruby:message%20origination%20date][报文发起日期]]（[[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][章节 7.1.1.2]]）所观察到的[[ruby:target%20resource][目标资源]]的目前状态。而一个回应给 POST 请求的 =200 (OK)= 响应报文可能表示：或者是在应用该请求以后的处理结果，或者是在应用该请求以后目标资源的新状态。带有一个错误状态码的响应报文通常会包含一个表示该错误条件的有效载荷来，以描述错误状态以及如何解决错误的下一步建议。
+在一个响应报文里，有效载荷的目标是由[[ruby:request%20method][请求方法]]和[[ruby:reponse%20status%20code][响应状态码]]两者共同来定义的。例如，一个回应给 GET 请求（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）的 =200 (OK)= 响应报文表示在[[ruby:message%20origination%20date][报文发起日期]]（[[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][章节 7.1.1.2]]）所观察到的[[ruby:target%20resource][目标资源]]的目前状态。而一个回应给 POST 请求的 =200 (OK)= 响应报文可能表示：或者是在应用该请求以后的处理结果，或者是在应用该请求以后目标资源的新状态。带有一个错误状态码的响应报文通常会包含一个表示该错误条件的有效载荷，以描述错误状态以及如何解决错误的下一步建议。
 
 #+BEGIN_QUOTE
 Header fields that specifically describe the payload, rather than the associated representation, are referred to as "payload header fields". Payload header fields are defined in other parts of this specification, due to their impact on message parsing.
@@ -663,15 +663,20 @@ Note that, in all cases, HTTP is not aware of the resource semantics. The consis
 TODO 需要注意的是，不管什么情况下，HTTP 都不知道资源的语义。HTTP 并不在意幕后的人物。
 
 *** 3.4.1. 主动型协商 / Proactive Negotiation
+:PROPERTIES:
+:ID:       c1d92ed4-69d5-4575-88c2-090534949ccf
+:END:
 #+BEGIN_QUOTE
 When content negotiation preferences are sent by the user agent in a request to encourage an algorithm located at the server to select the preferred representation, it is called proactive negotiation (a.k.a., server-driven negotiation). Selection is based on the available representations for a response (the dimensions over which it might vary, such as language, content-coding, etc.) compared to various information supplied in the request, including both the explicit negotiation fields of Section 5.3 and implicit characteristics, such as the client's network address or parts of the =User-Agent= field.
 #+END_QUOTE
 
-用户代理发送包含内容协商的偏好信息的请求到服务器，让服务器中的某个算法来选择偏好 representation，称之为[[ruby:proactive%20negotiation][主动型协商]]（也称[[ruby:server-driven%20negotiation][服务器驱动型协商]]）。这种选择是基于供响应使用的 representations （维度有很多，例如语言、内容编码等），对比多种由请求提供的信息，包括显式协商报头域（章节 5.3）和隐式特性两者，例如客户端的网络地址或者 =User-Agent= 报头域的部分信息。
+用户代理发送包含内容协商的偏好信息的请求到服务器，让服务器的某个算法来选择偏好 representation，称之为[[ruby:proactive%20negotiation][主动型协商]]（也称[[ruby:server-driven%20negotiation][服务器驱动型协商]]）。这种选择是基于供响应使用的 representations （维度有很多，例如语言、内容编码等），对比多种由请求提供的信息，包括显式协商报头域（章节 5.3）和隐式特性两者，例如客户端的网络地址或者 =User-Agent= 报头域的部分信息。
 
 #+BEGIN_QUOTE
-Proactive negotiation is advantageous when the algorithm for selecting from among the available representations is difficult to describe to a user agent, or when the server desires to send its "best guess" to the user agent along with the first response (hoping to avoid the round trip delay of a subsequent request if the "best guess" is good enough for the user). In order to improve the server's guess, a user agent MAY send request header fields that describe its preferences.
+Proactive negotiation is advantageous when the algorithm for selecting from among the available representations is difficult to describe to a user agent, or when the server desires to send its "best guess" to the user agent along with the first response (hoping to avoid the round trip delay of a subsequent request if the "best guess" is good enough for the user). In order to improve the server's guess, a user agent *MAY* send request header fields that describe its preferences.
 #+END_QUOTE
+
+主动型协商适用于以下情况：难以向用户代理描述清楚服务器的选择算法（如何从[[ruby:available%20representations][可使用的 representations]] 之中选择最佳的一个）；或者服务器倾向于在发送第一个响应到用户代理的时候就附带上它的“[[ruby:best%20guess][最佳猜测]]”（希望如果该“最佳猜测”对于该用户来说已经足够好的话，就能够避免后续请求的[[round trip delay][往返延时]]）。为了提升服务器猜测的准确性，用户代理 *可以* 在其发送的请求报文中包含某些报头域来描述自身的[[ruby:preferences][偏好]]。
 
 #+BEGIN_QUOTE
 Proactive negotiation has serious disadvantages:
@@ -681,13 +686,23 @@ Proactive negotiation has serious disadvantages:
 - It limits the reusability of responses for shared caching.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A user agent cannot rely on proactive negotiation preferences being consistently honored, since the origin server might not implement proactive negotiation for the requested resource or might decide that sending a response that doesn't conform to the user agent's preferences is better than sending a 406 (Not Acceptable) response.
-#+END_QUOTE
+主动型协商有以下严重的弊端：
+- 对于任何给定的用户，要让服务器精准确定什么才是“最佳的 representation”是不可能的，这是因为这需要全面了解用户代理的[[ruby:capabilities][能力]]及其对响应的[[ruby:intended%20use][使用意图]]（例如，用户是否想在屏幕上浏览或者将其打印成纸质的？）；
+- 让用户代理在每次请求里都要描述自身的能力是非常[[ruby:inefficient][低效的]]（假定只有一小部分响应带有[[ruby:multiple%20representations][多个 representations]]），而且对用户的隐私有潜在风险；
+- 复杂化了源服务器的实现和生成响应给到请求的算法；
+- 限制了[[ruby:shared%20caching][共享缓存]]的[[ruby:reusability][复用性]]。
 
 #+BEGIN_QUOTE
-A Vary header field (Section 7.1.4) is often sent in a response subject to proactive negotiation to indicate what parts of the request information were used in the selection algorithm.
+A user agent cannot rely on proactive negotiation preferences being consistently honored, since the origin server might not implement proactive negotiation for the requested resource or might decide that sending a response that doesn't conform to the user agent's preferences is better than sending a =406 (Not Acceptable)= response.
 #+END_QUOTE
+
+用户代理不能信赖主动型协商的[[ruby:preferences][预设]]会一直被遵循，这是因为源服务器可能没有对所请求的资源实现主动型协商，或者认为发送一个并不符合用户代理的偏好的响应比发送一个 =406 (Not Acceptable)= 响应要好。
+
+#+BEGIN_QUOTE
+A =Vary= header field ([[id:ca7f8781-b183-4563-a90a-b9b7ad4f1032][Section 7.1.4]]) is often sent in a response subject to proactive negotiation to indicate what parts of the request information were used in the selection algorithm.
+#+END_QUOTE
+
+=Vary= 报头域（[[id:ca7f8781-b183-4563-a90a-b9b7ad4f1032][章节 7.1.4]]）通常用来指明主动型协商的选择算法会用到请求信息的哪些部分。
 
 *** 3.4.2. 被动型协商 / Reactive Negotiation
 #+BEGIN_QUOTE
@@ -828,6 +843,9 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 *** 7.1.2. Location
 *** 7.1.3. Retry-After
 *** 7.1.4. Vary
+:PROPERTIES:
+:ID:       ca7f8781-b183-4563-a90a-b9b7ad4f1032
+:END:
 ** 7.2. Validator Header Fields
 ** 7.3. Authentication Challenges
 ** 7.4. Response Context
