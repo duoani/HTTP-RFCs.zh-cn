@@ -765,64 +765,86 @@ The request method's semantics might be further specialized by the semantics of 
 HTTP was originally designed to be usable as an interface to distributed object systems. The request method was envisioned as applying semantics to a target resource in much the same way as invoking a defined method on an identified object would apply semantics. The method token is case-sensitive because it might be used as a gateway to object-based systems with case-sensitive method names.
 #+END_QUOTE
 
-HTTP 最初是被设计为用来作为[[ruby:distributed%20object%20systems][分布式对象系统]]的一种接口。请求方法被设想为向某个目标资源应用语义，这就跟在某个被标识的对象上执行某个已定义的方法会应用语义大致一样。[[ruby:method%20tokens][方法标记]]是区分大小写的，这是因为它可能用作一个使用区分方法名称大小写的基于对象的系统的网关。
+HTTP 最初是被设计为用来作为[[ruby:distributed%20object%20systems][分布式对象系统]]的一种接口。请求方法被设想为向某个目标资源应用语义，这就跟在某个被标识的对象上执行某个已定义的方法会应用相应的语义一样。[[ruby:method%20tokens][方法标记]]是区分大小写的，这是因为它可能用作一种区分方法名称大小写的网关，来对[[ruby:object-based%20systems][基于对象的系统]]进行访问。
 
 #+BEGIN_QUOTE
 Unlike distributed objects, the standardized request methods in HTTP are not resource-specific, since uniform interfaces provide for better visibility and reuse in network-based systems [REST]. Once defined, a standardized method ought to have the same semantics when applied to any resource, though each resource determines for itself whether those semantics are implemented or allowed.
 #+END_QUOTE
 
+不同于分布式对象，在 HTTP 里，[[ruby:standardized%20request%20methods][标准请求方法]]不是[[ruby:resource-specific][资源特定的]]，这是因为提供统一接口是为了在基于网络的系统中有更好的可见性和复用（【[[http://roy.gbiv.com/pubs/dissertation/top.htm][REST]]】）。一旦定义了标准化的方法，那么，当它被应用到任意资源的时候，它都应该具有同等的语义，虽然每种资源会自己决定是否实现或者允许这些语义。
+
 #+BEGIN_QUOTE
 This specification defines a number of standardized methods that are commonly used in HTTP, as outlined by the following table. By convention, standardized methods are defined in all-uppercase US-ASCII letters.
 #+END_QUOTE
 
+本规范定义了若干常用在 HTTP 里的标准方法，见下表的概括。按照惯例，标准方法是定义为纯大写的 US-ASCII 字母。
+
 | 方法    | 描述                                                         |  章节 |
 |---------+--------------------------------------------------------------+-------|
-| GET     | 传输目标资源的一种 current representation                    | 4.3.1 |
-| HEAD    | 与 GET 相同，除了仅传输状态行和报头块                        | 4.3.2 |
-| POST    | 对请求有效载荷执行特定资源的处理                             | 4.3.3 |
-| PUT     | 使用请求有效载荷来替换目标资源的所有 current representations | 4.3.4 |
-| DELETE  | 删除目标资源的所有 current representations                   | 4.3.5 |
-| CONNECT | 与目标资源所标识的服务器建立隧道                             | 4.3.6 |
-| OPTIONS | 描述关于目标资源的通信选项                                   | 4.3.7 |
-| TRACE   | 执行一种沿着目标资源的路径的报文（消息）loop-back 测试       | 4.3.8 |
+| GET     | 传输目标资源的一种 current representation                    | [[id:698bab73-07b1-4349-8a03-5a4a89d966d8][4.3.1]] |
+| HEAD    | 与 GET 相同，除了仅传输状态行和报头块                        | [[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][4.3.2]] |
+| POST    | 对请求有效载荷执行特定资源的处理                             | [[id:d672d01b-615b-416a-a750-0442a6901ed0][4.3.3]] |
+| PUT     | 使用请求有效载荷来替换目标资源的所有 current representations | [[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][4.3.4]] |
+| DELETE  | 删除目标资源的所有 current representations                   | [[id:9e649fa9-0f7f-40d0-adef-8af6a6f62e80][4.3.5]] |
+| CONNECT | 与目标资源所标识的服务器建立隧道                             | [[id:630ab908-5d8e-400b-bed4-f6973b8c1549][4.3.6]] |
+| OPTIONS | 描述关于目标资源的通信选项                                   | [[id:f659b35f-7510-4961-ad3a-3ab1b312a681][4.3.7]] |
+| TRACE   | 执行一种沿着目标资源的路径的报文（消息）loop-back 测试       | [[id:bdc9e3b4-bac3-46c5-9319-31f7f4d6469d][4.3.8]] |
 
 #+BEGIN_QUOTE
-All general-purpose servers MUST support the methods GET and HEAD. All other methods are OPTIONAL.
+All general-purpose servers *MUST* support the methods GET and HEAD. All other methods are OPTIONAL.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Additional methods, outside the scope of this specification, have been standardized for use in HTTP. All such methods ought to be registered within the "Hypertext Transfer Protocol (HTTP) Method Registry" maintained by IANA, as defined in Section 8.1.
-#+END_QUOTE
+所有通用服务器 *必须* 支持 GET 和 HEAD 方法。所有其他方法都是 *可选的*。
 
 #+BEGIN_QUOTE
-The set of methods allowed by a target resource can be listed in an Allow header field (Section 7.4.1). However, the set of allowed methods can change dynamically. When a request method is received that is unrecognized or not implemented by an origin server, the origin server SHOULD respond with the 501 (Not Implemented) status code. When a request method is received that is known by an origin server but not allowed for the target resource, the origin server SHOULD respond with the 405 (Method Not Allowed) status code.
+Additional methods, outside the scope of this specification, have been standardized for use in HTTP. All such methods ought to be registered within the "Hypertext Transfer Protocol (HTTP) Method Registry" maintained by IANA, as defined in [[id:193d7ad5-9c6d-4bf7-98f1-6984a42af639][Section 8.1]].
 #+END_QUOTE
+
+超出本规范所定义的额外方法，它们在 HTTP 的使用方式已经被标准化。应该把所有这些方法注册在由 IANA 维护的 "Hypertext Transfer Protocol (HTTP) Method Registry" 注册表中，其定义见[[id:193d7ad5-9c6d-4bf7-98f1-6984a42af639][章节 8.1]]。
+
+#+BEGIN_QUOTE
+The set of methods allowed by a target resource can be listed in an =Allow= header field ([[id:f8577773-512f-4d68-8f5d-444368db7c29][Section 7.4.1]]). However, the set of allowed methods can change dynamically. When a request method is received that is unrecognized or not implemented by an origin server, the origin server *SHOULD* respond with the =501 (Not Implemented)= status code. When a request method is received that is known by an origin server but not allowed for the target resource, the origin server *SHOULD* respond with the =405 (Method Not Allowed)= status code.
+#+END_QUOTE
+
+被[[ruby:target%20resource][目标资源]]所允许的方法集可以列在 =Allow= 报头域内（[[id:f8577773-512f-4d68-8f5d-444368db7c29][章节 7.4.1]]）。然而，目标资源可以动态改变其允许哪些方法。当源服务器接收到一个[[ruby:unrecognized][不能识别]]或自身[[ruby:not%20implemented][未实现的]]请求方法时，源服务器 *应当* 以 =501 (Not Implemented)= 作为响应。当服务器接收到一个能够识别但目标资源不允许的请求方法时，源服务器 *应当* 以 =405 (Method Not Allowed)= 作为响应。
 
 ** 4.2. 公共方法属性 / Common Method Properties
-*** 4.2.1. 安全的方法 / Safe Methods
+*** 4.2.1. 安全方法 / Safe Methods
 :PROPERTIES:
 :ID:       2f967e3d-8694-430b-ad06-e748fd39b281
 :END:
 Request methods are considered "safe" if their defined semantics are essentially read-only; i.e., the client does not request, and does not expect, any state change on the origin server as a result of applying a safe method to a target resource. Likewise, reasonable use of a safe method is not expected to cause any harm, loss of property, or unusual burden on the origin server.
 
+如果请求方法所定义的语义本质上是[[ruby:read-only][只读]]的，那么，这种请求方法可以认为是“[[ruby:safe][安全的]]”。例如，在向源服务器的某个目标资源应用某个[[ruby:safe%20method][安全方法]]以后，客户端既[[ruby:not%20request][没有请求（要求）]]也[[ruby:not%20expect][没有期望]]源服务器有任何状态的变化。同样，安全方法的合理使用并不期望对源服务器造成任何损害、财产损失、或者不正常的负担。
+
 This definition of safe methods does not prevent an implementation from including behavior that is potentially harmful, that is not entirely read-only, or that causes side effects while invoking a safe method. What is important, however, is that the client did not request that additional behavior and cannot be held accountable for it. For example, most servers append request information to access log files at the completion of every response, regardless of the method, and that is considered safe even though the log storage might become full and crash the server. Likewise, a safe request initiated by selecting an advertisement on the Web will often have the side effect of charging an advertising account.
+
+安全方法的这种定义并不妨碍将其[[ruby:implement][实现]]为一种可能包含有害行为的方法，表现为不完全只读，或者当执行某个安全方法时会引起[[ruby:side%20effects][副作用]]。然而，最重要的是，客户端并没有请求（要求）服务器执行额外的行为，并且不能因此而追究客户端的责任。例如，大多数服务器，在完成每个响应的时候，会附加上请求信息到访问日志文件里面，不管是什么请求方法，这就被认为是安全的，哪怕日志存储可能变满导致服务器崩溃。同样，在网站上发起一个安全的请求来进行广告甄选，通常会有广告账号记账的副作用（即产生广告费用的消耗）。
 
 Of the request methods defined by this specification, the GET, HEAD, OPTIONS, and TRACE methods are defined to be safe.
 
+本规则所定义的请求方法中，定义为安全的方法有：GET、HEAD、OPTIONS 和 TRACE。
+
 The purpose of distinguishing between safe and unsafe methods is to allow automated retrieval processes (spiders) and cache performance optimization (pre-fetching) to work without fear of causing harm. In addition, it allows a user agent to apply appropriate constraints on the automated use of unsafe methods when processing potentially untrusted content.
 
-A user agent SHOULD distinguish between safe and unsafe methods when presenting potential actions to a user, such that the user can be made aware of an unsafe action before it is requested.
+之所有要区分方法是否安全，是为了放心开启[[ruby:automated%20retrieval%20processes][自动检索程序]]（[[ruby:spider][爬虫]]）和[[ruby:cache%20performance%20optimization][缓存性能优化]]（[[ruby:pre-fetching][预取]]）而不需要担心引起问题。再者，它允许用户代理，在处理可能不受信任的内容的时候，对自动使用的非安全方法施加适当的约束。
 
-When a resource is constructed such that parameters within the effective request URI have the effect of selecting an action, it is the resource owner's responsibility to ensure that the action is consistent with the request method semantics. For example, it is common for Web-based content editing software to use actions within query parameters, such as "page?do=delete". If the purpose of such a resource is to perform an unsafe action, then the resource owner MUST disable or disallow that action when it is accessed using a safe request method. Failure to do so will result in unfortunate side effects when automated processes perform a GET on every URI reference for the sake of link maintenance, pre-fetching, building a search index, etc.
+A user agent *SHOULD* distinguish between safe and unsafe methods when presenting potential actions to a user, such that the user can be made aware of an unsafe action before it is requested.
 
-*** 4.2.2. 幂等的方法 / Idempotent Methods
+当呈现潜在的请求动作给用户的时候，用户代理 *应当* 区分好安全与非安全的方法，以便在这种请求动作被执行之前，用户能够意识到这是一种不安全的动作。
+
+When a resource is constructed such that parameters within the effective request URI have the effect of selecting an action, it is the resource owner's responsibility to ensure that the action is consistent with the request method semantics. For example, it is common for Web-based content editing software to use actions within query parameters, such as "page?do=delete". If the purpose of such a resource is to perform an unsafe action, then the resource owner *MUST* disable or disallow that action when it is accessed using a safe request method. Failure to do so will result in unfortunate side effects when automated processes perform a GET on every URI reference for the sake of link maintenance, pre-fetching, building a search index, etc.
+
+构建一个资源，使在[[ruby:effective%20request%20URI][有效请求 URI]] 里的参数会影响到的请求动作选择，那么，确保该动作是否符合请求方法的语义是资源所有者的责任。例如，[[ruby:Web-based%20content%20editing%20software][基于网站的内容编辑软件]]常常会在[[ruby:query%20parameters][查询参数]]里使用某些动作，如 "page?do=delete"。如果这种资源的目的是为执行一个[[ruby:unsafe%20action][非安全的动作]]，那么，当使用一个[[ruby:safe%20request%20method][安全的请求方法]]来访问该资源的时候，资源所有者 *必须* 禁用或者拒绝该动作。否则的话，当[[ruby:automated%20processes][自动程序]]出于某种目的（为了链接维护，预取，生成搜索索引等）来对每个 URI 执行一个 GET 的时候，会导致不好的副作用。
+
+*** 4.2.2. 幂等方法 / Idempotent Methods
 A request method is considered "idempotent" if the intended effect on the server of multiple identical requests with that method is the same as the effect for a single such request. Of the request methods defined by this specification, PUT, DELETE, and safe request methods are idempotent.
 
 Like the definition of safe, the idempotent property only applies to what has been requested by the user; a server is free to log each request separately, retain a revision control history, or implement other non-idempotent side effects for each idempotent request.
 
 Idempotent methods are distinguished because the request can be repeated automatically if a communication failure occurs before the client is able to read the server's response. For example, if a client sends a PUT request and the underlying connection is closed before any response is received, then the client can establish a new connection and retry the idempotent request. It knows that repeating the request will have the same intended effect, even if the original request succeeded, though the response might differ.
 
-*** 4.2.3. 可缓存的方法 / Cacheable Methods
+*** 4.2.3. 可缓存方法 / Cacheable Methods
 Request methods can be defined as "cacheable" to indicate that responses to them are allowed to be stored for future reuse; for specific requirements see [RFC7234]. In general, safe methods that do not depend on a current or authoritative response are defined as cacheable; this specification defines GET, HEAD, and POST as cacheable, although the overwhelming majority of cache implementations only support GET and HEAD.
 
 ** 4.3. 方法的定义 / Method Definitions
@@ -901,6 +923,9 @@ An origin server that allows PUT on a given target resource MUST send a 400 (Bad
 Responses to the PUT method are not cacheable. If a successful PUT request passes through a cache that has one or more stored responses for the effective request URI, those stored responses will be invalidated (see Section 4.4 of [RFC7234]).
 
 *** 4.3.5. DELETE
+:PROPERTIES:
+:ID:       9e649fa9-0f7f-40d0-adef-8af6a6f62e80
+:END:
 The DELETE method requests that the origin server remove the association between the target resource and its current functionality. In effect, this method is similar to the rm command in UNIX: it expresses a deletion operation on the URI mapping of the origin server rather than an expectation that the previously associated information be deleted.
 
 If the target resource has one or more current representations, they might or might not be destroyed by the origin server, and the associated storage might or might not be reclaimed, depending entirely on the nature of the resource and its implementation by the origin server (which are beyond the scope of this specification). Likewise, other implementation aspects of a resource might need to be deactivated or archived as a result of a DELETE, such as database or gateway connections. In general, it is assumed that the origin server will only allow DELETE on resources for which it has a prescribed mechanism for accomplishing the deletion.
@@ -914,6 +939,9 @@ A payload within a DELETE request message has no defined semantics; sending a pa
 Responses to the DELETE method are not cacheable. If a DELETE request passes through a cache that has one or more stored responses for the effective request URI, those stored responses will be invalidated (see Section 4.4 of [RFC7234]).
 
 *** 4.3.6. CONNECT
+:PROPERTIES:
+:ID:       630ab908-5d8e-400b-bed4-f6973b8c1549
+:END:
 The CONNECT method requests that the recipient establish a tunnel to the destination origin server identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the tunnel is closed. Tunnels are commonly used to create an end-to-end virtual connection, through one or more proxies, which can then be secured using TLS (Transport Layer Security, [RFC5246]).
 
 CONNECT is intended only for use in requests to a proxy. An origin server that receives a CONNECT request for itself MAY respond with a 2xx (Successful) status code to indicate that a connection is established. However, most origin servers do not implement CONNECT.
@@ -948,6 +976,9 @@ A payload within a CONNECT request message has no defined semantics; sending a p
 Responses to the CONNECT method are not cacheable.
 
 *** 4.3.7. OPTIONS
+:PROPERTIES:
+:ID:       f659b35f-7510-4961-ad3a-3ab1b312a681
+:END:
 The OPTIONS method requests information about the communication options available for the target resource, at either the origin server or an intervening intermediary. This method allows a client to determine the options and/or requirements associated with a resource, or the capabilities of a server, without implying a resource action.
 
 An OPTIONS request with an asterisk ("*") as the request-target (Section 5.3 of [RFC7230]) applies to the server in general rather than to a specific resource. Since a server's communication options typically depend on the resource, the "*" request is only useful as a "ping" or "no-op" type of method; it does nothing beyond allowing the client to test the capabilities of the server. For example, this can be used to test a proxy for HTTP/1.1 conformance (or lack thereof).
@@ -963,6 +994,9 @@ A client that generates an OPTIONS request containing a payload body MUST send a
 Responses to the OPTIONS method are not cacheable.
 
 *** 4.3.8. TRACE
+:PROPERTIES:
+:ID:       bdc9e3b4-bac3-46c5-9319-31f7f4d6469d
+:END:
 The TRACE method requests a remote, application-level loop-back of the request message. The final recipient of the request SHOULD reflect the message received, excluding some fields described below, back to the client as the message body of a 200 (OK) response with a Content-Type of "message/http" (Section 8.3.1 of [RFC7230]). The final recipient is either the origin server or the first server to receive a Max-Forwards value of zero (0) in the request (Section 5.1.2).
 
 A client MUST NOT generate header fields in a TRACE request containing sensitive data that might be disclosed by the response. For example, it would be foolish for a user agent to send stored user credentials [RFC7235] or cookies [RFC6265] in a TRACE request. The final recipient of the request SHOULD exclude any request header fields that are likely to contain sensitive data when that recipient generates the response body.
@@ -1068,9 +1102,15 @@ Responses to the TRACE method are not cacheable.
 ** 7.3. Authentication Challenges
 ** 7.4. Response Context
 *** 7.4.1. Allow
+:PROPERTIES:
+:ID:       f8577773-512f-4d68-8f5d-444368db7c29
+:END:
 *** 7.4.2. Server
 * 8. IANA 注意事项 / IANA Considerations
 ** 8.1. 方法注册表 / Method Registry
+:PROPERTIES:
+:ID:       193d7ad5-9c6d-4bf7-98f1-6984a42af639
+:END:
 *** 8.1.1. Procedure
 *** 8.1.2. Considerations for New Methods
 *** 8.1.3. Registrations
