@@ -858,7 +858,7 @@ When a resource is constructed such that parameters within the effective request
 A request method is considered "idempotent" if the intended effect on the server of multiple identical requests with that method is the same as the effect for a single such request. Of the request methods defined by this specification, PUT, DELETE, and safe request methods are idempotent.
 #+END_QUOTE
 
-一个请求方法被认为是[[ruby:idempotent][幂等]]的，仅当执行多次相同的请求，与单次这样的请求，对服务器的预期效果是一样的。本规范所定义的请求方法中，幂等方法有：PUT、DELETE 以及所有安全请求方法。
+一个请求方法被认为是“[[ruby:idempotent][幂等的]]”，仅当执行多次相同的请求，与单次这样的请求，对服务器的预期效果是一样的。本规范所定义的请求方法中，幂等方法有：PUT、DELETE 以及所有安全请求方法。
 
 #+BEGIN_QUOTE
 Like the definition of safe, the idempotent property only applies to what has been requested by the user; a server is free to log each request separately, retain a revision control history, or implement other non-idempotent side effects for each idempotent request.
@@ -870,10 +870,14 @@ Like the definition of safe, the idempotent property only applies to what has be
 Idempotent methods are distinguished because the request can be repeated automatically if a communication failure occurs before the client is able to read the server's response. For example, if a client sends a PUT request and the underlying connection is closed before any response is received, then the client can establish a new connection and retry the idempotent request. It knows that repeating the request will have the same intended effect, even if the original request succeeded, though the response might differ.
 #+END_QUOTE
 
-之所以要区分请求方法的幂等与否，是因为如果在客户端能够读取服务器的响应之前发生了通信失败，请求可以被自动重复发送（见[[id:0ca97f51-efc7-43d2-ab52-d998a92423e5][【RFC7230】6.3.1]]）。例如，如果客户端发送一个 PUT 请求，同时，之前建立好的连接在客户端接收到任何响应之前就被关闭了，那么，客户端能够建立一个新的连接并重试该幂等请求。客户端知道重复该请求会有相同的预期效果，即使原来的请求已经成功了。
+之所以要区分请求方法的幂等与否，是因为如果在客户端能够读取服务器的响应之前发生了通信失败，请求可以被自动重复发送（见[[id:0ca97f51-efc7-43d2-ab52-d998a92423e5][【RFC7230】6.3.1]]）。例如，如果客户端发送一个 PUT 请求，同时，之前建立好的连接在客户端接收到任何响应之前就被关闭了，那么，客户端可以建立一个新的连接并重试该幂等请求。客户端知道重复该请求会有相同的预期效果，即使原来的请求已经成功了。
 
 *** 4.2.3. 可缓存方法 / Cacheable Methods
-Request methods can be defined as "cacheable" to indicate that responses to them are allowed to be stored for future reuse; for specific requirements see [RFC7234]. In general, safe methods that do not depend on a current or authoritative response are defined as cacheable; this specification defines GET, HEAD, and POST as cacheable, although the overwhelming majority of cache implementations only support GET and HEAD.
+#+BEGIN_QUOTE
+Request methods can be defined as "cacheable" to indicate that responses to them are allowed to be stored for future reuse; for specific requirements see [[[https://tools.ietf.org/html/rfc7234][RFC7234]]]. In general, safe methods that do not depend on a current or authoritative response are defined as cacheable; this specification defines GET, HEAD, and POST as cacheable, although the overwhelming majority of cache implementations only support GET and HEAD.
+#+END_QUOTE
+
+请求方法可以被定义为“[[ruby:cacheable][可缓存的]]”来指明：回应给它们的响应能够被保存起来，用于将来的复用，更具体的要求见【[[https://tools.ietf.org/html/rfc7234][RFC7234]]】。通常，不依赖某个[[ruby:current%20response][当前响应]]或[[ruby:authoritative%20response][权威响应]]的安全方法，就是[[ruby:cacheable][可缓存的]]方法。本规范定义了 GET、HEAD 和 POST 作为可缓存的方法，虽然绝大多数的[[ruby:cache%20implementations][缓存实现]]仅仅支持 GET 和 HEAD。
 
 ** 4.3. 方法的定义 / Method Definitions
 *** 4.3.1. GET
