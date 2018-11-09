@@ -813,36 +813,64 @@ The set of methods allowed by a target resource can be listed in an =Allow= head
 :PROPERTIES:
 :ID:       2f967e3d-8694-430b-ad06-e748fd39b281
 :END:
+#+BEGIN_QUOTE
 Request methods are considered "safe" if their defined semantics are essentially read-only; i.e., the client does not request, and does not expect, any state change on the origin server as a result of applying a safe method to a target resource. Likewise, reasonable use of a safe method is not expected to cause any harm, loss of property, or unusual burden on the origin server.
+#+END_QUOTE
 
 如果请求方法所定义的语义本质上是[[ruby:read-only][只读]]的，那么，这种请求方法可以认为是“[[ruby:safe][安全的]]”。例如，在向源服务器的某个目标资源应用某个[[ruby:safe%20method][安全方法]]以后，客户端既[[ruby:not%20request][没有请求（要求）]]也[[ruby:not%20expect][没有期望]]源服务器有任何状态的变化。同样，安全方法的合理使用并不期望对源服务器造成任何损害、财产损失、或者不正常的负担。
 
+#+BEGIN_QUOTE
 This definition of safe methods does not prevent an implementation from including behavior that is potentially harmful, that is not entirely read-only, or that causes side effects while invoking a safe method. What is important, however, is that the client did not request that additional behavior and cannot be held accountable for it. For example, most servers append request information to access log files at the completion of every response, regardless of the method, and that is considered safe even though the log storage might become full and crash the server. Likewise, a safe request initiated by selecting an advertisement on the Web will often have the side effect of charging an advertising account.
+#+END_QUOTE
 
-安全方法的这种定义并不妨碍将其[[ruby:implement][实现]]为一种可能包含有害行为的方法，表现为不完全只读，或者当执行某个安全方法时会引起[[ruby:side%20effects][副作用]]。然而，最重要的是，客户端并没有请求（要求）服务器执行额外的行为，并且不能因此而追究客户端的责任。例如，大多数服务器，在完成每个响应的时候，会附加上请求信息到访问日志文件里面，不管是什么请求方法，这就被认为是安全的，哪怕日志存储可能变满导致服务器崩溃。同样，在网站上发起一个安全的请求来进行广告甄选，通常会有广告账号记账的副作用（即产生广告费用的消耗）。
+安全方法的这种定义并不妨碍将其[[ruby:implement][实现]]为一种可能包含有害行为的方法，表现为不完全只读，或者当执行某个安全方法时会引起[[ruby:side%20effects][副作用]]。然而，重要的是，客户端并没有请求（要求）服务器执行额外的行为，并且不能因此而追究客户端的责任。例如，大多数服务器在完成每个响应的时候，会附加上请求信息到访问日志文件里面，而不管这是什么请求方法，这就被认为是安全的，哪怕日志存储可能变满导致服务器崩溃。同样，在网站上发起一个安全的请求来进行广告甄选，通常会有广告账号记账的副作用（即产生广告费用的消耗）。
 
+#+BEGIN_QUOTE
 Of the request methods defined by this specification, the GET, HEAD, OPTIONS, and TRACE methods are defined to be safe.
+#+END_QUOTE
 
-本规则所定义的请求方法中，定义为安全的方法有：GET、HEAD、OPTIONS 和 TRACE。
+本规范所定义的请求方法中，定义为安全的方法有：GET、HEAD、OPTIONS 和 TRACE。
 
+#+BEGIN_QUOTE
 The purpose of distinguishing between safe and unsafe methods is to allow automated retrieval processes (spiders) and cache performance optimization (pre-fetching) to work without fear of causing harm. In addition, it allows a user agent to apply appropriate constraints on the automated use of unsafe methods when processing potentially untrusted content.
+#+END_QUOTE
 
 之所有要区分方法是否安全，是为了放心开启[[ruby:automated%20retrieval%20processes][自动检索程序]]（[[ruby:spider][爬虫]]）和[[ruby:cache%20performance%20optimization][缓存性能优化]]（[[ruby:pre-fetching][预取]]）而不需要担心引起问题。再者，它允许用户代理，在处理可能不受信任的内容的时候，对自动使用的非安全方法施加适当的约束。
 
+#+BEGIN_QUOTE
 A user agent *SHOULD* distinguish between safe and unsafe methods when presenting potential actions to a user, such that the user can be made aware of an unsafe action before it is requested.
+#+END_QUOTE
 
 当呈现潜在的请求动作给用户的时候，用户代理 *应当* 区分好安全与非安全的方法，以便在这种请求动作被执行之前，用户能够意识到这是一种不安全的动作。
 
+#+BEGIN_QUOTE
 When a resource is constructed such that parameters within the effective request URI have the effect of selecting an action, it is the resource owner's responsibility to ensure that the action is consistent with the request method semantics. For example, it is common for Web-based content editing software to use actions within query parameters, such as "page?do=delete". If the purpose of such a resource is to perform an unsafe action, then the resource owner *MUST* disable or disallow that action when it is accessed using a safe request method. Failure to do so will result in unfortunate side effects when automated processes perform a GET on every URI reference for the sake of link maintenance, pre-fetching, building a search index, etc.
+#+END_QUOTE
 
 构建一个资源，使在[[ruby:effective%20request%20URI][有效请求 URI]] 里的参数会影响到的请求动作选择，那么，确保该动作是否符合请求方法的语义是资源所有者的责任。例如，[[ruby:Web-based%20content%20editing%20software][基于网站的内容编辑软件]]常常会在[[ruby:query%20parameters][查询参数]]里使用某些动作，如 "page?do=delete"。如果这种资源的目的是为执行一个[[ruby:unsafe%20action][非安全的动作]]，那么，当使用一个[[ruby:safe%20request%20method][安全的请求方法]]来访问该资源的时候，资源所有者 *必须* 禁用或者拒绝该动作。否则的话，当[[ruby:automated%20processes][自动程序]]出于某种目的（为了链接维护，预取，生成搜索索引等）来对每个 URI 执行一个 GET 的时候，会导致不好的副作用。
 
+#+BEGIN_QUOTE
+译注：请求方法是否是安全的，其关注点在于该方法是否有改变资源的状态，而不是平常我们认为的安全性或保密性的概念。只要执行该请求方法后，资源的状态没有被改变，那么这个请求方法就是安全的（哪怕可能会导致数据泄漏、黑客入侵、硬件爆炸等），否则就是不安全的。换句话说，安全的请求方法都是“只读”的，并不会对资源造成任何“写入”，类似于编程语言中 Getter 的概念。
+#+END_QUOTE
+
 *** 4.2.2. 幂等方法 / Idempotent Methods
+#+BEGIN_QUOTE
 A request method is considered "idempotent" if the intended effect on the server of multiple identical requests with that method is the same as the effect for a single such request. Of the request methods defined by this specification, PUT, DELETE, and safe request methods are idempotent.
+#+END_QUOTE
 
+一个请求方法被认为是[[ruby:idempotent][幂等]]的，仅当执行多次相同的请求，与单次这样的请求，对服务器的预期效果是一样的。本规范所定义的请求方法中，幂等方法有：PUT、DELETE 以及所有安全请求方法。
+
+#+BEGIN_QUOTE
 Like the definition of safe, the idempotent property only applies to what has been requested by the user; a server is free to log each request separately, retain a revision control history, or implement other non-idempotent side effects for each idempotent request.
+#+END_QUOTE
 
+跟安全的定义类似，请求方法的幂等性只适用于用户究竟请求到了什么，而服务器可以自由地单独记录每个请求的日志，保持一份版本管理历史，或者为每个幂等请求实现其他非幂等的副作用等等。
+
+#+BEGIN_QUOTE
 Idempotent methods are distinguished because the request can be repeated automatically if a communication failure occurs before the client is able to read the server's response. For example, if a client sends a PUT request and the underlying connection is closed before any response is received, then the client can establish a new connection and retry the idempotent request. It knows that repeating the request will have the same intended effect, even if the original request succeeded, though the response might differ.
+#+END_QUOTE
+
+之所以要区分请求方法的幂等与否，是因为如果在客户端能够读取服务器的响应之前发生了通信失败，请求可以被自动重复发送（见[[id:0ca97f51-efc7-43d2-ab52-d998a92423e5][【RFC7230】6.3.1]]）。例如，如果客户端发送一个 PUT 请求，同时，之前建立好的连接在客户端接收到任何响应之前就被关闭了，那么，客户端能够建立一个新的连接并重试该幂等请求。客户端知道重复该请求会有相同的预期效果，即使原来的请求已经成功了。
 
 *** 4.2.3. 可缓存方法 / Cacheable Methods
 Request methods can be defined as "cacheable" to indicate that responses to them are allowed to be stored for future reuse; for specific requirements see [RFC7234]. In general, safe methods that do not depend on a current or authoritative response are defined as cacheable; this specification defines GET, HEAD, and POST as cacheable, although the overwhelming majority of cache implementations only support GET and HEAD.

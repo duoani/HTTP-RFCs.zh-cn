@@ -2586,6 +2586,9 @@ See Appendix A.1.2 for more information on backwards compatibility with HTTP/1.0
 关于向后兼容 HTTP/1.0 客户端的更多信息，见附录 A.1.2。
 
 *** 6.3.1. 请求重试 (Retrying Requests)
+:PROPERTIES:
+:ID:       0ca97f51-efc7-43d2-ab52-d998a92423e5
+:END:
 #+BEGIN_QUOTE
 Connections can be closed at any time, with or without intention. Implementations ought to anticipate the need to recover from asynchronous close events.
 #+END_QUOTE
