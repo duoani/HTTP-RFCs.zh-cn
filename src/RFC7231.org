@@ -914,23 +914,29 @@ A client can alter the semantics of GET to be a "range request", requesting tran
 A payload within a GET request message has no defined semantics; sending a payload body on a GET request might cause some existing implementations to reject the request.
 #+END_QUOTE
 
-在 GET 请求报文里的有效载荷是没有定义任何语义的，在一个 GET 请求里发送一个有效载荷可能会导致某些现有的[[ruby:implementations][实现]]拒绝该请求。
+在 GET 请求报文里的有效载荷是没有定义任何语义的，如果在 GET 请求里带有一个有效载荷可能会导致某些现有的[[ruby:implementations][实现]]拒绝该请求。
 
 #+BEGIN_QUOTE
 The response to a GET request is cacheable; a cache *MAY* use it to satisfy subsequent GET and HEAD requests unless otherwise indicated by the =Cache-Control= header field ([[https://tools.ietf.org/html/rfc7234#section-5.2][Section 5.2]] of [RFC7234]).
 #+END_QUOTE
 
-回应给 GET 请求的响应是[[ruby:cacheable][可缓存的]]，缓存 *可以* 使用它来满足随后的 GET 和 HEAD 请求，除非 =Cache-Control= 报头域另有指定（[[https://tools.ietf.org/html/rfc7234#section-5.2][【RFC7234】章节 5.2]]）。
+回应给 GET 请求的响应是[[ruby:cacheable][可缓存的]]，[[ruby:cache][缓存]] *可以* 使用它来满足随后的 GET 和 HEAD 请求，除非 =Cache-Control= 报头域另有指定（[[https://tools.ietf.org/html/rfc7234#section-5.2][【RFC7234】章节 5.2]]）。
 
 *** 4.3.2. HEAD
 :PROPERTIES:
 :ID:       d00f1692-2d40-4b09-a634-9c87fce07bc4
 :END:
-The HEAD method is identical to GET except that the server MUST NOT send a message body in the response (i.e., the response terminates at the end of the header section). The server SHOULD send the same header fields in response to a HEAD request as it would have sent if the request had been a GET, except that the payload header fields (Section 3.3) MAY be omitted. This method can be used for obtaining metadata about the selected representation without transferring the representation data and is often used for testing hypertext links for validity, accessibility, and recent modification.
+The HEAD method is identical to GET except that the server *MUST NOT* send a message body in the response (i.e., the response terminates at the end of the header section). The server *SHOULD* send the same header fields in response to a HEAD request as it would have sent if the request had been a GET, except that the payload header fields ([[id:4c395bab-baa6-4895-b677-5daa1584da6e][Section 3.3]]) *MAY* be omitted. This method can be used for obtaining metadata about the selected representation without transferring the representation data and is often used for testing hypertext links for validity, accessibility, and recent modification.
+
+HEAD 方法几乎与 GET 方法等价，除了服务器 *禁止* 在回应 HEAD 请求的响应报文里带有[[ruby:message%20body][报文正文]]（也就是说，响应报文在[[ruby:header%20section][报头块]]之后就结束了）。服务器回应给 GET 请求的响应报文里带有什么报头域，回应给 HEAD 请求的响应报文里就 *应当* 带有什么报头域，除了[[ruby:payload%20header%20fields][有效载荷报头域]]（[[id:4c395bab-baa6-4895-b677-5daa1584da6e][章节 3.3]]） *可以* 被忽略以外。HEAD 方法能够用于在不需要传输 representation data 的情况下获取关于[[ruby:selected%20representation][已选定的 representation]]（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][章节 3]]） 的元数据。同时，它也常用于测试[[ruby:hypertext%20links][超链接]]的正确性、可访问性和最近是否有修改。
 
 A payload within a HEAD request message has no defined semantics; sending a payload body on a HEAD request might cause some existing implementations to reject the request.
 
-The response to a HEAD request is cacheable; a cache MAY use it to satisfy subsequent HEAD requests unless otherwise indicated by the Cache-Control header field (Section 5.2 of [RFC7234]). A HEAD response might also have an effect on previously cached responses to GET; see Section 4.3.5 of [RFC7234].
+在 HEAD 请求报文里的有效载荷是没有定义任何语义的，如果在 HEAD 请求里带有一个有效载荷可能会导致某些现有的[[ruby:implementations][实现]]拒绝该请求。
+
+The response to a HEAD request is cacheable; a cache *MAY* use it to satisfy subsequent HEAD requests unless otherwise indicated by the =Cache-Control= header field ([[https://tools.ietf.org/html/rfc7234#section-5.2][Section 5.2]] of [RFC7234]). A HEAD response might also have an effect on previously cached responses to GET; see [[https://tools.ietf.org/html/rfc7234#section-4.3.5][Section 4.3.5]] of [RFC7234].
+
+回应给 HEAD 请求的响应是[[ruby:cacheable][可缓存的]]，[[ruby:cache][缓存]] *可以* 使用它来满足随后的 HEAD 请求，除非 =Cache-Control= 报头域另有指定（[[https://tools.ietf.org/html/rfc7234#section-5.2][【RFC7234】章节 5.2]]）。HEAD 响应还可能影响到之前已缓存的 GET 响应，见[[https://tools.ietf.org/html/rfc7234#section-4.3.5][【RFC7234】章节 4.3.5]]。
 
 *** 4.3.3. POST
 :PROPERTIES:
