@@ -684,7 +684,7 @@ When content negotiation preferences are sent by the user agent in a request to 
 Proactive negotiation is advantageous when the algorithm for selecting from among the available representations is difficult to describe to a user agent, or when the server desires to send its "best guess" to the user agent along with the first response (hoping to avoid the round trip delay of a subsequent request if the "best guess" is good enough for the user). In order to improve the server's guess, a user agent *MAY* send request header fields that describe its preferences.
 #+END_QUOTE
 
-主动型协商适用于以下情况：当难以向用户代理描述清楚服务器的选择算法（如何从[[ruby:available%20representations][可使用的 representations]] 之中选择最佳的一个）；或者当服务器倾向于在发送第一个响应到用户代理的时候就附带上它的“[[ruby:best%20guess][最佳猜测]]”（希望如果该“最佳猜测”对于该用户来说已经足够好的话，就能够避免后续请求的[[round trip delay][往返延时]]）。为了提升服务器猜测的准确性，用户代理 *可以* 在其发送的请求报文中包含某些报头域来描述自身的[[ruby:preferences][偏好]]。
+主动型协商适用于以下情况：当难以向用户代理描述清楚服务器的选择算法（如何从[[ruby:available%20representations][可使用的 representations]] 之中选择最佳的一个）；或者当服务器倾向于在发送第一个响应到用户代理的时候就附带上它的“[[ruby:best%20guess][最佳猜测]]”（希望如果该“最佳猜测”对于该用户来说已经足够好的话，就能够避免后续请求的[[ruby:round%20trip%20delay][往返延时]]）。为了提升服务器猜测的准确性，用户代理 *可以* 在其发送的请求报文中包含某些报头域来描述自身的[[ruby:preferences][偏好]]。
 
 #+BEGIN_QUOTE
 Proactive negotiation has serious disadvantages:
