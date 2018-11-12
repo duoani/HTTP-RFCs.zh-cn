@@ -896,7 +896,7 @@ Request methods can be defined as "cacheable" to indicate that responses to them
 The GET method requests transfer of a current selected representation for the target resource. GET is the primary mechanism of information retrieval and the focus of almost all performance optimizations. Hence, when people speak of retrieving some identifiable information via HTTP, they are generally referring to making a GET request.
 #+END_QUOTE
 
-GET 方法向目标资源请求传输一种[[ruby:current%20selected%20representation][当前选定的 representation]]。GET 是信息获取的主要途径，同时，它也是几乎所有[[ruby:performance%20optimizations][性能优化]]的重点。因此，当人们谈及经由 HTTP 来获取某些可标识的信息的时候，他们一般指的是发起一个 GET 请求。
+GET 方法向目标资源请求（要求）传输一种[[ruby:current%20selected%20representation][当前选定的 representation]]。GET 是信息获取的主要途径，同时，它也是几乎所有[[ruby:performance%20optimizations][性能优化]]的重点。因此，当人们谈及经由 HTTP 来获取某些可标识的信息的时候，他们一般指的是发起一个 GET 请求。
 
 #+BEGIN_QUOTE
 It is tempting to think of resource identifiers as remote file system pathnames and of representations as being a copy of the contents of such files. In fact, that is how many resources are implemented (see [[id:9195be98-bd4e-40ae-a5a0-6af920044f02][Section 9.1]] for related security considerations). However, there are no such limitations in practice. The HTTP interface for a resource is just as likely to be implemented as a tree of content objects, a programmatic view on various database records, or a gateway to other information systems. Even when the URI mapping mechanism is tied to a file system, an origin server might be configured to execute the files with the request as input and send the output as the representation rather than transfer the files directly. Regardless, only the origin server needs to know how each of its resource identifiers corresponds to an implementation and how each implementation manages to select and send a current representation of the target resource in a response to GET.
@@ -942,20 +942,45 @@ The response to a HEAD request is cacheable; a cache *MAY* use it to satisfy sub
 :PROPERTIES:
 :ID:       d672d01b-615b-416a-a750-0442a6901ed0
 :END:
+#+BEGIN_QUOTE
 The POST method requests that the target resource process the representation enclosed in the request according to the resource's own specific semantics. For example, POST is used for the following functions (among others):
 
 - Providing a block of data, such as the fields entered into an HTML form, to a data-handling process;
 - Posting a message to a bulletin board, newsgroup, mailing list, blog, or similar group of articles;
 - Creating a new resource that has yet to be identified by the origin server; and
 - Appending data to a resource's existing representation(s).
+#+END_QUOTE
 
-An origin server indicates response semantics by choosing an appropriate status code depending on the result of processing the POST request; almost all of the status codes defined by this specification might be received in a response to POST (the exceptions being 206 (Partial Content), 304 (Not Modified), and 416 (Range Not Satisfiable)).
+POST 方法请求（要求）目标资源按照资源自身的具体语义来处理封装在请求报文里的 representation。例如，POST 是用于以下（或其他）功能。
 
-If one or more resources has been created on the origin server as a result of successfully processing a POST request, the origin server SHOULD send a 201 (Created) response containing a Location header field that provides an identifier for the primary resource created (Section 7.1.2) and a representation that describes the status of the request while referring to the new resource(s).
+- 为某个数据处理进程提供[[ruby:a%20block%20of%20data][数据块]]，例如某个 HTML 表单的域；
+- 发表一份报文到某个电子公告栏、新闻组、邮件列表、博客或者类似的文章组里；
+- 创建一种还没有被源服务器所标识的新的资源；以及
+- 附加数据到某个资源的现有 representation(s) 中。
 
-Responses to POST requests are only cacheable when they include explicit freshness information (see Section 4.2.1 of [RFC7234]). However, POST caching is not widely implemented. For cases where an origin server wishes the client to be able to cache the result of a POST in a way that can be reused by a later GET, the origin server MAY send a 200 (OK) response containing the result and a Content-Location header field that has the same value as the POST's effective request URI (Section 3.1.4.2).
+#+BEGIN_QUOTE
+An origin server indicates response semantics by choosing an appropriate status code depending on the result of processing the POST request; almost all of the status codes defined by this specification might be received in a response to POST (the exceptions being =206 (Partial Content)=, =304 (Not Modified)=, and =416 (Range Not Satisfiable)=).
+#+END_QUOTE
 
-If the result of processing a POST would be equivalent to a representation of an existing resource, an origin server MAY redirect the user agent to that resource by sending a 303 (See Other) response with the existing resource's identifier in the Location field. This has the benefits of providing the user agent a resource identifier and transferring the representation via a method more amenable to shared caching, though at the cost of an extra request if the user agent does not already have the representation cached.
+源服务器根据 POST 请求的处理结果来选择一种恰当的状态码来指明响应的语义，几乎所有本规范定义的状态码都可以用在回应给 POST 的响应里，除了 =206 (Partial Content)=、=304 (Not Modified)= 以及 =416 (Range Not Satisfiable)= 是例外。
+
+#+BEGIN_QUOTE
+If one or more resources has been created on the origin server as a result of successfully processing a POST request, the origin server *SHOULD* send a =201 (Created)= response containing a =Location= header field that provides an identifier for the primary resource created ([[id:bc2baf29-0bf6-4816-865c-3d33f5fe38e3][Section 7.1.2]]) and a representation that describes the status of the request while referring to the new resource(s).
+#+END_QUOTE
+
+如果一个或多个资源在源服务器上被创建，来作为对成功处理某个 POST 请求的结果，那么，源服务器 *应当* 发送一个 =201 (Created)= 响应，且该响应需带有一个 =Location= 报头域来提供一种标识符，来对应被创建的主要资源（[[id:bc2baf29-0bf6-4816-865c-3d33f5fe38e3][章节 7.1.2]]）；以及需要包含一种 representation，来描述当引用新资源的时候请求的状态。
+
+#+BEGIN_QUOTE
+Responses to POST requests are only cacheable when they include explicit freshness information (see [[https://tools.ietf.org/html/rfc7234#section-4.2.1][Section 4.2.1]] of [RFC7234]). However, POST caching is not widely implemented. For cases where an origin server wishes the client to be able to cache the result of a POST in a way that can be reused by a later GET, the origin server *MAY* send a =200 (OK)= response containing the result and a =Content-Location= header field that has the same value as the POST's effective request URI ([[id:91650144-4bfc-4362-b628-f96578a5c756][Section 3.1.4.2]]).
+#+END_QUOTE
+
+回应给 POST 请求的响应，仅当它们包含明确的[[ruby:freshness%20information][新鲜信息]]时，才是[[ruby:cacheable][可缓存的]]（见[[https://tools.ietf.org/html/rfc7234#section-4.2.1][【RFC7234】章节 4.2.1]]）。然而，对 POST 响应的缓存并没有被广泛实现。如果源服务器希望客户端以一种之后的 GET 能够复用的方式使客户端能够缓存 POST 的结果，面对这种情况，源服务器 *可以* 发送一个 =200 (OK)= 响应来包含该结果，并且，该响应还需带有与该 POST 的有效请求 URI 相同的值的一个 =Content-Location= 报头域（[[id:91650144-4bfc-4362-b628-f96578a5c756][章节 3.1.4.2]]）。
+
+#+BEGIN_QUOTE
+If the result of processing a POST would be equivalent to a representation of an existing resource, an origin server *MAY* redirect the user agent to that resource by sending a =303 (See Other)= response with the existing resource's identifier in the =Location= field. This has the benefits of providing the user agent a resource identifier and transferring the representation via a method more amenable to shared caching, though at the cost of an extra request if the user agent does not already have the representation cached.
+#+END_QUOTE
+
+如果处理某个 POST 请求的结果等价于某个现有资源的某种 representation 的话，源服务器 *可以* 发送一个 =303 (See Other)= 响应到用户代理，同时，响应里带有 =Location= 报头域，其值为该现在资源的标识符，让用户代理进行重定向。这样做的好处是可以向用户代理提供一种资源标识符，以及可以通过一种更适合缓存共享的方法来传输 representation，但坏处是可能需要一个额外的请求，如果用户代理还没有缓存过该 representation 的话。
 
 *** 4.3.4. PUT
 :PROPERTIES:
@@ -1159,6 +1184,9 @@ Responses to the TRACE method are not cacheable.
 :ID:       5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1
 :END:
 *** 7.1.2. Location
+:PROPERTIES:
+:ID:       bc2baf29-0bf6-4816-865c-3d33f5fe38e3
+:END:
 *** 7.1.3. Retry-After
 *** 7.1.4. Vary
 :PROPERTIES:
