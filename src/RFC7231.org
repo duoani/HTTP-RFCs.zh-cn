@@ -1033,7 +1033,7 @@ For example, if the target resource is configured to always have a =Content-Type
 HTTP does not define exactly how a PUT method affects the state of an origin server beyond what can be expressed by the intent of the user agent request and the semantics of the origin server response. It does not define what a resource might be, in any sense of that word, beyond the interface provided via HTTP. It does not define how resource state is "stored", nor how such storage might change as a result of a change in resource state, nor how the origin server translates resource state into representations. Generally speaking, all implementation details behind the resource interface are intentionally hidden by the server.
 #+END_QUOTE
 
-HTTP 并没有定义一个 PUT 方法究竟是如何影响一个源服务器的状态的，是因为这超出了用户代理的请求意图以及源服务器的响应语义所能表达的。HTTP 并没有定义一个[[ruby:resource][资源]]究竟是什么，在任何意义上，这超出了由 HTTP 所提供的接口所能表达的。HTTP 并没有定义[[ruby:resource%20state][资源的状态]]是被如何“[[stored][存储]]”的，也没有定义资源状态上的改变会导致这种存储如何改变，也没有定义源服务器是如何将资源的状态[[ruby:translate][翻译]]成[[ruby:representations][资源的表示]]的。一般而言，在资源接口后面的所有实现细节都被服务器有意地隐藏起来。
+HTTP 并没有定义一个 PUT 方法究竟是如何影响一个源服务器的状态的，是因为这超出了用户代理的请求意图以及源服务器的响应语义所能表达的。HTTP 并没有定义一个[[ruby:resource][资源]]究竟是什么，在任何意义上，这超出了由 HTTP 所提供的接口所能表达的。HTTP 并没有定义[[ruby:resource%20state][资源的状态]]是被如何“[[ruby:stored][存储]]”的，也没有定义资源状态上的改变会导致这种存储如何改变，也没有定义源服务器是如何将资源的状态[[ruby:translate][翻译]]成[[ruby:representations][资源的表示]]的。一般而言，在资源接口后面的所有实现细节都被服务器有意地隐藏起来。
 
 #+BEGIN_QUOTE
 An origin server *MUST NOT* send a validator header field ([[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][Section 7.2]]), such as an =ETag= or =Last-Modified= field, in a successful response to PUT unless the request's representation data was saved without any transformation applied to the body (i.e., the resource's new representation data is identical to the representation data received in the PUT request) and the validator field value reflects the new representation. This requirement allows a user agent to know when the representation body it has in memory remains current as a result of the PUT, thus not in need of being retrieved again from the origin server, and that the new validator(s) received in the response can be used for future conditional requests in order to prevent accidental overwrites (Section 5.2).
@@ -1079,7 +1079,13 @@ Responses to the PUT method are not cacheable. If a successful PUT request passe
 :PROPERTIES:
 :ID:       9e649fa9-0f7f-40d0-adef-8af6a6f62e80
 :END:
-The DELETE method requests that the origin server remove the association between the target resource and its current functionality. In effect, this method is similar to the rm command in UNIX: it expresses a deletion operation on the URI mapping of the origin server rather than an expectation that the previously associated information be deleted.
+The DELETE method requests that the origin server remove the association between the target resource and its current functionality. In effect, this method is similar to the =rm= command in UNIX: it expresses a deletion operation on the URI mapping of the origin server rather than an expectation that the previously associated information be deleted.
+
+DELETE 方法请求（要求）源服务器移除[[ruby:target%20resource][目标资源]]与它[[ruby:current%20functionality][当前的功能]]之间的关联。实际上，该方法与 UNIX 中的 =rm= 命令非常类似，DELETE 表达了一种删除操作源服务器的映射，而不是表达一种删除之前相关联的信息的期望。
+
+
+[[https://stackoverflow.com/questions/19884295/soap-vs-rest-differences/19884975#19884975]]
+[[https://stackoverflow.com/questions/19843480/s3-rest-api-and-post-method/19844272#19844272]]
 
 If the target resource has one or more current representations, they might or might not be destroyed by the origin server, and the associated storage might or might not be reclaimed, depending entirely on the nature of the resource and its implementation by the origin server (which are beyond the scope of this specification). Likewise, other implementation aspects of a resource might need to be deactivated or archived as a result of a DELETE, such as database or gateway connections. In general, it is assumed that the origin server will only allow DELETE on resources for which it has a prescribed mechanism for accomplishing the deletion.
 

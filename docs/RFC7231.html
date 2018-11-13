@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-12 Mon 18:50 -->
+<!-- 2018-11-13 Tue 19:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -2351,55 +2351,148 @@ If the result of processing a POST would be equivalent to a representation of an
 <div id="outline-container-org2e14fb1" class="outline-4">
 <h4 id="org2e14fb1"><a id="ID-28f69be8-26e9-4dd7-930e-7c683d7bcf8a"></a>4.3.4. PUT</h4>
 <div class="outline-text-4" id="text-org2e14fb1">
+<blockquote>
 <p>
 The PUT method requests that the state of the target resource be created or replaced with the state defined by the representation enclosed in the request message payload. A successful PUT of a given representation would suggest that a subsequent GET on that same target resource will result in an equivalent representation being sent in a 200 (OK) response. However, there is no guarantee that such a state change will be observable, since the target resource might be acted upon by other user agents in parallel, or might be subject to dynamic processing by the origin server, before any subsequent GET is received. A successful response only implies that the user agent's intent was achieved at the time of its processing by the origin server.
 </p>
+</blockquote>
 
 <p>
-If the target resource does not have a current representation and the PUT successfully creates one, then the origin server MUST inform the user agent by sending a 201 (Created) response. If the target resource does have a current representation and that representation is successfully modified in accordance with the state of the enclosed representation, then the origin server MUST send either a 200 (OK) or a 204 (No Content) response to indicate successful completion of the request.
+PUT 方法请求（要求）使用封装在请求报文有效载荷内的 representation 所定义的状态，来<ruby>新建<rt>create</rt></ruby>或<ruby>替换<rt>replace</rt></ruby>目标资源的状态。如果成功地向目标资源 PUT 了一个给定的 representation，那么我们可以认为，对相同目标资源的后续 GET 请求将会被回应一个 <code>200 (OK)</code> 响应，同时响应会携带一个（与之前 PUT 的 representation）等价的 representation。然而，不能保证这种状态的改变能够被客户端所观察到，这是因为在源服务器接收到任何来自该客户端的后续的 GET 请求之前，目标资源就可能被依据其他用户代理并行地执行动作，也有可能受到源服务器的动态处理。对 PUT 请求的成功响应，仅仅意味着在源服务器处理该请求的时候，用户代理达成了它的意图。
 </p>
 
+<blockquote>
 <p>
-An origin server SHOULD ignore unrecognized header fields received in a PUT request (i.e., do not save them as part of the resource state).
+If the target resource does not have a current representation and the PUT successfully creates one, then the origin server <b>MUST</b> inform the user agent by sending a <code>201 (Created)</code> response. If the target resource does have a current representation and that representation is successfully modified in accordance with the state of the enclosed representation, then the origin server <b>MUST</b> send either a <code>200 (OK)</code> or a <code>204 (No Content)</code> response to indicate successful completion of the request.
 </p>
+</blockquote>
 
 <p>
-An origin server SHOULD verify that the PUT representation is consistent with any constraints the server has for the target resource that cannot or will not be changed by the PUT. This is particularly important when the origin server uses internal configuration information related to the URI in order to set the values for representation metadata on GET responses. When a PUT representation is inconsistent with the target resource, the origin server SHOULD either make them consistent, by transforming the representation or changing the resource configuration, or respond with an appropriate error message containing sufficient information to explain why the representation is unsuitable. The 409 (Conflict) or 415 (Unsupported Media Type) status codes are suggested, with the latter being specific to constraints on Content-Type values.
+如果目标资源并没有当前的 representation，并且 PUT 成功地创建了一种 representation，那么，源服务器 <b>必须</b> 回应一个 <code>201 (Created)</code> 响应来告知用户代理。如果目标资源已有当前的 representation 并且该 representation 的状态被封装在 PUT 请求内的 representation 成功地更改了，那么，源服务器 <b>必须</b> 回应一个 <code>200 (OK)</code> 或者一个 <code>204 (No Content)</code> 来指明请求已经成功完成了。
 </p>
 
+<blockquote>
 <p>
-For example, if the target resource is configured to always have a Content-Type of "text/html" and the representation being PUT has a Content-Type of "image/jpeg", the origin server ought to do one of:
+译注：由此可见，PUT 会改变 representation 的状态，因此，它不是一个<ruby>安全方法<rt>safe method</rt></ruby>。而 PUT 是一个<ruby>幂等方法<rt>idempotent method</rt></ruby>，由上述可知，多次相同的 PUT 请求与一次 PUT 请求对 representation 的影响是一样的。试想一下，一个 PUT 请求，试图将用户 A 的年龄值更新为 18，无论发送一次还是多次这样的请求，用户 A 的年龄值最终依然是 18。
 </p>
+</blockquote>
+
+<blockquote>
+<p>
+An origin server <b>SHOULD</b> ignore unrecognized header fields received in a PUT request (i.e., do not save them as part of the resource state).
+</p>
+</blockquote>
 
 <p>
-reconfigure the target resource to reflect the new media type;
-transform the PUT representation to a format consistent with that of the resource before saving it as the new resource state; or,
-reject the request with a 415 (Unsupported Media Type) response indicating that the target resource is limited to "text/html", perhaps including a link to a different resource that would be a suitable target for the new representation.
+源服务器 <b>应当</b> 忽略掉接收自某个 PUT 请求的<ruby>未识别的报头域<rt>unrecognized header fields</rt></ruby>（也就是说，不要保存它们作为资源状态的一部分）。
+</p>
+
+<blockquote>
+<p>
+An origin server <b>SHOULD</b> verify that the PUT representation is consistent with any constraints the server has for the target resource that cannot or will not be changed by the PUT. This is particularly important when the origin server uses internal configuration information related to the URI in order to set the values for representation metadata on GET responses. When a PUT representation is inconsistent with the target resource, the origin server <b>SHOULD</b> either make them consistent, by transforming the representation or changing the resource configuration, or respond with an appropriate error message containing sufficient information to explain why the representation is unsuitable. The <code>409 (Conflict)</code> or <code>415 (Unsupported Media Type)</code> status codes are suggested, with the latter being specific to constraints on <code>Content-Type</code> values.
+</p>
+</blockquote>
+
+<p>
+源服务器 <b>应当</b> 校验 PUT 的 representation 是否符合服务器对目标资源的任何<ruby>约束<rt>constraints</rt></ruby>，确保它们不能或不会被 PUT 所改变。当源服务器使用 URI 相关的内部配置信息来对回应给 GET 的响应的 representation 的元数据设置值的时候，这种校验是非常重要的。当一个 PUT 请求内的 representation 不符合<ruby>目标资源<rt>target resource</rt></ruby>的约束时，源服务器 <b>应当</b> 要不通过转换该 representation 或者改变资源的配置以使其符合约束条件；要不回应一种恰当的错误报文，包含足够的信息来解释为什么该 representation 并不适合。建议使用 <code>409 (Conflict)</code> 或者 <code>415 (Unsupported Media Type)</code> 状态码，而对于后者（<code>415 (Unsupported Media Type)</code>），带有 <code>Content-Type</code> 报头域以指定具体的约束类型。
+</p>
+
+<blockquote>
+<p>
+For example, if the target resource is configured to always have a <code>Content-Type</code> of "text/html" and the representation being PUT has a <code>Content-Type</code> of "image/jpeg", the origin server ought to do one of:
+</p>
+
+<ul class="org-ul">
+<li>reconfigure the target resource to reflect the new media type;</li>
+<li>transform the PUT representation to a format consistent with that of the resource before saving it as the new resource state; or,</li>
+<li>reject the request with a <code>415 (Unsupported Media Type)</code> response indicating that the target resource is limited to "text/html", perhaps including a link to a different resource that would be a suitable target for the new representation.</li>
+</ul>
+</blockquote>
+
+<p>
+例如，如果目标资源被配置为总是带有一个 "text/html" 的 <code>Content-Type</code>，并且 PUT 请求内的 representation 带有一个 "image/jpeg" 的 <code>Content-Type</code>，那么，源服务器的行为应该是以下其中之一：
+</p>
+
+<ul class="org-ul">
+<li>将目标资源重新配置以体现该种新的媒体类型；</li>
+<li>在保存 PUT 请求的 representation 作为目标资源的新状态之前，先将其转换为一种符合资源约束的格式；或者</li>
+<li>回应一个 <code>415 (Unsupported Media Type)</code> 响应来拒绝该请求并指明目标资源被限定为 "text/html"，响应内可能还包含一条<ruby>链接<rt>link</rt></ruby>，该链接指向到其他可能适用于该请求目标的资源。</li>
+</ul>
+
+<blockquote>
+<p>
 HTTP does not define exactly how a PUT method affects the state of an origin server beyond what can be expressed by the intent of the user agent request and the semantics of the origin server response. It does not define what a resource might be, in any sense of that word, beyond the interface provided via HTTP. It does not define how resource state is "stored", nor how such storage might change as a result of a change in resource state, nor how the origin server translates resource state into representations. Generally speaking, all implementation details behind the resource interface are intentionally hidden by the server.
 </p>
+</blockquote>
 
 <p>
-An origin server MUST NOT send a validator header field (Section 7.2), such as an ETag or Last-Modified field, in a successful response to PUT unless the request's representation data was saved without any transformation applied to the body (i.e., the resource's new representation data is identical to the representation data received in the PUT request) and the validator field value reflects the new representation. This requirement allows a user agent to know when the representation body it has in memory remains current as a result of the PUT, thus not in need of being retrieved again from the origin server, and that the new validator(s) received in the response can be used for future conditional requests in order to prevent accidental overwrites (Section 5.2).
+HTTP 并没有定义一个 PUT 方法究竟是如何影响一个源服务器的状态的，是因为这超出了用户代理的请求意图以及源服务器的响应语义所能表达的。HTTP 并没有定义一个<ruby>资源<rt>resource</rt></ruby>究竟是什么，在任何意义上，这超出了由 HTTP 所提供的接口所能表达的。HTTP 并没有定义<ruby>资源的状态<rt>resource state</rt></ruby>是被如何“<ruby>存储<rt>stored</rt></ruby>”的，也没有定义资源状态上的改变会导致这种存储如何改变，也没有定义源服务器是如何将资源的状态<ruby>翻译<rt>translate</rt></ruby>成<ruby>资源的表示<rt>representations</rt></ruby>的。一般而言，在资源接口后面的所有实现细节都被服务器有意地隐藏起来。
 </p>
 
+<blockquote>
+<p>
+An origin server <b>MUST NOT</b> send a validator header field (<a href="#org4d2e5ff">Section 7.2</a>), such as an <code>ETag</code> or <code>Last-Modified</code> field, in a successful response to PUT unless the request's representation data was saved without any transformation applied to the body (i.e., the resource's new representation data is identical to the representation data received in the PUT request) and the validator field value reflects the new representation. This requirement allows a user agent to know when the representation body it has in memory remains current as a result of the PUT, thus not in need of being retrieved again from the origin server, and that the new validator(s) received in the response can be used for future conditional requests in order to prevent accidental overwrites (Section 5.2).
+</p>
+</blockquote>
+
+<p>
+源服务器 <b>禁止</b> 在回应给 PUT 的<ruby>成功响应<rt>successful response</rt></ruby>里带有任何<ruby>验证器报头域<rt>validator header field</rt></ruby>（<a href="#org4d2e5ff">章节 7.2</a>），例如 <code>ETag</code> 或者 <code>Last-Modified</code> 报头域，除非请求的 representation data 是保存在没有经过任何<ruby>编码转换<rt>transformation</rt></ruby>的报文正文（有效载荷）之内（也就是说，响应内的新 representation data 是等价于接收自 PUT 请求内的 representation data），并且该验证器报头域反映的是新是 representation。上述这种要求使得用户代理能够知道这个在自己内存中的 representation 在什么时间内可以<ruby>保持最新（保持为 current 状态）<rt>remain current</rt></ruby>，由此知道其是否仍然可以继续作为 PUT 请求的结果而不需要从源服务器上再次获取，以及在响应内接收到的新验证器能够被用于将来的<ruby>条件请求<rt>conditional requests</rt></ruby>以避免新<ruby>意外覆盖<rt>accidental overwrite</rt></ruby>（章节 5.2）。
+</p>
+
+<blockquote>
+<p>
+译注：未经过任何编码转换的<ruby>报文正文<rt>message body</rt></ruby>等价于<ruby>有效载荷体<rt>payload body</rt></ruby>，见<a href="RFC7230.html#ID-1754823B-D0BC-410F-A17B-E7ADA1AA79BC">【RFC7230】章节 3.3.1</a>。
+</p>
+</blockquote>
+
+<blockquote>
 <p>
 The fundamental difference between the POST and PUT methods is highlighted by the different intent for the enclosed representation. The target resource in a POST request is intended to handle the enclosed representation according to the resource's own semantics, whereas the enclosed representation in a PUT request is defined as replacing the state of the target resource. Hence, the intent of PUT is idempotent and visible to intermediaries, even though the exact effect is only known by the origin server.
 </p>
+</blockquote>
 
 <p>
-Proper interpretation of a PUT request presumes that the user agent knows which target resource is desired. A service that selects a proper URI on behalf of the client, after receiving a state-changing request, SHOULD be implemented using the POST method rather than PUT. If the origin server will not make the requested PUT state change to the target resource and instead wishes to have it applied to a different resource, such as when the resource has been moved to a different URI, then the origin server MUST send an appropriate 3xx (Redirection) response; the user agent MAY then make its own decision regarding whether or not to redirect the request.
+POST 与 PUT 两者的根本区别在于它们对封装的 representation 的不同意图。POST 所请求目标资源是意图依据该资源自身的语义来<ruby>处置<rt>handle</rt></ruby>请求内的 representation。而在 PUT 请求内的 representation 是定义为替换目标资源的状态的。因此，PUT 的意图是<ruby>幂等的<rt>idempotent</rt></ruby>且对<ruby>中间人<rt>intermediaries</rt></ruby>是<ruby>可见的<rt>visible</rt></ruby>，虽然只有源服务器了解其确切的作用。
 </p>
 
+<blockquote>
+<p>
+Proper interpretation of a PUT request presumes that the user agent knows which target resource is desired. A service that selects a proper URI on behalf of the client, after receiving a state-changing request, <b>SHOULD</b> be implemented using the POST method rather than PUT. If the origin server will not make the requested PUT state change to the target resource and instead wishes to have it applied to a different resource, such as when the resource has been moved to a different URI, then the origin server <b>MUST</b> send an appropriate <code>3xx (Redirection)</code> response; the user agent <b>MAY</b> then make its own decision regarding whether or not to redirect the request.
+</p>
+</blockquote>
+
+<p>
+PUT 请求的<ruby>合理解释<rt>proper interpretation</rt></ruby>是相信用户代理是知道哪个目标才是它所期望的。一种为客户端选择恰当的 URI 的服务，在接收到一种<ruby>会引起状态变化的请求<rt>state-changing request</rt></ruby>以后，<b>应当</b> 被实现为使用 POST 方法而不是 PUT 方法。如果源服务器不将 PUT 所请求的状态改变到目标资源上，而是希望将其应用到另外一个不同的资源上，例如当资源被迁移到另一个不同的 URI 上了，那么，源服务器 <b>必须</b> 回应一个恰当的 <code>3xx (Redirection)</code> 响应给用户代理，然后，用户代理 <b>可以</b> 自行决定是否对请求进行<ruby>重定向<rt>redirect</rt></ruby>。
+</p>
+
+<blockquote>
 <p>
 A PUT request applied to the target resource can have side effects on other resources. For example, an article might have a URI for identifying "the current version" (a resource) that is separate from the URIs identifying each particular version (different resources that at one point shared the same state as the current version resource). A successful PUT request on "the current version" URI might therefore create a new version resource in addition to changing the state of the target resource, and might also cause links to be added between the related resources.
 </p>
+</blockquote>
 
 <p>
-An origin server that allows PUT on a given target resource MUST send a 400 (Bad Request) response to a PUT request that contains a Content-Range header field (Section 4.2 of [RFC7233]), since the payload is likely to be partial content that has been mistakenly PUT as a full representation. Partial content updates are possible by targeting a separately identified resource with state that overlaps a portion of the larger resource, or by using a different method that has been specifically defined for partial updates (for example, the PATCH method defined in [RFC5789]).
+应用到<ruby>目标资源<rt>target resource</rt></ruby>的 PUT 请求可能会对其他资源带来<ruby>副作用<rt>side effects</rt></ruby>。例如，一篇文章可能会有一个用于标识“<ruby>当前版本<rt>the current version</rt></ruby>”（是一种资源）的 URI，独立于其他每一个标识特定版本的 URIs，不同的资源在某处共享同一种状态来作为“当前版本”所对应的资源。成功地向“当前版本”这个 URI 发起了一个 PUT 请求以后，可能除了改变目标资源的状态之外，还会创建额外一个“新版本”的资源，而且还有可能需要添加链接到相关的资源之中。 
 </p>
 
+<blockquote>
+<p>
+An origin server that allows PUT on a given target resource <b>MUST</b> send a <code>400 (Bad Request)</code> response to a PUT request that contains a <code>Content-Range</code> header field (<a href="https://tools.ietf.org/html/rfc7233#section-4.2">Section 4.2</a> of [RFC7233]), since the payload is likely to be partial content that has been mistakenly PUT as a full representation. Partial content updates are possible by targeting a separately identified resource with state that overlaps a portion of the larger resource, or by using a different method that has been specifically defined for partial updates (for example, the PATCH method defined in [<a href="https://tools.ietf.org/html/rfc5789">RFC5789</a>]).
+</p>
+</blockquote>
+
+<p>
+对于允许向给定目标资源发送 PUT 请求的源服务器来说，如果某个 PUT 请求包含有一个 <code>Content-Range</code> 报头域（<a href="https://tools.ietf.org/html/rfc7233#section-4.2">【RFC7233】章节 4.2</a>），源服务器 <b>必须</b> 向该请求回应一个 <code>400 (Bad Request)</code> 响应，这是因为该请求的<ruby>有效载荷<rt>payload</rt></ruby>很有可能只是<ruby>部分内容<rt>partial content</rt></ruby>而被错误地当作一个完整的 representation。<ruby>部分内容的更新<rt>partial content updates</rt></ruby>很可能是通过使用<ruby>大型资源<rt>larger resource</rt></ruby>的一部分相重叠的状态来定位一个单独标识的资源，或者通过使用另外一种被定义为专门用于<ruby>部分更新<rt>partial updates</rt></ruby>的方法（例如，定义于【<a href="https://tools.ietf.org/html/rfc5789">RFC5789</a>】里的 PATCH 方法）。
+</p>
+
+<blockquote>
 <p>
 Responses to the PUT method are not cacheable. If a successful PUT request passes through a cache that has one or more stored responses for the effective request URI, those stored responses will be invalidated (see Section 4.4 of [RFC7234]).
+</p>
+</blockquote>
+
+<p>
+回应给 PUT 方法的响应是<ruby>不可以缓存的<rt>not cacheable</rt></ruby>。如果一个<ruby>成功的 PUT 请求<rt>successful PUT request</rt></ruby>穿过一个<ruby>缓存<rt>cache</rt></ruby>，而该缓存已经存储（缓存）了该 PUT 请求的有效请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 PUT 请求），那么这些已存储的（已缓存的）响应将会被失效（见【RFC7234】章节 4.4）。
 </p>
 </div>
 </div>
@@ -2408,7 +2501,17 @@ Responses to the PUT method are not cacheable. If a successful PUT request passe
 <h4 id="orgf7b2242"><a id="ID-9e649fa9-0f7f-40d0-adef-8af6a6f62e80"></a>4.3.5. DELETE</h4>
 <div class="outline-text-4" id="text-orgf7b2242">
 <p>
-The DELETE method requests that the origin server remove the association between the target resource and its current functionality. In effect, this method is similar to the rm command in UNIX: it expresses a deletion operation on the URI mapping of the origin server rather than an expectation that the previously associated information be deleted.
+The DELETE method requests that the origin server remove the association between the target resource and its current functionality. In effect, this method is similar to the <code>rm</code> command in UNIX: it expresses a deletion operation on the URI mapping of the origin server rather than an expectation that the previously associated information be deleted.
+</p>
+
+<p>
+DELETE 方法请求（要求）源服务器移除<ruby>目标资源<rt>target resource</rt></ruby>与它<ruby>当前的功能<rt>current functionality</rt></ruby>之间的关联。实际上，该方法与 UNIX 中的 <code>rm</code> 命令非常类似，DELETE 表达了一种删除操作源服务器的映射，而不是表达一种删除之前相关联的信息的期望。
+</p>
+
+
+<p>
+<a href="https://stackoverflow.com/questions/19884295/soap-vs-rest-differences/19884975#19884975">https://stackoverflow.com/questions/19884295/soap-vs-rest-differences/19884975#19884975</a>
+<a href="https://stackoverflow.com/questions/19843480/s3-rest-api-and-post-method/19844272#19844272">https://stackoverflow.com/questions/19843480/s3-rest-api-and-post-method/19844272#19844272</a>
 </p>
 
 <p>
@@ -2790,7 +2893,9 @@ Responses to the TRACE method are not cacheable.
 </div>
 </div>
 <div id="outline-container-org4d2e5ff" class="outline-3">
-<h3 id="org4d2e5ff">7.2. Validator Header Fields</h3>
+<h3 id="org4d2e5ff"><a id="ID-efd98bfe-3f3c-4d75-9fa9-041a5af2f917"></a>7.2. Validator Header Fields</h3>
+<div class="outline-text-3" id="text-org4d2e5ff">
+</div>
 </div>
 <div id="outline-container-org847a265" class="outline-3">
 <h3 id="org847a265">7.3. Authentication Challenges</h3>
