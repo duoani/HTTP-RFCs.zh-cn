@@ -1259,7 +1259,7 @@ The presence of a message body in a response depends on both the request method 
 The =Transfer-Encoding= header field lists the transfer coding names corresponding to the sequence of transfer codings that have been (or will be) applied to the payload body in order to form the message body. Transfer codings are defined in [[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][Section 4]].
 #+END_QUOTE
 
-报头域 =Transfer-Encoding= 罗列了多个传输编码值（transfer coding）的名称，这些传输编码值已经（或即将）被应用于对有效载荷（payload body）进行编码，最终形成报文正文（message body）。传输编码值（transfer coding）定义在[[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][章节 4]]。
+报头域 =Transfer-Encoding= 罗列了所有与已经（或即将）被应用到有效载荷（payload body）的传输编码值（transfer coding）相对应的名称。有效载荷编码后形成报文正文（message body）。传输编码值（transfer coding）定义在[[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][章节 4]]。
 
 #+BEGIN_SRC text
 Transfer-Encoding = 1#transfer-coding
