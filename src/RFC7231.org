@@ -6,22 +6,24 @@
 #+bind: org-export-publishing-directory "./docs"
 
 #+BEGIN_EXPORT html
-<a class="github-repo" href="https://github.com/duoani/RFC7230.zh-cn">
+<a class="github-repo" href="https://github.com/duoani/HTTP-RFCs.zh-cn">
   <svg height="18" width="18" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
   <span>View Repo</span>
 </a>
 #+END_EXPORT
 
 #+BEGIN_EXPORT html
-<a href="https://github.com/duoani/RFC7230.zh-cn">
-  <img alt="" src="https://img.shields.io/github/license/duoani/RFC7230.zh-cn.svg?style=social"/>
+<a href="https://github.com/duoani/HTTP-RFCs.zh-cn">
+  <img alt="" src="https://img.shields.io/github/license/duoani/HTTP-RFCs.zh-cn.svg?style=social"/>
 </a>
-<a href="https://github.com/duoani/RFC7230.zh-cn">
-  <img src="https://img.shields.io/github/stars/duoani/RFC7230.zh-cn.svg?style=social&label=Stars"/>
+<a href="https://github.com/duoani/HTTP-RFCs.zh-cn">
+  <img src="https://img.shields.io/github/stars/duoani/HTTP-RFCs.zh-cn.svg?style=social&label=Stars"/>
 </a>
 #+END_EXPORT
 
 #+BEGIN_SRC text
+                                                         PROPOSED STANDARD
+                                                              Errata Exist
   Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
   Request for Comments: 7231                                         Adobe
   Obsoletes: 2616                                          J. Reschke, Ed.
@@ -1136,16 +1138,22 @@ Responses to the DELETE method are not cacheable. If a DELETE request passes thr
 :ID:       630ab908-5d8e-400b-bed4-f6973b8c1549
 :END:
 #+BEGIN_QUOTE
-The CONNECT method requests that the recipient establish a tunnel to the destination origin server identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the tunnel is closed. Tunnels are commonly used to create an end-to-end virtual connection, through one or more proxies, which can then be secured using TLS (Transport Layer Security, [RFC5246]).
+The CONNECT method requests that the recipient establish a tunnel to the destination origin server identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the tunnel is closed. Tunnels are commonly used to create an end-to-end virtual connection, through one or more proxies, which can then be secured using TLS (Transport Layer Security, [[[https://tools.ietf.org/html/rfc5246][RFC5246]]]).
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-CONNECT is intended only for use in requests to a proxy. An origin server that receives a CONNECT request for itself MAY respond with a 2xx (Successful) status code to indicate that a connection is established. However, most origin servers do not implement CONNECT.
-#+END_QUOTE
+CONNECT 方法请求（要求）接收端与[[ruby:request-target][请求目标]]所标识的源服务器[[ruby:establish][建立]]一个[[ruby:tunnel][隧道]]，并且如果建立成功以后，将接收端的行为限制为双向[[ruby:blind%20forwarding][盲目转发]]数据包，直到隧道被关闭为止。隧道常常用于创建一种穿越一个或多个[[ruby:proxies][代理]]的[[ruby:end-to-end][端到端]]的[[ruby:virtual%20connection][虚拟连接]]，然后能够安全使用 TLS（Transport Layer Security，【[[https://tools.ietf.org/html/rfc5246][RFC5246]]】）。
 
 #+BEGIN_QUOTE
-A client sending a CONNECT request *MUST* send the authority form of request-target (Section 5.3 of [RFC7230]); i.e., the request-target consists of only the host name and port number of the tunnel destination, separated by a colon. For example,
+CONNECT is intended only for use in requests to a proxy. An origin server that receives a CONNECT request for itself *MAY* respond with a =2xx (Successful)= status code to indicate that a connection is established. However, most origin servers do not implement CONNECT.
 #+END_QUOTE
+
+CONNECT 只能用在向代理发送的请求里。源服务器接收到一个发送给它自己的 CONNECT 请求时，*可以* 回应一个 =2xx (Successful)= 状态码来表明连接已被建立好。但是，大多数源服务器并没有[[ruby:implement][实现]] CONNECT。
+
+#+BEGIN_QUOTE
+A client sending a CONNECT request *MUST* send the authority form of request-target ([[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][Section 5.3]] of [RFC7230]); i.e., the request-target consists of only the host name and port number of the tunnel destination, separated by a colon. For example,
+#+END_QUOTE
+
+发送 CONNECT 请求的客户端 *必须* 以 authority-form（权威形式）的形式来发送[[ruby:request-target][请求目标]]（[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][【RFC7230】章节 5.3]]），也就是说，请求目标仅由隧道终点的[[ruby:host%20name][主机名称]]以及[[ruby:port%20number][端口号]]组成，以冒号分隔。例如：
 
 #+BEGIN_EXAMPLE
 CONNECT server.example.com:80 HTTP/1.1
@@ -1154,16 +1162,30 @@ Host: server.example.com:80
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-The recipient proxy can establish a tunnel either by directly connecting to the request-target or, if configured to use another proxy, by forwarding the CONNECT request to the next inbound proxy. Any 2xx (Successful) response indicates that the sender (and all inbound proxies) will switch to tunnel mode immediately after the blank line that concludes the successful response's header section; data received after that blank line is from the server identified by the request-target. Any response other than a successful response indicates that the tunnel has not yet been formed and that the connection remains governed by HTTP.
+译注：上例是有一个[[ruby:blank%20line][空行]]的，表示[[ruby:header%20section][报头块]]结束，报文结构的更多详情见[[id:6e9516fa-cde2-4693-b1e1-e763776d3186][【RFC7230】章节 3]]。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-A tunnel is closed when a tunnel intermediary detects that either side has closed its connection: the intermediary MUST attempt to send any outstanding data that came from the closed side to the other side, close both connections, and then discard any remaining data left undelivered.
+The recipient proxy can establish a tunnel either by directly connecting to the request-target or, if configured to use another proxy, by forwarding the CONNECT request to the next inbound proxy. Any =2xx (Successful)= response indicates that the sender (and all inbound proxies) will switch to tunnel mode immediately after the blank line that concludes the successful response's header section; data received after that blank line is from the server identified by the request-target. Any response other than a successful response indicates that the tunnel has not yet been formed and that the connection remains governed by HTTP.
 #+END_QUOTE
+
+作为接收端的[[ruby:proxy][代理]]能够通过以下方式建立一个隧道：直接连接到请求目标；或者，如果该代理被配置为使用另一个代理的话，转发该 CONNECT 请求到下一个[[ruby:inbound%20proxy][入站代理]]。任何 =2xx (Successful)= 响应都表明发送端（以及所有入站代理）将会在成功响应的[[ruby:header%20section][报头块]]末尾的空行（该空行表示报头块结束）以后，马上切换为[[ruby:tunnel%20mode][隧道模式]]，而在这个空行之后所接收到的数据，是来自由[[ruby:request%20target][请求目标]]所标识的源服务器的。其他任何不是表示成功的响应则表明这个隧道还没有形成，该连接仍然受到 HTTP 支配（而不是由隧道所扩展的协议来支配，例如 TLS）。
+
+#+BEGIN_QUOTE
+这里涉及到 HTTP 的报文结构和参与的多种角色，如果对这些概念还不够熟悉的话，请先浏览【[[file:RFC7230.org][RFC7230]]】里的章节 2 和 3。
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A tunnel is closed when a tunnel intermediary detects that either side has closed its connection: the intermediary *MUST* attempt to send any outstanding data that came from the closed side to the other side, close both connections, and then discard any remaining data left undelivered.
+#+END_QUOTE
+
+当[[ruby:tunnel%20intermediary][隧道中间人]]检测到隧道两端都已关闭了连接的时候，隧道被关闭。中间人 *必须* 尝试发送所有[[ruby:outstanding%20data][未偿付的数据]]，从被关闭的一端发送到另一端，然后关闭两端的连接，最后丢弃掉任何还[[ruby:undelivered][未投递出去]]的数据。
 
 #+BEGIN_QUOTE
 Proxy authentication might be used to establish the authority to create a tunnel. For example,
 #+END_QUOTE
+
+[[ruby:proxy%20authentication][代理认证]]可能被用来[[ruby:establish%20authority][确立权威]]来创建一个隧道，例如：
 
 #+BEGIN_EXAMPLE
 CONNECT server.example.com:80 HTTP/1.1
@@ -1173,20 +1195,28 @@ Proxy-Authorization: basic aGVsbG86d29ybGQ=
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-There are significant risks in establishing a tunnel to arbitrary servers, particularly when the destination is a well-known or reserved TCP port that is not intended for Web traffic. For example, a CONNECT to a request-target of "example.com:25" would suggest that the proxy connect to the reserved port for SMTP traffic; if allowed, that could trick the proxy into relaying spam email. Proxies that support CONNECT SHOULD restrict its use to a limited set of known ports or a configurable whitelist of safe request targets.
+There are significant risks in establishing a tunnel to arbitrary servers, particularly when the destination is a well-known or reserved TCP port that is not intended for Web traffic. For example, a CONNECT to a request-target of "example.com:25" would suggest that the proxy connect to the reserved port for SMTP traffic; if allowed, that could trick the proxy into relaying spam email. Proxies that support CONNECT *SHOULD* restrict its use to a limited set of known ports or a configurable whitelist of safe request targets.
 #+END_QUOTE
 
+向任意的服务器建立隧道会有严重的风险，特别是当隧道的终点是一个不作为[[ruby:Web%20traffic][网站流量]]的 TCP [[ruby:well-known%20port][知名端口]]或者[[ruby:reserved%20port][保留端口]]的时候。例如，请求目标为 "example.com:25" 的 CONNECT 请求会建议代理连接到用于 SMTP 流量的保留端口上，如果允许这样做，就会欺骗代理去[[ruby:relaying][中继转发]]垃圾邮件。因此，支持 CONNECT 的代理 *应当* 将 CONNECT 的使用限制到一个已知的有限的端口集合上，或者一个安全的可配置的请求目标白名单上。
+
 #+BEGIN_QUOTE
-A server *MUST NOT* send any Transfer-Encoding or Content-Length header fields in a 2xx (Successful) response to CONNECT. A client MUST ignore any Content-Length or Transfer-Encoding header fields received in a successful response to CONNECT.
+A server *MUST NOT* send any =Transfer-Encoding= or =Content-Length= header fields in a =2xx (Successful)= response to CONNECT. A client *MUST* ignore any =Content-Length= or =Transfer-Encoding= header fields received in a successful response to CONNECT.
 #+END_QUOTE
+
+服务器 *禁止* 在一个回应给 CONNECT 的 =2xx (Successful)= 响应中带有任何 =Transfer-Encoding= 或者 =Content-Length= 报头域。客户端 *必须* 在其接收到的回应给 CONNECT 的成功响应里，忽略掉任何 =Content-Length= 或者 =Transfer-Encoding= 报头域。
 
 #+BEGIN_QUOTE
 A payload within a CONNECT request message has no defined semantics; sending a payload body on a CONNECT request might cause some existing implementations to reject the request.
 #+END_QUOTE
 
+在 CONNECT 请求报文里的有效载荷是没有定义任何语义的，如果在 CONNECT 请求里带有一个有效载荷可能会导致某些现有的[[ruby:implementations][实现]]拒绝该请求。
+
 #+BEGIN_QUOTE
 Responses to the CONNECT method are not cacheable.
 #+END_QUOTE
+
+回应给 CONNECT 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。
 
 *** 4.3.7. OPTIONS
 :PROPERTIES:
@@ -1225,15 +1255,15 @@ Responses to the OPTIONS method are not cacheable.
 :ID:       bdc9e3b4-bac3-46c5-9319-31f7f4d6469d
 :END:
 #+BEGIN_QUOTE
-The TRACE method requests a remote, application-level loop-back of the request message. The final recipient of the request SHOULD reflect the message received, excluding some fields described below, back to the client as the message body of a 200 (OK) response with a Content-Type of "message/http" (Section 8.3.1 of [RFC7230]). The final recipient is either the origin server or the first server to receive a Max-Forwards value of zero (0) in the request (Section 5.1.2).
+The TRACE method requests a remote, application-level loop-back of the request message. The final recipient of the request *SHOULD* reflect the message received, excluding some fields described below, back to the client as the message body of a =200 (OK)= response with a =Content-Type= of "message/http" (Section 8.3.1 of [RFC7230]). The final recipient is either the origin server or the first server to receive a =Max-Forwards= value of zero (0) in the request (Section 5.1.2).
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-A client *MUST NOT* generate header fields in a TRACE request containing sensitive data that might be disclosed by the response. For example, it would be foolish for a user agent to send stored user credentials [RFC7235] or cookies [RFC6265] in a TRACE request. The final recipient of the request SHOULD exclude any request header fields that are likely to contain sensitive data when that recipient generates the response body.
+A client *MUST NOT* generate header fields in a TRACE request containing sensitive data that might be disclosed by the response. For example, it would be foolish for a user agent to send stored user credentials [RFC7235] or cookies [RFC6265] in a TRACE request. The final recipient of the request *SHOULD* exclude any request header fields that are likely to contain sensitive data when that recipient generates the response body.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-TRACE allows the client to see what is being received at the other end of the request chain and use that data for testing or diagnostic information. The value of the Via header field (Section 5.7.1 of [RFC7230]) is of particular interest, since it acts as a trace of the request chain. Use of the Max-Forwards header field allows the client to limit the length of the request chain, which is useful for testing a chain of proxies forwarding messages in an infinite loop.
+TRACE allows the client to see what is being received at the other end of the request chain and use that data for testing or diagnostic information. The value of the =Via= header field (Section 5.7.1 of [RFC7230]) is of particular interest, since it acts as a trace of the request chain. Use of the =Max-Forwards= header field allows the client to limit the length of the request chain, which is useful for testing a chain of proxies forwarding messages in an infinite loop.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
