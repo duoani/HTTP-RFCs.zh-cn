@@ -130,10 +130,10 @@ HTTP 的设计目标之一是将[[ruby:resource%20identification][资源识别]]
 Considering that a resource could be anything, and that the uniform interface provided by HTTP is similar to a window through which one can observe and act upon such a thing only through the communication of messages to some independent actor on the other side, an abstraction is needed to represent ("take the place of") the current or desired state of that thing in our communications. That abstraction is called a representation [REST].
 #+END_QUOTE
 
-考虑到[[ruby:resource][资源]]可以是任何事物，而 HTTP 所提供的统一接口类似于一个窗口，在窗口的一边我们能够对该事物进行观察；而要想对该事物采取行动的话，只能通过消息沟通来让窗口另一边的某个独立的动作执行者来完成。因此，在沟通过程中，我们需要一种“抽象”来[[ruby:represent][表示]]（代替）该事物的当前状态或期望状态。而这种“抽象”被称为 [[ruby:representation][资源的表示]]【[[http://roy.gbiv.com/pubs/dissertation/top.htm][REST]]】。
+考虑到[[ruby:resource][资源]]可以是任何事物，而 HTTP 所提供的统一接口类似于一个窗口，在窗口的一边我们能够对该事物进行观察；而要想对该事物采取行动的话，只能通过消息沟通来让窗口另一边的某个独立的动作执行者来完成。因此，在沟通过程中，我们需要一种“抽象”来[[ruby:represent][表示]]（代替）该事物的[[ruby:current%20state][当前状态]]或[[ruby:desired%20state][期望状态]]。而这种“抽象”被称为 [[ruby:representation][资源的表示]]【[[http://roy.gbiv.com/pubs/dissertation/top.htm][REST]]】。
 
 #+BEGIN_QUOTE
-译注："representation" 一词源自一种软件架构风格的术语，也就是我们常常听到的 RESTful 风格。[[ruby:representation][资源的表示]]是[[ruby:resource][资源]]的抽象，资源一般是唯一的，而资源的表示方式可以多种多样，例如，一份银行流水账单可以认为是一种资源，它的表示形式可以有 JSON、XML 或者二进制格式等，更详细的介绍可以[[http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm][查看这里]]。
+译注：术语 "representation" 一词源自一种软件架构风格的术语—— REST（Representational Style Transfer），也就是我们常常听到的 RESTful 风格。[[ruby:representation][资源的表示]]是[[ruby:resource][资源]]的抽象，资源一般是唯一的，而资源的表示方式可以多种多样，例如，一份银行流水账单可以认为是一种资源，按媒体类型来分，它的表示形式可以有 JSON、XML 或者二进制格式等，按时间来分，它的表示形式可以有昨日收支、今日收支、本用收支等，更详细的介绍可以[[http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm][查看这里]]。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -143,7 +143,19 @@ For the purposes of HTTP, a "representation" is information that is intended to 
 基于 HTTP 的目的，[[ruby:representation][资源的表示]]是一种信息，该信息用于反映某个给定资源的过去、现在、或将来期望的状态。它以一种能够轻易地经由协议进行传达的格式，并由一系列 [[ruby:representation%20metadata][元数据]]以及一个可能是无限大的 [[ruby:representation%20data][数据]]（流）组成。
 
 #+BEGIN_QUOTE
-译注："representation" 由 "representation data" 和 "representation metadata" 组成。"representation data"，即资源本身；"representation metadata"，是用来描述 "representation" 的。为了表述的准确，以后将不再对 "representation"、"representation data" 以及 "representation metadata" 进行翻译。
+译注：再强调一次，"representation" 是资源的一种抽象，反映的是资源的状态，资源一般有多种状态。引用上面提到的银行流水账单的例子，JSON 形式的表示是它的一种状态，它也可以转变为 XML 形式（状态过渡）。每一种状态由一种 representation 来表示，因此，资源与 representation 是一对多的关系。
+
+下文会多次提及到 "current representation"，它反映了资源的[[ruby:current%20state][目前状态]]，怎么理解呢？还是拿账单的例子，假设有两个接口，一个接口 A 用来获取今天的总支出，另一个接口 B 用来提交支出。
+
+- 第一次调用接口 A，返回总支出为 50 元，50 元反映了该接口所对应的资源的当前状态；
+- 调用接口 B 提交一条支出 5 元的数据，这时数据库新增了一条记录，资源的状态发生改变；
+- 每二次调用接口 A，返回总支出为 55 元，55 元反映了该接口所对应的资源的当前状态；
+
+另外，"current representation" 也可以同时有多个，例如接口 A 默认返回的是文本类型，但它还有一个参数 =filetype= 可以让接口调用者指定返回的数据类型，例如 JSON，那么，文本类型和 JSON 类型的总支出信息皆为接口 B 所对应的资源的 "current representation"。 
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+译注："representation" 由 "representation data" 和 "representation metadata" 组成。"representation data"，即资源本身；而 "representation metadata"，是用来描述 "representation" 的，所以叫作“元数据”。为了表述的准确，以后将不再对 "representation"、"representation data" 以及 "representation metadata" 进行翻译。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -980,7 +992,7 @@ Responses to POST requests are only cacheable when they include explicit freshne
 If the result of processing a POST would be equivalent to a representation of an existing resource, an origin server *MAY* redirect the user agent to that resource by sending a =303 (See Other)= response with the existing resource's identifier in the =Location= field. This has the benefits of providing the user agent a resource identifier and transferring the representation via a method more amenable to shared caching, though at the cost of an extra request if the user agent does not already have the representation cached.
 #+END_QUOTE
 
-如果处理某个 POST 请求的结果等价于某个现有资源的某种 representation 的话，源服务器 *可以* 发送一个 =303 (See Other)= 响应到用户代理，同时，响应里带有 =Location= 报头域，其值为该现在资源的标识符，让用户代理进行重定向。这样做的好处是可以向用户代理提供一种资源标识符，以及可以通过一种更适合缓存共享的方法来传输 representation，但坏处是可能需要一个额外的请求，如果用户代理还没有缓存过该 representation 的话。
+如果处理某个 POST 请求的结果等价于某个现有资源的某种 representation 的话，源服务器 *可以* 发送一个 =303 (See Other)= 响应到用户代理，同时，响应里带有 =Location= 报头域，其值为该现有资源的标识符，让用户代理进行重定向。这样做的好处是可以向用户代理提供一种资源标识符，以及可以通过一种更适合缓存共享的方法来传输 representation，但坏处是可能需要一个额外的请求，如果用户代理还没有缓存过该 representation 的话。
 
 *** 4.3.4. PUT
 :PROPERTIES:
@@ -990,13 +1002,13 @@ If the result of processing a POST would be equivalent to a representation of an
 The PUT method requests that the state of the target resource be created or replaced with the state defined by the representation enclosed in the request message payload. A successful PUT of a given representation would suggest that a subsequent GET on that same target resource will result in an equivalent representation being sent in a 200 (OK) response. However, there is no guarantee that such a state change will be observable, since the target resource might be acted upon by other user agents in parallel, or might be subject to dynamic processing by the origin server, before any subsequent GET is received. A successful response only implies that the user agent's intent was achieved at the time of its processing by the origin server.
 #+END_QUOTE
 
-PUT 方法请求（要求）使用封装在请求报文有效载荷内的 representation 所定义的状态，来[[ruby:create][新建]]或[[ruby:replace][替换]]目标资源的状态。如果成功地向目标资源 PUT 了一个给定的 representation，那么我们可以认为，对相同目标资源的后续 GET 请求将会被回应一个 =200 (OK)= 响应，同时响应会携带一个（与之前 PUT 的 representation）等价的 representation。然而，不能保证这种状态的改变能够被客户端所观察到，这是因为在源服务器接收到任何来自该客户端的后续的 GET 请求之前，目标资源就可能被依据其他用户代理并行地执行动作，也有可能受到源服务器的动态处理。对 PUT 请求的成功响应，仅仅意味着在源服务器处理该请求的时候，用户代理达成了它的意图。
+PUT 方法请求（要求）使用封装在请求报文有效载荷内的 representation 所定义的状态，来[[ruby:create][新建]]或[[ruby:replace][替换]]目标资源的状态。如果向目标资源[[ruby:successful%20PUT%20request][成功 PUT]] 了一个给定的 representation，那么我们可以认为，对相同目标资源的后续 GET 请求将会被回应一个 =200 (OK)= 响应，同时响应会携带一个（与之前 PUT 的 representation）等价的 representation。然而，不能保证这种状态的改变能够被客户端所观察到，这是因为在源服务器接收到任何来自该客户端的后续的 GET 请求之前，目标资源就可能被按照其他用户代理并行地执行动作，也有可能受到源服务器的动态处理。对 PUT 请求的[[ruby:successful%20response][成功响应]]，仅仅意味着在源服务器处理该请求的时候，用户代理达成了它的意图。
 
 #+BEGIN_QUOTE
 If the target resource does not have a current representation and the PUT successfully creates one, then the origin server *MUST* inform the user agent by sending a =201 (Created)= response. If the target resource does have a current representation and that representation is successfully modified in accordance with the state of the enclosed representation, then the origin server *MUST* send either a =200 (OK)= or a =204 (No Content)= response to indicate successful completion of the request.
 #+END_QUOTE
 
-如果目标资源并没有当前的 representation，并且 PUT 成功地创建了一种 representation，那么，源服务器 *必须* 回应一个 =201 (Created)= 响应来告知用户代理。如果目标资源已有当前的 representation 并且该 representation 的状态被封装在 PUT 请求内的 representation 成功地更改了，那么，源服务器 *必须* 回应一个 =200 (OK)= 或者一个 =204 (No Content)= 来指明请求已经成功完成了。
+如果目标资源并没有 current representation，并且 PUT 成功地创建了一种 representation，那么，源服务器 *必须* 回应一个 =201 (Created)= 响应来告知用户代理。如果目标资源已有 current representation 并且该 representation 的状态被封装在 PUT 请求内的 representation 成功地更改了，那么，源服务器 *必须* 回应一个 =200 (OK)= 或者一个 =204 (No Content)= 来指明请求已经成功完成了。
 
 #+BEGIN_QUOTE
 译注：由此可见，PUT 会改变 representation 的状态，因此，它不是一个[[ruby:safe%20method][安全方法]]。而 PUT 是一个[[ruby:idempotent%20method][幂等方法]]，由上述可知，多次相同的 PUT 请求与一次 PUT 请求对 representation 的影响是一样的。试想一下，一个 PUT 请求，试图将用户 A 的年龄值更新为 18，无论发送一次还是多次这样的请求，用户 A 的年龄值最终依然是 18。
@@ -1012,7 +1024,7 @@ An origin server *SHOULD* ignore unrecognized header fields received in a PUT re
 An origin server *SHOULD* verify that the PUT representation is consistent with any constraints the server has for the target resource that cannot or will not be changed by the PUT. This is particularly important when the origin server uses internal configuration information related to the URI in order to set the values for representation metadata on GET responses. When a PUT representation is inconsistent with the target resource, the origin server *SHOULD* either make them consistent, by transforming the representation or changing the resource configuration, or respond with an appropriate error message containing sufficient information to explain why the representation is unsuitable. The =409 (Conflict)= or =415 (Unsupported Media Type)= status codes are suggested, with the latter being specific to constraints on =Content-Type= values.
 #+END_QUOTE
 
-源服务器 *应当* 校验 PUT 的 representation 是否符合服务器对目标资源的任何[[ruby:constraints][约束]]，确保它们不能或不会被 PUT 所改变。当源服务器使用 URI 相关的内部配置信息来对回应给 GET 的响应的 representation 的元数据设置值的时候，这种校验是非常重要的。当一个 PUT 请求内的 representation 不符合[[ruby:target%20resource][目标资源]]的约束时，源服务器 *应当* 要不通过转换该 representation 或者改变资源的配置以使其符合约束条件；要不回应一种恰当的错误报文，包含足够的信息来解释为什么该 representation 并不适合。建议使用 =409 (Conflict)= 或者 =415 (Unsupported Media Type)= 状态码，而对于后者（=415 (Unsupported Media Type)=），带有 =Content-Type= 报头域以指定具体的约束类型。
+源服务器 *应当* 校验 PUT 的 representation 是否符合服务器对目标资源的任何[[ruby:constraints][约束]]，确保它们不能或不会被 PUT 所改变。当源服务器使用 URI 相关的内部配置信息来对回应给 GET 的响应的 representation 的元数据设置值的时候，这种校验是非常重要的。当一个 PUT 请求内的 representation 不符合[[ruby:target%20resource][目标资源]]的约束时，源服务器 *应当* 要不[[ruby:transform][转换]]这个 representation 或者改变资源的配置以使其符合约束条件；要不回应一种恰当的错误报文，包含足够的信息来解释为什么该 representation 并不适合。建议使用 =409 (Conflict)= 或者 =415 (Unsupported Media Type)= 状态码，而对于后者（=415 (Unsupported Media Type)=），带有 =Content-Type= 报头域以指定具体的约束类型。
 
 #+BEGIN_QUOTE
 For example, if the target resource is configured to always have a =Content-Type= of "text/html" and the representation being PUT has a =Content-Type= of "image/jpeg", the origin server ought to do one of:
@@ -1026,20 +1038,20 @@ For example, if the target resource is configured to always have a =Content-Type
 例如，如果目标资源被配置为总是带有一个 "text/html" 的 =Content-Type=，并且 PUT 请求内的 representation 带有一个 "image/jpeg" 的 =Content-Type=，那么，源服务器的行为应该是以下其中之一：
 
 - 将目标资源重新配置以体现该种新的媒体类型；
-- 在保存 PUT 请求的 representation 作为目标资源的新状态之前，先将其转换为一种符合资源约束的格式；或者
+- 在保存 PUT 请求的 representation 作为目标资源的新状态之前，先将其[[ruby:transform][转换]]为一种符合资源约束的格式；或者
 - 回应一个 =415 (Unsupported Media Type)= 响应来拒绝该请求并指明目标资源被限定为 "text/html"，响应内可能还包含一条[[ruby:link][链接]]，该链接指向到其他可能适用于该请求目标的资源。
 
 #+BEGIN_QUOTE
 HTTP does not define exactly how a PUT method affects the state of an origin server beyond what can be expressed by the intent of the user agent request and the semantics of the origin server response. It does not define what a resource might be, in any sense of that word, beyond the interface provided via HTTP. It does not define how resource state is "stored", nor how such storage might change as a result of a change in resource state, nor how the origin server translates resource state into representations. Generally speaking, all implementation details behind the resource interface are intentionally hidden by the server.
 #+END_QUOTE
 
-HTTP 并没有定义一个 PUT 方法究竟是如何影响一个源服务器的状态的，是因为这超出了用户代理的请求意图以及源服务器的响应语义所能表达的。HTTP 并没有定义一个[[ruby:resource][资源]]究竟是什么，在任何意义上，这超出了由 HTTP 所提供的接口所能表达的。HTTP 并没有定义[[ruby:resource%20state][资源的状态]]是被如何“[[ruby:stored][存储]]”的，也没有定义资源状态上的改变会导致这种存储如何改变，也没有定义源服务器是如何将资源的状态[[ruby:translate][翻译]]成[[ruby:representations][资源的表示]]的。一般而言，在资源接口后面的所有实现细节都被服务器有意地隐藏起来。
+HTTP 并没有定义 PUT 方法究竟是如何影响源服务器的状态的，是因为这超出了用户代理的请求意图以及源服务器的响应语义所能表达的。HTTP 并没有定义[[ruby:resource][资源]]究竟是什么，在任何意义上，这超出了由 HTTP 所提供的接口所能表达的。HTTP 并没有定义[[ruby:resource%20state][资源的状态]]是被如何“[[ruby:stored][存储]]”的，也没有定义资源状态上的改变会导致这种存储如何改变，也没有定义源服务器是如何将资源的状态[[ruby:translate][翻译]]成[[ruby:representations][资源的表示]]的。一般而言，在资源接口后面的所有实现细节都被服务器有意地隐藏起来。
 
 #+BEGIN_QUOTE
 An origin server *MUST NOT* send a validator header field ([[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][Section 7.2]]), such as an =ETag= or =Last-Modified= field, in a successful response to PUT unless the request's representation data was saved without any transformation applied to the body (i.e., the resource's new representation data is identical to the representation data received in the PUT request) and the validator field value reflects the new representation. This requirement allows a user agent to know when the representation body it has in memory remains current as a result of the PUT, thus not in need of being retrieved again from the origin server, and that the new validator(s) received in the response can be used for future conditional requests in order to prevent accidental overwrites (Section 5.2).
 #+END_QUOTE
 
-源服务器 *禁止* 在回应给 PUT 的[[ruby:successful%20response][成功响应]]里带有任何[[ruby:validator%20header%20field][验证器报头域]]（[[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][章节 7.2]]），例如 =ETag= 或者 =Last-Modified= 报头域，除非请求的 representation data 是保存在没有经过任何[[ruby:transformation][编码转换]]的报文正文（有效载荷）之内（也就是说，响应内的新 representation data 是等价于接收自 PUT 请求内的 representation data），并且该验证器报头域反映的是新是 representation。上述这种要求使得用户代理能够知道这个在自己内存中的 representation 在什么时间内可以[[ruby:remain%20current][保持最新（保持为 current 状态）]]，由此知道其是否仍然可以继续作为 PUT 请求的结果而不需要从源服务器上再次获取，以及在响应内接收到的新验证器能够被用于将来的[[ruby:conditional%20requests][条件请求]]以避免新[[ruby:accidental%20overwrite][意外覆盖]]（章节 5.2）。
+源服务器 *禁止* 在回应给 PUT 的[[ruby:successful%20response][成功响应]]里带有任何[[ruby:validator%20header%20field][验证器报头域]]（[[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][章节 7.2]]），例如 =ETag= 或者 =Last-Modified= 报头域，除非请求的 representation data 是保存在没有经过任何[[ruby:transformation][编码转换]]的报文正文（有效载荷）里（也就是说，响应内的新 representation data 是等价于接收自 PUT 请求内的 representation data），并且该验证器报头域反映的是新是 representation。上述这种要求使得用户代理能够知道这个在自己内存中的 representation 在什么时间内可以[[ruby:remain%20current][保持最新（保持为 current 状态）]]，由此知道其是否仍然可以继续作为 PUT 请求的结果而不需要从源服务器上再次获取，以及在响应内接收到的新验证器能够被用于将来的[[ruby:conditional%20requests][条件请求]]以避免新[[ruby:accidental%20overwrite][意外覆盖]]（章节 5.2）。
 
 #+BEGIN_QUOTE
 译注：未经过任何编码转换的[[ruby:message%20body][报文正文]]等价于[[ruby:payload%20body][有效载荷体]]，见[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][【RFC7230】章节 3.3.1]]。
@@ -1073,39 +1085,67 @@ An origin server that allows PUT on a given target resource *MUST* send a =400 (
 Responses to the PUT method are not cacheable. If a successful PUT request passes through a cache that has one or more stored responses for the effective request URI, those stored responses will be invalidated (see Section 4.4 of [RFC7234]).
 #+END_QUOTE
 
-回应给 PUT 方法的响应是[[ruby:not%20cacheable][不可以缓存的]]。如果一个[[ruby:successful%20PUT%20request][成功的 PUT 请求]]穿过一个[[ruby:cache][缓存]]，而该缓存已经存储（缓存）了该 PUT 请求的有效请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 PUT 请求），那么这些已存储的（已缓存的）响应将会被失效（见【RFC7234】章节 4.4）。
+回应给 PUT 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。如果一个[[ruby:successful%20PUT%20request][成功的 PUT 请求]]穿过一个[[ruby:cache][缓存]]，而该缓存已经存储（缓存）了该 PUT 请求的有效请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 PUT 请求），那么这些已存储的（已缓存的）响应将会[[ruby:be%20invalidated][被失效]]（见【RFC7234】章节 4.4）。
 
 *** 4.3.5. DELETE
 :PROPERTIES:
 :ID:       9e649fa9-0f7f-40d0-adef-8af6a6f62e80
 :END:
+#+BEGIN_QUOTE
 The DELETE method requests that the origin server remove the association between the target resource and its current functionality. In effect, this method is similar to the =rm= command in UNIX: it expresses a deletion operation on the URI mapping of the origin server rather than an expectation that the previously associated information be deleted.
+#+END_QUOTE
 
-DELETE 方法请求（要求）源服务器移除[[ruby:target%20resource][目标资源]]与它[[ruby:current%20functionality][当前的功能]]之间的关联。实际上，该方法与 UNIX 中的 =rm= 命令非常类似，DELETE 表达了一种删除操作源服务器的映射，而不是表达一种删除之前相关联的信息的期望。
+DELETE 方法请求（要求）源服务器移除[[ruby:target%20resource][目标资源]]与它[[ruby:current%20functionality][当前的功能]]之间的关联。实际上，该方法与 UNIX 中的 =rm= 命令非常类似，DELETE 表达了一种作用在映射到源服务器的 URI 之上的删除操作，而不是表达一种删除之前相关联的信息的期望。
 
-
-[[https://stackoverflow.com/questions/19884295/soap-vs-rest-differences/19884975#19884975]]
-[[https://stackoverflow.com/questions/19843480/s3-rest-api-and-post-method/19844272#19844272]]
-
+#+BEGIN_QUOTE
 If the target resource has one or more current representations, they might or might not be destroyed by the origin server, and the associated storage might or might not be reclaimed, depending entirely on the nature of the resource and its implementation by the origin server (which are beyond the scope of this specification). Likewise, other implementation aspects of a resource might need to be deactivated or archived as a result of a DELETE, such as database or gateway connections. In general, it is assumed that the origin server will only allow DELETE on resources for which it has a prescribed mechanism for accomplishing the deletion.
+#+END_QUOTE
 
-Relatively few resources allow the DELETE method — its primary use is for remote authoring environments, where the user has some direction regarding its effect. For example, a resource that was previously created using a PUT request, or identified via the Location header field after a 201 (Created) response to a POST request, might allow a corresponding DELETE request to undo those actions. Similarly, custom user agent implementations that implement an authoring function, such as revision control clients using HTTP for remote operations, might use DELETE based on an assumption that the server's URI space has been crafted to correspond to a version repository.
+如果目标资源有一个或多个 current representations，它们可能会也可能不会被源服务器所销毁，以及它们所关联的存储可能会也可能不会被回收，这完全取决于资源的性质以及服务器对资源的[[ruby:implementation][实现]]（已经超出了本规范的范畴）。同样，可能需要去[[ruby:deactivate][失效]]或[[ruby:archive][归档]]资源实现的其他方面，来作为一个 DELETE 操作的结果，比如数据库或者网关连接。总之，我们假设源服务器只会允许对这些资源进行 DELETE：具有某种规定机制来完成删除操作的资源。
 
-If a DELETE method is successfully applied, the origin server SHOULD send a 202 (Accepted) status code if the action will likely succeed but has not yet been enacted, a 204 (No Content) status code if the action has been enacted and no further information is to be supplied, or a 200 (OK) status code if the action has been enacted and the response message includes a representation describing the status.
+#+BEGIN_QUOTE
+Relatively few resources allow the DELETE method — its primary use is for remote authoring environments, where the user has some direction regarding its effect. For example, a resource that was previously created using a PUT request, or identified via the =Location= header field after a =201 (Created)= response to a POST request, might allow a corresponding DELETE request to undo those actions. Similarly, custom user agent implementations that implement an authoring function, such as revision control clients using HTTP for remote operations, might use DELETE based on an assumption that the server's URI space has been crafted to correspond to a version repository.
+#+END_QUOTE
 
+相对较少的资源会允许 DELETE 方法，它主要应用在用户会有某些关于它的影响效果的指导的[[ruby:remote%20authoring%20environments][远程编辑环境]]中。例如，在以前使用一个 PUT 请求来创建好的某个资源，或者是在回应给 POST 请求的一个 =201 (Created)= 响应以后，该响应里的 =Location= 报头域所标识的某个资源，可能会允许一个对应的 DELETE 请求来[[ruby:undo][撤消]]这些动作。类似的，实现某种[[ruby:authoring%20function][编辑方法]]的[[ruby:custom%20user%20agent%20implementations][定制的用户代理实现]]，比如使用 HTTP 来进行远程操作的[[ruby:revision%20control%20clients][版本管理客户端]]，可能会基于“服务器的 [[ruby:URI%20space][URI 空间]]是经过精心设计来对应某个版本仓库”的这种假设来使用 DELETE。
+
+#+BEGIN_QUOTE
+译注：URI space 参考【[[https://tools.ietf.org/html/rfc5785][RFC5785]]】Defining Well-Known Uniform Resource Identifiers (URIs)
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+If a DELETE method is successfully applied, the origin server *SHOULD* send a =202 (Accepted)= status code if the action will likely succeed but has not yet been enacted, a =204 (No Content)= status code if the action has been enacted and no further information is to be supplied, or a =200 (OK)= status code if the action has been enacted and the response message includes a representation describing the status.
+#+END_QUOTE
+
+如果成功执行了一次 DELETE 方法，如果该动作可能会成功但确定的结果还未[[ruby:enacted][出现]]，源服务器 *应当* 回应一个 =202 (Accepted)= 响应；如果该动作的结果已经出现了并且服务器不会再提供更多的信息，*应当* 回应一个 =204 (No Content)= 响应；或者如果该动作的结果已经出现了并且响应会包含一个 representation 来描述资源的状态，该响应的状态码 *应当* 是 =200 (OK)= 。
+
+#+BEGIN_QUOTE
 A payload within a DELETE request message has no defined semantics; sending a payload body on a DELETE request might cause some existing implementations to reject the request.
+#+END_QUOTE
 
-Responses to the DELETE method are not cacheable. If a DELETE request passes through a cache that has one or more stored responses for the effective request URI, those stored responses will be invalidated (see Section 4.4 of [RFC7234]).
+在 DELETE 请求里的[[ruby:payload][有效载荷]]并没有定义任何的语义，如果在 DELETE 请求里带有一个有效载荷可能会导致某些现有的[[ruby:implementations][实现]]拒绝该请求。
+
+#+BEGIN_QUOTE
+Responses to the DELETE method are not cacheable. If a DELETE request passes through a cache that has one or more stored responses for the effective request URI, those stored responses will be invalidated (see [[https://tools.ietf.org/html/rfc7234#section-4.4][Section 4.4]] of [RFC7234]).
+#+END_QUOTE
+
+回应给 DELETE 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。如果一个 DELETE 请求穿过一个[[ruby:cache][缓存]]，而该缓存已经存储（缓存）了该 DELETE 请求的有效请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 DELETE 请求），那么这些已存储的（已缓存的）响应将会[[ruby:be%20invalidated][被失效]]（见[[https://tools.ietf.org/html/rfc7234#section-4.4][【RFC7234】章节 4.4]]）。
 
 *** 4.3.6. CONNECT
 :PROPERTIES:
 :ID:       630ab908-5d8e-400b-bed4-f6973b8c1549
 :END:
+#+BEGIN_QUOTE
 The CONNECT method requests that the recipient establish a tunnel to the destination origin server identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the tunnel is closed. Tunnels are commonly used to create an end-to-end virtual connection, through one or more proxies, which can then be secured using TLS (Transport Layer Security, [RFC5246]).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 CONNECT is intended only for use in requests to a proxy. An origin server that receives a CONNECT request for itself MAY respond with a 2xx (Successful) status code to indicate that a connection is established. However, most origin servers do not implement CONNECT.
+#+END_QUOTE
 
-A client sending a CONNECT request MUST send the authority form of request-target (Section 5.3 of [RFC7230]); i.e., the request-target consists of only the host name and port number of the tunnel destination, separated by a colon. For example,
+#+BEGIN_QUOTE
+A client sending a CONNECT request *MUST* send the authority form of request-target (Section 5.3 of [RFC7230]); i.e., the request-target consists of only the host name and port number of the tunnel destination, separated by a colon. For example,
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
 CONNECT server.example.com:80 HTTP/1.1
@@ -1113,11 +1153,17 @@ Host: server.example.com:80
 
 #+END_EXAMPLE
 
+#+BEGIN_QUOTE
 The recipient proxy can establish a tunnel either by directly connecting to the request-target or, if configured to use another proxy, by forwarding the CONNECT request to the next inbound proxy. Any 2xx (Successful) response indicates that the sender (and all inbound proxies) will switch to tunnel mode immediately after the blank line that concludes the successful response's header section; data received after that blank line is from the server identified by the request-target. Any response other than a successful response indicates that the tunnel has not yet been formed and that the connection remains governed by HTTP.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A tunnel is closed when a tunnel intermediary detects that either side has closed its connection: the intermediary MUST attempt to send any outstanding data that came from the closed side to the other side, close both connections, and then discard any remaining data left undelivered.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Proxy authentication might be used to establish the authority to create a tunnel. For example,
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
 CONNECT server.example.com:80 HTTP/1.1
@@ -1126,45 +1172,77 @@ Proxy-Authorization: basic aGVsbG86d29ybGQ=
 
 #+END_EXAMPLE
 
+#+BEGIN_QUOTE
 There are significant risks in establishing a tunnel to arbitrary servers, particularly when the destination is a well-known or reserved TCP port that is not intended for Web traffic. For example, a CONNECT to a request-target of "example.com:25" would suggest that the proxy connect to the reserved port for SMTP traffic; if allowed, that could trick the proxy into relaying spam email. Proxies that support CONNECT SHOULD restrict its use to a limited set of known ports or a configurable whitelist of safe request targets.
+#+END_QUOTE
 
-A server MUST NOT send any Transfer-Encoding or Content-Length header fields in a 2xx (Successful) response to CONNECT. A client MUST ignore any Content-Length or Transfer-Encoding header fields received in a successful response to CONNECT.
+#+BEGIN_QUOTE
+A server *MUST NOT* send any Transfer-Encoding or Content-Length header fields in a 2xx (Successful) response to CONNECT. A client MUST ignore any Content-Length or Transfer-Encoding header fields received in a successful response to CONNECT.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A payload within a CONNECT request message has no defined semantics; sending a payload body on a CONNECT request might cause some existing implementations to reject the request.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Responses to the CONNECT method are not cacheable.
+#+END_QUOTE
 
 *** 4.3.7. OPTIONS
 :PROPERTIES:
 :ID:       f659b35f-7510-4961-ad3a-3ab1b312a681
 :END:
+#+BEGIN_QUOTE
 The OPTIONS method requests information about the communication options available for the target resource, at either the origin server or an intervening intermediary. This method allows a client to determine the options and/or requirements associated with a resource, or the capabilities of a server, without implying a resource action.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An OPTIONS request with an asterisk ("*") as the request-target (Section 5.3 of [RFC7230]) applies to the server in general rather than to a specific resource. Since a server's communication options typically depend on the resource, the "*" request is only useful as a "ping" or "no-op" type of method; it does nothing beyond allowing the client to test the capabilities of the server. For example, this can be used to test a proxy for HTTP/1.1 conformance (or lack thereof).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 If the request-target is not an asterisk, the OPTIONS request applies to the options that are available when communicating with the target resource.
+#+END_QUOTE
 
-A server generating a successful response to OPTIONS SHOULD send any header fields that might indicate optional features implemented by the server and applicable to the target resource (e.g., Allow), including potential extensions not defined by this specification. The response payload, if any, might also describe the communication options in a machine or human-readable representation. A standard format for such a representation is not defined by this specification, but might be defined by future extensions to HTTP. A server MUST generate a Content-Length field with a value of "0" if no payload body is to be sent in the response.
+#+BEGIN_QUOTE
+A server generating a successful response to OPTIONS *SHOULD* send any header fields that might indicate optional features implemented by the server and applicable to the target resource (e.g., Allow), including potential extensions not defined by this specification. The response payload, if any, might also describe the communication options in a machine or human-readable representation. A standard format for such a representation is not defined by this specification, but might be defined by future extensions to HTTP. A server MUST generate a Content-Length field with a value of "0" if no payload body is to be sent in the response.
+#+END_QUOTE
 
-A client MAY send a Max-Forwards header field in an OPTIONS request to target a specific recipient in the request chain (see Section 5.1.2). A proxy MUST NOT generate a Max-Forwards header field while forwarding a request unless that request was received with a Max-Forwards field.
+#+BEGIN_QUOTE
+A client *MAY* send a Max-Forwards header field in an OPTIONS request to target a specific recipient in the request chain (see Section 5.1.2). A proxy MUST NOT generate a Max-Forwards header field while forwarding a request unless that request was received with a Max-Forwards field.
+#+END_QUOTE
 
-A client that generates an OPTIONS request containing a payload body MUST send a valid Content-Type header field describing the representation media type. Although this specification does not define any use for such a payload, future extensions to HTTP might use the OPTIONS body to make more detailed queries about the target resource.
+#+BEGIN_QUOTE
+A client that generates an OPTIONS request containing a payload body *MUST* send a valid Content-Type header field describing the representation media type. Although this specification does not define any use for such a payload, future extensions to HTTP might use the OPTIONS body to make more detailed queries about the target resource.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Responses to the OPTIONS method are not cacheable.
+#+END_QUOTE
 
 *** 4.3.8. TRACE
 :PROPERTIES:
 :ID:       bdc9e3b4-bac3-46c5-9319-31f7f4d6469d
 :END:
+#+BEGIN_QUOTE
 The TRACE method requests a remote, application-level loop-back of the request message. The final recipient of the request SHOULD reflect the message received, excluding some fields described below, back to the client as the message body of a 200 (OK) response with a Content-Type of "message/http" (Section 8.3.1 of [RFC7230]). The final recipient is either the origin server or the first server to receive a Max-Forwards value of zero (0) in the request (Section 5.1.2).
+#+END_QUOTE
 
-A client MUST NOT generate header fields in a TRACE request containing sensitive data that might be disclosed by the response. For example, it would be foolish for a user agent to send stored user credentials [RFC7235] or cookies [RFC6265] in a TRACE request. The final recipient of the request SHOULD exclude any request header fields that are likely to contain sensitive data when that recipient generates the response body.
+#+BEGIN_QUOTE
+A client *MUST NOT* generate header fields in a TRACE request containing sensitive data that might be disclosed by the response. For example, it would be foolish for a user agent to send stored user credentials [RFC7235] or cookies [RFC6265] in a TRACE request. The final recipient of the request SHOULD exclude any request header fields that are likely to contain sensitive data when that recipient generates the response body.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 TRACE allows the client to see what is being received at the other end of the request chain and use that data for testing or diagnostic information. The value of the Via header field (Section 5.7.1 of [RFC7230]) is of particular interest, since it acts as a trace of the request chain. Use of the Max-Forwards header field allows the client to limit the length of the request chain, which is useful for testing a chain of proxies forwarding messages in an infinite loop.
+#+END_QUOTE
 
-A client MUST NOT send a message body in a TRACE request.
+#+BEGIN_QUOTE
+A client *MUST NOT* send a message body in a TRACE request.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Responses to the TRACE method are not cacheable.
+#+END_QUOTE
 
 * 5. 请求报头域 / Request Header Fields
 :PROPERTIES:
