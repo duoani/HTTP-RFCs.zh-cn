@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-11-14 Wed 19:13 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RFC7233: Hypertext Transfer Protocol (HTTP/1.1): Range Requests</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+* {
+  box-sizing: border-box;
+}
+
+html {
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 0;
+  margin: 0;
+  color: #24292e;
+  word-wrap: break-word;
+}
+
+b, strong {
+  font-weight: 700;
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active, a:hover {
+  outline-width: 0;
+}
+
+.underline{
+  text-decoration: underline;
+}
+
+del{
+  text-decoration: line-through;
+}
+
+i {
+  font-style: italic;
+}
+
+ul, ol {
+  padding-left: 1em;
+}
+
+ruby {
+  border-bottom: 1px solid #d9d9d9;
+}
+
+ruby > rt {
+  color: #6a737d;
+  text-align: center;
+}
+
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1.title {
+  padding-bottom: 0.3em;
+  font-size: 2em;
+  border-bottom: 1px solid #eaecef;
+}
+
+.outline-2 h1 {
+  font-size: 2.5em;
+}
+
+.outline-2 h2 {
+  padding-bottom: 0.3em;
+  font-size: 2em;
+  border-bottom: 1px solid #eaecef;
+}
+
+.outline-2 h3 {
+  padding-bottom: 0.3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid #eaecef;
+}
+
+.outline-2 h4 {
+  font-size: 1.25em
+}
+
+.outline-2 h5 {
+  font-size: 1.1em
+}
+
+.outline-2 h6 {
+  font-size: 1.1em
+}
+
+.outline-2 code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 3px;
+
+  color: #c7254e;
+  background-color: #f9f2f4;
+  white-space: normal;
+  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+}
+
+.outline-2 table{
+  width: 100%;
+}
+
+.outline-2 p,
+.outline-2 blockquote,
+.outline-2 ul,
+.outline-2 ol,
+.outline-2 dl,
+.outline-2 table,
+.outline-2 pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.outline-2 ul,
+.outline-2 ol {
+  padding-left: 2em;
+}
+
+table tbody tr:nth-child(odd){
+  background-color: #efefef;
+}
+
+pre,
+blockquote {
+  margin-bottom: 1em;
+}
+
+pre {
+  margin: 0;
+  padding: 1em;
+  line-height: 1.45;
+  font-size: 95%;
+  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+  border-radius: 3px;
+  overflow: auto;
+}
+
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+  margin: 0;
+}
+
+.org-src-container, .example {
+  width: 100%;
+  overflow-x: auto;
+  border-left: 0.25em solid #dfe2e5;
+  border-radius: 0.5rem;
+  background-color: #f6f8fa;
+  margin-bottom: 16px;
+}
+
+.org-src-container pre {
+  margin-bottom: 0;
+}
+
+.timestamp {
+  font-family: Courier New;
+  color: #888888;
+}
+
+dd {
+  text-align: justify;
+  margin-bottom: 14pt;
+}
+
+dt {
+  font-size: 110%;
+  font-family: Courier New;
+  color: #1c3030;
+  padding: 3px;
+  margin-bottom: 3px;
+}
+
+#table-of-contents {
+  font-size: 9pt;
+  position: fixed;
+  right: 0em;
+  top: 0em;
+  background: white;
+  -webkit-box-shadow: 0 0 1em #777777;
+  -moz-box-shadow: 0 0 1em #777777;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  text-align: right;
+  max-height: 80%;
+  overflow: auto;
+  z-index: 200;
+}
+
+#table-of-contents h2 {
+  font-size: 14px;
+  font-weight: normal;
+  padding: 0 .5em;
+  margin: 16px 0;
+  text-align: left;
+}
+
+#table-of-contents ul {
+  margin-left: 14pt;
+  margin-bottom: 10pt;
+  padding: 0
+}
+
+#table-of-contents li {
+  padding: 0;
+  margin: 1px;
+  list-style: none;
+}
+
+#table-of-contents ul>:first-child {
+  color: blue;
+}
+
+#table-of-contents #text-table-of-contents {
+  display: none;
+  text-align: left;
+}
+
+#table-of-contents:hover #text-table-of-contents {
+  display: block;
+  padding: 0.5em;
+  margin-top: -1.5em;
+}
+
+#content {
+  width: 980px;
+  padding: 45px 15px 15px 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media screen and (max-width: 980px) {
+  #content {
+    width: 100%;
+  }
+  #table-of-contents {
+    float: right;
+    border: 1px solid #CCC;
+    max-width: 50%;
+    overflow: auto;
+  }
+}
+
+.footdef {
+}
+.footdef sup {
+  float: left;
+  width: 3em;
+}
+.footdef > .footpara {
+  margin-left: 3em;
+  overflow-x: hidden;
+}
+.org-src-container {
+  width: 100%;
+  overflow-x: auto;
+}
+.github-repo {
+  position: absolute;
+  top: 0;
+  left: -24px;
+  margin-top: 32px;
+  padding: 0 20px 0 40px;
+  background-color: rgba(0,0,0,.2);
+  height: 22px;
+  line-height: 22px;
+  padding-left: 42px;
+  transform: rotate(-45deg);
+  transform-origin: 40% 50%;
+}
+.github-repo:hover,
+.github-repo:active {
+  text-decoration: none;
+}
+.github-repo svg {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 20px;
+  top: 2px;
+}
+.github-repo span {
+  color: #fff;
+}
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">RFC7233: Hypertext Transfer Protocol (HTTP/1.1): Range Requests</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org2133284">Abstract</a></li>
+<li><a href="#org50d643c">Status of This Memo</a></li>
+<li><a href="#org40d730c">Copyright Notice</a></li>
+<li><a href="#org187266d">1. Introduction</a>
+<ul>
+<li><a href="#org3dbeb4b">1.1. Conformance and Error Handling</a></li>
+<li><a href="#org592fb75">1.2. Syntax Notation</a></li>
+</ul>
+</li>
+<li><a href="#org964cdff">2. Range Units</a>
+<ul>
+<li><a href="#org8186894">2.1. Byte Ranges</a></li>
+<li><a href="#org13c9f8f">2.2. Other Range Units</a></li>
+<li><a href="#org6b1d683">2.3. Accept-Ranges</a></li>
+</ul>
+</li>
+<li><a href="#orgabdd4b0">3. Range Requests</a>
+<ul>
+<li><a href="#orgf26e511">3.1. Range</a></li>
+<li><a href="#org79d4a85">3.2. If-Range</a></li>
+</ul>
+</li>
+<li><a href="#org3bb2822">4. Responses to a Range Request</a>
+<ul>
+<li><a href="#org2d91892">4.1. 206 Partial Content</a></li>
+<li><a href="#org96d66d2">4.2. Content-Range</a></li>
+<li><a href="#orgbffe853">4.3. Combining Ranges</a></li>
+<li><a href="#org9a26c49">4.4. 416 Range Not Satisfiable</a></li>
+</ul>
+</li>
+<li><a href="#orga5fdf53">5. IANA Considerations</a>
+<ul>
+<li><a href="#org4c965e1">5.1. Range Unit Registry</a>
+<ul>
+<li><a href="#orgd9e592f">5.1.1. Procedure</a></li>
+<li><a href="#orgc516e6b">5.1.2. Registrations</a></li>
+</ul>
+</li>
+<li><a href="#orge3c1e57">5.2. Status Code Registration</a></li>
+<li><a href="#org750fe0c">5.3. Header Field Registration</a></li>
+<li><a href="#orgad4c2a6">5.4. Internet Media Type Registration</a>
+<ul>
+<li><a href="#org5f297a0">5.4.1. Internet Media Type multipart/byteranges</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org07a40e2">6. Security Considerations</a>
+<ul>
+<li><a href="#org4e7ae40">6.1. Denial-of-Service Attacks Using Range</a></li>
+</ul>
+</li>
+<li><a href="#org0a72d12">7. Acknowledgments</a></li>
+<li><a href="#orgbeb3402">8. References</a>
+<ul>
+<li><a href="#orgc0979c4">8.1. Normative References</a></li>
+<li><a href="#org199c976">8.2. Informative References</a></li>
+</ul>
+</li>
+<li><a href="#org3530ef3">Appendix A. Internet Media Type multipart/byteranges</a></li>
+<li><a href="#org0d1b044">Appendix B. Changes from RFC 2616</a></li>
+<li><a href="#orgacb9ec2">Appendix C. Imported ABNF</a></li>
+<li><a href="#org5d79cab">Appendix D. Collected ABNF</a></li>
+<li><a href="#org020c35c">Index</a></li>
+</ul>
+</div>
+</div>
+<a class="github-repo" href="https://github.com/duoani/HTTP-RFCs.zh-cn">
+  <svg height="18" width="18" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+  <span>View Repo</span>
+</a>
+
+<a href="https://github.com/duoani/HTTP-RFCs.zh-cn">
+  <img alt="" src="https://img.shields.io/github/license/duoani/HTTP-RFCs.zh-cn.svg?style=social"/>
+</a>
+<a href="https://github.com/duoani/HTTP-RFCs.zh-cn">
+  <img src="https://img.shields.io/github/stars/duoani/HTTP-RFCs.zh-cn.svg?style=social&label=Stars"/>
+</a>
+
+<div class="org-src-container">
+<pre class="src src-text">                                                       PROPOSED STANDARD
+                                                            Errata Exist
+Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
+Request for Comments: 7233                                         Adobe
+Obsoletes: 2616                                            Y. Lafon, Ed.
+Category: Standards Track                                            W3C
+ISSN: 2070-1721                                          J. Reschke, Ed.
+                                                              greenbytes
+                                                              June 2014
+</pre>
+</div>
+
+<div id="outline-container-org2133284" class="outline-2">
+<h2 id="org2133284">Abstract</h2>
+</div>
+
+<div id="outline-container-org50d643c" class="outline-2">
+<h2 id="org50d643c">Status of This Memo</h2>
+</div>
+
+<div id="outline-container-org40d730c" class="outline-2">
+<h2 id="org40d730c">Copyright Notice</h2>
+</div>
+
+<div id="outline-container-org187266d" class="outline-2">
+<h2 id="org187266d">1. Introduction</h2>
+<div class="outline-text-2" id="text-org187266d">
+</div>
+<div id="outline-container-org3dbeb4b" class="outline-3">
+<h3 id="org3dbeb4b">1.1. Conformance and Error Handling</h3>
+</div>
+<div id="outline-container-org592fb75" class="outline-3">
+<h3 id="org592fb75">1.2. Syntax Notation</h3>
+</div>
+</div>
+<div id="outline-container-org964cdff" class="outline-2">
+<h2 id="org964cdff">2. Range Units</h2>
+<div class="outline-text-2" id="text-org964cdff">
+</div>
+<div id="outline-container-org8186894" class="outline-3">
+<h3 id="org8186894">2.1. Byte Ranges</h3>
+</div>
+<div id="outline-container-org13c9f8f" class="outline-3">
+<h3 id="org13c9f8f">2.2. Other Range Units</h3>
+</div>
+<div id="outline-container-org6b1d683" class="outline-3">
+<h3 id="org6b1d683">2.3. Accept-Ranges</h3>
+</div>
+</div>
+<div id="outline-container-orgabdd4b0" class="outline-2">
+<h2 id="orgabdd4b0">3. Range Requests</h2>
+<div class="outline-text-2" id="text-orgabdd4b0">
+</div>
+<div id="outline-container-orgf26e511" class="outline-3">
+<h3 id="orgf26e511">3.1. Range</h3>
+</div>
+<div id="outline-container-org79d4a85" class="outline-3">
+<h3 id="org79d4a85">3.2. If-Range</h3>
+</div>
+</div>
+<div id="outline-container-org3bb2822" class="outline-2">
+<h2 id="org3bb2822">4. Responses to a Range Request</h2>
+<div class="outline-text-2" id="text-org3bb2822">
+</div>
+<div id="outline-container-org2d91892" class="outline-3">
+<h3 id="org2d91892">4.1. 206 Partial Content</h3>
+</div>
+<div id="outline-container-org96d66d2" class="outline-3">
+<h3 id="org96d66d2">4.2. Content-Range</h3>
+</div>
+<div id="outline-container-orgbffe853" class="outline-3">
+<h3 id="orgbffe853">4.3. Combining Ranges</h3>
+</div>
+<div id="outline-container-org9a26c49" class="outline-3">
+<h3 id="org9a26c49">4.4. 416 Range Not Satisfiable</h3>
+</div>
+</div>
+<div id="outline-container-orga5fdf53" class="outline-2">
+<h2 id="orga5fdf53">5. IANA Considerations</h2>
+<div class="outline-text-2" id="text-orga5fdf53">
+</div>
+<div id="outline-container-org4c965e1" class="outline-3">
+<h3 id="org4c965e1">5.1. Range Unit Registry</h3>
+<div class="outline-text-3" id="text-org4c965e1">
+</div>
+<div id="outline-container-orgd9e592f" class="outline-4">
+<h4 id="orgd9e592f">5.1.1. Procedure</h4>
+</div>
+<div id="outline-container-orgc516e6b" class="outline-4">
+<h4 id="orgc516e6b">5.1.2. Registrations</h4>
+</div>
+</div>
+<div id="outline-container-orge3c1e57" class="outline-3">
+<h3 id="orge3c1e57">5.2. Status Code Registration</h3>
+</div>
+<div id="outline-container-org750fe0c" class="outline-3">
+<h3 id="org750fe0c">5.3. Header Field Registration</h3>
+</div>
+<div id="outline-container-orgad4c2a6" class="outline-3">
+<h3 id="orgad4c2a6">5.4. Internet Media Type Registration</h3>
+<div class="outline-text-3" id="text-orgad4c2a6">
+</div>
+<div id="outline-container-org5f297a0" class="outline-4">
+<h4 id="org5f297a0">5.4.1. Internet Media Type multipart/byteranges</h4>
+</div>
+</div>
+</div>
+<div id="outline-container-org07a40e2" class="outline-2">
+<h2 id="org07a40e2">6. Security Considerations</h2>
+<div class="outline-text-2" id="text-org07a40e2">
+</div>
+<div id="outline-container-org4e7ae40" class="outline-3">
+<h3 id="org4e7ae40">6.1. Denial-of-Service Attacks Using Range</h3>
+</div>
+</div>
+<div id="outline-container-org0a72d12" class="outline-2">
+<h2 id="org0a72d12">7. Acknowledgments</h2>
+</div>
+<div id="outline-container-orgbeb3402" class="outline-2">
+<h2 id="orgbeb3402">8. References</h2>
+<div class="outline-text-2" id="text-orgbeb3402">
+</div>
+<div id="outline-container-orgc0979c4" class="outline-3">
+<h3 id="orgc0979c4">8.1. Normative References</h3>
+</div>
+<div id="outline-container-org199c976" class="outline-3">
+<h3 id="org199c976">8.2. Informative References</h3>
+</div>
+</div>
+<div id="outline-container-org3530ef3" class="outline-2">
+<h2 id="org3530ef3">Appendix A. Internet Media Type multipart/byteranges</h2>
+</div>
+<div id="outline-container-org0d1b044" class="outline-2">
+<h2 id="org0d1b044">Appendix B. Changes from RFC 2616</h2>
+</div>
+<div id="outline-container-orgacb9ec2" class="outline-2">
+<h2 id="orgacb9ec2">Appendix C. Imported ABNF</h2>
+</div>
+<div id="outline-container-org5d79cab" class="outline-2">
+<h2 id="org5d79cab">Appendix D. Collected ABNF</h2>
+</div>
+<div id="outline-container-org020c35c" class="outline-2">
+<h2 id="org020c35c">Index</h2>
+</div>
+</div>
+</body>
+</html>

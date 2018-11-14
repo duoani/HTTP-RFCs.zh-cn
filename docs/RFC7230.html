@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-13 Tue 19:17 -->
+<!-- 2018-11-14 Wed 19:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -452,7 +452,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org47e4cc3">5.3.1. 原始形式 (origin-form)</a></li>
 <li><a href="#orgb60219b">5.3.2. 绝对形式 (absolute-form)</a></li>
-<li><a href="#org82edbd5">5.3.3. Authority 形式 (authority-form)</a></li>
+<li><a href="#org433256a">5.3.3. 权威形式 (authority-form)</a></li>
 <li><a href="#orgc0548e7">5.3.4. 星号形式 (asterisk-form)</a></li>
 </ul>
 </li>
@@ -546,20 +546,22 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<a class="github-repo" href="https://github.com/duoani/RFC7230.zh-cn">
+<a class="github-repo" href="https://github.com/duoani/HTTP-RFCs.zh-cn">
   <svg height="18" width="18" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
   <span>View Repo</span>
 </a>
 
-<a href="https://github.com/duoani/RFC7230.zh-cn">
-  <img alt="" src="https://img.shields.io/github/license/duoani/RFC7230.zh-cn.svg?style=social"/>
+<a href="https://github.com/duoani/HTTP-RFCs.zh-cn">
+  <img alt="" src="https://img.shields.io/github/license/duoani/HTTP-RFCs.zh-cn.svg?style=social"/>
 </a>
-<a href="https://github.com/duoani/RFC7230.zh-cn">
-  <img src="https://img.shields.io/github/stars/duoani/RFC7230.zh-cn.svg?style=social&label=Stars"/>
+<a href="https://github.com/duoani/HTTP-RFCs.zh-cn">
+  <img src="https://img.shields.io/github/stars/duoani/HTTP-RFCs.zh-cn.svg?style=social&label=Stars"/>
 </a>
 
 <div class="org-src-container">
-<pre class="src src-text">Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
+<pre class="src src-text">                                                       PROPOSED STANDARD
+                                                            Errata Exis
+Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
 Request for Comments: 7230                                         Adobe
 Obsoletes: 2145, 2616                                    J. Reschke, Ed.
 Updates: 2817, 2818                                           greenbytes
@@ -1065,7 +1067,7 @@ A "tunnel" acts as a blind relay between two connections without changing the me
 </blockquote>
 
 <p>
-隧道（tunnel）在两个连接之间充当一个盲中继（blind relay），即隧道并不会对报文进行更改。隧道在激活后，由 HTTP 请求来进行初始化，但隧道并不作为 HTTP 通信的一部分。在隧道两端的连接都关闭后，隧道将不复存在。隧道通过一个中间人来扩展<a href="https://en.wikipedia.org/wiki/Virtual_circuit">虚连接（virtual connection）</a>，例如传输层安全协议（TLS，[<a href="https://tools.ietf.org/html/rfc5246">RFC5246</a>]）通过一个共享的防火墙代理，用于建立保密通信。
+隧道（tunnel）在两个连接之间充当一个盲中继（blind relay），即隧道并不会对报文进行更改。隧道在激活后，由 HTTP 请求来进行初始化，但隧道并不作为 HTTP 通信的一部分。在隧道两端的连接都关闭后，隧道将不复存在。经由一个中间人的中转，隧道能够用来扩展一种<a href="https://en.wikipedia.org/wiki/Virtual_circuit">虚连接（virtual connection）</a>，例如传输层安全协议（TLS，[<a href="https://tools.ietf.org/html/rfc5246">RFC5246</a>]）可以经由一个共享的防火墙代理来建立保密通信。
 </p>
 
 <blockquote>
@@ -2659,11 +2661,7 @@ A server <b>MAY</b> send a <code>Content-Length</code> header field in a respons
 </blockquote>
 
 <p>
-TODO 服务器 <b>可以</b> 在响应给一个 HEAD 请求（【RFC7231】章节 4.3.2）的响应报文中带有一个 <code>Content-Length</code> 报头域。服务器 <b>禁止</b> 在这种响应报文中带有 <code>Content-Length</code>：除非它的域值等于会在响应报文的有效载荷里发送以字节表示的十进制数字。
-</p>
-
-<p>
-在一个响应报文的有效载荷里，如果同样的请求使用的是 GET 请求方法。
+服务器 <b>可以</b> 在响应给一个 HEAD 请求（【RFC7231】章节 4.3.2）的响应中带有一个 <code>Content-Length</code> 报头域。服务器 <b>禁止</b> 在这种响应中带有 <code>Content-Length</code>，除非它的域值等于这样一个以字节表示的十进制数字：如果同样的请求使用的是 GET 请求方法的话，它的响应的有效载荷里带有的长度值。
 </p>
 
 <blockquote>
@@ -2673,7 +2671,7 @@ A server <b>MAY</b> send a <code>Content-Length</code> header field in a <code>3
 </blockquote>
 
 <p>
-TODO 服务器 <b>可以</b> 在响应给一个带条件的 GET 请求（【<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>】<a href="https://tools.ietf.org/html/rfc7232#section-4.1">章节 4.1</a>）的 <code>304 (Not Modified)</code> 响应报文里带有一个 <code>Content-Length</code> 报头域。服务器 <b>禁止</b> 在这种响应报文中带有 <code>Content-Length</code>：除非它的域值等于八位组表示的十进制数字。
+服务器 <b>可以</b> 在响应给一个带条件的 GET 请求（conditional GET request，【<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>】<a href="https://tools.ietf.org/html/rfc7232#section-4.1">章节 4.1</a>）的 <code>304 (Not Modified)</code> 响应报文里带有一个 <code>Content-Length</code> 报头域。服务器 <b>禁止</b> 在这种响应报文中带有 <code>Content-Length</code>，除非它的域值等于这样一个以字节表示的十进制数字：如果响应是一个 <code>200 (OK)</code> 的话，它的有效载荷里带有的长度值。
 </p>
 
 <blockquote>
@@ -3008,7 +3006,7 @@ The <code>chunked</code> transfer coding wraps the payload body in order to tran
 </blockquote>
 
 <p>
-TODO 使用 <code>chunked</code> 传输编码值将有效载荷（payload body）包裹为一系列的分块来传输。每个分块都带有单独的大小指标，跟随于一个 <b>可选的</b> 包含报头域的结尾之后。<code>chunked</code> 允许以一系列长度限定的（length-delimited）缓冲（buffers）的方式来传输大小未知的内容流。这种缓冲允许发送端去保持连接不关闭，以及使接收端得知在什么时候接收完整个报文。
+使用 <code>chunked</code> 传输编码值将有效载荷（payload body）包裹为一系列的分块来传输。每个分块都带有单独的大小指标，跟随于一个 <b>可选的</b> 包含报头域的结尾之后。<code>chunked</code> 允许以一系列长度限定的（length-delimited）缓冲（buffers）的方式来传输大小未知的内容流。这种缓冲允许发送端去保持连接不关闭，以及使接收端得知在什么时候接收完整个报文。
 </p>
 
 <div class="org-src-container">
@@ -3608,9 +3606,9 @@ To allow for transition to the absolute-form for all requests in some future ver
 </div>
 </div>
 
-<div id="outline-container-org82edbd5" class="outline-4">
-<h4 id="org82edbd5">5.3.3. Authority 形式 (authority-form)</h4>
-<div class="outline-text-4" id="text-org82edbd5">
+<div id="outline-container-org433256a" class="outline-4">
+<h4 id="org433256a">5.3.3. 权威形式 (authority-form)</h4>
+<div class="outline-text-4" id="text-org433256a">
 <blockquote>
 <p>
 The authority-form of request-target is only used for CONNECT requests (Section 4.3.6 of [RFC7231]).
@@ -3980,7 +3978,7 @@ A client that has more than one outstanding request on a connection <b>MUST</b> 
 </blockquote>
 
 <p>
-TODO 在一个连接中，客户端有超过一个未完成的请求（outstanding request），<b>必须</b> 以发送的顺序维护一个未完成请求的列表，并且 <b>必须</b> 关联每一个在该连接中接收到的响应报文到最高级的未接收到一个最终响应的请求。
+在一个连接中，如果客户端有超过一个未偿付的请求（outstanding request）的话，客户端 <b>必须</b> 以发送的顺序维护一个未完成请求的列表，并且 <b>必须</b> 关联每一个在该连接中接收到的响应报文到列表最高位的还未接收到最终响应（非 1xx 状态码）的请求。
 </p>
 </div>
 </div>
@@ -4499,7 +4497,7 @@ A recipient determines whether a connection is persistent or not based on the mo
 
 <blockquote>
 <p>
-TODO 对连接的描述上，"not persist" 与 "close" 有什么区别？
+译注：遗留问题，对连接的描述上，"not persist" 与 "close" 有什么区别？
 </p>
 </blockquote>
 
@@ -4520,7 +4518,7 @@ In order to remain persistent, all messages on a connection need to have a self-
 </blockquote>
 
 <p>
-为了保持持久，在一个连接中的所有报文都需要带有一个由自身所定义的（self-defined）报文长度（TODO 也就是说，并不是为连接的关闭所定义的？），如<a href="#org3d27427">章节 3.3</a> 所述。服务器 <b>必须</b> 在发送响应报文后，读取整个请求报文正文或者关闭该连接，这是因为如果不这样做的话，存在于持久连接中的剩余的数据会被误解为是下一个请求报文的内容。同样，如果客户端打算在接下来的请求中复用同一个连接，那么，客户端 <b>必须</b> 读取整个响应报文正文。
+为了保持持久，在一个连接中的所有报文都需要带有一个由自身所定义的（self-defined）报文长度（也就是说，并不是由连接的关闭而定义的那个长度），如<a href="#org3d27427">章节 3.3</a> 所述。服务器 <b>必须</b> 在发送响应报文后，读取整个请求报文正文或者关闭该连接，这是因为如果不这样做的话，存在于持久连接中的剩余的数据会被误解为是下一个请求报文的内容。同样，如果客户端打算在接下来的请求中复用同一个连接，那么，客户端 <b>必须</b> 读取整个响应报文正文。
 </p>
 
 <blockquote>
@@ -4928,8 +4926,14 @@ The capabilities and nature of the application-level communication after the pro
 </blockquote>
 
 <p>
-在协议变更以后，应用层通信的能力和性质取决于所选择的（一个或多个）新协议上。但是，在服务器直接发送了一个带有 <code>101 (Switching Protocols)</code> 状态码的过渡性响应报文（interim response）之后，服务器需要继续发送一个最终响应报文（final response）给到原先的请求，就像服务器已经在新协议连接中接收到请求报文一样（也就是说，在向客户端发送 <code>101 (Switching Protocols)</code> 过渡性响应之后就算真正切换到新协议了，但是，虽然在协议变更了，该服务器仍然未向客户端发送最终响应，因此，服务器需要以新的协议形式来响应这个请求，而不需要让客户端以新的协议形式来再一次发送该请求）。
+在协议变更以后，应用层通信的能力和性质取决于所选择的（一个或多个）新协议上。但是，在服务器直接发送了一个带有 <code>101 (Switching Protocols)</code> 状态码的过渡性响应报文（interim response）之后，服务器需要继续发送一个最终响应报文（final response）给到原先的请求，就像服务器已经在新协议连接中接收到请求报文一样（也就是说，在协议已经变更以后，服务器仍然存在一个未偿付的请求在等待满足，服务器打算以新的协议形式来满足这个请求，而不需要让客户端以新的协议形式来再一次发送该请求）
 </p>
+
+<blockquote>
+<p>
+译注：也就是说，在向客户端发送 <code>101 (Switching Protocols)</code> 过渡性响应之后就算真正切换到新协议了，但是，虽然在协议变更了，该服务器仍然未向客户端发送最终响应，因此，服务器需要以新的协议形式来响应这个请求，而不需要让客户端以新的协议形式来再一次发送该请求。
+</p>
+</blockquote>
 
 <blockquote>
 <p>
