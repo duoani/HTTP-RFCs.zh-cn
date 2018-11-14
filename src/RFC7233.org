@@ -1,0 +1,75 @@
+#+FILETAGS: :note:rfc:
+#+TITLE: RFC7233: Hypertext Transfer Protocol (HTTP/1.1): Range Requests
+#+SELECT_TAGS: export
+#+OPTIONS: toc:5 ^:{} H:6 num:0
+#+UNNUMBERED: t
+#+bind: org-export-publishing-directory "./docs"
+
+#+BEGIN_EXPORT html
+<a class="github-repo" href="https://github.com/duoani/HTTP-RFCs.zh-cn">
+  <svg height="18" width="18" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+  <span>View Repo</span>
+</a>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<a href="https://github.com/duoani/HTTP-RFCs.zh-cn">
+  <img alt="" src="https://img.shields.io/github/license/duoani/HTTP-RFCs.zh-cn.svg?style=social"/>
+</a>
+<a href="https://github.com/duoani/HTTP-RFCs.zh-cn">
+  <img src="https://img.shields.io/github/stars/duoani/HTTP-RFCs.zh-cn.svg?style=social&label=Stars"/>
+</a>
+#+END_EXPORT
+
+#+BEGIN_SRC text
+                                                         PROPOSED STANDARD
+                                                              Errata Exist
+  Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
+  Request for Comments: 7233                                         Adobe
+  Obsoletes: 2616                                            Y. Lafon, Ed.
+  Category: Standards Track                                            W3C
+  ISSN: 2070-1721                                          J. Reschke, Ed.
+                                                                greenbytes
+                                                                June 2014
+#+END_SRC
+
+* Abstract
+
+* Status of This Memo
+
+* Copyright Notice
+
+* 1. Introduction
+** 1.1. Conformance and Error Handling
+** 1.2. Syntax Notation
+* 2. Range Units
+** 2.1. Byte Ranges
+** 2.2. Other Range Units
+** 2.3. Accept-Ranges
+* 3. Range Requests
+** 3.1. Range
+** 3.2. If-Range
+* 4. Responses to a Range Request
+** 4.1. 206 Partial Content
+** 4.2. Content-Range
+** 4.3. Combining Ranges
+** 4.4. 416 Range Not Satisfiable
+* 5. IANA Considerations
+** 5.1. Range Unit Registry
+*** 5.1.1. Procedure
+*** 5.1.2. Registrations
+** 5.2. Status Code Registration
+** 5.3. Header Field Registration
+** 5.4. Internet Media Type Registration
+*** 5.4.1. Internet Media Type multipart/byteranges
+* 6. Security Considerations
+** 6.1. Denial-of-Service Attacks Using Range
+* 7. Acknowledgments
+* 8. References
+** 8.1. Normative References
+** 8.2. Informative References
+* Appendix A. Internet Media Type multipart/byteranges
+* Appendix B. Changes from RFC 2616
+* Appendix C. Imported ABNF
+* Appendix D. Collected ABNF
+* Index
