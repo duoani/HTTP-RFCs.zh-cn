@@ -6,28 +6,30 @@
 #+bind: org-export-publishing-directory "./docs"
 
 #+BEGIN_EXPORT html
-<a class="github-repo" href="https://github.com/duoani/RFC7230.zh-cn">
+<a class="github-repo" href="https://github.com/duoani/HTTP-RFCs.zh-cn">
   <svg height="18" width="18" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
   <span>View Repo</span>
 </a>
 #+END_EXPORT
 
 #+BEGIN_EXPORT html
-<a href="https://github.com/duoani/RFC7230.zh-cn">
-  <img alt="" src="https://img.shields.io/github/license/duoani/RFC7230.zh-cn.svg?style=social"/>
+<a href="https://github.com/duoani/HTTP-RFCs.zh-cn">
+  <img alt="" src="https://img.shields.io/github/license/duoani/HTTP-RFCs.zh-cn.svg?style=social"/>
 </a>
-<a href="https://github.com/duoani/RFC7230.zh-cn">
-  <img src="https://img.shields.io/github/stars/duoani/RFC7230.zh-cn.svg?style=social&label=Stars"/>
+<a href="https://github.com/duoani/HTTP-RFCs.zh-cn">
+  <img src="https://img.shields.io/github/stars/duoani/HTTP-RFCs.zh-cn.svg?style=social&label=Stars"/>
 </a>
 #+END_EXPORT
 
 #+BEGIN_SRC text
-Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
-Request for Comments: 7230                                         Adobe
-Obsoletes: 2145, 2616                                    J. Reschke, Ed.
-Updates: 2817, 2818                                           greenbytes
-Category: Standards Track                                      June 2014
-ISSN: 2070-1721
+                                                         PROPOSED STANDARD
+                                                              Errata Exis
+  Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
+  Request for Comments: 7230                                         Adobe
+  Obsoletes: 2145, 2616                                    J. Reschke, Ed.
+  Updates: 2817, 2818                                           greenbytes
+  Category: Standards Track                                      June 2014
+  ISSN: 2070-1721
 #+END_SRC
 
 * 摘要（Abstract）
@@ -342,7 +344,7 @@ HTTP 中所有对于源服务器的要求都适用于网关的出站通信（out
 A "tunnel" acts as a blind relay between two connections without changing the messages. Once active, a tunnel is not considered a party to the HTTP communication, though the tunnel might have been initiated by an HTTP request. A tunnel ceases to exist when both ends of the relayed connection are closed. Tunnels are used to extend a virtual connection through an intermediary, such as when Transport Layer Security (TLS, [RFC5246]) is used to establish confidential communication through a shared firewall proxy.
 #+END_QUOTE
 
-隧道（tunnel）在两个连接之间充当一个盲中继（blind relay），即隧道并不会对报文进行更改。隧道在激活后，由 HTTP 请求来进行初始化，但隧道并不作为 HTTP 通信的一部分。在隧道两端的连接都关闭后，隧道将不复存在。隧道通过一个中间人来扩展[[https://en.wikipedia.org/wiki/Virtual_circuit][虚连接（virtual connection）]]，例如传输层安全协议（TLS，[[[https://tools.ietf.org/html/rfc5246][RFC5246]]]）通过一个共享的防火墙代理，用于建立保密通信。
+隧道（tunnel）在两个连接之间充当一个盲中继（blind relay），即隧道并不会对报文进行更改。隧道在激活后，由 HTTP 请求来进行初始化，但隧道并不作为 HTTP 通信的一部分。在隧道两端的连接都关闭后，隧道将不复存在。经由一个中间人的中转，隧道能够用来扩展一种[[https://en.wikipedia.org/wiki/Virtual_circuit][虚连接（virtual connection）]]，例如传输层安全协议（TLS，[[[https://tools.ietf.org/html/rfc5246][RFC5246]]]）可以经由一个共享的防火墙代理来建立保密通信。
 
 #+BEGIN_QUOTE
 译注："blind relay"，盲中继，只是将字节从一个连接转发到另一个连接中去，不对 =Connection= 报头域进行特殊的处理。
@@ -1364,15 +1366,13 @@ A user agent *SHOULD* send a =Content-Length= in a request message when no =Tran
 A server *MAY* send a =Content-Length= header field in a response to a HEAD request (Section 4.3.2 of [RFC7231]); a server *MUST NOT* send =Content-Length= in such a response unless its field-value equals the decimal number of octets that would have been sent in the payload body of a response if the same request had used the GET method.
 #+END_QUOTE
 
-TODO 服务器 *可以* 在响应给一个 HEAD 请求（【RFC7231】章节 4.3.2）的响应报文中带有一个 =Content-Length= 报头域。服务器 *禁止* 在这种响应报文中带有 =Content-Length=：除非它的域值等于会在响应报文的有效载荷里发送以字节表示的十进制数字。
-
-在一个响应报文的有效载荷里，如果同样的请求使用的是 GET 请求方法。
+服务器 *可以* 在响应给一个 HEAD 请求（【RFC7231】章节 4.3.2）的响应中带有一个 =Content-Length= 报头域。服务器 *禁止* 在这种响应中带有 =Content-Length=，除非它的域值等于这样一个以字节表示的十进制数字：如果同样的请求使用的是 GET 请求方法的话，它的响应的有效载荷里带有的长度值。
 
 #+BEGIN_QUOTE
 A server *MAY* send a =Content-Length= header field in a =304 (Not Modified)= response to a conditional GET request ([[https://tools.ietf.org/html/rfc7232#section-4.1][Section 4.1]] of [[[https://tools.ietf.org/html/rfc7232][RFC7232]]]); a server *MUST NOT* send =Content-Length= in such a response unless its field-value equals the decimal number of octets that would have been sent in the payload body of a =200 (OK)= response to the same request.
 #+END_QUOTE
 
-TODO 服务器 *可以* 在响应给一个带条件的 GET 请求（【[[https://tools.ietf.org/html/rfc7232][RFC7232]]】[[https://tools.ietf.org/html/rfc7232#section-4.1][章节 4.1]]）的 =304 (Not Modified)= 响应报文里带有一个 =Content-Length= 报头域。服务器 *禁止* 在这种响应报文中带有 =Content-Length=：除非它的域值等于八位组表示的十进制数字。
+服务器 *可以* 在响应给一个带条件的 GET 请求（conditional GET request，【[[https://tools.ietf.org/html/rfc7232][RFC7232]]】[[https://tools.ietf.org/html/rfc7232#section-4.1][章节 4.1]]）的 =304 (Not Modified)= 响应报文里带有一个 =Content-Length= 报头域。服务器 *禁止* 在这种响应报文中带有 =Content-Length=，除非它的域值等于这样一个以字节表示的十进制数字：如果响应是一个 =200 (OK)= 的话，它的有效载荷里带有的长度值。
 
 #+BEGIN_QUOTE
 A server *MUST NOT* send a =Content-Length= header field in any response with a status code of =1xx (Informational)= or =204 (No Content)=. A server *MUST NOT* send a =Content-Length= header field in any =2xx (Successful)= response to a CONNECT request ([[https://tools.ietf.org/html/rfc7231#section-4.3.6][Section 4.3.6]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]).
@@ -1588,7 +1588,7 @@ All transfer-coding names are case-insensitive and ought to be registered within
 The =chunked= transfer coding wraps the payload body in order to transfer it as a series of chunks, each with its own size indicator, followed by an *OPTIONAL* trailer containing header fields. =Chunked= enables content streams of unknown size to be transferred as a sequence of length-delimited buffers, which enables the sender to retain connection persistence and the recipient to know when it has received the entire message.
 #+END_QUOTE
 
-TODO 使用 =chunked= 传输编码值将有效载荷（payload body）包裹为一系列的分块来传输。每个分块都带有单独的大小指标，跟随于一个 *可选的* 包含报头域的结尾之后。=chunked= 允许以一系列长度限定的（length-delimited）缓冲（buffers）的方式来传输大小未知的内容流。这种缓冲允许发送端去保持连接不关闭，以及使接收端得知在什么时候接收完整个报文。
+使用 =chunked= 传输编码值将有效载荷（payload body）包裹为一系列的分块来传输。每个分块都带有单独的大小指标，跟随于一个 *可选的* 包含报头域的结尾之后。=chunked= 允许以一系列长度限定的（length-delimited）缓冲（buffers）的方式来传输大小未知的内容流。这种缓冲允许发送端去保持连接不关闭，以及使接收端得知在什么时候接收完整个报文。
 
 #+BEGIN_SRC text
   chunked-body   = *chunk
@@ -1978,7 +1978,7 @@ To allow for transition to the absolute-form for all requests in some future ver
 
 为了允许在将来某个 HTTP 版本里将所有请求的请求目标转换为绝对形式，服务器 *必须* 接受请求目标是绝对形式的请求，即使 HTTP/1.1 客户端将仅向代理（proxy）发送这种请求。
 
-*** 5.3.3. Authority 形式 (authority-form)
+*** 5.3.3. 权威形式 (authority-form)
 #+BEGIN_QUOTE
 The authority-form of request-target is only used for CONNECT requests (Section 4.3.6 of [RFC7231]).
 #+END_QUOTE
@@ -2224,7 +2224,7 @@ HTTP 并不包含一个请求标记，用于关联一个给定请求报文和与
 A client that has more than one outstanding request on a connection *MUST* maintain a list of outstanding requests in the order sent and *MUST* associate each received response message on that connection to the highest ordered request that has not yet received a final (non-1xx) response.
 #+END_QUOTE
 
-TODO 在一个连接中，客户端有超过一个未完成的请求（outstanding request），*必须* 以发送的顺序维护一个未完成请求的列表，并且 *必须* 关联每一个在该连接中接收到的响应报文到最高级的未接收到一个最终响应的请求。
+在一个连接中，如果客户端有超过一个未偿付的请求（outstanding request）的话，客户端 *必须* 以发送的顺序维护一个未完成请求的列表，并且 *必须* 关联每一个在该连接中接收到的响应报文到列表最高位的还未接收到最终响应（非 1xx 状态码）的请求。
 
 ** 5.7. 报文转发 (Message Forwarding)
 :PROPERTIES:
@@ -2558,7 +2558,7 @@ A recipient determines whether a connection is persistent or not based on the mo
 - *else* 连接将会在当前响应之后关闭。
 
 #+BEGIN_QUOTE
-TODO 对连接的描述上，"not persist" 与 "close" 有什么区别？
+译注：遗留问题，对连接的描述上，"not persist" 与 "close" 有什么区别？
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -2571,7 +2571,7 @@ A client *MAY* send additional requests on a persistent connection until it send
 In order to remain persistent, all messages on a connection need to have a self-defined message length (i.e., one not defined by closure of the connection), as described in Section 3.3. A server *MUST* read the entire request message body or close the connection after sending its response, since otherwise the remaining data on a persistent connection would be misinterpreted as the next request. Likewise, a client *MUST* read the entire response message body if it intends to reuse the same connection for a subsequent request.
 #+END_QUOTE
 
-为了保持持久，在一个连接中的所有报文都需要带有一个由自身所定义的（self-defined）报文长度（TODO 也就是说，并不是为连接的关闭所定义的？），如[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]] 所述。服务器 *必须* 在发送响应报文后，读取整个请求报文正文或者关闭该连接，这是因为如果不这样做的话，存在于持久连接中的剩余的数据会被误解为是下一个请求报文的内容。同样，如果客户端打算在接下来的请求中复用同一个连接，那么，客户端 *必须* 读取整个响应报文正文。
+为了保持持久，在一个连接中的所有报文都需要带有一个由自身所定义的（self-defined）报文长度（也就是说，并不是由连接的关闭而定义的那个长度），如[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]] 所述。服务器 *必须* 在发送响应报文后，读取整个请求报文正文或者关闭该连接，这是因为如果不这样做的话，存在于持久连接中的剩余的数据会被误解为是下一个请求报文的内容。同样，如果客户端打算在接下来的请求中复用同一个连接，那么，客户端 *必须* 读取整个响应报文正文。
 
 #+BEGIN_QUOTE
 A proxy server *MUST NOT* maintain a persistent connection with an HTTP/1.0 client (see Section 19.7.1 of [RFC2068] for information and discussion of the problems with the =Keep-Alive= header field implemented by many HTTP/1.0 clients).
@@ -2819,7 +2819,11 @@ The following is a hypothetical example sent by a client:
 The capabilities and nature of the application-level communication after the protocol change is entirely dependent upon the new protocol(s) chosen. However, immediately after sending the =101 (Switching Protocols)= response, the server is expected to continue responding to the original request as if it had received its equivalent within the new protocol (i.e., the server still has an outstanding request to satisfy after the protocol has been changed, and is expected to do so without requiring the request to be repeated).
 #+END_QUOTE
 
-在协议变更以后，应用层通信的能力和性质取决于所选择的（一个或多个）新协议上。但是，在服务器直接发送了一个带有 =101 (Switching Protocols)= 状态码的过渡性响应报文（interim response）之后，服务器需要继续发送一个最终响应报文（final response）给到原先的请求，就像服务器已经在新协议连接中接收到请求报文一样（也就是说，在向客户端发送 =101 (Switching Protocols)= 过渡性响应之后就算真正切换到新协议了，但是，虽然在协议变更了，该服务器仍然未向客户端发送最终响应，因此，服务器需要以新的协议形式来响应这个请求，而不需要让客户端以新的协议形式来再一次发送该请求）。
+在协议变更以后，应用层通信的能力和性质取决于所选择的（一个或多个）新协议上。但是，在服务器直接发送了一个带有 =101 (Switching Protocols)= 状态码的过渡性响应报文（interim response）之后，服务器需要继续发送一个最终响应报文（final response）给到原先的请求，就像服务器已经在新协议连接中接收到请求报文一样（也就是说，在协议已经变更以后，服务器仍然存在一个未偿付的请求在等待满足，服务器打算以新的协议形式来满足这个请求，而不需要让客户端以新的协议形式来再一次发送该请求）
+
+#+BEGIN_QUOTE
+译注：也就是说，在向客户端发送 =101 (Switching Protocols)= 过渡性响应之后就算真正切换到新协议了，但是，虽然在协议变更了，该服务器仍然未向客户端发送最终响应，因此，服务器需要以新的协议形式来响应这个请求，而不需要让客户端以新的协议形式来再一次发送该请求。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 For example, if the =Upgrade= header field is received in a GET request and the server decides to switch protocols, it first responds with a =101 (Switching Protocols)= message in HTTP/1.1 and then immediately follows that with the new protocol's equivalent of a response to a GET on the target resource. This allows a connection to be upgraded to protocols with the same semantics as HTTP without the latency cost of an additional round trip. A server *MUST NOT* switch protocols unless the received message semantics can be honored by the new protocol; an OPTIONS request can be honored by any protocol.
