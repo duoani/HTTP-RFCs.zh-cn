@@ -452,7 +452,7 @@ HTTP 在 =Accept-Language= 和 =Content-Language= 报头域里使用语言标签
 A language tag is a sequence of one or more case-insensitive subtags, each separated by a hyphen character ("-", %x2D). In most cases, a language tag consists of a primary language subtag that identifies a broad family of related languages (e.g., "en" = English), which is optionally followed by a series of subtags that refine or narrow that language's range (e.g., "en-CA" = the variety of English as communicated in Canada). Whitespace is not allowed within a language tag. Example tags include:
 #+END_QUOTE
 
-一个[[ruby:language%20tag][语言标签]]是由一个或多个不区分大小写的子标签组成的，每个子标签之间使用连接符（"-"，"%x2D"）分隔。大多数情况下，一个语言标签包含一个标识一种相关语系的[[ruby:primary%20language%20subtag][主要语言子标签]]（例如，"en" 代表[[ruby:English][英语]]），另外还可以选择性地在其后面附加一连串的子标签来优化或缩小语言范围（例如，"en-CA" 代表一种[[ruby:Canada][加拿大]]英语）。语言标签里不允许存在空格。语言标签的几个例子如下：
+一个[[ruby:language%20tag][语言标签]]是由一个或多个不区分大小写的子标签组成的，每个子标签之间使用连接符（"-"，"%x2D"）分隔。大多数情况下，一个语言标签包含一个标识了某种关联语系的[[ruby:primary%20language%20subtag][主要语言子标签]]（例如，"en" 代表[[ruby:English][英语]]），另外还可以选择性地在其后面附加一连串的子标签来优化或缩小语言范围（例如，"en-CA" 代表一种[[ruby:Canada][加拿大]]英语）。语言标签里不允许存在空格。语言标签的几个例子如下：
 
 #+BEGIN_EXAMPLE
   fr, en-US, es-419, az-Arab, x-pig-latin, man-Nkoo-GN
@@ -1065,7 +1065,7 @@ An origin server *SHOULD* ignore unrecognized header fields received in a PUT re
 An origin server *SHOULD* verify that the PUT representation is consistent with any constraints the server has for the target resource that cannot or will not be changed by the PUT. This is particularly important when the origin server uses internal configuration information related to the URI in order to set the values for representation metadata on GET responses. When a PUT representation is inconsistent with the target resource, the origin server *SHOULD* either make them consistent, by transforming the representation or changing the resource configuration, or respond with an appropriate error message containing sufficient information to explain why the representation is unsuitable. The =409 (Conflict)= or =415 (Unsupported Media Type)= status codes are suggested, with the latter being specific to constraints on =Content-Type= values.
 #+END_QUOTE
 
-源服务器 *应当* 校验 PUT 的 representation 是否符合服务器对目标资源的任何[[ruby:constraints][约束]]，确保它们不能或不会被 PUT 所改变。当源服务器使用 URI 相关的内部配置信息来对回应给 GET 的响应的 representation 的元数据设置值的时候，这种校验是非常重要的。当一个 PUT 请求内的 representation 不符合[[ruby:target%20resource][目标资源]]的约束时，源服务器 *应当* 要不[[ruby:transform][转换]]这个 representation 或者改变资源的配置以使其符合约束条件；要不回应一种恰当的错误报文，包含足够的信息来解释为什么该 representation 并不适合。建议使用 =409 (Conflict)= 或者 =415 (Unsupported Media Type)= 状态码，而对于后者（=415 (Unsupported Media Type)=），带有 =Content-Type= 报头域以指定具体的约束类型。
+源服务器 *应当* 校验 PUT 的 representation 是否符合服务器对目标资源的任何[[ruby:constraints][约束]]，确保它们不能或不会被 PUT 所改变。当源服务器使用与 URI 相关联的内部配置信息来对回应给 GET 的响应的 representation 的元数据设置值的时候，这种校验是非常重要的。当一个 PUT 请求内的 representation 不符合[[ruby:target%20resource][目标资源]]的约束时，源服务器 *应当* 要不[[ruby:transform][转换]]这个 representation 或者改变资源的配置以使其符合约束条件；要不回应一种恰当的错误报文，包含足够的信息来解释为什么该 representation 并不适合。建议使用 =409 (Conflict)= 或者 =415 (Unsupported Media Type)= 状态码，而对于后者（=415 (Unsupported Media Type)=），带有 =Content-Type= 报头域以指定具体的约束类型。
 
 #+BEGIN_QUOTE
 For example, if the target resource is configured to always have a =Content-Type= of "text/html" and the representation being PUT has a =Content-Type= of "image/jpeg", the origin server ought to do one of:
@@ -1114,7 +1114,7 @@ PUT 请求的[[ruby:proper%20interpretation][合理解释]]是相信用户代理
 A PUT request applied to the target resource can have side effects on other resources. For example, an article might have a URI for identifying "the current version" (a resource) that is separate from the URIs identifying each particular version (different resources that at one point shared the same state as the current version resource). A successful PUT request on "the current version" URI might therefore create a new version resource in addition to changing the state of the target resource, and might also cause links to be added between the related resources.
 #+END_QUOTE
 
-应用到[[ruby:target%20resource][目标资源]]的 PUT 请求可能会对其他资源带来[[ruby:side%20effects][副作用]]。例如，一篇文章可能会有一个用于标识“[[ruby:the%20current%20version][当前版本]]”（是一种资源）的 URI，独立于其他每一个标识特定版本的 URIs，不同的资源在某处共享同一种状态来作为“当前版本”所对应的资源。成功地向“当前版本”这个 URI 发起了一个 PUT 请求以后，可能除了改变目标资源的状态之外，还会创建额外一个“新版本”的资源，而且还有可能需要添加链接到相关的资源之中。 
+应用到[[ruby:target%20resource][目标资源]]的 PUT 请求可能会对其他资源带来[[ruby:side%20effects][副作用]]。例如，一篇文章可能会有一个用于标识“[[ruby:the%20current%20version][当前版本]]”（是一种资源）的 URI，独立于其他每一个标识特定版本的 URIs，不同的资源在某处共享同一种状态来作为“当前版本”所对应的资源。成功地向“当前版本”这个 URI 发起了一个 PUT 请求以后，可能除了改变目标资源的状态之外，还会创建额外一个“新版本”的资源，而且还有可能需要添加链接到关联的资源之中。 
 
 #+BEGIN_QUOTE
 An origin server that allows PUT on a given target resource *MUST* send a =400 (Bad Request)= response to a PUT request that contains a =Content-Range= header field ([[https://tools.ietf.org/html/rfc7233#section-4.2][Section 4.2]] of [RFC7233]), since the payload is likely to be partial content that has been mistakenly PUT as a full representation. Partial content updates are possible by targeting a separately identified resource with state that overlaps a portion of the larger resource, or by using a different method that has been specifically defined for partial updates (for example, the PATCH method defined in [[[https://tools.ietf.org/html/rfc5789][RFC5789]]]).
@@ -1418,33 +1418,527 @@ The final recipient of the request should reflect the message received, excludin
 :PROPERTIES:
 :ID:       f8e7b063-496f-473e-95e8-88ec76f21582
 :END:
-** 5.1. Controls
+
+#+BEGIN_QUOTE
+A client sends request header fields to provide more information about the request context, make the request conditional based on the target resource state, suggest preferred formats for the response, supply authentication credentials, or modify the expected request processing. These fields act as request modifiers, similar to the parameters on a programming language method invocation.
+#+END_QUOTE
+
+客户端发送[[ruby:request%20header%20fields][请求报头域]]来提供更多请求上下文的相关信息，基于目标资源的状态来使请求[[ruby:conditional][条件化]]，提议响应的[[ruby:preferred%20formats][首选格式]]，提供身份凭证，或者更改预期的请求处理。这些报头域充当请求的[[ruby:modifiers][修饰符]]，类似于一门编程语言里用于函数调用的参数一样。
+
+** 5.1. 控制 / Controls
+
+#+BEGIN_QUOTE
+Controls are request header fields that direct specific handling of the request.
+#+END_QUOTE
+
+| Header Field Name | Defined in...            |
+|-------------------+--------------------------|
+| Cache-Control     | Section 5.2 of [RFC7234] |
+| Expect            | Section 5.1.1            |
+| Host              | Section 5.4 of [RFC7230] |
+| Max-Forwards      | Section 5.1.2            |
+| Pragma            | Section 5.4 of [RFC7234] |
+| Range             | Section 3.1 of [RFC7233] |
+| TE                | Section 4.3 of [RFC7230] |
+
 *** 5.1.1. Expect
+
+The "Expect" header field in a request indicates a certain set of behaviors (expectations) that need to be supported by the server in order to properly handle this request. The only such expectation defined by this specification is 100-continue.
+
+#+BEGIN_SRC text
+  Expect  = "100-continue"
+#+END_SRC
+
+#+BEGIN_QUOTE
+The Expect field-value is case-insensitive.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A server that receives an Expect field-value other than 100-continue MAY respond with a 417 (Expectation Failed) status code to indicate that the unexpected expectation cannot be met.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A 100-continue expectation informs recipients that the client is about to send a (presumably large) message body in this request and wishes to receive a 100 (Continue) interim response if the request-line and header fields are not sufficient to cause an immediate success, redirect, or error response. This allows the client to wait for an indication that it is worthwhile to send the message body before actually doing so, which can improve efficiency when the message body is huge or when the client anticipates that an error is likely (e.g., when sending a state-changing method, for the first time, without previously verified authentication credentials).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For example, a request that begins with
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  PUT /somewhere/fun HTTP/1.1
+  Host: origin.example.com
+  Content-Type: video/h264
+  Content-Length: 1234567890987
+  Expect: 100-continue
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+allows the origin server to immediately respond with an error message, such as 401 (Unauthorized) or 405 (Method Not Allowed), before the client starts filling the pipes with an unnecessary data transfer.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Requirements for clients:
+
+- A client MUST NOT generate a 100-continue expectation in a request that does not include a message body.
+- A client that will wait for a 100 (Continue) response before sending the request message body MUST send an Expect header field containing a 100-continue expectation.
+- A client that sends a 100-continue expectation is not required to wait for any specific length of time; such a client MAY proceed to send the message body even if it has not yet received a response. Furthermore, since 100 (Continue) responses cannot be sent through an HTTP/1.0 intermediary, such a client SHOULD NOT wait for an indefinite period before sending the message body.
+- A client that receives a 417 (Expectation Failed) status code in response to a request containing a 100-continue expectation SHOULD repeat that request without a 100-continue expectation, since the 417 response merely indicates that the response chain does not support expectations (e.g., it passes through an HTTP/1.0 server).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Requirements for servers:
+
+- A server that receives a 100-continue expectation in an HTTP/1.0 request MUST ignore that expectation.
+- A server MAY omit sending a 100 (Continue) response if it has already received some or all of the message body for the corresponding request, or if the framing indicates that there is no message body.
+- A server that sends a 100 (Continue) response MUST ultimately send a final status code, once the message body is received and processed, unless the connection is closed prematurely.
+- A server that responds with a final status code before reading the entire message body SHOULD indicate in that response whether it intends to close the connection or continue reading and discarding the request message (see Section 6.6 of [RFC7230]).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+An origin server *MUST*, upon receiving an HTTP/1.1 (or later) request-line and a complete header section that contains a 100-continue expectation and indicates a request message body will follow, either send an immediate response with a final status code, if that status can be determined by examining just the request-line and header fields, or send an immediate 100 (Continue) response to encourage the client to send the request's message body. The origin server MUST NOT wait for the message body before sending the 100 (Continue) response.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A proxy MUST, upon receiving an HTTP/1.1 (or later) request-line and a complete header section that contains a 100-continue expectation and indicates a request message body will follow, either send an immediate response with a final status code, if that status can be determined by examining just the request-line and header fields, or begin forwarding the request toward the origin server by sending a corresponding request-line and header section to the next inbound server. If the proxy believes (from configuration or past interaction) that the next inbound server only supports HTTP/1.0, the proxy MAY generate an immediate 100 (Continue) response to encourage the client to begin sending the message body.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+*Note:* The Expect header field was added after the original publication of HTTP/1.1 [RFC2068] as both the means to request an interim 100 (Continue) response and the general mechanism for indicating must-understand extensions. However, the extension mechanism has not been used by clients and the must-understand requirements have not been implemented by many servers, rendering the extension mechanism useless. This specification has removed the extension mechanism in order to simplify the definition and processing of 100-continue.
+#+END_QUOTE
+
 *** 5.1.2. Max-Forwards
 :PROPERTIES:
 :ID:       4c0e6435-a276-48fb-8cb8-32b8ef5a2780
 :END:
-** 5.2. Conditionals
+
+#+BEGIN_QUOTE
+The "Max-Forwards" header field provides a mechanism with the TRACE (Section 4.3.8) and OPTIONS (Section 4.3.7) request methods to limit the number of times that the request is forwarded by proxies. This can be useful when the client is attempting to trace a request that appears to be failing or looping mid-chain.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Max-Forwards = 1*DIGIT
+#+END_SRC
+
+#+BEGIN_QUOTE
+The Max-Forwards value is a decimal integer indicating the remaining number of times this request message can be forwarded.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Each intermediary that receives a TRACE or OPTIONS request containing a Max-Forwards header field MUST check and update its value prior to forwarding the request. If the received value is zero (0), the intermediary MUST NOT forward the request; instead, the intermediary MUST respond as the final recipient. If the received Max-Forwards value is greater than zero, the intermediary MUST generate an updated Max-Forwards field in the forwarded message with a field-value that is the lesser of a) the received value decremented by one (1) or b) the recipient's maximum supported value for Max-Forwards.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A recipient MAY ignore a Max-Forwards header field received with any other request methods.
+#+END_QUOTE
+
+** 5.2. 条件 / Conditionals
 :PROPERTIES:
 :ID:       b21923d5-a8f9-4560-8592-92fd9a098bf4
 :END:
-** 5.3. Content Negotiation
+
+The HTTP conditional request header fields [RFC7232] allow a client to place a precondition on the state of the target resource, so that the action corresponding to the method semantics will not be applied if the precondition evaluates to false. Each precondition defined by this specification consists of a comparison between a set of validators obtained from prior representations of the target resource to the current state of validators for the selected representation (Section 7.2). Hence, these preconditions evaluate whether the state of the target resource has changed since a given state known by the client. The effect of such an evaluation depends on the method semantics and choice of conditional, as defined in Section 5 of [RFC7232].
+
+| Header Field Name   | Defined in...            |
+|---------------------+--------------------------|
+| If-Match            | Section 3.1 of [RFC7232] |
+| If-None-Match       | Section 3.2 of [RFC7232] |
+| If-Modified-Since   | Section 3.3 of [RFC7232] |
+| If-Unmodified-Since | Section 3.4 of [RFC7232] |
+| If-Range            | Section 3.2 of [RFC7233] |
+
+** 5.3. 内容协商 / Content Negotiation
+
+The following request header fields are sent by a user agent to engage in proactive negotiation of the response content, as defined in Section 3.4.1. The preferences sent in these fields apply to any content in the response, including representations of the target resource, representations of error or processing status, and potentially even the miscellaneous text strings that might appear within the protocol.
+
+| Header Field Name | Defined in... |
+|-------------------+---------------|
+| Accept            | Section 5.3.2 |
+| Accept-Charset    | Section 5.3.3 |
+| Accept-Encoding   | Section 5.3.4 |
+| Accept-Language   | Section 5.3.5 |
+
 *** 5.3.1. Quality Values
+
+#+BEGIN_QUOTE
+Many of the request header fields for proactive negotiation use a common parameter, named "q" (case-insensitive), to assign a relative "weight" to the preference for that associated kind of content. This weight is referred to as a "quality value" (or "qvalue") because the same parameter name is often used within server configurations to assign a weight to the relative quality of the various representations that can be selected for a resource.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The weight is normalized to a real number in the range 0 through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means "not acceptable". If no "q" parameter is present, the default weight is 1.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  weight = OWS ";" OWS "q=" qvalue
+  qvalue = ( "0" [ "." 0*3DIGIT ] )
+         / ( "1" [ "." 0*3("0") ] )
+#+END_SRC
+
+#+BEGIN_QUOTE
+A sender of qvalue *MUST NOT* generate more than three digits after the decimal point. User configuration of these values ought to be limited in the same fashion.
+#+END_QUOTE
+
 *** 5.3.2. Accept
 :PROPERTIES:
 :ID:       95575604-c3d4-48d6-a061-325bd7798970
 :END:
+
+#+BEGIN_QUOTE
+The "Accept" header field can be used by user agents to specify response media types that are acceptable. Accept header fields can be used to indicate that the request is specifically limited to a small set of desired types, as in the case of a request for an in-line image.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Accept = #( media-range [ accept-params ] )
+
+  media-range    = ( "*/*"
+                   / ( type "/" "*" )
+                   / ( type "/" subtype )
+                   ) *( OWS ";" OWS parameter )
+  accept-params  = weight *( accept-ext )
+  accept-ext = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
+#+END_SRC
+
+#+BEGIN_QUOTE
+The asterisk "*" character is used to group media types into ranges, with "*/*" indicating all media types and "type/*" indicating all subtypes of that type. The media-range can include media type parameters that are applicable to that range.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Each media-range might be followed by zero or more applicable media type parameters (e.g., charset), an optional "q" parameter for indicating a relative weight (Section 5.3.1), and then zero or more extension parameters. The "q" parameter is necessary if any extensions (accept-ext) are present, since it acts as a separator between the two parameter sets.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+*Note:* Use of the "q" parameter name to separate media type parameters from Accept extension parameters is due to historical practice. Although this prevents any media type parameter named "q" from being used with a media range, such an event is believed to be unlikely given the lack of any "q" parameters in the IANA media type registry and the rare usage of any media type parameters in Accept. Future media types are discouraged from registering any parameter named "q".
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The example
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Accept: audio/*; q=0.2, audio/basic
+#+END_SRC
+
+#+BEGIN_QUOTE
+is interpreted as "I prefer audio/basic, but send me any audio type if it is the best available after an 80% markdown in quality".
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A request without any Accept header field implies that the user agent will accept any media type in response. If the header field is present in a request and none of the available representations for the response have a media type that is listed as acceptable, the origin server can either honor the header field by sending a 406 (Not Acceptable) response or disregard the header field by treating the response as if it is not subject to content negotiation.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A more elaborate example is
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Accept: text/plain; q=0.5, text/html,
+          text/x-dvi; q=0.8, text/x-c
+#+END_SRC
+
+#+BEGIN_QUOTE
+Verbally, this would be interpreted as "text/html and text/x-c are the equally preferred media types, but if they do not exist, then send the text/x-dvi representation, and if that does not exist, send the text/plain representation".
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Media ranges can be overridden by more specific media ranges or specific media types. If more than one media range applies to a given type, the most specific reference has precedence. For example,
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Accept: text/*, text/plain, text/plain;format=flowed, */*
+#+END_SRC
+
+#+BEGIN_QUOTE
+have the following precedence:
+
+1. text/plain;format=flowed
+2. text/plain
+3. text/*
+4. */*
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The media type quality factor associated with a given type is determined by finding the media range with the highest precedence that matches the type. For example,
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Accept: text/*;q=0.3, text/html;q=0.7, text/html;level=1,
+          text/html;level=2;q=0.4, */*;q=0.5
+#+END_SRC
+
+#+BEGIN_QUOTE
+would cause the following values to be associated:
+#+END_QUOTE
+
+| Media Type        | Quality Valut |
+|-------------------+---------------|
+| text/html;level=1 |             1 |
+| text/html         |           0.7 |
+| text/plain        |           0.3 |
+| image/jpeg        |           0.5 |
+| text/html;level=2 |           0.4 |
+| text/html;level=3 |           0.7 |
+
+#+BEGIN_QUOTE
+*Note:* A user agent might be provided with a default set of quality values for certain media ranges. However, unless the user agent is a closed system that cannot interact with other rendering agents, this default set ought to be configurable by the user.
+#+END_QUOTE
+
 *** 5.3.3. Accept-Charset
+
+#+BEGIN_QUOTE
+The "Accept-Charset" header field can be sent by a user agent to indicate what charsets are acceptable in textual response content. This field allows user agents capable of understanding more comprehensive or special-purpose charsets to signal that capability to an origin server that is capable of representing information in those charsets.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Accept-Charset = 1#( ( charset / "*" ) [ weight ] )
+#+END_SRC
+
+#+BEGIN_QUOTE
+Charset names are defined in Section 3.1.1.2. A user agent MAY associate a quality value with each charset to indicate the user's relative preference for that charset, as defined in Section 5.3.1. An example is
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Accept-Charset: iso-8859-5, unicode-1-1;q=0.8
+#+END_SRC
+
+#+BEGIN_QUOTE
+The special value "*", if present in the Accept-Charset field, matches every charset that is not mentioned elsewhere in the Accept-Charset field. If no "*" is present in an Accept-Charset field, then any charsets not explicitly mentioned in the field are considered "not acceptable" to the client.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A request without any Accept-Charset header field implies that the user agent will accept any charset in response. Most general-purpose user agents do not send Accept-Charset, unless specifically configured to do so, because a detailed list of supported charsets makes it easier for a server to identify an individual by virtue of the user agent's request characteristics (Section 9.7).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+If an Accept-Charset header field is present in a request and none of the available representations for the response has a charset that is listed as acceptable, the origin server can either honor the header field, by sending a 406 (Not Acceptable) response, or disregard the header field by treating the resource as if it is not subject to content negotiation.
+#+END_QUOTE
+
 *** 5.3.4. Accept-Encoding
 :PROPERTIES:
 :ID:       a8fcc101-3782-4ed0-aec0-561b933e6a5f
 :END:
+
+#+BEGIN_QUOTE
+The "Accept-Encoding" header field can be used by user agents to indicate what response content-codings (Section 3.1.2.1) are acceptable in the response. An "identity" token is used as a synonym for "no encoding" in order to communicate when no encoding is preferred.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Accept-Encoding  = #( codings [ weight ] )
+  codings          = content-coding / "identity" / "*"
+#+END_SRC
+
+#+BEGIN_QUOTE
+Each codings value MAY be given an associated quality value representing the preference for that encoding, as defined in Section 5.3.1. The asterisk "*" symbol in an Accept-Encoding field matches any available content-coding not explicitly listed in the header field.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For example,
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  Accept-Encoding: compress, gzip
+  Accept-Encoding:
+  Accept-Encoding: *
+  Accept-Encoding: compress;q=0.5, gzip;q=1.0
+  Accept-Encoding: gzip;q=1.0, identity; q=0.5, *;q=0
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+A request without an Accept-Encoding header field implies that the user agent has no preferences regarding content-codings. Although this allows the server to use any content-coding in a response, it does not imply that the user agent will be able to correctly process all encodings.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A server tests whether a content-coding for a given representation is acceptable using these rules:
+
+1. If no Accept-Encoding field is in the request, any content-coding is considered acceptable by the user agent.
+2. If the representation has no content-coding, then it is acceptable by default unless specifically excluded by the Accept-Encoding field stating either "identity;q=0" or "*;q=0" without a more specific entry for "identity".
+3. If the representation's content-coding is one of the content-codings listed in the Accept-Encoding field, then it is acceptable unless it is accompanied by a qvalue of 0. (As defined in Section 5.3.1, a qvalue of 0 means "not acceptable".)
+4. If multiple content-codings are acceptable, then the acceptable content-coding with the highest non-zero qvalue is preferred.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+An =Accept-Encoding= header field with a combined field-value that is empty implies that the user agent does not want any content-coding in response. If an Accept-Encoding header field is present in a request and none of the available representations for the response have a content-coding that is listed as acceptable, the origin server SHOULD send a response without any content-coding.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+*Note:* Most HTTP/1.0 applications do not recognize or obey qvalues associated with content-codings. This means that qvalues might not work and are not permitted with x-gzip or x-compress.
+#+END_QUOTE
+
 *** 5.3.5. Accept-Language
+
+#+BEGIN_QUOTE
+The "Accept-Language" header field can be used by user agents to indicate the set of natural languages that are preferred in the response. Language tags are defined in Section 3.1.3.1.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Accept-Language = 1#( language-range [ weight ] )
+  language-range  = 
+            <language-range, see [RFC4647], Section 2.1>
+#+END_SRC
+
+#+BEGIN_QUOTE
+Each language-range can be given an associated quality value representing an estimate of the user's preference for the languages specified by that range, as defined in Section 5.3.1. For example,
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  Accept-Language: da, en-gb;q=0.8, en;q=0.7
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+would mean: "I prefer Danish, but will accept British English and other types of English".
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A request without any Accept-Language header field implies that the user agent will accept any language in response. If the header field is present in a request and none of the available representations for the response have a matching language tag, the origin server can either disregard the header field by treating the response as if it is not subject to content negotiation or honor the header field by sending a 406 (Not Acceptable) response. However, the latter is not encouraged, as doing so can prevent users from accessing content that they might be able to use (with translation software, for example).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Note that some recipients treat the order in which language tags are listed as an indication of descending priority, particularly for tags that are assigned equal quality values (no value is the same as q=1). However, this behavior cannot be relied upon. For consistency and to maximize interoperability, many user agents assign each language tag a unique quality value while also listing them in order of decreasing quality. Additional discussion of language priority lists can be found in Section 2.3 of [RFC4647].
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+For matching, Section 3 of [RFC4647] defines several matching schemes. Implementations can offer the most appropriate matching scheme for their requirements. The "Basic Filtering" scheme ([RFC4647], Section 3.3.1) is identical to the matching scheme that was previously defined for HTTP in Section 14.4 of [RFC2616].
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+It might be contrary to the privacy expectations of the user to send an Accept-Language header field with the complete linguistic preferences of the user in every request (Section 9.7).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Since intelligibility is highly dependent on the individual user, user agents need to allow user control over the linguistic preference (either through configuration of the user agent itself or by defaulting to a user controllable system setting). A user agent that does not provide such control to the user MUST NOT send an Accept-Language header field.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+*Note:* User agents ought to provide guidance to users when setting a preference, since users are rarely familiar with the details of language matching as described above. For example, users might assume that on selecting "en-gb", they will be served any kind of English document if British English is not available. A user agent might suggest, in such a case, to add "en" to the list for better matching behavior.
+#+END_QUOTE
+
 ** 5.4. 身份验证凭证 / Authentication Credentials
+
+#+BEGIN_QUOTE
+Two header fields are used for carrying authentication credentials, as defined in [RFC7235]. Note that various custom mechanisms for user authentication use the Cookie header field for this purpose, as defined in [RFC6265].
+#+END_QUOTE
+
+| Header Field Name   | Defined in...            |
+|---------------------+--------------------------|
+| Authorization       | Section 4.2 of [RFC7235] |
+| Proxy-Authorization | Section 4.4 of [RFC7235] |
+
 ** 5.5. 请求上下文/ Request Context
+
+#+BEGIN_QUOTE
+The following request header fields provide additional information about the request context, including information about the user, user agent, and resource behind the request.
+#+END_QUOTE
+
+| Header Field Name | Defined in... |
+|-------------------+---------------|
+| Form              | Section 5.5.1 |
+| Referer           | Section 5.5.2 |
+| User-Agent        | Section 5.5.3 |
+
 *** 5.5.1. Form
+
+#+BEGIN_QUOTE
+The "From" header field contains an Internet email address for a human user who controls the requesting user agent. The address ought to be machine-usable, as defined by "mailbox" in Section 3.4 of [RFC5322]:
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  From    = mailbox
+
+  mailbox = <mailbox, see [RFC5322], Section 3.4>
+#+END_SRC
+
+#+BEGIN_QUOTE
+An example is:
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  From: webmaster@example.org
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+The From header field is rarely sent by non-robotic user agents. A user agent *SHOULD NOT* send a From header field without explicit configuration by the user, since that might conflict with the user's privacy interests or their site's security policy.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A robotic user agent *SHOULD* send a valid From header field so that the person responsible for running the robot can be contacted if problems occur on servers, such as if the robot is sending excessive, unwanted, or invalid requests.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A server *SHOULD NOT* use the From header field for access control or authentication, since most recipients will assume that the field value is public information.
+#+END_QUOTE
+
 *** 5.5.2. Referer
+
+#+BEGIN_QUOTE
+The "Referer" [sic] header field allows the user agent to specify a URI reference for the resource from which the target URI was obtained (i.e., the "referrer", though the field name is misspelled). A user agent MUST NOT include the fragment and userinfo components of the URI reference [RFC3986], if any, when generating the Referer field value.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  Referer = absolute-URI / partial-URI
+#+END_SRC
+
+#+BEGIN_QUOTE
+The Referer header field allows servers to generate back-links to other resources for simple analytics, logging, optimized caching, etc. It also allows obsolete or mistyped links to be found for maintenance. Some servers use the Referer header field as a means of denying links from other sites (so-called "deep linking") or restricting cross-site request forgery (CSRF), but not all requests contain it.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Example:
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  Referer: http://www.example.org/hypertext/Overview.html
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+If the target URI was obtained from a source that does not have its own URI (e.g., input from the user keyboard, or an entry within the user's bookmarks/favorites), the user agent MUST either exclude the Referer field or send it with a value of "about:blank".
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+The Referer field has the potential to reveal information about the request context or browsing history of the user, which is a privacy concern if the referring resource's identifier reveals personal information (such as an account name) or a resource that is supposed to be confidential (such as behind a firewall or internal to a secured service). Most general-purpose user agents do not send the Referer header field when the referring resource is a local "file" or "data" URI. A user agent MUST NOT send a Referer header field in an unsecured HTTP request if the referring page was received with a secure protocol. See Section 9.4 for additional security considerations.
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Some intermediaries have been known to indiscriminately remove Referer header fields from outgoing requests. This has the unfortunate side effect of interfering with protection against CSRF attacks, which can be far more harmful to their users. Intermediaries and user agent extensions that wish to limit information disclosure in Referer ought to restrict their changes to specific edits, such as replacing internal domain names with pseudonyms or truncating the query and/or path components. An intermediary SHOULD NOT modify or delete the Referer header field when the field value shares the same scheme and host as the request target.
+#+END_QUOTE
+
 *** 5.5.3. User-Agent
+
+#+BEGIN_QUOTE
+The "User-Agent" header field contains information about the user agent originating the request, which is often used by servers to help identify the scope of reported interoperability problems, to work around or tailor responses to avoid particular user agent limitations, and for analytics regarding browser or operating system use. A user agent SHOULD send a User-Agent field in each request unless specifically configured not to do so.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  User-Agent = product *( RWS ( product / comment ) )
+#+END_SRC
+
+#+BEGIN_QUOTE
+The User-Agent field-value consists of one or more product identifiers, each followed by zero or more comments (Section 3.2 of [RFC7230]), which together identify the user agent software and its significant subproducts. By convention, the product identifiers are listed in decreasing order of their significance for identifying the user agent software. Each product identifier consists of a name and optional version.
+#+END_QUOTE
+
+#+BEGIN_SRC text
+  product         = token ["/" product-version]
+  product-version = token
+#+END_SRC
+
+#+BEGIN_QUOTE
+A sender *SHOULD* limit generated product identifiers to what is necessary to identify the product; a sender MUST NOT generate advertising or other nonessential information within the product identifier. A sender SHOULD NOT generate information in product-version that is not a version identifier (i.e., successive versions of the same product name ought to differ only in the product-version portion of the product identifier).
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Example:
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+  User-Agent: CERN-LineMode/2.15 libwww/2.17b3
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+A user agent *SHOULD NOT* generate a User-Agent field containing needlessly fine-grained detail and SHOULD limit the addition of subproducts by third parties. Overly long and detailed User-Agent field values increase request latency and the risk of a user being identified against their wishes ("fingerprinting").
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Likewise, implementations are encouraged not to use the product tokens of other implementations in order to declare compatibility with them, as this circumvents the purpose of the field. If a user agent masquerades as a different user agent, recipients can assume that the user intentionally desires to see responses tailored for that identified user agent, even if they might not work as well for the actual user agent being used.
+#+END_QUOTE
+
 * 6. 响应状态码 / Response Status Codes
 :PROPERTIES:
 :ID:       5a69d0cc-628c-4897-a089-45f906b94a92
