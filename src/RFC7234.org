@@ -65,11 +65,17 @@
 * 5. Header Field Definitions
 ** 5.1. Age
 ** 5.2. Cache-Control
+:PROPERTIES:
+:ID:       03c2dad4-a6d2-4d3c-b087-d08717bf09ec
+:END:
 *** 5.2.1. Request Cache-Control Directives
 *** 5.2.2. Response Cache-Control Directives
 *** 5.2.3. Cache Control Extensions
 ** 5.3. Expires
 ** 5.4. Pragma
+:PROPERTIES:
+:ID:       8414ec2d-e5b5-4f9c-8160-c354c12b7504
+:END:
 ** 5.5. Warning
 *** 5.5.1. Warning: 110 - "Response is Stale"
 *** 5.5.2. Warning: 111 - "Revalidation Failed"

@@ -585,7 +585,7 @@ If =Content-Location= is included in a =2xx (Successful)= response message and i
 
 如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应报文里，且它的域值指向于一个与有效请求 URI 不相同的 URI，那么，源服务器[[ruby:claim][声称]]该 URI 是一个与封装在该有效载荷内的 representation 相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
 - 对于回应给 GET 或 HEAD 请求的一个响应，它表明了[[ruby:effective%20request%20URI][有效请求 URI]] 指向到一个服从[[ruby:content%20negotiation][内容协商]]的资源，并且针对[[ruby:selective%20representation][已选定的 representation]]  来说，=Content-Location= 的域值是一个更加具体的标识符。
-- 对于回应给[[ruby:state-changing%20method][状态改变的请求方法]]的一个 =201 (Created)= 响应，如果 =Content-Location= 的域值与 =Location= 的域值相同，那么，这表明这个有效载荷是新近被创建的资源的[[ruby:current%20representation][当前 representation]]。
+- 对于回应给[[ruby:state-changing%20method][会改变资源状态的请求方法]]的一个 =201 (Created)= 响应，如果 =Content-Location= 的域值与 =Location= 的域值相同，那么，这表明这个有效载荷是新近被创建的资源的[[ruby:current%20representation][当前 representation]]。
 - 否则，这个 =Content-Location= 表明了这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对 representation 进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 =200 (OK)= 响应的有效载荷，=Content-Location= 的域值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。
 
 #+BEGIN_QUOTE
@@ -1431,39 +1431,58 @@ A client sends request header fields to provide more information about the reque
 Controls are request header fields that direct specific handling of the request.
 #+END_QUOTE
 
+控制相关的请求报头域的作用是指导请求的具体处理。
+
 | Header Field Name | Defined in...            |
 |-------------------+--------------------------|
-| Cache-Control     | Section 5.2 of [RFC7234] |
-| Expect            | Section 5.1.1            |
-| Host              | Section 5.4 of [RFC7230] |
-| Max-Forwards      | Section 5.1.2            |
-| Pragma            | Section 5.4 of [RFC7234] |
-| Range             | Section 3.1 of [RFC7233] |
-| TE                | Section 4.3 of [RFC7230] |
+| Cache-Control     | [[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][Section 5.2]] of [RFC7234] |
+| Expect            | [[id:0b0cea12-0af7-47f1-8908-2afc48ce3fb2][Section 5.1.1]]            |
+| Host              | [[id:f6cd08fd-597f-4b1d-98ad-a1730125abdc][Section 5.4]] of [RFC7230] |
+| Max-Forwards      | [[id:4c0e6435-a276-48fb-8cb8-32b8ef5a2780][Section 5.1.2]]            |
+| Pragma            | [[id:8414ec2d-e5b5-4f9c-8160-c354c12b7504][Section 5.4]] of [RFC7234] |
+| Range             | [[id:a70b4aaa-f776-4d5b-a31d-60d1ad16d85e][Section 3.1]] of [RFC7233] |
+| TE                | [[id:2BA944C9-6215-4B88-8F5F-D5CACA865191][Section 4.3]] of [RFC7230] |
 
 *** 5.1.1. Expect
+:PROPERTIES:
+:ID:       0b0cea12-0af7-47f1-8908-2afc48ce3fb2
+:END:
 
 The "Expect" header field in a request indicates a certain set of behaviors (expectations) that need to be supported by the server in order to properly handle this request. The only such expectation defined by this specification is 100-continue.
+
+请求报文里的 =Expect= 报头域指明了一个确定的[[ruby:behaviors][行为]]（[[ruby:expectations][期望]]）集合，这些期望需要通过服务器的支持来实现，以使得这个请求得以妥善处理。=100-continue= 是仅有的由本规范所定义的期望。
 
 #+BEGIN_SRC text
   Expect  = "100-continue"
 #+END_SRC
 
 #+BEGIN_QUOTE
-The Expect field-value is case-insensitive.
+The =Expect= field-value is case-insensitive.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A server that receives an Expect field-value other than 100-continue MAY respond with a 417 (Expectation Failed) status code to indicate that the unexpected expectation cannot be met.
-#+END_QUOTE
+=Expect= 的值是不区分大小写的。
 
 #+BEGIN_QUOTE
-A 100-continue expectation informs recipients that the client is about to send a (presumably large) message body in this request and wishes to receive a 100 (Continue) interim response if the request-line and header fields are not sufficient to cause an immediate success, redirect, or error response. This allows the client to wait for an indication that it is worthwhile to send the message body before actually doing so, which can improve efficiency when the message body is huge or when the client anticipates that an error is likely (e.g., when sending a state-changing method, for the first time, without previously verified authentication credentials).
+A server that receives an =Expect= field-value other than =100-continue= *MAY* respond with a =417 (Expectation Failed)= status code to indicate that the unexpected expectation cannot be met.
+#+END_QUOTE
+
+如果服务器接收到一个带有 =Expect= 报头域的请求，但其域值并不是 =100-continue=，那么，服务器 *可以* 回应一个 =417 (Expectation Failed)= 状态的响应来指明不能遇到[[ruby:unexpected%20expectation][意料之外的期望]]（也就是说，服务器仅能处理 =100-continue= 这种期望）。
+
+#+BEGIN_QUOTE
+A =100-continue= expectation informs recipients that the client is about to send a (presumably large) message body in this request and wishes to receive a =100 (Continue)= interim response if the request-line and header fields are not sufficient to cause an immediate success, redirect, or error response. This allows the client to wait for an indication that it is worthwhile to send the message body before actually doing so, which can improve efficiency when the message body is huge or when the client anticipates that an error is likely (e.g., when sending a state-changing method, for the first time, without previously verified authentication credentials).
+#+END_QUOTE
+
+=100-continue= 这个期望向接收端告知了这样一个信息：客户端即将在本次请求中发送一个（假定是很大的）报文正文，如果之前所发送的请求行以及报头域不足以引起一个立即成功、重定向或者错误响应的时候，它希望能够从接收端那里接收到一个 =100 (Continue)= 的过渡响应，让客户端在真正要发送这个报文正文之前，可以等待服务器的指示来确认是否有必要发送这个报文正文。这样做在报文正文的体积巨大，或者客户端预见到可能出现错误（例如，当首次发送一个[[ruby:state-changing%20method][会改变资源状态的请求方法]]的时候没有预先校验身份凭证）的情况下，可以提高效率。
+
+#+BEGIN_QUOTE
+译注：[[ruby:interim%20response][过渡响应]]是相对于[[ruby:final%20response][最终响应]]来说的。过渡响应即所有 =1xx= 状态码的响应，所有非 =1xx= 状态码的响应都是最终响应。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
 For example, a request that begins with
 #+END_QUOTE
+
+例如，请求报文的起始内容如下：
 
 #+BEGIN_EXAMPLE
   PUT /somewhere/fun HTTP/1.1
@@ -1471,19 +1490,32 @@ For example, a request that begins with
   Content-Type: video/h264
   Content-Length: 1234567890987
   Expect: 100-continue
+
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-allows the origin server to immediately respond with an error message, such as 401 (Unauthorized) or 405 (Method Not Allowed), before the client starts filling the pipes with an unnecessary data transfer.
+allows the origin server to immediately respond with an error message, such as =401 (Unauthorized)= or =405 (Method Not Allowed)=, before the client starts filling the pipes with an unnecessary data transfer.
 #+END_QUOTE
+
+这个请求让源服务器可以在客户端向管道连接里填充不必要的数据流之前，立即响应一个错误报文，比如 =401 (Unauthorized)= 或者 =405 (Method Not Allowed)=。
 
 #+BEGIN_QUOTE
 Requirements for clients:
 
-- A client MUST NOT generate a 100-continue expectation in a request that does not include a message body.
-- A client that will wait for a 100 (Continue) response before sending the request message body MUST send an Expect header field containing a 100-continue expectation.
-- A client that sends a 100-continue expectation is not required to wait for any specific length of time; such a client MAY proceed to send the message body even if it has not yet received a response. Furthermore, since 100 (Continue) responses cannot be sent through an HTTP/1.0 intermediary, such a client SHOULD NOT wait for an indefinite period before sending the message body.
-- A client that receives a 417 (Expectation Failed) status code in response to a request containing a 100-continue expectation SHOULD repeat that request without a 100-continue expectation, since the 417 response merely indicates that the response chain does not support expectations (e.g., it passes through an HTTP/1.0 server).
+- A client *MUST NOT* generate a =100-continue= expectation in a request that does not include a message body.
+- A client that will wait for a =100 (Continue)= response before sending the request message body *MUST* send an =Expect= header field containing a =100-continue= expectation.
+- A client that sends a =100-continue= expectation is not required to wait for any specific length of time; such a client *MAY* proceed to send the message body even if it has not yet received a response. Furthermore, since =100 (Continue)= responses cannot be sent through an HTTP/1.0 intermediary, such a client *SHOULD NOT* wait for an indefinite period before sending the message body.
+- A client that receives a =417 (Expectation Failed)= status code in response to a request containing a =100-continue= expectation *SHOULD* repeat that request without a =100-continue= expectation, since the =417= response merely indicates that the response chain does not support expectations (e.g., it passes through an HTTP/1.0 server).
+#+END_QUOTE
+
+对于客户端的要求：
+- 客户端 *禁止* 在一个没有[[ruby:message%20body][报文正文]]的请求里生成一个 =100-continue= 期望。
+- 客户端在发送请求的报文正文之前，如果打算等待服务器的 =100 (Continue)=，*必须* 发送一个包含 =100-continue= 期望的 =Expect= 报头域。
+- 客户端在发送了一个 =100-continue= 期望以后，并不要求去等待任意具体的时长。这时候客户端甚至 *可以* 在未接收到任何响应的情况下就开始发送报文正文。再者，由于 =100 (Continue)= 响应不能经由一个 HTTP/1.0 中间人来发送，因此，客户端 *不应当* 在发送报文正文之前无限期地等待。
+- 客户端接收到一个 =417 (Expectation Failed)= 状态码的响应，该响应是回应给一个包含 =100-continue= 期望的请求的，这时候，客户端 *应当* 在不再带有 =100-continue= 期望的情况下再次发起这个请求，这是因为该 417 响应只不过是表明该[[ruby:response%20chain][响应链路]]并不支持期望（比如，它经过一个 HTTP/1.0 服务器）。
+
+#+BEGIN_QUOTE
+译注：HTTP/1.0 并没有定义任何 1xx 的状态码，所以不支持在 HTTP/1.0 上使用 =100-continue=。
 #+END_QUOTE
 
 #+BEGIN_QUOTE

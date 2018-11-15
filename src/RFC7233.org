@@ -48,6 +48,9 @@
 ** 2.3. Accept-Ranges
 * 3. Range Requests
 ** 3.1. Range
+:PROPERTIES:
+:ID:       a70b4aaa-f776-4d5b-a31d-60d1ad16d85e
+:END:
 ** 3.2. If-Range
 * 4. Responses to a Range Request
 ** 4.1. 206 Partial Content
