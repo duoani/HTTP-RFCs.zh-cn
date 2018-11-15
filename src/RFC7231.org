@@ -482,7 +482,7 @@ The "Content-Language" header field describes the natural language(s) of the int
 Language tags are defined in [[id:0a52652d-e5e8-40f9-ba1a-f96c45969b85][Section 3.1.3.1]]. The primary purpose of =Content-Language= is to allow a user to identify and differentiate representations according to the users' own preferred language. Thus, if the content is intended only for a Danish-literate audience, the appropriate field is
 #+END_QUOTE
 
-[[ruby:language%20tag][语言标签]]定义在[[id:0a52652d-e5e8-40f9-ba1a-f96c45969b85][章节 3.1.3.1]] 里。=Content-Language= 的主要目的是允许一个用户依据用户自身的首选语言来标识和区分 representations。所以，如果只想将[[ruby:Danish-literate][懂丹麦语]]的人作为内容的目标受众，那么报头域可以这样设置：
+[[ruby:language%20tag][语言标签]]定义在[[id:0a52652d-e5e8-40f9-ba1a-f96c45969b85][章节 3.1.3.1]] 里。=Content-Language= 的主要目的是让用户能够依据自身的首选语言来标识和区分 representations。所以，如果只想将[[ruby:Danish-literate][懂丹麦语]]的人作为内容的目标受众，那么报头域可以这样设置：
 
 #+BEGIN_EXAMPLE
   Content-Language: da
@@ -574,7 +574,7 @@ The =Content-Location= value is not a replacement for the effective Request URI 
 If =Content-Location= is included in a =2xx (Successful)= response message and its value refers (after conversion to absolute form) to a URI that is the same as the effective request URI, then the recipient *MAY* consider the payload to be a current representation of that resource at the time indicated by the message origination date. For a GET ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]]) or HEAD ([[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][Section 4.3.2]]) request, this is the same as the default semantics when no =Content-Location= is provided by the server. For a state-changing request like PUT ([[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][Section 4.3.4]]) or POST ([[id:d672d01b-615b-416a-a750-0442a6901ed0][Section 4.3.3]]), it implies that the server's response contains the new representation of that resource, thereby distinguishing it from representations that might only report about the action (e.g., "It worked!"). This allows authoring applications to update their local copies without the need for a subsequent GET request.
 #+END_QUOTE
 
-如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应报文里，且它的值指向于（在转换为[[ruby:absolute%20form][绝对形式]]之后）一个与有效请求 URI 相同的 URI，那么，接收端 *可以* 将该有效载荷认为是一个在特定时间里的资源的 current representation，所述特定时间是由[[ruby:message%20origination%20date][报文始发日期]]所指定的时间。对于 GET（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）或者 HEAD（[[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][章节 4.3.2]]）请求来说，这与在服务器没有提供 =Content-Location= 报头域的情况下的默认语义相一致。对于类似 PUT（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）或者 POST（[[id:d672d01b-615b-416a-a750-0442a6901ed0][章节 4.3.3]]）这些会[[ruby:state-changing][改变状态]]的请求来说，这意味着服务器的响应包含了该资源的新的 representation，由此与那些只报告动作方面的信息（例如，“[[ruby:It%20worked!][它生效了！]]”）的 representations 作区分。
+如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应报文里，且它的值指向于（在转换为[[ruby:absolute%20form][绝对形式]]之后）一个与有效请求 URI 相同的 URI，那么，接收端 *可以* 将该有效载荷认为是一个在特定时间里的资源的 current representation，所述特定时间是由[[ruby:message%20origination%20date][报文始发日期]]所指定的时间。对于 GET（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）或者 HEAD（[[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][章节 4.3.2]]）请求来说，这与在服务器没有提供 =Content-Location= 报头域的情况下的默认语义相一致。对于类似 PUT（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）或者 POST（[[id:d672d01b-615b-416a-a750-0442a6901ed0][章节 4.3.3]]）这些会[[ruby:state-changing][改变状态]]的请求来说，这意味着服务器的响应包含了该资源的新的 representation，由此与那些只报告动作方面的信息（例如，“[[ruby:It%20worked!][它生效了！]]”）的 representations 作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
 
 #+BEGIN_QUOTE
 If =Content-Location= is included in a =2xx (Successful)= response message and its field-value refers to a URI that differs from the effective request URI, then the origin server claims that the URI is an identifier for a different resource corresponding to the enclosed representation. Such a claim can only be trusted if both identifiers share the same resource owner, which cannot be programmatically determined via HTTP.
@@ -857,7 +857,7 @@ Of the request methods defined by this specification, the GET, HEAD, OPTIONS, an
 The purpose of distinguishing between safe and unsafe methods is to allow automated retrieval processes (spiders) and cache performance optimization (pre-fetching) to work without fear of causing harm. In addition, it allows a user agent to apply appropriate constraints on the automated use of unsafe methods when processing potentially untrusted content.
 #+END_QUOTE
 
-之所有要区分方法是否安全，是为了放心开启[[ruby:automated%20retrieval%20processes][自动检索程序]]（[[ruby:spider][爬虫]]）和[[ruby:cache%20performance%20optimization][缓存性能优化]]（[[ruby:pre-fetching][预取]]）而不需要担心引起问题。再者，它允许用户代理，在处理可能不受信任的内容的时候，对非安全方法的自动使用施加适当的约束。
+之所有要区分方法是否安全，是为了可以放心地开启[[ruby:automated%20retrieval%20processes][自动检索程序]]（[[ruby:spider][爬虫]]）和[[ruby:cache%20performance%20optimization][缓存性能优化]]（[[ruby:pre-fetching][预取]]）而不需要担心引起问题。再者，它让用户代理在处理可能不受信任的内容的时候，能够对非安全方法的自动使用实施适当的约束。
 
 #+BEGIN_QUOTE
 A user agent *SHOULD* distinguish between safe and unsafe methods when presenting potential actions to a user, such that the user can be made aware of an unsafe action before it is requested.
@@ -881,6 +881,10 @@ A request method is considered "idempotent" if the intended effect on the server
 #+END_QUOTE
 
 当执行多次相同的请求，与单次这样的请求，对服务器的预期效果是一样的，那么，该请求方法被认为是“[[ruby:idempotent][幂等的]]”。本规范所定义的请求方法中，幂等方法有：PUT、DELETE 以及所有[[id:2f967e3d-8694-430b-ad06-e748fd39b281][安全请求方法]]。
+
+#+BEGIN_QUOTE
+译注：也就是说，幂等的方法共有GET、HEAD、PUT、DELETE、OPTIONS 和 TRACE。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 Like the definition of safe, the idempotent property only applies to what has been requested by the user; a server is free to log each request separately, retain a revision control history, or implement other non-idempotent side effects for each idempotent request.
@@ -936,6 +940,17 @@ The response to a GET request is cacheable; a cache *MAY* use it to satisfy subs
 
 回应给 GET 请求的响应是[[ruby:cacheable][可缓存的]]，[[ruby:cache][缓存]] *可以* 使用它来满足随后的 GET 和 HEAD 请求，除非 =Cache-Control= 报头域另有指定（[[https://tools.ietf.org/html/rfc7234#section-5.2][【RFC7234】章节 5.2]]）。
 
+#+BEGIN_QUOTE
+译注：来自 [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET][MDN]] 的总结：
+The HTTP GET method requests a representation of the specified resource. Requests using GET should only retrieve data.
+- Request has body :: No
+- Successful response has body :: Yes
+- Safe :: Yes
+- Idempotent :: Yes
+- Cacheable :: Yes
+- Allowed in HTML forms :: Yes
+#+END_QUOTE
+
 *** 4.3.2. HEAD
 :PROPERTIES:
 :ID:       d00f1692-2d40-4b09-a634-9c87fce07bc4
@@ -951,6 +966,17 @@ A payload within a HEAD request message has no defined semantics; sending a payl
 The response to a HEAD request is cacheable; a cache *MAY* use it to satisfy subsequent HEAD requests unless otherwise indicated by the =Cache-Control= header field ([[https://tools.ietf.org/html/rfc7234#section-5.2][Section 5.2]] of [RFC7234]). A HEAD response might also have an effect on previously cached responses to GET; see [[https://tools.ietf.org/html/rfc7234#section-4.3.5][Section 4.3.5]] of [RFC7234].
 
 回应给 HEAD 请求的响应是[[ruby:cacheable][可缓存的]]，[[ruby:cache][缓存]] *可以* 使用它来满足随后的 HEAD 请求，除非 =Cache-Control= 报头域另有指定（[[https://tools.ietf.org/html/rfc7234#section-5.2][【RFC7234】章节 5.2]]）。HEAD 响应还可能影响到之前已缓存的 GET 响应，见[[https://tools.ietf.org/html/rfc7234#section-4.3.5][【RFC7234】章节 4.3.5]]。
+
+#+BEGIN_QUOTE
+译注：来自 [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD][MDN]] 的总结：
+
+- Request has body :: No
+- Successful response has body :: No
+- Safe :: Yes
+- Idempotent :: Yes
+- Cacheable :: Yes
+- Allowed in HTML forms :: No
+#+END_QUOTE
 
 *** 4.3.3. POST
 :PROPERTIES:
@@ -995,6 +1021,19 @@ If the result of processing a POST would be equivalent to a representation of an
 #+END_QUOTE
 
 如果处理某个 POST 请求的结果等价于某个现有资源的某种 representation 的话，源服务器 *可以* 发送一个 =303 (See Other)= 响应到用户代理，同时，响应里带有 =Location= 报头域，其值为该现有资源的标识符，让用户代理进行重定向。这样做的好处是可以向用户代理提供一种资源标识符，以及可以通过一种更适合缓存共享的方法来传输 representation，但坏处是可能需要一个额外的请求，如果用户代理还没有缓存过该 representation 的话。
+
+#+BEGIN_QUOTE
+译注：来自 [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST][MDN]] 的总结：
+
+The HTTP POST method sends data to the server. The type of the body of the request is indicated by the Content-Type header.
+
+- Request has body :: Yes
+- Successful response has body :: Yes
+- Safe :: No
+- Idempotent :: No
+- Cacheable :: Only if freshness information is included
+- Allowed in HTML forms :: Yes
+#+END_QUOTE
 
 *** 4.3.4. PUT
 :PROPERTIES:
@@ -1053,7 +1092,7 @@ HTTP 并没有定义 PUT 方法究竟是如何影响源服务器的状态的，�
 An origin server *MUST NOT* send a validator header field ([[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][Section 7.2]]), such as an =ETag= or =Last-Modified= field, in a successful response to PUT unless the request's representation data was saved without any transformation applied to the body (i.e., the resource's new representation data is identical to the representation data received in the PUT request) and the validator field value reflects the new representation. This requirement allows a user agent to know when the representation body it has in memory remains current as a result of the PUT, thus not in need of being retrieved again from the origin server, and that the new validator(s) received in the response can be used for future conditional requests in order to prevent accidental overwrites (Section 5.2).
 #+END_QUOTE
 
-源服务器 *禁止* 在回应给 PUT 的[[ruby:successful%20response][成功响应]]里带有任何[[ruby:validator%20header%20field][验证器报头域]]（[[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][章节 7.2]]），例如 =ETag= 或者 =Last-Modified= 报头域，除非请求的 representation data 是保存在没有经过任何[[ruby:transformation][编码转换]]的报文正文（有效载荷）里（也就是说，响应内的新 representation data 是等价于接收自 PUT 请求内的 representation data），并且该验证器报头域反映的是新是 representation。上述这种要求使得用户代理能够知道这个在自己内存中的 representation 在什么时间内可以[[ruby:remain%20current][保持最新（保持为 current 状态）]]，由此知道其是否仍然可以继续作为 PUT 请求的结果而不需要从源服务器上再次获取，以及在响应内接收到的新验证器能够被用于将来的[[ruby:conditional%20requests][条件请求]]以避免新[[ruby:accidental%20overwrite][意外覆盖]]（章节 5.2）。
+源服务器 *禁止* 在回应给 PUT 的[[ruby:successful%20response][成功响应]]里带有任何[[ruby:validator%20header%20field][验证器报头域]]（[[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][章节 7.2]]），例如 =ETag= 或者 =Last-Modified= 报头域，除非请求的 representation data 是保存在没有经过任何[[ruby:transformation][编码转换]]的报文正文（有效载荷）里（也就是说，响应内的新 representation data 是等价于接收自 PUT 请求内的 representation data），并且该验证器报头域反映的是新是 representation。上述这种要求让用户代理能够知道这个在自己内存中的 representation 在什么时间内可以[[ruby:remain%20current][保持最新（保持为 current 状态）]]，由此知道其是否仍然可以继续作为 PUT 请求的结果而不需要从源服务器上再次获取，以及在响应内接收到的新验证器能够被用于将来的[[ruby:conditional%20requests][条件请求]]以避免新[[ruby:accidental%20overwrite][意外覆盖]]（章节 5.2）。
 
 #+BEGIN_QUOTE
 译注：未经过任何编码转换的[[ruby:message%20body][报文正文]]等价于[[ruby:payload%20body][有效载荷体]]，见[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][【RFC7230】章节 3.3.1]]。
@@ -1089,6 +1128,21 @@ Responses to the PUT method are not cacheable. If a successful PUT request passe
 
 回应给 PUT 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。如果一个[[ruby:successful%20PUT%20request][成功的 PUT 请求]]穿过一个[[ruby:cache][缓存]]，而该缓存已经存储（缓存）了该 PUT 请求的有效请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 PUT 请求），那么这些已存储的（已缓存的）响应将会[[ruby:be%20invalidated][被失效]]（见【RFC7234】章节 4.4）。
 
+#+BEGIN_QUOTE
+译注：来自 [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT][MDN]] 的总结：
+
+The HTTP PUT request method creates a new resource or replaces a representation of the target resource with the request payload.
+
+The difference between PUT and POST is that PUT is idempotent: calling it once or several times successively has the same effect (that is no side effect), where successive identical POST may have additional effects, like passing an order several times.
+
+- Request has body :: Yes
+- Successful response has body :: No
+- Safe :: No
+- Idempotent :: Yes
+- Cacheable :: No
+- Allowed in HTML forms :: No
+#+END_QUOTE
+
 *** 4.3.5. DELETE
 :PROPERTIES:
 :ID:       9e649fa9-0f7f-40d0-adef-8af6a6f62e80
@@ -1109,7 +1163,7 @@ If the target resource has one or more current representations, they might or mi
 Relatively few resources allow the DELETE method — its primary use is for remote authoring environments, where the user has some direction regarding its effect. For example, a resource that was previously created using a PUT request, or identified via the =Location= header field after a =201 (Created)= response to a POST request, might allow a corresponding DELETE request to undo those actions. Similarly, custom user agent implementations that implement an authoring function, such as revision control clients using HTTP for remote operations, might use DELETE based on an assumption that the server's URI space has been crafted to correspond to a version repository.
 #+END_QUOTE
 
-相对较少的资源会允许 DELETE 方法，它主要应用在用户会有某些关于它的影响效果的指导的[[ruby:remote%20authoring%20environments][远程编辑环境]]中。例如，在以前使用一个 PUT 请求来创建好的某个资源，或者是在回应给 POST 请求的一个 =201 (Created)= 响应以后，该响应里的 =Location= 报头域所标识的某个资源，可能会允许一个对应的 DELETE 请求来[[ruby:undo][撤消]]这些动作。类似的，实现某种[[ruby:authoring%20function][编辑方法]]的[[ruby:custom%20user%20agent%20implementations][定制的用户代理实现]]，比如使用 HTTP 来进行远程操作的[[ruby:revision%20control%20clients][版本管理客户端]]，可能会基于“服务器的 [[ruby:URI%20space][URI 空间]]是经过精心设计来对应某个版本仓库”的这种假设来使用 DELETE。
+相对较少的资源会允许 DELETE 方法，它主要应用在用户会有某些关于它的影响效果的指导的[[ruby:remote%20authoring%20environments][远程编辑环境]]中。例如，在以前使用一个 PUT 请求来创建好的某个资源，或者是在回应给 POST 请求的一个 =201 (Created)= 响应以后，该响应里的 =Location= 报头域所标识的某个资源，可能会允许使用一个对应的 DELETE 请求来[[ruby:undo][撤消]]这些动作。类似的，实现某种[[ruby:authoring%20function][编辑方法]]的[[ruby:custom%20user%20agent%20implementations][定制的用户代理实现]]，比如使用 HTTP 来进行远程操作的[[ruby:revision%20control%20clients][版本管理客户端]]，可能会基于“服务器的 [[ruby:URI%20space][URI 空间]]是经过精心设计来对应某个版本仓库”的这种假设来使用 DELETE。
 
 #+BEGIN_QUOTE
 译注：URI space 参考【[[https://tools.ietf.org/html/rfc5785][RFC5785]]】Defining Well-Known Uniform Resource Identifiers (URIs)
@@ -1132,6 +1186,19 @@ Responses to the DELETE method are not cacheable. If a DELETE request passes thr
 #+END_QUOTE
 
 回应给 DELETE 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。如果一个 DELETE 请求穿过一个[[ruby:cache][缓存]]，而该缓存已经存储（缓存）了该 DELETE 请求的有效请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 DELETE 请求），那么这些已存储的（已缓存的）响应将会[[ruby:be%20invalidated][被失效]]（见[[https://tools.ietf.org/html/rfc7234#section-4.4][【RFC7234】章节 4.4]]）。
+
+#+BEGIN_QUOTE
+译注：来自 [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE][MDN]] 的总结：
+
+The HTTP DELETE request method deletes the specified resource.
+
+- Request has body :: May
+- Successful response has body :: May
+- Safe :: No
+- Idempotent :: Yes
+- Cacheable :: No
+- Allowed in HTML forms :: No
+#+END_QUOTE
 
 *** 4.3.6. CONNECT
 :PROPERTIES:
@@ -1222,6 +1289,23 @@ Responses to the CONNECT method are not cacheable.
 
 回应给 CONNECT 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。
 
+#+BEGIN_QUOTE
+译注：来自 [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT][MDN]] 的总结：
+
+The HTTP CONNECT method method starts two-way communications with the requested resource. It can be used to open a tunnel.
+
+For example, the CONNECT method can be used to access websites that use SSL (HTTPS). The client asks an HTTP Proxy server to tunnel the TCP connection to the desired destination. The server then proceeds to make the connection on behalf of the client. Once the connection has been established by the server, the Proxy server continues to proxy the TCP stream to and from the client.
+
+CONNECT is a hop-by-hop method.
+
+- Request has body :: No
+- Successful response has body :: Yes
+- Safe :: No
+- Idempotent :: No
+- Cacheable :: No
+- Allowed in HTML forms :: No
+#+END_QUOTE
+
 *** 4.3.7. OPTIONS
 :PROPERTIES:
 :ID:       f659b35f-7510-4961-ad3a-3ab1b312a681
@@ -1230,13 +1314,13 @@ Responses to the CONNECT method are not cacheable.
 The OPTIONS method requests information about the communication options available for the target resource, at either the origin server or an intervening intermediary. This method allows a client to determine the options and/or requirements associated with a resource, or the capabilities of a server, without implying a resource action.
 #+END_QUOTE
 
-OPTIONS 方法请求获得可用于目标资源的[[ruby:communication%20options][通信选项]]的有关信息，这些信息是在源服务器或者介于客户端和源服务器之间的中间人上的。本方法允许客户端在没有对资源执行相关动作的情况下，就可以确定与资源有关的选项和（或者）要求，或者服务器的功能。
+OPTIONS 方法请求获得可用于目标资源的[[ruby:communication%20options][通信选项]]的有关信息，这些信息是在源服务器或者介于客户端和源服务器之间的中间人上的。本方法让客户端在没有对资源执行相关动作的情况下，就可以确定与资源有关的选项和（或者）要求，或者服务器的功能。
 
 #+BEGIN_QUOTE
 An OPTIONS request with an asterisk ("*") as the request-target ([[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][Section 5.3]] of [RFC7230]) applies to the server in general rather than to a specific resource. Since a server's communication options typically depend on the resource, the "*" request is only useful as a "ping" or "no-op" type of method; it does nothing beyond allowing the client to test the capabilities of the server. For example, this can be used to test a proxy for HTTP/1.1 conformance (or lack thereof).
 #+END_QUOTE
 
-如果要向服务器执行 OPTIONS 请求，一般是使用一个星号（"*"），而不是一个具体的资源，来作为请求目标（[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][【RFC7230】章节 5.3]]）。这是因为服务器的通信选项一般依赖于资源，"*" 请求仅作为方法的一种 "ping" 或者“空操作” 时才有用处，除了允许客户端来测试服务器的功能以外，它并没有做任何其他事情。例如，用它来测试一个代理是否遵循 HTTP/1.1 规范。
+如果要向服务器执行 OPTIONS 请求，一般是使用一个星号（"*"），而不是一个具体的资源，来作为请求目标（[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][【RFC7230】章节 5.3]]）。这是因为服务器的通信选项一般依赖于资源，"*" 请求仅作为方法的一种 "ping" 或者“空操作” 时才有用处，除了让客户端可以去测试服务器的功能以外，它并没有做任何其他事情。例如，用它来测试一个代理是否遵循 HTTP/1.1 规范。
 
 #+BEGIN_QUOTE
 If the request-target is not an asterisk, the OPTIONS request applies to the options that are available when communicating with the target resource.
@@ -1268,28 +1352,66 @@ Responses to the OPTIONS method are not cacheable.
 
 回应给 OPTIONS 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。
 
+#+BEGIN_QUOTE
+译注：来自 [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS][MDN]] 的总结：
+
+The HTTP OPTIONS method is used to describe the communication options for the target resource. The client can specify a URL for the OPTIONS method, or an asterisk (*) to refer to the entire server.
+
+- Request has body :: No
+- Successful response has body :: Yes
+- Safe :: Yes
+- Idempotent :: Yes
+- Cacheable :: No
+- Allowed in HTML forms :: No
+#+END_QUOTE
+
 *** 4.3.8. TRACE
 :PROPERTIES:
 :ID:       bdc9e3b4-bac3-46c5-9319-31f7f4d6469d
 :END:
 #+BEGIN_QUOTE
-The TRACE method requests a remote, application-level loop-back of the request message. The final recipient of the request *SHOULD* reflect the message received, excluding some fields described below, back to the client as the message body of a =200 (OK)= response with a =Content-Type= of "message/http" (Section 8.3.1 of [RFC7230]). The final recipient is either the origin server or the first server to receive a =Max-Forwards= value of zero (0) in the request (Section 5.1.2).
+The TRACE method requests a remote, application-level loop-back of the request message. The final recipient of the request *SHOULD* reflect the message received, excluding some fields described below, back to the client as the message body of a =200 (OK)= response with a =Content-Type= of "message/http" ([[id:44492A0E-8B7F-46EC-890D-317BC32E2228][Section 8.3.1]] of [RFC7230]). The final recipient is either the origin server or the first server to receive a =Max-Forwards= value of zero (0) in the request ([[id:4c0e6435-a276-48fb-8cb8-32b8ef5a2780][Section 5.1.2]]).
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A client *MUST NOT* generate header fields in a TRACE request containing sensitive data that might be disclosed by the response. For example, it would be foolish for a user agent to send stored user credentials [RFC7235] or cookies [RFC6265] in a TRACE request. The final recipient of the request *SHOULD* exclude any request header fields that are likely to contain sensitive data when that recipient generates the response body.
-#+END_QUOTE
+TRACE 方法请求一个远程的、应用层的请求报文[[ruby:loop-back][回路]]。请求链路中的[[ruby:final%20recipient][最终接收端]] *应当* 原样[[ruby:reflect][反映]]它所接收到的报文，排除掉下文所述的那些报头域，作为一个带有值为 "message/http"（[[id:44492A0E-8B7F-46EC-890D-317BC32E2228][【RFC7230】章节 8.3.1]]）的 =Content-Type= 的 =200 (OK)= 响应的报文正文，最后返回给客户端。最终接收端指的是源服务器，或者是在请求链路中第一个接收到 Max-Forwards 值为 0 的请求报文的服务器（[[id:4c0e6435-a276-48fb-8cb8-32b8ef5a2780][章节 5.1.2]]）。
 
 #+BEGIN_QUOTE
-TRACE allows the client to see what is being received at the other end of the request chain and use that data for testing or diagnostic information. The value of the =Via= header field (Section 5.7.1 of [RFC7230]) is of particular interest, since it acts as a trace of the request chain. Use of the =Max-Forwards= header field allows the client to limit the length of the request chain, which is useful for testing a chain of proxies forwarding messages in an infinite loop.
+A client *MUST NOT* generate header fields in a TRACE request containing sensitive data that might be disclosed by the response. For example, it would be foolish for a user agent to send stored user credentials [[[file:RFC7235.org][RFC7235]]] or cookies [[[https://tools.ietf.org/html/rfc6265][RFC6265]]] in a TRACE request. The final recipient of the request *SHOULD* exclude any request header fields that are likely to contain sensitive data when that recipient generates the response body.
 #+END_QUOTE
+
+客户端 *禁止* 在一个 TRACE 请求里生成以下这种报头域：包含有[[ruby:sensitive%20data][敏感数据]]的，并且这些敏感数据有可能会被响应[[ruby:disclosed][曝露]]出来的。例如，用户代理在一个 TRACE 请求里包含有存放在本地的[[ruby:user%20credentials][用户证书]]【[[file:RFC7235.org][RFC7235]]】或者 cookies【[[https://tools.ietf.org/html/rfc6265][RFC6265]]】，这种做法是非常愚蠢的。请求的[[ruby:final%20recipient][最终接收端]]在生成响应正文的时候，*应当* 排除掉任何有可能包含敏感数据的请求报头域。
+
+#+BEGIN_QUOTE
+TRACE allows the client to see what is being received at the other end of the request chain and use that data for testing or diagnostic information. The value of the =Via= header field ([[id:4a38d632-e412-4122-8ae5-0d58ab8f3d6a][Section 5.7.1]] of [RFC7230]) is of particular interest, since it acts as a trace of the request chain. Use of the =Max-Forwards= header field allows the client to limit the length of the request chain, which is useful for testing a chain of proxies forwarding messages in an infinite loop.
+#+END_QUOTE
+
+TRACE 让客户端能够观察到请求链路的另一端将会接收到什么数据，并且让客户端可以使用这些数据来测试或者诊断信息。在这些数据之中，=Via= 报头域（[[id:4a38d632-e412-4122-8ae5-0d58ab8f3d6a][【RFC7230】章节 5.7.1]]）的值是特别让人感兴趣的数据之一，这是因为它记录了请求链路的轨迹。使用 =Max-Forwards= 报头域可以让客户端对请求链路的长度进行限制，这对测试一条代理链路是否在无限循环转发报文是非常有用的。
 
 #+BEGIN_QUOTE
 A client *MUST NOT* send a message body in a TRACE request.
 #+END_QUOTE
 
+客户端 *禁止* 在一个 TRACE 请求里带有一个报文正文。
+
 #+BEGIN_QUOTE
 Responses to the TRACE method are not cacheable.
+#+END_QUOTE
+
+回应给 TRACE 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。
+
+#+BEGIN_QUOTE
+译注：来自 [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/TRACE][MDN]] 的总结：
+
+The HTTP TRACE method performs a message loop-back test along the path to the target resource, providing a useful debugging mechanism.
+
+The final recipient of the request should reflect the message received, excluding some fields described below, back to the client as the message body of a 200 (OK) response with a Content-Type of message/http. The final recipient is either the origin server or the first server to receive a Max-Forwards value of 0 in the request.
+
+- Request has body :: No
+- Successful response has body :: No
+- Safe :: No
+- Idempotent :: Yes
+- Cacheable :: No
+- Allowed in HTML forms :: No
 #+END_QUOTE
 
 * 5. 请求报头域 / Request Header Fields
