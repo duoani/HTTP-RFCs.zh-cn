@@ -910,7 +910,7 @@ Request methods can be defined as "cacheable" to indicate that responses to them
 The GET method requests transfer of a current selected representation for the target resource. GET is the primary mechanism of information retrieval and the focus of almost all performance optimizations. Hence, when people speak of retrieving some identifiable information via HTTP, they are generally referring to making a GET request.
 #+END_QUOTE
 
-GET 方法向目标资源请求（要求）传输一种[[ruby:current%20selected%20representation][当前选定的 representation]]。GET 是信息获取的主要途径，同时，它也是几乎所有[[ruby:performance%20optimizations][性能优化]]的重点。因此，当人们谈及经由 HTTP 来获取某些可标识的信息的时候，他们一般指的是发起一个 GET 请求。
+GET 方法请求获得目标资源的一种[[ruby:current%20selected%20representation][当前选定的 representation]]。GET 是信息获取的主要途径，同时，它也是几乎所有[[ruby:performance%20optimizations][性能优化]]的重点。因此，当人们谈及经由 HTTP 来获取某些可标识的信息的时候，他们一般指的是发起一个 GET 请求。
 
 #+BEGIN_QUOTE
 It is tempting to think of resource identifiers as remote file system pathnames and of representations as being a copy of the contents of such files. In fact, that is how many resources are implemented (see [[id:9195be98-bd4e-40ae-a5a0-6af920044f02][Section 9.1]] for related security considerations). However, there are no such limitations in practice. The HTTP interface for a resource is just as likely to be implemented as a tree of content objects, a programmatic view on various database records, or a gateway to other information systems. Even when the URI mapping mechanism is tied to a file system, an origin server might be configured to execute the files with the request as input and send the output as the representation rather than transfer the files directly. Regardless, only the origin server needs to know how each of its resource identifiers corresponds to an implementation and how each implementation manages to select and send a current representation of the target resource in a response to GET.
@@ -965,7 +965,7 @@ The POST method requests that the target resource process the representation enc
 - Appending data to a resource's existing representation(s).
 #+END_QUOTE
 
-POST 方法请求（要求）目标资源按照资源自身的具体语义来处理封装在请求报文里的 representation。例如，POST 是用于以下（或其他）功能。
+POST 方法请求目标资源按照资源自身的具体语义来处理封装在请求报文里的 representation。例如，POST 是用于以下（或其他）功能。
 
 - 为某个数据处理进程提供[[ruby:a%20block%20of%20data][数据块]]，例如某个 HTML 表单的域；
 - 发表一份报文到某个电子公告栏、新闻组、邮件列表、博客或者类似的文章组里；
@@ -1004,7 +1004,7 @@ If the result of processing a POST would be equivalent to a representation of an
 The PUT method requests that the state of the target resource be created or replaced with the state defined by the representation enclosed in the request message payload. A successful PUT of a given representation would suggest that a subsequent GET on that same target resource will result in an equivalent representation being sent in a 200 (OK) response. However, there is no guarantee that such a state change will be observable, since the target resource might be acted upon by other user agents in parallel, or might be subject to dynamic processing by the origin server, before any subsequent GET is received. A successful response only implies that the user agent's intent was achieved at the time of its processing by the origin server.
 #+END_QUOTE
 
-PUT 方法请求（要求）使用封装在请求报文有效载荷内的 representation 所定义的状态，来[[ruby:create][新建]]或[[ruby:replace][替换]]目标资源的状态。如果向目标资源[[ruby:successful%20PUT%20request][成功 PUT]] 了一个给定的 representation，那么我们可以认为，对相同目标资源的后续 GET 请求将会被回应一个 =200 (OK)= 响应，同时响应会携带一个（与之前 PUT 的 representation）等价的 representation。然而，不能保证这种状态的改变能够被客户端所观察到，这是因为在源服务器接收到任何来自该客户端的后续的 GET 请求之前，目标资源就可能被按照其他用户代理并行地执行动作，也有可能受到源服务器的动态处理。对 PUT 请求的[[ruby:successful%20response][成功响应]]，仅仅意味着在源服务器处理该请求的时候，用户代理达成了它的意图。
+PUT 方法请求源服务器使用封装在请求报文有效载荷内的 representation 所定义的状态，来[[ruby:create][新建]]或[[ruby:replace][替换]]目标资源的状态。如果向目标资源[[ruby:successful%20PUT%20request][成功 PUT]] 了一个给定的 representation，那么我们可以认为，对相同目标资源的后续 GET 请求将会被回应一个 =200 (OK)= 响应，同时响应会携带一个（与之前 PUT 的 representation）等价的 representation。然而，不能保证这种状态的改变能够被客户端所观察到，这是因为在源服务器接收到任何来自该客户端的后续的 GET 请求之前，目标资源就可能被按照其他用户代理并行地执行动作，也有可能受到源服务器的动态处理。对 PUT 请求的[[ruby:successful%20response][成功响应]]，仅仅意味着在源服务器处理该请求的时候，用户代理达成了它的意图。
 
 #+BEGIN_QUOTE
 If the target resource does not have a current representation and the PUT successfully creates one, then the origin server *MUST* inform the user agent by sending a =201 (Created)= response. If the target resource does have a current representation and that representation is successfully modified in accordance with the state of the enclosed representation, then the origin server *MUST* send either a =200 (OK)= or a =204 (No Content)= response to indicate successful completion of the request.
@@ -1097,13 +1097,13 @@ Responses to the PUT method are not cacheable. If a successful PUT request passe
 The DELETE method requests that the origin server remove the association between the target resource and its current functionality. In effect, this method is similar to the =rm= command in UNIX: it expresses a deletion operation on the URI mapping of the origin server rather than an expectation that the previously associated information be deleted.
 #+END_QUOTE
 
-DELETE 方法请求（要求）源服务器移除[[ruby:target%20resource][目标资源]]与它[[ruby:current%20functionality][当前的功能]]之间的关联。实际上，该方法与 UNIX 中的 =rm= 命令非常类似，DELETE 表达了一种作用在映射到源服务器的 URI 之上的删除操作，而不是表达一种删除之前相关联的信息的期望。
+DELETE 方法请求源服务器移除[[ruby:target%20resource][目标资源]]与它[[ruby:current%20functionality][当前的功能]]之间的关联。实际上，该方法与 UNIX 中的 =rm= 命令非常类似，DELETE 表达了一种作用在映射到源服务器的 URI 之上的删除操作，而不是表达一种删除之前相关联的信息的期望。
 
 #+BEGIN_QUOTE
 If the target resource has one or more current representations, they might or might not be destroyed by the origin server, and the associated storage might or might not be reclaimed, depending entirely on the nature of the resource and its implementation by the origin server (which are beyond the scope of this specification). Likewise, other implementation aspects of a resource might need to be deactivated or archived as a result of a DELETE, such as database or gateway connections. In general, it is assumed that the origin server will only allow DELETE on resources for which it has a prescribed mechanism for accomplishing the deletion.
 #+END_QUOTE
 
-如果目标资源有一个或多个 current representations，它们可能会也可能不会被源服务器所销毁，以及它们所关联的存储可能会也可能不会被回收，这完全取决于资源的性质以及服务器对资源的[[ruby:implementation][实现]]（已经超出了本规范的范畴）。同样，可能需要去[[ruby:deactivate][失效]]或[[ruby:archive][归档]]资源实现的其他方面，来作为一个 DELETE 操作的结果，比如数据库或者网关连接。总之，我们假设源服务器只会允许对这些资源进行 DELETE：具有某种规定机制来完成删除操作的资源。
+如果目标资源有一个或多个 current representations，它们可能会也可能不会被源服务器所销毁，另外，它们所关联的存储可能会也可能不会被回收，这完全取决于资源的性质以及服务器对资源的[[ruby:implementation][实现]]（已经超出了本规范的范畴）。同样，还可能需要去[[ruby:deactivate][失效]]或[[ruby:archive][归档]]资源实现的其他方面，来作为一个 DELETE 操作的结果，比如数据库或者网关连接。总之，我们假设源服务器只会允许对这些资源进行 DELETE：具有某种规定机制来完成删除操作的资源。
 
 #+BEGIN_QUOTE
 Relatively few resources allow the DELETE method — its primary use is for remote authoring environments, where the user has some direction regarding its effect. For example, a resource that was previously created using a PUT request, or identified via the =Location= header field after a =201 (Created)= response to a POST request, might allow a corresponding DELETE request to undo those actions. Similarly, custom user agent implementations that implement an authoring function, such as revision control clients using HTTP for remote operations, might use DELETE based on an assumption that the server's URI space has been crafted to correspond to a version repository.
@@ -1141,7 +1141,11 @@ Responses to the DELETE method are not cacheable. If a DELETE request passes thr
 The CONNECT method requests that the recipient establish a tunnel to the destination origin server identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the tunnel is closed. Tunnels are commonly used to create an end-to-end virtual connection, through one or more proxies, which can then be secured using TLS (Transport Layer Security, [[[https://tools.ietf.org/html/rfc5246][RFC5246]]]).
 #+END_QUOTE
 
-CONNECT 方法请求（要求）接收端与[[ruby:request-target][请求目标]]所标识的源服务器[[ruby:establish][建立]]一个[[ruby:tunnel][隧道]]，并且如果建立成功以后，将接收端的行为限制为双向[[ruby:blind%20forwarding][盲目转发]]数据包，直到隧道被关闭为止。隧道常常用于创建一种穿越一个或多个[[ruby:proxies][代理]]的[[ruby:end-to-end][端到端]]的[[ruby:virtual%20connection][虚拟连接]]，然后能够安全使用 TLS（Transport Layer Security，【[[https://tools.ietf.org/html/rfc5246][RFC5246]]】）。
+CONNECT 方法请求让对方（接收端）与[[ruby:request-target][请求目标]]所标识的源服务器[[ruby:establish][建立]]一个[[ruby:tunnel][隧道]]，并且如果建立成功以后，将接收端的行为限制为双向[[ruby:blind%20forwarding][盲目转发]]数据包，直到隧道被关闭为止。隧道常常用于创建一种穿越一个或多个[[ruby:proxies][代理]]的[[ruby:end-to-end][端到端]]的[[ruby:virtual%20connection][虚拟连接]]，然后能够安全使用 TLS（Transport Layer Security，【[[https://tools.ietf.org/html/rfc5246][RFC5246]]】）。
+
+#+BEGIN_QUOTE
+译注：需要注意的是，并不是 CONNECT 请求的发送端与源服务器建立隧道，而是 CONNECT 接收端与源服务器建立隧道，这个要清楚。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 CONNECT is intended only for use in requests to a proxy. An origin server that receives a CONNECT request for itself *MAY* respond with a =2xx (Successful)= status code to indicate that a connection is established. However, most origin servers do not implement CONNECT.
@@ -1198,7 +1202,7 @@ Proxy-Authorization: basic aGVsbG86d29ybGQ=
 There are significant risks in establishing a tunnel to arbitrary servers, particularly when the destination is a well-known or reserved TCP port that is not intended for Web traffic. For example, a CONNECT to a request-target of "example.com:25" would suggest that the proxy connect to the reserved port for SMTP traffic; if allowed, that could trick the proxy into relaying spam email. Proxies that support CONNECT *SHOULD* restrict its use to a limited set of known ports or a configurable whitelist of safe request targets.
 #+END_QUOTE
 
-向任意的服务器建立隧道会有严重的风险，特别是当隧道的终点是一个不作为[[ruby:Web%20traffic][网站流量]]的 TCP [[ruby:well-known%20port][知名端口]]或者[[ruby:reserved%20port][保留端口]]的时候。例如，请求目标为 "example.com:25" 的 CONNECT 请求会建议代理连接到用于 SMTP 流量的保留端口上，如果允许这样做，就会欺骗代理去[[ruby:relaying][中继转发]]垃圾邮件。因此，支持 CONNECT 的代理 *应当* 将 CONNECT 的使用限制到一个已知的有限的端口集合上，或者一个安全的可配置的请求目标白名单上。
+向任意的服务器建立隧道会有严重的风险，特别是当隧道的终点是一个不作为[[ruby:Web%20traffic][网站流量]]的 TCP [[ruby:well-known%20port][知名端口]]或者[[ruby:reserved%20port][保留端口]]的时候。例如，请求目标为 "example.com:25" 的 CONNECT 请求会建议代理连接到用于 SMTP 流量的保留端口上，如果允许这样做，就会欺骗代理去[[ruby:relaying][中转]]垃圾邮件。因此，支持 CONNECT 的代理 *应当* 将 CONNECT 的使用限制到一个已知的有限的端口集合上，或者一个安全的可配置的请求目标白名单上。
 
 #+BEGIN_QUOTE
 A server *MUST NOT* send any =Transfer-Encoding= or =Content-Length= header fields in a =2xx (Successful)= response to CONNECT. A client *MUST* ignore any =Content-Length= or =Transfer-Encoding= header fields received in a successful response to CONNECT.
@@ -1226,33 +1230,43 @@ Responses to the CONNECT method are not cacheable.
 The OPTIONS method requests information about the communication options available for the target resource, at either the origin server or an intervening intermediary. This method allows a client to determine the options and/or requirements associated with a resource, or the capabilities of a server, without implying a resource action.
 #+END_QUOTE
 
-OPTIONS 方法请求（要求）关于可用于目标资源的[[ruby:communication%20options][通信选项]]的信息，这些通信选项信息是在源服务器或者介于客户端和源服务器之间的中间人上。本方法允许客户端在没有对资源执行相关动作的情况下，就可以确定与资源相关的选项和（或者）要求，或者服务器的功能。
+OPTIONS 方法请求获得可用于目标资源的[[ruby:communication%20options][通信选项]]的有关信息，这些信息是在源服务器或者介于客户端和源服务器之间的中间人上的。本方法允许客户端在没有对资源执行相关动作的情况下，就可以确定与资源有关的选项和（或者）要求，或者服务器的功能。
 
 #+BEGIN_QUOTE
 An OPTIONS request with an asterisk ("*") as the request-target ([[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][Section 5.3]] of [RFC7230]) applies to the server in general rather than to a specific resource. Since a server's communication options typically depend on the resource, the "*" request is only useful as a "ping" or "no-op" type of method; it does nothing beyond allowing the client to test the capabilities of the server. For example, this can be used to test a proxy for HTTP/1.1 conformance (or lack thereof).
 #+END_QUOTE
 
-如果要向服务器执行 OPTIONS 请求，一般是使用一个星号（"*"），而不是一个具体的资源，来作为请求目标（[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][【RFC7230】章节 5.3]]）。这是因为服务器的通信选项一般依赖于资源，"*" 请求是仅作为 "ping" 或者“空操作”
+如果要向服务器执行 OPTIONS 请求，一般是使用一个星号（"*"），而不是一个具体的资源，来作为请求目标（[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][【RFC7230】章节 5.3]]）。这是因为服务器的通信选项一般依赖于资源，"*" 请求仅作为方法的一种 "ping" 或者“空操作” 时才有用处，除了允许客户端来测试服务器的功能以外，它并没有做任何其他事情。例如，用它来测试一个代理是否遵循 HTTP/1.1 规范。
 
 #+BEGIN_QUOTE
 If the request-target is not an asterisk, the OPTIONS request applies to the options that are available when communicating with the target resource.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A server generating a successful response to OPTIONS *SHOULD* send any header fields that might indicate optional features implemented by the server and applicable to the target resource (e.g., Allow), including potential extensions not defined by this specification. The response payload, if any, might also describe the communication options in a machine or human-readable representation. A standard format for such a representation is not defined by this specification, but might be defined by future extensions to HTTP. A server MUST generate a Content-Length field with a value of "0" if no payload body is to be sent in the response.
-#+END_QUOTE
+如果请求目标不是使用[[ruby:asterisk-form][星号形式]]，那么，OPTIONS 请求所应用到的选项是可用在与目标资源通信的。
 
 #+BEGIN_QUOTE
-A client *MAY* send a Max-Forwards header field in an OPTIONS request to target a specific recipient in the request chain (see Section 5.1.2). A proxy MUST NOT generate a Max-Forwards header field while forwarding a request unless that request was received with a Max-Forwards field.
+A server generating a successful response to OPTIONS *SHOULD* send any header fields that might indicate optional features implemented by the server and applicable to the target resource (e.g., =Allow=), including potential extensions not defined by this specification. The response payload, if any, might also describe the communication options in a machine or human-readable representation. A standard format for such a representation is not defined by this specification, but might be defined by future extensions to HTTP. A server *MUST* generate a =Content-Length= field with a value of "0" if no payload body is to be sent in the response.
 #+END_QUOTE
 
+服务器在向 OPTIONS 生成一个成功响应的时候，*应当* 带有所有可能指明以下信息的报头域：由服务器所实现的可选功能，并且这些可选功能是可作用于目标资源的（例如，=Allow=）。这些报头域还应当包括那些未定义在本规范里的扩展报头域，如果有的话。如果响应里包含有效载荷，那么还可能描述了机器的通信选项，或者供人类阅读的 representation 的通信选项。对于这样一种 representation，本规范并没有定义一种标准格式，但可能会在将来的 HTTP 扩展中进行定义。服务器 *禁止* 生成带有一个 "0" 值的 =Content-Length= 报头域，如果该响应没有包含有效载荷的话。
+
 #+BEGIN_QUOTE
-A client that generates an OPTIONS request containing a payload body *MUST* send a valid Content-Type header field describing the representation media type. Although this specification does not define any use for such a payload, future extensions to HTTP might use the OPTIONS body to make more detailed queries about the target resource.
+A client *MAY* send a =Max-Forwards= header field in an OPTIONS request to target a specific recipient in the request chain (see [[id:4c0e6435-a276-48fb-8cb8-32b8ef5a2780][Section 5.1.2]]). A proxy *MUST NOT* generate a =Max-Forwards= header field while forwarding a request unless that request was received with a =Max-Forwards= field.
 #+END_QUOTE
+
+客户端 *可以* 在一个 OPTIONS 请求中带有一个 =Max-Forwards= 报头域，以便在请求链路中对一个具体的接收端进行定位（见[[id:4c0e6435-a276-48fb-8cb8-32b8ef5a2780][章节 5.1.2]]）。代理 *禁止* 在转发请求的时候生成一个 =Max-Forwards= 报头域，除非该请求本身已带有一个 =Max-Forwards= 报头域。
+
+#+BEGIN_QUOTE
+A client that generates an OPTIONS request containing a payload body *MUST* send a valid =Content-Type= header field describing the representation media type. Although this specification does not define any use for such a payload, future extensions to HTTP might use the OPTIONS body to make more detailed queries about the target resource.
+#+END_QUOTE
+
+客户端生成一个 OPTIONS 请求的时候，如果该请求包含一个有效载荷，那么，该请求 *必须* 带有一个有效的 =Content-Type= 报头域来描述 representation 的媒体类型。虽然本规范并没有对这样一种有效载荷的用途进行过任何定义，但将来的 HTTP 扩展中可能会使用 OPTIONS 请求的报文正文来携带目标资源有关的更细致的查询信息。
 
 #+BEGIN_QUOTE
 Responses to the OPTIONS method are not cacheable.
 #+END_QUOTE
+
+回应给 OPTIONS 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。
 
 *** 4.3.8. TRACE
 :PROPERTIES:
@@ -1285,6 +1299,9 @@ Responses to the TRACE method are not cacheable.
 ** 5.1. Controls
 *** 5.1.1. Expect
 *** 5.1.2. Max-Forwards
+:PROPERTIES:
+:ID:       4c0e6435-a276-48fb-8cb8-32b8ef5a2780
+:END:
 ** 5.2. Conditionals
 :PROPERTIES:
 :ID:       b21923d5-a8f9-4560-8592-92fd9a098bf4
