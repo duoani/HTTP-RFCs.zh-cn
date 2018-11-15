@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-14 Wed 19:13 -->
+<!-- 2018-11-15 Thu 19:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -449,14 +449,14 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#org478df38">5. 请求报头域 / Request Header Fields</a>
 <ul>
-<li><a href="#orgb54175d">5.1. Controls</a>
+<li><a href="#org8542bda">5.1. 控制 / Controls</a>
 <ul>
 <li><a href="#org83b8384">5.1.1. Expect</a></li>
 <li><a href="#org57067e1">5.1.2. Max-Forwards</a></li>
 </ul>
 </li>
-<li><a href="#org6511c97">5.2. Conditionals</a></li>
-<li><a href="#orgd476747">5.3. Content Negotiation</a>
+<li><a href="#org8c0da01">5.2. 条件 / Conditionals</a></li>
+<li><a href="#org07183ec">5.3. 内容协商 / Content Negotiation</a>
 <ul>
 <li><a href="#org6e3f7bd">5.3.1. Quality Values</a></li>
 <li><a href="#orgd78f0e9">5.3.2. Accept</a></li>
@@ -1391,7 +1391,7 @@ A language tag is a sequence of one or more case-insensitive subtags, each separ
 </blockquote>
 
 <p>
-一个<ruby>语言标签<rt>language tag</rt></ruby>是由一个或多个不区分大小写的子标签组成的，每个子标签之间使用连接符（"-"，"%x2D"）分隔。大多数情况下，一个语言标签包含一个标识一种相关语系的<ruby>主要语言子标签<rt>primary language subtag</rt></ruby>（例如，"en" 代表<ruby>英语<rt>English</rt></ruby>），另外还可以选择性地在其后面附加一连串的子标签来优化或缩小语言范围（例如，"en-CA" 代表一种<ruby>加拿大<rt>Canada</rt></ruby>英语）。语言标签里不允许存在空格。语言标签的几个例子如下：
+一个<ruby>语言标签<rt>language tag</rt></ruby>是由一个或多个不区分大小写的子标签组成的，每个子标签之间使用连接符（"-"，"%x2D"）分隔。大多数情况下，一个语言标签包含一个标识了某种关联语系的<ruby>主要语言子标签<rt>primary language subtag</rt></ruby>（例如，"en" 代表<ruby>英语<rt>English</rt></ruby>），另外还可以选择性地在其后面附加一连串的子标签来优化或缩小语言范围（例如，"en-CA" 代表一种<ruby>加拿大<rt>Canada</rt></ruby>英语）。语言标签里不允许存在空格。语言标签的几个例子如下：
 </p>
 
 <pre class="example">
@@ -1435,7 +1435,7 @@ Language tags are defined in <a href="#org2f3fd1f">Section 3.1.3.1</a>. The prim
 </blockquote>
 
 <p>
-<ruby>语言标签<rt>language tag</rt></ruby>定义在<a href="#org2f3fd1f">章节 3.1.3.1</a> 里。<code>Content-Language</code> 的主要目的是允许一个用户依据用户自身的首选语言来标识和区分 representations。所以，如果只想将<ruby>懂丹麦语<rt>Danish-literate</rt></ruby>的人作为内容的目标受众，那么报头域可以这样设置：
+<ruby>语言标签<rt>language tag</rt></ruby>定义在<a href="#org2f3fd1f">章节 3.1.3.1</a> 里。<code>Content-Language</code> 的主要目的是让用户能够依据自身的首选语言来标识和区分 representations。所以，如果只想将<ruby>懂丹麦语<rt>Danish-literate</rt></ruby>的人作为内容的目标受众，那么报头域可以这样设置：
 </p>
 
 <pre class="example">
@@ -1585,7 +1585,7 @@ If <code>Content-Location</code> is included in a <code>2xx (Successful)</code> 
 </blockquote>
 
 <p>
-如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应报文里，且它的值指向于（在转换为<ruby>绝对形式<rt>absolute form</rt></ruby>之后）一个与有效请求 URI 相同的 URI，那么，接收端 <b>可以</b> 将该有效载荷认为是一个在特定时间里的资源的 current representation，所述特定时间是由<ruby>报文始发日期<rt>message origination date</rt></ruby>所指定的时间。对于 GET（<a href="#org479e86d">章节 4.3.1</a>）或者 HEAD（<a href="#org607980d">章节 4.3.2</a>）请求来说，这与在服务器没有提供 <code>Content-Location</code> 报头域的情况下的默认语义相一致。对于类似 PUT（<a href="#org2e14fb1">章节 4.3.4</a>）或者 POST（<a href="#org24c5a01">章节 4.3.3</a>）这些会<ruby>改变状态<rt>state-changing</rt></ruby>的请求来说，这意味着服务器的响应包含了该资源的新的 representation，由此与那些只报告动作方面的信息（例如，“<ruby>它生效了！<rt>It worked!</rt></ruby>”）的 representations 作区分。
+如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应报文里，且它的值指向于（在转换为<ruby>绝对形式<rt>absolute form</rt></ruby>之后）一个与有效请求 URI 相同的 URI，那么，接收端 <b>可以</b> 将该有效载荷认为是一个在特定时间里的资源的 current representation，所述特定时间是由<ruby>报文始发日期<rt>message origination date</rt></ruby>所指定的时间。对于 GET（<a href="#org479e86d">章节 4.3.1</a>）或者 HEAD（<a href="#org607980d">章节 4.3.2</a>）请求来说，这与在服务器没有提供 <code>Content-Location</code> 报头域的情况下的默认语义相一致。对于类似 PUT（<a href="#org2e14fb1">章节 4.3.4</a>）或者 POST（<a href="#org24c5a01">章节 4.3.3</a>）这些会<ruby>改变状态<rt>state-changing</rt></ruby>的请求来说，这意味着服务器的响应包含了该资源的新的 representation，由此与那些只报告动作方面的信息（例如，“<ruby>它生效了！<rt>It worked!</rt></ruby>”）的 representations 作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
 </p>
 
 <blockquote>
@@ -1604,7 +1604,7 @@ If <code>Content-Location</code> is included in a <code>2xx (Successful)</code> 
 </p>
 <ul class="org-ul">
 <li>对于回应给 GET 或 HEAD 请求的一个响应，它表明了<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 指向到一个服从<ruby>内容协商<rt>content negotiation</rt></ruby>的资源，并且针对<ruby>已选定的 representation<rt>selective representation</rt></ruby>  来说，<code>Content-Location</code> 的域值是一个更加具体的标识符。</li>
-<li>对于回应给<ruby>状态改变的请求方法<rt>state-changing method</rt></ruby>的一个 <code>201 (Created)</code> 响应，如果 <code>Content-Location</code> 的域值与 <code>Location</code> 的域值相同，那么，这表明这个有效载荷是新近被创建的资源的<ruby>当前 representation<rt>current representation</rt></ruby>。</li>
+<li>对于回应给<ruby>会改变资源状态的请求方法<rt>state-changing method</rt></ruby>的一个 <code>201 (Created)</code> 响应，如果 <code>Content-Location</code> 的域值与 <code>Location</code> 的域值相同，那么，这表明这个有效载荷是新近被创建的资源的<ruby>当前 representation<rt>current representation</rt></ruby>。</li>
 <li>否则，这个 <code>Content-Location</code> 表明了这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对 representation 进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 <code>200 (OK)</code> 响应的有效载荷，<code>Content-Location</code> 的域值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。</li>
 </ul>
 
@@ -1944,12 +1944,12 @@ The request method token is the primary source of request semantics; it indicate
 
 <blockquote>
 <p>
-The request method's semantics might be further specialized by the semantics of some header fields when present in a request (<a href="#org478df38">Section 5</a>) if those additional semantics do not conflict with the method. For example, a client can send conditional request header fields (<a href="#org6511c97">Section 5.2</a>) to make the requested action conditional on the current state of the target resource ([<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>]).
+The request method's semantics might be further specialized by the semantics of some header fields when present in a request (<a href="#org478df38">Section 5</a>) if those additional semantics do not conflict with the method. For example, a client can send conditional request header fields (<a href="#org8c0da01">Section 5.2</a>) to make the requested action conditional on the current state of the target resource ([<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>]).
 </p>
 </blockquote>
 
 <p>
-请求方法的语义可能由于某些请求报头域（<a href="#org478df38">章节 5</a>）的出现而被<ruby>进一步深化<rt>further specialized</rt></ruby>，如果这些报头域的语义与方法的语义并不冲突的话。例如，客户端能够发送<ruby>条件请求报头域<rt>conditional request header fields</rt></ruby>（<a href="#org6511c97">章节 5.2</a>）以使对目标资源的当前状态的请求动作<ruby>条件化<rt>conditional</rt></ruby>（【<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>】）。
+请求方法的语义可能由于某些请求报头域（<a href="#org478df38">章节 5</a>）的出现而被<ruby>进一步深化<rt>further specialized</rt></ruby>，如果这些报头域的语义与方法的语义并不冲突的话。例如，客户端能够发送<ruby>条件请求报头域<rt>conditional request header fields</rt></ruby>（<a href="#org8c0da01">章节 5.2</a>）以使对目标资源的当前状态的请求动作<ruby>条件化<rt>conditional</rt></ruby>（【<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>】）。
 </p>
 
 <div class="org-src-container">
@@ -2131,7 +2131,7 @@ The purpose of distinguishing between safe and unsafe methods is to allow automa
 </blockquote>
 
 <p>
-之所有要区分方法是否安全，是为了放心开启<ruby>自动检索程序<rt>automated retrieval processes</rt></ruby>（<ruby>爬虫<rt>spider</rt></ruby>）和<ruby>缓存性能优化<rt>cache performance optimization</rt></ruby>（<ruby>预取<rt>pre-fetching</rt></ruby>）而不需要担心引起问题。再者，它允许用户代理，在处理可能不受信任的内容的时候，对非安全方法的自动使用施加适当的约束。
+之所有要区分方法是否安全，是为了可以放心地开启<ruby>自动检索程序<rt>automated retrieval processes</rt></ruby>（<ruby>爬虫<rt>spider</rt></ruby>）和<ruby>缓存性能优化<rt>cache performance optimization</rt></ruby>（<ruby>预取<rt>pre-fetching</rt></ruby>）而不需要担心引起问题。再者，它让用户代理在处理可能不受信任的内容的时候，能够对非安全方法的自动使用实施适当的约束。
 </p>
 
 <blockquote>
@@ -2174,6 +2174,12 @@ A request method is considered "idempotent" if the intended effect on the server
 <p>
 当执行多次相同的请求，与单次这样的请求，对服务器的预期效果是一样的，那么，该请求方法被认为是“<ruby>幂等的<rt>idempotent</rt></ruby>”。本规范所定义的请求方法中，幂等方法有：PUT、DELETE 以及所有<a href="#org9cf22b2">安全请求方法</a>。
 </p>
+
+<blockquote>
+<p>
+译注：也就是说，幂等的方法共有GET、HEAD、PUT、DELETE、OPTIONS 和 TRACE。
+</p>
+</blockquote>
 
 <blockquote>
 <p>
@@ -2227,7 +2233,7 @@ The GET method requests transfer of a current selected representation for the ta
 </blockquote>
 
 <p>
-GET 方法向目标资源请求（要求）传输一种<ruby>当前选定的 representation<rt>current selected representation</rt></ruby>。GET 是信息获取的主要途径，同时，它也是几乎所有<ruby>性能优化<rt>performance optimizations</rt></ruby>的重点。因此，当人们谈及经由 HTTP 来获取某些可标识的信息的时候，他们一般指的是发起一个 GET 请求。
+GET 方法请求获得目标资源的一种<ruby>当前选定的 representation<rt>current selected representation</rt></ruby>。GET 是信息获取的主要途径，同时，它也是几乎所有<ruby>性能优化<rt>performance optimizations</rt></ruby>的重点。因此，当人们谈及经由 HTTP 来获取某些可标识的信息的时候，他们一般指的是发起一个 GET 请求。
 </p>
 
 <blockquote>
@@ -2269,6 +2275,21 @@ The response to a GET request is cacheable; a cache <b>MAY</b> use it to satisfy
 <p>
 回应给 GET 请求的响应是<ruby>可缓存的<rt>cacheable</rt></ruby>，<ruby>缓存<rt>cache</rt></ruby> <b>可以</b> 使用它来满足随后的 GET 和 HEAD 请求，除非 <code>Cache-Control</code> 报头域另有指定（<a href="https://tools.ietf.org/html/rfc7234#section-5.2">【RFC7234】章节 5.2</a>）。
 </p>
+
+<blockquote>
+<p>
+译注：来自 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET">MDN</a> 的总结：
+The HTTP GET method requests a representation of the specified resource. Requests using GET should only retrieve data.
+</p>
+<dl class="org-dl">
+<dt>Request has body</dt><dd>No</dd>
+<dt>Successful response has body</dt><dd>Yes</dd>
+<dt>Safe</dt><dd>Yes</dd>
+<dt>Idempotent</dt><dd>Yes</dd>
+<dt>Cacheable</dt><dd>Yes</dd>
+<dt>Allowed in HTML forms</dt><dd>Yes</dd>
+</dl>
+</blockquote>
 </div>
 </div>
 
@@ -2298,6 +2319,21 @@ The response to a HEAD request is cacheable; a cache <b>MAY</b> use it to satisf
 <p>
 回应给 HEAD 请求的响应是<ruby>可缓存的<rt>cacheable</rt></ruby>，<ruby>缓存<rt>cache</rt></ruby> <b>可以</b> 使用它来满足随后的 HEAD 请求，除非 <code>Cache-Control</code> 报头域另有指定（<a href="https://tools.ietf.org/html/rfc7234#section-5.2">【RFC7234】章节 5.2</a>）。HEAD 响应还可能影响到之前已缓存的 GET 响应，见<a href="https://tools.ietf.org/html/rfc7234#section-4.3.5">【RFC7234】章节 4.3.5</a>。
 </p>
+
+<blockquote>
+<p>
+译注：来自 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD">MDN</a> 的总结：
+</p>
+
+<dl class="org-dl">
+<dt>Request has body</dt><dd>No</dd>
+<dt>Successful response has body</dt><dd>No</dd>
+<dt>Safe</dt><dd>Yes</dd>
+<dt>Idempotent</dt><dd>Yes</dd>
+<dt>Cacheable</dt><dd>Yes</dd>
+<dt>Allowed in HTML forms</dt><dd>No</dd>
+</dl>
+</blockquote>
 </div>
 </div>
 
@@ -2318,7 +2354,7 @@ The POST method requests that the target resource process the representation enc
 </blockquote>
 
 <p>
-POST 方法请求（要求）目标资源按照资源自身的具体语义来处理封装在请求报文里的 representation。例如，POST 是用于以下（或其他）功能。
+POST 方法请求目标资源按照资源自身的具体语义来处理封装在请求报文里的 representation。例如，POST 是用于以下（或其他）功能。
 </p>
 
 <ul class="org-ul">
@@ -2367,6 +2403,25 @@ If the result of processing a POST would be equivalent to a representation of an
 <p>
 如果处理某个 POST 请求的结果等价于某个现有资源的某种 representation 的话，源服务器 <b>可以</b> 发送一个 <code>303 (See Other)</code> 响应到用户代理，同时，响应里带有 <code>Location</code> 报头域，其值为该现有资源的标识符，让用户代理进行重定向。这样做的好处是可以向用户代理提供一种资源标识符，以及可以通过一种更适合缓存共享的方法来传输 representation，但坏处是可能需要一个额外的请求，如果用户代理还没有缓存过该 representation 的话。
 </p>
+
+<blockquote>
+<p>
+译注：来自 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST">MDN</a> 的总结：
+</p>
+
+<p>
+The HTTP POST method sends data to the server. The type of the body of the request is indicated by the Content-Type header.
+</p>
+
+<dl class="org-dl">
+<dt>Request has body</dt><dd>Yes</dd>
+<dt>Successful response has body</dt><dd>Yes</dd>
+<dt>Safe</dt><dd>No</dd>
+<dt>Idempotent</dt><dd>No</dd>
+<dt>Cacheable</dt><dd>Only if freshness information is included</dd>
+<dt>Allowed in HTML forms</dt><dd>Yes</dd>
+</dl>
+</blockquote>
 </div>
 </div>
 
@@ -2380,7 +2435,7 @@ The PUT method requests that the state of the target resource be created or repl
 </blockquote>
 
 <p>
-PUT 方法请求（要求）使用封装在请求报文有效载荷内的 representation 所定义的状态，来<ruby>新建<rt>create</rt></ruby>或<ruby>替换<rt>replace</rt></ruby>目标资源的状态。如果向目标资源<ruby>成功 PUT<rt>successful PUT request</rt></ruby> 了一个给定的 representation，那么我们可以认为，对相同目标资源的后续 GET 请求将会被回应一个 <code>200 (OK)</code> 响应，同时响应会携带一个（与之前 PUT 的 representation）等价的 representation。然而，不能保证这种状态的改变能够被客户端所观察到，这是因为在源服务器接收到任何来自该客户端的后续的 GET 请求之前，目标资源就可能被按照其他用户代理并行地执行动作，也有可能受到源服务器的动态处理。对 PUT 请求的<ruby>成功响应<rt>successful response</rt></ruby>，仅仅意味着在源服务器处理该请求的时候，用户代理达成了它的意图。
+PUT 方法请求源服务器使用封装在请求报文有效载荷内的 representation 所定义的状态，来<ruby>新建<rt>create</rt></ruby>或<ruby>替换<rt>replace</rt></ruby>目标资源的状态。如果向目标资源<ruby>成功 PUT<rt>successful PUT request</rt></ruby> 了一个给定的 representation，那么我们可以认为，对相同目标资源的后续 GET 请求将会被回应一个 <code>200 (OK)</code> 响应，同时响应会携带一个（与之前 PUT 的 representation）等价的 representation。然而，不能保证这种状态的改变能够被客户端所观察到，这是因为在源服务器接收到任何来自该客户端的后续的 GET 请求之前，目标资源就可能被按照其他用户代理并行地执行动作，也有可能受到源服务器的动态处理。对 PUT 请求的<ruby>成功响应<rt>successful response</rt></ruby>，仅仅意味着在源服务器处理该请求的时候，用户代理达成了它的意图。
 </p>
 
 <blockquote>
@@ -2416,7 +2471,7 @@ An origin server <b>SHOULD</b> verify that the PUT representation is consistent 
 </blockquote>
 
 <p>
-源服务器 <b>应当</b> 校验 PUT 的 representation 是否符合服务器对目标资源的任何<ruby>约束<rt>constraints</rt></ruby>，确保它们不能或不会被 PUT 所改变。当源服务器使用 URI 相关的内部配置信息来对回应给 GET 的响应的 representation 的元数据设置值的时候，这种校验是非常重要的。当一个 PUT 请求内的 representation 不符合<ruby>目标资源<rt>target resource</rt></ruby>的约束时，源服务器 <b>应当</b> 要不<ruby>转换<rt>transform</rt></ruby>这个 representation 或者改变资源的配置以使其符合约束条件；要不回应一种恰当的错误报文，包含足够的信息来解释为什么该 representation 并不适合。建议使用 <code>409 (Conflict)</code> 或者 <code>415 (Unsupported Media Type)</code> 状态码，而对于后者（<code>415 (Unsupported Media Type)</code>），带有 <code>Content-Type</code> 报头域以指定具体的约束类型。
+源服务器 <b>应当</b> 校验 PUT 的 representation 是否符合服务器对目标资源的任何<ruby>约束<rt>constraints</rt></ruby>，确保它们不能或不会被 PUT 所改变。当源服务器使用与 URI 相关联的内部配置信息来对回应给 GET 的响应的 representation 的元数据设置值的时候，这种校验是非常重要的。当一个 PUT 请求内的 representation 不符合<ruby>目标资源<rt>target resource</rt></ruby>的约束时，源服务器 <b>应当</b> 要不<ruby>转换<rt>transform</rt></ruby>这个 representation 或者改变资源的配置以使其符合约束条件；要不回应一种恰当的错误报文，包含足够的信息来解释为什么该 representation 并不适合。建议使用 <code>409 (Conflict)</code> 或者 <code>415 (Unsupported Media Type)</code> 状态码，而对于后者（<code>415 (Unsupported Media Type)</code>），带有 <code>Content-Type</code> 报头域以指定具体的约束类型。
 </p>
 
 <blockquote>
@@ -2458,7 +2513,7 @@ An origin server <b>MUST NOT</b> send a validator header field (<a href="#org4d2
 </blockquote>
 
 <p>
-源服务器 <b>禁止</b> 在回应给 PUT 的<ruby>成功响应<rt>successful response</rt></ruby>里带有任何<ruby>验证器报头域<rt>validator header field</rt></ruby>（<a href="#org4d2e5ff">章节 7.2</a>），例如 <code>ETag</code> 或者 <code>Last-Modified</code> 报头域，除非请求的 representation data 是保存在没有经过任何<ruby>编码转换<rt>transformation</rt></ruby>的报文正文（有效载荷）里（也就是说，响应内的新 representation data 是等价于接收自 PUT 请求内的 representation data），并且该验证器报头域反映的是新是 representation。上述这种要求使得用户代理能够知道这个在自己内存中的 representation 在什么时间内可以<ruby>保持最新（保持为 current 状态）<rt>remain current</rt></ruby>，由此知道其是否仍然可以继续作为 PUT 请求的结果而不需要从源服务器上再次获取，以及在响应内接收到的新验证器能够被用于将来的<ruby>条件请求<rt>conditional requests</rt></ruby>以避免新<ruby>意外覆盖<rt>accidental overwrite</rt></ruby>（章节 5.2）。
+源服务器 <b>禁止</b> 在回应给 PUT 的<ruby>成功响应<rt>successful response</rt></ruby>里带有任何<ruby>验证器报头域<rt>validator header field</rt></ruby>（<a href="#org4d2e5ff">章节 7.2</a>），例如 <code>ETag</code> 或者 <code>Last-Modified</code> 报头域，除非请求的 representation data 是保存在没有经过任何<ruby>编码转换<rt>transformation</rt></ruby>的报文正文（有效载荷）里（也就是说，响应内的新 representation data 是等价于接收自 PUT 请求内的 representation data），并且该验证器报头域反映的是新是 representation。上述这种要求让用户代理能够知道这个在自己内存中的 representation 在什么时间内可以<ruby>保持最新（保持为 current 状态）<rt>remain current</rt></ruby>，由此知道其是否仍然可以继续作为 PUT 请求的结果而不需要从源服务器上再次获取，以及在响应内接收到的新验证器能够被用于将来的<ruby>条件请求<rt>conditional requests</rt></ruby>以避免新<ruby>意外覆盖<rt>accidental overwrite</rt></ruby>（章节 5.2）。
 </p>
 
 <blockquote>
@@ -2494,7 +2549,7 @@ A PUT request applied to the target resource can have side effects on other reso
 </blockquote>
 
 <p>
-应用到<ruby>目标资源<rt>target resource</rt></ruby>的 PUT 请求可能会对其他资源带来<ruby>副作用<rt>side effects</rt></ruby>。例如，一篇文章可能会有一个用于标识“<ruby>当前版本<rt>the current version</rt></ruby>”（是一种资源）的 URI，独立于其他每一个标识特定版本的 URIs，不同的资源在某处共享同一种状态来作为“当前版本”所对应的资源。成功地向“当前版本”这个 URI 发起了一个 PUT 请求以后，可能除了改变目标资源的状态之外，还会创建额外一个“新版本”的资源，而且还有可能需要添加链接到相关的资源之中。 
+应用到<ruby>目标资源<rt>target resource</rt></ruby>的 PUT 请求可能会对其他资源带来<ruby>副作用<rt>side effects</rt></ruby>。例如，一篇文章可能会有一个用于标识“<ruby>当前版本<rt>the current version</rt></ruby>”（是一种资源）的 URI，独立于其他每一个标识特定版本的 URIs，不同的资源在某处共享同一种状态来作为“当前版本”所对应的资源。成功地向“当前版本”这个 URI 发起了一个 PUT 请求以后，可能除了改变目标资源的状态之外，还会创建额外一个“新版本”的资源，而且还有可能需要添加链接到关联的资源之中。 
 </p>
 
 <blockquote>
@@ -2516,6 +2571,29 @@ Responses to the PUT method are not cacheable. If a successful PUT request passe
 <p>
 回应给 PUT 方法的响应是<ruby>不可缓存的<rt>not cacheable</rt></ruby>。如果一个<ruby>成功的 PUT 请求<rt>successful PUT request</rt></ruby>穿过一个<ruby>缓存<rt>cache</rt></ruby>，而该缓存已经存储（缓存）了该 PUT 请求的有效请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 PUT 请求），那么这些已存储的（已缓存的）响应将会<ruby>被失效<rt>be invalidated</rt></ruby>（见【RFC7234】章节 4.4）。
 </p>
+
+<blockquote>
+<p>
+译注：来自 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT">MDN</a> 的总结：
+</p>
+
+<p>
+The HTTP PUT request method creates a new resource or replaces a representation of the target resource with the request payload.
+</p>
+
+<p>
+The difference between PUT and POST is that PUT is idempotent: calling it once or several times successively has the same effect (that is no side effect), where successive identical POST may have additional effects, like passing an order several times.
+</p>
+
+<dl class="org-dl">
+<dt>Request has body</dt><dd>Yes</dd>
+<dt>Successful response has body</dt><dd>No</dd>
+<dt>Safe</dt><dd>No</dd>
+<dt>Idempotent</dt><dd>Yes</dd>
+<dt>Cacheable</dt><dd>No</dd>
+<dt>Allowed in HTML forms</dt><dd>No</dd>
+</dl>
+</blockquote>
 </div>
 </div>
 
@@ -2529,7 +2607,7 @@ The DELETE method requests that the origin server remove the association between
 </blockquote>
 
 <p>
-DELETE 方法请求（要求）源服务器移除<ruby>目标资源<rt>target resource</rt></ruby>与它<ruby>当前的功能<rt>current functionality</rt></ruby>之间的关联。实际上，该方法与 UNIX 中的 <code>rm</code> 命令非常类似，DELETE 表达了一种作用在映射到源服务器的 URI 之上的删除操作，而不是表达一种删除之前相关联的信息的期望。
+DELETE 方法请求源服务器移除<ruby>目标资源<rt>target resource</rt></ruby>与它<ruby>当前的功能<rt>current functionality</rt></ruby>之间的关联。实际上，该方法与 UNIX 中的 <code>rm</code> 命令非常类似，DELETE 表达了一种作用在映射到源服务器的 URI 之上的删除操作，而不是表达一种删除之前相关联的信息的期望。
 </p>
 
 <blockquote>
@@ -2539,7 +2617,7 @@ If the target resource has one or more current representations, they might or mi
 </blockquote>
 
 <p>
-如果目标资源有一个或多个 current representations，它们可能会也可能不会被源服务器所销毁，以及它们所关联的存储可能会也可能不会被回收，这完全取决于资源的性质以及服务器对资源的<ruby>实现<rt>implementation</rt></ruby>（已经超出了本规范的范畴）。同样，可能需要去<ruby>失效<rt>deactivate</rt></ruby>或<ruby>归档<rt>archive</rt></ruby>资源实现的其他方面，来作为一个 DELETE 操作的结果，比如数据库或者网关连接。总之，我们假设源服务器只会允许对这些资源进行 DELETE：具有某种规定机制来完成删除操作的资源。
+如果目标资源有一个或多个 current representations，它们可能会也可能不会被源服务器所销毁，另外，它们所关联的存储可能会也可能不会被回收，这完全取决于资源的性质以及服务器对资源的<ruby>实现<rt>implementation</rt></ruby>（已经超出了本规范的范畴）。同样，还可能需要去<ruby>失效<rt>deactivate</rt></ruby>或<ruby>归档<rt>archive</rt></ruby>资源实现的其他方面，来作为一个 DELETE 操作的结果，比如数据库或者网关连接。总之，我们假设源服务器只会允许对这些资源进行 DELETE：具有某种规定机制来完成删除操作的资源。
 </p>
 
 <blockquote>
@@ -2549,7 +2627,7 @@ Relatively few resources allow the DELETE method — its primary use is for remo
 </blockquote>
 
 <p>
-相对较少的资源会允许 DELETE 方法，它主要应用在用户会有某些关于它的影响效果的指导的<ruby>远程编辑环境<rt>remote authoring environments</rt></ruby>中。例如，在以前使用一个 PUT 请求来创建好的某个资源，或者是在回应给 POST 请求的一个 <code>201 (Created)</code> 响应以后，该响应里的 <code>Location</code> 报头域所标识的某个资源，可能会允许一个对应的 DELETE 请求来<ruby>撤消<rt>undo</rt></ruby>这些动作。类似的，实现某种<ruby>编辑方法<rt>authoring function</rt></ruby>的<ruby>定制的用户代理实现<rt>custom user agent implementations</rt></ruby>，比如使用 HTTP 来进行远程操作的<ruby>版本管理客户端<rt>revision control clients</rt></ruby>，可能会基于“服务器的 <ruby>URI 空间<rt>URI space</rt></ruby>是经过精心设计来对应某个版本仓库”的这种假设来使用 DELETE。
+相对较少的资源会允许 DELETE 方法，它主要应用在用户会有某些关于它的影响效果的指导的<ruby>远程编辑环境<rt>remote authoring environments</rt></ruby>中。例如，在以前使用一个 PUT 请求来创建好的某个资源，或者是在回应给 POST 请求的一个 <code>201 (Created)</code> 响应以后，该响应里的 <code>Location</code> 报头域所标识的某个资源，可能会允许使用一个对应的 DELETE 请求来<ruby>撤消<rt>undo</rt></ruby>这些动作。类似的，实现某种<ruby>编辑方法<rt>authoring function</rt></ruby>的<ruby>定制的用户代理实现<rt>custom user agent implementations</rt></ruby>，比如使用 HTTP 来进行远程操作的<ruby>版本管理客户端<rt>revision control clients</rt></ruby>，可能会基于“服务器的 <ruby>URI 空间<rt>URI space</rt></ruby>是经过精心设计来对应某个版本仓库”的这种假设来使用 DELETE。
 </p>
 
 <blockquote>
@@ -2587,6 +2665,25 @@ Responses to the DELETE method are not cacheable. If a DELETE request passes thr
 <p>
 回应给 DELETE 方法的响应是<ruby>不可缓存的<rt>not cacheable</rt></ruby>。如果一个 DELETE 请求穿过一个<ruby>缓存<rt>cache</rt></ruby>，而该缓存已经存储（缓存）了该 DELETE 请求的有效请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 DELETE 请求），那么这些已存储的（已缓存的）响应将会<ruby>被失效<rt>be invalidated</rt></ruby>（见<a href="https://tools.ietf.org/html/rfc7234#section-4.4">【RFC7234】章节 4.4</a>）。
 </p>
+
+<blockquote>
+<p>
+译注：来自 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE">MDN</a> 的总结：
+</p>
+
+<p>
+The HTTP DELETE request method deletes the specified resource.
+</p>
+
+<dl class="org-dl">
+<dt>Request has body</dt><dd>May</dd>
+<dt>Successful response has body</dt><dd>May</dd>
+<dt>Safe</dt><dd>No</dd>
+<dt>Idempotent</dt><dd>Yes</dd>
+<dt>Cacheable</dt><dd>No</dd>
+<dt>Allowed in HTML forms</dt><dd>No</dd>
+</dl>
+</blockquote>
 </div>
 </div>
 
@@ -2600,8 +2697,14 @@ The CONNECT method requests that the recipient establish a tunnel to the destina
 </blockquote>
 
 <p>
-CONNECT 方法请求（要求）接收端与<ruby>请求目标<rt>request-target</rt></ruby>所标识的源服务器<ruby>建立<rt>establish</rt></ruby>一个<ruby>隧道<rt>tunnel</rt></ruby>，并且如果建立成功以后，将接收端的行为限制为双向<ruby>盲目转发<rt>blind forwarding</rt></ruby>数据包，直到隧道被关闭为止。隧道常常用于创建一种穿越一个或多个<ruby>代理<rt>proxies</rt></ruby>的<ruby>端到端<rt>end-to-end</rt></ruby>的<ruby>虚拟连接<rt>virtual connection</rt></ruby>，然后能够安全使用 TLS（Transport Layer Security，【<a href="https://tools.ietf.org/html/rfc5246">RFC5246</a>】）。
+CONNECT 方法请求让对方（接收端）与<ruby>请求目标<rt>request-target</rt></ruby>所标识的源服务器<ruby>建立<rt>establish</rt></ruby>一个<ruby>隧道<rt>tunnel</rt></ruby>，并且如果建立成功以后，将接收端的行为限制为双向<ruby>盲目转发<rt>blind forwarding</rt></ruby>数据包，直到隧道被关闭为止。隧道常常用于创建一种穿越一个或多个<ruby>代理<rt>proxies</rt></ruby>的<ruby>端到端<rt>end-to-end</rt></ruby>的<ruby>虚拟连接<rt>virtual connection</rt></ruby>，然后能够安全使用 TLS（Transport Layer Security，【<a href="https://tools.ietf.org/html/rfc5246">RFC5246</a>】）。
 </p>
+
+<blockquote>
+<p>
+译注：需要注意的是，并不是 CONNECT 请求的发送端与源服务器建立隧道，而是 CONNECT 接收端与源服务器建立隧道，这个要清楚。
+</p>
+</blockquote>
 
 <blockquote>
 <p>
@@ -2685,7 +2788,7 @@ There are significant risks in establishing a tunnel to arbitrary servers, parti
 </blockquote>
 
 <p>
-向任意的服务器建立隧道会有严重的风险，特别是当隧道的终点是一个不作为<ruby>网站流量<rt>Web traffic</rt></ruby>的 TCP <ruby>知名端口<rt>well-known port</rt></ruby>或者<ruby>保留端口<rt>reserved port</rt></ruby>的时候。例如，请求目标为 "example.com:25" 的 CONNECT 请求会建议代理连接到用于 SMTP 流量的保留端口上，如果允许这样做，就会欺骗代理去<ruby>中继转发<rt>relaying</rt></ruby>垃圾邮件。因此，支持 CONNECT 的代理 <b>应当</b> 将 CONNECT 的使用限制到一个已知的有限的端口集合上，或者一个安全的可配置的请求目标白名单上。
+向任意的服务器建立隧道会有严重的风险，特别是当隧道的终点是一个不作为<ruby>网站流量<rt>Web traffic</rt></ruby>的 TCP <ruby>知名端口<rt>well-known port</rt></ruby>或者<ruby>保留端口<rt>reserved port</rt></ruby>的时候。例如，请求目标为 "example.com:25" 的 CONNECT 请求会建议代理连接到用于 SMTP 流量的保留端口上，如果允许这样做，就会欺骗代理去<ruby>中转<rt>relaying</rt></ruby>垃圾邮件。因此，支持 CONNECT 的代理 <b>应当</b> 将 CONNECT 的使用限制到一个已知的有限的端口集合上，或者一个安全的可配置的请求目标白名单上。
 </p>
 
 <blockquote>
@@ -2717,6 +2820,33 @@ Responses to the CONNECT method are not cacheable.
 <p>
 回应给 CONNECT 方法的响应是<ruby>不可缓存的<rt>not cacheable</rt></ruby>。
 </p>
+
+<blockquote>
+<p>
+译注：来自 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT">MDN</a> 的总结：
+</p>
+
+<p>
+The HTTP CONNECT method method starts two-way communications with the requested resource. It can be used to open a tunnel.
+</p>
+
+<p>
+For example, the CONNECT method can be used to access websites that use SSL (HTTPS). The client asks an HTTP Proxy server to tunnel the TCP connection to the desired destination. The server then proceeds to make the connection on behalf of the client. Once the connection has been established by the server, the Proxy server continues to proxy the TCP stream to and from the client.
+</p>
+
+<p>
+CONNECT is a hop-by-hop method.
+</p>
+
+<dl class="org-dl">
+<dt>Request has body</dt><dd>No</dd>
+<dt>Successful response has body</dt><dd>Yes</dd>
+<dt>Safe</dt><dd>No</dd>
+<dt>Idempotent</dt><dd>No</dd>
+<dt>Cacheable</dt><dd>No</dd>
+<dt>Allowed in HTML forms</dt><dd>No</dd>
+</dl>
+</blockquote>
 </div>
 </div>
 
@@ -2730,7 +2860,7 @@ The OPTIONS method requests information about the communication options availabl
 </blockquote>
 
 <p>
-OPTIONS 方法请求（要求）关于可用于目标资源的<ruby>通信选项<rt>communication options</rt></ruby>的信息，这些通信选项信息是在源服务器或者介于客户端和源服务器之间的中间人上。本方法允许客户端在没有对资源执行相关动作的情况下，就可以确定与资源相关的选项和（或者）要求，或者服务器的功能。
+OPTIONS 方法请求获得可用于目标资源的<ruby>通信选项<rt>communication options</rt></ruby>的有关信息，这些信息是在源服务器或者介于客户端和源服务器之间的中间人上的。本方法让客户端在没有对资源执行相关动作的情况下，就可以确定与资源有关的选项和（或者）要求，或者服务器的功能。
 </p>
 
 <blockquote>
@@ -2740,7 +2870,7 @@ An OPTIONS request with an asterisk ("*") as the request-target (<a href="RFC723
 </blockquote>
 
 <p>
-如果要向服务器执行 OPTIONS 请求，一般是使用一个星号（"*"），而不是一个具体的资源，来作为请求目标（<a href="RFC7230.html#ID-16a8fba9-40f8-4b2c-ba5f-2f6522362c3a">【RFC7230】章节 5.3</a>）。这是因为服务器的通信选项一般依赖于资源，"*" 请求是仅作为 "ping" 或者“空操作”
+如果要向服务器执行 OPTIONS 请求，一般是使用一个星号（"*"），而不是一个具体的资源，来作为请求目标（<a href="RFC7230.html#ID-16a8fba9-40f8-4b2c-ba5f-2f6522362c3a">【RFC7230】章节 5.3</a>）。这是因为服务器的通信选项一般依赖于资源，"*" 请求仅作为方法的一种 "ping" 或者“空操作” 时才有用处，除了让客户端可以去测试服务器的功能以外，它并没有做任何其他事情。例如，用它来测试一个代理是否遵循 HTTP/1.1 规范。
 </p>
 
 <blockquote>
@@ -2749,28 +2879,67 @@ If the request-target is not an asterisk, the OPTIONS request applies to the opt
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A server generating a successful response to OPTIONS <b>SHOULD</b> send any header fields that might indicate optional features implemented by the server and applicable to the target resource (e.g., Allow), including potential extensions not defined by this specification. The response payload, if any, might also describe the communication options in a machine or human-readable representation. A standard format for such a representation is not defined by this specification, but might be defined by future extensions to HTTP. A server MUST generate a Content-Length field with a value of "0" if no payload body is to be sent in the response.
+如果请求目标不是使用<ruby>星号形式<rt>asterisk-form</rt></ruby>，那么，OPTIONS 请求所应用到的选项是可用在与目标资源通信的。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-A client <b>MAY</b> send a Max-Forwards header field in an OPTIONS request to target a specific recipient in the request chain (see Section 5.1.2). A proxy MUST NOT generate a Max-Forwards header field while forwarding a request unless that request was received with a Max-Forwards field.
+A server generating a successful response to OPTIONS <b>SHOULD</b> send any header fields that might indicate optional features implemented by the server and applicable to the target resource (e.g., <code>Allow</code>), including potential extensions not defined by this specification. The response payload, if any, might also describe the communication options in a machine or human-readable representation. A standard format for such a representation is not defined by this specification, but might be defined by future extensions to HTTP. A server <b>MUST</b> generate a <code>Content-Length</code> field with a value of "0" if no payload body is to be sent in the response.
 </p>
 </blockquote>
 
+<p>
+服务器在向 OPTIONS 生成一个成功响应的时候，<b>应当</b> 带有所有可能指明以下信息的报头域：由服务器所实现的可选功能，并且这些可选功能是可作用于目标资源的（例如，<code>Allow</code>）。这些报头域还应当包括那些未定义在本规范里的扩展报头域，如果有的话。如果响应里包含有效载荷，那么还可能描述了机器的通信选项，或者供人类阅读的 representation 的通信选项。对于这样一种 representation，本规范并没有定义一种标准格式，但可能会在将来的 HTTP 扩展中进行定义。服务器 <b>禁止</b> 生成带有一个 "0" 值的 <code>Content-Length</code> 报头域，如果该响应没有包含有效载荷的话。
+</p>
+
 <blockquote>
 <p>
-A client that generates an OPTIONS request containing a payload body <b>MUST</b> send a valid Content-Type header field describing the representation media type. Although this specification does not define any use for such a payload, future extensions to HTTP might use the OPTIONS body to make more detailed queries about the target resource.
+A client <b>MAY</b> send a <code>Max-Forwards</code> header field in an OPTIONS request to target a specific recipient in the request chain (see <a href="#org57067e1">Section 5.1.2</a>). A proxy <b>MUST NOT</b> generate a <code>Max-Forwards</code> header field while forwarding a request unless that request was received with a <code>Max-Forwards</code> field.
 </p>
 </blockquote>
+
+<p>
+客户端 <b>可以</b> 在一个 OPTIONS 请求中带有一个 <code>Max-Forwards</code> 报头域，以便在请求链路中对一个具体的接收端进行定位（见<a href="#org57067e1">章节 5.1.2</a>）。代理 <b>禁止</b> 在转发请求的时候生成一个 <code>Max-Forwards</code> 报头域，除非该请求本身已带有一个 <code>Max-Forwards</code> 报头域。
+</p>
+
+<blockquote>
+<p>
+A client that generates an OPTIONS request containing a payload body <b>MUST</b> send a valid <code>Content-Type</code> header field describing the representation media type. Although this specification does not define any use for such a payload, future extensions to HTTP might use the OPTIONS body to make more detailed queries about the target resource.
+</p>
+</blockquote>
+
+<p>
+客户端生成一个 OPTIONS 请求的时候，如果该请求包含一个有效载荷，那么，该请求 <b>必须</b> 带有一个有效的 <code>Content-Type</code> 报头域来描述 representation 的媒体类型。虽然本规范并没有对这样一种有效载荷的用途进行过任何定义，但将来的 HTTP 扩展中可能会使用 OPTIONS 请求的报文正文来携带目标资源有关的更细致的查询信息。
+</p>
 
 <blockquote>
 <p>
 Responses to the OPTIONS method are not cacheable.
 </p>
+</blockquote>
+
+<p>
+回应给 OPTIONS 方法的响应是<ruby>不可缓存的<rt>not cacheable</rt></ruby>。
+</p>
+
+<blockquote>
+<p>
+译注：来自 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS">MDN</a> 的总结：
+</p>
+
+<p>
+The HTTP OPTIONS method is used to describe the communication options for the target resource. The client can specify a URL for the OPTIONS method, or an asterisk (*) to refer to the entire server.
+</p>
+
+<dl class="org-dl">
+<dt>Request has body</dt><dd>No</dd>
+<dt>Successful response has body</dt><dd>Yes</dd>
+<dt>Safe</dt><dd>Yes</dd>
+<dt>Idempotent</dt><dd>Yes</dd>
+<dt>Cacheable</dt><dd>No</dd>
+<dt>Allowed in HTML forms</dt><dd>No</dd>
+</dl>
 </blockquote>
 </div>
 </div>
@@ -2780,21 +2949,33 @@ Responses to the OPTIONS method are not cacheable.
 <div class="outline-text-4" id="text-orgda48f54">
 <blockquote>
 <p>
-The TRACE method requests a remote, application-level loop-back of the request message. The final recipient of the request <b>SHOULD</b> reflect the message received, excluding some fields described below, back to the client as the message body of a <code>200 (OK)</code> response with a <code>Content-Type</code> of "message/http" (Section 8.3.1 of [RFC7230]). The final recipient is either the origin server or the first server to receive a <code>Max-Forwards</code> value of zero (0) in the request (Section 5.1.2).
+The TRACE method requests a remote, application-level loop-back of the request message. The final recipient of the request <b>SHOULD</b> reflect the message received, excluding some fields described below, back to the client as the message body of a <code>200 (OK)</code> response with a <code>Content-Type</code> of "message/http" (<a href="RFC7230.html#ID-44492A0E-8B7F-46EC-890D-317BC32E2228">Section 8.3.1</a> of [RFC7230]). The final recipient is either the origin server or the first server to receive a <code>Max-Forwards</code> value of zero (0) in the request (<a href="#org57067e1">Section 5.1.2</a>).
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A client <b>MUST NOT</b> generate header fields in a TRACE request containing sensitive data that might be disclosed by the response. For example, it would be foolish for a user agent to send stored user credentials [RFC7235] or cookies [RFC6265] in a TRACE request. The final recipient of the request <b>SHOULD</b> exclude any request header fields that are likely to contain sensitive data when that recipient generates the response body.
+TRACE 方法请求一个远程的、应用层的请求报文<ruby>回路<rt>loop-back</rt></ruby>。请求链路中的<ruby>最终接收端<rt>final recipient</rt></ruby> <b>应当</b> 原样<ruby>反映<rt>reflect</rt></ruby>它所接收到的报文，排除掉下文所述的那些报头域，作为一个带有值为 "message/http"（<a href="RFC7230.html#ID-44492A0E-8B7F-46EC-890D-317BC32E2228">【RFC7230】章节 8.3.1</a>）的 <code>Content-Type</code> 的 <code>200 (OK)</code> 响应的报文正文，最后返回给客户端。最终接收端指的是源服务器，或者是在请求链路中第一个接收到 Max-Forwards 值为 0 的请求报文的服务器（<a href="#org57067e1">章节 5.1.2</a>）。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-TRACE allows the client to see what is being received at the other end of the request chain and use that data for testing or diagnostic information. The value of the <code>Via</code> header field (Section 5.7.1 of [RFC7230]) is of particular interest, since it acts as a trace of the request chain. Use of the <code>Max-Forwards</code> header field allows the client to limit the length of the request chain, which is useful for testing a chain of proxies forwarding messages in an infinite loop.
+A client <b>MUST NOT</b> generate header fields in a TRACE request containing sensitive data that might be disclosed by the response. For example, it would be foolish for a user agent to send stored user credentials [<a href="RFC7235.html">RFC7235</a>] or cookies [<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>] in a TRACE request. The final recipient of the request <b>SHOULD</b> exclude any request header fields that are likely to contain sensitive data when that recipient generates the response body.
 </p>
 </blockquote>
+
+<p>
+客户端 <b>禁止</b> 在一个 TRACE 请求里生成以下这种报头域：包含有<ruby>敏感数据<rt>sensitive data</rt></ruby>的，并且这些敏感数据有可能会被响应<ruby>曝露<rt>disclosed</rt></ruby>出来的。例如，用户代理在一个 TRACE 请求里包含有存放在本地的<ruby>用户证书<rt>user credentials</rt></ruby>【<a href="RFC7235.html">RFC7235</a>】或者 cookies【<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>】，这种做法是非常愚蠢的。请求的<ruby>最终接收端<rt>final recipient</rt></ruby>在生成响应正文的时候，<b>应当</b> 排除掉任何有可能包含敏感数据的请求报头域。
+</p>
+
+<blockquote>
+<p>
+TRACE allows the client to see what is being received at the other end of the request chain and use that data for testing or diagnostic information. The value of the <code>Via</code> header field (<a href="RFC7230.html#ID-4a38d632-e412-4122-8ae5-0d58ab8f3d6a">Section 5.7.1</a> of [RFC7230]) is of particular interest, since it acts as a trace of the request chain. Use of the <code>Max-Forwards</code> header field allows the client to limit the length of the request chain, which is useful for testing a chain of proxies forwarding messages in an infinite loop.
+</p>
+</blockquote>
+
+<p>
+TRACE 让客户端能够观察到请求链路的另一端将会接收到什么数据，并且让客户端可以使用这些数据来测试或者诊断信息。在这些数据之中，<code>Via</code> 报头域（<a href="RFC7230.html#ID-4a38d632-e412-4122-8ae5-0d58ab8f3d6a">【RFC7230】章节 5.7.1</a>）的值是特别让人感兴趣的数据之一，这是因为它记录了请求链路的轨迹。使用 <code>Max-Forwards</code> 报头域可以让客户端对请求链路的长度进行限制，这对测试一条代理链路是否在无限循环转发报文是非常有用的。
+</p>
 
 <blockquote>
 <p>
@@ -2802,10 +2983,41 @@ A client <b>MUST NOT</b> send a message body in a TRACE request.
 </p>
 </blockquote>
 
+<p>
+客户端 <b>禁止</b> 在一个 TRACE 请求里带有一个报文正文。
+</p>
+
 <blockquote>
 <p>
 Responses to the TRACE method are not cacheable.
 </p>
+</blockquote>
+
+<p>
+回应给 TRACE 方法的响应是<ruby>不可缓存的<rt>not cacheable</rt></ruby>。
+</p>
+
+<blockquote>
+<p>
+译注：来自 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/TRACE">MDN</a> 的总结：
+</p>
+
+<p>
+The HTTP TRACE method performs a message loop-back test along the path to the target resource, providing a useful debugging mechanism.
+</p>
+
+<p>
+The final recipient of the request should reflect the message received, excluding some fields described below, back to the client as the message body of a 200 (OK) response with a Content-Type of message/http. The final recipient is either the origin server or the first server to receive a Max-Forwards value of 0 in the request.
+</p>
+
+<dl class="org-dl">
+<dt>Request has body</dt><dd>No</dd>
+<dt>Successful response has body</dt><dd>No</dd>
+<dt>Safe</dt><dd>No</dd>
+<dt>Idempotent</dt><dd>Yes</dd>
+<dt>Cacheable</dt><dd>No</dd>
+<dt>Allowed in HTML forms</dt><dd>No</dd>
+</dl>
 </blockquote>
 </div>
 </div>
@@ -2815,65 +3027,982 @@ Responses to the TRACE method are not cacheable.
 <div id="outline-container-org478df38" class="outline-2">
 <h2 id="org478df38"><a id="ID-f8e7b063-496f-473e-95e8-88ec76f21582"></a>5. 请求报头域 / Request Header Fields</h2>
 <div class="outline-text-2" id="text-org478df38">
+<blockquote>
+<p>
+A client sends request header fields to provide more information about the request context, make the request conditional based on the target resource state, suggest preferred formats for the response, supply authentication credentials, or modify the expected request processing. These fields act as request modifiers, similar to the parameters on a programming language method invocation.
+</p>
+</blockquote>
+
+<p>
+客户端发送<ruby>请求报头域<rt>request header fields</rt></ruby>来提供更多请求上下文的相关信息，基于目标资源的状态来使请求<ruby>条件化<rt>conditional</rt></ruby>，提议响应的<ruby>首选格式<rt>preferred formats</rt></ruby>，提供身份凭证，或者更改预期的请求处理。这些报头域充当请求的<ruby>修饰符<rt>modifiers</rt></ruby>，类似于一门编程语言里用于函数调用的参数一样。
+</p>
 </div>
-<div id="outline-container-orgb54175d" class="outline-3">
-<h3 id="orgb54175d">5.1. Controls</h3>
-<div class="outline-text-3" id="text-orgb54175d">
+
+<div id="outline-container-org8542bda" class="outline-3">
+<h3 id="org8542bda">5.1. 控制 / Controls</h3>
+<div class="outline-text-3" id="text-org8542bda">
+<blockquote>
+<p>
+Controls are request header fields that direct specific handling of the request.
+</p>
+</blockquote>
+
+<p>
+控制相关的请求报头域的作用是指导请求的具体处理。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Header Field Name</th>
+<th scope="col" class="org-left">Defined in&#x2026;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Cache-Control</td>
+<td class="org-left"><a href="RFC7234.html#ID-03c2dad4-a6d2-4d3c-b087-d08717bf09ec">Section 5.2</a> of [RFC7234]</td>
+</tr>
+
+<tr>
+<td class="org-left">Expect</td>
+<td class="org-left"><a href="#org83b8384">Section 5.1.1</a></td>
+</tr>
+
+<tr>
+<td class="org-left">Host</td>
+<td class="org-left"><a href="RFC7230.html#ID-f6cd08fd-597f-4b1d-98ad-a1730125abdc">Section 5.4</a> of [RFC7230]</td>
+</tr>
+
+<tr>
+<td class="org-left">Max-Forwards</td>
+<td class="org-left"><a href="#org57067e1">Section 5.1.2</a></td>
+</tr>
+
+<tr>
+<td class="org-left">Pragma</td>
+<td class="org-left"><a href="RFC7234.html#ID-8414ec2d-e5b5-4f9c-8160-c354c12b7504">Section 5.4</a> of [RFC7234]</td>
+</tr>
+
+<tr>
+<td class="org-left">Range</td>
+<td class="org-left"><a href="RFC7233.html#ID-a70b4aaa-f776-4d5b-a31d-60d1ad16d85e">Section 3.1</a> of [RFC7233]</td>
+</tr>
+
+<tr>
+<td class="org-left">TE</td>
+<td class="org-left"><a href="RFC7230.html#ID-2BA944C9-6215-4B88-8F5F-D5CACA865191">Section 4.3</a> of [RFC7230]</td>
+</tr>
+</tbody>
+</table>
 </div>
+
 <div id="outline-container-org83b8384" class="outline-4">
-<h4 id="org83b8384">5.1.1. Expect</h4>
+<h4 id="org83b8384"><a id="ID-0b0cea12-0af7-47f1-8908-2afc48ce3fb2"></a>5.1.1. Expect</h4>
+<div class="outline-text-4" id="text-org83b8384">
+<p>
+The "Expect" header field in a request indicates a certain set of behaviors (expectations) that need to be supported by the server in order to properly handle this request. The only such expectation defined by this specification is 100-continue.
+</p>
+
+<p>
+请求报文里的 <code>Expect</code> 报头域指明了一个确定的<ruby>行为<rt>behaviors</rt></ruby>（<ruby>期望<rt>expectations</rt></ruby>）集合，这些期望需要通过服务器的支持来实现，以使得这个请求得以妥善处理。<code>100-continue</code> 是仅有的由本规范所定义的期望。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">Expect  = "100-continue"
+</pre>
 </div>
+
+<blockquote>
+<p>
+The <code>Expect</code> field-value is case-insensitive.
+</p>
+</blockquote>
+
+<p>
+<code>Expect</code> 的值是不区分大小写的。
+</p>
+
+<blockquote>
+<p>
+A server that receives an <code>Expect</code> field-value other than <code>100-continue</code> <b>MAY</b> respond with a <code>417 (Expectation Failed)</code> status code to indicate that the unexpected expectation cannot be met.
+</p>
+</blockquote>
+
+<p>
+如果服务器接收到一个带有 <code>Expect</code> 报头域的请求，但其域值并不是 <code>100-continue</code>，那么，服务器 <b>可以</b> 回应一个 <code>417 (Expectation Failed)</code> 状态的响应来指明不能遇到<ruby>意料之外的期望<rt>unexpected expectation</rt></ruby>（也就是说，服务器仅能处理 <code>100-continue</code> 这种期望）。
+</p>
+
+<blockquote>
+<p>
+A <code>100-continue</code> expectation informs recipients that the client is about to send a (presumably large) message body in this request and wishes to receive a <code>100 (Continue)</code> interim response if the request-line and header fields are not sufficient to cause an immediate success, redirect, or error response. This allows the client to wait for an indication that it is worthwhile to send the message body before actually doing so, which can improve efficiency when the message body is huge or when the client anticipates that an error is likely (e.g., when sending a state-changing method, for the first time, without previously verified authentication credentials).
+</p>
+</blockquote>
+
+<p>
+<code>100-continue</code> 这个期望向接收端告知了这样一个信息：客户端即将在本次请求中发送一个（假定是很大的）报文正文，如果之前所发送的请求行以及报头域不足以引起一个立即成功、重定向或者错误响应的时候，它希望能够从接收端那里接收到一个 <code>100 (Continue)</code> 的过渡响应，让客户端在真正要发送这个报文正文之前，可以等待服务器的指示来确认是否有必要发送这个报文正文。这样做在报文正文的体积巨大，或者客户端预见到可能出现错误（例如，当首次发送一个<ruby>会改变资源状态的请求方法<rt>state-changing method</rt></ruby>的时候没有预先校验身份凭证）的情况下，可以提高效率。
+</p>
+
+<blockquote>
+<p>
+译注：<ruby>过渡响应<rt>interim response</rt></ruby>是相对于<ruby>最终响应<rt>final response</rt></ruby>来说的。过渡响应即所有 <code>1xx</code> 状态码的响应，所有非 <code>1xx</code> 状态码的响应都是最终响应。
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+For example, a request that begins with
+</p>
+</blockquote>
+
+<p>
+例如，请求报文的起始内容如下：
+</p>
+
+<pre class="example">
+PUT /somewhere/fun HTTP/1.1
+Host: origin.example.com
+Content-Type: video/h264
+Content-Length: 1234567890987
+Expect: 100-continue
+
+</pre>
+
+<blockquote>
+<p>
+allows the origin server to immediately respond with an error message, such as <code>401 (Unauthorized)</code> or <code>405 (Method Not Allowed)</code>, before the client starts filling the pipes with an unnecessary data transfer.
+</p>
+</blockquote>
+
+<p>
+这个请求让源服务器可以在客户端向管道连接里填充不必要的数据流之前，立即响应一个错误报文，比如 <code>401 (Unauthorized)</code> 或者 <code>405 (Method Not Allowed)</code>。
+</p>
+
+<blockquote>
+<p>
+Requirements for clients:
+</p>
+
+<ul class="org-ul">
+<li>A client <b>MUST NOT</b> generate a <code>100-continue</code> expectation in a request that does not include a message body.</li>
+<li>A client that will wait for a <code>100 (Continue)</code> response before sending the request message body <b>MUST</b> send an <code>Expect</code> header field containing a <code>100-continue</code> expectation.</li>
+<li>A client that sends a <code>100-continue</code> expectation is not required to wait for any specific length of time; such a client <b>MAY</b> proceed to send the message body even if it has not yet received a response. Furthermore, since <code>100 (Continue)</code> responses cannot be sent through an HTTP/1.0 intermediary, such a client <b>SHOULD NOT</b> wait for an indefinite period before sending the message body.</li>
+<li>A client that receives a <code>417 (Expectation Failed)</code> status code in response to a request containing a <code>100-continue</code> expectation <b>SHOULD</b> repeat that request without a <code>100-continue</code> expectation, since the <code>417</code> response merely indicates that the response chain does not support expectations (e.g., it passes through an HTTP/1.0 server).</li>
+</ul>
+</blockquote>
+
+<p>
+对于客户端的要求：
+</p>
+<ul class="org-ul">
+<li>客户端 <b>禁止</b> 在一个没有<ruby>报文正文<rt>message body</rt></ruby>的请求里生成一个 <code>100-continue</code> 期望。</li>
+<li>客户端在发送请求的报文正文之前，如果打算等待服务器的 <code>100 (Continue)</code>，<b>必须</b> 发送一个包含 <code>100-continue</code> 期望的 <code>Expect</code> 报头域。</li>
+<li>客户端在发送了一个 <code>100-continue</code> 期望以后，并不要求去等待任意具体的时长。这时候客户端甚至 <b>可以</b> 在未接收到任何响应的情况下就开始发送报文正文。再者，由于 <code>100 (Continue)</code> 响应不能经由一个 HTTP/1.0 中间人来发送，因此，客户端 <b>不应当</b> 在发送报文正文之前无限期地等待。</li>
+<li>客户端接收到一个 <code>417 (Expectation Failed)</code> 状态码的响应，该响应是回应给一个包含 <code>100-continue</code> 期望的请求的，这时候，客户端 <b>应当</b> 在不再带有 <code>100-continue</code> 期望的情况下再次发起这个请求，这是因为该 417 响应只不过是表明该<ruby>响应链路<rt>response chain</rt></ruby>并不支持期望（比如，它经过一个 HTTP/1.0 服务器）。</li>
+</ul>
+
+<blockquote>
+<p>
+译注：HTTP/1.0 并没有定义任何 1xx 的状态码，所以不支持在 HTTP/1.0 上使用 <code>100-continue</code>。
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Requirements for servers:
+</p>
+
+<ul class="org-ul">
+<li>A server that receives a 100-continue expectation in an HTTP/1.0 request MUST ignore that expectation.</li>
+<li>A server MAY omit sending a 100 (Continue) response if it has already received some or all of the message body for the corresponding request, or if the framing indicates that there is no message body.</li>
+<li>A server that sends a 100 (Continue) response MUST ultimately send a final status code, once the message body is received and processed, unless the connection is closed prematurely.</li>
+<li>A server that responds with a final status code before reading the entire message body SHOULD indicate in that response whether it intends to close the connection or continue reading and discarding the request message (see Section 6.6 of [RFC7230]).</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+An origin server <b>MUST</b>, upon receiving an HTTP/1.1 (or later) request-line and a complete header section that contains a 100-continue expectation and indicates a request message body will follow, either send an immediate response with a final status code, if that status can be determined by examining just the request-line and header fields, or send an immediate 100 (Continue) response to encourage the client to send the request's message body. The origin server MUST NOT wait for the message body before sending the 100 (Continue) response.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A proxy MUST, upon receiving an HTTP/1.1 (or later) request-line and a complete header section that contains a 100-continue expectation and indicates a request message body will follow, either send an immediate response with a final status code, if that status can be determined by examining just the request-line and header fields, or begin forwarding the request toward the origin server by sending a corresponding request-line and header section to the next inbound server. If the proxy believes (from configuration or past interaction) that the next inbound server only supports HTTP/1.0, the proxy MAY generate an immediate 100 (Continue) response to encourage the client to begin sending the message body.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> The Expect header field was added after the original publication of HTTP/1.1 [RFC2068] as both the means to request an interim 100 (Continue) response and the general mechanism for indicating must-understand extensions. However, the extension mechanism has not been used by clients and the must-understand requirements have not been implemented by many servers, rendering the extension mechanism useless. This specification has removed the extension mechanism in order to simplify the definition and processing of 100-continue.
+</p>
+</blockquote>
+</div>
+</div>
+
 <div id="outline-container-org57067e1" class="outline-4">
-<h4 id="org57067e1">5.1.2. Max-Forwards</h4>
+<h4 id="org57067e1"><a id="ID-4c0e6435-a276-48fb-8cb8-32b8ef5a2780"></a>5.1.2. Max-Forwards</h4>
+<div class="outline-text-4" id="text-org57067e1">
+<blockquote>
+<p>
+The "Max-Forwards" header field provides a mechanism with the TRACE (Section 4.3.8) and OPTIONS (Section 4.3.7) request methods to limit the number of times that the request is forwarded by proxies. This can be useful when the client is attempting to trace a request that appears to be failing or looping mid-chain.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Max-Forwards = 1*DIGIT
+</pre>
+</div>
+
+<blockquote>
+<p>
+The Max-Forwards value is a decimal integer indicating the remaining number of times this request message can be forwarded.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Each intermediary that receives a TRACE or OPTIONS request containing a Max-Forwards header field MUST check and update its value prior to forwarding the request. If the received value is zero (0), the intermediary MUST NOT forward the request; instead, the intermediary MUST respond as the final recipient. If the received Max-Forwards value is greater than zero, the intermediary MUST generate an updated Max-Forwards field in the forwarded message with a field-value that is the lesser of a) the received value decremented by one (1) or b) the recipient's maximum supported value for Max-Forwards.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A recipient MAY ignore a Max-Forwards header field received with any other request methods.
+</p>
+</blockquote>
 </div>
 </div>
-<div id="outline-container-org6511c97" class="outline-3">
-<h3 id="org6511c97"><a id="ID-b21923d5-a8f9-4560-8592-92fd9a098bf4"></a>5.2. Conditionals</h3>
-<div class="outline-text-3" id="text-org6511c97">
+</div>
+
+<div id="outline-container-org8c0da01" class="outline-3">
+<h3 id="org8c0da01"><a id="ID-b21923d5-a8f9-4560-8592-92fd9a098bf4"></a>5.2. 条件 / Conditionals</h3>
+<div class="outline-text-3" id="text-org8c0da01">
+<p>
+The HTTP conditional request header fields [RFC7232] allow a client to place a precondition on the state of the target resource, so that the action corresponding to the method semantics will not be applied if the precondition evaluates to false. Each precondition defined by this specification consists of a comparison between a set of validators obtained from prior representations of the target resource to the current state of validators for the selected representation (Section 7.2). Hence, these preconditions evaluate whether the state of the target resource has changed since a given state known by the client. The effect of such an evaluation depends on the method semantics and choice of conditional, as defined in Section 5 of [RFC7232].
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Header Field Name</th>
+<th scope="col" class="org-left">Defined in&#x2026;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">If-Match</td>
+<td class="org-left">Section 3.1 of [RFC7232]</td>
+</tr>
+
+<tr>
+<td class="org-left">If-None-Match</td>
+<td class="org-left">Section 3.2 of [RFC7232]</td>
+</tr>
+
+<tr>
+<td class="org-left">If-Modified-Since</td>
+<td class="org-left">Section 3.3 of [RFC7232]</td>
+</tr>
+
+<tr>
+<td class="org-left">If-Unmodified-Since</td>
+<td class="org-left">Section 3.4 of [RFC7232]</td>
+</tr>
+
+<tr>
+<td class="org-left">If-Range</td>
+<td class="org-left">Section 3.2 of [RFC7233]</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<div id="outline-container-orgd476747" class="outline-3">
-<h3 id="orgd476747">5.3. Content Negotiation</h3>
-<div class="outline-text-3" id="text-orgd476747">
+
+<div id="outline-container-org07183ec" class="outline-3">
+<h3 id="org07183ec">5.3. 内容协商 / Content Negotiation</h3>
+<div class="outline-text-3" id="text-org07183ec">
+<p>
+The following request header fields are sent by a user agent to engage in proactive negotiation of the response content, as defined in Section 3.4.1. The preferences sent in these fields apply to any content in the response, including representations of the target resource, representations of error or processing status, and potentially even the miscellaneous text strings that might appear within the protocol.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Header Field Name</th>
+<th scope="col" class="org-left">Defined in&#x2026;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Accept</td>
+<td class="org-left">Section 5.3.2</td>
+</tr>
+
+<tr>
+<td class="org-left">Accept-Charset</td>
+<td class="org-left">Section 5.3.3</td>
+</tr>
+
+<tr>
+<td class="org-left">Accept-Encoding</td>
+<td class="org-left">Section 5.3.4</td>
+</tr>
+
+<tr>
+<td class="org-left">Accept-Language</td>
+<td class="org-left">Section 5.3.5</td>
+</tr>
+</tbody>
+</table>
 </div>
+
 <div id="outline-container-org6e3f7bd" class="outline-4">
 <h4 id="org6e3f7bd">5.3.1. Quality Values</h4>
+<div class="outline-text-4" id="text-org6e3f7bd">
+<blockquote>
+<p>
+Many of the request header fields for proactive negotiation use a common parameter, named "q" (case-insensitive), to assign a relative "weight" to the preference for that associated kind of content. This weight is referred to as a "quality value" (or "qvalue") because the same parameter name is often used within server configurations to assign a weight to the relative quality of the various representations that can be selected for a resource.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The weight is normalized to a real number in the range 0 through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means "not acceptable". If no "q" parameter is present, the default weight is 1.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">weight = OWS ";" OWS "q=" qvalue
+qvalue = ( "0" [ "." 0*3DIGIT ] )
+       / ( "1" [ "." 0*3("0") ] )
+</pre>
 </div>
+
+<blockquote>
+<p>
+A sender of qvalue <b>MUST NOT</b> generate more than three digits after the decimal point. User configuration of these values ought to be limited in the same fashion.
+</p>
+</blockquote>
+</div>
+</div>
+
 <div id="outline-container-orgd78f0e9" class="outline-4">
 <h4 id="orgd78f0e9"><a id="ID-95575604-c3d4-48d6-a061-325bd7798970"></a>5.3.2. Accept</h4>
 <div class="outline-text-4" id="text-orgd78f0e9">
+<blockquote>
+<p>
+The "Accept" header field can be used by user agents to specify response media types that are acceptable. Accept header fields can be used to indicate that the request is specifically limited to a small set of desired types, as in the case of a request for an in-line image.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Accept = #( media-range [ accept-params ] )
+
+media-range    = ( "*/*"
+                 / ( type "/" "*" )
+                 / ( type "/" subtype )
+                 ) *( OWS ";" OWS parameter )
+accept-params  = weight *( accept-ext )
+accept-ext = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
+</pre>
+</div>
+
+<blockquote>
+<p>
+The asterisk "*" character is used to group media types into ranges, with "<b>/</b>" indicating all media types and "type/*" indicating all subtypes of that type. The media-range can include media type parameters that are applicable to that range.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Each media-range might be followed by zero or more applicable media type parameters (e.g., charset), an optional "q" parameter for indicating a relative weight (Section 5.3.1), and then zero or more extension parameters. The "q" parameter is necessary if any extensions (accept-ext) are present, since it acts as a separator between the two parameter sets.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> Use of the "q" parameter name to separate media type parameters from Accept extension parameters is due to historical practice. Although this prevents any media type parameter named "q" from being used with a media range, such an event is believed to be unlikely given the lack of any "q" parameters in the IANA media type registry and the rare usage of any media type parameters in Accept. Future media types are discouraged from registering any parameter named "q".
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The example
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Accept: audio/*; q=0.2, audio/basic
+</pre>
+</div>
+
+<blockquote>
+<p>
+is interpreted as "I prefer audio/basic, but send me any audio type if it is the best available after an 80% markdown in quality".
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A request without any Accept header field implies that the user agent will accept any media type in response. If the header field is present in a request and none of the available representations for the response have a media type that is listed as acceptable, the origin server can either honor the header field by sending a 406 (Not Acceptable) response or disregard the header field by treating the response as if it is not subject to content negotiation.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A more elaborate example is
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Accept: text/plain; q=0.5, text/html,
+        text/x-dvi; q=0.8, text/x-c
+</pre>
+</div>
+
+<blockquote>
+<p>
+Verbally, this would be interpreted as "text/html and text/x-c are the equally preferred media types, but if they do not exist, then send the text/x-dvi representation, and if that does not exist, send the text/plain representation".
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Media ranges can be overridden by more specific media ranges or specific media types. If more than one media range applies to a given type, the most specific reference has precedence. For example,
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Accept: text/*, text/plain, text/plain;format=flowed, */*
+</pre>
+</div>
+
+<blockquote>
+<p>
+have the following precedence:
+</p>
+
+<ol class="org-ol">
+<li>text/plain;format=flowed</li>
+<li>text/plain</li>
+<li>text/*</li>
+<li><b>/</b></li>
+</ol>
+</blockquote>
+
+<blockquote>
+<p>
+The media type quality factor associated with a given type is determined by finding the media range with the highest precedence that matches the type. For example,
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Accept: text/*;q=0.3, text/html;q=0.7, text/html;level=1,
+        text/html;level=2;q=0.4, */*;q=0.5
+</pre>
+</div>
+
+<blockquote>
+<p>
+would cause the following values to be associated:
+</p>
+</blockquote>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Media Type</th>
+<th scope="col" class="org-right">Quality Valut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">text/html;level=1</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-left">text/html</td>
+<td class="org-right">0.7</td>
+</tr>
+
+<tr>
+<td class="org-left">text/plain</td>
+<td class="org-right">0.3</td>
+</tr>
+
+<tr>
+<td class="org-left">image/jpeg</td>
+<td class="org-right">0.5</td>
+</tr>
+
+<tr>
+<td class="org-left">text/html;level=2</td>
+<td class="org-right">0.4</td>
+</tr>
+
+<tr>
+<td class="org-left">text/html;level=3</td>
+<td class="org-right">0.7</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>
+<b>Note:</b> A user agent might be provided with a default set of quality values for certain media ranges. However, unless the user agent is a closed system that cannot interact with other rendering agents, this default set ought to be configurable by the user.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-org5919b30" class="outline-4">
 <h4 id="org5919b30">5.3.3. Accept-Charset</h4>
+<div class="outline-text-4" id="text-org5919b30">
+<blockquote>
+<p>
+The "Accept-Charset" header field can be sent by a user agent to indicate what charsets are acceptable in textual response content. This field allows user agents capable of understanding more comprehensive or special-purpose charsets to signal that capability to an origin server that is capable of representing information in those charsets.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Accept-Charset = 1#( ( charset / "*" ) [ weight ] )
+</pre>
 </div>
+
+<blockquote>
+<p>
+Charset names are defined in Section 3.1.1.2. A user agent MAY associate a quality value with each charset to indicate the user's relative preference for that charset, as defined in Section 5.3.1. An example is
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Accept-Charset: iso-8859-5, unicode-1-1;q=0.8
+</pre>
+</div>
+
+<blockquote>
+<p>
+The special value "*", if present in the Accept-Charset field, matches every charset that is not mentioned elsewhere in the Accept-Charset field. If no "*" is present in an Accept-Charset field, then any charsets not explicitly mentioned in the field are considered "not acceptable" to the client.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A request without any Accept-Charset header field implies that the user agent will accept any charset in response. Most general-purpose user agents do not send Accept-Charset, unless specifically configured to do so, because a detailed list of supported charsets makes it easier for a server to identify an individual by virtue of the user agent's request characteristics (Section 9.7).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If an Accept-Charset header field is present in a request and none of the available representations for the response has a charset that is listed as acceptable, the origin server can either honor the header field, by sending a 406 (Not Acceptable) response, or disregard the header field by treating the resource as if it is not subject to content negotiation.
+</p>
+</blockquote>
+</div>
+</div>
+
 <div id="outline-container-org6451ddf" class="outline-4">
 <h4 id="org6451ddf"><a id="ID-a8fcc101-3782-4ed0-aec0-561b933e6a5f"></a>5.3.4. Accept-Encoding</h4>
 <div class="outline-text-4" id="text-org6451ddf">
+<blockquote>
+<p>
+The "Accept-Encoding" header field can be used by user agents to indicate what response content-codings (Section 3.1.2.1) are acceptable in the response. An "identity" token is used as a synonym for "no encoding" in order to communicate when no encoding is preferred.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Accept-Encoding  = #( codings [ weight ] )
+codings          = content-coding / "identity" / "*"
+</pre>
+</div>
+
+<blockquote>
+<p>
+Each codings value MAY be given an associated quality value representing the preference for that encoding, as defined in Section 5.3.1. The asterisk "*" symbol in an Accept-Encoding field matches any available content-coding not explicitly listed in the header field.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+For example,
+</p>
+</blockquote>
+
+<pre class="example">
+Accept-Encoding: compress, gzip
+Accept-Encoding:
+Accept-Encoding: *
+Accept-Encoding: compress;q=0.5, gzip;q=1.0
+Accept-Encoding: gzip;q=1.0, identity; q=0.5, *;q=0
+</pre>
+
+<blockquote>
+<p>
+A request without an Accept-Encoding header field implies that the user agent has no preferences regarding content-codings. Although this allows the server to use any content-coding in a response, it does not imply that the user agent will be able to correctly process all encodings.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A server tests whether a content-coding for a given representation is acceptable using these rules:
+</p>
+
+<ol class="org-ol">
+<li>If no Accept-Encoding field is in the request, any content-coding is considered acceptable by the user agent.</li>
+<li>If the representation has no content-coding, then it is acceptable by default unless specifically excluded by the Accept-Encoding field stating either "identity;q=0" or "*;q=0" without a more specific entry for "identity".</li>
+<li>If the representation's content-coding is one of the content-codings listed in the Accept-Encoding field, then it is acceptable unless it is accompanied by a qvalue of 0. (As defined in Section 5.3.1, a qvalue of 0 means "not acceptable".)</li>
+<li>If multiple content-codings are acceptable, then the acceptable content-coding with the highest non-zero qvalue is preferred.</li>
+</ol>
+</blockquote>
+
+<blockquote>
+<p>
+An <code>Accept-Encoding</code> header field with a combined field-value that is empty implies that the user agent does not want any content-coding in response. If an Accept-Encoding header field is present in a request and none of the available representations for the response have a content-coding that is listed as acceptable, the origin server SHOULD send a response without any content-coding.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> Most HTTP/1.0 applications do not recognize or obey qvalues associated with content-codings. This means that qvalues might not work and are not permitted with x-gzip or x-compress.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-org39787e1" class="outline-4">
 <h4 id="org39787e1">5.3.5. Accept-Language</h4>
+<div class="outline-text-4" id="text-org39787e1">
+<blockquote>
+<p>
+The "Accept-Language" header field can be used by user agents to indicate the set of natural languages that are preferred in the response. Language tags are defined in Section 3.1.3.1.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Accept-Language = 1#( language-range [ weight ] )
+language-range  = 
+          &lt;language-range, see [RFC4647], Section 2.1&gt;
+</pre>
+</div>
+
+<blockquote>
+<p>
+Each language-range can be given an associated quality value representing an estimate of the user's preference for the languages specified by that range, as defined in Section 5.3.1. For example,
+</p>
+</blockquote>
+
+<pre class="example">
+Accept-Language: da, en-gb;q=0.8, en;q=0.7
+</pre>
+
+<blockquote>
+<p>
+would mean: "I prefer Danish, but will accept British English and other types of English".
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A request without any Accept-Language header field implies that the user agent will accept any language in response. If the header field is present in a request and none of the available representations for the response have a matching language tag, the origin server can either disregard the header field by treating the response as if it is not subject to content negotiation or honor the header field by sending a 406 (Not Acceptable) response. However, the latter is not encouraged, as doing so can prevent users from accessing content that they might be able to use (with translation software, for example).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Note that some recipients treat the order in which language tags are listed as an indication of descending priority, particularly for tags that are assigned equal quality values (no value is the same as q=1). However, this behavior cannot be relied upon. For consistency and to maximize interoperability, many user agents assign each language tag a unique quality value while also listing them in order of decreasing quality. Additional discussion of language priority lists can be found in Section 2.3 of [RFC4647].
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+For matching, Section 3 of [RFC4647] defines several matching schemes. Implementations can offer the most appropriate matching scheme for their requirements. The "Basic Filtering" scheme ([RFC4647], Section 3.3.1) is identical to the matching scheme that was previously defined for HTTP in Section 14.4 of [RFC2616].
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+It might be contrary to the privacy expectations of the user to send an Accept-Language header field with the complete linguistic preferences of the user in every request (Section 9.7).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Since intelligibility is highly dependent on the individual user, user agents need to allow user control over the linguistic preference (either through configuration of the user agent itself or by defaulting to a user controllable system setting). A user agent that does not provide such control to the user MUST NOT send an Accept-Language header field.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> User agents ought to provide guidance to users when setting a preference, since users are rarely familiar with the details of language matching as described above. For example, users might assume that on selecting "en-gb", they will be served any kind of English document if British English is not available. A user agent might suggest, in such a case, to add "en" to the list for better matching behavior.
+</p>
+</blockquote>
 </div>
 </div>
+</div>
+
 <div id="outline-container-orgeec6089" class="outline-3">
 <h3 id="orgeec6089">5.4. 身份验证凭证 / Authentication Credentials</h3>
+<div class="outline-text-3" id="text-orgeec6089">
+<blockquote>
+<p>
+Two header fields are used for carrying authentication credentials, as defined in [RFC7235]. Note that various custom mechanisms for user authentication use the Cookie header field for this purpose, as defined in [RFC6265].
+</p>
+</blockquote>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Header Field Name</th>
+<th scope="col" class="org-left">Defined in&#x2026;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Authorization</td>
+<td class="org-left">Section 4.2 of [RFC7235]</td>
+</tr>
+
+<tr>
+<td class="org-left">Proxy-Authorization</td>
+<td class="org-left">Section 4.4 of [RFC7235]</td>
+</tr>
+</tbody>
+</table>
 </div>
+</div>
+
 <div id="outline-container-org178e82e" class="outline-3">
 <h3 id="org178e82e">5.5. 请求上下文/ Request Context</h3>
 <div class="outline-text-3" id="text-org178e82e">
+<blockquote>
+<p>
+The following request header fields provide additional information about the request context, including information about the user, user agent, and resource behind the request.
+</p>
+</blockquote>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Header Field Name</th>
+<th scope="col" class="org-left">Defined in&#x2026;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Form</td>
+<td class="org-left">Section 5.5.1</td>
+</tr>
+
+<tr>
+<td class="org-left">Referer</td>
+<td class="org-left">Section 5.5.2</td>
+</tr>
+
+<tr>
+<td class="org-left">User-Agent</td>
+<td class="org-left">Section 5.5.3</td>
+</tr>
+</tbody>
+</table>
 </div>
+
 <div id="outline-container-org0e7c143" class="outline-4">
 <h4 id="org0e7c143">5.5.1. Form</h4>
+<div class="outline-text-4" id="text-org0e7c143">
+<blockquote>
+<p>
+The "From" header field contains an Internet email address for a human user who controls the requesting user agent. The address ought to be machine-usable, as defined by "mailbox" in Section 3.4 of [RFC5322]:
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">From    = mailbox
+
+mailbox = &lt;mailbox, see [RFC5322], Section 3.4&gt;
+</pre>
 </div>
+
+<blockquote>
+<p>
+An example is:
+</p>
+</blockquote>
+
+<pre class="example">
+From: webmaster@example.org
+</pre>
+
+<blockquote>
+<p>
+The From header field is rarely sent by non-robotic user agents. A user agent <b>SHOULD NOT</b> send a From header field without explicit configuration by the user, since that might conflict with the user's privacy interests or their site's security policy.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A robotic user agent <b>SHOULD</b> send a valid From header field so that the person responsible for running the robot can be contacted if problems occur on servers, such as if the robot is sending excessive, unwanted, or invalid requests.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A server <b>SHOULD NOT</b> use the From header field for access control or authentication, since most recipients will assume that the field value is public information.
+</p>
+</blockquote>
+</div>
+</div>
+
 <div id="outline-container-orga439d85" class="outline-4">
 <h4 id="orga439d85">5.5.2. Referer</h4>
+<div class="outline-text-4" id="text-orga439d85">
+<blockquote>
+<p>
+The "Referer" [sic] header field allows the user agent to specify a URI reference for the resource from which the target URI was obtained (i.e., the "referrer", though the field name is misspelled). A user agent MUST NOT include the fragment and userinfo components of the URI reference [RFC3986], if any, when generating the Referer field value.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Referer = absolute-URI / partial-URI
+</pre>
 </div>
+
+<blockquote>
+<p>
+The Referer header field allows servers to generate back-links to other resources for simple analytics, logging, optimized caching, etc. It also allows obsolete or mistyped links to be found for maintenance. Some servers use the Referer header field as a means of denying links from other sites (so-called "deep linking") or restricting cross-site request forgery (CSRF), but not all requests contain it.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Example:
+</p>
+</blockquote>
+
+<pre class="example">
+Referer: http://www.example.org/hypertext/Overview.html
+</pre>
+
+<blockquote>
+<p>
+If the target URI was obtained from a source that does not have its own URI (e.g., input from the user keyboard, or an entry within the user's bookmarks/favorites), the user agent MUST either exclude the Referer field or send it with a value of "about:blank".
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The Referer field has the potential to reveal information about the request context or browsing history of the user, which is a privacy concern if the referring resource's identifier reveals personal information (such as an account name) or a resource that is supposed to be confidential (such as behind a firewall or internal to a secured service). Most general-purpose user agents do not send the Referer header field when the referring resource is a local "file" or "data" URI. A user agent MUST NOT send a Referer header field in an unsecured HTTP request if the referring page was received with a secure protocol. See Section 9.4 for additional security considerations.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Some intermediaries have been known to indiscriminately remove Referer header fields from outgoing requests. This has the unfortunate side effect of interfering with protection against CSRF attacks, which can be far more harmful to their users. Intermediaries and user agent extensions that wish to limit information disclosure in Referer ought to restrict their changes to specific edits, such as replacing internal domain names with pseudonyms or truncating the query and/or path components. An intermediary SHOULD NOT modify or delete the Referer header field when the field value shares the same scheme and host as the request target.
+</p>
+</blockquote>
+</div>
+</div>
+
 <div id="outline-container-org382027f" class="outline-4">
 <h4 id="org382027f">5.5.3. User-Agent</h4>
+<div class="outline-text-4" id="text-org382027f">
+<blockquote>
+<p>
+The "User-Agent" header field contains information about the user agent originating the request, which is often used by servers to help identify the scope of reported interoperability problems, to work around or tailor responses to avoid particular user agent limitations, and for analytics regarding browser or operating system use. A user agent SHOULD send a User-Agent field in each request unless specifically configured not to do so.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">User-Agent = product *( RWS ( product / comment ) )
+</pre>
+</div>
+
+<blockquote>
+<p>
+The User-Agent field-value consists of one or more product identifiers, each followed by zero or more comments (Section 3.2 of [RFC7230]), which together identify the user agent software and its significant subproducts. By convention, the product identifiers are listed in decreasing order of their significance for identifying the user agent software. Each product identifier consists of a name and optional version.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">product         = token ["/" product-version]
+product-version = token
+</pre>
+</div>
+
+<blockquote>
+<p>
+A sender <b>SHOULD</b> limit generated product identifiers to what is necessary to identify the product; a sender MUST NOT generate advertising or other nonessential information within the product identifier. A sender SHOULD NOT generate information in product-version that is not a version identifier (i.e., successive versions of the same product name ought to differ only in the product-version portion of the product identifier).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Example:
+</p>
+</blockquote>
+
+<pre class="example">
+User-Agent: CERN-LineMode/2.15 libwww/2.17b3
+</pre>
+
+<blockquote>
+<p>
+A user agent <b>SHOULD NOT</b> generate a User-Agent field containing needlessly fine-grained detail and SHOULD limit the addition of subproducts by third parties. Overly long and detailed User-Agent field values increase request latency and the risk of a user being identified against their wishes ("fingerprinting").
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Likewise, implementations are encouraged not to use the product tokens of other implementations in order to declare compatibility with them, as this circumvents the purpose of the field. If a user agent masquerades as a different user agent, recipients can assume that the user intentionally desires to see responses tailored for that identified user agent, even if they might not work as well for the actual user agent being used.
+</p>
+</blockquote>
 </div>
 </div>
 </div>
+</div>
+
 <div id="outline-container-org1463c22" class="outline-2">
 <h2 id="org1463c22"><a id="ID-5a69d0cc-628c-4897-a089-45f906b94a92"></a>6. 响应状态码 / Response Status Codes</h2>
 <div class="outline-text-2" id="text-org1463c22">
