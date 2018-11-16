@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-15 Thu 19:21 -->
+<!-- 2018-11-16 Fri 19:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -824,7 +824,7 @@ Most HTTP communication consists of a retrieval request (GET) for a representati
 </blockquote>
 
 <p>
-大多数 HTTP 的通讯是通过使用一个 URI 以 GET 请求的形式来定位资源。在最简单的情况下，可以经由一个在用户代理（UA）和源服务器（O）之间的双向连接就能完成。
+大多数 HTTP 的通讯是由 GET 请求组成的，通过向一个 URI 发起 GET 请求来获得该 URI 所标识的资源一种<ruby>表示方式<rt>representation</rt></ruby>。在最简单的情况下，可以经由一个在用户代理（UA）和源服务器（O）之间的双向连接就能完成。
 </p>
 
 <div class="org-src-container">
@@ -841,7 +841,7 @@ A client sends an HTTP request to a server in the form of a request message, beg
 </blockquote>
 
 <p>
-客户端以请求报文（request message）的形式向服务器发送一个 HTTP 请求。请求报文以一个包含了方法（method）、URI 和协议版本（protocol version）的请求行（request line，见<a href="#orgc608d15">章节 3.1.1</a>）作为开始；随后是包含了请求修饰符，客户端信息以及 representation 元数据（representation metadata，见<a href="#org022942f">章节 3.2</a>）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含了有效载荷（如果有的话，见<a href="#org3d27427">章节 3.3</a>）的报文正文（message body）。
+客户端以请求报文（request message）的形式向服务器发送一个 HTTP 请求。请求报文以一个包含了方法（method）、URI 和协议版本（protocol version）的请求行（request line，见<a href="#orgc608d15">章节 3.1.1</a>）作为开始；随后是包含了请求修饰符，客户端信息以及表示形式元数据（representation metadata，见<a href="#org022942f">章节 3.2</a>）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含了有效载荷（如果有的话，见<a href="#org3d27427">章节 3.3</a>）的报文正文（message body）。
 </p>
 
 <blockquote>
@@ -857,7 +857,7 @@ A server responds to a client's request by sending one or more HTTP response mes
 </blockquote>
 
 <p>
-服务器通过发送一个或多个 HTTP 响应报文（response message）来响应客户端的请求。每个响应报文以一个包含协议版本（protocol version）、一个成功或失败的状态码（status code）以及一个描述状态码的文本短语（reason phrase）的状态行（status line，<a href="#orgd6df797">章节 3.1.2</a>）作为开始；随后可能是包含服务器信息、资源元数据以及 representation 元数据（representation metadata，见章节 3.2）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含有效载荷（如果有的话，见<a href="#org3d27427">章节 3.3</a>）的报文正文（message body）。
+服务器通过发送一个或多个 HTTP 响应报文（response message）来响应客户端的请求。每个响应报文以一个包含协议版本（protocol version）、一个成功或失败的状态码（status code）以及一个描述状态码的文本短语（reason phrase）的状态行（status line，<a href="#orgd6df797">章节 3.1.2</a>）作为开始；随后可能是包含服务器信息、资源元数据以及表示形式元数据（representation metadata，见章节 3.2）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含有效载荷（如果有的话，见<a href="#org3d27427">章节 3.3</a>）的报文正文（message body）。
 </p>
 
 <blockquote>
@@ -2270,7 +2270,7 @@ A server that receives an <code>obs-fold</code> in a request message that is not
 </blockquote>
 
 <p>
-如果服务端接收到一个在请求报文里的分行 <code>obs-fold</code>，但这个分行不在媒体类型 "message/http" 的容器内，服务端 <b>必须</b> 要不拒绝这种报文并响应一个 <code>400 (Bad Request)</code> 状态码，更好的方式是在响应报文中带有一个 representation 来解释那种已经废弃的分行是不再允许出现在报文中的；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
+如果服务端接收到一个在请求报文里的分行 <code>obs-fold</code>，但这个分行不在媒体类型 "message/http" 的容器内，服务端 <b>必须</b> 要不拒绝这种报文并响应一个 <code>400 (Bad Request)</code> 状态码，更好的方式是在响应报文中带有一种<ruby>表示形式<rt>representation</rt></ruby>来解释那种已经废弃的分行是不再允许出现在报文中的；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
 </p>
 
 <blockquote>
@@ -2280,7 +2280,7 @@ A proxy or gateway that receives an <code>obs-fold</code> in a response message 
 </blockquote>
 
 <p>
-如果代理（proxy）或网关（gateway）接收到一个响应报文里的分行 <code>obs-fold</code>，但这个分行不在媒体类型 "message/http" 的容器内，这些中间人 <b>必须</b> 要不丢弃这个报文改由响应一个 <code>502 (Bad Gateway)</code> 状态码，更好的方式是在响应报文中带有一个 representation 来解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
+如果代理（proxy）或网关（gateway）接收到一个响应报文里的分行 <code>obs-fold</code>，但这个分行不在媒体类型 "message/http" 的容器内，这些中间人 <b>必须</b> 要不丢弃这个报文改由响应一个 <code>502 (Bad Gateway)</code> 状态码，更好的方式是在响应报文中带有一种<ruby>表示形式<rt>representation</rt></ruby>来解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
 </p>
 
 <blockquote>
@@ -2555,7 +2555,7 @@ Unlike <code>Content-Encoding</code> (<a href="https://tools.ietf.org/html/rfc72
 </blockquote>
 
 <p>
-与 <code>Content-Encoding</code> 报头域（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-3.1.2.1">章节 3.1.2.1</a>）不同的是，<code>Transfer-Encoding</code> 报头域是报文（message）的一个属性，而不是 representation 的一个属性，并且在请求/响应链路中的所有接收端都 <b>可以</b> 依据所接收到的传输代码值（一个或多个）对报文正文进行解码，或者向报文正文应用额外的传输代码值，假设 <code>Transfer-Encoding</code> 的 <code>field-value</code> 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的报头域提供。
+与 <code>Content-Encoding</code> 报头域（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-3.1.2.1">章节 3.1.2.1</a>）不同的是，<code>Transfer-Encoding</code> 报头域是报文（message）的一个属性，而不是<ruby>表示形式<rt>representation</rt></ruby>的一个属性，并且在请求/响应链路中的所有接收端都 <b>可以</b> 依据所接收到的传输代码值（一个或多个）对报文正文进行解码，或者向报文正文应用额外的传输代码值，假设 <code>Transfer-Encoding</code> 的 <code>field-value</code> 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的报头域提供。
 </p>
 
 <blockquote>
@@ -2611,7 +2611,7 @@ When a message does not have a <code>Transfer-Encoding</code> header field, a <c
 
 <p>
 当一个报文不带有 <code>Transfer-Encoding</code> 报头域的时候，<code>Content-Length</code> 报头域能够提供对于一个潜在的有效载荷（payload body）的预期的大小。<code>Content-Length</code> 是一个十进制数字，以字节（octets）形式。对于包含一个有效载荷的报文，<code>Content-Length</code> 的 <code>field-value</code>
-提供了决定报文正文在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的报文，<code>Content-Length</code> 指明了已选定的 representation（selected representation【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-3">章节 3</a>）的大小。
+提供了决定报文正文在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的报文，<code>Content-Length</code> 指明了已选定的表示形式（selected representation【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-3">章节 3</a>）的大小。
 </p>
 
 <div class="org-src-container">
@@ -2957,7 +2957,7 @@ Transfer coding names are used to indicate an encoding transformation that has b
 </blockquote>
 
 <p>
-传输编码值（transfer coding）是用于表示已经、能够或者可能需要应用到一个有效载荷（payload body）中以确保网络传输安全的一种编码转换（encoding transformation）。与内容编码值（content coding）不同的是，传输编码值是一个报文的特性，而不是一个 representation 的特性。
+传输编码值（transfer coding）是用于表示已经、能够或者可能需要应用到一个有效载荷（payload body）中以确保网络传输安全的一种编码转换（encoding transformation）。与内容编码值（content coding）不同的是，传输编码值是一个报文的特性，而不是一个<ruby>表示形式<rt>representation</rt></ruby>的特性。
 </p>
 
 <div class="org-src-container">
@@ -3518,7 +3518,7 @@ For example, a client wishing to retrieve a representation of the resource ident
 </blockquote>
 
 <p>
-例如，一个客户端希望从源服务器里获得一个资源的 representation，资源对应的 URI 如下：
+例如，一个客户端希望从源服务器里获得这个资源的一种<ruby>表示形式<rt>representation</rt></ruby>，资源对应的 URI 如下：
 </p>
 
 <pre class="example">
@@ -4235,7 +4235,7 @@ A proxy <b>SHOULD NOT</b> modify header fields that provide information about th
 </blockquote>
 
 <p>
-代理 <b>不应当</b> 修改提供有关通信链路端点、资源状态，或者已选定的 representation（除了有效载荷）的信息的报头域，除非该域的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
+代理 <b>不应当</b> 修改提供有关通信链路端点、资源状态，或者<ruby>已选定的表示形式<rt>selected representation</rt></ruby>（除了有效载荷）的信息的报头域，除非该域的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
 </p>
 </div>
 </div>
@@ -4788,7 +4788,7 @@ A server that receives a "close" connection option <b>MUST</b> initiate a close 
 </blockquote>
 
 <p>
-服务器接收到一个带有 "close" 连接连接的请求报文之后，<b>必须</b> 在其发送完该请求报文所对应的最后一个响应报文之后进行关闭连接的初始化流程（见下文）。服务器 <b>应当</b> 在该连接中的最后一个响应报文中带有一个 "close" 连接选项。其后，服务器 <b>禁止</b> 在该连接中处理任何进一步的请求报文。
+服务器接收到一个带有 "close" 连接连接的请求报文，在其发送完该请求报文所对应的最后一个响应报文之后，<b>必须</b> 进行关闭连接的流程（见下文）。服务器 <b>应当</b> 在该连接中的最后一个响应报文中带有一个 "close" 连接选项。其后，服务器 <b>禁止</b> 在该连接中处理任何进一步的请求报文。
 </p>
 
 <blockquote>
@@ -4798,7 +4798,7 @@ A server that sends a "close" connection option <b>MUST</b> initiate a close of 
 </blockquote>
 
 <p>
-服务器发送了一个带有 "close" 连接选项的响应报文之后，<b>必须</b> 进行关闭连接的初始化流程（见下文）。其后，服务器 <b>禁止</b> 在该连接中处理任何进一步的请求报文。
+服务器发送了一个带有 "close" 连接选项的响应报文之后，<b>必须</b> 进行关闭连接的流程（见下文）。其后，服务器 <b>禁止</b> 在该连接中处理任何进一步的请求报文。
 </p>
 
 <blockquote>

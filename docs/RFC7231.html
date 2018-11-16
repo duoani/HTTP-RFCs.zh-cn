@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-15 Thu 19:21 -->
+<!-- 2018-11-16 Fri 19:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -380,9 +380,9 @@ for the JavaScript code in this tag.
 </ul>
 </li>
 <li><a href="#orgec9ef27">2. 资源 / Resources</a></li>
-<li><a href="#org5a29517">3. 资源的表示 / Representations</a>
+<li><a href="#org117585a">3. 资源的表示形式 / Representations</a>
 <ul>
-<li><a href="#orgc098448">3.1. 表示元数据 / Representation Metadata</a>
+<li><a href="#org80727a7">3.1. 表示形式元数据 / Representation Metadata</a>
 <ul>
 <li><a href="#orgfebd6b5">3.1.1. 处理表示数据 / Processing Representation Data</a>
 <ul>
@@ -413,7 +413,7 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
-<li><a href="#orgd26c42d">3.2. 表示数据 / Representation Data</a></li>
+<li><a href="#orgb25116e">3.2. 表示形式数据 / Representation Data</a></li>
 <li><a href="#orgb3d98f9">3.3. 有效载荷的语义 / Payload Semantics</a></li>
 <li><a href="#org7e87af6">3.4. 内容协商 / Content Negotiation</a>
 <ul>
@@ -455,7 +455,7 @@ for the JavaScript code in this tag.
 <li><a href="#org57067e1">5.1.2. Max-Forwards</a></li>
 </ul>
 </li>
-<li><a href="#org8c0da01">5.2. 条件 / Conditionals</a></li>
+<li><a href="#orgb31b803">5.2. 条件句 / Conditionals</a></li>
 <li><a href="#org07183ec">5.3. 内容协商 / Content Negotiation</a>
 <ul>
 <li><a href="#org6e3f7bd">5.3.1. Quality Values</a></li>
@@ -715,12 +715,12 @@ Each Hypertext Transfer Protocol (HTTP) message is either a request or a respons
 
 <blockquote>
 <p>
-HTTP provides a uniform interface for interacting with a resource (<a href="#orgec9ef27">Section 2</a>), regardless of its type, nature, or implementation, via the manipulation and transfer of representations (<a href="#org5a29517">Section 3</a>).
+HTTP provides a uniform interface for interacting with a resource (<a href="#orgec9ef27">Section 2</a>), regardless of its type, nature, or implementation, via the manipulation and transfer of representations (<a href="#org117585a">Section 3</a>).
 </p>
 </blockquote>
 
 <p>
-HTTP 提供了一种统一的接口来对<ruby>资源<rt>resource</rt></ruby>（<a href="#orgec9ef27">章节 2</a>）进行交互，而不必理会资源的类型、性质或者<ruby>实现<rt>implementation</rt></ruby>，具体是经由对<ruby>资源的表示<rt>representations</rt></ruby>（<a href="#org5a29517">章节 3</a>）进行操作和传输来实现的。
+HTTP 提供了一种统一的接口来对<ruby>资源<rt>resource</rt></ruby>（<a href="#orgec9ef27">章节 2</a>）进行交互，而不必理会资源的类型、性质或者<ruby>实现<rt>implementation</rt></ruby>，具体是经由对<ruby>资源的表示形式<rt>representations</rt></ruby>（<a href="#org117585a">章节 3</a>）进行操作和传输来实现的。
 </p>
 
 <blockquote>
@@ -740,7 +740,7 @@ This document also defines representation metadata that describe how a payload i
 </blockquote>
 
 <p>
-本文档还定义了以下内容：描述打算让接收端怎样<ruby>解释<rt>interpret</rt></ruby>一个<ruby>有效载荷<rt>payload</rt></ruby>的<ruby>资源的表示元数据<rt>representation metadata</rt></ruby>、可能影响<ruby>内容选择<rt>content selection</rt></ruby>的请求报头域、统称为“<ruby>内容协商<rt>content negotiation</rt></ruby>”的各种选择算法（<a href="#org7e87af6">章节 3.4</a>）。
+本文档还定义了以下内容：<ruby>资源的表示形式元数据<rt>representation metadata</rt></ruby>，用于描述打算让接收端怎样<ruby>解释<rt>interpret</rt></ruby>一个<ruby>有效载荷<rt>payload</rt></ruby>；可能影响<ruby>内容选择<rt>content selection</rt></ruby>的请求报头域、统称为“<ruby>内容协商<rt>content negotiation</rt></ruby>”的各种选择算法（<a href="#org7e87af6">章节 3.4</a>）。
 </p>
 </div>
 
@@ -830,9 +830,9 @@ HTTP 的设计目标之一是将<ruby>资源识别<rt>resource identification</r
 </div>
 </div>
 
-<div id="outline-container-org5a29517" class="outline-2">
-<h2 id="org5a29517"><a id="ID-7dd837af-fd6a-4918-9c62-cf12a4c31522"></a>3. 资源的表示 / Representations</h2>
-<div class="outline-text-2" id="text-org5a29517">
+<div id="outline-container-org117585a" class="outline-2">
+<h2 id="org117585a"><a id="ID-7dd837af-fd6a-4918-9c62-cf12a4c31522"></a>3. 资源的表示形式 / Representations</h2>
+<div class="outline-text-2" id="text-org117585a">
 <blockquote>
 <p>
 Considering that a resource could be anything, and that the uniform interface provided by HTTP is similar to a window through which one can observe and act upon such a thing only through the communication of messages to some independent actor on the other side, an abstraction is needed to represent ("take the place of") the current or desired state of that thing in our communications. That abstraction is called a representation [REST].
@@ -840,12 +840,12 @@ Considering that a resource could be anything, and that the uniform interface pr
 </blockquote>
 
 <p>
-考虑到<ruby>资源<rt>resource</rt></ruby>可以是任何事物，而 HTTP 所提供的统一接口类似于一个窗口，在窗口的一边我们能够对该事物进行观察；而要想对该事物采取行动的话，只能通过消息沟通来让窗口另一边的某个独立的动作执行者来完成。因此，在沟通过程中，我们需要一种“抽象”来<ruby>表示<rt>represent</rt></ruby>（代替）该事物的<ruby>当前状态<rt>current state</rt></ruby>或<ruby>期望状态<rt>desired state</rt></ruby>。而这种“抽象”被称为 <ruby>资源的表示<rt>representation</rt></ruby>【<a href="http://roy.gbiv.com/pubs/dissertation/top.htm">REST</a>】。
+考虑到<ruby>资源<rt>resource</rt></ruby>可以是任何事物，而 HTTP 所提供的统一接口类似于一个窗口，在窗口的一边我们能够对该事物进行观察；而要想对该事物采取行动的话，只能通过消息沟通来让窗口另一边的某个独立的动作执行者来完成。因此，在沟通过程中，我们需要一种“抽象”来<ruby>表示<rt>represent</rt></ruby>（代替）该事物的<ruby>当前状态<rt>current state</rt></ruby>或<ruby>期望状态<rt>desired state</rt></ruby>。而这种“抽象”被称为 <ruby>资源的表示形式<rt>representation</rt></ruby>【<a href="http://roy.gbiv.com/pubs/dissertation/top.htm">REST</a>】。
 </p>
 
 <blockquote>
 <p>
-译注：术语 "representation" 一词源自一种软件架构风格的术语—— REST（Representational Style Transfer），也就是我们常常听到的 RESTful 风格。<ruby>资源的表示<rt>representation</rt></ruby>是<ruby>资源<rt>resource</rt></ruby>的抽象，资源一般是唯一的，而资源的表示方式可以多种多样，例如，一份银行流水账单可以认为是一种资源，按媒体类型来分，它的表示形式可以有 JSON、XML 或者二进制格式等，按时间来分，它的表示形式可以有昨日收支、今日收支、本用收支等，更详细的介绍可以<a href="http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm">查看这里</a>。
+译注：术语 "representation" 一词源自一种软件架构风格的术语—— REST（Representational Style Transfer），也就是我们常常听到的 RESTful 风格。<ruby>资源的表示形式<rt>representation</rt></ruby>是<ruby>资源<rt>resource</rt></ruby>的抽象，资源一般是唯一的，而资源的表示形式可以多种多样，例如，一份银行流水账单可以认为是一种资源，按媒体类型来分，它的表示形式可以有 JSON、XML 或者二进制格式等，按时间来分，它的表示形式可以有昨日收支、今日收支、本用收支等，更详细的介绍可以<a href="http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm">查看这里</a>。
 </p>
 </blockquote>
 
@@ -856,16 +856,16 @@ For the purposes of HTTP, a "representation" is information that is intended to 
 </blockquote>
 
 <p>
-基于 HTTP 的目的，<ruby>资源的表示<rt>representation</rt></ruby>是一种信息，该信息用于反映某个给定资源的过去、现在、或将来期望的状态。它以一种能够轻易地经由协议进行传达的格式，并由一系列 <ruby>元数据<rt>representation metadata</rt></ruby>以及一个可能是无限大的 <ruby>数据<rt>representation data</rt></ruby>（流）组成。
+基于 HTTP 的目的，<ruby>资源的表示形式<rt>representation</rt></ruby>是一种信息，该信息用于反映某个给定资源的过去、现在、或将来期望的状态。它以一种能够轻易地经由协议进行传达的格式，并由一系列 <ruby>元数据<rt>representation metadata</rt></ruby>以及一个可能是无限大的 <ruby>数据<rt>representation data</rt></ruby>（流）组成。
 </p>
 
 <blockquote>
 <p>
-译注：再强调一次，"representation" 是资源的一种抽象，反映的是资源的状态，资源一般有多种状态。引用上面提到的银行流水账单的例子，JSON 形式的表示是它的一种状态，它也可以转变为 XML 形式（状态过渡）。每一种状态由一种 representation 来表示，因此，资源与 representation 是一对多的关系。
+译注：再强调一次，<ruby>资源的表示形式<rt>representation</rt></ruby>是资源的一种抽象，反映的是资源的状态，资源一般有多种状态。引用上面提到的银行流水账单的例子，JSON 形式的表示是它的一种状态，它也可以转变为 XML 形式（状态过渡）。每一种状态由一种资源的表示形式来表示，因此，资源与资源的表示形式是一对多的关系。
 </p>
 
 <p>
-下文会多次提及到 "current representation"，它反映了资源的<ruby>目前状态<rt>current state</rt></ruby>，怎么理解呢？还是拿账单的例子，假设有两个接口，一个接口 A 用来获取今天的总支出，另一个接口 B 用来提交支出。
+下文会多次提及到<ruby>资源的当前表现形式<rt>current representation</rt></ruby>，它反映了资源的<ruby>当前状态<rt>current state</rt></ruby>，怎么理解呢？还是拿账单的例子，假设有两个接口，一个接口 A 用来获取今天的总支出，另一个接口 B 用来提交支出。
 </p>
 
 <ul class="org-ul">
@@ -875,13 +875,13 @@ For the purposes of HTTP, a "representation" is information that is intended to 
 </ul>
 
 <p>
-另外，"current representation" 也可以同时有多个，例如接口 A 默认返回的是文本类型，但它还有一个参数 <code>filetype</code> 可以让接口调用者指定返回的数据类型，例如 JSON，那么，文本类型和 JSON 类型的总支出信息皆为接口 B 所对应的资源的 "current representation"。 
+另外，<ruby>资源的当前表现形式<rt>current representation</rt></ruby>也可以同时有多种，可以这样理解：资源的当前状态可以有多种表现形式。例如接口 A 默认返回的是文本类型，但它还有一个参数 <code>filetype</code> 可以让接口调用者指定返回的数据类型，例如 JSON，那么，文本类型和 JSON 类型的总支出信息皆为接口 B 所对应的资源的当前表现形式。 
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-译注："representation" 由 "representation data" 和 "representation metadata" 组成。"representation data"，即资源本身；而 "representation metadata"，是用来描述 "representation" 的，所以叫作“元数据”。为了表述的准确，以后将不再对 "representation"、"representation data" 以及 "representation metadata" 进行翻译。
+译注：<ruby>资源的表现形式<rt>representation</rt></ruby>由表现形式的<ruby>数据<rt>representation data</rt></ruby>和<ruby>元数据<rt>representation metadata</rt></ruby>组成。资源的表现形式的数据，即资源本身的数据表示；而资源的表现形式的元数据，是用来描述资源的表现形式（或者描述资源的表现形式元数据自身）的，所以叫作“元数据”。
 </p>
 </blockquote>
 
@@ -892,13 +892,13 @@ An origin server might be provided with, or be capable of generating, multiple r
 </blockquote>
 
 <p>
-<ruby>源服务器<rt>origin server</rt></ruby>可能提供或能够生成多种 representations，每种 representation 旨在反映<ruby>目标资源<rt>target resource</rt></ruby>的当前状态。在这种情况下，源服务器会使用某些算法（通常会基于<ruby>内容协商<rt>content negotiation</rt></ruby>）来选择其中一种对于给定请求来说最适合的 representation。这个“<ruby>已选定的 representation<rt>selected representation</rt></ruby>”是用来为<ruby>评估带条件的请求<rt>evaluating conditional requests</rt></ruby>提供数据和元数据，以及为响应给 GET 请求（<a href="#org479e86d">章节 4.3.1</a>）的 <code>200 (OK)</code> 和 <code>304 (Not Modified)</code> 响应报文构建<ruby>有效载荷<rt>payload</rt></ruby>。
+<ruby>源服务器<rt>origin server</rt></ruby>可能被赋予提供或生成多种<ruby>资源的表示形式<rt>representations</rt></ruby>的能力，每种表示形式旨在反映<ruby>目标资源<rt>target resource</rt></ruby>的当前状态。在这种情况下，源服务器会使用某些算法（通常会基于<ruby>内容协商<rt>content negotiation</rt></ruby>）来选定其中一种对于给定请求来说是最适合的表现形式。这个“<ruby>已选定的表现形式<rt>selected representation</rt></ruby>”是用来为<ruby>评估条件请求<rt>evaluating conditional requests</rt></ruby>提供数据和元数据，以及为响应给 GET 请求（<a href="#org479e86d">章节 4.3.1</a>）的 <code>200 (OK)</code> 和 <code>304 (Not Modified)</code> 响应报文构建<ruby>有效载荷<rt>payload</rt></ruby>。
 </p>
 </div>
 
-<div id="outline-container-orgc098448" class="outline-3">
-<h3 id="orgc098448">3.1. 表示元数据 / Representation Metadata</h3>
-<div class="outline-text-3" id="text-orgc098448">
+<div id="outline-container-org80727a7" class="outline-3">
+<h3 id="org80727a7"><a id="ID-49e0f329-4c0c-4a07-8c8e-666de785c97e"></a>3.1. 表示形式元数据 / Representation Metadata</h3>
+<div class="outline-text-3" id="text-org80727a7">
 <blockquote>
 <p>
 Representation header fields provide metadata about the representation. When a message includes a payload body, the representation header fields describe how to interpret the representation data enclosed in the payload body. In a response to a HEAD request, the representation header fields describe the representation data that would have been enclosed in the payload body if the same request had been a GET.
@@ -906,7 +906,7 @@ Representation header fields provide metadata about the representation. When a m
 </blockquote>
 
 <p>
-与 representation 相关的报头域提供了 representation 的元数据。当一个<ruby>报文<rt>message</rt></ruby>包含一个<ruby>有效载荷<rt>payload body</rt></ruby>时，与 representation 相关的报头域描述了如何解释这个封装在有效载荷内的 representation data。在一个回应给 HEAD 请求的响应报文里，与 representation 相关的报头域描述了如果相同的请求是一个 GET 请求的话，将会如何解释这个封装在有效载荷内的 representation data。
+与表示形式相关的报头域提供了表示形式的元数据。当一个<ruby>报文<rt>message</rt></ruby>包含一个<ruby>有效载荷<rt>payload body</rt></ruby>时，这些报头域描述了如何解释这个封装在有效载荷内的<ruby>表示形式数据<rt>representation data</rt></ruby>。在一个回应给 HEAD 请求的响应报文里，这些报头域描述了如果相同的请求是一个 GET 请求的话，将会如何解释这个封装在有效载荷内的<ruby>表示形式数据<rt>representation data</rt></ruby>。
 </p>
 
 <blockquote>
@@ -916,7 +916,7 @@ The following header fields convey representation metadata:
 </blockquote>
 
 <p>
-以下报头域负责传达 representation metadata：
+以下报头域负责传达<ruby>表示形式元数据<rt>representation metadata</rt></ruby>：
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1061,7 +1061,7 @@ HTTP uses charset names to indicate or negotiate the character encoding scheme o
 </blockquote>
 
 <p>
-HTTP 使用<ruby>字符集名称<rt>charset names</rt></ruby>来指定或协商一个文本类型的 representation 的<ruby>字符编码方案<rt>character encoding scheme</rt></ruby>【<a href="https://tools.ietf.org/html/rfc6365">RFC6365</a>】。字符集由一个不区分大小写的 token 来指定。
+HTTP 使用<ruby>字符集名称<rt>charset names</rt></ruby>来表明或协商一个文本类型的<ruby>表现形式<rt>representation</rt></ruby>的<ruby>字符编码方案<rt>character encoding scheme</rt></ruby>【<a href="https://tools.ietf.org/html/rfc6365">RFC6365</a>】。字符集由一个不区分大小写的<ruby>标记<rt>token</rt></ruby>来标识。
 </p>
 
 <div class="org-src-container">
@@ -1091,7 +1091,7 @@ Internet media types are registered with a canonical form in order to be interop
 </blockquote>
 
 <p>
-<ruby>互联网媒体类型<rt>Internet media types</rt></ruby>是使用一种<ruby>规范形式<rt>canonical form</rt></ruby>来注册的，以便于在具有不同本地编码格式的系统之间能够相互操作。经由 HTTP 来选择或传输的 representations 应该使用规范形式，其原因已经在<ruby>多用途互联网邮件扩展<rt>Multipurpose Internet Mail Extensions</rt></ruby>（MIME）【<a href="https://tools.ietf.org/html/rfc2045">RFC2045</a>】里描述过了。然而，电子邮件调度（即存储和转发报文到其他对方）的性能特征跟在 HTTP 和 Web（其于服务器的信息服务）中通用的性能特征有明显的区别。此外，在 MIME 里为了兼容旧的邮件传输协议所设计的约束并不适用于 HTTP（见<a href="#orgc9f7ec8">附录 A</a>）。
+<ruby>互联网媒体类型<rt>Internet media types</rt></ruby>是使用一种<ruby>规范形式<rt>canonical form</rt></ruby>来注册的，以便于在具有不同本地编码格式的系统之间能够相互操作。经由 HTTP 来选择或传输的<ruby>资源表示形式<rt>representations</rt></ruby>应该使用规范形式，其原因已经在<ruby>多用途互联网邮件扩展<rt>Multipurpose Internet Mail Extensions</rt></ruby>（MIME）【<a href="https://tools.ietf.org/html/rfc2045">RFC2045</a>】里描述过了。然而，电子邮件调度（即存储和转发报文到其他对方）的性能特征跟在 HTTP 和 Web（其于服务器的信息服务）中通用的性能特征有明显的区别。此外，在 MIME 里为了兼容旧的邮件传输协议所设计的约束并不适用于 HTTP（见<a href="#orgc9f7ec8">附录 A</a>）。
 </p>
 
 <blockquote>
@@ -1107,7 +1107,7 @@ MIME's canonical form requires that media subtypes of the "text" type use <code>
 </blockquote>
 
 <p>
-MIME 的规范形式要求文本（"text"）类型媒体的子类型使用 <code>CRLF</code> 来作为换行符。HTTP 允许文本类型媒体单独使用 <code>CR</code> 或者 <code>LF</code> 来表示一个换行符，只要求所使用的换行符在整个 representation 中是统一的。HTTP 发送端 <b>可以</b> 在文本类型媒体中生成由 <code>CRLF</code>、或者单纯是 <code>CR</code>、或者单纯是为 <code>LF</code> 组成的换行符。HTTP 接收端 <b>必须</b> 能够解析文本类型媒体中的由 <code>CRLF</code>、或者单纯是 <code>CR</code>、或者单纯是 <code>LF</code> 组成的换行符。而且，在 HTTP 里的文本类型媒体并不限于使用 13 作为 <code>CR</code>，10 作为 <code>LF</code> 的字符集。这种对于换行符的灵活性仅适用于一个声明为 "text" 媒体类型的 representation 以内的文本，它并不适用于 "multipart" 类型，也不适用于有效载荷以外的 HTTP 元素（例如，报头域）。
+MIME 的规范形式要求文本（"text"）类型媒体的子类型使用 <code>CRLF</code> 来作为换行符。HTTP 允许文本类型媒体单独使用 <code>CR</code> 或者 <code>LF</code> 来表示一个换行符，只要求所使用的换行符在整个<ruby>资源表示形式<rt>representation</rt></ruby>中是统一的。HTTP 发送端 <b>可以</b> 在文本类型媒体中生成由 <code>CRLF</code>、或者单纯是 <code>CR</code>、或者单纯是为 <code>LF</code> 组成的换行符。HTTP 接收端 <b>必须</b> 能够解析文本类型媒体中的由 <code>CRLF</code>、或者单纯是 <code>CR</code>、或者单纯是 <code>LF</code> 组成的换行符。而且，在 HTTP 里的文本类型媒体并不限于使用 13 作为 <code>CR</code>，10 作为 <code>LF</code> 的字符集。这种对于换行符的灵活性仅适用于声明为 "text" 媒体类型的<ruby>表示形式<rt>representation</rt></ruby>以内的文本，它并不适用于 "multipart" 类型，也不适用于有效载荷以外的 HTTP 元素（例如，报头域）。
 </p>
 
 <blockquote>
@@ -1117,7 +1117,7 @@ If a representation is encoded with a content-coding, the underlying data ought 
 </blockquote>
 
 <p>
-如果一个 representation 使用了一种<ruby>内容编码值<rt>content-coding</rt></ruby>来编码，<ruby>基础数据<rt>underlying data</rt></ruby>应该在编码之前处于上述定义的那种规范形式。
+如果一种<ruby>表示形式<rt>representation</rt></ruby>使用了一种<ruby>内容编码值<rt>content-coding</rt></ruby>来编码，<ruby>基础数据<rt>underlying data</rt></ruby>应该在编码之前处于上述定义的那种规范形式。
 </p>
 
 <blockquote>
@@ -1136,7 +1136,7 @@ MIME provides for a number of "multipart" types — encapsulations of one or mor
 </p>
 
 <p>
-MIME 提供了大量的 "multipart" 类型，即在单独一个<ruby>报文正文<rt>message body</rt></ruby>里封装了一个或多个 representations。所有 multipart 类型共享一个通用的句法（见<a href="https://tools.ietf.org/html/rfc2046#section-5.1.1">【RFC2046】章节 5.1.1</a>），并且包含一个 <code>boundary</code> 参数作为媒体类型的值的一部分。报文正文本身就是一个协议元素，发送端 <b>必须</b> 在报文正文的各个<ruby>分部<rt>parts</rt></ruby>之间仅生成 <code>CRLF</code> 来表示换行符。
+MIME 提供了大量的 "multipart" 类型，即在单独一个<ruby>报文正文<rt>message body</rt></ruby>里封装了一个或多个<ruby>表示形式<rt>representations</rt></ruby>。所有 "multipart" 类型共享一个通用的句法（见<a href="https://tools.ietf.org/html/rfc2046#section-5.1.1">【RFC2046】章节 5.1.1</a>），并且包含一个 <code>boundary</code> 参数作为媒体类型的值的一部分。报文正文本身就是一个协议元素，发送端 <b>必须</b> 在报文正文的各个<ruby>分部<rt>parts</rt></ruby>之间仅生成 <code>CRLF</code> 来表示换行符。
 </p>
 
 <blockquote>
@@ -1165,7 +1165,7 @@ The "Content-Type" header field indicates the media type of the associated repre
 </blockquote>
 
 <p>
-<code>Content-Type</code> 报头域指明了它所关联的 representation 的媒体类型。所述“关联的 representation”，要不是封装在报文有效载荷内的 representation，要不是已选定的 representation，由报文语义所决定。 <code>Content-Type</code> 所指定的媒体类型定义了 representation 的数据格式以及期望该数据被接收端如何处理，在该报文的语义范围之内，在依照 <code>Content-Encoding</code> 里的所有内容编码进行解码之后。
+<code>Content-Type</code> 报头域指明了它所关联的<ruby>表示形式<rt>representation</rt></ruby>的媒体类型。所述“关联的表示形式”，是封装在报文有效载荷内的表示形式或者<ruby>已选定的表示形式<rt>selected representation</rt></ruby>，由报文语义所决定。 <code>Content-Type</code> 所指定的媒体类型定义了<ruby>表示形式<rt>representation</rt></ruby>的数据格式以及期望该数据被接收端如何处理，在该报文的语义范围之内，在依照 <code>Content-Encoding</code> 里的所有内容编码进行解码之后。
 </p>
 
 <div class="org-src-container">
@@ -1195,7 +1195,7 @@ A sender that generates a message containing a payload body <b>SHOULD</b> genera
 </blockquote>
 
 <p>
-如果发送端所生成的报文包含有一个有效载荷，那么发送端 <b>应当</b> 在该报文里生成一个 <code>Content-Type</code> 报头域，除非它并不知道应该对封装在有效载荷内的 representation 的指定哪一种媒体类型。如果没有出现 <code>Content-Type</code> 报头域，接收端 <b>可以</b> 要不假定为 "application/octet-stream" 媒体类型（<a href="https://tools.ietf.org/html/rfc2046#section-4.5.1">【RFC2046】章节 4.5.1</a>），要不检查该数据来确定它的媒体类型。
+如果发送端所生成的报文包含有一个有效载荷，那么发送端 <b>应当</b> 在该报文里生成一个 <code>Content-Type</code> 报头域，除非它并不知道应该对封装在有效载荷内的<ruby>表示形式<rt>representation</rt></ruby>指定哪一种媒体类型。如果没有出现 <code>Content-Type</code> 报头域，接收端 <b>可以</b> 要不假定为 "application/octet-stream" 媒体类型（<a href="https://tools.ietf.org/html/rfc2046#section-4.5.1">【RFC2046】章节 4.5.1</a>），要不检查该数据来确定它的媒体类型。
 </p>
 
 <blockquote>
@@ -1205,7 +1205,7 @@ In practice, resource owners do not always properly configure their origin serve
 </blockquote>
 
 <p>
-实际上，<ruby>资源所有者<rt>resource owners</rt></ruby>并不总是能恰当地配置它们的源服务器来为一个给定的 representation 提供正确的 <code>Content-Type</code>，出于这种原因，某些客户端会检查有效载荷的内容然后<ruby>重写<rt>override</rt></ruby>指定的类型。但是，客户端这样做可能会得出错误的论断，从而可能会暴露出额外的安全风险（例如，<ruby>特权提升<rt>privilege escalation</rt></ruby>）。而且，通过检查数据格式是不可能确定发送端的真正意图的，这是由于某些数据格式能够匹配多种媒体类型，而仅在语义处理会有所不同。鼓励实现者提供一种方法，当启用这种方法的时候可以禁用上述这种“<ruby>内容嗅探<rt>content sniffing</rt></ruby>”。
+实际上，<ruby>资源所有者<rt>resource owners</rt></ruby>并不总是能恰当地配置它们的源服务器来为一个给定的<ruby>表示形式<rt>representation</rt></ruby>提供正确的 <code>Content-Type</code>，出于这种原因，某些客户端会检查有效载荷的内容然后<ruby>重写<rt>override</rt></ruby>指定的类型。但是，客户端这样做可能会得出错误的论断，从而可能会暴露出额外的安全风险（例如，<ruby>特权提升<rt>privilege escalation</rt></ruby>）。而且，通过检查数据格式是不可能确定发送端的真正意图的，这是由于某些数据格式能够匹配多种媒体类型，而仅在语义处理会有所不同。鼓励实现者提供一种方法，当启用这种方法的时候可以禁用上述这种“<ruby>内容嗅探<rt>content sniffing</rt></ruby>”。
 </p>
 
 <blockquote>
@@ -1231,7 +1231,7 @@ Content coding values indicate an encoding transformation that has been or can b
 </blockquote>
 
 <p>
-content coding 的值指明了一种已经或能够应用到一个 representation 的<ruby>编码转换<rt>encoding transformation</rt></ruby>。content coding 主要用来允许在没有丢失 representation 之前的媒体类型的身份以及没有丢失信息的情况下，对该 representation 进行压缩或者进行其他方式的转换。representation 常常被存储为<ruby>编码过的形式<rt>code form</rt></ruby>，然后将其直接进行传输，最后仅到达最终接收端才会进行解码。
+content coding 的值指明了一种已经或能够应用到一个<ruby>表示形式<rt>representation</rt></ruby>的<ruby>编码转换<rt>encoding transformation</rt></ruby>。content coding 主要用来允许在没有丢失<ruby>表示形式<rt>representation</rt></ruby>之前的媒体类型的身份以及没有丢失信息的情况下，对该表示形式进行压缩或者进行其他方式的转换。表示形式常常被存储为<ruby>编码过的形式<rt>code form</rt></ruby>，然后将其直接进行传输，最后仅到达最终接收端才会进行解码。
 </p>
 
 <blockquote>
@@ -1287,7 +1287,7 @@ The "Content-Encoding" header field indicates what content codings have been app
 </blockquote>
 
 <p>
-<code>Content-Encoding</code> 报头域指明了已经对 representation 应用了哪些突破其固有的媒体类型的 content codings，因此得知，为了获得 <code>Content-Type</code> 报头域所提及的那种媒体类型的数据，需要应用哪一种解码机制。<code>Content-Encoding</code> 主要用来允许在没有丢失 representation 之前的媒体类型的身份的情况下，对一个 representation 的数据进行压缩。
+<code>Content-Encoding</code> 报头域指明了已经对<ruby>表示形式<rt>representation</rt></ruby>应用了哪些突破其固有的媒体类型的 content codings，因此得知，为了获得 <code>Content-Type</code> 报头域所提及的那种媒体类型的数据，需要应用哪一种解码机制。<code>Content-Encoding</code> 主要用来允许在没有丢失<ruby>表示形式<rt>representation</rt></ruby>之前的媒体类型的身份的情况下，对一个<ruby>表示形式<rt>representation</rt></ruby>的数据进行压缩。
 </p>
 
 <div class="org-src-container">
@@ -1316,7 +1316,7 @@ If one or more encodings have been applied to a representation, the sender that 
 </blockquote>
 
 <p>
-如果对一个 representation 应用了一种或多种编码，应用这些编码的发送端 <b>必须</b> 生成一个 <code>Content-Encoding</code> 报头域，以它们被应用的先后顺序来一一列出对应的 content codings。如果某种编码需要附带额外的参数信息，可以由其他未在本规范上定义过的报头域来提供。
+如果对一个<ruby>表示形式<rt>representation</rt></ruby>应用了一种或多种编码，应用这些编码的发送端 <b>必须</b> 生成一个 <code>Content-Encoding</code> 报头域，以它们被应用的先后顺序来一一列出对应的 content codings。如果某种编码需要附带额外的参数信息，可以由其他未在本规范上定义过的报头域来提供。
 </p>
 
 <blockquote>
@@ -1326,7 +1326,7 @@ Unlike <code>Transfer-Encoding</code> (<a href="RFC7230.html#ID-1754823B-D0BC-41
 </blockquote>
 
 <p>
-不像 <code>Transfer-Encoding</code> （<a href="RFC7230.html#ID-1754823B-D0BC-410F-A17B-E7ADA1AA79BC">【RFC7230】章节 3.3.1</a>），列在 <code>Content-Encoding</code> 报头域上的 codings 是 representation 的特性。representation 是依据其编码过的形式来进行定义的，除非在元数据的定义中另有注明，所有其他关于 representation 的元数据是对该形式进行描述的。通常，representation 仅在渲染呈现或类似的用途之前才会被解码。
+不像 <code>Transfer-Encoding</code> （<a href="RFC7230.html#ID-1754823B-D0BC-410F-A17B-E7ADA1AA79BC">【RFC7230】章节 3.3.1</a>），列在 <code>Content-Encoding</code> 报头域上的 codings 是<ruby>表示形式<rt>representation</rt></ruby>的特性。<ruby>表示形式<rt>representation</rt></ruby>是依据其编码过的形式来进行定义的，除非在元数据的定义中另有注明，所有其他与表示形式相关的元数据皆为对这种编码过的形式进行描述的。通常，<ruby>表示形式<rt>representation</rt></ruby>仅在渲染呈现或类似的用途之前才会被解码。
 </p>
 
 <blockquote>
@@ -1336,7 +1336,7 @@ If the media type includes an inherent encoding, such as a data format that is a
 </blockquote>
 
 <p>
-如果媒体类型包含有一种<ruby>固有的编码<rt>inherent encoding</rt></ruby>，例如一种总是以压缩方式来表示的数据格式，那么，这种编码不要在 <code>Content-Encoding</code> 里重申，哪怕它恰巧与其中一个 content codings 的算法一致。这种 content coding 只会在以下这种情况下才需要在 <code>Content-Encoding</code> 列出：出于某些怪异的原因，需要应用该 content coding 两次才能形成正确的 representation。同样，原服务器可能选择将该同样的数据作为<ruby>多种 representations<rt>multiple representations</rt></ruby> 来发布，其区别仅在于 coding 是作为 Content-Type 的一部分还是作为 Content-Encoding 的一部分 ，这是因为某些用户代理处理各个响应的行为会有所不同（例如，打开一个“另存为&#x2026;”对话框，而不是自动解缩并渲染内容）。
+如果媒体类型包含有一种<ruby>固有的编码<rt>inherent encoding</rt></ruby>，例如一种总是以压缩方式来表示的数据格式，那么，这种编码不要在 <code>Content-Encoding</code> 里重申，哪怕它恰巧与其中一个 content codings 的算法一致。这种 content coding 只会在以下这种情况下才需要在 <code>Content-Encoding</code> 列出：出于某些怪异的原因，需要应用该 content coding 两次才能形成正确的<ruby>表示形式<rt>representation</rt></ruby>。同样，原服务器可能选择将该同样的数据作为<ruby>多种表示形式<rt>multiple representations</rt></ruby>来发布，其区别仅在于 coding 是作为 <code>Content-Type</code> 的一部分还是作为 <code>Content-Encoding</code> 的一部分 ，这是因为某些用户代理处理各个响应的行为会有所不同（例如，打开一个“另存为&#x2026;”对话框，而不是自动解缩并渲染内容）。
 </p>
 
 <blockquote>
@@ -1346,7 +1346,7 @@ An origin server <b>MAY</b> respond with a status code of <code>415 (Unsupported
 </blockquote>
 
 <p>
-如果请求报文里的某个 representation 应用了服务器不支持的 content coding，源服务器 <b>可以</b> 以 <code>415 (Unsupported Media Type)</code> 作为响应。
+如果请求报文里的<ruby>表示形式<rt>representation</rt></ruby>应用了服务器不支持的 content coding，源服务器 <b>可以</b> 以 <code>415 (Unsupported Media Type)</code> 作为响应。
 </p>
 </div>
 </div>
@@ -1420,7 +1420,7 @@ The "Content-Language" header field describes the natural language(s) of the int
 </blockquote>
 
 <p>
-<code>Content-Language</code> 报头域描述了 representation 的目标受众的（一种或多种）自然语言。需要注意的是，它可能并不等价于用在 representation 里的所有语言。
+<code>Content-Language</code> 报头域描述了<ruby>资源表示形式<rt>representation</rt></ruby>的目标受众的（一种或多种）自然语言。需要注意的是，它可能并不等价于用在<ruby>表示形式<rt>representation</rt></ruby>里的所有语言。
 </p>
 
 <div class="org-src-container">
@@ -1435,7 +1435,7 @@ Language tags are defined in <a href="#org2f3fd1f">Section 3.1.3.1</a>. The prim
 </blockquote>
 
 <p>
-<ruby>语言标签<rt>language tag</rt></ruby>定义在<a href="#org2f3fd1f">章节 3.1.3.1</a> 里。<code>Content-Language</code> 的主要目的是让用户能够依据自身的首选语言来标识和区分 representations。所以，如果只想将<ruby>懂丹麦语<rt>Danish-literate</rt></ruby>的人作为内容的目标受众，那么报头域可以这样设置：
+<ruby>语言标签<rt>language tag</rt></ruby>定义在<a href="#org2f3fd1f">章节 3.1.3.1</a> 里。<code>Content-Language</code> 的主要目的是让用户能够依据自身的首选语言来标识和区分<ruby>表示形式<rt>representation</rt></ruby>。所以，如果只想将<ruby>懂丹麦语<rt>Danish-literate</rt></ruby>的人作为内容的目标受众，那么报头域可以这样设置：
 </p>
 
 <pre class="example">
@@ -1473,7 +1473,7 @@ However, just because multiple languages are present within a representation doe
 </blockquote>
 
 <p>
-然而，只因为在一个 representation 里出现了多种语言就认为它是打算面向认识多种语言的受众，这是错误的。举个例子，一本面向新手的语言入门读物，就称为《第一堂拉丁语课》吧，是明确打算面向懂英语的读者的，那么，最恰当的做法是 <code>Content-Language</code> 只包含 "en"。
+然而，只因为在一个<ruby>表示形式<rt>representation</rt></ruby>里出现了多种语言就认为它是打算面向认识多种语言的受众，这是错误的。举个例子，一本面向新手的语言入门读物，就称为《第一堂拉丁语课》吧，是明确打算面向懂英语的读者的，那么，最恰当的做法是 <code>Content-Language</code> 只包含 "en"。
 </p>
 
 <blockquote>
@@ -1483,7 +1483,7 @@ However, just because multiple languages are present within a representation doe
 </blockquote>
 
 <p>
-<code>Content-Language</code> 可以应用于任意<ruby>媒体类型<rt>media type</rt></ruby> 的 representation 里，也就是说，它并不仅限于<ruby>文本类的文档<rt>textual documents</rt></ruby>。
+<code>Content-Language</code> 可以应用于任意<ruby>媒体类型<rt>media type</rt></ruby> 的<ruby>表示形式<rt>representation</rt></ruby>里，也就是说，它并不仅限于<ruby>文本类的文档<rt>textual documents</rt></ruby>。
 </p>
 </div>
 </div>
@@ -1560,7 +1560,7 @@ The "Content-Location" header field references a URI that can be used as an iden
 </blockquote>
 
 <p>
-<code>Content-Location</code> 报头域是一个 URI，该 URI 能够用于作为一个与封装在报文有效载荷内的 representation 所对应的具体资源的标识符。换句话说，如果某个用户代理对这个 URI 执行了 GET 请求，那么会回应一个 <code>200 (OK)</code> 响应报文，该响应报文的有效载荷会封装相同的 representation。
+<code>Content-Location</code> 报头域是一个 URI，该 URI 可以作为一种标识符来标识与封装在报文有效载荷内的<ruby>资源表示形式<rt>representation</rt></ruby>所对应的具体资源。换句话说，如果某个用户代理对这个 URI 执行了 GET 请求，那么会回应一个 <code>200 (OK)</code> 响应报文，该响应报文的有效载荷会封装相同的<ruby>表示形式<rt>representation</rt></ruby>。
 </p>
 
 <div class="org-src-container">
@@ -1575,7 +1575,7 @@ The <code>Content-Location</code> value is not a replacement for the effective R
 </blockquote>
 
 <p>
-<code>Content-Location</code> 的值并不是用来替换<ruby>有效请求 URI<rt>effective request URI</rt></ruby>（<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）的。它是一个 representation metadata。它具有与定义在 MIME 的同名报头域（<a href="https://tools.ietf.org/html/rfc2557#section-4">【RFC2557】章节 4</a>）相同的句法和语义。但是，这个报头域出现在一个 HTTP 报头里是具有特殊含义的。
+<code>Content-Location</code> 的值并不是用来替换<ruby>有效请求 URI<rt>effective request URI</rt></ruby>（<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）的。它是一种<ruby>表示形式元数据<rt>representation metadata</rt></ruby>。它具有与定义在 MIME 的同名报头域（<a href="https://tools.ietf.org/html/rfc2557#section-4">【RFC2557】章节 4</a>）相同的句法和语义。但是，这个报头域出现在一个 HTTP 报头里是具有特殊含义的。
 </p>
 
 <blockquote>
@@ -1585,7 +1585,7 @@ If <code>Content-Location</code> is included in a <code>2xx (Successful)</code> 
 </blockquote>
 
 <p>
-如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应报文里，且它的值指向于（在转换为<ruby>绝对形式<rt>absolute form</rt></ruby>之后）一个与有效请求 URI 相同的 URI，那么，接收端 <b>可以</b> 将该有效载荷认为是一个在特定时间里的资源的 current representation，所述特定时间是由<ruby>报文始发日期<rt>message origination date</rt></ruby>所指定的时间。对于 GET（<a href="#org479e86d">章节 4.3.1</a>）或者 HEAD（<a href="#org607980d">章节 4.3.2</a>）请求来说，这与在服务器没有提供 <code>Content-Location</code> 报头域的情况下的默认语义相一致。对于类似 PUT（<a href="#org2e14fb1">章节 4.3.4</a>）或者 POST（<a href="#org24c5a01">章节 4.3.3</a>）这些会<ruby>改变状态<rt>state-changing</rt></ruby>的请求来说，这意味着服务器的响应包含了该资源的新的 representation，由此与那些只报告动作方面的信息（例如，“<ruby>它生效了！<rt>It worked!</rt></ruby>”）的 representations 作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
+如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应报文里，且它的值指向于（在转换为<ruby>绝对形式<rt>absolute form</rt></ruby>之后）一个与有效请求 URI 相同的 URI，那么，接收端 <b>可以</b> 将该有效载荷认为是对应资源在特定时间里的<ruby>当前表示形式<rt>current representation</rt></ruby>，所述“特定时间”是指由<ruby>报文始发日期<rt>message origination date</rt></ruby>所指定的时间。对于 GET（<a href="#org479e86d">章节 4.3.1</a>）或者 HEAD（<a href="#org607980d">章节 4.3.2</a>）请求来说，这与在服务器没有提供 <code>Content-Location</code> 报头域的情况下的默认语义相一致。对于类似 PUT（<a href="#org2e14fb1">章节 4.3.4</a>）或者 POST（<a href="#org24c5a01">章节 4.3.3</a>）这些会<ruby>改变状态<rt>state-changing</rt></ruby>的请求来说，这意味着服务器的响应包含了这个资源的新的<ruby>表示形式<rt>representation</rt></ruby>，由此与那些只报告动作方面的信息（例如，“<ruby>它生效了！<rt>It worked!</rt></ruby>”）的<ruby>表示形式<rt>representations</rt></ruby>作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
 </p>
 
 <blockquote>
@@ -1600,12 +1600,12 @@ If <code>Content-Location</code> is included in a <code>2xx (Successful)</code> 
 </blockquote>
 
 <p>
-如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应报文里，且它的域值指向于一个与有效请求 URI 不相同的 URI，那么，源服务器<ruby>声称<rt>claim</rt></ruby>该 URI 是一个与封装在该有效载荷内的 representation 相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
+如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应报文里，且它的域值指向于一个与有效请求 URI 不相同的 URI，那么，源服务器<ruby>声称<rt>claim</rt></ruby>该 URI 是一个与封装在该有效载荷内的<ruby>表示形式<rt>representation</rt></ruby>相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
 </p>
 <ul class="org-ul">
-<li>对于回应给 GET 或 HEAD 请求的一个响应，它表明了<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 指向到一个服从<ruby>内容协商<rt>content negotiation</rt></ruby>的资源，并且针对<ruby>已选定的 representation<rt>selective representation</rt></ruby>  来说，<code>Content-Location</code> 的域值是一个更加具体的标识符。</li>
-<li>对于回应给<ruby>会改变资源状态的请求方法<rt>state-changing method</rt></ruby>的一个 <code>201 (Created)</code> 响应，如果 <code>Content-Location</code> 的域值与 <code>Location</code> 的域值相同，那么，这表明这个有效载荷是新近被创建的资源的<ruby>当前 representation<rt>current representation</rt></ruby>。</li>
-<li>否则，这个 <code>Content-Location</code> 表明了这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对 representation 进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 <code>200 (OK)</code> 响应的有效载荷，<code>Content-Location</code> 的域值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。</li>
+<li>对于回应给 GET 或 HEAD 请求的一个响应，它表明了<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 指向到一个服从<ruby>内容协商<rt>content negotiation</rt></ruby>的资源，并且针对<ruby>已选定的表示形式<rt>selective representation</rt></ruby>  来说，<code>Content-Location</code> 的域值是一个更加具体的标识符。</li>
+<li>对于回应给<ruby>会改变资源状态的请求方法<rt>state-changing method</rt></ruby>的一个 <code>201 (Created)</code> 响应，如果 <code>Content-Location</code> 的域值与 <code>Location</code> 的域值相同，那么，这表明这个有效载荷是新近被创建的资源的<ruby>当前表示形式<rt>current representation</rt></ruby>。</li>
+<li>否则，这个 <code>Content-Location</code> 表明了这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对<ruby>表示形式<rt>representation</rt></ruby>进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 <code>200 (OK)</code> 响应的有效载荷，<code>Content-Location</code> 的域值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。</li>
 </ul>
 
 <blockquote>
@@ -1615,7 +1615,7 @@ A user agent that sends <code>Content-Location</code> in a request message is st
 </blockquote>
 
 <p>
-用户代理在其发送的请求报文里带有 <code>Content-Location</code> 是想表达它的域值里的 URI 指的是用户代理最开始是在哪里获得这个封装在有效载荷内的 representation 的内容的（在该用户代理对这个 representation 所作的任何更改之前）。也就是说，该用户代理提供了一种对于原始 representation 的<ruby>来源<rt>source</rt></ruby>的<ruby>反向链接<rt>back link</rt></ruby><sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>。
+用户代理在其发送的请求报文里带有 <code>Content-Location</code> 是想表达它的域值里的 URI 指的是用户代理最开始是在哪里获得这个封装在有效载荷内的<ruby>表示形式<rt>representation</rt></ruby>的内容的（在该用户代理对这个表示形式所作的任何更改之前）。也就是说，该用户代理提供了一种的<ruby>反向链接<rt>back link</rt></ruby><sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>来指向于<ruby>原始表示形式<rt>original representation</rt></ruby>的<ruby>来源<rt>source</rt></ruby>。
 </p>
 
 <blockquote>
@@ -1625,7 +1625,7 @@ An origin server that receives a <code>Content-Location</code> field in a reques
 </blockquote>
 
 <p>
-源服务器在一个请求报文中接收到 <code>Content-Location</code> 报头域的时候，<b>必须</b> 将该报头域的信息作为<ruby>暂时的请求上下文<rt>transitory request context</rt></ruby>来对待，而不是作为 representation metadata 来逐字保存。源服务器 <b>可以</b> 使用该上下文来指导请求的处理，或者将其保存起来留作其他用途，例如，用于<ruby>来源链接<rt>source links</rt></ruby>或<ruby>元数据的版本管理<rt>versioning metadata</rt></ruby>。但是，源服务器 <b>禁止</b> 使用这种上下文信息来改变该请求的语义。
+源服务器在一个请求报文中接收到 <code>Content-Location</code> 报头域的时候，<b>必须</b> 将该报头域的信息作为<ruby>暂时的请求上下文<rt>transitory request context</rt></ruby>来对待，而不是作为元数据被逐字保存来成为<ruby>资源表示形式<rt>representation</rt></ruby>的一部分。源服务器 <b>可以</b> 使用该上下文来指导请求的处理，或者将其保存起来留作其他用途，例如，用于<ruby>来源链接<rt>source links</rt></ruby>或<ruby>元数据的版本管理<rt>versioning metadata</rt></ruby>。但是，源服务器 <b>禁止</b> 使用这种上下文信息来改变该请求的语义。
 </p>
 
 <blockquote>
@@ -1635,16 +1635,16 @@ For example, if a client makes a PUT request on a negotiated resource and the or
 </blockquote>
 
 <p>
-例如，如果一个客户端对一个<ruby>协商过的资源<rt>negotiated resource</rt></ruby>发起一个 PUT 请求，并且源服务器接受了这个 PUT（没有经过<ruby>重定向<rt>redirection</rt></ruby>），那么，资源的新状态预期将与提供自该 PUT 请求的 representation 相一致；PUT 请求里的 <code>Content-Location</code> 报头域不能当作是一种<ruby>反向内容选择标识符<rt>reverse content selection identifier</rt></ruby>来仅对协商的 representations 中的其中一种进行更新。如果客户端想要后者这种语义，它可以直接对 <code>Content-Location</code> 的 URI 应用 PUT 请求。
+例如，如果一个客户端对一个<ruby>协商过的资源<rt>negotiated resource</rt></ruby>发起一个 PUT 请求，并且源服务器接受了这个 PUT（没有经过<ruby>重定向<rt>redirection</rt></ruby>），那么，资源的新状态预期将与提供自该 PUT 请求的<ruby>表示形式<rt>representation</rt></ruby>相一致；PUT 请求里的 <code>Content-Location</code> 报头域不能当作是一种<ruby>反向内容选择标识符<rt>reverse content selection identifier</rt></ruby>来仅对协商的<ruby>表示形式<rt>representations</rt></ruby>中的其中一种进行更新。如果客户端想要后者这种语义，它可以直接对 <code>Content-Location</code> 的 URI 应用 PUT 请求。
 </p>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd26c42d" class="outline-3">
-<h3 id="orgd26c42d">3.2. 表示数据 / Representation Data</h3>
-<div class="outline-text-3" id="text-orgd26c42d">
+<div id="outline-container-orgb25116e" class="outline-3">
+<h3 id="orgb25116e">3.2. 表示形式数据 / Representation Data</h3>
+<div class="outline-text-3" id="text-orgb25116e">
 <blockquote>
 <p>
 The representation data associated with an HTTP message is either provided as the payload body of the message or referred to by the message semantics and the effective request URI. The representation data is in a format and encoding defined by the representation metadata header fields.
@@ -1652,7 +1652,7 @@ The representation data associated with an HTTP message is either provided as th
 </blockquote>
 
 <p>
-一个 HTTP 报文相关联的 representation data 或者提供作为报文有效载荷，或者通过报文的语义和有效请求 URI 来引用它。representation data 是处于某种格式和编码中，这种格式和编码由 representation metadata 相关的报头域来定义。
+一个 HTTP 报文相关联的<ruby>表示形式数据<rt>representation data</rt></ruby>是被提供作为报文有效载荷，或者被报文的语义和有效请求 URI 所引用。<ruby>表示形式数据<rt>representation data</rt></ruby>是处于某种由<ruby>表示形式元数据<rt>representation metadata</rt></ruby>相关的报头域所定义的格式和编码之中的。
 </p>
 
 <blockquote>
@@ -1662,7 +1662,7 @@ The data type of the representation data is determined via the header fields <co
 </blockquote>
 
 <p>
-representation data 的数据类型是经由 <code>Content-Type</code> 和 <code>Content-Encoding</code> 报头域决定的。它们共同定义了一种<ruby>双层的、顺序编码的模型<rt>two-layer, ordered encoding model</rt></ruby>：
+<ruby>表示形式数据<rt>representation data</rt></ruby>的数据类型是由 <code>Content-Type</code> 和 <code>Content-Encoding</code> 报头域决定的。它们共同定义了一种<ruby>双层嵌套的、顺序编码的模型<rt>two-layer, ordered encoding model</rt></ruby>：
 </p>
 
 <div class="org-src-container">
@@ -1682,7 +1682,7 @@ Some HTTP messages transfer a complete or partial representation as the message 
 </blockquote>
 
 <p>
-某些 HTTP 报文传输一个完整或部分的 representation 作为报文的“<ruby>有效载荷<rt>payload</rt></ruby>”。在某些情况下，一个有效载荷可能只包含 representation 相关的报头域（例如，回应给 HEAD 的响应报文），或者只有 representation 的某（几）部分（例如，<code>206 (Partial Content)</code> 状态码）。
+某些 HTTP 报文会传输一个<ruby>完整的<rt>complete</rt></ruby>或者<ruby>部分的<rt>partial</rt></ruby><ruby>资源表示形式<rt>representation</rt></ruby>来作为报文的“<ruby>有效载荷<rt>payload</rt></ruby>”。在某些情况下，一个有效载荷可能只包含<ruby>表示形式<rt>representation</rt></ruby>相关的报头域（例如，回应给 HEAD 的响应报文），或者只有表示形式的某（几）部分（例如，<code>206 (Partial Content)</code> 状态码）。
 </p>
 
 <blockquote>
@@ -1692,7 +1692,7 @@ The purpose of a payload in a request is defined by the method semantics. For ex
 </blockquote>
 
 <p>
-对于请求报文里的有效载荷，其目的是由<ruby>请求方法的语义<rt>request method semantics</rt></ruby>来定义的。例如，在一个 PUT 请求（<a href="#org2e14fb1">章节 4.3.4</a>）的有效载荷内的 representation 表示如果成功应用该请求以后，<ruby>目标资源<rt>target resource</rt></ruby>的预期的状态。而一个 POST 请求（<a href="#org24c5a01">章节 4.3.3</a>）的有效载荷内的 representation 表示交由目标资源来处理的信息。
+对于请求报文里的有效载荷，其目的是由<ruby>请求方法的语义<rt>request method semantics</rt></ruby>来定义的。例如，在一个 PUT 请求（<a href="#org2e14fb1">章节 4.3.4</a>）的有效载荷内的<ruby>资源表示形式<rt>representation</rt></ruby>代表如果成功执行该请求以后，<ruby>目标资源<rt>target resource</rt></ruby>的预期的状态。而一个 POST 请求（<a href="#org24c5a01">章节 4.3.3</a>）的有效载荷内的表示形式代表交由目标资源来处理的信息。
 </p>
 
 <blockquote>
@@ -1712,7 +1712,7 @@ Header fields that specifically describe the payload, rather than the associated
 </blockquote>
 
 <p>
-特定用于描述有效载荷而不是描述相关的 representation 的报头域，被称为“<ruby>有效载荷报头域<rt>payload header fields</rt></ruby>”。有效载荷报头域被定义在本规范的其他部分中，由它们对<ruby>报文解析<rt>message parsing</rt></ruby>的影响来决定。
+特定用于描述有效载荷（而不是描述它所关联的<ruby>表示形式<rt>representation</rt></ruby>）的报头域，被称为“<ruby>有效载荷报头域<rt>payload header fields</rt></ruby>”。有效载荷报头域被定义在本规范的其他部分中，由它们对<ruby>报文解析<rt>message parsing</rt></ruby>的影响来决定。
 </p>
 
 <blockquote>
@@ -1770,7 +1770,7 @@ When responses convey payload information, whether indicating a success or an er
 </blockquote>
 
 <p>
-响应在传达有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器——在所有可用的 representations 中，究竟响应哪一个 representation 才是最合适的。出于上述原因，HTTP 提供了<ruby>内容协商<rt>content negotiation</rt></ruby>的机制。
+响应在传达有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器——在所有可用的 representations 中，究竟响应哪一种<ruby>表示形式<rt>representation</rt></ruby>才是最合适的。出于上述原因，HTTP 提供了<ruby>内容协商<rt>content negotiation</rt></ruby>的机制。
 </p>
 
 <blockquote>
@@ -1780,7 +1780,7 @@ This specification defines two patterns of content negotiation that can be made 
 </blockquote>
 
 <p>
-本规范定义了两种内容协商的模式，使之能够在协议里可见：“<ruby>主动型<rt>proactive</rt></ruby>”和“<ruby>被动型<rt>reactive</rt></ruby>”。对于主动型内容协商，服务器会依据用户代理申明的偏好来选择 representation。对于被动型内容协商，服务会提供一系列的 representations 供用户代理选择。其他的内容协商的模式包括：“<ruby>条件内容<rt>conditional content</rt></ruby>”，representation 由多个部分组成，源服务器基于用户代理的参数来选择性地渲染各个部分；“<ruby>活动内容<rt>active content</rt></ruby>”，representation 包含有一个脚本，该脚本可以基于用户代理的特性来生成额外的（更加具体的）请求；“<ruby>透明内容协商<rt>Transparent Content Negotiation</rt></ruby>”（【<a href="https://tools.ietf.org/html/rfc2295">RFC2295</a>】），由一个中间人来执行内容选择。这些模式不是<ruby>互斥的<rt>mutually exclusive</rt></ruby>，每种都有其<ruby>适应性<rt>applicability</rt></ruby>和<ruby>实用性<rt>practicality</rt></ruby>。
+本规范定义了两种内容协商的模式，使之能够在协议里可见：“<ruby>主动型<rt>proactive</rt></ruby>”和“<ruby>被动型<rt>reactive</rt></ruby>”。对于主动型内容协商，服务器会依据用户代理申明的偏好来选择 representation。对于被动型内容协商，服务会提供一系列的<ruby>表示形式<rt>representations</rt></ruby>供用户代理选择。其他的内容协商的模式包括：“<ruby>条件内容<rt>conditional content</rt></ruby>”，<ruby>表示形式<rt>representation</rt></ruby>由多个部分组成，源服务器基于用户代理的参数来选择性地渲染各个部分；“<ruby>活动内容<rt>active content</rt></ruby>”，<ruby>表示形式<rt>representation</rt></ruby>含有一个脚本，该脚本可以基于用户代理的特性来生成额外的（更加具体的）请求；“<ruby>透明内容协商<rt>Transparent Content Negotiation</rt></ruby>”（【<a href="https://tools.ietf.org/html/rfc2295">RFC2295</a>】），由一个中间人来执行内容选择。这些模式不是<ruby>互斥的<rt>mutually exclusive</rt></ruby>，每种都有其<ruby>适应性<rt>applicability</rt></ruby>和<ruby>实用性<rt>practicality</rt></ruby>。
 </p>
 
 <blockquote>
@@ -1790,7 +1790,7 @@ Note that, in all cases, HTTP is not aware of the resource semantics. The consis
 </blockquote>
 
 <p>
-需要注意的是，不管什么情况下，HTTP 都不知道资源的语义。源服务器响应给请求所遵循的一致性，随着时间和内容协商的不同维度的变化，因然一个资源的观察到的 representations 随着时间所表现出的“相同性”，是完全取决于实体还是算法，选择还是生成了什么响应。HTTP 并不在意幕后的人物。
+需要注意的是，不管什么情况下，HTTP 都不知道资源的语义。源服务器响应给请求所遵循的一致性，随着时间和内容协商的不同维度的变化，因然一个资源所观察到的各个<ruby>表示形式<rt>representations</rt></ruby>随着时间所表现出的“相同性”，是完全取决于实体还是算法，选择还是生成了什么响应。HTTP 并不在意幕后的人物。
 </p>
 </div>
 
@@ -1804,7 +1804,7 @@ When content negotiation preferences are sent by the user agent in a request to 
 </blockquote>
 
 <p>
-用户代理发送包含内容协商的偏好信息的请求到服务器，让服务器的某个算法来选择偏好 representation，称之为<ruby>主动型协商<rt>proactive negotiation</rt></ruby>（也称<ruby>服务器驱动型协商<rt>server-driven negotiation</rt></ruby>）。这种选择是基于供响应使用的 representations （维度有很多，例如语言、内容编码等），对比多种由请求提供的信息，包括显式协商报头域（章节 5.3）和隐式特性两者，例如客户端的网络地址或者 <code>User-Agent</code> 报头域的部分信息。
+用户代理发送包含内容协商的偏好信息的请求到服务器，让服务器的某个算法来选择<ruby>首选的表示形式<rt>preferred representation</rt></ruby>，称之为<ruby>主动型协商<rt>proactive negotiation</rt></ruby>（也称<ruby>服务器驱动型协商<rt>server-driven negotiation</rt></ruby>）。这种选择是基于可供响应使用的<ruby>表示形式<rt>representations</rt></ruby>（维度有很多，例如语言、内容编码等），对比多种由请求提供的信息，包括显式协商报头域（章节 5.3）和隐式特性两者，例如客户端的网络地址或者 <code>User-Agent</code> 报头域的部分信息。
 </p>
 
 <blockquote>
@@ -1814,7 +1814,7 @@ Proactive negotiation is advantageous when the algorithm for selecting from amon
 </blockquote>
 
 <p>
-主动型协商适用于以下情况：当难以向用户代理描述清楚服务器的选择算法（如何从<ruby>可使用的 representations<rt>available representations</rt></ruby> 之中选择最佳的一个）；或者当服务器倾向于在发送第一个响应到用户代理的时候就附带上它的“<ruby>最佳猜测<rt>best guess</rt></ruby>”（希望如果该“最佳猜测”对于该用户来说已经足够好的话，就能够避免后续请求的<ruby>往返延时<rt>round trip delay</rt></ruby>）。为了提升服务器猜测的准确性，用户代理 <b>可以</b> 在其发送的请求报文中包含某些报头域来描述自身的<ruby>偏好<rt>preferences</rt></ruby>。
+主动型协商适用于以下情况：当难以向用户代理描述清楚服务器的选择算法（如何从<ruby>可使用的表现形式<rt>available representations</rt></ruby> 之中选择最佳的一个）；或者当服务器倾向于在发送第一个响应到用户代理的时候就附带上它的“<ruby>最佳猜测<rt>best guess</rt></ruby>”（希望如果该“最佳猜测”对于该用户来说已经足够好的话，就能够避免后续请求的<ruby>往返延时<rt>round trip delay</rt></ruby>）。为了提升服务器猜测的准确性，用户代理 <b>可以</b> 在其发送的请求报文中包含某些报头域来描述自身的<ruby>偏好<rt>preferences</rt></ruby>。
 </p>
 
 <blockquote>
@@ -1833,8 +1833,8 @@ Proactive negotiation has serious disadvantages:
 主动型协商有以下严重的弊端：
 </p>
 <ul class="org-ul">
-<li>对于任何给定的用户，要让服务器精准确定什么才是“最佳的 representation”是不可能的，这是因为这需要全面了解用户代理的<ruby>能力<rt>capabilities</rt></ruby>及其对响应的<ruby>使用意图<rt>intended use</rt></ruby>（例如，用户是否想在屏幕上浏览或者将其打印成纸质的？）；</li>
-<li>让用户代理在每次请求里都要描述自身的能力是非常<ruby>低效的<rt>inefficient</rt></ruby>（假定只有一小部分响应带有<ruby>多个 representations<rt>multiple representations</rt></ruby>），而且对用户的隐私有潜在风险；</li>
+<li>对于任何给定的用户，要让服务器精准确定什么才是“<ruby>最佳表示形式<rt>best representation</rt></ruby>”是不可能的，这是因为这需要全面了解用户代理的<ruby>功能<rt>capabilities</rt></ruby>及其对响应的<ruby>使用意图<rt>intended use</rt></ruby>（例如，用户是否想在屏幕上浏览或者将其打印成纸质的？）；</li>
+<li>让用户代理在每次请求里都要描述自身的能力是非常<ruby>低效的<rt>inefficient</rt></ruby>（假定只有一小部分响应带有<ruby>多个表示形式<rt>multiple representations</rt></ruby>），而且对用户的隐私有潜在风险；</li>
 <li>复杂化了源服务器的实现和生成响应给到请求的算法；</li>
 <li>限制了<ruby>共享缓存<rt>shared caching</rt></ruby>的<ruby>复用性<rt>reusability</rt></ruby>。</li>
 </ul>
@@ -1871,7 +1871,7 @@ With reactive negotiation (a.k.a., agent-driven negotiation), selection of the b
 </blockquote>
 
 <p>
-使用<ruby>被动型协商<rt>reactive negotiation</rt></ruby>（也称<ruby>代理驱动型协商<rt>agent-driven negotiation</rt></ruby>），选择哪一个作为响应的最佳 representation（且不论<ruby>响应状态码<rt>response status code</rt></ruby>）是由用户代理在接收到一个来自源服务器的<ruby>初始响应<rt>initial response</rt></ruby>之后执行的。该初始响应包含一个<ruby>备选 representations<rt>alternative representations</rt></ruby> 列表。如果用户代理不满意初始响应的 representation，它可以（基于包含在上述列表中的元数据来）选择向一个或多个备选 representations 发起 GET 请求来获得不同形式的 representation。选择哪一种备选 representation 可能由用户代理自动执行，也可能由用户从一个生成好的菜单（也许是超文本）里手动选择。
+使用<ruby>被动型协商<rt>reactive negotiation</rt></ruby>（也称<ruby>代理驱动型协商<rt>agent-driven negotiation</rt></ruby>），选择哪一个作为响应的<ruby>最佳表示形式<rt>best representation</rt></ruby>（且不论<ruby>响应状态码<rt>response status code</rt></ruby>）是由用户代理在接收到一个来自源服务器的<ruby>初始响应<rt>initial response</rt></ruby>之后执行的。这个初始响应会包含<ruby>备选的表示形式<rt>alternative representations</rt></ruby>的一个列表。如果用户代理不满意初始响应的表示形式，它可以（基于包含在上述列表中的元数据来）选择向一个或多个备选表示形式所对应的 URI 发起 GET 请求来获得其得的表示形式。选择哪一种备选表示形式可能是由用户代理自动执行，也可能是由用户从一个生成好的菜单（也许是超文本）里手动选择。
 </p>
 
 <blockquote>
@@ -1881,7 +1881,7 @@ Note that the above refers to representations of the response, in general, not r
 </blockquote>
 
 <p>
-需要注意的是，上述所指的是响应的 representations，通常来说，并不是指资源的 representations。如果提供那些<ruby>备选 representation<rt>alternative representations</rt></ruby> 的响应带有如下语义：成为目标资源的一种 representation（例如，一个回应给 GET 请求的 <code>200 (OK)</code> 响应）；或者提供链接到该目标资源的备选 representations（例如，一个回应给 GET 请求的 <code>300 (Multiple Choices)</code> 响应），那么，备选 representations 仅考虑目标资源的 representations。
+需要注意的是，上述指的是响应的表示形式，通常来说，并不是指资源的表示形式。如果提供那些<ruby>备选表示形式<rt>alternative representations</rt></ruby>的响应带有如下语义：成为目标资源的一种表示形式（例如，一个回应给 GET 请求的 <code>200 (OK)</code> 响应）；或者提供链接到该目标资源的备选表示形式（例如，一个回应给 GET 请求的 <code>300 (Multiple Choices)</code> 响应），那么，备选表示形式仅考虑目标资源的表示形式。
 </p>
 
 <blockquote>
@@ -1891,7 +1891,7 @@ A server might choose not to send an initial representation, other than the list
 </blockquote>
 
 <p>
-服务器可能选择不发送一个初始 representation，而只发送<ruby>备选列表<rt>list of alternatives</rt></ruby>，从而表明它首选由用户代理来执行的被动型协商。例如，列在带有 <code>300 (Multiple Choices)</code> 和 <code>406 (Not Acceptable)</code> 状态码的响应里的<ruby>备选物<rt>alternatives</rt></ruby>，包含了关于<ruby>可用 representations<rt>available representations</rt></ruby> 的信息以便用户或用户代理作出选择。
+服务器可能选择不发送一个初始表示形式，而是只发送<ruby>备选列表<rt>list of alternatives</rt></ruby>，从而表明它首选由用户代理来执行的被动型协商。例如，列在带有 <code>300 (Multiple Choices)</code> 和 <code>406 (Not Acceptable)</code> 状态码的响应里的<ruby>备选物<rt>alternatives</rt></ruby>，包含了关于<ruby>可用的表示形式<rt>available representations</rt></ruby>的信息以便用户或用户代理作出选择。
 </p>
 
 <blockquote>
@@ -1911,7 +1911,7 @@ Reactive negotiation suffers from the disadvantages of transmitting a list of al
 </blockquote>
 
 <p>
-被动型协商存在以下缺点：需要传递备选列表到用户代理，并且需要另一个请求来获得一种备选 representation。
+被动型协商存在以下缺点：需要传递备选列表到用户代理，并且需要另一个请求来获得一种备选表示形式。
 在报头块里传递备选列表势必会导致<ruby>用户观感延时的降级<rt>degrades user-perceived latency</rt></ruby>。而且，本规范并没有定义用于支持自动选择的机制，但它也没有阻止这样一种机制发展成为扩展。
 </p>
 
@@ -1944,12 +1944,12 @@ The request method token is the primary source of request semantics; it indicate
 
 <blockquote>
 <p>
-The request method's semantics might be further specialized by the semantics of some header fields when present in a request (<a href="#org478df38">Section 5</a>) if those additional semantics do not conflict with the method. For example, a client can send conditional request header fields (<a href="#org8c0da01">Section 5.2</a>) to make the requested action conditional on the current state of the target resource ([<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>]).
+The request method's semantics might be further specialized by the semantics of some header fields when present in a request (<a href="#org478df38">Section 5</a>) if those additional semantics do not conflict with the method. For example, a client can send conditional request header fields (<a href="#orgb31b803">Section 5.2</a>) to make the requested action conditional on the current state of the target resource ([<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>]).
 </p>
 </blockquote>
 
 <p>
-请求方法的语义可能由于某些请求报头域（<a href="#org478df38">章节 5</a>）的出现而被<ruby>进一步深化<rt>further specialized</rt></ruby>，如果这些报头域的语义与方法的语义并不冲突的话。例如，客户端能够发送<ruby>条件请求报头域<rt>conditional request header fields</rt></ruby>（<a href="#org8c0da01">章节 5.2</a>）以使对目标资源的当前状态的请求动作<ruby>条件化<rt>conditional</rt></ruby>（【<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>】）。
+请求方法的语义可能由于某些请求报头域（<a href="#org478df38">章节 5</a>）的出现而被<ruby>进一步深化<rt>further specialized</rt></ruby>，如果这些报头域的语义与方法的语义并不冲突的话。例如，客户端能够发送<ruby>条件请求报头域<rt>conditional request header fields</rt></ruby>（<a href="#orgb31b803">章节 5.2</a>）以使对目标资源的当前状态的请求动作<ruby>带有条件<rt>conditional</rt></ruby>（【<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>】）。
 </p>
 
 <div class="org-src-container">
@@ -2007,7 +2007,7 @@ This specification defines a number of standardized methods that are commonly us
 <tbody>
 <tr>
 <td class="org-left">GET</td>
-<td class="org-left">传输目标资源的一种 current representation</td>
+<td class="org-left">传输目标资源的一种当前表示形式</td>
 <td class="org-left"><a href="#org479e86d">4.3.1</a></td>
 </tr>
 
@@ -2025,13 +2025,13 @@ This specification defines a number of standardized methods that are commonly us
 
 <tr>
 <td class="org-left">PUT</td>
-<td class="org-left">使用请求有效载荷来替换目标资源的所有 current representations</td>
+<td class="org-left">使用请求有效载荷来替换目标资源的所有当前表示形式</td>
 <td class="org-left"><a href="#org2e14fb1">4.3.4</a></td>
 </tr>
 
 <tr>
 <td class="org-left">DELETE</td>
-<td class="org-left">删除目标资源的所有 current representations</td>
+<td class="org-left">删除目标资源的所有当前表示形式</td>
 <td class="org-left"><a href="#orgf7b2242">4.3.5</a></td>
 </tr>
 
@@ -2233,7 +2233,7 @@ The GET method requests transfer of a current selected representation for the ta
 </blockquote>
 
 <p>
-GET 方法请求获得目标资源的一种<ruby>当前选定的 representation<rt>current selected representation</rt></ruby>。GET 是信息获取的主要途径，同时，它也是几乎所有<ruby>性能优化<rt>performance optimizations</rt></ruby>的重点。因此，当人们谈及经由 HTTP 来获取某些可标识的信息的时候，他们一般指的是发起一个 GET 请求。
+GET 方法请求获得目标资源的一种<ruby>当前选定的表示形式<rt>current selected representation</rt></ruby>。GET 是信息获取的主要途径，同时，它也是几乎所有<ruby>性能优化<rt>performance optimizations</rt></ruby>的重点。因此，当人们谈及经由 HTTP 来获取某些可标识的信息的时候，他们一般指的是发起一个 GET 请求。
 </p>
 
 <blockquote>
@@ -2243,7 +2243,7 @@ It is tempting to think of resource identifiers as remote file system pathnames 
 </blockquote>
 
 <p>
-我们很容易想到将<ruby>资源标识<rt>resource identifiers</rt></ruby>符作为远程文件系统的路径名称，以及将 representations 作为这些远程文件的内容的一种拷贝。事件上，这也是许多资源的实现方式（安全相关注意事项见<a href="#org64f3a9f">章节 9.1</a>）。然而，实际上资源并没有被限制为只有这一种实现方式。资源的 HTTP 接口也有可能被实现为一种<ruby>内容对象树<rt>content object tree</rt></ruby><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>、一种基于各种数据库记录的可编程视图、一种到其他信息系统的网关等等。甚至当 URI 的映射机制被捆绑到一种文件系统上，也可以将源服务器配置为将文件连同请求一起作为执行的输入，而输出结果则作为 representation 并发送给请求，而不是直接传输文件本身。无论如何，只有源服务器需要了解它的每个资源标识符如何对应到某种实现，以及每种实现如何在回应到 GET 的响应里达成选择和发送目标资源的某种 current representation。
+我们很容易想到将<ruby>资源标识<rt>resource identifiers</rt></ruby>符作为远程文件系统的路径名称，以及将<ruby>表示形式<rt>representations</rt></ruby>作为这些远程文件的内容的一种拷贝。事件上，这也是许多资源的实现方式（安全相关注意事项见<a href="#org64f3a9f">章节 9.1</a>）。然而，实际上资源并没有被限制为只有这一种实现方式。资源的 HTTP 接口也有可能被实现为一种<ruby>内容对象树<rt>content object tree</rt></ruby><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>、一种基于各种数据库记录的可编程视图、一种到其他信息系统的网关等等。甚至当 URI 的映射机制被捆绑到一种文件系统上，也可以将源服务器配置为将文件连同请求一起作为执行的输入，而输出结果则作为<ruby>表示形式<rt>representation</rt></ruby>并发送给请求，而不是直接传输文件本身。无论如何，只有源服务器需要了解它的每个资源标识符如何对应到某种实现上，以及每种实现如何在回应到 GET 的响应里达成选择和发送目标资源的某种<ruby>当前表示形式<rt>current representation</rt></ruby>。
 </p>
 
 <blockquote>
@@ -2253,7 +2253,7 @@ A client can alter the semantics of GET to be a "range request", requesting tran
 </blockquote>
 
 <p>
-客户端能够将 GET 的语义改变为一种“<ruby>范围请求<rt>range request</rt></ruby>”，通过在其发送的请求报文中带有一个 <code>Range</code> 报头域，来实现只对已选择的 representation 中的某（几）部分进行请求传输（【<a href="https://tools.ietf.org/html/rfc7233">RFC7233</a>】）。
+客户端能够将 GET 的语义改变为一种“<ruby>范围请求<rt>range request</rt></ruby>”，通过在其发送的请求报文中带有一个 <code>Range</code> 报头域，来实现只对<ruby>已选定的表示形式<rt>selected representation</rt></ruby>中的某（几）部分进行请求传输（【<a href="https://tools.ietf.org/html/rfc7233">RFC7233</a>】）。
 </p>
 
 <blockquote>
@@ -2301,7 +2301,7 @@ The HEAD method is identical to GET except that the server <b>MUST NOT</b> send 
 </p>
 
 <p>
-HEAD 方法几乎与 GET 方法等价，除了服务器 <b>禁止</b> 在回应 HEAD 请求的响应报文里带有<ruby>报文正文<rt>message body</rt></ruby>（也就是说，响应报文在<ruby>报头块<rt>header section</rt></ruby>之后就结束了）。服务器回应给 GET 请求的响应报文里带有什么报头域，回应给 HEAD 请求的响应报文里就 <b>应当</b> 带有什么报头域，除了<ruby>有效载荷报头域<rt>payload header fields</rt></ruby>（<a href="#orgb3d98f9">章节 3.3</a>） <b>可以</b> 被忽略以外。HEAD 方法能够用于在不需要传输 representation data 的情况下获取关于<ruby>已选定的 representation<rt>selected representation</rt></ruby>（<a href="#org5a29517">章节 3</a>） 的元数据。同时，它也常用于测试<ruby>超链接<rt>hypertext links</rt></ruby>的正确性、可访问性和最近是否有修改。
+HEAD 方法几乎与 GET 方法等价，除了服务器 <b>禁止</b> 在回应 HEAD 请求的响应报文里带有<ruby>报文正文<rt>message body</rt></ruby>（也就是说，响应报文在<ruby>报头块<rt>header section</rt></ruby>之后就结束了）。服务器回应给 GET 请求的响应报文里带有什么报头域，回应给 HEAD 请求的响应报文里就 <b>应当</b> 带有什么报头域，除了<ruby>有效载荷报头域<rt>payload header fields</rt></ruby>（<a href="#orgb3d98f9">章节 3.3</a>） <b>可以</b> 被忽略以外。HEAD 方法能够用于在不需要传输<ruby>表示形式数据<rt>representation data</rt></ruby>的情况下获取<ruby>已选定的表示形式<rt>selected representation</rt></ruby>（<a href="#org117585a">章节 3</a>） 相关的元数据。同时，它也常用于测试<ruby>超链接<rt>hypertext links</rt></ruby>的正确性、可访问性和最近是否有修改。
 </p>
 
 <p>
@@ -2354,14 +2354,14 @@ The POST method requests that the target resource process the representation enc
 </blockquote>
 
 <p>
-POST 方法请求目标资源按照资源自身的具体语义来处理封装在请求报文里的 representation。例如，POST 是用于以下（或其他）功能。
+POST 方法请求目标资源按照资源自身的具体语义来处理封装在请求报文里的<ruby>表示形式<rt>representation</rt></ruby>。例如，POST 是用于以下（或其他）功能。
 </p>
 
 <ul class="org-ul">
 <li>为某个数据处理进程提供<ruby>数据块<rt>a block of data</rt></ruby>，例如某个 HTML 表单的域；</li>
 <li>发表一份报文到某个电子公告栏、新闻组、邮件列表、博客或者类似的文章组里；</li>
 <li>创建一种还没有被源服务器所标识的新的资源；以及</li>
-<li>附加数据到某个资源的现有 representation(s) 中。</li>
+<li>附加数据到某个资源的现有<ruby>表示形式<rt>representation(s)</rt></ruby>中。</li>
 </ul>
 
 <blockquote>
@@ -2381,7 +2381,7 @@ If one or more resources has been created on the origin server as a result of su
 </blockquote>
 
 <p>
-如果一个或多个资源在源服务器上被创建，来作为对成功处理某个 POST 请求的结果，那么，源服务器 <b>应当</b> 发送一个 <code>201 (Created)</code> 响应，且该响应需带有一个 <code>Location</code> 报头域来提供一种标识符，来对应被创建的主要资源（<a href="#orgad9277e">章节 7.1.2</a>）；以及需要包含一种 representation，来描述当引用新资源的时候请求的状态。
+如果一个或多个资源在源服务器上被创建，来作为对成功处理某个 POST 请求的结果，那么，源服务器 <b>应当</b> 发送一个 <code>201 (Created)</code> 响应，且该响应需带有一个 <code>Location</code> 报头域来提供一种标识符，来对应被创建的主要资源（<a href="#orgad9277e">章节 7.1.2</a>）；以及需要包含一种<ruby>表示形式<rt>representation</rt></ruby>，来描述当引用新资源的时候请求的状态。
 </p>
 
 <blockquote>
@@ -2401,7 +2401,7 @@ If the result of processing a POST would be equivalent to a representation of an
 </blockquote>
 
 <p>
-如果处理某个 POST 请求的结果等价于某个现有资源的某种 representation 的话，源服务器 <b>可以</b> 发送一个 <code>303 (See Other)</code> 响应到用户代理，同时，响应里带有 <code>Location</code> 报头域，其值为该现有资源的标识符，让用户代理进行重定向。这样做的好处是可以向用户代理提供一种资源标识符，以及可以通过一种更适合缓存共享的方法来传输 representation，但坏处是可能需要一个额外的请求，如果用户代理还没有缓存过该 representation 的话。
+如果处理某个 POST 请求的结果等价于某个现有资源的某种<ruby>表示形式<rt>representation</rt></ruby>的话，源服务器 <b>可以</b> 发送一个 <code>303 (See Other)</code> 响应到用户代理，同时，响应里带有 <code>Location</code> 报头域，其值为该现有资源的标识符，让用户代理进行重定向。这样做的好处是可以向用户代理提供一种资源标识符，以及可以通过一种更适合缓存共享的方法来传输<ruby>表示形式<rt>representation</rt></ruby>，但坏处是可能需要一个额外的请求，如果用户代理还没有缓存过该<ruby>表示形式<rt>representation</rt></ruby>的话。
 </p>
 
 <blockquote>
@@ -2435,7 +2435,7 @@ The PUT method requests that the state of the target resource be created or repl
 </blockquote>
 
 <p>
-PUT 方法请求源服务器使用封装在请求报文有效载荷内的 representation 所定义的状态，来<ruby>新建<rt>create</rt></ruby>或<ruby>替换<rt>replace</rt></ruby>目标资源的状态。如果向目标资源<ruby>成功 PUT<rt>successful PUT request</rt></ruby> 了一个给定的 representation，那么我们可以认为，对相同目标资源的后续 GET 请求将会被回应一个 <code>200 (OK)</code> 响应，同时响应会携带一个（与之前 PUT 的 representation）等价的 representation。然而，不能保证这种状态的改变能够被客户端所观察到，这是因为在源服务器接收到任何来自该客户端的后续的 GET 请求之前，目标资源就可能被按照其他用户代理并行地执行动作，也有可能受到源服务器的动态处理。对 PUT 请求的<ruby>成功响应<rt>successful response</rt></ruby>，仅仅意味着在源服务器处理该请求的时候，用户代理达成了它的意图。
+PUT 方法请求源服务器使用封装在请求报文有效载荷内的<ruby>表示形式<rt>representation</rt></ruby>所定义的状态，来<ruby>新建<rt>create</rt></ruby>或<ruby>替换<rt>replace</rt></ruby>目标资源的状态。如果向目标资源<ruby>成功 PUT<rt>successful PUT request</rt></ruby> 了一个给定的<ruby>表示形式<rt>representation</rt></ruby>，那么我们可以认为，对相同目标资源的后续 GET 请求将会被回应一个 <code>200 (OK)</code> 响应，同时响应会携带一个（与之前 PUT 的表示形式）等价的表示形式。然而，不能保证这种状态的改变能够被客户端所观察到，这是因为在源服务器接收到任何来自该客户端的后续的 GET 请求之前，目标资源就可能被按照其他用户代理并行地执行动作，也有可能受到源服务器的动态处理。对 PUT 请求的<ruby>成功响应<rt>successful response</rt></ruby>，仅仅意味着在源服务器处理该请求的时候，用户代理达成了它的意图。
 </p>
 
 <blockquote>
@@ -2445,12 +2445,12 @@ If the target resource does not have a current representation and the PUT succes
 </blockquote>
 
 <p>
-如果目标资源并没有 current representation，并且 PUT 成功地创建了一种 representation，那么，源服务器 <b>必须</b> 回应一个 <code>201 (Created)</code> 响应来告知用户代理。如果目标资源已有 current representation 并且该 representation 的状态被封装在 PUT 请求内的 representation 成功地更改了，那么，源服务器 <b>必须</b> 回应一个 <code>200 (OK)</code> 或者一个 <code>204 (No Content)</code> 来指明请求已经成功完成了。
+如果目标资源并没有<ruby>当前表示形式<rt>current representation</rt></ruby>，并且 PUT 成功地创建了一种表示形式，那么，源服务器 <b>必须</b> 回应一个 <code>201 (Created)</code> 响应来告知用户代理。如果目标资源已有一种<ruby>当前表示形式<rt>current representation</rt></ruby>，并且该表示形式的状态被封装在 PUT 请求内的表示形式成功地更改了，那么，源服务器 <b>必须</b> 回应一个 <code>200 (OK)</code> 或者一个 <code>204 (No Content)</code> 来指明请求已经成功完成了。
 </p>
 
 <blockquote>
 <p>
-译注：由此可见，PUT 会改变 representation 的状态，因此，它不是一个<ruby>安全方法<rt>safe method</rt></ruby>。而 PUT 是一个<ruby>幂等方法<rt>idempotent method</rt></ruby>，由上述可知，多次相同的 PUT 请求与一次 PUT 请求对 representation 的影响是一样的。试想一下，一个 PUT 请求，试图将用户 A 的年龄值更新为 18，无论发送一次还是多次这样的请求，用户 A 的年龄值最终依然是 18。
+译注：由此可见，PUT 会改变 representation 的状态，因此，它不是一个<ruby>安全方法<rt>safe method</rt></ruby>。而 PUT 是一个<ruby>幂等方法<rt>idempotent method</rt></ruby>，由上述可知，多次相同的 PUT 请求与一次 PUT 请求对<ruby>表示形式<rt>representation</rt></ruby>的影响是一样的。试想一下，一个 PUT 请求，试图将用户 A 的年龄值更新为 18，无论发送一次还是多次这样的请求，用户 A 的年龄值最终依然是 18。
 </p>
 </blockquote>
 
@@ -2471,7 +2471,7 @@ An origin server <b>SHOULD</b> verify that the PUT representation is consistent 
 </blockquote>
 
 <p>
-源服务器 <b>应当</b> 校验 PUT 的 representation 是否符合服务器对目标资源的任何<ruby>约束<rt>constraints</rt></ruby>，确保它们不能或不会被 PUT 所改变。当源服务器使用与 URI 相关联的内部配置信息来对回应给 GET 的响应的 representation 的元数据设置值的时候，这种校验是非常重要的。当一个 PUT 请求内的 representation 不符合<ruby>目标资源<rt>target resource</rt></ruby>的约束时，源服务器 <b>应当</b> 要不<ruby>转换<rt>transform</rt></ruby>这个 representation 或者改变资源的配置以使其符合约束条件；要不回应一种恰当的错误报文，包含足够的信息来解释为什么该 representation 并不适合。建议使用 <code>409 (Conflict)</code> 或者 <code>415 (Unsupported Media Type)</code> 状态码，而对于后者（<code>415 (Unsupported Media Type)</code>），带有 <code>Content-Type</code> 报头域以指定具体的约束类型。
+源服务器 <b>应当</b> 校验 PUT 的<ruby>表示形式<rt>representation</rt></ruby>是否符合服务器对目标资源的任何<ruby>约束<rt>constraints</rt></ruby>，确保它们不能或不会被 PUT 所改变。当源服务器使用与 URI 相关联的内部配置信息来对回应给 GET 的响应的<ruby>表示形式<rt>representation</rt></ruby>的元数据设置值的时候，这种校验是非常重要的。当一个 PUT 请求内的表示形式不符合<ruby>目标资源<rt>target resource</rt></ruby>的约束时，源服务器 <b>应当</b> 要不<ruby>转换<rt>transform</rt></ruby>这个表示形式或者改变资源的配置以使其符合约束条件；要不回应一种恰当的错误报文，包含足够的信息来解释为什么该表示形式并不合适。建议使用 <code>409 (Conflict)</code> 或者 <code>415 (Unsupported Media Type)</code> 状态码，而对于后者（<code>415 (Unsupported Media Type)</code>），带有 <code>Content-Type</code> 报头域以指定具体的约束类型。
 </p>
 
 <blockquote>
@@ -2487,12 +2487,12 @@ For example, if the target resource is configured to always have a <code>Content
 </blockquote>
 
 <p>
-例如，如果目标资源被配置为总是带有一个 "text/html" 的 <code>Content-Type</code>，并且 PUT 请求内的 representation 带有一个 "image/jpeg" 的 <code>Content-Type</code>，那么，源服务器的行为应该是以下其中之一：
+例如，如果目标资源被配置为总是带有一个 "text/html" 的 <code>Content-Type</code>，并且 PUT 请求内的<ruby>表示形式<rt>representation</rt></ruby>带有一个 "image/jpeg" 的 <code>Content-Type</code>，那么，源服务器的行为应该是以下其中之一：
 </p>
 
 <ul class="org-ul">
 <li>将目标资源重新配置以体现该种新的媒体类型；</li>
-<li>在保存 PUT 请求的 representation 作为目标资源的新状态之前，先将其<ruby>转换<rt>transform</rt></ruby>为一种符合资源约束的格式；或者</li>
+<li>在保存 PUT 请求的<ruby>表示形式<rt>representation</rt></ruby>作为目标资源的新状态之前，先将其<ruby>转换<rt>transform</rt></ruby>为一种符合资源约束的格式；或者</li>
 <li>回应一个 <code>415 (Unsupported Media Type)</code> 响应来拒绝该请求并指明目标资源被限定为 "text/html"，响应内可能还包含一条<ruby>链接<rt>link</rt></ruby>，该链接指向到其他可能适用于该请求目标的资源。</li>
 </ul>
 
@@ -2513,7 +2513,7 @@ An origin server <b>MUST NOT</b> send a validator header field (<a href="#org4d2
 </blockquote>
 
 <p>
-源服务器 <b>禁止</b> 在回应给 PUT 的<ruby>成功响应<rt>successful response</rt></ruby>里带有任何<ruby>验证器报头域<rt>validator header field</rt></ruby>（<a href="#org4d2e5ff">章节 7.2</a>），例如 <code>ETag</code> 或者 <code>Last-Modified</code> 报头域，除非请求的 representation data 是保存在没有经过任何<ruby>编码转换<rt>transformation</rt></ruby>的报文正文（有效载荷）里（也就是说，响应内的新 representation data 是等价于接收自 PUT 请求内的 representation data），并且该验证器报头域反映的是新是 representation。上述这种要求让用户代理能够知道这个在自己内存中的 representation 在什么时间内可以<ruby>保持最新（保持为 current 状态）<rt>remain current</rt></ruby>，由此知道其是否仍然可以继续作为 PUT 请求的结果而不需要从源服务器上再次获取，以及在响应内接收到的新验证器能够被用于将来的<ruby>条件请求<rt>conditional requests</rt></ruby>以避免新<ruby>意外覆盖<rt>accidental overwrite</rt></ruby>（章节 5.2）。
+源服务器 <b>禁止</b> 在回应给 PUT 的<ruby>成功响应<rt>successful response</rt></ruby>里带有任何<ruby>验证器报头域<rt>validator header field</rt></ruby>（<a href="#org4d2e5ff">章节 7.2</a>），例如 <code>ETag</code> 或者 <code>Last-Modified</code> 报头域，除非请求的<ruby>表示形式数据<rt>representation data</rt></ruby>是保存在没有经过任何<ruby>编码转换<rt>transformation</rt></ruby>的报文正文（有效载荷）里（也就是说，响应内的新的<ruby>表示形式数据<rt>representation data</rt></ruby>是等价于接收自 PUT 请求内的<ruby>表示形式数据<rt>representation data</rt></ruby>），并且该验证器报头域反映的是新的表示形式。上述这种要求让用户代理能够知道这个在自己内存中的表示形式在什么时间内可以<ruby>保持最新（保持为 current 状态）<rt>remain current</rt></ruby>，由此知道其是否仍然可以继续作为 PUT 请求的结果而不需要从源服务器上再次获取，以及在响应内接收到的新验证器能够被用于将来的<ruby>条件请求<rt>conditional requests</rt></ruby>以避免新<ruby>意外覆盖<rt>accidental overwrite</rt></ruby>（章节 5.2）。
 </p>
 
 <blockquote>
@@ -2529,7 +2529,7 @@ The fundamental difference between the POST and PUT methods is highlighted by th
 </blockquote>
 
 <p>
-POST 与 PUT 两者的根本区别在于它们对封装的 representation 的不同意图。POST 所请求目标资源是意图依据该资源自身的语义来<ruby>处置<rt>handle</rt></ruby>请求内的 representation。而在 PUT 请求内的 representation 是定义为替换目标资源的状态的。因此，PUT 的意图是<ruby>幂等的<rt>idempotent</rt></ruby>且对<ruby>中间人<rt>intermediaries</rt></ruby>是<ruby>可见的<rt>visible</rt></ruby>，虽然只有源服务器了解其确切的作用。
+POST 与 PUT 两者的根本区别在于它们对封装的<ruby>表示形式<rt>representation</rt></ruby>的不同意图。POST 所请求目标资源是意图依据该资源自身的语义来<ruby>处置<rt>handle</rt></ruby>请求内的表示形式。而在 PUT 请求内的表示形式是定义为替换目标资源的状态的。因此，PUT 的意图是<ruby>幂等的<rt>idempotent</rt></ruby>且对<ruby>中间人<rt>intermediaries</rt></ruby>是<ruby>可见的<rt>visible</rt></ruby>，虽然只有源服务器了解其确切的作用。
 </p>
 
 <blockquote>
@@ -2617,7 +2617,7 @@ If the target resource has one or more current representations, they might or mi
 </blockquote>
 
 <p>
-如果目标资源有一个或多个 current representations，它们可能会也可能不会被源服务器所销毁，另外，它们所关联的存储可能会也可能不会被回收，这完全取决于资源的性质以及服务器对资源的<ruby>实现<rt>implementation</rt></ruby>（已经超出了本规范的范畴）。同样，还可能需要去<ruby>失效<rt>deactivate</rt></ruby>或<ruby>归档<rt>archive</rt></ruby>资源实现的其他方面，来作为一个 DELETE 操作的结果，比如数据库或者网关连接。总之，我们假设源服务器只会允许对这些资源进行 DELETE：具有某种规定机制来完成删除操作的资源。
+如果目标资源有一个或多个<ruby>当前表示形式<rt>current representations</rt></ruby>，它们可能会也可能不会被源服务器所销毁，另外，它们所关联的存储可能会也可能不会被回收，这完全取决于资源的性质以及服务器对资源的<ruby>实现<rt>implementation</rt></ruby>（已经超出了本规范的范畴）。同样，还可能需要去<ruby>失效<rt>deactivate</rt></ruby>或<ruby>归档<rt>archive</rt></ruby>资源实现的其他方面，来作为一个 DELETE 操作的结果，比如数据库或者网关连接。总之，我们假设源服务器只会允许对这些资源进行 DELETE：具有某种规定机制来完成删除操作的资源。
 </p>
 
 <blockquote>
@@ -2643,7 +2643,7 @@ If a DELETE method is successfully applied, the origin server <b>SHOULD</b> send
 </blockquote>
 
 <p>
-如果成功执行了一次 DELETE 方法，如果该动作可能会成功但确定的结果还未<ruby>出现<rt>enacted</rt></ruby>，源服务器 <b>应当</b> 回应一个 <code>202 (Accepted)</code> 响应；如果该动作的结果已经出现了并且服务器不会再提供更多的信息，<b>应当</b> 回应一个 <code>204 (No Content)</code> 响应；或者如果该动作的结果已经出现了并且响应会包含一个 representation 来描述资源的状态，该响应的状态码 <b>应当</b> 是 <code>200 (OK)</code> 。
+如果成功执行了一次 DELETE 方法，如果该动作可能会成功但确定的结果还未<ruby>出现<rt>enacted</rt></ruby>，源服务器 <b>应当</b> 回应一个 <code>202 (Accepted)</code> 响应；如果该动作的结果已经出现了并且服务器不会再提供更多的信息，<b>应当</b> 回应一个 <code>204 (No Content)</code> 响应；或者如果该动作的结果已经出现了并且响应会包含一个<ruby>表示形式<rt>representation</rt></ruby>来描述资源的状态，该响应的状态码 <b>应当</b> 是 <code>200 (OK)</code> 。
 </p>
 
 <blockquote>
@@ -2890,7 +2890,7 @@ A server generating a successful response to OPTIONS <b>SHOULD</b> send any head
 </blockquote>
 
 <p>
-服务器在向 OPTIONS 生成一个成功响应的时候，<b>应当</b> 带有所有可能指明以下信息的报头域：由服务器所实现的可选功能，并且这些可选功能是可作用于目标资源的（例如，<code>Allow</code>）。这些报头域还应当包括那些未定义在本规范里的扩展报头域，如果有的话。如果响应里包含有效载荷，那么还可能描述了机器的通信选项，或者供人类阅读的 representation 的通信选项。对于这样一种 representation，本规范并没有定义一种标准格式，但可能会在将来的 HTTP 扩展中进行定义。服务器 <b>禁止</b> 生成带有一个 "0" 值的 <code>Content-Length</code> 报头域，如果该响应没有包含有效载荷的话。
+服务器在向 OPTIONS 生成一个成功响应的时候，<b>应当</b> 带有所有可能指明以下信息的报头域：由服务器所实现的可选功能，并且这些可选功能是可作用于目标资源的（例如，<code>Allow</code>）。这些报头域还应当包括那些未定义在本规范里的扩展报头域，如果有的话。如果响应里包含有效载荷，那么还可能描述了机器的通信选项，或者供人类阅读的<ruby>表示形式<rt>representation</rt></ruby>的通信选项。对于这样一种表示形式，本规范并没有定义一种标准格式，但可能会在将来的 HTTP 扩展中进行定义。服务器 <b>禁止</b> 生成带有一个 "0" 值的 <code>Content-Length</code> 报头域，如果该响应没有包含有效载荷的话。
 </p>
 
 <blockquote>
@@ -2910,7 +2910,7 @@ A client that generates an OPTIONS request containing a payload body <b>MUST</b>
 </blockquote>
 
 <p>
-客户端生成一个 OPTIONS 请求的时候，如果该请求包含一个有效载荷，那么，该请求 <b>必须</b> 带有一个有效的 <code>Content-Type</code> 报头域来描述 representation 的媒体类型。虽然本规范并没有对这样一种有效载荷的用途进行过任何定义，但将来的 HTTP 扩展中可能会使用 OPTIONS 请求的报文正文来携带目标资源有关的更细致的查询信息。
+客户端生成一个 OPTIONS 请求的时候，如果该请求包含一个有效载荷，那么，该请求 <b>必须</b> 带有一个有效的 <code>Content-Type</code> 报头域来描述<ruby>表示形式<rt>representation</rt></ruby>的媒体类型。虽然本规范并没有对这样一种有效载荷的用途进行过任何定义，但将来的 HTTP 扩展中可能会使用 OPTIONS 请求的报文正文来携带目标资源有关的更细致的查询信息。
 </p>
 
 <blockquote>
@@ -3034,7 +3034,7 @@ A client sends request header fields to provide more information about the reque
 </blockquote>
 
 <p>
-客户端发送<ruby>请求报头域<rt>request header fields</rt></ruby>来提供更多请求上下文的相关信息，基于目标资源的状态来使请求<ruby>条件化<rt>conditional</rt></ruby>，提议响应的<ruby>首选格式<rt>preferred formats</rt></ruby>，提供身份凭证，或者更改预期的请求处理。这些报头域充当请求的<ruby>修饰符<rt>modifiers</rt></ruby>，类似于一门编程语言里用于函数调用的参数一样。
+客户端发送<ruby>请求报头域<rt>request header fields</rt></ruby>来提供请求上下文的更多相关信息，基于目标资源的状态来使请求<ruby>带有条件<rt>conditional</rt></ruby>，提议响应的<ruby>首选格式<rt>preferred formats</rt></ruby>，提供身份凭证，或者更改预期的请求处理。这些报头域充当请求的<ruby>修饰符<rt>modifiers</rt></ruby>，类似于一门编程语言中参与函数调用的参数一样。
 </p>
 </div>
 
@@ -3107,9 +3107,11 @@ Controls are request header fields that direct specific handling of the request.
 <div id="outline-container-org83b8384" class="outline-4">
 <h4 id="org83b8384"><a id="ID-0b0cea12-0af7-47f1-8908-2afc48ce3fb2"></a>5.1.1. Expect</h4>
 <div class="outline-text-4" id="text-org83b8384">
+<blockquote>
 <p>
 The "Expect" header field in a request indicates a certain set of behaviors (expectations) that need to be supported by the server in order to properly handle this request. The only such expectation defined by this specification is 100-continue.
 </p>
+</blockquote>
 
 <p>
 请求报文里的 <code>Expect</code> 报头域指明了一个确定的<ruby>行为<rt>behaviors</rt></ruby>（<ruby>期望<rt>expectations</rt></ruby>）集合，这些期望需要通过服务器的支持来实现，以使得这个请求得以妥善处理。<code>100-continue</code> 是仅有的由本规范所定义的期望。
@@ -3147,7 +3149,7 @@ A <code>100-continue</code> expectation informs recipients that the client is ab
 </blockquote>
 
 <p>
-<code>100-continue</code> 这个期望向接收端告知了这样一个信息：客户端即将在本次请求中发送一个（假定是很大的）报文正文，如果之前所发送的请求行以及报头域不足以引起一个立即成功、重定向或者错误响应的时候，它希望能够从接收端那里接收到一个 <code>100 (Continue)</code> 的过渡响应，让客户端在真正要发送这个报文正文之前，可以等待服务器的指示来确认是否有必要发送这个报文正文。这样做在报文正文的体积巨大，或者客户端预见到可能出现错误（例如，当首次发送一个<ruby>会改变资源状态的请求方法<rt>state-changing method</rt></ruby>的时候没有预先校验身份凭证）的情况下，可以提高效率。
+<code>100-continue</code> 这个期望向接收端告知了这样一个信息：客户端即将在本次请求中发送一个（假定是很大的）报文正文，如果之前所发送的请求行以及报头域不足以引起一个立即成功、重定向或者错误响应的时候，它希望能够从接收端那里接收到一个 <code>100 (Continue)</code> 的<ruby>过渡响应<rt>interim response</rt></ruby>，让客户端在真正要发送这个报文正文之前，可以等待服务器的指示来确认是否有必要发送这个报文正文。当报文正文的体积巨大，或者客户端预见到可能出现错误（例如，当首次发送一个<ruby>会改变资源状态的请求方法<rt>state-changing method</rt></ruby>的时候没有预先校验身份凭证）的时候，这样做可以提高效率。
 </p>
 
 <blockquote>
@@ -3201,16 +3203,17 @@ Requirements for clients:
 <p>
 对于客户端的要求：
 </p>
+
 <ul class="org-ul">
 <li>客户端 <b>禁止</b> 在一个没有<ruby>报文正文<rt>message body</rt></ruby>的请求里生成一个 <code>100-continue</code> 期望。</li>
 <li>客户端在发送请求的报文正文之前，如果打算等待服务器的 <code>100 (Continue)</code>，<b>必须</b> 发送一个包含 <code>100-continue</code> 期望的 <code>Expect</code> 报头域。</li>
-<li>客户端在发送了一个 <code>100-continue</code> 期望以后，并不要求去等待任意具体的时长。这时候客户端甚至 <b>可以</b> 在未接收到任何响应的情况下就开始发送报文正文。再者，由于 <code>100 (Continue)</code> 响应不能经由一个 HTTP/1.0 中间人来发送，因此，客户端 <b>不应当</b> 在发送报文正文之前无限期地等待。</li>
-<li>客户端接收到一个 <code>417 (Expectation Failed)</code> 状态码的响应，该响应是回应给一个包含 <code>100-continue</code> 期望的请求的，这时候，客户端 <b>应当</b> 在不再带有 <code>100-continue</code> 期望的情况下再次发起这个请求，这是因为该 417 响应只不过是表明该<ruby>响应链路<rt>response chain</rt></ruby>并不支持期望（比如，它经过一个 HTTP/1.0 服务器）。</li>
+<li>客户端在发送了一个 <code>100-continue</code> 期望以后，并不要求去等待任意具体的时长。这时候客户端甚至 <b>可以</b> 在未接收到任何响应的情况下就开始发送报文正文。再者，由于 <code>100 (Continue)</code> 响应不能经由一个 HTTP/1.0 中间人来转发，因此，这种情况下的客户端 <b>不应当</b> 在发送报文正文之前无限期地等待。</li>
+<li>客户端接收到一个 <code>417 (Expectation Failed)</code> 状态码的响应，该响应是回应给一个包含 <code>100-continue</code> 期望的请求的，这时候，客户端 <b>应当</b> 再次发起这个请求，但这次请求不会再带有 <code>100-continue</code> 期望，这是因为这个 <code>417</code> 响应只不过是表明该<ruby>响应链路<rt>response chain</rt></ruby>并不支持期望（比如，它经过一个 HTTP/1.0 服务器）。</li>
 </ul>
 
 <blockquote>
 <p>
-译注：HTTP/1.0 并没有定义任何 1xx 的状态码，所以不支持在 HTTP/1.0 上使用 <code>100-continue</code>。
+译注：HTTP/1.0 并没有定义任何 <code>1xx</code> 的状态码，所以不支持在 HTTP/1.0 上使用 <code>100-continue</code>。
 </p>
 </blockquote>
 
@@ -3220,30 +3223,59 @@ Requirements for servers:
 </p>
 
 <ul class="org-ul">
-<li>A server that receives a 100-continue expectation in an HTTP/1.0 request MUST ignore that expectation.</li>
-<li>A server MAY omit sending a 100 (Continue) response if it has already received some or all of the message body for the corresponding request, or if the framing indicates that there is no message body.</li>
-<li>A server that sends a 100 (Continue) response MUST ultimately send a final status code, once the message body is received and processed, unless the connection is closed prematurely.</li>
-<li>A server that responds with a final status code before reading the entire message body SHOULD indicate in that response whether it intends to close the connection or continue reading and discarding the request message (see Section 6.6 of [RFC7230]).</li>
+<li>A server that receives a <code>100-continue</code> expectation in an HTTP/1.0 request <b>MUST</b> ignore that expectation.</li>
+<li>A server <b>MAY</b> omit sending a <code>100 (Continue)</code> response if it has already received some or all of the message body for the corresponding request, or if the framing indicates that there is no message body.</li>
+<li>A server that sends a <code>100 (Continue)</code> response <b>MUST</b> ultimately send a final status code, once the message body is received and processed, unless the connection is closed prematurely.</li>
+<li>A server that responds with a final status code before reading the entire message body <b>SHOULD</b> indicate in that response whether it intends to close the connection or continue reading and discarding the request message (see <a href="RFC7230.html#ID-5051d9ad-6b2e-45b0-be58-42b9dce34b89">Section 6.6</a> of [RFC7230]).</li>
 </ul>
 </blockquote>
 
+<p>
+对于服务器的要求：
+</p>
+
+<ul class="org-ul">
+<li>当服务器接收到一个 HTTP/1.0 的请求，并且该请求包含一个 <code>100-continue</code> 期望的时候，服务器 <b>必须</b> 忽略掉这个期望。</li>
+<li>如果服务器已经接收到部分或全部报文正文，或者报文分帧表明这个请求并没有报文正文的话，服务器 <b>可以</b> 省略发送一个 <code>100 (Continue)</code> 响应到对应的请求上。</li>
+<li>服务器发送了一个 <code>100 (Continue)</code> 响应，一旦接收到并处理完报文正文以后，<b>必须</b> 发送一个<ruby>最终状态码<rt>final status code</rt></ruby>，除非连接被过早地关闭了。</li>
+<li>如果服务器在读取完整个报文正文之前就响应了一个最终状态码，那么，服务器 <b>应当</b> 在该响应里表明它是打算关闭这个连接呢，还是继续读取和丢弃这个请求报文（见<a href="RFC7230.html#ID-5051d9ad-6b2e-45b0-be58-42b9dce34b89">【RFC7230】章节 6.6</a>）。</li>
+</ul>
+
 <blockquote>
 <p>
-An origin server <b>MUST</b>, upon receiving an HTTP/1.1 (or later) request-line and a complete header section that contains a 100-continue expectation and indicates a request message body will follow, either send an immediate response with a final status code, if that status can be determined by examining just the request-line and header fields, or send an immediate 100 (Continue) response to encourage the client to send the request's message body. The origin server MUST NOT wait for the message body before sending the 100 (Continue) response.
+An origin server <b>MUST</b>, upon receiving an HTTP/1.1 (or later) request-line and a complete header section that contains a <code>100-continue</code> expectation and indicates a request message body will follow, either send an immediate response with a final status code, if that status can be determined by examining just the request-line and header fields, or send an immediate <code>100 (Continue)</code> response to encourage the client to send the request's message body. The origin server <b>MUST NOT</b> wait for the message body before sending the <code>100 (Continue)</code> response.
+</p>
+</blockquote>
+
+<p>
+源服务器 <b>必须</b> 依据所接收到的 HTTP/1.1（或更新的）<ruby>请求行<rt>request-line</rt></ruby>，以及包含有一个 <code>100-continue</code> 期望并表明随后将会有一个请求报文正文到来的完整的<ruby>报头块<rt>header section</rt></ruby>，来决定：是立即发送一个带有最终状态码的响应呢，如果该状态仅仅通过检测请求行和报头域就可以确定到的话；还是立即发送一个 <code>100 (Continue)</code> 响应来<ruby>促使<rt>encourage</rt></ruby>客户端去发送该请求的报文正文呢？源服务器在发送 <code>100 (Continue)</code> 响应之前 <b>禁止</b> 等待报文正文。
+</p>
+
+<blockquote>
+<p>
+A proxy <b>MUST</b>, upon receiving an HTTP/1.1 (or later) request-line and a complete header section that contains a <code>100-continue</code> expectation and indicates a request message body will follow, either send an immediate response with a final status code, if that status can be determined by examining just the request-line and header fields, or begin forwarding the request toward the origin server by sending a corresponding request-line and header section to the next inbound server. If the proxy believes (from configuration or past interaction) that the next inbound server only supports HTTP/1.0, the proxy <b>MAY</b> generate an immediate <code>100 (Continue)</code> response to encourage the client to begin sending the message body.
+</p>
+</blockquote>
+
+<p>
+代理 <b>必须</b> 依据依据所接收到的 HTTP/1.1（或更新的）<ruby>请求行<rt>request-line</rt></ruby>，以及包含有一个 <code>100-continue</code> 期望并表明随后将会有一个请求报文正文到来的完整的<ruby>报头块<rt>header section</rt></ruby>，来决定：是立即发送一个带有最终状态码的响应呢，如果该状态仅仅通过检测请求行和报头域就可以确定到的话；还是开始通过发送一个对应的请求行和报头块到下一个<ruby>入站服务器<rt>inbound server</rt></ruby>，来沿着源服务器的方向转发这个请求呢？如果这个代理（依据本地配置或者过去的交互）相信下一个入站服务器仅支持 HTTP/1.0 的话，这个代理 <b>可以</b> 立即生成一个 <code>100 (Continue)</code> 响应来促使客户端开始发送该请求的报文正文。
+</p>
+
+<blockquote>
+<p>
+译注：入站、出站的概念见<a href="RFC7230.html#ID-e2d9bed8-d6ca-4b5d-ab4a-6b2b2576393e">【RFC7230】章节 2.3</a>。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-A proxy MUST, upon receiving an HTTP/1.1 (or later) request-line and a complete header section that contains a 100-continue expectation and indicates a request message body will follow, either send an immediate response with a final status code, if that status can be determined by examining just the request-line and header fields, or begin forwarding the request toward the origin server by sending a corresponding request-line and header section to the next inbound server. If the proxy believes (from configuration or past interaction) that the next inbound server only supports HTTP/1.0, the proxy MAY generate an immediate 100 (Continue) response to encourage the client to begin sending the message body.
+<b>Note:</b> The <code>Expect</code> header field was added after the original publication of HTTP/1.1 [RFC2068] as both the means to request an interim <code>100 (Continue)</code> response and the general mechanism for indicating must-understand extensions. However, the extension mechanism has not been used by clients and the must-understand requirements have not been implemented by many servers, rendering the extension mechanism useless. This specification has removed the extension mechanism in order to simplify the definition and processing of <code>100-continue</code>.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-<b>Note:</b> The Expect header field was added after the original publication of HTTP/1.1 [RFC2068] as both the means to request an interim 100 (Continue) response and the general mechanism for indicating must-understand extensions. However, the extension mechanism has not been used by clients and the must-understand requirements have not been implemented by many servers, rendering the extension mechanism useless. This specification has removed the extension mechanism in order to simplify the definition and processing of 100-continue.
+注意：<code>Expect</code> 报头域早在 HTTP/1.1 规范的第一版【RFC2068】时就已经被引入，当时它是有两个作用的：一是用于请求一个 <code>100 (Continue)</code> 过渡响应，二是作为一种通用机制来表明这是一种“<ruby>必须理解<rt>must-understand</rt></ruby>”的<ruby>扩展<rt>extensions</rt></ruby>。但是，这种扩展机制并没有得到客户端的应用，而且这个所谓的“必须理解”的要求也没有得到很多服务器的实现，致使这种扩展机制变得<ruby>无用<rt>useless</rt></ruby>。本规范已经移除了这种扩展机制以简化 <code>100-continue</code> 的定义和处理。
 </p>
-</blockquote>
 </div>
 </div>
 
@@ -3252,9 +3284,13 @@ A proxy MUST, upon receiving an HTTP/1.1 (or later) request-line and a complete 
 <div class="outline-text-4" id="text-org57067e1">
 <blockquote>
 <p>
-The "Max-Forwards" header field provides a mechanism with the TRACE (Section 4.3.8) and OPTIONS (Section 4.3.7) request methods to limit the number of times that the request is forwarded by proxies. This can be useful when the client is attempting to trace a request that appears to be failing or looping mid-chain.
+The "Max-Forwards" header field provides a mechanism with the TRACE (<a href="#orgda48f54">Section 4.3.8</a>) and OPTIONS (<a href="#org85c174f">Section 4.3.7</a>) request methods to limit the number of times that the request is forwarded by proxies. This can be useful when the client is attempting to trace a request that appears to be failing or looping mid-chain.
 </p>
 </blockquote>
+
+<p>
+<code>Max-Forwards</code> 报头域为 TRACE（<a href="#orgda48f54">章节 4.3.8</a>）和 OPTIONS（<a href="#org85c174f">章节 4.3.7</a>）请求方法提供了一种方法来限制这个请求被代理所转发的次数。当客户端试图去追踪某个请求可能在请求<ruby>链路的中部<rt>mid-chain</rt></ruby>转发失败了或者陷入循环的时候，<code>Max-Forwards</code> 将非常有用。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Max-Forwards = 1*DIGIT
@@ -3263,30 +3299,59 @@ The "Max-Forwards" header field provides a mechanism with the TRACE (Section 4.3
 
 <blockquote>
 <p>
-The Max-Forwards value is a decimal integer indicating the remaining number of times this request message can be forwarded.
+The <code>Max-Forwards</code> value is a decimal integer indicating the remaining number of times this request message can be forwarded.
 </p>
 </blockquote>
+
+<p>
+<code>Max-Forwards</code> 的值是一个十进制整数，表明这个请求报文能够被转发的剩余次数。
+</p>
 
 <blockquote>
 <p>
-Each intermediary that receives a TRACE or OPTIONS request containing a Max-Forwards header field MUST check and update its value prior to forwarding the request. If the received value is zero (0), the intermediary MUST NOT forward the request; instead, the intermediary MUST respond as the final recipient. If the received Max-Forwards value is greater than zero, the intermediary MUST generate an updated Max-Forwards field in the forwarded message with a field-value that is the lesser of a) the received value decremented by one (1) or b) the recipient's maximum supported value for Max-Forwards.
+Each intermediary that receives a TRACE or OPTIONS request containing a <code>Max-Forwards</code> header field <b>MUST</b> check and update its value prior to forwarding the request. If the received value is zero (0), the intermediary <b>MUST NOT</b> forward the request; instead, the intermediary <b>MUST</b> respond as the final recipient. If the received <code>Max-Forwards</code> value is greater than zero, the intermediary <b>MUST</b> generate an updated <code>Max-Forwards</code> field in the forwarded message with a field-value that is the lesser of a) the received value decremented by one (1) or b) the recipient's maximum supported value for <code>Max-Forwards</code>.
 </p>
 </blockquote>
+
+<p>
+接收到一个包含有一个 <code>Max-Forwards</code> 报头域的 TRACE 或者 OPTIONS 请求的每一个中间人，在转发这个请求的之前，<b>必须</b> 检查并更新 <code>Max-Forwards</code> 的值。如果所接收到的值是 0，这个中间人 <b>禁止</b> 转发该请求，而是，<b>必须</b> 作为<ruby>最终接收端<rt>final recipient</rt></ruby>来响应该请求。如果所接收到的 <code>Max-Forwards</code> 值大于 0，这个中间人 <b>必须</b> 在转发的报文里生成一个更新后的 <code>Max-Forwards</code>，其值可以为以下其中之一：
+</p>
+
+<ol class="org-ol">
+<li>所接收到的值减去 1；</li>
+<li>该接收端自身的 <code>Max-Forwards</code> 最大可支持的值。</li>
+</ol>
 
 <blockquote>
 <p>
-A recipient MAY ignore a Max-Forwards header field received with any other request methods.
+A recipient <b>MAY</b> ignore a <code>Max-Forwards</code> header field received with any other request methods.
+</p>
+</blockquote>
+
+<p>
+接收端 <b>可以</b> 忽略接收自其他请求方法里的 <code>Max-Forwards</code> 报头域。
+</p>
+
+<blockquote>
+<p>
+译注：也就是说，应该仅在 TRACE 和 OPTIONS 请求里使用 Max-Forwards 报头域。
 </p>
 </blockquote>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8c0da01" class="outline-3">
-<h3 id="org8c0da01"><a id="ID-b21923d5-a8f9-4560-8592-92fd9a098bf4"></a>5.2. 条件 / Conditionals</h3>
-<div class="outline-text-3" id="text-org8c0da01">
+<div id="outline-container-orgb31b803" class="outline-3">
+<h3 id="orgb31b803"><a id="ID-b21923d5-a8f9-4560-8592-92fd9a098bf4"></a>5.2. 条件句 / Conditionals</h3>
+<div class="outline-text-3" id="text-orgb31b803">
+<blockquote>
 <p>
-The HTTP conditional request header fields [RFC7232] allow a client to place a precondition on the state of the target resource, so that the action corresponding to the method semantics will not be applied if the precondition evaluates to false. Each precondition defined by this specification consists of a comparison between a set of validators obtained from prior representations of the target resource to the current state of validators for the selected representation (Section 7.2). Hence, these preconditions evaluate whether the state of the target resource has changed since a given state known by the client. The effect of such an evaluation depends on the method semantics and choice of conditional, as defined in Section 5 of [RFC7232].
+The HTTP conditional request header fields [<a href="RFC7232.html">RFC7232</a>] allow a client to place a precondition on the state of the target resource, so that the action corresponding to the method semantics will not be applied if the precondition evaluates to false. Each precondition defined by this specification consists of a comparison between a set of validators obtained from prior representations of the target resource to the current state of validators for the selected representation (<a href="#org4d2e5ff">Section 7.2</a>). Hence, these preconditions evaluate whether the state of the target resource has changed since a given state known by the client. The effect of such an evaluation depends on the method semantics and choice of conditional, as defined in <a href="RFC7232.html#ID-fce45320-6c1c-4486-a32b-2c553780d785">Section 5</a> of [RFC7232].
+</p>
+</blockquote>
+
+<p>
+HTTP 的<ruby>条件请求报头域<rt>conditional request fields</rt></ruby>【<a href="RFC7232.html">RFC7232</a>】让客户端可以在目标资源的状态上设置一个<ruby>前置条件<rt>precondition</rt></ruby>，使得如果前置条件不成立的话，该请求方法的语义所对应动作不会被执行。本规范所定义的每一种前置条件皆由从目标资源先前的<ruby>表示形式<rt>representations</rt></ruby>那里获得的一系列<ruby>验证器<rt>validators</rt></ruby>，与当前应用到已选定的表示形式的验证器的目前状态之间的比较来组成的（<a href="#org4d2e5ff">章节 7.2</a>）。因此，这些前置条件以客户端的一个给定的已知状态作为参考，来评估目标资源的状态是否已经改变了。这种评估的结果依赖于<ruby>请求方法的语义<rt>method semantics</rt></ruby>以及<ruby>条件句的选择<rt>choice of conditional</rt></ruby>，其定义见<a href="RFC7232.html#ID-fce45320-6c1c-4486-a32b-2c553780d785">【RFC7232】章节 5</a>。
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3306,27 +3371,27 @@ The HTTP conditional request header fields [RFC7232] allow a client to place a p
 <tbody>
 <tr>
 <td class="org-left">If-Match</td>
-<td class="org-left">Section 3.1 of [RFC7232]</td>
+<td class="org-left"><a href="RFC7232.html#ID-2c4da24a-b694-472c-8ac3-f09c20a84216">Section 3.1</a> of [RFC7232]</td>
 </tr>
 
 <tr>
 <td class="org-left">If-None-Match</td>
-<td class="org-left">Section 3.2 of [RFC7232]</td>
+<td class="org-left"><a href="RFC7232.html#ID-30878863-9a64-4efe-bc9b-07386eae0ed7">Section 3.2</a> of [RFC7232]</td>
 </tr>
 
 <tr>
 <td class="org-left">If-Modified-Since</td>
-<td class="org-left">Section 3.3 of [RFC7232]</td>
+<td class="org-left"><a href="RFC7232.html#ID-e71fa098-728a-46bf-b792-2388946ea0ee">Section 3.3</a> of [RFC7232]</td>
 </tr>
 
 <tr>
 <td class="org-left">If-Unmodified-Since</td>
-<td class="org-left">Section 3.4 of [RFC7232]</td>
+<td class="org-left"><a href="RFC7232.html#ID-7365caf4-85ba-4e10-90a2-1abc298dc569">Section 3.4</a> of [RFC7232]</td>
 </tr>
 
 <tr>
 <td class="org-left">If-Range</td>
-<td class="org-left">Section 3.2 of [RFC7233]</td>
+<td class="org-left"><a href="RFC7233.html#ID-2859ef1f-8309-4b7d-9e22-963391b5822a">Section 3.2</a> of [RFC7233]</td>
 </tr>
 </tbody>
 </table>
