@@ -2729,13 +2729,13 @@ A client that sends a "close" connection option *MUST NOT* send further requests
 A server that receives a "close" connection option *MUST* initiate a close of the connection (see below) after it sends the final response to the request that contained "close". The server *SHOULD* send a "close" connection option in its final response on that connection. The server *MUST NOT* process any further requests received on that connection.
 #+END_QUOTE
 
-服务器接收到一个带有 "close" 连接连接的请求报文之后，*必须* 在其发送完该请求报文所对应的最后一个响应报文之后进行关闭连接的初始化流程（见下文）。服务器 *应当* 在该连接中的最后一个响应报文中带有一个 "close" 连接选项。其后，服务器 *禁止* 在该连接中处理任何进一步的请求报文。
+服务器接收到一个带有 "close" 连接连接的请求报文，在其发送完该请求报文所对应的最后一个响应报文之后，*必须* 进行关闭连接的流程（见下文）。服务器 *应当* 在该连接中的最后一个响应报文中带有一个 "close" 连接选项。其后，服务器 *禁止* 在该连接中处理任何进一步的请求报文。
 
 #+BEGIN_QUOTE
 A server that sends a "close" connection option *MUST* initiate a close of the connection (see below) after it sends the response containing "close". The server *MUST NOT* process any further requests received on that connection.
 #+END_QUOTE
 
-服务器发送了一个带有 "close" 连接选项的响应报文之后，*必须* 进行关闭连接的初始化流程（见下文）。其后，服务器 *禁止* 在该连接中处理任何进一步的请求报文。
+服务器发送了一个带有 "close" 连接选项的响应报文之后，*必须* 进行关闭连接的流程（见下文）。其后，服务器 *禁止* 在该连接中处理任何进一步的请求报文。
 
 #+BEGIN_QUOTE
 A client that receives a "close" connection option *MUST* cease sending requests on that connection and close the connection after reading the response message containing the "close"; if additional pipelined requests had been sent on the connection, the client *SHOULD NOT* assume that they will be processed by the server.

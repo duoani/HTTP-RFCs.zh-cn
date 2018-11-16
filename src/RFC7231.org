@@ -1423,7 +1423,7 @@ The final recipient of the request should reflect the message received, excludin
 A client sends request header fields to provide more information about the request context, make the request conditional based on the target resource state, suggest preferred formats for the response, supply authentication credentials, or modify the expected request processing. These fields act as request modifiers, similar to the parameters on a programming language method invocation.
 #+END_QUOTE
 
-客户端发送[[ruby:request%20header%20fields][请求报头域]]来提供更多请求上下文的相关信息，基于目标资源的状态来使请求[[ruby:conditional][条件化]]，提议响应的[[ruby:preferred%20formats][首选格式]]，提供身份凭证，或者更改预期的请求处理。这些报头域充当请求的[[ruby:modifiers][修饰符]]，类似于一门编程语言里用于函数调用的参数一样。
+客户端发送[[ruby:request%20header%20fields][请求报头域]]来提供请求上下文的更多相关信息，基于目标资源的状态来使请求[[ruby:conditional][条件化]]，提议响应的[[ruby:preferred%20formats][首选格式]]，提供身份凭证，或者更改预期的请求处理。这些报头域充当请求的[[ruby:modifiers][修饰符]]，类似于一门编程语言中参与函数调用的参数一样。
 
 ** 5.1. 控制 / Controls
 
@@ -1448,7 +1448,9 @@ Controls are request header fields that direct specific handling of the request.
 :ID:       0b0cea12-0af7-47f1-8908-2afc48ce3fb2
 :END:
 
+#+BEGIN_QUOTE
 The "Expect" header field in a request indicates a certain set of behaviors (expectations) that need to be supported by the server in order to properly handle this request. The only such expectation defined by this specification is 100-continue.
+#+END_QUOTE
 
 请求报文里的 =Expect= 报头域指明了一个确定的[[ruby:behaviors][行为]]（[[ruby:expectations][期望]]）集合，这些期望需要通过服务器的支持来实现，以使得这个请求得以妥善处理。=100-continue= 是仅有的由本规范所定义的期望。
 
@@ -1472,7 +1474,7 @@ A server that receives an =Expect= field-value other than =100-continue= *MAY* r
 A =100-continue= expectation informs recipients that the client is about to send a (presumably large) message body in this request and wishes to receive a =100 (Continue)= interim response if the request-line and header fields are not sufficient to cause an immediate success, redirect, or error response. This allows the client to wait for an indication that it is worthwhile to send the message body before actually doing so, which can improve efficiency when the message body is huge or when the client anticipates that an error is likely (e.g., when sending a state-changing method, for the first time, without previously verified authentication credentials).
 #+END_QUOTE
 
-=100-continue= 这个期望向接收端告知了这样一个信息：客户端即将在本次请求中发送一个（假定是很大的）报文正文，如果之前所发送的请求行以及报头域不足以引起一个立即成功、重定向或者错误响应的时候，它希望能够从接收端那里接收到一个 =100 (Continue)= 的过渡响应，让客户端在真正要发送这个报文正文之前，可以等待服务器的指示来确认是否有必要发送这个报文正文。这样做在报文正文的体积巨大，或者客户端预见到可能出现错误（例如，当首次发送一个[[ruby:state-changing%20method][会改变资源状态的请求方法]]的时候没有预先校验身份凭证）的情况下，可以提高效率。
+=100-continue= 这个期望向接收端告知了这样一个信息：客户端即将在本次请求中发送一个（假定是很大的）报文正文，如果之前所发送的请求行以及报头域不足以引起一个立即成功、重定向或者错误响应的时候，它希望能够从接收端那里接收到一个 =100 (Continue)= 的[[ruby:interim%20response][过渡响应]]，让客户端在真正要发送这个报文正文之前，可以等待服务器的指示来确认是否有必要发送这个报文正文。当报文正文的体积巨大，或者客户端预见到可能出现错误（例如，当首次发送一个[[ruby:state-changing%20method][会改变资源状态的请求方法]]的时候没有预先校验身份凭证）的时候，这样做可以提高效率。
 
 #+BEGIN_QUOTE
 译注：[[ruby:interim%20response][过渡响应]]是相对于[[ruby:final%20response][最终响应]]来说的。过渡响应即所有 =1xx= 状态码的响应，所有非 =1xx= 状态码的响应都是最终响应。
@@ -1509,35 +1511,53 @@ Requirements for clients:
 #+END_QUOTE
 
 对于客户端的要求：
+
 - 客户端 *禁止* 在一个没有[[ruby:message%20body][报文正文]]的请求里生成一个 =100-continue= 期望。
 - 客户端在发送请求的报文正文之前，如果打算等待服务器的 =100 (Continue)=，*必须* 发送一个包含 =100-continue= 期望的 =Expect= 报头域。
-- 客户端在发送了一个 =100-continue= 期望以后，并不要求去等待任意具体的时长。这时候客户端甚至 *可以* 在未接收到任何响应的情况下就开始发送报文正文。再者，由于 =100 (Continue)= 响应不能经由一个 HTTP/1.0 中间人来发送，因此，客户端 *不应当* 在发送报文正文之前无限期地等待。
-- 客户端接收到一个 =417 (Expectation Failed)= 状态码的响应，该响应是回应给一个包含 =100-continue= 期望的请求的，这时候，客户端 *应当* 在不再带有 =100-continue= 期望的情况下再次发起这个请求，这是因为该 417 响应只不过是表明该[[ruby:response%20chain][响应链路]]并不支持期望（比如，它经过一个 HTTP/1.0 服务器）。
+- 客户端在发送了一个 =100-continue= 期望以后，并不要求去等待任意具体的时长。这时候客户端甚至 *可以* 在未接收到任何响应的情况下就开始发送报文正文。再者，由于 =100 (Continue)= 响应不能经由一个 HTTP/1.0 中间人来转发，因此，这种情况下的客户端 *不应当* 在发送报文正文之前无限期地等待。
+- 客户端接收到一个 =417 (Expectation Failed)= 状态码的响应，该响应是回应给一个包含 =100-continue= 期望的请求的，这时候，客户端 *应当* 再次发起这个请求，但这次请求不会再带有 =100-continue= 期望，这是因为这个 =417= 响应只不过是表明该[[ruby:response%20chain][响应链路]]并不支持期望（比如，它经过一个 HTTP/1.0 服务器）。
 
 #+BEGIN_QUOTE
-译注：HTTP/1.0 并没有定义任何 1xx 的状态码，所以不支持在 HTTP/1.0 上使用 =100-continue=。
+译注：HTTP/1.0 并没有定义任何 =1xx= 的状态码，所以不支持在 HTTP/1.0 上使用 =100-continue=。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
 Requirements for servers:
 
-- A server that receives a 100-continue expectation in an HTTP/1.0 request MUST ignore that expectation.
-- A server MAY omit sending a 100 (Continue) response if it has already received some or all of the message body for the corresponding request, or if the framing indicates that there is no message body.
-- A server that sends a 100 (Continue) response MUST ultimately send a final status code, once the message body is received and processed, unless the connection is closed prematurely.
-- A server that responds with a final status code before reading the entire message body SHOULD indicate in that response whether it intends to close the connection or continue reading and discarding the request message (see Section 6.6 of [RFC7230]).
+- A server that receives a =100-continue= expectation in an HTTP/1.0 request *MUST* ignore that expectation.
+- A server *MAY* omit sending a =100 (Continue)= response if it has already received some or all of the message body for the corresponding request, or if the framing indicates that there is no message body.
+- A server that sends a =100 (Continue)= response *MUST* ultimately send a final status code, once the message body is received and processed, unless the connection is closed prematurely.
+- A server that responds with a final status code before reading the entire message body *SHOULD* indicate in that response whether it intends to close the connection or continue reading and discarding the request message (see [[id:5051d9ad-6b2e-45b0-be58-42b9dce34b89][Section 6.6]] of [RFC7230]).
+#+END_QUOTE
+
+对于服务器的要求：
+
+- 当服务器接收到一个 HTTP/1.0 的请求，并且该请求包含一个 =100-continue= 期望的时候，服务器 *必须* 忽略掉这个期望。
+- 如果服务器已经接收到部分或全部报文正文，或者报文分帧表明这个请求并没有报文正文的话，服务器 *可以* 省略发送一个 =100 (Continue)= 响应到对应的请求上。
+- 服务器发送了一个 =100 (Continue)= 响应，一旦接收到并处理完报文正文以后，*必须* 发送一个[[ruby:final%20status%20code][最终状态码]]，除非连接被过早地关闭了。
+- 如果服务器在读取完整个报文正文之前就响应了一个最终状态码，那么，服务器 *应当* 在该响应里表明它是打算关闭这个连接呢，还是继续读取和丢弃这个请求报文（见[[id:5051d9ad-6b2e-45b0-be58-42b9dce34b89][【RFC7230】章节 6.6]]）。
+
+#+BEGIN_QUOTE
+An origin server *MUST*, upon receiving an HTTP/1.1 (or later) request-line and a complete header section that contains a =100-continue= expectation and indicates a request message body will follow, either send an immediate response with a final status code, if that status can be determined by examining just the request-line and header fields, or send an immediate =100 (Continue)= response to encourage the client to send the request's message body. The origin server *MUST NOT* wait for the message body before sending the =100 (Continue)= response.
+#+END_QUOTE
+
+源服务器 *必须* 依据所接收到的 HTTP/1.1（或更新的）[[ruby:request-line][请求行]]，以及包含有一个 =100-continue= 期望并表明随后将会有一个请求报文正文到来的完整的[[ruby:header%20section][报头块]]，来决定：是立即发送一个带有最终状态码的响应呢，如果该状态仅仅通过检测请求行和报头域就可以确定到的话；还是立即发送一个 =100 (Continue)= 响应来[[ruby:encourage][促使]]客户端去发送该请求的报文正文呢？源服务器在发送 =100 (Continue)= 响应之前 *禁止* 等待报文正文。
+
+#+BEGIN_QUOTE
+A proxy *MUST*, upon receiving an HTTP/1.1 (or later) request-line and a complete header section that contains a =100-continue= expectation and indicates a request message body will follow, either send an immediate response with a final status code, if that status can be determined by examining just the request-line and header fields, or begin forwarding the request toward the origin server by sending a corresponding request-line and header section to the next inbound server. If the proxy believes (from configuration or past interaction) that the next inbound server only supports HTTP/1.0, the proxy *MAY* generate an immediate =100 (Continue)= response to encourage the client to begin sending the message body.
+#+END_QUOTE
+
+代理 *必须* 依据依据所接收到的 HTTP/1.1（或更新的）[[ruby:request-line][请求行]]，以及包含有一个 =100-continue= 期望并表明随后将会有一个请求报文正文到来的完整的[[ruby:header%20section][报头块]]，来决定：是立即发送一个带有最终状态码的响应呢，如果该状态仅仅通过检测请求行和报头域就可以确定到的话；还是开始通过发送一个对应的请求行和报头块到下一个[[ruby:inbound%20server][入站服务器]]，来沿着源服务器的方向转发这个请求呢？如果这个代理（依据本地配置或者过去的交互）相信下一个入站服务器仅支持 HTTP/1.0 的话，这个代理 *可以* 立即生成一个 =100 (Continue)= 响应来促使客户端开始发送该请求的报文正文。
+
+#+BEGIN_QUOTE
+译注：入站、出站的概念见[[id:e2d9bed8-d6ca-4b5d-ab4a-6b2b2576393e][【RFC7230】章节 2.3]]。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-An origin server *MUST*, upon receiving an HTTP/1.1 (or later) request-line and a complete header section that contains a 100-continue expectation and indicates a request message body will follow, either send an immediate response with a final status code, if that status can be determined by examining just the request-line and header fields, or send an immediate 100 (Continue) response to encourage the client to send the request's message body. The origin server MUST NOT wait for the message body before sending the 100 (Continue) response.
+*Note:* The =Expect= header field was added after the original publication of HTTP/1.1 [RFC2068] as both the means to request an interim =100 (Continue)= response and the general mechanism for indicating must-understand extensions. However, the extension mechanism has not been used by clients and the must-understand requirements have not been implemented by many servers, rendering the extension mechanism useless. This specification has removed the extension mechanism in order to simplify the definition and processing of =100-continue=.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A proxy MUST, upon receiving an HTTP/1.1 (or later) request-line and a complete header section that contains a 100-continue expectation and indicates a request message body will follow, either send an immediate response with a final status code, if that status can be determined by examining just the request-line and header fields, or begin forwarding the request toward the origin server by sending a corresponding request-line and header section to the next inbound server. If the proxy believes (from configuration or past interaction) that the next inbound server only supports HTTP/1.0, the proxy MAY generate an immediate 100 (Continue) response to encourage the client to begin sending the message body.
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-*Note:* The Expect header field was added after the original publication of HTTP/1.1 [RFC2068] as both the means to request an interim 100 (Continue) response and the general mechanism for indicating must-understand extensions. However, the extension mechanism has not been used by clients and the must-understand requirements have not been implemented by many servers, rendering the extension mechanism useless. This specification has removed the extension mechanism in order to simplify the definition and processing of 100-continue.
-#+END_QUOTE
+注意：=Expect= 报头域早在 HTTP/1.1 规范的第一版【RFC2068】时就已经被引入，当时它是有两个作用的：一是用于请求一个 =100 (Continue)= 过渡响应，二是作为一种通用机制来表明这是一种“[[ruby:must-understand][必须理解]]”的[[ruby:extensions][扩展]]。但是，这种扩展机制并没有得到客户端的应用，而且这个所谓的“必须理解”的要求也没有得到很多服务器的实现，致使这种扩展机制变得[[ruby:useless][无用]]。本规范已经移除了这种扩展机制以简化 =100-continue= 的定义和处理。
 
 *** 5.1.2. Max-Forwards
 :PROPERTIES:
@@ -1545,23 +1565,38 @@ A proxy MUST, upon receiving an HTTP/1.1 (or later) request-line and a complete 
 :END:
 
 #+BEGIN_QUOTE
-The "Max-Forwards" header field provides a mechanism with the TRACE (Section 4.3.8) and OPTIONS (Section 4.3.7) request methods to limit the number of times that the request is forwarded by proxies. This can be useful when the client is attempting to trace a request that appears to be failing or looping mid-chain.
+The "Max-Forwards" header field provides a mechanism with the TRACE ([[id:bdc9e3b4-bac3-46c5-9319-31f7f4d6469d][Section 4.3.8]]) and OPTIONS ([[id:f659b35f-7510-4961-ad3a-3ab1b312a681][Section 4.3.7]]) request methods to limit the number of times that the request is forwarded by proxies. This can be useful when the client is attempting to trace a request that appears to be failing or looping mid-chain.
 #+END_QUOTE
+
+=Max-Forwards= 报头域为 TRACE（[[id:bdc9e3b4-bac3-46c5-9319-31f7f4d6469d][章节 4.3.8]]）和 OPTIONS（[[id:f659b35f-7510-4961-ad3a-3ab1b312a681][章节 4.3.7]]）请求方法提供了一种方法来限制这个请求被代理所转发的次数。当客户端试图去追踪某个请求可能在请求[[ruby:mid-chain][链路的中部]]转发失败了或者陷入循环的时候，=Max-Forwards= 将非常有用。
 
 #+BEGIN_SRC text
   Max-Forwards = 1*DIGIT
 #+END_SRC
 
 #+BEGIN_QUOTE
-The Max-Forwards value is a decimal integer indicating the remaining number of times this request message can be forwarded.
+The =Max-Forwards= value is a decimal integer indicating the remaining number of times this request message can be forwarded.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Each intermediary that receives a TRACE or OPTIONS request containing a Max-Forwards header field MUST check and update its value prior to forwarding the request. If the received value is zero (0), the intermediary MUST NOT forward the request; instead, the intermediary MUST respond as the final recipient. If the received Max-Forwards value is greater than zero, the intermediary MUST generate an updated Max-Forwards field in the forwarded message with a field-value that is the lesser of a) the received value decremented by one (1) or b) the recipient's maximum supported value for Max-Forwards.
-#+END_QUOTE
+=Max-Forwards= 的值是一个十进制整数，表明这个请求报文能够被转发的剩余次数。
 
 #+BEGIN_QUOTE
-A recipient MAY ignore a Max-Forwards header field received with any other request methods.
+Each intermediary that receives a TRACE or OPTIONS request containing a =Max-Forwards= header field *MUST* check and update its value prior to forwarding the request. If the received value is zero (0), the intermediary *MUST NOT* forward the request; instead, the intermediary *MUST* respond as the final recipient. If the received =Max-Forwards= value is greater than zero, the intermediary *MUST* generate an updated =Max-Forwards= field in the forwarded message with a field-value that is the lesser of a) the received value decremented by one (1) or b) the recipient's maximum supported value for =Max-Forwards=.
+#+END_QUOTE
+
+接收到一个包含有一个 =Max-Forwards= 报头域的 TRACE 或者 OPTIONS 请求的每一个中间人，在转发这个请求的之前，*必须* 检查并更新 =Max-Forwards= 的值。如果所接收到的值是 0，这个中间人 *禁止* 转发该请求，而是，*必须* 作为[[ruby:final%20recipient][最终接收端]]来响应该请求。如果所接收到的 =Max-Forwards= 值大于 0，这个中间人 *必须* 在转发的报文里生成一个更新后的 =Max-Forwards=，其值可以为以下其中之一：
+
+1. 所接收到的值减去 1；
+2. 该接收端自身的 =Max-Forwards= 最大可支持的值。
+
+#+BEGIN_QUOTE
+A recipient *MAY* ignore a =Max-Forwards= header field received with any other request methods.
+#+END_QUOTE
+
+接收端 *可以* 忽略接收自其他请求方法里的 =Max-Forwards= 报头域。
+
+#+BEGIN_QUOTE
+译注：也就是说，应该仅在 TRACE 和 OPTIONS 请求里使用 Max-Forwards 报头域。
 #+END_QUOTE
 
 ** 5.2. 条件 / Conditionals
