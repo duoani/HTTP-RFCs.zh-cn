@@ -52,6 +52,9 @@
 :ID:       a70b4aaa-f776-4d5b-a31d-60d1ad16d85e
 :END:
 ** 3.2. If-Range
+:PROPERTIES:
+:ID:       2859ef1f-8309-4b7d-9e22-963391b5822a
+:END:
 * 4. Responses to a Range Request
 ** 4.1. 206 Partial Content
 ** 4.2. Content-Range

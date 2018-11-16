@@ -51,14 +51,32 @@
 ** 2.4. When to Use Entity-Tags and Last-Modified Dates
 * 3. Precondition Header Fields
 ** 3.1. If-Match
+:PROPERTIES:
+:ID:       2c4da24a-b694-472c-8ac3-f09c20a84216
+:END:
 ** 3.2. If-None-Match
+:PROPERTIES:
+:ID:       30878863-9a64-4efe-bc9b-07386eae0ed7
+:END:
 ** 3.3. If-Modified-Since
+:PROPERTIES:
+:ID:       e71fa098-728a-46bf-b792-2388946ea0ee
+:END:
 ** 3.4. If-Unmodified-Since
+:PROPERTIES:
+:ID:       7365caf4-85ba-4e10-90a2-1abc298dc569
+:END:
 ** 3.5. If-Range
+:PROPERTIES:
+:ID:       1b40ccc8-f559-49c3-ae13-9642f9e7e9d5
+:END:
 * 4. Status Code Definitions
 ** 4.1. 304 Not Modified
 ** 4.2. 412 Precondition Failed
 * 5. Evaluation
+:PROPERTIES:
+:ID:       fce45320-6c1c-4486-a32b-2c553780d785
+:END:
 * 6. Precedence
 * 7. IANA Considerations
 ** 7.1. Status Code Registration

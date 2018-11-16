@@ -186,7 +186,7 @@ HTTP 依靠“统一资源标识符（URI）标准[[https://tools.ietf.org/html/
 Most HTTP communication consists of a retrieval request (GET) for a representation of some resource identified by a URI. In the simplest case, this might be accomplished via a single bidirectional connection (===) between the user agent (UA) and the origin server (O).
 #+END_QUOTE
 
-大多数 HTTP 的通讯是通过使用一个 URI 以 GET 请求的形式来定位资源。在最简单的情况下，可以经由一个在用户代理（UA）和源服务器（O）之间的双向连接就能完成。
+大多数 HTTP 的通讯是由 GET 请求组成的，通过向一个 URI 发起 GET 请求来获得该 URI 所标识的资源一种[[ruby:representation][表示方式]]。在最简单的情况下，可以经由一个在用户代理（UA）和源服务器（O）之间的双向连接就能完成。
 
 #+BEGIN_SRC text
             request   >
@@ -198,7 +198,7 @@ Most HTTP communication consists of a retrieval request (GET) for a representati
 A client sends an HTTP request to a server in the form of a request message, beginning with a request-line that includes a method, URI, and protocol version (Section 3.1.1), followed by header fields containing request modifiers, client information, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
 #+END_QUOTE
 
-客户端以请求报文（request message）的形式向服务器发送一个 HTTP 请求。请求报文以一个包含了方法（method）、URI 和协议版本（protocol version）的请求行（request line，见[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]）作为开始；随后是包含了请求修饰符，客户端信息以及 representation 元数据（representation metadata，见[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含了有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（message body）。
+客户端以请求报文（request message）的形式向服务器发送一个 HTTP 请求。请求报文以一个包含了方法（method）、URI 和协议版本（protocol version）的请求行（request line，见[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]）作为开始；随后是包含了请求修饰符，客户端信息以及表示形式元数据（representation metadata，见[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含了有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（message body）。
 
 #+BEGIN_QUOTE
 译注："header fields" 通常译作报头域、首部、首部字段等，本文统一译作“报头域”。"message body" 通常译作报文正文、消息正文、消息体等，本文统一译作“报文正文”。
@@ -208,7 +208,7 @@ A client sends an HTTP request to a server in the form of a request message, beg
 A server responds to a client's request by sending one or more HTTP response messages, each beginning with a status line that includes the protocol version, a success or error code, and textual reason phrase (Section 3.1.2), possibly followed by header fields containing server information, resource metadata, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
 #+END_QUOTE
 
-服务器通过发送一个或多个 HTTP 响应报文（response message）来响应客户端的请求。每个响应报文以一个包含协议版本（protocol version）、一个成功或失败的状态码（status code）以及一个描述状态码的文本短语（reason phrase）的状态行（status line，[[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][章节 3.1.2]]）作为开始；随后可能是包含服务器信息、资源元数据以及 representation 元数据（representation metadata，见章节 3.2）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（message body）。
+服务器通过发送一个或多个 HTTP 响应报文（response message）来响应客户端的请求。每个响应报文以一个包含协议版本（protocol version）、一个成功或失败的状态码（status code）以及一个描述状态码的文本短语（reason phrase）的状态行（status line，[[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][章节 3.1.2]]）作为开始；随后可能是包含服务器信息、资源元数据以及表示形式元数据（representation metadata，见章节 3.2）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含有效载荷（如果有的话，见[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][章节 3.3]]）的报文正文（message body）。
 
 #+BEGIN_QUOTE
 A connection might be used for multiple request/response exchanges, as defined in Section 6.3.
@@ -1115,13 +1115,13 @@ Historically, HTTP header field values could be extended over multiple lines by 
 A server that receives an =obs-fold= in a request message that is not within a message/http container *MUST* either reject the message by sending a =400 (Bad Request)=, preferably with a representation explaining that obsolete line folding is unacceptable, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
 #+END_QUOTE
 
-如果服务端接收到一个在请求报文里的分行 =obs-fold=，但这个分行不在媒体类型 "message/http" 的容器内，服务端 *必须* 要不拒绝这种报文并响应一个 =400 (Bad Request)= 状态码，更好的方式是在响应报文中带有一个 representation 来解释那种已经废弃的分行是不再允许出现在报文中的；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
+如果服务端接收到一个在请求报文里的分行 =obs-fold=，但这个分行不在媒体类型 "message/http" 的容器内，服务端 *必须* 要不拒绝这种报文并响应一个 =400 (Bad Request)= 状态码，更好的方式是在响应报文中带有一种[[ruby:representation][表示形式]]来解释那种已经废弃的分行是不再允许出现在报文中的；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
 
 #+BEGIN_QUOTE
 A proxy or gateway that receives an =obs-fold= in a response message that is not within a message/http container *MUST* either discard the message and replace it with a =502 (Bad Gateway)= response, preferably with a representation explaining that unacceptable line folding was received, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
 #+END_QUOTE
 
-如果代理（proxy）或网关（gateway）接收到一个响应报文里的分行 =obs-fold=，但这个分行不在媒体类型 "message/http" 的容器内，这些中间人 *必须* 要不丢弃这个报文改由响应一个 =502 (Bad Gateway)= 状态码，更好的方式是在响应报文中带有一个 representation 来解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
+如果代理（proxy）或网关（gateway）接收到一个响应报文里的分行 =obs-fold=，但这个分行不在媒体类型 "message/http" 的容器内，这些中间人 *必须* 要不丢弃这个报文改由响应一个 =502 (Bad Gateway)= 状态码，更好的方式是在响应报文中带有一种[[ruby:representation][表示形式]]来解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
 
 #+BEGIN_QUOTE
 A user agent that receives an =obs-fold= in a response message that is not within a message/http container *MUST* replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value.
@@ -1299,7 +1299,7 @@ indicates that the payload body has been compressed using the =gzip= coding and 
 Unlike =Content-Encoding= ([[https://tools.ietf.org/html/rfc7231#section-3.1.2.1][Section 3.1.2.1]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]), =Transfer-Encoding= is a property of the message, not of the representation, and any recipient along the request/response chain *MAY* decode the received transfer coding(s) or apply additional transfer coding(s) to the message body, assuming that corresponding changes are made to the =Transfer-Encoding= field-value. Additional information about the encoding parameters can be provided by other header fields not defined by this specification.
 #+END_QUOTE
 
-与 =Content-Encoding= 报头域（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-3.1.2.1][章节 3.1.2.1]]）不同的是，=Transfer-Encoding= 报头域是报文（message）的一个属性，而不是 representation 的一个属性，并且在请求/响应链路中的所有接收端都 *可以* 依据所接收到的传输代码值（一个或多个）对报文正文进行解码，或者向报文正文应用额外的传输代码值，假设 =Transfer-Encoding= 的 =field-value= 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的报头域提供。
+与 =Content-Encoding= 报头域（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-3.1.2.1][章节 3.1.2.1]]）不同的是，=Transfer-Encoding= 报头域是报文（message）的一个属性，而不是[[ruby:representation][表示形式]]的一个属性，并且在请求/响应链路中的所有接收端都 *可以* 依据所接收到的传输代码值（一个或多个）对报文正文进行解码，或者向报文正文应用额外的传输代码值，假设 =Transfer-Encoding= 的 =field-value= 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的报头域提供。
 
 #+BEGIN_QUOTE
 =Transfer-Encoding= *MAY* be sent in a response to a HEAD request or in a =304 (Not Modified)= response (Section 4.1 of [RFC7232]) to a GET request, neither of which includes a message body, to indicate that the origin server would have applied a transfer coding to the message body if the request had been an unconditional GET. This indication is not required, however, because any recipient on the response chain (including the origin server) can remove transfer codings when they are not needed.
@@ -1334,7 +1334,7 @@ When a message does not have a =Transfer-Encoding= header field, a =Content-Leng
 #+END_QUOTE
 
 当一个报文不带有 =Transfer-Encoding= 报头域的时候，=Content-Length= 报头域能够提供对于一个潜在的有效载荷（payload body）的预期的大小。=Content-Length= 是一个十进制数字，以字节（octets）形式。对于包含一个有效载荷的报文，=Content-Length= 的 =field-value=
-提供了决定报文正文在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的报文，=Content-Length= 指明了已选定的 representation（selected representation【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-3][章节 3]]）的大小。
+提供了决定报文正文在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的报文，=Content-Length= 指明了已选定的表示形式（selected representation【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-3][章节 3]]）的大小。
 
 #+BEGIN_SRC text
 Content-Length = 1*DIGIT
@@ -1552,7 +1552,7 @@ When a server listening only for HTTP request messages, or processing what appea
 Transfer coding names are used to indicate an encoding transformation that has been, can be, or might need to be applied to a payload body in order to ensure "safe transport" through the network. This differs from a content coding in that the transfer coding is a property of the message rather than a property of the representation that is being transferred.
 #+END_QUOTE
 
-传输编码值（transfer coding）是用于表示已经、能够或者可能需要应用到一个有效载荷（payload body）中以确保网络传输安全的一种编码转换（encoding transformation）。与内容编码值（content coding）不同的是，传输编码值是一个报文的特性，而不是一个 representation 的特性。
+传输编码值（transfer coding）是用于表示已经、能够或者可能需要应用到一个有效载荷（payload body）中以确保网络传输安全的一种编码转换（encoding transformation）。与内容编码值（content coding）不同的是，传输编码值是一个报文的特性，而不是一个[[ruby:representation][表示形式]]的特性。
 
 #+HEADER: :var chunked-rule-url=123123
 #+BEGIN_SRC org
@@ -1922,7 +1922,7 @@ When making a request directly to an origin server, other than a CONNECT or serv
 For example, a client wishing to retrieve a representation of the resource identified as
 #+END_QUOTE
 
-例如，一个客户端希望从源服务器里获得一个资源的 representation，资源对应的 URI 如下：
+例如，一个客户端希望从源服务器里获得这个资源的一种[[ruby:representation][表示形式]]，资源对应的 URI 如下：
 
 #+BEGIN_EXAMPLE
 http://www.example.org/where?q=now
@@ -2390,7 +2390,7 @@ A proxy *MAY* transform the payload of a message that does not contain a =no-tra
 A proxy *SHOULD NOT* modify header fields that provide information about the endpoints of the communication chain, the resource state, or the selected representation (other than the payload) unless the field's definition specifically allows such modification or the modification is deemed necessary for privacy or security.
 #+END_QUOTE
 
-代理 *不应当* 修改提供有关通信链路端点、资源状态，或者已选定的 representation（除了有效载荷）的信息的报头域，除非该域的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
+代理 *不应当* 修改提供有关通信链路端点、资源状态，或者[[ruby:selected%20representation][已选定的表示形式]]（除了有效载荷）的信息的报头域，除非该域的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
 
 * 6. 连接管理（Connection Management）
 :PROPERTIES:
