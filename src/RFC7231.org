@@ -1941,8 +1941,10 @@ An =Accept-Encoding= header field with a combined field-value that is empty impl
 :END:
 
 #+BEGIN_QUOTE
-The "Accept-Language" header field can be used by user agents to indicate the set of natural languages that are preferred in the response. Language tags are defined in Section 3.1.3.1.
+The "Accept-Language" header field can be used by user agents to indicate the set of natural languages that are preferred in the response. Language tags are defined in [[id:0a52652d-e5e8-40f9-ba1a-f96c45969b85][Section 3.1.3.1]].
 #+END_QUOTE
+
+用户代理可以使用 =Accept-Language= 报头域来表明在响应中首选使用的[[ruby:natural%20language][自然语言]]集合。[[ruby:language%20tags][语言标签]]的定义见[[id:0a52652d-e5e8-40f9-ba1a-f96c45969b85][章节 3.1.3.1]]。
 
 #+BEGIN_SRC text
   Accept-Language = 1#( language-range [ weight ] )
@@ -1951,8 +1953,10 @@ The "Accept-Language" header field can be used by user agents to indicate the se
 #+END_SRC
 
 #+BEGIN_QUOTE
-Each language-range can be given an associated quality value representing an estimate of the user's preference for the languages specified by that range, as defined in Section 5.3.1. For example,
+Each language-range can be given an associated quality value representing an estimate of the user's preference for the languages specified by that range, as defined in [[id:91059de1-4a9b-4d9f-8be2-eb4d2d6ddc37][Section 5.3.1]]. For example,
 #+END_QUOTE
+
+上述每个 =language-range= 都可以分别被给予一个相关联的[[ruby:quality%20value][质量值]]来表示用户对由该范围所指定的语言的偏爱程度，其定义见[[id:91059de1-4a9b-4d9f-8be2-eb4d2d6ddc37][章节 5.3.1]]。例如：
 
 #+BEGIN_EXAMPLE
   Accept-Language: da, en-gb;q=0.8, en;q=0.7
@@ -1962,25 +1966,37 @@ Each language-range can be given an associated quality value representing an est
 would mean: "I prefer Danish, but will accept British English and other types of English".
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A request without any Accept-Language header field implies that the user agent will accept any language in response. If the header field is present in a request and none of the available representations for the response have a matching language tag, the origin server can either disregard the header field by treating the response as if it is not subject to content negotiation or honor the header field by sending a 406 (Not Acceptable) response. However, the latter is not encouraged, as doing so can prevent users from accessing content that they might be able to use (with translation software, for example).
-#+END_QUOTE
+意为：“我首选[[ruby:Danish][丹麦语]]，但也会接受[[ruby:British%20English][英国英语]]以及其他类型的英语”。
 
 #+BEGIN_QUOTE
-Note that some recipients treat the order in which language tags are listed as an indication of descending priority, particularly for tags that are assigned equal quality values (no value is the same as q=1). However, this behavior cannot be relied upon. For consistency and to maximize interoperability, many user agents assign each language tag a unique quality value while also listing them in order of decreasing quality. Additional discussion of language priority lists can be found in Section 2.3 of [RFC4647].
+A request without any =Accept-Language= header field implies that the user agent will accept any language in response. If the header field is present in a request and none of the available representations for the response have a matching language tag, the origin server can either disregard the header field by treating the response as if it is not subject to content negotiation or honor the header field by sending a =406 (Not Acceptable)= response. However, the latter is not encouraged, as doing so can prevent users from accessing content that they might be able to use (with translation software, for example).
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-For matching, Section 3 of [RFC4647] defines several matching schemes. Implementations can offer the most appropriate matching scheme for their requirements. The "Basic Filtering" scheme ([RFC4647], Section 3.3.1) is identical to the matching scheme that was previously defined for HTTP in Section 14.4 of [RFC2616].
-#+END_QUOTE
+如果请求里没有任何 =Accept-Language= 报头域，意味着该用户代理将会在响应里接受任何语言。如果请求里出现了该报头域，但响应没有任何[[ruby:avaliable%20representations][备选表示形式]]带有与之相匹配的语言标签，源服务器可以[[ruby:disregard][忽视]]该报头域的要求就好像它并没有受到[[ruby:content%20negotiation][内容协商]]的影响一样，可以[[ruby:honor][遵守]]该报头域的要求而返回一个 =406 (Not Acceptable)= 响应。但是，并不鼓励使用后者这种方式，这是因为后者会阻止用户访问他们可能能够使用的内容（例如，使用翻译软件等）。
 
 #+BEGIN_QUOTE
-It might be contrary to the privacy expectations of the user to send an Accept-Language header field with the complete linguistic preferences of the user in every request (Section 9.7).
+Note that some recipients treat the order in which language tags are listed as an indication of descending priority, particularly for tags that are assigned equal quality values (no value is the same as q=1). However, this behavior cannot be relied upon. For consistency and to maximize interoperability, many user agents assign each language tag a unique quality value while also listing them in order of decreasing quality. Additional discussion of language priority lists can be found in [[https://tools.ietf.org/html/rfc4647#section-2.3][Section 2.3]] of [RFC4647].
 #+END_QUOTE
 
+需要注意的是，某些接收端会将语言标签在 =Accept-Language= 里的列举顺序作为优先级的顺序（[[ruby:descending][降序]]），特别是对于赋值为相等质量值（没有值等价于 q=1）的标签。但是，不能够依赖这种行为。为了[[ruby:consistency][一致性]]以及[[ruby:maximize%20interoperability][最化大互操作性]]，许多用户代理会对每种语言标签赋值一个唯一的质量值并且将它们以质量值降序的顺序列举到报头域里。对语言优先级列表的更多讨论能够在[[https://tools.ietf.org/html/rfc4647#section-2.3][【RFC4647】章节 2.3]] 里找到。
+
 #+BEGIN_QUOTE
-Since intelligibility is highly dependent on the individual user, user agents need to allow user control over the linguistic preference (either through configuration of the user agent itself or by defaulting to a user controllable system setting). A user agent that does not provide such control to the user MUST NOT send an Accept-Language header field.
+For matching, [[https://tools.ietf.org/html/rfc4647#section-3][Section 3]] of [RFC4647] defines several matching schemes. Implementations can offer the most appropriate matching scheme for their requirements. The "Basic Filtering" scheme ([RFC4647], [[https://tools.ietf.org/html/rfc4647#section-3.3.1][Section 3.3.1]]) is identical to the matching scheme that was previously defined for HTTP in [[https://tools.ietf.org/html/rfc2616#section-14.4][Section 14.4]] of [RFC2616].
 #+END_QUOTE
+
+为了匹配，[[https://tools.ietf.org/html/rfc4647#section-3][【RFC4647】章节 3]] 定义了若干[[ruby:matching%20schemes][匹配方案]]。实现可以以它们的要求来提供最合适的匹配方案。“[[ruby:Basic%20Filtering][基础过滤]]”方案（[[https://tools.ietf.org/html/rfc4647#section-3.3.1][【RFC4647】章节 3.3.1]]）等价于之前[[https://tools.ietf.org/html/rfc2616#section-14.4][【RFC2616】章节 14.4]] 为 HTTP 而定义的匹配方案。
+
+#+BEGIN_QUOTE
+It might be contrary to the privacy expectations of the user to send an =Accept-Language= header field with the complete linguistic preferences of the user in every request ([[id:58ca9032-65b1-47ff-b759-d1cedc245d4b][Section 9.7]]).
+#+END_QUOTE
+
+在用户每次请求里的完整的语言学优先级可能会和用户发送 =Accept-Language= 报头域的[[ruby:privacy%20expectations][隐私期望]]相悖（[[id:58ca9032-65b1-47ff-b759-d1cedc245d4b][章节 9.7]]）。
+
+#+BEGIN_QUOTE
+Since intelligibility is highly dependent on the individual user, user agents need to allow user control over the linguistic preference (either through configuration of the user agent itself or by defaulting to a user controllable system setting). A user agent that does not provide such control to the user *MUST NOT* send an =Accept-Language= header field.
+#+END_QUOTE
+
+正由于[[ruby:intelligibility][可理解性]]是高度依赖于单独个体的，因此，用户代理需要让用户来控制语言的首选（可以通过用户代理自己的配置，也可以默认由用户系统设置来控制）。不提供这些控制的用户代理 *禁止* 发送 =Accept-Language= 报头域。
 
 #+BEGIN_QUOTE
 *Note:* User agents ought to provide guidance to users when setting a preference, since users are rarely familiar with the details of language matching as described above. For example, users might assume that on selecting "en-gb", they will be served any kind of English document if British English is not available. A user agent might suggest, in such a case, to add "en" to the list for better matching behavior.
