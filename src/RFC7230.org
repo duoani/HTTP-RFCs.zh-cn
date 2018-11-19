@@ -1788,7 +1788,7 @@ The presence of the keyword "trailers" indicates that the client is willing to a
 When multiple transfer codings are acceptable, the client *MAY* rank the codings by preference using a case-insensitive "q" parameter (similar to the qvalues used in content negotiation fields, Section 5.3.1 of [RFC7231]). The rank value is a real number in the range 0 through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means "not acceptable".
 #+END_QUOTE
 
-当允许多个传输编码值时，客户端 *可以* 依据其喜好，通过使用一个不区分大小写的参数 =q= （类似于内容协商域里的 =qvalues=，见[[https://tools.ietf.org/html/rfc7231][【RFC7231】章节 5.3.1]]），来对这些编码值分配权重。权重值是一个 0 到 1 之间的实数，最小值是 0.001（优先级最低），最大值为 1（优先级最高），排序值为 0 代表“不接受这种传输编码”。 
+当允许多个传输编码值时，客户端 *可以* 依据其偏好，通过使用一个不区分大小写的参数 =q= （类似于内容协商域里的 =qvalues=，见[[https://tools.ietf.org/html/rfc7231][【RFC7231】章节 5.3.1]]），来对这些编码值分配权重。权重值是一个 0 到 1 之间的实数，最小值是 0.001（优先级最低），最大值为 1（优先级最高），排序值为 0 代表“不接受这种传输编码”。 
 
 #+BEGIN_QUOTE
 If the TE field-value is empty or if no TE field is present, the only acceptable transfer coding is chunked. A message with no transfer coding is always acceptable.

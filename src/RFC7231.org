@@ -252,6 +252,9 @@ Internet media types ought to be registered with IANA according to the procedure
 *注意：* 不像其他报头域里的某些类似结构，媒体类型的参数不允许在等号（"="）两边带有空格（即使是 [[id:f26527b6-d15c-4967-97e3-acc669609481][BWS]] 也不允许）。
 
 **** 3.1.1.2. 字符集 / Charset
+:PROPERTIES:
+:ID:       dc31dd72-3e53-4fb1-b3a6-e6716f61b202
+:END:
 #+BEGIN_QUOTE
 HTTP uses charset names to indicate or negotiate the character encoding scheme of a textual representation [[[https://tools.ietf.org/html/rfc2978][RFC6365]]]. A charset is identified by a case-insensitive token.
 #+END_QUOTE
@@ -1426,7 +1429,7 @@ The final recipient of the request should reflect the message received, excludin
 A client sends request header fields to provide more information about the request context, make the request conditional based on the target resource state, suggest preferred formats for the response, supply authentication credentials, or modify the expected request processing. These fields act as request modifiers, similar to the parameters on a programming language method invocation.
 #+END_QUOTE
 
-客户端发送[[ruby:request%20header%20fields][请求报头域]]来提供请求上下文的更多相关信息，基于目标资源的状态来使请求[[ruby:conditional][带有条件]]，提议响应的[[ruby:preferred%20formats][首选格式]]，提供身份凭证，或者更改预期的请求处理。这些报头域充当请求的[[ruby:modifiers][修饰符]]，类似于一门编程语言中参与函数调用的参数一样。
+客户端发送[[ruby:request%20header%20fields][请求报头域]]来提供更多关于请求上下文的信息，基于目标资源的状态来使请求[[ruby:conditional][带有条件]]，提议响应的[[ruby:preferred%20formats][首选格式]]，提供身份凭证，或者更改预期的请求处理。这些报头域充当请求的[[ruby:modifiers][修饰符]]，类似于一门编程语言中参与函数调用的参数一样。
 
 ** 5.1. 控制 / Controls
 
@@ -1623,24 +1626,33 @@ HTTP 的[[ruby:conditional%20request%20fields][条件请求报头域]]【[[file:
 
 ** 5.3. 内容协商 / Content Negotiation
 
-The following request header fields are sent by a user agent to engage in proactive negotiation of the response content, as defined in Section 3.4.1. The preferences sent in these fields apply to any content in the response, including representations of the target resource, representations of error or processing status, and potentially even the miscellaneous text strings that might appear within the protocol.
+The following request header fields are sent by a user agent to engage in proactive negotiation of the response content, as defined in [[id:c1d92ed4-69d5-4575-88c2-090534949ccf][Section 3.4.1]]. The preferences sent in these fields apply to any content in the response, including representations of the target resource, representations of error or processing status, and potentially even the miscellaneous text strings that might appear within the protocol.
+
+下列[[ruby:request%20header%20fields][请求报头域]]会被用户代理所发送以参与对响应内容的[[ruby:proactive%20negotiation][主动协商]]，其定义见[[id:c1d92ed4-69d5-4575-88c2-090534949ccf][章节 3.4.1]]。在这些报头域里[[ruby:preferences][偏好设置（首选项）]]会应用到响应里的所有内容上，这些内容包括：目标资源的表示形式、错误状态或处理中状态的表示形式、甚至是可能出现在协议内的混杂文本字符串。
 
 | Header Field Name | Defined in... |
 |-------------------+---------------|
-| Accept            | Section 5.3.2 |
-| Accept-Charset    | Section 5.3.3 |
-| Accept-Encoding   | Section 5.3.4 |
-| Accept-Language   | Section 5.3.5 |
+| Accept            | [[id:95575604-c3d4-48d6-a061-325bd7798970][Section 5.3.2]] |
+| Accept-Charset    | [[id:4c8262b6-8e4c-4476-ba72-47a096dfbfa7][Section 5.3.3]] |
+| Accept-Encoding   | [[id:a8fcc101-3782-4ed0-aec0-561b933e6a5f][Section 5.3.4]] |
+| Accept-Language   | [[id:bdbc4965-a98b-451d-91c6-58e51d7c03c9][Section 5.3.5]] |
 
-*** 5.3.1. Quality Values
+*** 5.3.1. 质量度 / Quality Values
+:PROPERTIES:
+:ID:       91059de1-4a9b-4d9f-8be2-eb4d2d6ddc37
+:END:
 
 #+BEGIN_QUOTE
 Many of the request header fields for proactive negotiation use a common parameter, named "q" (case-insensitive), to assign a relative "weight" to the preference for that associated kind of content. This weight is referred to as a "quality value" (or "qvalue") because the same parameter name is often used within server configurations to assign a weight to the relative quality of the various representations that can be selected for a resource.
 #+END_QUOTE
 
+许多用于[[ruby:proactive%20negotiation][主动协商]]的请求报头域都会使用一个名叫 "q"（不区分大小写）的[[ruby:common%20parameter][通用型参数]]，来分别向内容的对应类型的[[ruby:preference][偏爱度]]赋予一个相对的“[[ruby:weight][权重值]]”。由于相同的参数名称（"q"）常常用在服务器配置里来对某个资源的各种待选表现形式所对应的质量度赋予一个权重值，因此，这个权重值被称为“[[ruby:quality%20value][质量度]]”（或者称为 =qvalue=）。
+
 #+BEGIN_QUOTE
 The weight is normalized to a real number in the range 0 through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means "not acceptable". If no "q" parameter is present, the default weight is 1.
 #+END_QUOTE
+
+权重值被[[ruby:normalized][规范化]]为一个 0 到 1 范围内的实数值，其中，最小值是 0.001（优先级最低），最大值为 1（优先级最高），权重值为 0 代表“不被接受”。如果没有出现参数 "q"，那么默认的权重值为 1。 
 
 #+BEGIN_SRC text
   weight = OWS ";" OWS "q=" qvalue
@@ -1652,14 +1664,18 @@ The weight is normalized to a real number in the range 0 through 1, where 0.001 
 A sender of qvalue *MUST NOT* generate more than three digits after the decimal point. User configuration of these values ought to be limited in the same fashion.
 #+END_QUOTE
 
+发送端 *禁止* 生成小数点后超过三位小数的 =qvalue=。应该要以相同的方式来限制这些权重值的用户配置。
+
 *** 5.3.2. Accept
 :PROPERTIES:
 :ID:       95575604-c3d4-48d6-a061-325bd7798970
 :END:
 
 #+BEGIN_QUOTE
-The "Accept" header field can be used by user agents to specify response media types that are acceptable. Accept header fields can be used to indicate that the request is specifically limited to a small set of desired types, as in the case of a request for an in-line image.
+The "Accept" header field can be used by user agents to specify response media types that are acceptable. =Accept= header fields can be used to indicate that the request is specifically limited to a small set of desired types, as in the case of a request for an in-line image.
 #+END_QUOTE
+
+用户代理可以使用 =Accept= 报头域来[[ruby:specify][指定]]可以接受资源的哪些[[ruby:media%20types][媒体类型]]。=Accept= 报头域可以用来[[ruby:indicate][表明]]请求是明确限定在一个[[ruby:desired%20types][期望类型]]的小集合，正如请求一个[[ruby:in-line%20image][内嵌图片]]这种情况一样。
 
 #+BEGIN_SRC text
   Accept = #( media-range [ accept-params ] )
@@ -1673,36 +1689,58 @@ The "Accept" header field can be used by user agents to specify response media t
 #+END_SRC
 
 #+BEGIN_QUOTE
-The asterisk "*" character is used to group media types into ranges, with "*/*" indicating all media types and "type/*" indicating all subtypes of that type. The media-range can include media type parameters that are applicable to that range.
+译注：Accept 的 ABNF 定义使用了 =#= 列表规则，因此 =Accept= 接受多个媒体类型（=media-range=）及其对应的参数，每个媒体类型之间使用逗号分隔。媒体范围、媒体参数以及扩展参数之间使用分号分隔。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-Each media-range might be followed by zero or more applicable media type parameters (e.g., charset), an optional "q" parameter for indicating a relative weight (Section 5.3.1), and then zero or more extension parameters. The "q" parameter is necessary if any extensions (accept-ext) are present, since it acts as a separator between the two parameter sets.
+The asterisk "*" character is used to group media types into ranges, with "\ast{}/\ast{}" indicating all media types and "type/*" indicating all subtypes of that type. The =media-range= can include media type parameters that are applicable to that range.
 #+END_QUOTE
 
+字符 "*" 用于将媒体类型归为一个范围，使用 "\ast{}/\ast{}" 来表明所有媒体类型，使用 "type/*" 来表明该 type 类型的所有子类型。=media-range= 能够包含该 range 所接收的媒体类型参数。
+
 #+BEGIN_QUOTE
-*Note:* Use of the "q" parameter name to separate media type parameters from Accept extension parameters is due to historical practice. Although this prevents any media type parameter named "q" from being used with a media range, such an event is believed to be unlikely given the lack of any "q" parameters in the IANA media type registry and the rare usage of any media type parameters in Accept. Future media types are discouraged from registering any parameter named "q".
+Each =media-range= might be followed by zero or more applicable media type parameters (e.g., =charset=), an optional "q" parameter for indicating a relative weight ([[id:91059de1-4a9b-4d9f-8be2-eb4d2d6ddc37][Section 5.3.1]]), and then zero or more extension parameters. The "q" parameter is necessary if any extensions (accept-ext) are present, since it acts as a separator between the two parameter sets.
 #+END_QUOTE
+
+每个 =media-range= 后面可以跟随：0 个以上合适的[[ruby:media%20type%20parameters][媒体类型参数]]（比如 =charset=）；一个可选的 "q" 参数用于指明一个相对的权重值（[[id:91059de1-4a9b-4d9f-8be2-eb4d2d6ddc37][章节 5.3.1]]）；以及在这些可选项其后还可以有 0 个以上[[ruby:extension%20parameters][扩展参数]]。如果存在任何扩展（=accept-ext=），那么必须要设置 "q" 参数，这是因为它在两种参数集中扮演着一个分隔符的角色。
+
+#+BEGIN_QUOTE
+*Note:* Use of the "q" parameter name to separate media type parameters from =Accept= extension parameters is due to historical practice. Although this prevents any media type parameter named "q" from being used with a media range, such an event is believed to be unlikely given the lack of any "q" parameters in the IANA media type registry and the rare usage of any media type parameters in =Accept=. Future media types are discouraged from registering any parameter named "q".
+#+END_QUOTE
+
+*注意：* 之所以使用 "q" 参数名来分隔媒体参数与扩展参数是出于[[ruby:historical%20practice][历史实践]]的原因。虽然这样做导致了 "q" 这个名字不能用来作为一个媒体类型的范围——基于 IANA 媒体类型注册表里的没有注册任何 "q" 参数，以及在 =Accept= 里极少使用媒体类型参数这些事实，相信不太可能会发生这种情况。将来新增的媒体类型会被劝阻注册任何命名为 "q" 的参数。
 
 #+BEGIN_QUOTE
 The example
 #+END_QUOTE
+
+例如：
 
 #+BEGIN_SRC text
   Accept: audio/*; q=0.2, audio/basic
 #+END_SRC
 
 #+BEGIN_QUOTE
-is interpreted as "I prefer audio/basic, but send me any audio type if it is the best available after an 80% markdown in quality".
+is interpreted as "I prefer =audio/basic=, but send me any audio type if it is the best available after an 80% markdown in quality".
 #+END_QUOTE
 
+上面例子可以解释为：“我首选（偏爱） =audio/basic=，但是，如果最佳备选的质量度调低 80% 以上的话，可以发送给我任意音频类型”
+
 #+BEGIN_QUOTE
-A request without any Accept header field implies that the user agent will accept any media type in response. If the header field is present in a request and none of the available representations for the response have a media type that is listed as acceptable, the origin server can either honor the header field by sending a 406 (Not Acceptable) response or disregard the header field by treating the response as if it is not subject to content negotiation.
+A request without any =Accept= header field implies that the user agent will accept any media type in response. If the header field is present in a request and none of the available representations for the response have a media type that is listed as acceptable, the origin server can either honor the header field by sending a =406 (Not Acceptable)= response or disregard the header field by treating the response as if it is not subject to content negotiation.
+#+END_QUOTE
+
+一个请求里没有任何 =Accept= 报头域，意味着用户代理接受任何媒体类型的响应。如果在一个请求里出现了 =Accept=，但没有任何可供响应选择的[[ruby:available%20representations][备选表现形式]]所带有的媒体类型是被其列为可接受的，那么，源服务器可以[[ruby:honor][遵守]] =Accept= 报头域的要求而返回一个 =406 (Not Acceptable)= 响应，也可以[[ruby:disregard][忽视]]该报头域的要求就好像它并没有受到[[ruby:content%20negotiation][内容协商]]的影响一样。
+
+#+BEGIN_QUOTE
+译注：也就是说，客户端提供了 =Accept= 报头域后并不能保证源服务器会按照它的要求来响应内容，选择权仍然在源服务器中。因为这是[[ruby:proactive%20content%20negotiation][主动内容协商]]嘛。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
 A more elaborate example is
 #+END_QUOTE
+
+一个更复杂的例子：
 
 #+BEGIN_SRC text
   Accept: text/plain; q=0.5, text/html,
@@ -1710,12 +1748,20 @@ A more elaborate example is
 #+END_SRC
 
 #+BEGIN_QUOTE
-Verbally, this would be interpreted as "text/html and text/x-c are the equally preferred media types, but if they do not exist, then send the text/x-dvi representation, and if that does not exist, send the text/plain representation".
+Verbally, this would be interpreted as "=text/html= and =text/x-c= are the equally preferred media types, but if they do not exist, then send the =text/x-dvi= representation, and if that does not exist, send the =text/plain= representation".
+#+END_QUOTE
+
+通俗来说，上面例子可以解释为：“=text/html= 和 =text/x-c= 同样是最首选的媒体类型。但是，如果它们都不存在的话，发送 =text/x-dvi= 类型的[[ruby:representation][表示形式]]。如果 =text/x-dvi= 同样也不存在的话，发送 =text/plain= 类型的表示形式。”
+
+#+BEGIN_QUOTE
+译注：=text/html= 和 =text/x-c= 都没有指定 "q" 值，则默认权重值为 1（最高优先级）。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
 Media ranges can be overridden by more specific media ranges or specific media types. If more than one media range applies to a given type, the most specific reference has precedence. For example,
 #+END_QUOTE
+
+[[ruby:media%20ranges][媒体的范围]]可以通过更明确的媒体范围，或者更明确的媒体类型来[[ruby:overridden][重写]]。如果超过一个媒体范围应用到一个给定类型上，那么，优先使用最明确那一个。例如：
 
 #+BEGIN_SRC text
   Accept: text/*, text/plain, text/plain;format=flowed, */*
@@ -1727,12 +1773,25 @@ have the following precedence:
 1. text/plain;format=flowed
 2. text/plain
 3. text/*
-4. */*
+4. \ast{}/\ast{}
+#+END_QUOTE
+
+具有以下[[ruby:precedence][优先级]]：
+
+1. text/plain;format=flowed
+2. text/plain
+3. text/*
+4. \ast{}/\ast{}
+
+#+BEGIN_QUOTE
+译注：可以看出，范围超精准，优先级越高。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
 The media type quality factor associated with a given type is determined by finding the media range with the highest precedence that matches the type. For example,
 #+END_QUOTE
+
+对应某个给定类型的媒体类型质量因子，是通过查找匹配该类型的最高优先级的媒体范围来确定的。
 
 #+BEGIN_SRC text
   Accept: text/*;q=0.3, text/html;q=0.7, text/html;level=1,
@@ -1743,7 +1802,9 @@ The media type quality factor associated with a given type is determined by find
 would cause the following values to be associated:
 #+END_QUOTE
 
-| Media Type        | Quality Valut |
+会导致以下对应的质量度：
+
+| Media Type        | Quality Value |
 |-------------------+---------------|
 | text/html;level=1 |             1 |
 | text/html         |           0.7 |
@@ -1756,35 +1817,50 @@ would cause the following values to be associated:
 *Note:* A user agent might be provided with a default set of quality values for certain media ranges. However, unless the user agent is a closed system that cannot interact with other rendering agents, this default set ought to be configurable by the user.
 #+END_QUOTE
 
+*注意：* 对于确定的媒体范围来说，用户代理可能被提供一个默认的质量度集合。但是，除非该用户代理是一个无法与其他渲染代理交互的封装的系统，这个默认集合应该由用户来配置。
+
 *** 5.3.3. Accept-Charset
+:PROPERTIES:
+:ID:       4c8262b6-8e4c-4476-ba72-47a096dfbfa7
+:END:
 
 #+BEGIN_QUOTE
 The "Accept-Charset" header field can be sent by a user agent to indicate what charsets are acceptable in textual response content. This field allows user agents capable of understanding more comprehensive or special-purpose charsets to signal that capability to an origin server that is capable of representing information in those charsets.
 #+END_QUOTE
+
+用户代理可以发送 =Accept-Charset= 报头域来表明在文本类型的响应内容中，它接受哪些[[ruby:charsets][字符集]]。这个报头域让那些能够理解更加综合或者更加专业的字符集的用户代理，可以向那些能够以所述字符集来表示信息的源服务器，来表达这种信号：与之通信的客户端具备这种能力。
 
 #+BEGIN_SRC text
   Accept-Charset = 1#( ( charset / "*" ) [ weight ] )
 #+END_SRC
 
 #+BEGIN_QUOTE
-Charset names are defined in Section 3.1.1.2. A user agent MAY associate a quality value with each charset to indicate the user's relative preference for that charset, as defined in Section 5.3.1. An example is
+Charset names are defined in [[id:dc31dd72-3e53-4fb1-b3a6-e6716f61b202][Section 3.1.1.2]]. A user agent *MAY* associate a quality value with each charset to indicate the user's relative preference for that charset, as defined in [[id:91059de1-4a9b-4d9f-8be2-eb4d2d6ddc37][Section 5.3.1]]. An example is
 #+END_QUOTE
+
+字符集名称的定义见[[id:dc31dd72-3e53-4fb1-b3a6-e6716f61b202][章节 3.1.1.2]]。用户代理 *可以* 向每个字符集关联一个质量度，来表明该用户对于那种字符集的相对偏爱度，其定义见[[id:91059de1-4a9b-4d9f-8be2-eb4d2d6ddc37][章节 5.3.1]]。以下是一个例子：
 
 #+BEGIN_SRC text
   Accept-Charset: iso-8859-5, unicode-1-1;q=0.8
 #+END_SRC
 
 #+BEGIN_QUOTE
-The special value "*", if present in the Accept-Charset field, matches every charset that is not mentioned elsewhere in the Accept-Charset field. If no "*" is present in an Accept-Charset field, then any charsets not explicitly mentioned in the field are considered "not acceptable" to the client.
+The special value "*", if present in the =Accept-Charset= field, matches every charset that is not mentioned elsewhere in the =Accept-Charset= field. If no "*" is present in an =Accept-Charset= field, then any charsets not explicitly mentioned in the field are considered "not acceptable" to the client.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A request without any Accept-Charset header field implies that the user agent will accept any charset in response. Most general-purpose user agents do not send Accept-Charset, unless specifically configured to do so, because a detailed list of supported charsets makes it easier for a server to identify an individual by virtue of the user agent's request characteristics (Section 9.7).
-#+END_QUOTE
+如果 =Accept-Charset= 的域值里出现了特殊值 "*" 的话，说明匹配所有未在该域里提及到的字符集。如果 =Accept-Charset= 的域值里没有出现 "*"，说明任何没有在该域里明确提及到的字符集是不为客户端所接受的。
 
 #+BEGIN_QUOTE
-If an Accept-Charset header field is present in a request and none of the available representations for the response has a charset that is listed as acceptable, the origin server can either honor the header field, by sending a 406 (Not Acceptable) response, or disregard the header field by treating the resource as if it is not subject to content negotiation.
+A request without any =Accept-Charset= header field implies that the user agent will accept any charset in response. Most general-purpose user agents do not send =Accept-Charset=, unless specifically configured to do so, because a detailed list of supported charsets makes it easier for a server to identify an individual by virtue of the user agent's request characteristics ([[id:58ca9032-65b1-47ff-b759-d1cedc245d4b][Section 9.7]]).
 #+END_QUOTE
+
+请求里没有任何 =Accept-Charset= 报头域意味着该用户代理在响应里将接受的任何字符集。大多数[[ruby:general-purpose][通用型]]的用户代理并不会发送 =Accept-Charset=，除非明确地配置为这样做，这是因为凭借用户代理的[[ruby:request%20characteristics][请求特征]]（[[id:58ca9032-65b1-47ff-b759-d1cedc245d4b][章节 9.7]]），一个支持的字符集的详细列表让一个服务器（相对 =Accept-Charset= 来说）更加轻松地标识一个[[ruby:individual][个体]]。
+
+#+BEGIN_QUOTE
+If an =Accept-Charset= header field is present in a request and none of the available representations for the response has a charset that is listed as acceptable, the origin server can either honor the header field, by sending a =406 (Not Acceptable)= response, or disregard the header field by treating the resource as if it is not subject to content negotiation.
+#+END_QUOTE
+
+如果请求里出现了 =Accept-Charset= 报头域，但没有任何可供响应选择的[[ruby:available%20representations][备选表现形式]]所带有的字符集是被其列为可接受的，那么，源服务器可以[[ruby:honor][遵守]] =Accept-Charset= 报头域的要求而返回一个 =406 (Not Acceptable)= 响应，也可以[[ruby:disregard][忽视]]该报头域的要求就好像它并没有受到[[ruby:content%20negotiation][内容协商]]的影响一样。 
 
 *** 5.3.4. Accept-Encoding
 :PROPERTIES:
@@ -1838,6 +1914,9 @@ An =Accept-Encoding= header field with a combined field-value that is empty impl
 #+END_QUOTE
 
 *** 5.3.5. Accept-Language
+:PROPERTIES:
+:ID:       bdbc4965-a98b-451d-91c6-58e51d7c03c9
+:END:
 
 #+BEGIN_QUOTE
 The "Accept-Language" header field can be used by user agents to indicate the set of natural languages that are preferred in the response. Language tags are defined in Section 3.1.3.1.
@@ -2122,6 +2201,9 @@ Likewise, implementations are encouraged not to use the product tokens of other 
 ** 9.5. Disclosure of Fragment after Redirects
 ** 9.6. Disclosure of Product Information
 ** 9.7. 浏览器指纹识别 / Browser Fingerprinting
+:PROPERTIES:
+:ID:       58ca9032-65b1-47ff-b759-d1cedc245d4b
+:END:
 * 10. 鸣谢 / Acknowledgements
 * 11. 参考资料 / References
 ** 11.1. Normative References
