@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-16 Fri 19:12 -->
+<!-- 2018-11-19 Mon 19:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -458,7 +458,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgb31b803">5.2. 条件句 / Conditionals</a></li>
 <li><a href="#org07183ec">5.3. 内容协商 / Content Negotiation</a>
 <ul>
-<li><a href="#org6e3f7bd">5.3.1. Quality Values</a></li>
+<li><a href="#org26f02dc">5.3.1. 质量值 / Quality Values</a></li>
 <li><a href="#orgd78f0e9">5.3.2. Accept</a></li>
 <li><a href="#org5919b30">5.3.3. Accept-Charset</a></li>
 <li><a href="#org6451ddf">5.3.4. Accept-Encoding</a></li>
@@ -1052,7 +1052,7 @@ Internet media types ought to be registered with IANA according to the procedure
 </div>
 
 <div id="outline-container-org22f52a6" class="outline-5">
-<h5 id="org22f52a6">3.1.1.2. 字符集 / Charset</h5>
+<h5 id="org22f52a6"><a id="ID-dc31dd72-3e53-4fb1-b3a6-e6716f61b202"></a>3.1.1.2. 字符集 / Charset</h5>
 <div class="outline-text-5" id="text-org22f52a6">
 <blockquote>
 <p>
@@ -1222,7 +1222,7 @@ In practice, resource owners do not always properly configure their origin serve
 <div class="outline-text-4" id="text-org3e2d9f7">
 </div>
 <div id="outline-container-org72efdb3" class="outline-5">
-<h5 id="org72efdb3">3.1.2.1. Content Codings</h5>
+<h5 id="org72efdb3"><a id="ID-a67acb58-7b0a-49c8-8de4-5dd8a4ab9e61"></a>3.1.2.1. Content Codings</h5>
 <div class="outline-text-5" id="text-org72efdb3">
 <blockquote>
 <p>
@@ -3034,7 +3034,7 @@ A client sends request header fields to provide more information about the reque
 </blockquote>
 
 <p>
-客户端发送<ruby>请求报头域<rt>request header fields</rt></ruby>来提供请求上下文的更多相关信息，基于目标资源的状态来使请求<ruby>带有条件<rt>conditional</rt></ruby>，提议响应的<ruby>首选格式<rt>preferred formats</rt></ruby>，提供身份凭证，或者更改预期的请求处理。这些报头域充当请求的<ruby>修饰符<rt>modifiers</rt></ruby>，类似于一门编程语言中参与函数调用的参数一样。
+客户端发送<ruby>请求报头域<rt>request header fields</rt></ruby>来提供更多关于请求上下文的信息，基于目标资源的状态来使请求<ruby>带有条件<rt>conditional</rt></ruby>，提议响应的<ruby>首选格式<rt>preferred formats</rt></ruby>，提供身份凭证，或者更改预期的请求处理。这些报头域充当请求的<ruby>修饰符<rt>modifiers</rt></ruby>，类似于一门编程语言中参与函数调用的参数一样。
 </p>
 </div>
 
@@ -3402,7 +3402,11 @@ HTTP 的<ruby>条件请求报头域<rt>conditional request fields</rt></ruby>【
 <h3 id="org07183ec">5.3. 内容协商 / Content Negotiation</h3>
 <div class="outline-text-3" id="text-org07183ec">
 <p>
-The following request header fields are sent by a user agent to engage in proactive negotiation of the response content, as defined in Section 3.4.1. The preferences sent in these fields apply to any content in the response, including representations of the target resource, representations of error or processing status, and potentially even the miscellaneous text strings that might appear within the protocol.
+The following request header fields are sent by a user agent to engage in proactive negotiation of the response content, as defined in <a href="#orgcc6adb1">Section 3.4.1</a>. The preferences sent in these fields apply to any content in the response, including representations of the target resource, representations of error or processing status, and potentially even the miscellaneous text strings that might appear within the protocol.
+</p>
+
+<p>
+下列<ruby>请求报头域<rt>request header fields</rt></ruby>会被用户代理所发送以参与对响应内容的<ruby>主动协商<rt>proactive negotiation</rt></ruby>，其定义见<a href="#orgcc6adb1">章节 3.4.1</a>。在这些报头域里<ruby>偏好设置（首选项）<rt>preferences</rt></ruby>会应用到响应里的所有内容上，这些内容包括：目标资源的表示形式、错误状态或处理中状态的表示形式、甚至是可能出现在协议内的混杂文本字符串。
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3422,41 +3426,49 @@ The following request header fields are sent by a user agent to engage in proact
 <tbody>
 <tr>
 <td class="org-left">Accept</td>
-<td class="org-left">Section 5.3.2</td>
+<td class="org-left"><a href="#orgd78f0e9">Section 5.3.2</a></td>
 </tr>
 
 <tr>
 <td class="org-left">Accept-Charset</td>
-<td class="org-left">Section 5.3.3</td>
+<td class="org-left"><a href="#org5919b30">Section 5.3.3</a></td>
 </tr>
 
 <tr>
 <td class="org-left">Accept-Encoding</td>
-<td class="org-left">Section 5.3.4</td>
+<td class="org-left"><a href="#org6451ddf">Section 5.3.4</a></td>
 </tr>
 
 <tr>
 <td class="org-left">Accept-Language</td>
-<td class="org-left">Section 5.3.5</td>
+<td class="org-left"><a href="#org39787e1">Section 5.3.5</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 
-<div id="outline-container-org6e3f7bd" class="outline-4">
-<h4 id="org6e3f7bd">5.3.1. Quality Values</h4>
-<div class="outline-text-4" id="text-org6e3f7bd">
+<div id="outline-container-org26f02dc" class="outline-4">
+<h4 id="org26f02dc"><a id="ID-91059de1-4a9b-4d9f-8be2-eb4d2d6ddc37"></a>5.3.1. 质量值 / Quality Values</h4>
+<div class="outline-text-4" id="text-org26f02dc">
 <blockquote>
 <p>
 Many of the request header fields for proactive negotiation use a common parameter, named "q" (case-insensitive), to assign a relative "weight" to the preference for that associated kind of content. This weight is referred to as a "quality value" (or "qvalue") because the same parameter name is often used within server configurations to assign a weight to the relative quality of the various representations that can be selected for a resource.
 </p>
 </blockquote>
 
+<p>
+许多用于<ruby>主动协商<rt>proactive negotiation</rt></ruby>的请求报头域都会使用一个名叫 "q"（不区分大小写）的<ruby>通用型参数<rt>common parameter</rt></ruby>，来分别向内容的对应类型的<ruby>偏爱度<rt>preference</rt></ruby>赋予一个相对的“<ruby>权重<rt>weight</rt></ruby>”。由于相同的参数名称（"q"）常常用在服务器配置里来对某个资源的各种待选表现形式所对应的质量值赋予一个权重，因此，这个权重被称为“<ruby>质量值<rt>quality value</rt></ruby>”（或者称为 <code>qvalue</code>）。
+</p>
+
 <blockquote>
 <p>
 The weight is normalized to a real number in the range 0 through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means "not acceptable". If no "q" parameter is present, the default weight is 1.
 </p>
 </blockquote>
+
+<p>
+权重被<ruby>规范化<rt>normalized</rt></ruby>为一个 0 到 1 范围内的实数值，其中，最小值是 0.001（优先级最低），最大值为 1（优先级最高），权重为 0 代表“不被接受”。如果没有出现参数 "q"，那么默认的权重为 1。 
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">weight = OWS ";" OWS "q=" qvalue
@@ -3470,6 +3482,10 @@ qvalue = ( "0" [ "." 0*3DIGIT ] )
 A sender of qvalue <b>MUST NOT</b> generate more than three digits after the decimal point. User configuration of these values ought to be limited in the same fashion.
 </p>
 </blockquote>
+
+<p>
+发送端 <b>禁止</b> 生成小数点后超过三位小数的 <code>qvalue</code>。应该要以相同的方式来限制这些权重的用户配置。
+</p>
 </div>
 </div>
 
@@ -3478,9 +3494,13 @@ A sender of qvalue <b>MUST NOT</b> generate more than three digits after the dec
 <div class="outline-text-4" id="text-orgd78f0e9">
 <blockquote>
 <p>
-The "Accept" header field can be used by user agents to specify response media types that are acceptable. Accept header fields can be used to indicate that the request is specifically limited to a small set of desired types, as in the case of a request for an in-line image.
+The "Accept" header field can be used by user agents to specify response media types that are acceptable. <code>Accept</code> header fields can be used to indicate that the request is specifically limited to a small set of desired types, as in the case of a request for an in-line image.
 </p>
 </blockquote>
+
+<p>
+用户代理可以使用 <code>Accept</code> 报头域来<ruby>指定<rt>specify</rt></ruby>可以接受资源的哪些<ruby>媒体类型<rt>media types</rt></ruby>。<code>Accept</code> 报头域可以用来<ruby>表明<rt>indicate</rt></ruby>请求是明确限定在一个<ruby>期望类型<rt>desired types</rt></ruby>的小集合，正如请求一个<ruby>内嵌图片<rt>in-line image</rt></ruby>这种情况一样。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Accept = #( media-range [ accept-params ] )
@@ -3496,27 +3516,49 @@ accept-ext = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
 
 <blockquote>
 <p>
-The asterisk "*" character is used to group media types into ranges, with "<b>/</b>" indicating all media types and "type/*" indicating all subtypes of that type. The media-range can include media type parameters that are applicable to that range.
+译注：Accept 的 ABNF 定义使用了 <code>#</code> 列表规则，因此 <code>Accept</code> 接受多个媒体类型（<code>media-range</code>）及其对应的参数，每个媒体类型之间使用逗号分隔。媒体范围、媒体参数以及扩展参数之间使用分号分隔。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-Each media-range might be followed by zero or more applicable media type parameters (e.g., charset), an optional "q" parameter for indicating a relative weight (Section 5.3.1), and then zero or more extension parameters. The "q" parameter is necessary if any extensions (accept-ext) are present, since it acts as a separator between the two parameter sets.
+The asterisk "*" character is used to group media types into ranges, with "&lowast;/&lowast;" indicating all media types and "type/*" indicating all subtypes of that type. The <code>media-range</code> can include media type parameters that are applicable to that range.
 </p>
 </blockquote>
 
+<p>
+字符 "*" 用于将媒体类型归为一个范围，使用 "&lowast;/&lowast;" 来表明任何媒体类型，使用 "type/*" 来表明该 type 类型的任何子类型。<code>media-range</code> 能够包含该 range 所接收的媒体类型参数。
+</p>
+
 <blockquote>
 <p>
-<b>Note:</b> Use of the "q" parameter name to separate media type parameters from Accept extension parameters is due to historical practice. Although this prevents any media type parameter named "q" from being used with a media range, such an event is believed to be unlikely given the lack of any "q" parameters in the IANA media type registry and the rare usage of any media type parameters in Accept. Future media types are discouraged from registering any parameter named "q".
+Each <code>media-range</code> might be followed by zero or more applicable media type parameters (e.g., <code>charset</code>), an optional "q" parameter for indicating a relative weight (<a href="#org26f02dc">Section 5.3.1</a>), and then zero or more extension parameters. The "q" parameter is necessary if any extensions (accept-ext) are present, since it acts as a separator between the two parameter sets.
 </p>
 </blockquote>
+
+<p>
+每个 <code>media-range</code> 后面可以跟随：0 个以上合适的<ruby>媒体类型参数<rt>media type parameters</rt></ruby>（比如 <code>charset</code>）；一个可选的 "q" 参数用于指明一个相对的权重（<a href="#org26f02dc">章节 5.3.1</a>）；以及在这些可选项其后还可以有 0 个以上<ruby>扩展参数<rt>extension parameters</rt></ruby>。如果存在任何扩展（<code>accept-ext</code>），那么必须要设置 "q" 参数，这是因为它在两种参数集中扮演着一个分隔符的角色。
+</p>
+
+<blockquote>
+<p>
+<b>Note:</b> Use of the "q" parameter name to separate media type parameters from <code>Accept</code> extension parameters is due to historical practice. Although this prevents any media type parameter named "q" from being used with a media range, such an event is believed to be unlikely given the lack of any "q" parameters in the IANA media type registry and the rare usage of any media type parameters in <code>Accept</code>. Future media types are discouraged from registering any parameter named "q".
+</p>
+</blockquote>
+
+<p>
+<b>注意：</b> 之所以使用 "q" 参数名来分隔媒体参数与扩展参数是出于<ruby>历史实践<rt>historical practice</rt></ruby>的原因。虽然这样做导致了 "q" 这个名字不能用来作为一个媒体类型的范围——基于 IANA 媒体类型注册表里的没有注册任何 "q" 参数，以及在 <code>Accept</code> 里极少使用媒体类型参数这些事实，相信不太可能会发生这种情况。将来新增的媒体类型会被劝阻注册任何命名为 "q" 的参数。
+</p>
 
 <blockquote>
 <p>
 The example
 </p>
 </blockquote>
+
+<p>
+例如：
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Accept: audio/*; q=0.2, audio/basic
@@ -3525,13 +3567,27 @@ The example
 
 <blockquote>
 <p>
-is interpreted as "I prefer audio/basic, but send me any audio type if it is the best available after an 80% markdown in quality".
+is interpreted as "I prefer <code>audio/basic</code>, but send me any audio type if it is the best available after an 80% markdown in quality".
 </p>
 </blockquote>
 
+<p>
+上面例子可以解释为：“我首选（偏爱） <code>audio/basic</code>，但是，如果最佳备选的质量值调低 80% 以上的话，可以发送给我任意音频类型”
+</p>
+
 <blockquote>
 <p>
-A request without any Accept header field implies that the user agent will accept any media type in response. If the header field is present in a request and none of the available representations for the response have a media type that is listed as acceptable, the origin server can either honor the header field by sending a 406 (Not Acceptable) response or disregard the header field by treating the response as if it is not subject to content negotiation.
+A request without any <code>Accept</code> header field implies that the user agent will accept any media type in response. If the header field is present in a request and none of the available representations for the response have a media type that is listed as acceptable, the origin server can either honor the header field by sending a <code>406 (Not Acceptable)</code> response or disregard the header field by treating the response as if it is not subject to content negotiation.
+</p>
+</blockquote>
+
+<p>
+一个请求里没有任何 <code>Accept</code> 报头域，意味着用户代理接受任何媒体类型的响应。如果在一个请求里出现了 <code>Accept</code>，但没有任何可供响应选择的<ruby>备选表现形式<rt>available representations</rt></ruby>所带有的媒体类型是被其列为可接受的，那么，源服务器可以<ruby>遵守<rt>honor</rt></ruby> <code>Accept</code> 报头域的要求而返回一个 <code>406 (Not Acceptable)</code> 响应，也可以<ruby>忽视<rt>disregard</rt></ruby>该报头域的要求就好像它并没有受到<ruby>内容协商<rt>content negotiation</rt></ruby>的影响一样。
+</p>
+
+<blockquote>
+<p>
+译注：也就是说，客户端提供了 <code>Accept</code> 报头域后并不能保证源服务器会按照它的要求来响应内容，选择权仍然在源服务器中。因为这是<ruby>主动内容协商<rt>proactive content negotiation</rt></ruby>嘛。
 </p>
 </blockquote>
 
@@ -3541,6 +3597,10 @@ A more elaborate example is
 </p>
 </blockquote>
 
+<p>
+一个更复杂的例子：
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">Accept: text/plain; q=0.5, text/html,
         text/x-dvi; q=0.8, text/x-c
@@ -3549,7 +3609,17 @@ A more elaborate example is
 
 <blockquote>
 <p>
-Verbally, this would be interpreted as "text/html and text/x-c are the equally preferred media types, but if they do not exist, then send the text/x-dvi representation, and if that does not exist, send the text/plain representation".
+Verbally, this would be interpreted as "<code>text/html</code> and <code>text/x-c</code> are the equally preferred media types, but if they do not exist, then send the <code>text/x-dvi</code> representation, and if that does not exist, send the <code>text/plain</code> representation".
+</p>
+</blockquote>
+
+<p>
+通俗来说，上面例子可以解释为：“<code>text/html</code> 和 <code>text/x-c</code> 同样是最首选的媒体类型。但是，如果它们都不存在的话，发送 <code>text/x-dvi</code> 类型的<ruby>表示形式<rt>representation</rt></ruby>。如果 <code>text/x-dvi</code> 同样也不存在的话，发送 <code>text/plain</code> 类型的表示形式。”
+</p>
+
+<blockquote>
+<p>
+译注：<code>text/html</code> 和 <code>text/x-c</code> 都没有指定 "q" 值，则默认权重为 1（最高优先级）。
 </p>
 </blockquote>
 
@@ -3558,6 +3628,10 @@ Verbally, this would be interpreted as "text/html and text/x-c are the equally p
 Media ranges can be overridden by more specific media ranges or specific media types. If more than one media range applies to a given type, the most specific reference has precedence. For example,
 </p>
 </blockquote>
+
+<p>
+<ruby>媒体的范围<rt>media ranges</rt></ruby>可以通过更明确的媒体范围，或者更明确的媒体类型来<ruby>重写<rt>overridden</rt></ruby>。如果超过一个媒体范围应用到一个给定类型上，那么，优先使用最明确那一个。例如：
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Accept: text/*, text/plain, text/plain;format=flowed, */*
@@ -3573,8 +3647,25 @@ have the following precedence:
 <li>text/plain;format=flowed</li>
 <li>text/plain</li>
 <li>text/*</li>
-<li><b>/</b></li>
+<li>&lowast;/&lowast;</li>
 </ol>
+</blockquote>
+
+<p>
+具有以下<ruby>优先级<rt>precedence</rt></ruby>：
+</p>
+
+<ol class="org-ol">
+<li>text/plain;format=flowed</li>
+<li>text/plain</li>
+<li>text/*</li>
+<li>&lowast;/&lowast;</li>
+</ol>
+
+<blockquote>
+<p>
+译注：可以看出，范围超精准，优先级越高。
+</p>
 </blockquote>
 
 <blockquote>
@@ -3582,6 +3673,10 @@ have the following precedence:
 The media type quality factor associated with a given type is determined by finding the media range with the highest precedence that matches the type. For example,
 </p>
 </blockquote>
+
+<p>
+对应某个给定类型的媒体类型质量值，是通过查找匹配该类型的最高优先级的媒体范围来确定的。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Accept: text/*;q=0.3, text/html;q=0.7, text/html;level=1,
@@ -3595,6 +3690,10 @@ would cause the following values to be associated:
 </p>
 </blockquote>
 
+<p>
+会导致以下对应的质量值：
+</p>
+
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -3606,7 +3705,7 @@ would cause the following values to be associated:
 <thead>
 <tr>
 <th scope="col" class="org-left">Media Type</th>
-<th scope="col" class="org-right">Quality Valut</th>
+<th scope="col" class="org-right">Quality Value</th>
 </tr>
 </thead>
 <tbody>
@@ -3647,17 +3746,25 @@ would cause the following values to be associated:
 <b>Note:</b> A user agent might be provided with a default set of quality values for certain media ranges. However, unless the user agent is a closed system that cannot interact with other rendering agents, this default set ought to be configurable by the user.
 </p>
 </blockquote>
+
+<p>
+<b>注意：</b> 对于确定的媒体范围来说，用户代理可能被提供一个默认的质量值集合。但是，除非该用户代理是一个无法与其他渲染代理交互的封装的系统，这个默认集合应该由用户来配置。
+</p>
 </div>
 </div>
 
 <div id="outline-container-org5919b30" class="outline-4">
-<h4 id="org5919b30">5.3.3. Accept-Charset</h4>
+<h4 id="org5919b30"><a id="ID-4c8262b6-8e4c-4476-ba72-47a096dfbfa7"></a>5.3.3. Accept-Charset</h4>
 <div class="outline-text-4" id="text-org5919b30">
 <blockquote>
 <p>
 The "Accept-Charset" header field can be sent by a user agent to indicate what charsets are acceptable in textual response content. This field allows user agents capable of understanding more comprehensive or special-purpose charsets to signal that capability to an origin server that is capable of representing information in those charsets.
 </p>
 </blockquote>
+
+<p>
+用户代理可以发送 <code>Accept-Charset</code> 报头域来表明在文本类型的响应内容中，它接受哪些<ruby>字符集<rt>charsets</rt></ruby>。这个报头域让那些能够理解更加综合或者更加专业的字符集的用户代理，可以向那些能够以所述字符集来表示信息的源服务器，来表达这种信号：与之通信的客户端具备这种能力。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Accept-Charset = 1#( ( charset / "*" ) [ weight ] )
@@ -3666,9 +3773,13 @@ The "Accept-Charset" header field can be sent by a user agent to indicate what c
 
 <blockquote>
 <p>
-Charset names are defined in Section 3.1.1.2. A user agent MAY associate a quality value with each charset to indicate the user's relative preference for that charset, as defined in Section 5.3.1. An example is
+Charset names are defined in <a href="#org22f52a6">Section 3.1.1.2</a>. A user agent <b>MAY</b> associate a quality value with each charset to indicate the user's relative preference for that charset, as defined in <a href="#org26f02dc">Section 5.3.1</a>. An example is
 </p>
 </blockquote>
+
+<p>
+字符集名称的定义见<a href="#org22f52a6">章节 3.1.1.2</a>。用户代理 <b>可以</b> 向每个字符集关联一个质量值，来表明该用户对于那种字符集的相对偏爱度，其定义见<a href="#org26f02dc">章节 5.3.1</a>。以下是一个例子：
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Accept-Charset: iso-8859-5, unicode-1-1;q=0.8
@@ -3677,21 +3788,33 @@ Charset names are defined in Section 3.1.1.2. A user agent MAY associate a quali
 
 <blockquote>
 <p>
-The special value "*", if present in the Accept-Charset field, matches every charset that is not mentioned elsewhere in the Accept-Charset field. If no "*" is present in an Accept-Charset field, then any charsets not explicitly mentioned in the field are considered "not acceptable" to the client.
+The special value "*", if present in the <code>Accept-Charset</code> field, matches every charset that is not mentioned elsewhere in the <code>Accept-Charset</code> field. If no "*" is present in an <code>Accept-Charset</code> field, then any charsets not explicitly mentioned in the field are considered "not acceptable" to the client.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A request without any Accept-Charset header field implies that the user agent will accept any charset in response. Most general-purpose user agents do not send Accept-Charset, unless specifically configured to do so, because a detailed list of supported charsets makes it easier for a server to identify an individual by virtue of the user agent's request characteristics (Section 9.7).
+如果 <code>Accept-Charset</code> 的域值里出现了特殊值 "*" 的话，说明匹配任何未在该域里提及到的字符集。如果 <code>Accept-Charset</code> 的域值里没有出现 "*"，说明任何没有在该域里明确提及到的字符集是不为客户端所接受的。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-If an Accept-Charset header field is present in a request and none of the available representations for the response has a charset that is listed as acceptable, the origin server can either honor the header field, by sending a 406 (Not Acceptable) response, or disregard the header field by treating the resource as if it is not subject to content negotiation.
+A request without any <code>Accept-Charset</code> header field implies that the user agent will accept any charset in response. Most general-purpose user agents do not send <code>Accept-Charset</code>, unless specifically configured to do so, because a detailed list of supported charsets makes it easier for a server to identify an individual by virtue of the user agent's request characteristics (<a href="#org588cbb2">Section 9.7</a>).
 </p>
 </blockquote>
+
+<p>
+请求里没有任何 <code>Accept-Charset</code> 报头域意味着该用户代理在响应里将接受的任何字符集。大多数<ruby>通用型<rt>general-purpose</rt></ruby>的用户代理并不会发送 <code>Accept-Charset</code>，除非明确地配置为这样做，这是因为凭借用户代理的<ruby>请求特征<rt>request characteristics</rt></ruby>（<a href="#org588cbb2">章节 9.7</a>），一个支持的字符集的详细列表让一个服务器（相对 <code>Accept-Charset</code> 来说）更加轻松地标识一个<ruby>个体<rt>individual</rt></ruby>。
+</p>
+
+<blockquote>
+<p>
+If an <code>Accept-Charset</code> header field is present in a request and none of the available representations for the response has a charset that is listed as acceptable, the origin server can either honor the header field, by sending a <code>406 (Not Acceptable)</code> response, or disregard the header field by treating the resource as if it is not subject to content negotiation.
+</p>
+</blockquote>
+
+<p>
+如果请求里出现了 <code>Accept-Charset</code> 报头域，但响应没有任何<ruby>备选表现形式<rt>available representations</rt></ruby>所带有的字符集是被其列为可接受的，那么，源服务器可以<ruby>遵守<rt>honor</rt></ruby> <code>Accept-Charset</code> 报头域的要求而返回一个 <code>406 (Not Acceptable)</code> 响应，也可以<ruby>忽视<rt>disregard</rt></ruby>该报头域的要求就好像它并没有受到<ruby>内容协商<rt>content negotiation</rt></ruby>的影响一样。 
+</p>
 </div>
 </div>
 
@@ -3700,9 +3823,13 @@ If an Accept-Charset header field is present in a request and none of the availa
 <div class="outline-text-4" id="text-org6451ddf">
 <blockquote>
 <p>
-The "Accept-Encoding" header field can be used by user agents to indicate what response content-codings (Section 3.1.2.1) are acceptable in the response. An "identity" token is used as a synonym for "no encoding" in order to communicate when no encoding is preferred.
+The "Accept-Encoding" header field can be used by user agents to indicate what response content-codings (<a href="#org72efdb3">Section 3.1.2.1</a>) are acceptable in the response. An "identity" token is used as a synonym for "no encoding" in order to communicate when no encoding is preferred.
 </p>
 </blockquote>
+
+<p>
+用户代理可以使用 <code>Accept-Encoding</code> 报头域来表明在响应中，它接受哪些响应<ruby>内容编码<rt>content-codings</rt></ruby>（<a href="#org72efdb3">章节 3.1.2.1</a>）。"identity" 标记用于作为一个“<ruby>没有编码<rt>no encoding</rt></ruby>”同义词以便在首选不编码的情况下进行通信。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Accept-Encoding  = #( codings [ weight ] )
@@ -3712,15 +3839,23 @@ codings          = content-coding / "identity" / "*"
 
 <blockquote>
 <p>
-Each codings value MAY be given an associated quality value representing the preference for that encoding, as defined in Section 5.3.1. The asterisk "*" symbol in an Accept-Encoding field matches any available content-coding not explicitly listed in the header field.
+Each codings value <b>MAY</b> be given an associated quality value representing the preference for that encoding, as defined in <a href="#org26f02dc">Section 5.3.1</a>. The asterisk "*" symbol in an <code>Accept-Encoding</code> field matches any available content-coding not explicitly listed in the header field.
 </p>
 </blockquote>
+
+<p>
+每个 codings 值都 <b>可以</b> 分别被给予一个相关联的<ruby>质量值<rt>quality value</rt></ruby>来表示对应的编码的优先级，其定义见<a href="#org26f02dc">章节 5.3.1</a>。如果 <code>Accept-Encoding</code> 的域值里出现了符号 "*" 的话，说明匹配任何没有被明确列举在该域里的<ruby>可用的内容编码<rt>available content-coding</rt></ruby>。
+</p>
 
 <blockquote>
 <p>
 For example,
 </p>
 </blockquote>
+
+<p>
+例如：
+</p>
 
 <pre class="example">
 Accept-Encoding: compress, gzip
@@ -3732,9 +3867,13 @@ Accept-Encoding: gzip;q=1.0, identity; q=0.5, *;q=0
 
 <blockquote>
 <p>
-A request without an Accept-Encoding header field implies that the user agent has no preferences regarding content-codings. Although this allows the server to use any content-coding in a response, it does not imply that the user agent will be able to correctly process all encodings.
+A request without an <code>Accept-Encoding</code> header field implies that the user agent has no preferences regarding content-codings. Although this allows the server to use any content-coding in a response, it does not imply that the user agent will be able to correctly process all encodings.
 </p>
 </blockquote>
+
+<p>
+请求里没有 <code>Accept-Encoding</code> 报头域，意味着该用户代理没有指定关于<ruby>内容编码<rt>content-codings</rt></ruby>的<ruby>偏好程度<rt>preferences</rt></ruby>。虽然这样做让服务器可以在响应里使用任何内容编码，但它并不意味着用户代理能够正确处理所有编码。
+</p>
 
 <blockquote>
 <p>
@@ -3742,35 +3881,58 @@ A server tests whether a content-coding for a given representation is acceptable
 </p>
 
 <ol class="org-ol">
-<li>If no Accept-Encoding field is in the request, any content-coding is considered acceptable by the user agent.</li>
-<li>If the representation has no content-coding, then it is acceptable by default unless specifically excluded by the Accept-Encoding field stating either "identity;q=0" or "*;q=0" without a more specific entry for "identity".</li>
-<li>If the representation's content-coding is one of the content-codings listed in the Accept-Encoding field, then it is acceptable unless it is accompanied by a qvalue of 0. (As defined in Section 5.3.1, a qvalue of 0 means "not acceptable".)</li>
+<li>If no <code>Accept-Encoding</code> field is in the request, any content-coding is considered acceptable by the user agent.</li>
+<li>If the representation has no content-coding, then it is acceptable by default unless specifically excluded by the <code>Accept-Encoding</code> field stating either "identity;q=0" or "*;q=0" without a more specific entry for "identity".</li>
+<li>If the representation's content-coding is one of the content-codings listed in the <code>Accept-Encoding</code> field, then it is acceptable unless it is accompanied by a qvalue of 0. (As defined in <a href="#org26f02dc">Section 5.3.1</a>, a qvalue of 0 means "not acceptable".)</li>
 <li>If multiple content-codings are acceptable, then the acceptable content-coding with the highest non-zero qvalue is preferred.</li>
 </ol>
 </blockquote>
 
+<p>
+服务器使用以下规则来测试一个给定<ruby>表示形式<rt>representation</rt></ruby>的某种内容编码是否为客户端所接受：
+</p>
+
+<ol class="org-ol">
+<li>如果请求里没有出现 <code>Accept-Encoding</code>，那么，可以认为任何内容编码皆为用户代理所接受。</li>
+<li>如果该表示形式没有内容编码，那么，默认是可接受，除非客户端使用以下方式来明确地排除无内容编码的情况：<code>Accept-Encoding</code> 的域值以 "identity;q=0" 或者 "*;q=0" 开头，并且不再有比 "identity" 更明确的条目。</li>
+<li>如果该表示形式的内容编码是 <code>Accept-Encoding</code> 报头域里所列举的其中之一，那么，该内容编码可接受的，除非它伴随着的一个值为 0 的<ruby>质量值<rt>qvalue</rt></ruby>（定义见<a href="#org26f02dc">章节 5.3.1</a>，其值为 0 意味着“<ruby>不接受<rt>not acceptable</rt></ruby>”）。</li>
+<li>如果多个内容编码都是可接受的，那么，带有质量值为最大且非 0 的内容编码作为首选。</li>
+</ol>
+
 <blockquote>
 <p>
-An <code>Accept-Encoding</code> header field with a combined field-value that is empty implies that the user agent does not want any content-coding in response. If an Accept-Encoding header field is present in a request and none of the available representations for the response have a content-coding that is listed as acceptable, the origin server SHOULD send a response without any content-coding.
+An <code>Accept-Encoding</code> header field with a combined field-value that is empty implies that the user agent does not want any content-coding in response. If an <code>Accept-Encoding</code> header field is present in a request and none of the available representations for the response have a content-coding that is listed as acceptable, the origin server <b>SHOULD</b> send a response without any content-coding.
 </p>
 </blockquote>
+
+<p>
+如果 <code>Accept-Encoding</code> 报头域里其中一个<ruby>组合条目值<rt>combined field-value</rt></ruby>为空，意味着用户代理并不想在响应里进行任何的内容编码。如果请求里出现了 <code>Accept-Encoding</code> 报头域，但响应没有任何<ruby>备选表示形式<rt>available representations</rt></ruby>所带有的内容编码是被其列为可接受的，那么，源服务器 <b>应当</b> 在没有任何内容编码的情况下发送响应。
+</p>
 
 <blockquote>
 <p>
 <b>Note:</b> Most HTTP/1.0 applications do not recognize or obey qvalues associated with content-codings. This means that qvalues might not work and are not permitted with x-gzip or x-compress.
 </p>
 </blockquote>
+
+<p>
+<b>注意：</b> 大多数 HTTP/1.0 的应用并不能识别或者遵循内容编码相关联的质量值。这意味着，质量值可能并不一定有用，并且它不能带有 x-gzip 或者 x-compress。
+</p>
 </div>
 </div>
 
 <div id="outline-container-org39787e1" class="outline-4">
-<h4 id="org39787e1">5.3.5. Accept-Language</h4>
+<h4 id="org39787e1"><a id="ID-bdbc4965-a98b-451d-91c6-58e51d7c03c9"></a>5.3.5. Accept-Language</h4>
 <div class="outline-text-4" id="text-org39787e1">
 <blockquote>
 <p>
-The "Accept-Language" header field can be used by user agents to indicate the set of natural languages that are preferred in the response. Language tags are defined in Section 3.1.3.1.
+The "Accept-Language" header field can be used by user agents to indicate the set of natural languages that are preferred in the response. Language tags are defined in <a href="#org2f3fd1f">Section 3.1.3.1</a>.
 </p>
 </blockquote>
+
+<p>
+用户代理可以使用 <code>Accept-Language</code> 报头域来表明在响应中首选使用的<ruby>自然语言<rt>natural language</rt></ruby>集合。<ruby>语言标签<rt>language tags</rt></ruby>的定义见<a href="#org2f3fd1f">章节 3.1.3.1</a>。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Accept-Language = 1#( language-range [ weight ] )
@@ -3781,9 +3943,13 @@ language-range  =
 
 <blockquote>
 <p>
-Each language-range can be given an associated quality value representing an estimate of the user's preference for the languages specified by that range, as defined in Section 5.3.1. For example,
+Each language-range can be given an associated quality value representing an estimate of the user's preference for the languages specified by that range, as defined in <a href="#org26f02dc">Section 5.3.1</a>. For example,
 </p>
 </blockquote>
+
+<p>
+上述每个 <code>language-range</code> 都可以分别被给予一个相关联的<ruby>质量值<rt>quality value</rt></ruby>来表示用户对由该范围所指定的语言的偏爱程度，其定义见<a href="#org26f02dc">章节 5.3.1</a>。例如：
+</p>
 
 <pre class="example">
 Accept-Language: da, en-gb;q=0.8, en;q=0.7
@@ -3795,35 +3961,59 @@ would mean: "I prefer Danish, but will accept British English and other types of
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A request without any Accept-Language header field implies that the user agent will accept any language in response. If the header field is present in a request and none of the available representations for the response have a matching language tag, the origin server can either disregard the header field by treating the response as if it is not subject to content negotiation or honor the header field by sending a 406 (Not Acceptable) response. However, the latter is not encouraged, as doing so can prevent users from accessing content that they might be able to use (with translation software, for example).
+意为：“我首选<ruby>丹麦语<rt>Danish</rt></ruby>，但也会接受<ruby>英国英语<rt>British English</rt></ruby>以及其他类型的英语”。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-Note that some recipients treat the order in which language tags are listed as an indication of descending priority, particularly for tags that are assigned equal quality values (no value is the same as q=1). However, this behavior cannot be relied upon. For consistency and to maximize interoperability, many user agents assign each language tag a unique quality value while also listing them in order of decreasing quality. Additional discussion of language priority lists can be found in Section 2.3 of [RFC4647].
+A request without any <code>Accept-Language</code> header field implies that the user agent will accept any language in response. If the header field is present in a request and none of the available representations for the response have a matching language tag, the origin server can either disregard the header field by treating the response as if it is not subject to content negotiation or honor the header field by sending a <code>406 (Not Acceptable)</code> response. However, the latter is not encouraged, as doing so can prevent users from accessing content that they might be able to use (with translation software, for example).
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-For matching, Section 3 of [RFC4647] defines several matching schemes. Implementations can offer the most appropriate matching scheme for their requirements. The "Basic Filtering" scheme ([RFC4647], Section 3.3.1) is identical to the matching scheme that was previously defined for HTTP in Section 14.4 of [RFC2616].
+如果请求里没有任何 <code>Accept-Language</code> 报头域，意味着该用户代理将会在响应里接受任何语言。如果请求里出现了该报头域，但响应没有任何<ruby>备选表示形式<rt>avaliable representations</rt></ruby>带有与之相匹配的语言标签，源服务器可以<ruby>忽视<rt>disregard</rt></ruby>该报头域的要求就好像它并没有受到<ruby>内容协商<rt>content negotiation</rt></ruby>的影响一样，可以<ruby>遵守<rt>honor</rt></ruby>该报头域的要求而返回一个 <code>406 (Not Acceptable)</code> 响应。但是，并不鼓励使用后者这种方式，这是因为后者会阻止用户访问他们可能能够使用的内容（例如，使用翻译软件等）。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-It might be contrary to the privacy expectations of the user to send an Accept-Language header field with the complete linguistic preferences of the user in every request (Section 9.7).
+Note that some recipients treat the order in which language tags are listed as an indication of descending priority, particularly for tags that are assigned equal quality values (no value is the same as q=1). However, this behavior cannot be relied upon. For consistency and to maximize interoperability, many user agents assign each language tag a unique quality value while also listing them in order of decreasing quality. Additional discussion of language priority lists can be found in <a href="https://tools.ietf.org/html/rfc4647#section-2.3">Section 2.3</a> of [RFC4647].
 </p>
 </blockquote>
 
+<p>
+需要注意的是，某些接收端会将语言标签在 <code>Accept-Language</code> 里的列举顺序作为优先级的顺序（<ruby>降序<rt>descending</rt></ruby>），特别是对于赋值为相等质量值（没有值等价于 q=1）的标签。但是，不能够依赖这种行为。为了<ruby>一致性<rt>consistency</rt></ruby>以及<ruby>最化大互操作性<rt>maximize interoperability</rt></ruby>，许多用户代理会对每种语言标签赋值一个唯一的质量值并且将它们以质量值降序的顺序列举到报头域里。对语言优先级列表的更多讨论能够在<a href="https://tools.ietf.org/html/rfc4647#section-2.3">【RFC4647】章节 2.3</a> 里找到。
+</p>
+
 <blockquote>
 <p>
-Since intelligibility is highly dependent on the individual user, user agents need to allow user control over the linguistic preference (either through configuration of the user agent itself or by defaulting to a user controllable system setting). A user agent that does not provide such control to the user MUST NOT send an Accept-Language header field.
+For matching, <a href="https://tools.ietf.org/html/rfc4647#section-3">Section 3</a> of [RFC4647] defines several matching schemes. Implementations can offer the most appropriate matching scheme for their requirements. The "Basic Filtering" scheme ([RFC4647], <a href="https://tools.ietf.org/html/rfc4647#section-3.3.1">Section 3.3.1</a>) is identical to the matching scheme that was previously defined for HTTP in <a href="https://tools.ietf.org/html/rfc2616#section-14.4">Section 14.4</a> of [RFC2616].
 </p>
 </blockquote>
+
+<p>
+为了匹配，<a href="https://tools.ietf.org/html/rfc4647#section-3">【RFC4647】章节 3</a> 定义了若干<ruby>匹配方案<rt>matching schemes</rt></ruby>。实现可以以它们的要求来提供最合适的匹配方案。“<ruby>基础过滤<rt>Basic Filtering</rt></ruby>”方案（<a href="https://tools.ietf.org/html/rfc4647#section-3.3.1">【RFC4647】章节 3.3.1</a>）等价于之前<a href="https://tools.ietf.org/html/rfc2616#section-14.4">【RFC2616】章节 14.4</a> 为 HTTP 而定义的匹配方案。
+</p>
+
+<blockquote>
+<p>
+It might be contrary to the privacy expectations of the user to send an <code>Accept-Language</code> header field with the complete linguistic preferences of the user in every request (<a href="#org588cbb2">Section 9.7</a>).
+</p>
+</blockquote>
+
+<p>
+在用户每次请求里的完整的语言学优先级可能会和用户发送 <code>Accept-Language</code> 报头域的<ruby>隐私期望<rt>privacy expectations</rt></ruby>相悖（<a href="#org588cbb2">章节 9.7</a>）。
+</p>
+
+<blockquote>
+<p>
+Since intelligibility is highly dependent on the individual user, user agents need to allow user control over the linguistic preference (either through configuration of the user agent itself or by defaulting to a user controllable system setting). A user agent that does not provide such control to the user <b>MUST NOT</b> send an <code>Accept-Language</code> header field.
+</p>
+</blockquote>
+
+<p>
+正由于<ruby>可理解性<rt>intelligibility</rt></ruby>是高度依赖于单独个体的，因此，用户代理需要让用户来控制语言的首选（可以通过用户代理自己的配置，也可以默认由用户系统设置来控制）。不提供这些控制的用户代理 <b>禁止</b> 发送 <code>Accept-Language</code> 报头域。
+</p>
 
 <blockquote>
 <p>
@@ -4346,7 +4536,9 @@ Likewise, implementations are encouraged not to use the product tokens of other 
 <h3 id="org6f777ff">9.6. Disclosure of Product Information</h3>
 </div>
 <div id="outline-container-org588cbb2" class="outline-3">
-<h3 id="org588cbb2">9.7. 浏览器指纹识别 / Browser Fingerprinting</h3>
+<h3 id="org588cbb2"><a id="ID-58ca9032-65b1-47ff-b759-d1cedc245d4b"></a>9.7. 浏览器指纹识别 / Browser Fingerprinting</h3>
+<div class="outline-text-3" id="text-org588cbb2">
+</div>
 </div>
 </div>
 <div id="outline-container-org1702724" class="outline-2">

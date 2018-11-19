@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-16 Fri 19:12 -->
+<!-- 2018-11-19 Mon 19:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -3312,7 +3312,7 @@ When multiple transfer codings are acceptable, the client <b>MAY</b> rank the co
 </blockquote>
 
 <p>
-当允许多个传输编码值时，客户端 <b>可以</b> 依据其喜好，通过使用一个不区分大小写的参数 <code>q</code> （类似于内容协商域里的 <code>qvalues</code>，见<a href="https://tools.ietf.org/html/rfc7231">【RFC7231】章节 5.3.1</a>），来对这些编码值分配权重。权重值是一个 0 到 1 之间的实数，最小值是 0.001（优先级最低），最大值为 1（优先级最高），排序值为 0 代表“不接受这种传输编码”。 
+当允许多个传输编码值时，客户端 <b>可以</b> 依据其偏好，通过使用一个不区分大小写的参数 <code>q</code> （类似于内容协商域里的 <code>qvalues</code>，见<a href="https://tools.ietf.org/html/rfc7231">【RFC7231】章节 5.3.1</a>），来对这些编码值分配权重。权重值是一个 0 到 1 之间的实数，最小值是 0.001（优先级最低），最大值为 1（优先级最高），排序值为 0 代表“不接受这种传输编码”。 
 </p>
 
 <blockquote>
