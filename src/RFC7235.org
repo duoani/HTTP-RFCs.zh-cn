@@ -50,8 +50,14 @@
 * 4. Header Field Definitions
 ** 4.1. WWW-Authenticate
 ** 4.2. Authorization
+:PROPERTIES:
+:ID:       14671c8e-e5a4-4f9d-ad1d-6460328ed7f5
+:END:
 ** 4.3. Proxy-Authenticate
 ** 4.4. Proxy-Authorization
+:PROPERTIES:
+:ID:       89c3125a-e7ef-48ea-a2c1-ff4c57214389
+:END:
 * 5. IANA Considerations
 ** 5.1. Authentication Scheme Registry
 *** 5.1.1. Procedure

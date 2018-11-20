@@ -1388,7 +1388,7 @@ TRACE 方法请求一个远程的、应用层的请求消息[[ruby:loop-back][�
 A client *MUST NOT* generate header fields in a TRACE request containing sensitive data that might be disclosed by the response. For example, it would be foolish for a user agent to send stored user credentials [[[file:RFC7235.org][RFC7235]]] or cookies [[[https://tools.ietf.org/html/rfc6265][RFC6265]]] in a TRACE request. The final recipient of the request *SHOULD* exclude any request header fields that are likely to contain sensitive data when that recipient generates the response body.
 #+END_QUOTE
 
-客户端 *禁止* 在一个 TRACE 请求里生成以下这种头字段：包含有[[ruby:sensitive%20data][敏感数据]]的，并且这些敏感数据有可能会被响应[[ruby:disclosed][曝露]]出来的。例如，用户代理在一个 TRACE 请求里包含有存放在本地的[[ruby:user%20credentials][用户证书]]【[[file:RFC7235.org][RFC7235]]】或者 cookies【[[https://tools.ietf.org/html/rfc6265][RFC6265]]】，这种做法是非常愚蠢的。请求的[[ruby:final%20recipient][最终接收端]]在生成响应正文的时候，*应当* 排除掉任何有可能包含敏感数据的请求头字段。
+客户端 *禁止* 在一个 TRACE 请求里生成以下这种头字段：包含有[[ruby:sensitive%20data][敏感数据]]的，并且这些敏感数据有可能会被响应[[ruby:disclosed][暴露]]出来的。例如，用户代理在一个 TRACE 请求里包含有存放在本地的[[ruby:user%20credentials][用户证书]]【[[file:RFC7235.org][RFC7235]]】或者 cookies【[[https://tools.ietf.org/html/rfc6265][RFC6265]]】，这种做法是非常愚蠢的。请求的[[ruby:final%20recipient][最终接收端]]在生成响应正文的时候，*应当* 排除掉任何有可能包含敏感数据的请求头字段。
 
 #+BEGIN_QUOTE
 TRACE allows the client to see what is being received at the other end of the request chain and use that data for testing or diagnostic information. The value of the =Via= header field ([[id:4a38d632-e412-4122-8ae5-0d58ab8f3d6a][Section 5.7.1]] of [RFC7230]) is of particular interest, since it acts as a trace of the request chain. Use of the =Max-Forwards= header field allows the client to limit the length of the request chain, which is useful for testing a chain of proxies forwarding messages in an infinite loop.
@@ -1629,7 +1629,9 @@ HTTP 的[[ruby:conditional%20request%20fields][条件请求头字段]]【[[file:
 
 ** 5.3. 内容协商 / Content Negotiation
 
+#+BEGIN_QUOTE
 The following request header fields are sent by a user agent to engage in proactive negotiation of the response content, as defined in [[id:c1d92ed4-69d5-4575-88c2-090534949ccf][Section 3.4.1]]. The preferences sent in these fields apply to any content in the response, including representations of the target resource, representations of error or processing status, and potentially even the miscellaneous text strings that might appear within the protocol.
+#+END_QUOTE
 
 下列[[ruby:request%20header%20fields][请求头字段]]会被用户代理所发送以参与对响应内容的[[ruby:proactive%20negotiation][主动协商]]，其定义见[[id:c1d92ed4-69d5-4575-88c2-090534949ccf][章节 3.4.1]]。在这些头字段里[[ruby:preferences][偏好设置（首选项）]]会应用到响应里的所有内容上，这些内容包括：目标资源的表示形式、错误状态或处理中状态的表示形式、甚至是可能出现在协议内的混杂文本字符串。
 
@@ -1966,7 +1968,7 @@ Each language-range can be given an associated quality value representing an est
 would mean: "I prefer Danish, but will accept British English and other types of English".
 #+END_QUOTE
 
-意为：“我首选[[ruby:Danish][丹麦语]]，但也会接受[[ruby:British%20English][英国英语]]以及其他类型的英语”。
+意为：“我首选[[ruby:Danish][丹麦语]]，但也会接受[[ruby:British%20English][英式英语]]以及其他类型的英语”。
 
 #+BEGIN_QUOTE
 A request without any =Accept-Language= header field implies that the user agent will accept any language in response. If the header field is present in a request and none of the available representations for the response have a matching language tag, the origin server can either disregard the header field by treating the response as if it is not subject to content negotiation or honor the header field by sending a =406 (Not Acceptable)= response. However, the latter is not encouraged, as doing so can prevent users from accessing content that they might be able to use (with translation software, for example).
@@ -1990,28 +1992,32 @@ For matching, [[https://tools.ietf.org/html/rfc4647#section-3][Section 3]] of [R
 It might be contrary to the privacy expectations of the user to send an =Accept-Language= header field with the complete linguistic preferences of the user in every request ([[id:58ca9032-65b1-47ff-b759-d1cedc245d4b][Section 9.7]]).
 #+END_QUOTE
 
-在用户每次请求里的完整的语言学优先级可能会和用户发送 =Accept-Language= 头字段的[[ruby:privacy%20expectations][隐私期望]]相悖（[[id:58ca9032-65b1-47ff-b759-d1cedc245d4b][章节 9.7]]）。
+在用户每次请求里的完整的语言[[ruby:preferences][偏爱]]可能会和用户发送 =Accept-Language= 头字段的[[ruby:privacy%20expectations][隐私期望]]相悖（[[id:58ca9032-65b1-47ff-b759-d1cedc245d4b][章节 9.7]]）。
 
 #+BEGIN_QUOTE
 Since intelligibility is highly dependent on the individual user, user agents need to allow user control over the linguistic preference (either through configuration of the user agent itself or by defaulting to a user controllable system setting). A user agent that does not provide such control to the user *MUST NOT* send an =Accept-Language= header field.
 #+END_QUOTE
 
-正由于[[ruby:intelligibility][可理解性]]是高度依赖于单独个体的，因此，用户代理需要让用户来控制语言的首选（可以通过用户代理自己的配置，也可以默认为用户所控制的系统设置）。不提供这些控制的用户代理 *禁止* 发送 =Accept-Language= 头字段。
+正由于[[ruby:intelligibility][可理解性]]是高度依赖于单独个体的，因此，用户代理需要让用户来控制语言[[ruby:preferences][偏爱]]（可以通过用户代理自己的配置，也可以默认为用户所控制的系统设置）。不提供这些控制的用户代理 *禁止* 发送 =Accept-Language= 头字段。
 
 #+BEGIN_QUOTE
 *Note:* User agents ought to provide guidance to users when setting a preference, since users are rarely familiar with the details of language matching as described above. For example, users might assume that on selecting "en-gb", they will be served any kind of English document if British English is not available. A user agent might suggest, in such a case, to add "en" to the list for better matching behavior.
 #+END_QUOTE
 
+*注意：* 当需要选择语言偏爱的时候，用户代理应该向用户提供引导，这是因为用户很少熟悉上述[[ruby:language%20matching][语言匹配]]相关的细节。例如，用户可以假设在选择 "en-gb" 的时候，如果英式英文不可用的情况下，用户代理会提供给他们任何类型的英文文档。在这种场景下，用户代理可以建议将 "en" 添加到列表中以为了更好的匹配行为。
+
 ** 5.4. 身份验证凭证 / Authentication Credentials
 
 #+BEGIN_QUOTE
-Two header fields are used for carrying authentication credentials, as defined in [RFC7235]. Note that various custom mechanisms for user authentication use the Cookie header field for this purpose, as defined in [RFC6265].
+Two header fields are used for carrying authentication credentials, as defined in [[[file:RFC7235.org][RFC7235]]]. Note that various custom mechanisms for user authentication use the =Cookie= header field for this purpose, as defined in [[[https://tools.ietf.org/html/rfc6265][RFC6265]]].
 #+END_QUOTE
+
+以下两个头字段是用于装载身份验证凭证的，其定义见【[[file:RFC7235.org][RFC7235]]】。需要注意的是，很多种用于用户身份验证的自定义机制使用了 =Cookie= 头字段来实现上述目的，其定义见【[[https://tools.ietf.org/html/rfc6265][RFC6265]]】。
 
 | Header Field Name   | Defined in...            |
 |---------------------+--------------------------|
-| Authorization       | Section 4.2 of [RFC7235] |
-| Proxy-Authorization | Section 4.4 of [RFC7235] |
+| Authorization       | [[id:14671c8e-e5a4-4f9d-ad1d-6460328ed7f5][Section 4.2]] of [RFC7235] |
+| Proxy-Authorization | [[id:89c3125a-e7ef-48ea-a2c1-ff4c57214389][Section 4.4]] of [RFC7235] |
 
 ** 5.5. 请求上下文/ Request Context
 
@@ -2019,17 +2025,24 @@ Two header fields are used for carrying authentication credentials, as defined i
 The following request header fields provide additional information about the request context, including information about the user, user agent, and resource behind the request.
 #+END_QUOTE
 
+以下请求头字段提供了请求上下文相关的额外信息，包括用户、用户代理、请求背后的资源等相关的信息。
+
 | Header Field Name | Defined in... |
 |-------------------+---------------|
-| Form              | Section 5.5.1 |
-| Referer           | Section 5.5.2 |
-| User-Agent        | Section 5.5.3 |
+| Form              | [[id:197fca23-d64a-470b-9c12-31ff7d2ddf02][Section 5.5.1]] |
+| Referer           | [[id:5738c39d-f031-4866-b280-76cc7e2ff433][Section 5.5.2]] |
+| User-Agent        | [[id:d3473599-e20b-4b5d-9600-cb05340e8687][Section 5.5.3]] |
 
-*** 5.5.1. Form
+*** 5.5.1. From
+:PROPERTIES:
+:ID:       197fca23-d64a-470b-9c12-31ff7d2ddf02
+:END:
 
 #+BEGIN_QUOTE
-The "From" header field contains an Internet email address for a human user who controls the requesting user agent. The address ought to be machine-usable, as defined by "mailbox" in Section 3.4 of [RFC5322]:
+The "From" header field contains an Internet email address for a human user who controls the requesting user agent. The address ought to be machine-usable, as defined by "mailbox" in [[https://tools.ietf.org/html/rfc5322#section-3.4][Section 3.4]] of [RFC5322]:
 #+END_QUOTE
+
+=From= 头字段包含有一个使用用户代理来发送请求的人类用户的一个互联网电子邮箱地址。该地址应该以[[ruby:machine-usable][机器可用]]的形式，正如[[https://tools.ietf.org/html/rfc5322#section-3.4][【RFC5322】章节 3.4]] 中的 "mailbox" 所定义的一样。
 
 #+BEGIN_SRC text
   From    = mailbox
@@ -2041,26 +2054,43 @@ The "From" header field contains an Internet email address for a human user who 
 An example is:
 #+END_QUOTE
 
+一个例子：
+
 #+BEGIN_EXAMPLE
   From: webmaster@example.org
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-The From header field is rarely sent by non-robotic user agents. A user agent *SHOULD NOT* send a From header field without explicit configuration by the user, since that might conflict with the user's privacy interests or their site's security policy.
+The =From= header field is rarely sent by non-robotic user agents. A user agent *SHOULD NOT* send a =From= header field without explicit configuration by the user, since that might conflict with the user's privacy interests or their site's security policy.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A robotic user agent *SHOULD* send a valid From header field so that the person responsible for running the robot can be contacted if problems occur on servers, such as if the robot is sending excessive, unwanted, or invalid requests.
-#+END_QUOTE
+=From= 头字段很少由[[ruby:non-robotic][非机器人]]的用户代理所发送。用户代理 *不应当* 在未经用户显式配置（许可）的情况下发送 =From= 头字段，这是因为这样做可能会与用户的[[ruby:privacy%20interests][隐私利益]]或者他们网站的[[ruby:security%20policy][安全策略]]相冲突。
 
 #+BEGIN_QUOTE
-A server *SHOULD NOT* use the From header field for access control or authentication, since most recipients will assume that the field value is public information.
+A robotic user agent *SHOULD* send a valid =From= header field so that the person responsible for running the robot can be contacted if problems occur on servers, such as if the robot is sending excessive, unwanted, or invalid requests.
 #+END_QUOTE
+
+机器人用户代理 *应当* 发送一个合法的 =From= 头字段，以便于如果服务器发生故障（比如该机器人发送了过多的、不必要的或者非法的请求）的时候，能够联系到负责运行该机器人的人。
+
+#+BEGIN_QUOTE
+A server *SHOULD NOT* use the =From= header field for access control or authentication, since most recipients will assume that the field value is public information.
+#+END_QUOTE
+
+服务器 *不应当* 将这个 =From= 头字段用于[[ruby:access%20control][访问控制]]或者[[ruby:authentication][身份验证]]，这是因为大多数接收端将会假定这个字段值是一种公共的信息。
 
 *** 5.5.2. Referer
+:PROPERTIES:
+:ID:       5738c39d-f031-4866-b280-76cc7e2ff433
+:END:
 
 #+BEGIN_QUOTE
-The "Referer" [sic] header field allows the user agent to specify a URI reference for the resource from which the target URI was obtained (i.e., the "referrer", though the field name is misspelled). A user agent MUST NOT include the fragment and userinfo components of the URI reference [RFC3986], if any, when generating the Referer field value.
+The "Referer" [sic] header field allows the user agent to specify a URI reference for the resource from which the target URI was obtained (i.e., the "referrer", though the field name is misspelled). A user agent *MUST NOT* include the =fragment= and =userinfo= components of the URI reference [[[https://tools.ietf.org/html/rfc3986][RFC3986]]], if any, when generating the =Referer= field value.
+#+END_QUOTE
+
+=Referer= 头字段让用户代理可以指定一个 URI 引用，来表明本次请求的[[ruby:target%20URI][目标 URI]] 是从哪一个资源那里获得的（也就是说，"referer" 指的是“引用页、引用者”，虽然这个字段名称存在拼写错误）。用户代理在生成 =Referer= 头字段的时候，*禁止* 包括 URI 引用里的 =fragment= 以及 =userinfo= 组件【[[https://tools.ietf.org/html/rfc3986][RFC3986]]】。 
+
+#+BEGIN_QUOTE
+译注：自【RFC7231】开始，已不再允许在 HTTP 和 HTTPS URI 中出现 =userinfo= （也就是说，用户名和密码）了，因为它在通信线路上传输时存在安全问题（见[[id:cdfe1d9f-fe54-40a8-936b-aa02154989f9][【RFC7230】附录 A.1]]）。而 =fragment= 标识是保留给客户端处理的，也不必提交到服务器上。
 #+END_QUOTE
 
 #+BEGIN_SRC text
@@ -2068,30 +2098,47 @@ The "Referer" [sic] header field allows the user agent to specify a URI referenc
 #+END_SRC
 
 #+BEGIN_QUOTE
-The Referer header field allows servers to generate back-links to other resources for simple analytics, logging, optimized caching, etc. It also allows obsolete or mistyped links to be found for maintenance. Some servers use the Referer header field as a means of denying links from other sites (so-called "deep linking") or restricting cross-site request forgery (CSRF), but not all requests contain it.
+The =Referer= header field allows servers to generate back-links to other resources for simple analytics, logging, optimized caching, etc. It also allows obsolete or mistyped links to be found for maintenance. Some servers use the =Referer= header field as a means of denying links from other sites (so-called "deep linking") or restricting cross-site request forgery (CSRF), but not all requests contain it.
 #+END_QUOTE
+
+=Referer= 头字段让服务器可以生成[[ruby:back-links][反向链接]]到其他资源上，以达到[[ruby:simple%20analytics][简单分析]]、[[ruby:logging][日志记录]]、[[ruby:optimized%20caching][缓存优化]]等目的。它还让弃用的或者打错的链接得以被发现，以便修复。某些服务器使用 =Referer= 头字段来作为拒绝来自其他网站的链接（即所谓的“深度链接”）或者限制[[ruby:cross-site%20request%20forgery][跨站请求伪造]]（CSRF）的一种方法，但并不是所有请求都会包含这个头字段。
 
 #+BEGIN_QUOTE
 Example:
 #+END_QUOTE
+
+例如：
 
 #+BEGIN_EXAMPLE
   Referer: http://www.example.org/hypertext/Overview.html
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-If the target URI was obtained from a source that does not have its own URI (e.g., input from the user keyboard, or an entry within the user's bookmarks/favorites), the user agent MUST either exclude the Referer field or send it with a value of "about:blank".
+If the target URI was obtained from a source that does not have its own URI (e.g., input from the user keyboard, or an entry within the user's bookmarks/favorites), the user agent *MUST* either exclude the =Referer= field or send it with a value of "about:blank".
+#+END_QUOTE
+
+如果[[ruby:target%20URI][目标 URI]]是从一个资源那里获得的，但该资源并没有自己的 URI（比如，从键盘直接输入网址，或者在用户的书签/收藏夹内一个条目），那么，用户代理 *必须* 排除掉 =Referer= 头字段，或者将它的值赋值为 "about:blank" 来发送。
+
+#+BEGIN_QUOTE
+译注：从网站统计的角度上看，用户通过在浏览器上直接输入网址或书签对网站进行访问的行为，就是所谓的[[https://baike.baidu.com/item/%25E7%259B%25B4%25E6%258E%25A5%25E8%25AE%25BF%25E9%2597%25AE/8845360?fr=aladdin#2][直接访问]]。服务器的判断依据是请求是否有 =Referer= 或者其值是否为 "about:blank"。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-The Referer field has the potential to reveal information about the request context or browsing history of the user, which is a privacy concern if the referring resource's identifier reveals personal information (such as an account name) or a resource that is supposed to be confidential (such as behind a firewall or internal to a secured service). Most general-purpose user agents do not send the Referer header field when the referring resource is a local "file" or "data" URI. A user agent MUST NOT send a Referer header field in an unsecured HTTP request if the referring page was received with a secure protocol. See Section 9.4 for additional security considerations.
+The =Referer= field has the potential to reveal information about the request context or browsing history of the user, which is a privacy concern if the referring resource's identifier reveals personal information (such as an account name) or a resource that is supposed to be confidential (such as behind a firewall or internal to a secured service). Most general-purpose user agents do not send the =Referer= header field when the referring resource is a local "file" or "data" URI. A user agent *MUST NOT* send a =Referer= header field in an unsecured HTTP request if the referring page was received with a secure protocol. See [[id:ed824807-db16-4f5b-ab13-2366f5cfc0f3][Section 9.4]] for additional security considerations.
 #+END_QUOTE
 
+=Referer= 头字段存在暴露请求上下文或用户浏览历史记录的相关信息的可能，如果所引用的资源的标识符暴露了个人信息（比如一个账户名）或者暴露了一个本应是保密的资源（比如在一个防火墙之后的，或者一个安全服务内部的）的话，这是需要关注的隐私问题。当所引用的资源是一个本地文件或者一个本地数据的 URI 的时候，大多数通用型的用户代理并不会发送 =Referer= 头字段。如果所引用的页面使用的是一种安全的协议的话，用户代理 *禁止* 在一个不安全的 HTTP 请求中带有 =Referer= 字段值。更多安全注意事项见[[id:ed824807-db16-4f5b-ab13-2366f5cfc0f3][章节 9.4]]。
+
 #+BEGIN_QUOTE
-Some intermediaries have been known to indiscriminately remove Referer header fields from outgoing requests. This has the unfortunate side effect of interfering with protection against CSRF attacks, which can be far more harmful to their users. Intermediaries and user agent extensions that wish to limit information disclosure in Referer ought to restrict their changes to specific edits, such as replacing internal domain names with pseudonyms or truncating the query and/or path components. An intermediary SHOULD NOT modify or delete the Referer header field when the field value shares the same scheme and host as the request target.
+Some intermediaries have been known to indiscriminately remove =Referer= header fields from outgoing requests. This has the unfortunate side effect of interfering with protection against CSRF attacks, which can be far more harmful to their users. Intermediaries and user agent extensions that wish to limit information disclosure in =Referer= ought to restrict their changes to specific edits, such as replacing internal domain names with pseudonyms or truncating the =query= and/or =path= components. An intermediary *SHOULD NOT* modify or delete the =Referer= header field when the field value shares the same scheme and host as the request target.
 #+END_QUOTE
+
+目前已经知道某些[[ruby:intermediaries][中间人]]会在其[[ruby:outgoing%20requests][发出的请求]]中任意移除 =Referer= 头字段。这样做会对抵御 CSRF 攻击造成干扰，这种副作用对用户来说更加有害。以[[ruby:limit][限制]] =Referer= 的信息暴露为目的中间人扩展以及用户代理扩展应该将它们对 =Referer= 的改变[[ruby:restrict][限制]]在特定的编辑范围内，比如使用[[ruby:pseudonyms][化名]]来替换掉内部域名，或者截断 =query= 和/或 =path= 组件等。当 =Referer= 的字段值与[[ruby:request%20target][请求目标]]使用的是相同的 =scheme= 和 =host= 的时候，中间人 *不应当* 修改或者删除 =Referer= 头字段。
 
 *** 5.5.3. User-Agent
+:PROPERTIES:
+:ID:       d3473599-e20b-4b5d-9600-cb05340e8687
+:END:
 
 #+BEGIN_QUOTE
 The "User-Agent" header field contains information about the user agent originating the request, which is often used by servers to help identify the scope of reported interoperability problems, to work around or tailor responses to avoid particular user agent limitations, and for analytics regarding browser or operating system use. A user agent SHOULD send a User-Agent field in each request unless specifically configured not to do so.
@@ -2236,6 +2283,9 @@ Likewise, implementations are encouraged not to use the product tokens of other 
 ** 9.2. 基于命令、代码、查询注入 / Attacks Based on Command, Code, or Query Injection
 ** 9.3. 个人信息的披露 / Disclosure of Personal Information
 ** 9.4. URLs 敏感信息的披露 / Disclosure of Sensitive Information in URLs
+:PROPERTIES:
+:ID:       ed824807-db16-4f5b-ab13-2366f5cfc0f3
+:END:
 ** 9.5. Disclosure of Fragment after Redirects
 ** 9.6. Disclosure of Product Information
 ** 9.7. 浏览器指纹识别 / Browser Fingerprinting

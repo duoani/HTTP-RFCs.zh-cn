@@ -674,7 +674,7 @@ http-URI = "http:" "//" authority path-abempty [ "?" query ] [ "#" fragment ]
 The origin server for an "http" URI is identified by the authority component, which includes a host identifier and optional TCP port ([RFC3986], Section 3.2.2). The hierarchical path component and optional query component serve as an identifier for a potential target resource within that origin server's name space. The optional fragment component allows for indirect identification of a secondary resource, independent of the URI scheme, as defined in Section 3.5 of [RFC3986].
 #+END_QUOTE
 
-如上所示，对于一个 "http" URI，源服务器被标记到 =authority= 组件里，=authority= 包含一个主机（host）标识和一个可选的 TCP 端口（[[https://tools.ietf.org/html/rfc3986#section-3.2.2][【RFC3986】，章节 3.2.2]]）。=path= 组件和可选的 =query= 组件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 =fragment= 组件允许间接标记一个次要资源（secondary resource），不依赖于哪一种 URI 方案（"http" 或者 "https"），见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]] 。
+如上所示，对于一个 "http" URI，源服务器被标记到 =authority= 组件里，=authority= 包含一个主机（host）标识和一个可选的 TCP 端口（[[https://tools.ietf.org/html/rfc3986#section-3.2.2][【RFC3986】，章节 3.2.2]]）。=path= 组件和可选的 =query= 组件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 =fragment= 组件允许间接标识一个次要资源（secondary resource）而不依赖于哪一种 URI 方案（"http" 或者 "https"），见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]] 。
 
 #+BEGIN_QUOTE
 译注：按照[[https://tools.ietf.org/html/rfc3986#section-3.2][【RFC3986】章节 3.2]] 的解释，"authority" 是“管理机构”的意思，由域名或 IP，加上一个可选的端口组成，通俗的讲，它的作用是相当于一个房屋的门牌，通过找门牌就可以找到这一间房屋。而 "path" 相当于从房屋大门走到特定房间的路径。另外，"authority" 除了“机构、权威、权力、当局”的意思以外，在其他文库管理方面还有其他有趣的意思[fn:3]哦
@@ -3378,7 +3378,7 @@ A server is in the position to save personal data about a user's requests over t
 HTTP log information is confidential in nature; its handling is often constrained by laws and regulations. Log information needs to be securely stored and appropriate guidelines followed for its analysis. Anonymization of personal information within individual entries helps, but it is generally not sufficient to prevent real log traces from being re-identified based on correlation with other access characteristics. As such, access traces that are keyed to a specific client are unsafe to publish even if the key is pseudonymous.
 #+END_QUOTE
 
-HTTP 日志信息如个涉及机密信息，日志信息需要被安全地存储，对它们的分析需要遵循正确的指导方针。对个人信息进行匿名化是有效的，但这样做还不足以阻止通过关联其他访问特征来重新识别出真实的日志痕迹的行为。因此，公布具有唯一定位一个具体客户端的访问痕迹（access traces）是危险的，即使这个唯一码只是一个假名。
+HTTP 日志信息如个涉及机密信息，日志信息需要被安全地存储，对它们的分析需要遵循正确的指导方针。对个人信息进行匿名化是有效的，但这样做还不足以阻止通过关联其他访问特征来重新识别出真实的日志痕迹的行为。因此，公布具有唯一定位一个具体客户端的访问痕迹（access traces）是危险的，即使这个唯一码只是一个化名。
 
 #+BEGIN_QUOTE
 To minimize the risk of theft or accidental publication, log information ought to be purged of personally identifiable information, including user identifiers, IP addresses, and user-provided query parameters, as soon as that information is no longer necessary to support operational needs for security, auditing, or fraud control.
@@ -3540,6 +3540,9 @@ HTTP/1.1 introduces the =Transfer-Encoding= header field ([[id:1754823B-D0BC-410
 HTTP/1.1 引入了 =Transfer-Encoding= 头字段（[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][章节 3.3.1]]）。传输编码值需要在 HTTP 消息在某个遵循 MIME 协议的连接上转发之前进行解码。
 
 ** A.2. 相对 RFC 2616 的变化 (Changes from RFC 2616)
+:PROPERTIES:
+:ID:       cdfe1d9f-fe54-40a8-936b-aa02154989f9
+:END:
 #+BEGIN_QUOTE
 HTTP's approach to error handling has been explained. ([[id:A0441F72-9799-4667-9477-1E05885946A1][Section 2.5]])
 #+END_QUOTE
@@ -3557,7 +3560,7 @@ version= ABNF production has been clarified to be case-sensitive. Additionally, 
 Userinfo (i.e., username and password) are now disallowed in HTTP and HTTPS URIs, because of security issues related to their transmission on the wire. ([[id:3a2bda95-617a-4b5f-a1f6-21baa76e8a90][Section 2.7.1]])
 #+END_QUOTE
 
-现在，不再允许在 HTTP 和 HTTPS URI 中出现 =userinfo= （也就是说，用户名和密码），因为它在通信线路上传输时存在安全问题。（[[id:3a2bda95-617a-4b5f-a1f6-21baa76e8a90][章节 2.7.1]]）
+现在，不再允许在 HTTP 和 HTTPS URI 中出现 =userinfo= （也就是说，用户名和密码）了，因为它在通信线路上传输时存在安全问题。（[[id:3a2bda95-617a-4b5f-a1f6-21baa76e8a90][章节 2.7.1]]）
 
 #+BEGIN_QUOTE
 The HTTPS URI scheme is now defined by this specification; previously, it was done in [[https://tools.ietf.org/html/rfc2818#section-2.4][Section 2.4]] of [[[https://tools.ietf.org/html/rfc2818][RFC2818]]]. Furthermore, it implies end-to-end security. ([[id:25028231-5e21-44b9-ba0c-2f014e5ffcfd][Section 2.7.2]])
