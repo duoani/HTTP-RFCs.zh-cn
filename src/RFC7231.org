@@ -2042,7 +2042,7 @@ The following request header fields provide additional information about the req
 The "From" header field contains an Internet email address for a human user who controls the requesting user agent. The address ought to be machine-usable, as defined by "mailbox" in [[https://tools.ietf.org/html/rfc5322#section-3.4][Section 3.4]] of [RFC5322]:
 #+END_QUOTE
 
-=From= 头字段包含有一个使用用户代理来发送请求的人类用户的一个互联网电子邮箱地址。该地址应该以[[ruby:machine-usable][机器可用]]的形式，正如[[https://tools.ietf.org/html/rfc5322#section-3.4][【RFC5322】章节 3.4]] 中的 "mailbox" 所定义的一样。
+=From= 头字段包含一个控制现正发起请求的用户代理的人类用户的一个电子邮箱地址。该地址应该是[[ruby:machine-usable][机器可用的]]，正如[[https://tools.ietf.org/html/rfc5322#section-3.4][【RFC5322】章节 3.4]] 中的 "mailbox" 所定义的一样。
 
 #+BEGIN_SRC text
   From    = mailbox
@@ -2087,7 +2087,7 @@ A server *SHOULD NOT* use the =From= header field for access control or authenti
 The "Referer" [sic] header field allows the user agent to specify a URI reference for the resource from which the target URI was obtained (i.e., the "referrer", though the field name is misspelled). A user agent *MUST NOT* include the =fragment= and =userinfo= components of the URI reference [[[https://tools.ietf.org/html/rfc3986][RFC3986]]], if any, when generating the =Referer= field value.
 #+END_QUOTE
 
-=Referer= 头字段让用户代理可以指定一个 URI 引用，来表明本次请求的[[ruby:target%20URI][目标 URI]] 是从哪一个资源那里获得的（也就是说，"referer" 指的是“引用页、引用者”，虽然这个字段名称存在拼写错误）。用户代理在生成 =Referer= 头字段的时候，*禁止* 包括 URI 引用里的 =fragment= 以及 =userinfo= 组件【[[https://tools.ietf.org/html/rfc3986][RFC3986]]】。 
+=Referer= 头字段让用户代理可以指定一个 URI 引用，来表明本次请求的[[ruby:target%20URI][目标 URI]] 是从哪一个资源那里获得的（也就是说，"referer" 指的是“引用页、引用者”，虽然这个字段名称存在拼写错误，本应该是 "referrer"）。用户代理在生成 =Referer= 头字段的时候，*禁止* 包括 URI 引用里的 =fragment= 以及 =userinfo= 组件【[[https://tools.ietf.org/html/rfc3986][RFC3986]]】。 
 
 #+BEGIN_QUOTE
 译注：自【RFC7231】开始，已不再允许在 HTTP 和 HTTPS URI 中出现 =userinfo= （也就是说，用户名和密码）了，因为它在通信线路上传输时存在安全问题（见[[id:cdfe1d9f-fe54-40a8-936b-aa02154989f9][【RFC7230】附录 A.1]]）。而 =fragment= 标识是保留给客户端处理的，也不必提交到服务器上。
@@ -2141,16 +2141,20 @@ Some intermediaries have been known to indiscriminately remove =Referer= header 
 :END:
 
 #+BEGIN_QUOTE
-The "User-Agent" header field contains information about the user agent originating the request, which is often used by servers to help identify the scope of reported interoperability problems, to work around or tailor responses to avoid particular user agent limitations, and for analytics regarding browser or operating system use. A user agent SHOULD send a User-Agent field in each request unless specifically configured not to do so.
+The "User-Agent" header field contains information about the user agent originating the request, which is often used by servers to help identify the scope of reported interoperability problems, to work around or tailor responses to avoid particular user agent limitations, and for analytics regarding browser or operating system use. A user agent *SHOULD* send a =User-Agent= field in each request unless specifically configured not to do so.
 #+END_QUOTE
+
+=User-Agent= 头字段包含了[[ruby:originating%20the%20request][发起请求]]的用户代理的相关信息。=User-Agent= 常被服务器用来帮助识别报告出互操作性问题的范围，[[ruby:work%20around][变通]]或[[ruby:tailor][调整]]响应以避免个别用户代理的限制，以及分析浏览器或操作系统的使用情况等。用户代理 *应当* 在每个请求里包含一个 =User-Agent= 头字段，除非被明确配置为不要这样做。
 
 #+BEGIN_SRC text
   User-Agent = product *( RWS ( product / comment ) )
 #+END_SRC
 
 #+BEGIN_QUOTE
-The User-Agent field-value consists of one or more product identifiers, each followed by zero or more comments (Section 3.2 of [RFC7230]), which together identify the user agent software and its significant subproducts. By convention, the product identifiers are listed in decreasing order of their significance for identifying the user agent software. Each product identifier consists of a name and optional version.
+The =User-Agent= field-value consists of one or more product identifiers, each followed by zero or more comments ([[id:a6c4dceb-8a19-4799-a39b-b7240755c672][Section 3.2]] of [RFC7230]), which together identify the user agent software and its significant subproducts. By convention, the product identifiers are listed in decreasing order of their significance for identifying the user agent software. Each product identifier consists of a name and optional version.
 #+END_QUOTE
+
+=User-Agent= 的字段值由一个或多个[[ruby:product%20identifiers][产品标识符]]组成，每个产品标识符后面跟随零个或多个注释（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][【RFC7230】章节 3.2]]），它们一起标识了该用户代理软件以及它的重要的[[ruby:subproducts][子产品]]。按照惯例，这些产品标识符是按其标识用户代理软件的重要性的降序顺序排列的。每个产品标识符由一个名称和一个可选的版本组成。
 
 #+BEGIN_SRC text
   product         = token ["/" product-version]
@@ -2158,24 +2162,32 @@ The User-Agent field-value consists of one or more product identifiers, each fol
 #+END_SRC
 
 #+BEGIN_QUOTE
-A sender *SHOULD* limit generated product identifiers to what is necessary to identify the product; a sender MUST NOT generate advertising or other nonessential information within the product identifier. A sender SHOULD NOT generate information in product-version that is not a version identifier (i.e., successive versions of the same product name ought to differ only in the product-version portion of the product identifier).
+A sender *SHOULD* limit generated product identifiers to what is necessary to identify the product; a sender *MUST NOT* generate advertising or other nonessential information within the product identifier. A sender *SHOULD NOT* generate information in =product-version= that is not a version identifier (i.e., successive versions of the same product name ought to differ only in the =product-version= portion of the product identifier).
 #+END_QUOTE
+
+发送端 *应当* 将所生成的产品标识符限制为必要于标识该产品的那些标识符。发送端 *禁止* 将广告或其他非本质信息生成到产品标识符内部。发送端 *不应当* 将非版本标识符的信息生成到 =product-version= 内部（也就是说，同一个产品名称的连续版本之间区别应该仅在于产品标识符的 =product-version= 部分）。
 
 #+BEGIN_QUOTE
 Example:
 #+END_QUOTE
+
+例如：
 
 #+BEGIN_EXAMPLE
   User-Agent: CERN-LineMode/2.15 libwww/2.17b3
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-A user agent *SHOULD NOT* generate a User-Agent field containing needlessly fine-grained detail and SHOULD limit the addition of subproducts by third parties. Overly long and detailed User-Agent field values increase request latency and the risk of a user being identified against their wishes ("fingerprinting").
+A user agent *SHOULD NOT* generate a =User-Agent= field containing needlessly fine-grained detail and *SHOULD* limit the addition of subproducts by third parties. Overly long and detailed =User-Agent= field values increase request latency and the risk of a user being identified against their wishes ("fingerprinting").
 #+END_QUOTE
+
+用户代理 *不应当* 生成一个包含不必要的[[ruby:fine-grained%20detail][细粒度详尽信息]] 的 =User-Agent= 头字段，同时，*应当* 限制被第三方添加子产品到该字段中。太过长或详尽的 =User-Agent= 字段值会加大请求的延迟以及违背用户意愿而被识别出（“[[ruby:fingerprinting][指纹识别]]”）的风险。
 
 #+BEGIN_QUOTE
 Likewise, implementations are encouraged not to use the product tokens of other implementations in order to declare compatibility with them, as this circumvents the purpose of the field. If a user agent masquerades as a different user agent, recipients can assume that the user intentionally desires to see responses tailored for that identified user agent, even if they might not work as well for the actual user agent being used.
 #+END_QUOTE
+
+同样，不鼓励[[ruby:implementations][实现]]使用[[ruby:other%20implementations][其他实现]]的 =product= 标记来[[ruby:declare][断言]]（判断）与它们之间的[[ruby:compatibility][兼容性]]，因为这样[[ruby:circumvents][逃避]]了该字段的目的。如果一个用户代理伪装成另一个不同的用户代理，接收端可以假定这个用户代理故意想查看适用于被伪装的用户代理的响应，即使这些响应可能无法很好地适用于实际的用户代理。
 
 * 6. 响应状态码 / Response Status Codes
 :PROPERTIES:
