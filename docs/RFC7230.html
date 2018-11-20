@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-19 Mon 19:23 -->
+<!-- 2018-11-20 Tue 19:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -380,7 +380,7 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#org3a75a2a">2. 体系结构（Architecture）</a>
 <ul>
-<li><a href="#orga9ebb0c">2.1. 客户端/服务器报文传递 (Client/Server Messaging)</a></li>
+<li><a href="#orgf700077">2.1. 客户端/服务器消息传递 (Client/Server Messaging)</a></li>
 <li><a href="#org6cefed7">2.2. 实现的差异性（Implementation Diversity）</a></li>
 <li><a href="#org1fc5a04">2.3. 中间人 (Intermediaries)</a></li>
 <li><a href="#orgeca5bdd">2.4. 缓存 (Caches)</a></li>
@@ -395,7 +395,7 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
-<li><a href="#org86c9e58">3. 报文格式（Message Format）</a>
+<li><a href="#org4fb3faf">3. 消息格式（Message Format）</a>
 <ul>
 <li><a href="#org184755b">3.1. 起始行 (Start Line)</a>
 <ul>
@@ -403,25 +403,25 @@ for the JavaScript code in this tag.
 <li><a href="#orgd6df797">3.1.2. 状态行 (Status Line)</a></li>
 </ul>
 </li>
-<li><a href="#org022942f">3.2. 报头域 (Header Fields)</a>
+<li><a href="#org1f965fb">3.2. 头字段 (Header Fields)</a>
 <ul>
 <li><a href="#org2c00eb3">3.2.1. 域的可扩展性 (Field Extensibility)</a></li>
 <li><a href="#orgfe048e2">3.2.2. 域的顺序 (Field Order)</a></li>
 <li><a href="#org84926f6">3.2.3. 空格 (Whitespace)</a></li>
 <li><a href="#org4aaca07">3.2.4. 域解析 (Field Parsing)</a></li>
 <li><a href="#orgd42648b">3.2.5. 域限制 (Field Limits)</a></li>
-<li><a href="#org9aed017">3.2.6. 域值的组成 (Field Value Components)</a></li>
+<li><a href="#orgd7938c9">3.2.6. 字段值的组成 (Field Value Components)</a></li>
 </ul>
 </li>
-<li><a href="#org3d27427">3.3. 报文正文 (Message Body)</a>
+<li><a href="#orgd385ed5">3.3. 消息体 (Message Body)</a>
 <ul>
 <li><a href="#org209c019">3.3.1. 传输编码 (Transfer-Encoding)</a></li>
 <li><a href="#orge260bed">3.3.2. 内容长度 (Content-Length)</a></li>
-<li><a href="#orga7ccbf3">3.3.3. 报文正文的长度 (Message Body Length)</a></li>
+<li><a href="#orgb9426aa">3.3.3. 消息体的长度 (Message Body Length)</a></li>
 </ul>
 </li>
-<li><a href="#org5ce153b">3.4. 报文不完整的处理 (Handling Incomplete Messages)</a></li>
-<li><a href="#org189d602">3.5. 报文解析的健壮性 (Message Parsing Robustness)</a></li>
+<li><a href="#orgfa53349">3.4. 消息不完整的处理 (Handling Incomplete Messages)</a></li>
+<li><a href="#org6c0e6ec">3.5. 消息解析的健壮性 (Message Parsing Robustness)</a></li>
 </ul>
 </li>
 <li><a href="#orgdb9d59f">4. 传输编码值（Transfer Codings）</a>
@@ -444,7 +444,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgeb23914">4.4. Trailer</a></li>
 </ul>
 </li>
-<li><a href="#org9d6a2ba">5. 报文路由（Message Routing）</a>
+<li><a href="#orga5f14c8">5. 消息路由（Message Routing）</a>
 <ul>
 <li><a href="#org88cd76d">5.1. 标识目标资源 (Identifying a Target Resource)</a></li>
 <li><a href="#org7b5f4a2">5.2. 连接入站 (Connecting Inbound)</a></li>
@@ -459,7 +459,7 @@ for the JavaScript code in this tag.
 <li><a href="#org1e507aa">5.4. 主机 (Host)</a></li>
 <li><a href="#org35ae270">5.5. 有效请求 URI (Effective Request URI)</a></li>
 <li><a href="#orgf78f02d">5.6. 将响应关联到请求 (Associating a Response to a Request)</a></li>
-<li><a href="#org5fed8d5">5.7. 报文转发 (Message Forwarding)</a>
+<li><a href="#orgb81449b">5.7. 消息转发 (Message Forwarding)</a>
 <ul>
 <li><a href="#org05e91bc">5.7.1. Via</a></li>
 <li><a href="#org54dfdcc">5.7.2. Transformations</a></li>
@@ -486,7 +486,7 @@ for the JavaScript code in this tag.
 <li><a href="#org38d9a36">7. ABNF 列表扩展：#rule（ABNF List Extension: #rule）</a></li>
 <li><a href="#orgef7d4df">8. INAN 注意事项（IANA Considerations）</a>
 <ul>
-<li><a href="#orgce68929">8.1. 报头域注册 (Header Field Registration)</a></li>
+<li><a href="#org93bf595">8.1. 头字段注册 (Header Field Registration)</a></li>
 <li><a href="#orgb199c78">8.2. URI 方案注册 (URI Scheme Registration)</a></li>
 <li><a href="#org5c99af6">8.3. 互联网媒体类型注册 (Internet Media Type Registration)</a>
 <ul>
@@ -516,8 +516,8 @@ for the JavaScript code in this tag.
 <li><a href="#orga78d282">9.3. 通过协议元素长度进行攻击 (Attacks via Protocol Element Length)</a></li>
 <li><a href="#org34d6b3f">9.4. 响应分割 (Response Splitting)</a></li>
 <li><a href="#org92b4d2b">9.5. 请求走私 (Request Smuggling)</a></li>
-<li><a href="#orgcd0c781">9.6. 报文完整性 (Message Integrity)</a></li>
-<li><a href="#org6d72682">9.7. 报文保密性 (Message Confidentiality)</a></li>
+<li><a href="#orgb1c0b51">9.6. 消息完整性 (Message Integrity)</a></li>
+<li><a href="#org3f3f5ee">9.7. 消息保密性 (Message Confidentiality)</a></li>
 <li><a href="#org5ca2646">9.8. 服务器日志信息的隐私 (Privacy of Server Log Information)</a></li>
 </ul>
 </li>
@@ -580,7 +580,7 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol
 </blockquote>
 
 <p>
-超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI 方案（URI schemes），定义了 HTTP/1.1 报文句法和解析要求，以及描述了对实现（implementations）的安全性相关的注意事项。
+超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI 方案（URI schemes），定义了 HTTP/1.1 消息句法和解析要求，以及描述了对实现（implementations）的安全性相关的注意事项。
 </p>
 
 <blockquote>
@@ -618,7 +618,7 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level request/
 </blockquote>
 
 <p>
-超文本传输协议（HTTP）是一种基于请求/响应模式的、无状态的、应用层协议，使用可扩展的语义和自我描述的报文有效载荷，与基于网络的超文本信息系统进行灵活的交互。本文档是 HTTP/1.1 规范系列文档里的第一份。
+超文本传输协议（HTTP）是一种基于请求/响应模式的、无状态的应用层协议，使用可扩展的语义和自我描述的消息有效载荷，与基于网络的超文本信息系统进行灵活的交互。本文档是 HTTP/1.1 规范系列文档里的第一份。
 </p>
 
 <blockquote>
@@ -633,7 +633,7 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level request/
 </blockquote>
 
 <ul class="org-ul">
-<li>《报文句法和路由》（本文档）</li>
+<li>《消息句法和路由》（本文档）</li>
 <li>《语义和内容》【<a href="https://tools.ietf.org/html/7231">RFC7231</a>】</li>
 <li>《条件请求》【<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>】</li>
 <li>《范围请求》【<a href="https://tools.ietf.org/html/rfc7233">RFC7233</a>】</li>
@@ -694,7 +694,7 @@ This document describes the architectural elements that are used or referred to 
 </blockquote>
 
 <p>
-本文档描述了用于或涉及 HTTP 的架构元素（architectural elements），定义了 "http" 和 "https" 两种 URI 方案，总体上描述了网络操作和连接管理，并且定义了 HTTP 报文在分帧（framing）和转发（forwarding）方面的要求。我们的目标是为处理 HTTP 报文定义所有独立于报文语义的必要方法，从而为报文解析器（message parsers）和报文转发中间人(message-forwarding intermediaries)定义完整的要求集（complete set of requirements）。
+本文档描述了用于或涉及 HTTP 的架构元素（architectural elements），定义了 "http" 和 "https" 两种 URI 方案，总体上描述了网络操作和连接管理，并且定义了 HTTP 消息在分帧（framing）和转发（forwarding）方面的要求。我们的目标是为处理 HTTP 消息定义所有独立于消息语义的必要方法，从而为消息解析器（message parsers）和消息转发中间人(message-forwarding intermediaries)定义完整的要求集（complete set of requirements）。
 </p>
 </div>
 
@@ -778,22 +778,22 @@ HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支
 </p>
 </div>
 
-<div id="outline-container-orga9ebb0c" class="outline-3">
-<h3 id="orga9ebb0c">2.1. 客户端/服务器报文传递 (Client/Server Messaging)</h3>
-<div class="outline-text-3" id="text-orga9ebb0c">
+<div id="outline-container-orgf700077" class="outline-3">
+<h3 id="orgf700077">2.1. 客户端/服务器消息传递 (Client/Server Messaging)</h3>
+<div class="outline-text-3" id="text-orgf700077">
 <blockquote>
 <p>
-HTTP is a stateless request/response protocol that operates by exchanging messages (<a href="#org86c9e58">Section 3</a>) across a reliable transport- or session-layer "connection" (<a href="#orgf9a5c1a">Section 6</a>). An HTTP "client" is a program that establishes a connection to a server for the purpose of sending one or more HTTP requests. An HTTP "server" is a program that accepts connections in order to service HTTP requests by sending HTTP responses.
+HTTP is a stateless request/response protocol that operates by exchanging messages (<a href="#org4fb3faf">Section 3</a>) across a reliable transport- or session-layer "connection" (<a href="#orgf9a5c1a">Section 6</a>). An HTTP "client" is a program that establishes a connection to a server for the purpose of sending one or more HTTP requests. An HTTP "server" is a program that accepts connections in order to service HTTP requests by sending HTTP responses.
 </p>
 </blockquote>
 
 <p>
-HTTP 是一种无状态的请求/响应协议，通过一个可靠的传输层或会话层“连接”来交换报文（message，见<a href="#org86c9e58">章节 3</a>）。HTTP 客户端（client）是一种用于与服务器建立连接（connection，见<a href="#orgf9a5c1a">章节 6</a>），向其发送一个或多个 HTTP 请求的应用程序。HTTP 服务器（server）是一个接受客户端连接，接收 HTTP 请求，发送 HTTP 响应的应用程序。
+HTTP 是一种无状态的请求/响应协议，通过一个可靠的传输层或会话层“连接”来交换消息（message，见<a href="#org4fb3faf">章节 3</a>）。HTTP 客户端（client）是一种用于与服务器建立连接（connection，见<a href="#orgf9a5c1a">章节 6</a>），向其发送一个或多个 HTTP 请求的应用程序。HTTP 服务器（server）是一个接受客户端连接，接收 HTTP 请求，发送 HTTP 响应的应用程序。
 </p>
 
 <blockquote>
 <p>
-译注：response 译作“响应”、“应答”，本文统一译为“响应”；message 译作“报文”、“消息”，这里统一译为“报文”，但在如果在某些情况下我认为译为“消息”更通俗的时候，我会特别标注为“消息”。
+译注：response 译作“响应”、“应答”，本文统一译为“响应”，作动词时有时会译为“回应&#x2026;的响应”；message 译作“消息”、“报文”，这里统一译为“消息”。
 </p>
 </blockquote>
 
@@ -804,7 +804,7 @@ The terms "client" and "server" refer only to the roles that these programs perf
 </blockquote>
 
 <p>
-术语“客户端（client）”和“服务器（server）”特指在一个具体连接（connection）中的相关程序所充当的角色。同一个程序可能在某些连接中充当一个客户端，而在其他连接中充当的是一个服务器。术语“用户代理（user agent）”指的是任何发起请求的各种客户端程序，包括（但不限于）浏览器、爬虫（基于网络的机器人）、命令行工具、定制应用和移动应用。术语“源服务器（origin server）”指的是任何为一个给定目标资源产生权威响应（authoritative response，见<a href="#orge2d4dc4">章节 9.1</a>）的程序。术语“发送端（sender）”和“接收端（recipient）”分别指的是任何发送或者接收一个给定报文的实现（implementation）。
+术语“客户端（client）”和“服务器（server）”特指在一个具体连接（connection）中的相关程序所充当的角色。同一个程序可能在某些连接中充当一个客户端，而在其他连接中充当的是一个服务器。术语“用户代理（user agent）”指的是任何发起请求的各种客户端程序，包括（但不限于）浏览器、爬虫（基于网络的机器人）、命令行工具、定制应用和移动应用。术语“源服务器（origin server）”指的是任何为一个给定目标资源产生权威响应（authoritative response，见<a href="#orge2d4dc4">章节 9.1</a>）的程序。术语“发送端（sender）”和“接收端（recipient）”分别指的是任何发送或者接收一个给定消息的实现（implementation）。
 </p>
 
 <blockquote>
@@ -814,7 +814,7 @@ HTTP relies upon the Uniform Resource Identifier (URI) standard [<a href="https:
 </blockquote>
 
 <p>
-HTTP 依靠“统一资源标识符（URI）标准<a href="https://tools.ietf.org/html/rfc3986">【RFC3986】</a>”来标识目标资源（<a href="#org88cd76d">章节 5.1</a>）以及资源与资源之间的关系。报文通过类似于电子邮件【<a href="https://tools.ietf.org/html/rfc5233">RFC5233</a>】和多用途互联网邮件扩展类型（MIME）【<a href="https://tools.ietf.org/html/rfc2045">RFC2045</a>】的格式来进行传输。对于 HTTP 与 MIME 之间的区别可以查看【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】的<a href="https://tools.ietf.org/html/rfc7231#appendix-A">附录 A</a>。）
+HTTP 依靠“统一资源标识符（URI）标准<a href="https://tools.ietf.org/html/rfc3986">【RFC3986】</a>”来标识目标资源（<a href="#org88cd76d">章节 5.1</a>）以及资源与资源之间的关系。消息通过类似于电子邮件【<a href="https://tools.ietf.org/html/rfc5233">RFC5233</a>】和多用途互联网邮件扩展类型（MIME）【<a href="https://tools.ietf.org/html/rfc2045">RFC2045</a>】的格式来进行传输。对于 HTTP 与 MIME 之间的区别可以查看【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】的<a href="https://tools.ietf.org/html/rfc7231#appendix-A">附录 A</a>。）
 </p>
 
 <blockquote>
@@ -841,12 +841,12 @@ A client sends an HTTP request to a server in the form of a request message, beg
 </blockquote>
 
 <p>
-客户端以请求报文（request message）的形式向服务器发送一个 HTTP 请求。请求报文以一个包含了方法（method）、URI 和协议版本（protocol version）的请求行（request line，见<a href="#orgc608d15">章节 3.1.1</a>）作为开始；随后是包含了请求修饰符，客户端信息以及表示形式元数据（representation metadata，见<a href="#org022942f">章节 3.2</a>）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含了有效载荷（如果有的话，见<a href="#org3d27427">章节 3.3</a>）的报文正文（message body）。
+客户端以请求消息（request message）的形式向服务器发送一个 HTTP 请求。请求消息以一个包含了方法（method）、URI 和协议版本（protocol version）的请求行（request line，见<a href="#orgc608d15">章节 3.1.1</a>）作为开始；随后是包含了请求修饰符，客户端信息以及表示形式元数据（representation metadata，见<a href="#org1f965fb">章节 3.2</a>）的头字段（header fields）；接着是一个空行，来表示消息头部（header section）结束；最后是一个包含了有效载荷（如果有的话，见<a href="#orgd385ed5">章节 3.3</a>）的消息体（message body）。
 </p>
 
 <blockquote>
 <p>
-译注："header fields" 通常译作报头域、首部、首部字段等，本文统一译作“报头域”。"message body" 通常译作报文正文、消息正文、消息体等，本文统一译作“报文正文”。
+译注："header fields" 通常译作头字段、首部字段、报头域等，本文统一译作“头字段”。"message body" 通常译作消息体、消息主体、报文正文等，本文统一译作“消息体”。
 </p>
 </blockquote>
 
@@ -857,7 +857,7 @@ A server responds to a client's request by sending one or more HTTP response mes
 </blockquote>
 
 <p>
-服务器通过发送一个或多个 HTTP 响应报文（response message）来响应客户端的请求。每个响应报文以一个包含协议版本（protocol version）、一个成功或失败的状态码（status code）以及一个描述状态码的文本短语（reason phrase）的状态行（status line，<a href="#orgd6df797">章节 3.1.2</a>）作为开始；随后可能是包含服务器信息、资源元数据以及表示形式元数据（representation metadata，见章节 3.2）的报头域（header fields）；接着是一个空行，来表示报头块（header section）结束；最后是一个包含有效载荷（如果有的话，见<a href="#org3d27427">章节 3.3</a>）的报文正文（message body）。
+服务器通过发送一个或多个 HTTP 响应消息（response message）来响应客户端的请求。每个响应消息以一个包含协议版本（protocol version）、一个成功或失败的状态码（status code）以及一个描述状态码的文本短语（reason phrase）的状态行（status line，<a href="#orgd6df797">章节 3.1.2</a>）作为开始；随后可能是包含服务器信息、资源元数据以及表示形式元数据（representation metadata，见章节 3.2）的头字段（header fields）；接着是一个空行，来表示消息头部（header section）结束；最后是一个包含有效载荷（如果有的话，见<a href="#orgd385ed5">章节 3.3</a>）的消息体（message body）。
 </p>
 
 <blockquote>
@@ -867,7 +867,7 @@ A connection might be used for multiple request/response exchanges, as defined i
 </blockquote>
 
 <p>
-一个连接可能被用于多次请求/响应的报文交换，其定义见<a href="#orgb06054f">章节 6.3</a>。
+一个连接可能被用于多次请求/响应的消息交换，其定义见<a href="#orgb06054f">章节 6.3</a>。
 </p>
 
 <blockquote>
@@ -877,7 +877,7 @@ The following example illustrates a typical message exchange for a GET request (
 </blockquote>
 
 <p>
-下面举例说明对于 URI 为 "<a href="http://www.example.com/hello.txt">http://www.example.com/hello.txt</a>" 的一个典型的 GET 请求（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.1">章节 4.3.1</a>）的报文交换过程。
+下面举例说明对于 URI 为 "<a href="http://www.example.com/hello.txt">http://www.example.com/hello.txt</a>" 的一个典型的 GET 请求（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.1">章节 4.3.1</a>）的消息交换过程。
 </p>
 
 <blockquote>
@@ -988,13 +988,13 @@ The figure above shows three intermediaries (A, B, and C) between the user agent
 </blockquote>
 
 <p>
-上图演示了在用户代理（UA）和源服务器（O）之间的三个中间人（A、B 和 C）。一个请求报文或者响应报文通过依次建立四个单独的连接来穿越整条链路。HTTP 的某些通信选项可能仅适用于通信链路上的某些节点上，例如离其最近的非隧道节点、链路的端点，或者适用于链路上的所有节点。虽然上图以线性的方式展示这条链路（但并不一定是线性的），每个节点都可能在处理多个并行的通信。例如，B 在处理来自 A 的请求的同时，还可能接收到来自 A 之外的多个客户端的请求，并（或）将其转发这些请求到 C 之外的服务器。同样，后面接收到的请求可能被节点依据其负载均衡的策略发送至另外一个不同通信路径上（译注：例如，来自 A 的请求被 B 转发到 D，而不是上图所示的 C）。
+上图演示了在用户代理（UA）和源服务器（O）之间的三个中间人（A、B 和 C）。一个请求消息或者响应消息通过依次建立四个单独的连接来穿越整条链路。HTTP 的某些通信选项可能仅适用于通信链路上的某些节点上，例如离其最近的非隧道节点、链路的端点，或者适用于链路上的所有节点。虽然上图以线性的方式展示这条链路（但并不一定是线性的），每个节点都可能在处理多个并行的通信。例如，B 在处理来自 A 的请求的同时，还可能接收到来自 A 之外的多个客户端的请求，并（或）将其转发这些请求到 C 之外的服务器。同样，后面接收到的请求可能被节点依据其负载均衡的策略发送至另外一个不同通信路径上（译注：例如，来自 A 的请求被 B 转发到 D，而不是上图所示的 C）。
 </p>
 
 <blockquote>
 <p>
 译注：
-可以将通信链路想像为一条公交线路 A &#x2013; B &#x2013; C &#x2026; X &#x2013; Y &#x2013; Z，线路两个端点（起始端/终点站）分别为 A 与 Z，之间的所有站点可以认为是中间人。公交车（请求报文）先从 A 站（用户代理）开始发起，途经 B、C……最终到达 Z 终点站（源服务器），然后公交车（响应报文）以 Z 站作为起点，途经 Y、X……最终返回到终点站 A。
+可以将通信链路想像为一条公交线路 A &#x2013; B &#x2013; C &#x2026; X &#x2013; Y &#x2013; Z，线路两个端点（起始端/终点站）分别为 A 与 Z，之间的所有站点可以认为是中间人。公交车（请求消息）先从 A 站（用户代理）开始发起，途经 B、C……最终到达 Z 终点站（源服务器），然后公交车（响应消息）以 Z 站作为起点，途经 Y、X……最终返回到终点站 A。
 </p>
 
 <p>
@@ -1009,7 +1009,7 @@ The terms "upstream" and "downstream" are used to describe directional requireme
 </blockquote>
 
 <p>
-术语“上游（upstream）”和“下游（downstream）”用于描述报文（消息）流的方向：所有的报文（消息）都从上游流到下游。术语“入站（inbound）”和“出站（outbound）”用于描述请求经过路由的方向：“入站”意为经过路由器的数据流向源服务器，而“出站”意为经过路由器的数据流向用户代理。 
+术语“上游（upstream）”和“下游（downstream）”用于描述消息流的方向：所有的消息都从上游流到下游。术语“入站（inbound）”和“出站（outbound）”用于描述请求经过路由的方向：“入站”意为经过路由器的数据流向源服务器流动，而“出站”意为经过路由器的数据流向用户代理流动。 
 </p>
 
 <blockquote>
@@ -1031,7 +1031,7 @@ A "proxy" is a message-forwarding agent that is selected by the client, usually 
 </blockquote>
 
 <p>
-代理（proxy），是一种由客户端选定的负责报文转发的中介，一般通过本地设置的规则来接收绝对 URI（absolute URI）类型的请求并试图经由 HTTP 接口的翻译（translation）来满足这些请求。某些翻译（translation）是以最低限度来进行的，例如对 "http" URI 进行请求代理；与之相反的是，某些请求可能要求翻译为或翻译自（translation to and from）完全不同的应用层协议。为了安全性、服务标识或者共享缓存，某些代理一般通过一个共同的中间人，对同一组织的 HTTP 请求进行分组。某些代理被设计为对选定的报文或有效载荷在其被转发时进行转换（见 <a href="#org54dfdcc">5.7.2</a>）。
+代理（proxy），是一种由客户端选定的负责消息转发的中介，一般通过本地设置的规则来接收绝对 URI（absolute URI）类型的请求并试图经由 HTTP 接口的翻译（translation）来满足这些请求。某些翻译（translation）是以最低限度来进行的，例如对 "http" URI 进行请求代理；与之相反的是，某些请求可能要求翻译为或翻译自（translation to and from）完全不同的应用层协议。为了安全性、服务标识或者共享缓存，某些代理一般通过一个共同的中间人，对同一组织的 HTTP 请求进行分组。某些代理被设计为对选定的消息或有效载荷在其被转发时进行转换（见 <a href="#org54dfdcc">5.7.2</a>）。
 </p>
 
 <blockquote>
@@ -1067,12 +1067,12 @@ A "tunnel" acts as a blind relay between two connections without changing the me
 </blockquote>
 
 <p>
-隧道（tunnel）在两个连接之间充当一个盲中继（blind relay），即隧道并不会对报文进行更改。隧道在激活后，由 HTTP 请求来进行初始化，但隧道并不作为 HTTP 通信的一部分。在隧道两端的连接都关闭后，隧道将不复存在。经由一个中间人的中转，隧道能够用来扩展一种<a href="https://en.wikipedia.org/wiki/Virtual_circuit">虚连接（virtual connection）</a>，例如传输层安全协议（TLS，[<a href="https://tools.ietf.org/html/rfc5246">RFC5246</a>]）可以经由一个共享的防火墙代理来建立保密通信。
+隧道（tunnel）在两个连接之间充当一个盲中继（blind relay），即隧道并不会对消息进行更改。隧道在激活后，由 HTTP 请求来进行初始化，但隧道并不作为 HTTP 通信的一部分。在隧道两端的连接都关闭后，隧道将不复存在。经由一个中间人的中转，隧道能够用来扩展一种<a href="https://en.wikipedia.org/wiki/Virtual_circuit">虚连接（virtual connection）</a>，例如传输层安全协议（TLS，[<a href="https://tools.ietf.org/html/rfc5246">RFC5246</a>]）可以经由一个共享的防火墙代理来建立保密通信。
 </p>
 
 <blockquote>
 <p>
-译注："blind relay"，盲中继，只是将字节从一个连接转发到另一个连接中去，不对 <code>Connection</code> 报头域进行特殊的处理。
+译注："blind relay"，盲中继，只是将字节从一个连接转发到另一个连接中去，不对 <code>Connection</code> 头字段进行特殊的处理。
 </p>
 </blockquote>
 
@@ -1083,7 +1083,7 @@ The above categories for intermediary only consider those acting as participants
 </blockquote>
 
 <p>
-上述这些类型的中间人仅认为是在 HTTP 通信中作为参与者。这些中间人同样能工作在网络协议栈的底层，过滤或重定向 HTTP 流而不必了解报文发送者的权限或逻辑。网络中间人并不能（在协议层面上）识别出报文是否来自于<a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">中间人攻击（man-in-the-middle attack）</a>，因此，有时会因为中间人的实现（implementations）有误没有遵循 HTTP 语义从而引入了安全隐患或者互操作性问题。
+上述这些类型的中间人仅认为是在 HTTP 通信中作为参与者。这些中间人同样能工作在网络协议栈的底层，过滤或重定向 HTTP 流而不必了解消息发送者的权限或逻辑。网络中间人并不能（在协议层面上）识别出消息是否来自于<a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">中间人攻击（man-in-the-middle attack）</a>，因此，有时会因为中间人的实现（implementations）有误没有遵循 HTTP 语义从而引入了安全隐患或者互操作性问题。
 </p>
 
 <blockquote>
@@ -1109,12 +1109,12 @@ HTTP is defined as a stateless protocol, meaning that each request message can b
 </blockquote>
 
 <p>
-HTTP 被定义为一种无状态的协议，意味着每一个请求报文都能够（在不需要依赖其他报文的情况下）被单独理解。许多实现（implementations）依托于 HTTP 无状态性来复用代理过的连接或者通过多台服务器实施对请求的动态负载均衡。因此，一个服务器 <b>禁止</b> 假设同一个连接里的两个请求是来自于同一个用户代理，除非是连接是安全的或者这些请求是该用户代理特有的。目前已发现某些非标准的 HTTP 扩展（例如<a href="https://tools.ietf.org/html/4559">【RFC4559】</a>）违反了这一要求，结果就是引发安全性和互操作性的问题。
+HTTP 被定义为一种无状态的协议，意味着每一个请求消息都能够（在不需要依赖其他消息的情况下）被单独理解。许多实现（implementations）依托于 HTTP 无状态性来复用代理过的连接或者通过多台服务器实施对请求的动态负载均衡。因此，一个服务器 <b>禁止</b> 假设同一个连接里的两个请求是来自于同一个用户代理，除非是连接是安全的或者这些请求是该用户代理特有的。目前已发现某些非标准的 HTTP 扩展（例如<a href="https://tools.ietf.org/html/4559">【RFC4559】</a>）违反了这一要求，结果就是引发安全性和互操作性的问题。
 </p>
 
 <blockquote>
 <p>
-译注：源服务器或中间人能够完全理解每一个请求报文的含义，这种理解并不用基于该请求报文的前一个或多个请求报文的内容。
+译注：源服务器或中间人能够完全理解每一个请求消息的含义，这种理解并不用基于该请求消息的前一个或多个请求消息的内容。
 </p>
 </blockquote>
 </div>
@@ -1130,7 +1130,7 @@ A "cache" is a local store of previous response messages and the subsystem that 
 </blockquote>
 
 <p>
-缓存（cache），是一种保存之前的响应报文的本地存储，以及控制其报文的存储、获取和删除的子系统。缓存（cache）存储了可缓存（cacheable）的响应是为了减少将来的响应时间和网络带宽消耗。任何客户端或者服务器 <b>可以</b> 使用缓存，但是，当服务器作为隧道（tunnel）而使用时，不能使用缓存。
+缓存（cache），是一种保存之前的响应消息的本地存储，以及控制其消息的存储、获取和删除的子系统。缓存（cache）存储了可缓存（cacheable）的响应是为了减少将来的响应时间和网络带宽消耗。任何客户端或者服务器 <b>可以</b> 使用缓存，但是，当服务器作为隧道（tunnel）而使用时，不能使用缓存。
 </p>
 
 <blockquote>
@@ -1140,7 +1140,7 @@ The effect of a cache is that the request/response chain is shortened if one of 
 </blockquote>
 
 <p>
-缓存（cache）的作用是缩短请求/响应链，体现为在一个有缓存参与的请求/响应链中，如果链路中的某个缓存（cache）保存并返回了与该请求相匹配的响应报文。下图的请求响应链的意思是，如果 B 保存了之前从源服务器 O （经过 C）返回的响应报文的副本，而这个响应没有缓存于用户代理 UA 或者 A 中，那么 B 就可以直接返回缓存的响应，而不用再转发至 C。
+缓存（cache）的作用是缩短请求/响应链，体现为在一个有缓存参与的请求/响应链中，如果链路中的某个缓存（cache）保存并返回了与该请求相匹配的响应消息。下图的请求响应链的意思是，如果 B 保存了之前从源服务器 O （经过 C）返回的响应消息的副本，而这个响应没有缓存于用户代理 UA 或者 A 中，那么 B 就可以直接返回缓存的响应，而不用再转发至 C。
 </p>
 
 <div class="org-src-container">
@@ -1157,7 +1157,7 @@ A response is "cacheable" if a cache is allowed to store a copy of the response 
 </blockquote>
 
 <p>
-如果一个缓存被允许去存储一个响应报文的副本用于应答随后的请求，那么这个响应报文是“可缓存的（cacheable）”。即使一个响应是可缓存的，也可能存在一些来自客户端或源服务器的额外约束来规定在什么情况下所缓存的响应报文能够用于具体的请求。HTTP 关于缓存的行为（cache behavior）以及可缓存的响应（cacheable reponses）的定义，见<a href="https://tools.ietf.org/html/rfc7234#section-2">【RFC7234】第二章</a>。
+如果一个缓存被允许去存储一个响应消息的副本用于应答随后的请求，那么这个响应消息是“可缓存的（cacheable）”。即使一个响应是可缓存的，也可能存在一些来自客户端或源服务器的额外约束来规定在什么情况下所缓存的响应消息能够用于具体的请求。HTTP 关于缓存的行为（cache behavior）以及可缓存的响应（cacheable reponses）的定义，见<a href="https://tools.ietf.org/html/rfc7234#section-2">【RFC7234】第二章</a>。
 </p>
 
 <blockquote>
@@ -1219,7 +1219,7 @@ Conformance includes both the syntax and semantics of protocol elements. A sende
 </blockquote>
 
 <p>
-一致性包含协议元素（protocol elements）的句法（syntax）及语义（semantics）。发送端 <b>禁止</b> 生成其明知是不正确的协议元素。发送端 <b>禁止</b> 生成与相关 ABNF 规则所定义的语法（grammar）不相匹配的协议元素。在给定的报文中，发送端 <b>禁止</b> 生成只允许在其他角色参与者（也就是说，一种发送端所不具备的角色）中生成的协议元素或相关句法替代品。
+一致性包含协议元素（protocol elements）的句法（syntax）及语义（semantics）。发送端 <b>禁止</b> 生成其明知是不正确的协议元素。发送端 <b>禁止</b> 生成与相关 ABNF 规则所定义的语法（grammar）不相匹配的协议元素。在给定的消息中，发送端 <b>禁止</b> 生成只允许在其他角色参与者（也就是说，一种发送端所不具备的角色）中生成的协议元素或相关句法替代品。
 </p>
 
 <blockquote>
@@ -1241,12 +1241,12 @@ When a received protocol element is parsed, the recipient <b>MUST</b> be able to
 </blockquote>
 
 <p>
-当一个接收到的协议元素被解析（parse）时，接收端必须能够解释任何适用于接收端这一角色以及与相关 ABNF 规则所定义的语法相匹配的、合理长度的值。需要注意的是，某些接收到的协议元素可能不被解析（parse）。例如，一个中间人在转发报文时可能会将一个报头域（header-field）解析（parse）为报头域名（field-name）和域值（field-value），但转发头域时并没有再对域值进一步解析（parse）。
+当一个接收到的协议元素被解析（parse）时，接收端必须能够解释任何适用于接收端这一角色以及与相关 ABNF 规则所定义的语法相匹配的、合理长度的值。需要注意的是，某些接收到的协议元素可能不被解析（parse）。例如，一个中间人在转发消息时可能会将一个头字段（header-field）解析（parse）为头字段名（field-name）和字段值（field-value），但转发头字段时并没有再对字段值进一步解析（parse）。
 </p>
 
 <blockquote>
 <p>
-译注：出于兼容性考虑，当接收者的 HTTP 版本是 HTTP/1.0，假如接到到的报文版本是 HTTP/1.1，那么某些头域可能会被忽略。
+译注：出于兼容性考虑，当接收者的 HTTP 版本是 HTTP/1.0，假如接到到的消息版本是 HTTP/1.1，那么某些头字段可能会被忽略。
 </p>
 </blockquote>
 
@@ -1267,7 +1267,7 @@ At a minimum, a recipient <b>MUST</b> be able to parse and process protocol elem
 </blockquote>
 
 <p>
-接收端必须能够最低限度地解析（parse）和处理（process）协议元素的长度，至少和它在其他报文中生成的同样一个协议元素的长度一致。例如，一个源服务器公布了一个非常长的 URI 来引用其自身资源，当它接收到以这个 URI 作为目标资源的请求时， 源服务器必须能够正确地解析（parse）和处理（process）这个 URI。
+接收端必须能够最低限度地解析（parse）和处理（process）协议元素的长度，至少和它在其他消息中生成的同样一个协议元素的长度一致。例如，一个源服务器公布了一个非常长的 URI 来引用其自身资源，当它接收到以这个 URI 作为目标资源的请求时， 源服务器必须能够正确地解析（parse）和处理（process）这个 URI。
 </p>
 
 <blockquote>
@@ -1277,7 +1277,7 @@ A recipient <b>MUST</b> interpret a received protocol element according to the s
 </blockquote>
 
 <p>
-接收端 <b>必须</b> 依据本规范（及其后续扩展）所定义的语义来解释（interpret）其接收到的协议元素，除非接收端已经（通过经验或者配置）确定发送端并没有正确实现那些语义。例如，源服务器接到一个请求报文，这个请求的 <code>Accept-Encoding</code> 报文头域表明发送端支持某些编码类型，源服务器通过检查这个请求的 <code>User-Agent</code> 报头域来获得这个用户代理的实现版本，（从过往的经验上）得知实际上这个用户代理并不能正确处理其声明的编码类型，于是源服务器可以忽略接收到的 <code>Accept-Encoding</code> 报文头域的内容。
+接收端 <b>必须</b> 依据本规范（及其后续扩展）所定义的语义来解释（interpret）其接收到的协议元素，除非接收端已经（通过经验或者配置）确定发送端并没有正确实现那些语义。例如，源服务器接到一个请求消息，这个请求的 <code>Accept-Encoding</code> 消息头字段表明发送端支持某些编码类型，源服务器通过检查这个请求的 <code>User-Agent</code> 头字段来获得这个用户代理的实现版本，（从过往的经验上）得知实际上这个用户代理并不能正确处理其声明的编码类型，于是源服务器可以忽略接收到的 <code>Accept-Encoding</code> 消息头字段的内容。
 </p>
 
 <blockquote>
@@ -1287,7 +1287,7 @@ Unless noted otherwise, a recipient <b>MAY</b> attempt to <a href="https://en.wi
 </blockquote>
 
 <p>
-除非另有说明，接收端 <b>可以</b> 尝试从一个不合法的报文结构中恢复（recover）出一个可用的协议元素。HTTP 协议在不用的应用场景上会有不同的错误处理策略的要求，因此，协议本身并没有定义具体的错误处理机制，除非这种错误直接影响到安全性。例如，一个网页浏览器接收到一个响应报文，响应报文的 <code>Location</code> 头域依据 ABNF 规则并不能合法解析（parse）到，于是浏览器可能希望进行<a href="https://en.wikipedia.org/wiki/Failure_transparency">透明恢复（transparently recover）</a>；但是对于一个系统控制客户端，可能认为任何方式的错误恢复都是危险的。
+除非另有说明，接收端 <b>可以</b> 尝试从一个不合法的消息结构中恢复（recover）出一个可用的协议元素。HTTP 协议在不用的应用场景上会有不同的错误处理策略的要求，因此，协议本身并没有定义具体的错误处理机制，除非这种错误直接影响到安全性。例如，一个网页浏览器接收到一个响应消息，响应消息的 <code>Location</code> 头字段依据 ABNF 规则并不能合法解析（parse）到，于是浏览器可能希望进行<a href="https://en.wikipedia.org/wiki/Failure_transparency">透明恢复（transparently recover）</a>；但是对于一个系统控制客户端，可能认为任何方式的错误恢复都是危险的。
 </p>
 
 <blockquote>
@@ -1324,7 +1324,7 @@ The version of an HTTP message is indicated by an HTTP-version field in the firs
 </blockquote>
 
 <p>
-HTTP 协议的版本通过在报文的第一行的 <code>HTTP-version</code> 域来指定。需要注意的是，<code>HTTP-version</code> 是区分大小写的，以下是 HTTP-version 的 ABNF 规则。
+HTTP 协议的版本通过在消息的第一行的 <code>HTTP-version</code> 域来指定。需要注意的是，<code>HTTP-version</code> 是区分大小写的，以下是 HTTP-version 的 ABNF 规则。
 </p>
 
 <div class="org-src-container">
@@ -1340,7 +1340,7 @@ The HTTP version number consists of two decimal digits separated by a "." (perio
 </blockquote>
 
 <p>
-HTTP 的版本号由 2 个十进制数组成，中间以英文句号 "." 分隔。第一个数字（主版本号）表示 HTTP 报文的句法，第二个数字（次版本号）表示发送端在接下来的通信中将会遵循以及能够理解的最高次版本。次要版本号声明了发送端的通信能力，即使发送端仅仅使用协议的向后兼容的子集，因此让接收端了解更多高级功能能够被用于响应（作为服务器）或者用于接下来的请求（作为客户端）。
+HTTP 的版本号由 2 个十进制数组成，中间以英文句号 "." 分隔。第一个数字（主版本号）表示 HTTP 消息的句法，第二个数字（次版本号）表示发送端在接下来的通信中将会遵循以及能够理解的最高次版本。次要版本号声明了发送端的通信能力，即使发送端仅仅使用协议的向后兼容的子集，因此让接收端了解更多高级功能能够被用于响应（作为服务器）或者用于接下来的请求（作为客户端）。
 </p>
 
 <blockquote>
@@ -1350,7 +1350,7 @@ When an HTTP/1.1 message is sent to an HTTP/1.0 recipient [<a href="https://tool
 </blockquote>
 
 <p>
-当一个 HTTP/1.1 报文被发送到一个 HTTP/1.0 接收端<a href="https://tools.ietf.org/html/rfc1945">【RFC1945】</a>或者一个接收端的版本号未知，HTTP/1.1 报文会被构建成一个能够被解释（interprete）为一个合法的 HTTP/1.0 报文，如果忽略掉所有在 HTTP/1.1 新增的功能的话。本规范明确了接收端使用新功能的版本要求，以便于发送端可以仅仅使用兼容性功能与接收端通信，直到发送端（通过配置，或者接收到的报文）已经明确接收端支持 HTTP/1.1。
+当一个 HTTP/1.1 消息被发送到一个 HTTP/1.0 接收端<a href="https://tools.ietf.org/html/rfc1945">【RFC1945】</a>或者一个接收端的版本号未知，HTTP/1.1 消息会被构建成一个能够被解释（interprete）为一个合法的 HTTP/1.0 消息，如果忽略掉所有在 HTTP/1.1 新增的功能的话。本规范明确了接收端使用新功能的版本要求，以便于发送端可以仅仅使用兼容性功能与接收端通信，直到发送端（通过配置，或者接收到的消息）已经明确接收端支持 HTTP/1.1。
 </p>
 
 <blockquote>
@@ -1361,7 +1361,7 @@ When an HTTP/1.1 message is sent to an HTTP/1.0 recipient [<a href="https://tool
 
 <blockquote>
 <p>
-译注：发送端如何得知接收端支持 HTTP/1.1？一个办法是，发送端不管接收端是否支持，强制使用 HTTP/1.1；另一个办法是解析从接收端响应的报文，分析其是否真正实现了 HTTP/1.1。
+译注：发送端如何得知接收端支持 HTTP/1.1？一个办法是，发送端不管接收端是否支持，强制使用 HTTP/1.1；另一个办法是解析从接收端响应的消息，分析其是否真正实现了 HTTP/1.1。
 </p>
 </blockquote>
 
@@ -1372,7 +1372,7 @@ The interpretation of a header field does not change between minor versions of t
 </blockquote>
 
 <p>
-在规范中，在主版本（major version）一致的情况下，不同次版本（minor version）并不会对报文头域有不同的解释（interpretation），虽然接收者在缺少这些域时的默认行为会有所不同。除非具体说明，定义在 HTTP/1.1 版本的头域同样适用于所有 HTTP/1.x 版本。特别是，<code>Host</code> 和 <code>Connection</code> 头域应该为所有版本（all HTTP/1.x）所实现，无论它们声明是否与 HTTP/1.1 版本一致。
+在规范中，在主版本（major version）一致的情况下，不同次版本（minor version）并不会对消息头字段有不同的解释（interpretation），虽然接收者在缺少这些域时的默认行为会有所不同。除非具体说明，定义在 HTTP/1.1 版本的头字段同样适用于所有 HTTP/1.x 版本。特别是，<code>Host</code> 和 <code>Connection</code> 头字段应该为所有版本（all HTTP/1.x）所实现，无论它们声明是否与 HTTP/1.1 版本一致。
 </p>
 
 <blockquote>
@@ -1382,7 +1382,7 @@ New header fields can be introduced without changing the protocol version if the
 </blockquote>
 
 <p>
-将来新的头域能够在不改变当前协议版本的情况下被引入，如果定义这些新头域的语义允许它们能够在接收者无法识别的情况下被其安全忽略（safely ignored）。报头域的扩展性（extensibility）会在 <a href="#org2c00eb3">章节 3.2.1</a> 中讨论。
+将来新的头字段能够在不改变当前协议版本的情况下被引入，如果定义这些新头字段的语义允许它们能够在接收者无法识别的情况下被其安全忽略（safely ignored）。头字段的扩展性（extensibility）会在 <a href="#org2c00eb3">章节 3.2.1</a> 中讨论。
 </p>
 
 <blockquote>
@@ -1392,12 +1392,12 @@ Intermediaries that process HTTP messages (i.e., all intermediaries other than t
 </blockquote>
 
 <p>
-处理 HTTP 报文的中间人（除了作为隧道的中间人） <b>必须</b> 在其转发报文中包含它们自身的 <code>HTTP-version</code>。换句话说，在以上中间人接收和发送报文的时候，它们并不允许在没有确保报文的版本与自身所使用的 HTTP 版本是否一致的情况下盲转发（blindly forward）HTTP 报文的首行。当下游（downstream）接收端使用报文的发送端版本来决定“对于接下来与之通信，什么功能能够安全使用”时，在没有重写 <code>HTTP-version</code> 的情况下直接转发一个 HTTP 报文可能会导致通信错误。
+处理 HTTP 消息的中间人（除了作为隧道的中间人） <b>必须</b> 在其转发消息中包含它们自身的 <code>HTTP-version</code>。换句话说，在以上中间人接收和发送消息的时候，它们并不允许在没有确保消息的版本与自身所使用的 HTTP 版本是否一致的情况下盲转发（blindly forward）HTTP 消息的首行。当下游（downstream）接收端使用消息的发送端版本来决定“对于接下来与之通信，什么功能能够安全使用”时，在没有重写 <code>HTTP-version</code> 的情况下直接转发一个 HTTP 消息可能会导致通信错误。
 </p>
 
 <blockquote>
 <p>
-译注：隧道作为盲中介，它并不会对报文本身作修改。
+译注：隧道作为盲中介，它并不会对消息本身作修改。
 </p>
 </blockquote>
 
@@ -1408,7 +1408,7 @@ A client <b>SHOULD</b> send a request version equal to the highest version to wh
 </blockquote>
 
 <p>
-客户端所发送的请求报文版本 <b>应当</b> 等于其支持的最高版本，同时，客户端的主版本（major version）不能高于服务器支持的最高主版本号（如果客户端知道服务器的主版本号的话）。客户端 <b>禁止</b> 发送自身不支持的协议版本。
+客户端所发送的请求消息版本 <b>应当</b> 等于其支持的最高版本，同时，客户端的主版本（major version）不能高于服务器支持的最高主版本号（如果客户端知道服务器的主版本号的话）。客户端 <b>禁止</b> 发送自身不支持的协议版本。
 </p>
 
 <blockquote>
@@ -1424,7 +1424,7 @@ A client <b>MAY</b> send a lower request version if it is known that the server 
 </blockquote>
 
 <p>
-如果客户端知道服务器没有正确实现 HTTP 规范，客户端 <b>可以</b> 向服务器发送较低版本的请求，但仅当客户端在至少发送一次正常（最高版本）请求未遂，并且依据服务器的响应报文里的状态码或者报头域断定服务器不能正确处理更高版本的请求的情况下才允许上述做法。
+如果客户端知道服务器没有正确实现 HTTP 规范，客户端 <b>可以</b> 向服务器发送较低版本的请求，但仅当客户端在至少发送一次正常（最高版本）请求未遂，并且依据服务器的响应消息里的状态码或者头字段断定服务器不能正确处理更高版本的请求的情况下才允许上述做法。
 </p>
 
 <blockquote>
@@ -1434,7 +1434,7 @@ A server <b>SHOULD</b> send a response version equal to the highest version to w
 </blockquote>
 
 <p>
-服务器所发送的响应报文版本 <b>应当</b> 低于或等于其接收到的请求报文的主版本（major version）。服务器 <b>不能</b> 发送自身不支持的协议版本。如有必要，当服务器不支持客户端所声明的 HTTP 协议主版本时，服务器可以发送一个 <code>505 (HTTP Version Not Supported)</code> 响应来拒绝来自客户端的请求服务。
+服务器所发送的响应消息版本 <b>应当</b> 低于或等于其接收到的请求消息的主版本（major version）。服务器 <b>不能</b> 发送自身不支持的协议版本。如有必要，当服务器不支持客户端所声明的 HTTP 协议主版本时，服务器可以发送一个 <code>505 (HTTP Version Not Supported)</code> 响应来拒绝来自客户端的请求服务。
 </p>
 
 <blockquote>
@@ -1444,7 +1444,7 @@ A server <b>MAY</b> send an HTTP/1.0 response to a request if it is known or sus
 </blockquote>
 
 <p>
-如果服务器知道或者怀疑客户端没有正确实现 HTTP 规范而且不能够正确处理更高版本的响应的时候，服务器 <b>可以</b> 发送 HTTP/1.0 响应。例如，当客户端没有正确解析（parse）协议版本号，或者已知一个中间人即使自身没有实现给定的 <code>HTTP-version</code> 的次版本的规范（即不支持给定版本的 HTTP 协议）仍然盲转发该 <code>HTTP-version</code> 等。<b>不应该</b> 执行上述这种协议版本的降级行为，除非服务器（或其他中间人）被特定客户端的特性所触发，例如当唯一匹配到客户端所发送的一个或多个请求报头域（例如 <a href="https://httpwg.org/specs/rfc7231.html#header.user-agent">User-Agent</a>）是已知会导致错误。
+如果服务器知道或者怀疑客户端没有正确实现 HTTP 规范而且不能够正确处理更高版本的响应的时候，服务器 <b>可以</b> 发送 HTTP/1.0 响应。例如，当客户端没有正确解析（parse）协议版本号，或者已知一个中间人即使自身没有实现给定的 <code>HTTP-version</code> 的次版本的规范（即不支持给定版本的 HTTP 协议）仍然盲转发该 <code>HTTP-version</code> 等。<b>不应该</b> 执行上述这种协议版本的降级行为，除非服务器（或其他中间人）被特定客户端的特性所触发，例如当唯一匹配到客户端所发送的一个或多个请求头字段（例如 <a href="https://httpwg.org/specs/rfc7231.html#header.user-agent">User-Agent</a>）是已知会导致错误。
 </p>
 
 <blockquote>
@@ -1454,7 +1454,7 @@ The intention of HTTP's versioning design is that the major number will only be 
 </blockquote>
 
 <p>
-HTTP 版本编号的设计意图是：主版本号（major number）只会在引入不兼容的报文句法的情况下才会增加；次版本号（minor number）只会在对协议的改动会引起语义的添加，或者赋予发送端新的能力时才会增加。但是，从<a href="https://tools.ietf.org/html/rfc2068">【RFC2068】</a>到<a href="https://tools.ietf.org/html/rfc2616">【RFC2616】</a>的修订过程中，次版本号并没有增加（仍然是 HTTP/1.1），同时，本次修订已经明确避免对协议（版本号）的变动。
+HTTP 版本编号的设计意图是：主版本号（major number）只会在引入不兼容的消息句法的情况下才会增加；次版本号（minor number）只会在对协议的改动会引起语义的添加，或者赋予发送端新的能力时才会增加。但是，从<a href="https://tools.ietf.org/html/rfc2068">【RFC2068】</a>到<a href="https://tools.ietf.org/html/rfc2616">【RFC2616】</a>的修订过程中，次版本号并没有增加（仍然是 HTTP/1.1），同时，本次修订已经明确避免对协议（版本号）的变动。
 </p>
 
 <blockquote>
@@ -1464,7 +1464,7 @@ When an HTTP message is received with a major version number that the recipient 
 </blockquote>
 
 <p>
-接收端接收到一个 HTTP 报文，如果接收端兼容该报文的主版本号，但不兼容其次版本号（接收端所支持的次版本号低于该报文所标识的次版本号），那么，接收端 <b>应当</b> 以其所能支持的最高次版本（前题是相同主版本）的方式来处理这个报文。当接收端接收到一个报文，如果该报文的次要版本号高于接收端所实现的，接收端可以假设这个报文能够向后兼容所有具有相同主版本号的实现（implementation），让其被安全处理。 
+接收端接收到一个 HTTP 消息，如果接收端兼容该消息的主版本号，但不兼容其次版本号（接收端所支持的次版本号低于该消息所标识的次版本号），那么，接收端 <b>应当</b> 以其所能支持的最高次版本（前题是相同主版本）的方式来处理这个消息。当接收端接收到一个消息，如果该消息的次要版本号高于接收端所实现的，接收端可以假设这个消息能够向后兼容所有具有相同主版本号的实现（implementation），让其被安全处理。 
 </p>
 </div>
 </div>
@@ -1579,7 +1579,7 @@ The origin server for an "http" URI is identified by the authority component, wh
 </blockquote>
 
 <p>
-如上所示，对于一个 "http" URI，源服务器被标记到 <code>authority</code> 组件里，<code>authority</code> 包含一个主机（host）标识和一个可选的 TCP 端口（<a href="https://tools.ietf.org/html/rfc3986#section-3.2.2">【RFC3986】，章节 3.2.2</a>）。<code>path</code> 组件和可选的 <code>query</code> 组件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 <code>fragment</code> 组件允许间接标记一个次要资源（secondary resource），不依赖于哪一种 URI 方案（"http" 或者 "https"），见<a href="https://tools.ietf.org/html/rfc3986#section-3.5">【RFC3986】章节 3.5</a> 。
+如上所示，对于一个 "http" URI，源服务器被标记到 <code>authority</code> 组件里，<code>authority</code> 包含一个主机（host）标识和一个可选的 TCP 端口（<a href="https://tools.ietf.org/html/rfc3986#section-3.2.2">【RFC3986】，章节 3.2.2</a>）。<code>path</code> 组件和可选的 <code>query</code> 组件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 <code>fragment</code> 组件允许间接标识一个次要资源（secondary resource）而不依赖于哪一种 URI 方案（"http" 或者 "https"），见<a href="https://tools.ietf.org/html/rfc3986#section-3.5">【RFC3986】章节 3.5</a> 。
 </p>
 
 <blockquote>
@@ -1631,7 +1631,7 @@ When an "http" URI is used within a context that calls for access to the indicat
 </blockquote>
 
 <p>
-当一个 "http" URI 用于一个请求访问目标资源的场合里，客户端 <b>可以</b> 尝试通过解释（resolve） <code>host</code> 获得 IP 地址，（通过对应的端口）建立一个 TCP 连接到这个地址，然后发送一个包含这个 URI 的识别数据（见<a href="#org9d6a2ba">章节 5</a>）的 HTTP 请求，从而访问到这个目标资源。如果服务器对这个请求响应了一个非过渡（non-interim）的 HTTP 响应报文（见<a href="https://httpwg.org/specs/rfc7231.html#status.codes">【RFC7231】章节 6</a>），那么这个响应可认为是一个对客户端请求的权威应答（authoritative answer）。
+当一个 "http" URI 用于一个请求访问目标资源的场合里，客户端 <b>可以</b> 尝试通过解释（resolve） <code>host</code> 获得 IP 地址，（通过对应的端口）建立一个 TCP 连接到这个地址，然后发送一个包含这个 URI 的识别数据（见<a href="#orga5f14c8">章节 5</a>）的 HTTP 请求，从而访问到这个目标资源。如果服务器对这个请求响应了一个非过渡（non-interim）的 HTTP 响应消息（见<a href="https://httpwg.org/specs/rfc7231.html#status.codes">【RFC7231】章节 6</a>），那么这个响应可认为是一个对客户端请求的权威应答（authoritative answer）。
 </p>
 
 <blockquote>
@@ -1651,7 +1651,7 @@ The URI generic syntax for authority also includes a deprecated <code>userinfo</
 </blockquote>
 
 <p>
-在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 <code>userinfo</code> 子组件（见<a href="https://tools.ietf.org/html/rfc3986#section-3.2.1">【RFC3986】章节 3.2.1</a>），用于包含用户信息到 URI 里。某些实现（implementations）将 <code>userinfo</code> 组件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 报文，包含以 <code>http</code> URI 引用作为一个请求目标或者报文头域里的值（例如头域 <code>Location</code>）时，发送端 <b>禁止</b> 生成 <code>userinfo</code> 子组件（以及其 "@" 分隔符）。在使用一个接收自一个非受信的源的 <code>http</code> URI 引用时，接收者 <b>应当</b> 对 <code>userinfo</code> 进行解析（parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（phishing attach）的威胁。
+在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 <code>userinfo</code> 子组件（见<a href="https://tools.ietf.org/html/rfc3986#section-3.2.1">【RFC3986】章节 3.2.1</a>），用于包含用户信息到 URI 里。某些实现（implementations）将 <code>userinfo</code> 组件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 消息，包含以 <code>http</code> URI 引用作为一个请求目标或者消息头字段里的值（例如头字段 <code>Location</code>）时，发送端 <b>禁止</b> 生成 <code>userinfo</code> 子组件（以及其 "@" 分隔符）。在使用一个接收自一个非受信的源的 <code>http</code> URI 引用时，接收者 <b>应当</b> 对 <code>userinfo</code> 进行解析（parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（phishing attach）的威胁。
 </p>
 </div>
 </div>
@@ -1762,9 +1762,9 @@ http://EXAMPLE.com:/%7esmith/home.html
 </div>
 </div>
 
-<div id="outline-container-org86c9e58" class="outline-2">
-<h2 id="org86c9e58"><a id="ID-6e9516fa-cde2-4693-b1e1-e763776d3186"></a>3. 报文格式（Message Format）</h2>
-<div class="outline-text-2" id="text-org86c9e58">
+<div id="outline-container-org4fb3faf" class="outline-2">
+<h2 id="org4fb3faf"><a id="ID-6e9516fa-cde2-4693-b1e1-e763776d3186"></a>3. 消息格式（Message Format）</h2>
+<div class="outline-text-2" id="text-org4fb3faf">
 <blockquote>
 <p>
 All HTTP/1.1 messages consist of a start-line followed by a sequence of octets in a format similar to the Internet Message Format [RFC5322]: zero or more header fields (collectively referred to as the "headers" or the "header section"), an empty line indicating the end of the header section, and an optional message body.
@@ -1772,12 +1772,12 @@ All HTTP/1.1 messages consist of a start-line followed by a sequence of octets i
 </blockquote>
 
 <p>
-所有 HTTP/1.1 报文皆由一个“起始行（start-line）”以及随后的报头（header），然后空一行（表明报头结束），最后是一个可选的报文正文（message body）组合而成。其中报头由 0 个或多个报头域（header fields）组成，报头域的格式类似于<a href="https://tools.ietf.org/html/rfc5322">互联网消息格式【RFC5322】</a>。
+所有 HTTP/1.1 消息皆由一个“起始行（start-line）”以及随后的消息头（header），然后空一行（表明消息头结束），最后是一个可选的消息体（message body）组合而成。其中消息头由 0 个或多个头字段（header fields）组成，头字段的格式类似于<a href="https://tools.ietf.org/html/rfc5322">互联网消息格式【RFC5322】</a>。
 </p>
 
 <blockquote>
 <p>
-译注："header" 译作“报头”，也有译作“消息头”；"message body" 译作“报文正文”，也有译作“消息体”。
+译注："header" 译作“消息头”，也有译作“报头字段”；"message body" 译作“消息体”，也有译作“报文正文”。
 </p>
 </blockquote>
 
@@ -1797,7 +1797,7 @@ The normal procedure for parsing an HTTP message is to read the start-line into 
 </blockquote>
 
 <p>
-解析（parse）HTTP 报文的一般流程是先将起始行（start line）读入到一个<a href="https://baike.baidu.com/item/%E7%BB%93%E6%9E%84%E4%BD%93/3709485">构造体</a>中，将所有报头域（header fields）读入到一个<a href="https://baike.baidu.com/item/%E5%93%88%E5%B8%8C%E8%A1%A8">哈希表</a>中（以域的名称作为键）直到遇到空行（empty line），然后使用以上解释得到的信息来决定是否需要解释报文正文（message body）。如果报头表明该报文带有报文正文，那么将报文正文以<a href="https://baike.baidu.com/item/IO%E6%B5%81">流</a>的方式读入，直到已读字节数（octets）等于报文正文的长度或者连接已被关闭为止。
+解析（parse）HTTP 消息的一般流程是先将起始行（start line）读入到一个<a href="https://baike.baidu.com/item/%E7%BB%93%E6%9E%84%E4%BD%93/3709485">构造体</a>中，将所有头字段（header fields）读入到一个<a href="https://baike.baidu.com/item/%E5%93%88%E5%B8%8C%E8%A1%A8">哈希表</a>中（以域的名称作为键）直到遇到空行（empty line），然后使用以上解释得到的信息来决定是否需要解释消息体（message body）。如果消息头表明该消息带有消息体，那么将消息体以<a href="https://baike.baidu.com/item/IO%E6%B5%81">流</a>的方式读入，直到已读字节数（octets）等于消息体的长度或者连接已被关闭为止。
 </p>
 
 <blockquote>
@@ -1807,7 +1807,7 @@ A recipient <b>MUST</b> parse an HTTP message as a sequence of octets in an enco
 </blockquote>
 
 <p>
-接收端 <b>必须</b> 将 HTTP 报文解析（parse）为以 <a href="https://baike.baidu.com/item/ASCII/309296?fr=aladdin">US-ASCII</a> 的超集来编码的字节（octet）序列。没有考虑具体的编码（encoding）就将报文解释为 Unicode 字符会引发<a href="https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats">安全漏洞</a>，这是由于字符串处理库（string processing libraries）处理包含 <code>LF</code> (%x0A) 非法多字节字符序列的方式有很多种而导致的。基于字符串的解析器（string-based parsers）只能工作在报文提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出报文里所有报头域（header fields）后，对报头中的一个域值（field-value）使用基于字符串的解释器是可以保证安全的。
+接收端 <b>必须</b> 将 HTTP 消息解析（parse）为以 <a href="https://baike.baidu.com/item/ASCII/309296?fr=aladdin">US-ASCII</a> 的超集来编码的字节（octet）序列。没有考虑具体的编码（encoding）就将消息解释为 Unicode 字符会引发<a href="https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats">安全漏洞</a>，这是由于字符串处理库（string processing libraries）处理包含 <code>LF</code> (%x0A) 非法多字节字符序列的方式有很多种而导致的。基于字符串的解析器（string-based parsers）只能工作在消息提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出消息里所有头字段（header fields）后，对消息头中的一个字段值（field-value）使用基于字符串的解释器是可以保证安全的。
 </p>
 
 <blockquote>
@@ -1817,7 +1817,7 @@ An HTTP message can be parsed as a stream for incremental processing or forwardi
 </blockquote>
 
 <p>
-HTTP 报文能够解析（parse）为用于增量处理（incremental processing）或转发到下游（forwarding downstream）的流。但是，接收端不能依赖局部报文的增量投递，因为某些实现（implementations）会因为网络性能、安全校验或者有效载荷转换（payload transformations，<a href="#org54dfdcc">章节 5.7.2</a>）而对这些不完整的报文进行缓冲或延迟转发。
+HTTP 消息能够解析（parse）为用于增量处理（incremental processing）或转发到下游（forwarding downstream）的流。但是，接收端不能依赖局部消息的增量投递，因为某些实现（implementations）会因为网络性能、安全校验或者有效载荷转换（payload transformations，<a href="#org54dfdcc">章节 5.7.2</a>）而对这些不完整的消息进行缓冲或延迟转发。
 </p>
 
 <blockquote>
@@ -1827,7 +1827,7 @@ A sender <b>MUST NOT</b> send whitespace between the start-line and the first he
 </blockquote>
 
 <p>
-发送端所发送的报文里，起始行（start line）和第一个报头域（header field）之间 <b>禁止</b> 带有空格。当接收端发现它所接收到的报文起始行与第一个报头域之间带有空格时，<b>必须</b> 拒绝处理整个不合法的报文，或者仅忽略这种以空格开头的行（例如，忽略整行，连同后续所有以空格开头的行，直到遇到一个格式正确的报头域或者到达报头块的结尾为止）。
+发送端所发送的消息里，起始行（start line）和第一个头字段（header field）之间 <b>禁止</b> 带有空格。当接收端发现它所接收到的消息起始行与第一个头字段之间带有空格时，<b>必须</b> 拒绝处理整个不合法的消息，或者仅忽略这种以空格开头的行（例如，忽略整行，连同后续所有以空格开头的行，直到遇到一个格式正确的头字段或者到达消息头部的结尾为止）。
 </p>
 
 <blockquote>
@@ -1837,7 +1837,7 @@ The presence of such whitespace in a request might be an attempt to trick a serv
 </blockquote>
 
 <p>
-在一个请求报文中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些报头域或忽略处理某些行，欺骗服务器使其认为这个请求是一个新请求（new request）。如果在请求链路中其他实现（implementation）对这种带有非法空格的报文的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应报文中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端终止解析（parse）。
+在一个请求消息中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些头字段或忽略处理某些行，欺骗服务器使其认为这个请求是一个新请求（new request）。如果在请求链路中其他实现（implementation）对这种带有非法空格的消息的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应消息中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端终止解析（parse）。
 </p>
 </div>
 
@@ -1851,11 +1851,11 @@ An HTTP message can be either a request from client to server or a response from
 </blockquote>
 
 <p>
-一个 HTTP 报文要么是一个从客户端到服务器的请求报文，要么是一个从服务器到客户端的响应报文。从句法上看，这两种类型的报文的区别有两点：
+一个 HTTP 消息要么是一个从客户端到服务器的请求消息，要么是一个从服务器到客户端的响应消息。从句法上看，这两种类型的消息的区别有两点：
 </p>
 <ol class="org-ol">
-<li>起始行（start line）：请求报文的起始行称为请求行（status line），响应报文的起始行称为状态行（status line）</li>
-<li>测算报文正文的长度的算法（<a href="#org3d27427">章节 3.3</a>）</li>
+<li>起始行（start line）：请求消息的起始行称为请求行（status line），响应消息的起始行称为状态行（status line）</li>
+<li>测算消息体的长度的算法（<a href="#orgd385ed5">章节 3.3</a>）</li>
 </ol>
 
 <blockquote>
@@ -1865,7 +1865,7 @@ In theory, a client could receive requests and a server could receive responses,
 </blockquote>
 
 <p>
-理论上，客户端同样能够接收请求报文，服务器同样能够接收响应报文，只需要让它们区别好报文起始行的不同格式就可以了。但实际上，一般将服务端实现为仅预期接收请求（而接收到响应的话，服务器会将其解释（Interpret）为一个未知或非法的请求方法），将客户端实现为仅预期接收响应。
+理论上，客户端同样能够接收请求消息，服务器同样能够接收响应消息，只需要让它们区别好消息起始行的不同格式就可以了。但实际上，一般将服务端实现为仅预期接收请求（而接收到响应的话，服务器会将其解释（Interpret）为一个未知或非法的请求方法），将客户端实现为仅预期接收响应。
 </p>
 
 <div class="org-src-container">
@@ -1929,12 +1929,12 @@ The <code>request-target</code> identifies the target resource upon which to app
 
 <blockquote>
 <p>
-Recipients typically parse the <code>request-line</code> into its component parts by splitting on whitespace (see <a href="#org189d602">Section 3.5</a>), since no whitespace is allowed in the three components. Unfortunately, some user agents fail to properly encode or exclude whitespace found in <a href="https://en.wikipedia.org/wiki/Hyperlink">hypertext references</a>, resulting in those disallowed characters being sent in a <code>request-target</code>.
+Recipients typically parse the <code>request-line</code> into its component parts by splitting on whitespace (see <a href="#org6c0e6ec">Section 3.5</a>), since no whitespace is allowed in the three components. Unfortunately, some user agents fail to properly encode or exclude whitespace found in <a href="https://en.wikipedia.org/wiki/Hyperlink">hypertext references</a>, resulting in those disallowed characters being sent in a <code>request-target</code>.
 </p>
 </blockquote>
 
 <p>
-接收端在解析（parse）请求行 <code>request-line</code> 的过程中，通过以空格分割出请求行的各个组件（共有三个组件，分别为方法标识、请求目标以及协议版本），因此，以上三个组件的内容不能带有空格（见<a href="#org189d602">章节 3.5</a>）。不幸的是，某些用户代理不能对超文本引用（<a href="https://en.wikipedia.org/wiki/Hyperlink">hypertext references</a>，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求报文中的请求目标 <code>request-target</code> 包含了那些不被允许出现的字符（character）。
+接收端在解析（parse）请求行 <code>request-line</code> 的过程中，通过以空格分割出请求行的各个组件（共有三个组件，分别为方法标识、请求目标以及协议版本），因此，以上三个组件的内容不能带有空格（见<a href="#org6c0e6ec">章节 3.5</a>）。不幸的是，某些用户代理不能对超文本引用（<a href="https://en.wikipedia.org/wiki/Hyperlink">hypertext references</a>，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求消息中的请求目标 <code>request-target</code> 包含了那些不被允许出现的字符（character）。
 </p>
 
 <blockquote>
@@ -1944,12 +1944,12 @@ Recipients of an invalid <code>request-line</code> <b>SHOULD</b> respond with ei
 </blockquote>
 
 <p>
-接收端接收到一个不合法的请求行 <code>request-line</code> 时，<b>应当</b> 响应一个 <code>400 (Bad Request)</code> 错误或者 <code>301 (Move Permanently)</code> 重定向，编码方式依据 <code>request-line</code> 的相应要求。接收端 <b>不应当</b> 试图在不重定向的情况下自动修正然后处理这种请求报文，这是因为这种非法的请求行 <code>request-line</code> 可能是刻意制造出来用于越过请求链路中的安全过滤机制。
+接收端接收到一个不合法的请求行 <code>request-line</code> 时，<b>应当</b> 响应一个 <code>400 (Bad Request)</code> 错误或者 <code>301 (Move Permanently)</code> 重定向，编码方式依据 <code>request-line</code> 的相应要求。接收端 <b>不应当</b> 试图在不重定向的情况下自动修正然后处理这种请求消息，这是因为这种非法的请求行 <code>request-line</code> 可能是刻意制造出来用于越过请求链路中的安全过滤机制。
 </p>
 
 <blockquote>
 <p>
-译注：除非特别说明，形如“响应一个 <code>code (status)</code> 报文”、“响应一个 <code>code (status)</code> 状态码”，或者“发送一个 <code>code (status)</code> 响应”皆表示“响应（或发送）一个带有 <code>code (status)</code> 状态码的响应报文”。例如“服务器发送一个 <code>200 (OK)</code> 响应”，表示的是“服务器发送一个带有 <code>200 (OK)</code> 状态码的响应报文”。
+译注：除非特别说明，形如“响应一个 <code>code (status)</code> 消息”、“响应一个 <code>code (status)</code> 状态码”，或者“发送一个 <code>code (status)</code> 响应”皆表示“响应（或发送）一个带有 <code>code (status)</code> 状态码的响应消息”。例如“服务器发送一个 <code>200 (OK)</code> 响应”，表示的是“服务器发送一个带有 <code>200 (OK)</code> 状态码的响应消息”。
 </p>
 </blockquote>
 
@@ -1985,7 +1985,7 @@ The first line of a response message is the <code>status-line</code>, consisting
 </blockquote>
 
 <p>
-响应报文的第一行称为状态行 <code>status-line</code>，包含协议版本 <code>HTTP-version</code>，一个空格 <code>SP</code>，状态码 <code>status-code</code>，另一个空格 <code>SP</code>，一个可能为空的文本短语 <code>reason-phrase</code> 来描述该状态码，最后是回车换行符 <code>CRLF</code>。
+响应消息的第一行称为状态行 <code>status-line</code>，包含协议版本 <code>HTTP-version</code>，一个空格 <code>SP</code>，状态码 <code>status-code</code>，另一个空格 <code>SP</code>，一个可能为空的文本短语 <code>reason-phrase</code> 来描述该状态码，最后是回车换行符 <code>CRLF</code>。
 </p>
 
 <div class="org-src-container">
@@ -2000,7 +2000,7 @@ The <code>status-code</code> element is a 3-digit integer code describing the re
 </blockquote>
 
 <p>
-状态码 <code>status-code</code> 是一个 3 位整数值，用于描述服务器尝试理解以及满足客户端相应请求的处理结果。接收端应该依据报文的状态码所定义的语义来解释（interprete）报文的剩余部分（即除了状态行以外的部分）。对于状态码的语义的相关信息，包括状态码的分类（由状态码的第一位数字来指定）、本规范所定义的状态码、定义新状态码的注意事项，以及 IANA 注册表，见<a href="https://tools.ietf.org/html/rfc7231#section-6">【RFC7231】章节 6</a>。
+状态码 <code>status-code</code> 是一个 3 位整数值，用于描述服务器尝试理解以及满足客户端相应请求的处理结果。接收端应该依据消息的状态码所定义的语义来解释（interprete）消息的剩余部分（即除了状态行以外的部分）。对于状态码的语义的相关信息，包括状态码的分类（由状态码的第一位数字来指定）、本规范所定义的状态码、定义新状态码的注意事项，以及 IANA 注册表，见<a href="https://tools.ietf.org/html/rfc7231#section-6">【RFC7231】章节 6</a>。
 </p>
 
 <div class="org-src-container">
@@ -2026,9 +2026,9 @@ The <code>reason-phrase</code> element exists for the sole purpose of providing 
 </div>
 </div>
 
-<div id="outline-container-org022942f" class="outline-3">
-<h3 id="org022942f"><a id="ID-a6c4dceb-8a19-4799-a39b-b7240755c672"></a>3.2. 报头域 (Header Fields)</h3>
-<div class="outline-text-3" id="text-org022942f">
+<div id="outline-container-org1f965fb" class="outline-3">
+<h3 id="org1f965fb"><a id="ID-a6c4dceb-8a19-4799-a39b-b7240755c672"></a>3.2. 头字段 (Header Fields)</h3>
+<div class="outline-text-3" id="text-org1f965fb">
 <blockquote>
 <p>
 Each header field consists of a case-insensitive field name followed by a colon (":"), optional leading whitespace, the field value, and optional trailing whitespace.
@@ -2036,7 +2036,7 @@ Each header field consists of a case-insensitive field name followed by a colon 
 </blockquote>
 
 <p>
-每一个头域（header field）都由一个域名称（field name）及随后的一个分号（":"）、可选的前置空格、一个域值（field value）、一个可选的结尾空格组成。
+每一个头字段（header field）都由一个字段名（field name）及随后的一个分号（":"）、可选的前置空格、一个字段值（field value）、一个可选的结尾空格组成。
 </p>
 
 <div class="org-src-container">
@@ -2060,7 +2060,7 @@ The <code>field-name</code> token labels the corresponding <code>field-value</co
 </blockquote>
 
 <p>
-报头域名称 <code>field-name</code> 将其对应的报头域值 <code>field-value</code> 算作这个报文带有相应报头域的语义。例如，定义在【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-7.1.1.2">章节 7.1.1.2</a> 的 <code>Date</code> 报头域的出现说明报文包含了原始时间戳。
+头字段名称 <code>field-name</code> 将其对应的头字段值 <code>field-value</code> 算作这个消息带有相应头字段的语义。例如，定义在【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-7.1.1.2">章节 7.1.1.2</a> 的 <code>Date</code> 头字段的出现说明消息包含了原始时间戳。
 </p>
 </div>
 
@@ -2074,7 +2074,7 @@ Header fields are fully extensible: there is no limit on the introduction of new
 </blockquote>
 
 <p>
-不限制引入新的报头域名，每个报头域都可假定其定义了新的语言，也不限制给定报文中的报头域的数值作限制，因此，报头域是完全可扩展的。已知的报头域定义在本规范的各个部分中，以及超出本文档集的其他规范中。
+不限制引入新的头字段名，每个头字段都可假定其定义了新的语言，也不限制给定消息中的头字段的数值作限制，因此，头字段是完全可扩展的。已知的头字段定义在本规范的各个部分中，以及超出本文档集的其他规范中。
 </p>
 
 <blockquote>
@@ -2084,12 +2084,12 @@ New header fields can be defined such that, when they are understood by a recipi
 </blockquote>
 
 <p>
-新报头域能够定义为这样：当新报头域能够被接收端所理解时，它们可以覆盖或增强之前所定义的报头域的解释（interpretation），定义对解释请求（request evaluation）的前置条件（preconditions），或者提炼响应报文的意思。
+新头字段能够定义为这样：当新头字段能够被接收端所理解时，它们可以覆盖或增强之前所定义的头字段的解释（interpretation），定义对解释请求（request evaluation）的前置条件（preconditions），或者提炼响应消息的意思。
 </p>
 
 <blockquote>
 <p>
-译注：计算机或数学领域中一般将 "evaluation" 翻译为“求值”（参考<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Evaluation.html#Evaluation">这里</a>），例如，对一个表达式进行求值。"request evaluation"，请求求值？请求评估？没找到合适的词来形容。我的理解是对请求报文进行解释，提取其信息，并转化为接收端所能理解的形式，让接收端理解请求的意图，也说是说，对请求报文进行求值。
+译注：计算机或数学领域中一般将 "evaluation" 翻译为“求值”（参考<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Evaluation.html#Evaluation">这里</a>），例如，对一个表达式进行求值。"request evaluation"，请求求值？请求评估？没找到合适的词来形容。我的理解是对请求消息进行解释，提取其信息，并转化为接收端所能理解的形式，让接收端理解请求的意图，也说是说，对请求消息进行求值。
 </p>
 </blockquote>
 
@@ -2100,7 +2100,7 @@ A proxy <b>MUST</b> forward unrecognized header fields unless the <code>field-na
 </blockquote>
 
 <p>
-代理（proxy） <b>必须</b> 将未能识别的报头域转发出去，除非 <code>Connection</code> 报头域里列出了该报头域名称 <code>field-name</code> （见<a href="#org57994e1">章节 6.1</a>），或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 <b>应当</b> 忽略未能识别的报头域。这些要求使得在链路中的中间人还没有预先更新的情况下，HTTP 的功能仍能得到增强。
+代理（proxy） <b>必须</b> 将未能识别的头字段转发出去，除非 <code>Connection</code> 头字段里列出了该头字段名称 <code>field-name</code> （见<a href="#org57994e1">章节 6.1</a>），或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 <b>应当</b> 忽略未能识别的头字段。这些要求使得在链路中的中间人还没有预先更新的情况下，HTTP 的功能仍能得到增强。
 </p>
 
 <blockquote>
@@ -2110,7 +2110,7 @@ All defined header fields ought to be registered with <a href="https://www.iana.
 </blockquote>
 
 <p>
-所有已定义的报头域都应该被注册到 IANA 的 "Message Headers" 注册表中，详细描述见【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-8.3">章节 8.3</a>。
+所有已定义的头字段都应该被注册到 IANA 的 "Message Headers" 注册表中，详细描述见【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-8.3">章节 8.3</a>。
 </p>
 </div>
 </div>
@@ -2125,7 +2125,7 @@ The order in which header fields with differing field names are received is not 
 </blockquote>
 
 <p>
-不同的报头域名的接收顺序是无关要紧的。但是，最佳的实践是优先发送包含控制的信息（control data），例如请求报文中的 <code>Host</code> 和 响应报文中的 <code>Date</code>，以便于相应的实现（implementations）能够尽可能简单地决定在什么时候不去处理这个报文。服务端 <b>禁止</b> 在整个请求报头块接收完毕之前去申请目标资源，这是因为接后来的请求头域可能包含影响请求处理流程的条件、认证信息或者故意误导性的重复报头域。
+不同的头字段名的接收顺序是无关要紧的。但是，最佳的实践是优先发送包含控制的信息（control data），例如请求消息中的 <code>Host</code> 和 响应消息中的 <code>Date</code>，以便于相应的实现（implementations）能够尽可能简单地决定在什么时候不去处理这个消息。服务端 <b>禁止</b> 在整个请求消息头部接收完毕之前去申请目标资源，这是因为接后来的请求头字段可能包含影响请求处理流程的条件、认证信息或者故意误导性的重复头字段。
 </p>
 
 <blockquote>
@@ -2135,7 +2135,7 @@ A sender <b>MUST NOT</b> generate multiple header fields with the same field nam
 </blockquote>
 
 <p>
-发送端 <b>禁止</b> 在一个报文中生成多个相同名称的的报头域（header fields），除非所有这些报头域的报头域值是定义为以英文“逗号”分隔（comma-separated）的列表（例如，#(values)）或者报头域是公认的例外（如之前所列举的）。
+发送端 <b>禁止</b> 在一个消息中生成多个相同名称的的头字段（header fields），除非所有这些头字段的头字段值是定义为以英文“逗号”分隔（comma-separated）的列表（例如，#(values)）或者头字段是公认的例外（如之前所列举的）。
 </p>
 
 <blockquote>
@@ -2145,7 +2145,7 @@ A recipient <b>MAY</b> combine multiple header fields with the same field name i
 </blockquote>
 
 <p>
-在没有改变报文语义的情况下，接收端 <b>可以</b> 将多个相同名称的报头域合并成一个报头域键-值对（"field-name: field-value" pair），具体实现方式是通过按顺序向要合并的那个域值末尾附加其他子序列的报头域值，并以英文“逗号”分隔。因此，该同名报文域在报文中的接收顺序对所合并而成的域值的解释（interpretation）有重要意义。代理 <b>禁止</b> 在转发报文的时候改变这些域值的顺序。
+在没有改变消息语义的情况下，接收端 <b>可以</b> 将多个相同名称的头字段合并成一个头字段键-值对（"field-name: field-value" pair），具体实现方式是通过按顺序向要合并的那个字段值末尾附加其他子序列的头字段值，并以英文“逗号”分隔。因此，该同名消息头字段在消息中的接收顺序对所合并而成的字段值的解释（interpretation）有重要意义。代理 <b>禁止</b> 在转发消息的时候改变这些字段值的顺序。
 </p>
 
 <blockquote>
@@ -2155,7 +2155,7 @@ A recipient <b>MAY</b> combine multiple header fields with the same field name i
 </blockquote>
 
 <p>
-<b>注意：</b> 在实践中，报头域 <code>Set-Cookie</code> （见【<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>】）在一个响应报文中通常会出现多次，并且不是以列表的句法形式，违背了以上关于多个相同名称的报头域的要求。这是因为它不能组合成一个单一的域值（field value），因此，当处理报头域的时候，接收端应该将 <code>Set-cookie</code> 作为特殊情况。（详情见【Kri2001】的附件 A.2.3。）
+<b>注意：</b> 在实践中，头字段 <code>Set-Cookie</code> （见【<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>】）在一个响应消息中通常会出现多次，并且不是以列表的句法形式，违背了以上关于多个相同名称的头字段的要求。这是因为它不能组合成一个单一的字段值（field value），因此，当处理头字段的时候，接收端应该将 <code>Set-cookie</code> 作为特殊情况。（详情见【Kri2001】的附件 A.2.3。）
 </p>
 </div>
 </div>
@@ -2185,7 +2185,7 @@ The <code>OWS</code> rule is used where zero or more linear whitespace octets mi
 </blockquote>
 
 <p>
-<code>OWS</code> 规则是用在可能出现零个或多个连续空格（octets）的位置上。对于协议元素来说，可选空格的使用有助于提交可读性。发送端 <b>应当</b> 将可选空格生成为一个单一的 <code>SP</code>；接收端除了在报文就地过滤（in-place message filtering）期间因为修正非法或多余的协议元素的需要而生成可选空格以外，接收端 <b>不应当</b> 生成可选空格。
+<code>OWS</code> 规则是用在可能出现零个或多个连续空格（octets）的位置上。对于协议元素来说，可选空格的使用有助于提交可读性。发送端 <b>应当</b> 将可选空格生成为一个单一的 <code>SP</code>；接收端除了在消息就地过滤（in-place message filtering）期间因为修正非法或多余的协议元素的需要而生成可选空格以外，接收端 <b>不应当</b> 生成可选空格。
 </p>
 
 <blockquote>
@@ -2205,7 +2205,7 @@ The <code>BWS</code> rule is used where the grammar allows optional whitespace o
 </blockquote>
 
 <p>
-<code>BWS</code> 规则是用在由于历史遗留因素才在语法上允许可选空格的位置上。发送端 <b>禁止</b> 在报文中生成 <code>BWS</code>。接收端 <b>必须</b> 在解释（interpret）协议元素之前对这些不可取的空格进行解释（parse）并且移除它们。
+<code>BWS</code> 规则是用在由于历史遗留因素才在语法上允许可选空格的位置上。发送端 <b>禁止</b> 在消息中生成 <code>BWS</code>。接收端 <b>必须</b> 在解释（interpret）协议元素之前对这些不可取的空格进行解释（parse）并且移除它们。
 </p>
 
 <div class="org-src-container">
@@ -2230,7 +2230,7 @@ Messages are parsed using a generic algorithm, independent of the individual hea
 </blockquote>
 
 <p>
-报文使用通用的算法进行解析（parse），不依赖个别的报头域名。对一个给定的报头域值里的内容进行解析（parse）会在报文解释（interpretation）的偏后阶段进行，通常在报文的整个报头域块（header section）都已经被处理（process）好之后。因此，本规范不再使用 ABNF 规则去定义每一个报头域“键-值”对（"Field-Name: Field Value" pair），正如上个版本的做法。取而代之的是，本规范使用以每一个已注册的报头域的名称来命名的 ABNF 规则，每个规则里定义了相应的报头域所对应的域值（也就是说，通过一个通用报头域解析器从报头块中抽取出 <code>field-value</code> 以后的内容）的合法语法。
+消息使用通用的算法进行解析（parse），不依赖个别的头字段名。对一个给定的头字段值里的内容进行解析（parse）会在消息解释（interpretation）的偏后阶段进行，通常在消息的整个头字段块（header section）都已经被处理（process）好之后。因此，本规范不再使用 ABNF 规则去定义每一个头字段“键-值”对（"Field-Name: Field Value" pair），正如上个版本的做法。取而代之的是，本规范使用以每一个已注册的头字段的名称来命名的 ABNF 规则，每个规则里定义了相应的头字段所对应的字段值（也就是说，通过一个通用头字段解析器从消息头部中抽取出 <code>field-value</code> 以后的内容）的合法语法。
 </p>
 
 <blockquote>
@@ -2240,7 +2240,7 @@ No whitespace is allowed between the header <code>field-name</code> and colon. I
 </blockquote>
 
 <p>
-报头域名（field name）和冒号之间不允许带有空格。在过去，对于这些空格的各不相同的处理方式已经导致请求路由和响应处理方面的安全隐患。服务器 <b>必须</b> 拒绝这种在报头域名和冒号之间包含空格请求报文，并响应一个 <code>400 (Bad Request)</code> 的状态码。代理（proxy） <b>必须</b> 在转发到下游之前从响应报文中移除所有上述空格。
+头字段名（field name）和冒号之间不允许带有空格。在过去，对于这些空格的各不相同的处理方式已经导致请求路由和响应处理方面的安全隐患。服务器 <b>必须</b> 拒绝这种在头字段名和冒号之间包含空格请求消息，并响应一个 <code>400 (Bad Request)</code> 的状态码。代理（proxy） <b>必须</b> 在转发到下游之前从响应消息中移除所有上述空格。
 </p>
 
 <blockquote>
@@ -2250,7 +2250,7 @@ A field value might be preceded and/or followed by optional whitespace (<code>OW
 </blockquote>
 
 <p>
-在报头域值之前并且（或者）之后可能带有可选空格（<code>OWS</code>）；为了遵循人类可读性，在 <code>field-value</code> 之前推荐带有一个单一的空格 <code>SP</code>。报头域值并不包含任何前置或后置的空格：当从一个报头域中抽出报头域值的时候，出现在报头域值的第一个非空格字节之前或者最后一个非空格字节之后的可选空格 <code>OWS</code> 应该被解析器所排除。
+在头字段值之前并且（或者）之后可能带有可选空格（<code>OWS</code>）；为了遵循人类可读性，在 <code>field-value</code> 之前推荐带有一个单一的空格 <code>SP</code>。头字段值并不包含任何前置或后置的空格：当从一个头字段中抽出头字段值的时候，出现在头字段值的第一个非空格字节之前或者最后一个非空格字节之后的可选空格 <code>OWS</code> 应该被解析器所排除。
 </p>
 
 <blockquote>
@@ -2260,7 +2260,7 @@ Historically, HTTP header field values could be extended over multiple lines by 
 </blockquote>
 
 <p>
-历史上，HTTP 报头域值能被扩展为多行，通过在每个额外行之前添加至少一个空格或水平制表符（<code>obs-fold</code>）来实现。本规范废弃了这些分行（line folding）除了在媒体类型（media type）"message/http"（见<a href="#orgd8838e8">章节 8.3.1</a>）之内的。发送端 <b>禁止</b> 生成一个包含分行（也就是说，带有任何包含能够匹配 <code>obs-fold</code> 规则的报头域值 <code>field-value</code>）的报文，除非报文是用于封装媒体类型 "message/http" 的内容。
+历史上，HTTP 头字段值能被扩展为多行，通过在每个额外行之前添加至少一个空格或水平制表符（<code>obs-fold</code>）来实现。本规范废弃了这些分行（line folding）除了在媒体类型（media type）"message/http"（见<a href="#orgd8838e8">章节 8.3.1</a>）之内的。发送端 <b>禁止</b> 生成一个包含分行（也就是说，带有任何包含能够匹配 <code>obs-fold</code> 规则的头字段值 <code>field-value</code>）的消息，除非消息是用于封装媒体类型 "message/http" 的内容。
 </p>
 
 <blockquote>
@@ -2270,7 +2270,7 @@ A server that receives an <code>obs-fold</code> in a request message that is not
 </blockquote>
 
 <p>
-如果服务端接收到一个在请求报文里的分行 <code>obs-fold</code>，但这个分行不在媒体类型 "message/http" 的容器内，服务端 <b>必须</b> 要不拒绝这种报文并响应一个 <code>400 (Bad Request)</code> 状态码，更好的方式是在响应报文中带有一种<ruby>表示形式<rt>representation</rt></ruby>来解释那种已经废弃的分行是不再允许出现在报文中的；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
+如果服务端接收到一个在请求消息里的分行 <code>obs-fold</code>，但这个分行不在媒体类型 "message/http" 的容器内，服务端 <b>必须</b> 要不拒绝这种消息并响应一个 <code>400 (Bad Request)</code> 状态码，更好的方式是在响应消息中带有一种<ruby>表示形式<rt>representation</rt></ruby>来解释那种已经废弃的分行是不再允许出现在消息中的；要不在解释（interpret）头字段值（或转发消息到下游）之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
 </p>
 
 <blockquote>
@@ -2280,7 +2280,7 @@ A proxy or gateway that receives an <code>obs-fold</code> in a response message 
 </blockquote>
 
 <p>
-如果代理（proxy）或网关（gateway）接收到一个响应报文里的分行 <code>obs-fold</code>，但这个分行不在媒体类型 "message/http" 的容器内，这些中间人 <b>必须</b> 要不丢弃这个报文改由响应一个 <code>502 (Bad Gateway)</code> 状态码，更好的方式是在响应报文中带有一种<ruby>表示形式<rt>representation</rt></ruby>来解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（interpret）报头域值（或转发报文到下游）之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
+如果代理（proxy）或网关（gateway）接收到一个响应消息里的分行 <code>obs-fold</code>，但这个分行不在媒体类型 "message/http" 的容器内，这些中间人 <b>必须</b> 要不丢弃这个消息改由响应一个 <code>502 (Bad Gateway)</code> 状态码，更好的方式是在响应消息中带有一种<ruby>表示形式<rt>representation</rt></ruby>来解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（interpret）头字段值（或转发消息到下游）之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
 </p>
 
 <blockquote>
@@ -2290,7 +2290,7 @@ A user agent that receives an <code>obs-fold</code> in a response message that i
 </blockquote>
 
 <p>
-如果用户代理（User Agent）接收到一个响应报文里的分行 <code>obs-fold</code>，但这个分行不要媒体类型 "message/http" 的容器内，用户代理 <b>必须</b> 在解释（interpret）报头域值之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
+如果用户代理（User Agent）接收到一个响应消息里的分行 <code>obs-fold</code>，但这个分行不要媒体类型 "message/http" 的容器内，用户代理 <b>必须</b> 在解释（interpret）头字段值之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
 </p>
 
 <blockquote>
@@ -2300,7 +2300,7 @@ Historically, HTTP has allowed field content with text in the ISO‑8859‑1 cha
 </blockquote>
 
 <p>
-历史上，HTTP 已允许报头域的内容带有 ISO-8859-1 字符集【ISO-8859-1】的字符，要支持其他字符集，仅能通过使用【<a href="https://tools.ietf.org/html/rfc2047">RFC2047</a>】编码。实际上，大多 HTTP 报头域值仅仅使用 US-ASCII 字符集【USASCII】的子集。新近定义的报头域 <b>应该</b> 将它们的域值的内容限制为 US-ASCII 字节（Octets）。接收端 <b>应该</b> 将在报头域里的其他字节文本（<code>obs-text</code>）作为不透明数据（<a href="https://en.wikipedia.org/wiki/Opaque_data_type">Opaque Data</a>）对待。
+历史上，HTTP 已允许头字段的内容带有 ISO-8859-1 字符集【ISO-8859-1】的字符，要支持其他字符集，仅能通过使用【<a href="https://tools.ietf.org/html/rfc2047">RFC2047</a>】编码。实际上，大多 HTTP 头字段值仅仅使用 US-ASCII 字符集【USASCII】的子集。新近定义的头字段 <b>应该</b> 将它们的字段值的内容限制为 US-ASCII 字节（Octets）。接收端 <b>应该</b> 将在头字段里的其他字节文本（<code>obs-text</code>）作为不透明数据（<a href="https://en.wikipedia.org/wiki/Opaque_data_type">Opaque Data</a>）对待。
 </p>
 
 <blockquote>
@@ -2328,7 +2328,7 @@ HTTP does not place a predefined limit on the length of each header field or on 
 </blockquote>
 
 <p>
-HTTP 并没有预先限制每一个报头域（header field）的长度或者整个报头块（header section）的长度，详情见<a href="#orgcbf7860">章节 2.5</a>。实践中已发现各家 ad hoc 网络对于个别报头域的长度有不同的限制，这咱长度限制通常依据具体的报头域的语义。
+HTTP 并没有预先限制每一个头字段（header field）的长度或者整个消息头部（header section）的长度，详情见<a href="#orgcbf7860">章节 2.5</a>。实践中已发现各家 ad hoc 网络对于个别头字段的长度有不同的限制，这咱长度限制通常依据具体的头字段的语义。
 </p>
 
 <blockquote>
@@ -2338,7 +2338,7 @@ A server that receives a request header field, or set of fields, larger than it 
 </blockquote>
 
 <p>
-服务端接收到一个请求报头域或报头域集合，其长度超出服务器所能处理的最大长度时，服务器 <b>必须</b> 响应一个恰当的 <code>4xx (Client Error)</code> 状态码。而忽略这些报头域会增加服务器被“Request Smuggling 攻击”（<a href="#org92b4d2b">章节 9.5</a>）的隐患。
+服务端接收到一个请求头字段或头字段集合，其长度超出服务器所能处理的最大长度时，服务器 <b>必须</b> 响应一个恰当的 <code>4xx (Client Error)</code> 状态码。而忽略这些头字段会增加服务器被“Request Smuggling 攻击”（<a href="#org92b4d2b">章节 9.5</a>）的隐患。
 </p>
 
 <blockquote>
@@ -2348,14 +2348,14 @@ A client <b>MAY</b> discard or truncate received header fields that are larger t
 </blockquote>
 
 <p>
-客户端 <b>可以</b> 丢弃或拼接所接收到的超出客户端所能处理的最大长度的报头域，如果那个域的语义是那种摘除掉的值能够在没有改变报文的分帧或响应语义的情况下被安全地被忽略。
+客户端 <b>可以</b> 丢弃或拼接所接收到的超出客户端所能处理的最大长度的头字段，如果那个域的语义是那种摘除掉的值能够在没有改变消息的分帧或响应语义的情况下被安全地被忽略。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9aed017" class="outline-4">
-<h4 id="org9aed017"><a id="ID-d0012483-93a3-44cf-b019-29e12725d94a"></a>3.2.6. 域值的组成 (Field Value Components)</h4>
-<div class="outline-text-4" id="text-org9aed017">
+<div id="outline-container-orgd7938c9" class="outline-4">
+<h4 id="orgd7938c9"><a id="ID-d0012483-93a3-44cf-b019-29e12725d94a"></a>3.2.6. 字段值的组成 (Field Value Components)</h4>
+<div class="outline-text-4" id="text-orgd7938c9">
 <blockquote>
 <p>
 Most HTTP header field values are defined using common syntax components (token, quoted-string, and comment) separated by whitespace or specific delimiting characters. Delimiters are chosen from the set of US-ASCII visual characters not allowed in a token (DQUOTE and "(),/:;&lt;=&gt;?@[\]{}").
@@ -2363,7 +2363,7 @@ Most HTTP header field values are defined using common syntax components (token,
 </blockquote>
 
 <p>
-大多数 HTTP 报头域值使用通用句法组件（common syntax components，包括标记 <code>token</code>、字符串 <code>quoted-string</code>、注释 <code>comment</code> ）来进行定义。这些通用句法组件以空格或者特定的定界符（delimiting characters）来分隔。定界符选取自 US-ASCII 字符集中的可见字符（visual characters），并且这些可见字符是不允许出现在标记（token）上的（包括 <code>DQUOTE</code> 和 "<code>(),/:;&lt;=&gt;?@[\]{}</code>"）。
+大多数 HTTP 头字段值使用通用句法组件（common syntax components，包括标记 <code>token</code>、字符串 <code>quoted-string</code>、注释 <code>comment</code> ）来进行定义。这些通用句法组件以空格或者特定的定界符（delimiting characters）来分隔。定界符选取自 US-ASCII 字符集中的可见字符（visual characters），并且这些可见字符是不允许出现在标记（token）上的（包括 <code>DQUOTE</code> 和 "<code>(),/:;&lt;=&gt;?@[\]{}</code>"）。
 </p>
 
 <div class="org-src-container">
@@ -2400,7 +2400,7 @@ Comments can be included in some HTTP header fields by surrounding the comment t
 </blockquote>
 
 <p>
-可以通过在注释文本两边添加括号的方式将注释包含在某些 HTTP 报头域中。仅当某个报头域值的定义中带有 <code>comment</code> 作为它的一部分，注释才能够包含在该报头域中。
+可以通过在注释文本两边添加括号的方式将注释包含在某些 HTTP 头字段中。仅当某个头字段值的定义中带有 <code>comment</code> 作为它的一部分，注释才能够包含在该头字段中。
 </p>
 
 <div class="org-src-container">
@@ -2437,9 +2437,9 @@ A sender <b>SHOULD NOT</b> generate a <code>quoted-pair</code> in a <code>quoted
 </div>
 </div>
 
-<div id="outline-container-org3d27427" class="outline-3">
-<h3 id="org3d27427"><a id="ID-74ac5c85-d91e-43ab-bb2f-6c5957da5f5c"></a>3.3. 报文正文 (Message Body)</h3>
-<div class="outline-text-3" id="text-org3d27427">
+<div id="outline-container-orgd385ed5" class="outline-3">
+<h3 id="orgd385ed5"><a id="ID-74ac5c85-d91e-43ab-bb2f-6c5957da5f5c"></a>3.3. 消息体 (Message Body)</h3>
+<div class="outline-text-3" id="text-orgd385ed5">
 <blockquote>
 <p>
 The message body (if any) of an HTTP message is used to carry the payload body of that request or response. The message body is identical to the payload body unless a transfer coding has been applied, as described in <a href="#org209c019">Section 3.3.1</a>.
@@ -2447,7 +2447,7 @@ The message body (if any) of an HTTP message is used to carry the payload body o
 </blockquote>
 
 <p>
-HTTP 报文的报文正文（如果存在的话）是用来运载请求或响应的有效载荷（payload body）的。除非应用了传输编码，报文正文（message body）等价于有效载荷（payload body），详情见<a href="#org209c019">章节 3.3.1</a>。
+HTTP 消息的消息体（如果存在的话）是用来运载请求或响应的有效载荷（payload body）的。除非应用了传输编码，消息体（message body）等价于有效载荷（payload body），详情见<a href="#org209c019">章节 3.3.1</a>。
 </p>
 
 <div class="org-src-container">
@@ -2462,7 +2462,7 @@ The rules for when a message body is allowed in a message differ for requests an
 </blockquote>
 
 <p>
-在什么情况下才允许带有报文正文，有相应的规则进行约束，而且对于请求报文和响应报文的规则是不尽相同的。
+在什么情况下才允许带有消息体，有相应的规则进行约束，而且对于请求消息和响应消息的规则是不尽相同的。
 </p>
 
 <blockquote>
@@ -2472,7 +2472,7 @@ The presence of a message body in a request is signaled by a <code>Content-Lengt
 </blockquote>
 
 <p>
-在一个请求中是否会出现报文正文，以报头中是否带有 <code>Content-Length</code> 或者 <code>Transfer-Encoding</code> 报头域作为信号。请求报文的分帧是独立于请求方法（method）的语义之外的，即使请求方法并没有任何用于一个报文正文的相关定义。
+在一个请求中是否会出现消息体，以消息头中是否带有 <code>Content-Length</code> 或者 <code>Transfer-Encoding</code> 头字段作为信号。请求消息的分帧是独立于请求方法（method）的语义之外的，即使请求方法并没有任何用于一个消息体的相关定义。
 </p>
 
 <blockquote>
@@ -2482,7 +2482,7 @@ The presence of a message body in a response depends on both the request method 
 </blockquote>
 
 <p>
-在一个响应中是否会出现报文正文，取决于请求方法所对应的响应是什么，且响应状态码是什么（<a href="#orgd6df797">章节 3.1.2</a>）。响应给请求方法 HEAD（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.2">章节 4.3.2</a>）的报文永远不会包含一个报文正文，这是因为如果出现上述相关的响应报头域（例如，<code>Transfer-Encoding</code>、<code>Content-Length</code> 等），表明仅当这个报文的请求方法被改变为 GET（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.1">章节 4.3.1</a>）的时候，这些报头域才有效<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>。<code>2xx (Successful)</code> 响应给一个请求方法 CONNECT（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.6">章节 4.3.6</a>）。所有 <code>1xx (Informational)</code>、<code>204 (No Content)</code> 和 <code>304 (Not Modified)</code> 的响应报文并不会包含一个报文正文。除上述情况以外，所有其他响应报文都会包含一个报文正文，虽然报文正文的长度可能为零。
+在一个响应中是否会出现消息体，取决于请求方法所对应的响应是什么，且响应状态码是什么（<a href="#orgd6df797">章节 3.1.2</a>）。响应给请求方法 HEAD（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.2">章节 4.3.2</a>）的消息永远不会包含一个消息体，这是因为如果出现上述相关的响应头字段（例如，<code>Transfer-Encoding</code>、<code>Content-Length</code> 等），表明仅当这个消息的请求方法被改变为 GET（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.1">章节 4.3.1</a>）的时候，这些头字段才有效<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>。<code>2xx (Successful)</code> 响应给一个请求方法 CONNECT（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.6">章节 4.3.6</a>）。所有 <code>1xx (Informational)</code>、<code>204 (No Content)</code> 和 <code>304 (Not Modified)</code> 的响应消息并不会包含一个消息体。除上述情况以外，所有其他响应消息都会包含一个消息体，虽然消息体的长度可能为零。
 </p>
 </div>
 
@@ -2496,7 +2496,7 @@ The <code>Transfer-Encoding</code> header field lists the transfer coding names 
 </blockquote>
 
 <p>
-报头域 <code>Transfer-Encoding</code> 罗列了所有与已经（或即将）被应用到有效载荷（payload body）的传输编码值（transfer coding）相对应的名称。有效载荷编码后形成报文正文（message body）。传输编码值（transfer coding）定义在<a href="#orgdb9d59f">章节 4</a>。
+头字段 <code>Transfer-Encoding</code> 罗列了所有与已经（或即将）被应用到有效载荷（payload body）的传输编码值（transfer coding）相对应的名称。有效载荷编码后形成消息体（message body）。传输编码值（transfer coding）定义在<a href="#orgdb9d59f">章节 4</a>。
 </p>
 
 <div class="org-src-container">
@@ -2521,7 +2521,7 @@ A recipient <b>MUST</b> be able to parse the chunked transfer coding (<a href="#
 </blockquote>
 
 <p>
-一个接收端 <b>必须</b> 能够解析（parse）分块传输编码值（chunked transfer coding，见<a href="#orgb66f233">章节 4.1</a>），这是因为它在预先并不知道有效载荷（payload body）的大小的情况下对报文进行分帧的过程中扮演了重要的角色。一个发送端 <b>禁止</b> 对一个报文正文进行超过一次的分块（也就是说，不允许对一个已经分好块的报文进行再次分块）。如果任何除 <code>chunked</code> 以外的传输编码值被应用到一个请求报文的有效载荷（request payload body）里，发送端 <b>必须</b> 将 <code>chunked</code> 作为最后的传输编码值来确保那个报文被正确的分帧。如果任何除 <code>chunked</code> 以外的传输编码值被应用到一个响应报文的有效载荷（response payload body）里，发送端 <b>必须</b> 要不将 <code>chunked</code> 作为最后的传输编码值，要不关闭连接来终止这个报文的发送。
+一个接收端 <b>必须</b> 能够解析（parse）分块传输编码值（chunked transfer coding，见<a href="#orgb66f233">章节 4.1</a>），这是因为它在预先并不知道有效载荷（payload body）的大小的情况下对消息进行分帧的过程中扮演了重要的角色。一个发送端 <b>禁止</b> 对一个消息体进行超过一次的分块（也就是说，不允许对一个已经分好块的消息进行再次分块）。如果任何除 <code>chunked</code> 以外的传输编码值被应用到一个请求消息的有效载荷（request payload body）里，发送端 <b>必须</b> 将 <code>chunked</code> 作为最后的传输编码值来确保那个消息被正确的分帧。如果任何除 <code>chunked</code> 以外的传输编码值被应用到一个响应消息的有效载荷（response payload body）里，发送端 <b>必须</b> 要不将 <code>chunked</code> 作为最后的传输编码值，要不关闭连接来终止这个消息的发送。
 </p>
 
 <blockquote>
@@ -2545,7 +2545,7 @@ indicates that the payload body has been compressed using the <code>gzip</code> 
 </blockquote>
 
 <p>
-表示有效载荷（payload body）已经使用 <code>gzip</code> 编码压缩过，然后在报文正文分帧的时候使用 <code>chunked</code> 编码。
+表示有效载荷（payload body）已经使用 <code>gzip</code> 编码压缩过，然后在消息体分帧的时候使用 <code>chunked</code> 编码。
 </p>
 
 <blockquote>
@@ -2555,7 +2555,7 @@ Unlike <code>Content-Encoding</code> (<a href="https://tools.ietf.org/html/rfc72
 </blockquote>
 
 <p>
-与 <code>Content-Encoding</code> 报头域（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-3.1.2.1">章节 3.1.2.1</a>）不同的是，<code>Transfer-Encoding</code> 报头域是报文（message）的一个属性，而不是<ruby>表示形式<rt>representation</rt></ruby>的一个属性，并且在请求/响应链路中的所有接收端都 <b>可以</b> 依据所接收到的传输代码值（一个或多个）对报文正文进行解码，或者向报文正文应用额外的传输代码值，假设 <code>Transfer-Encoding</code> 的 <code>field-value</code> 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的报头域提供。
+与 <code>Content-Encoding</code> 头字段（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-3.1.2.1">章节 3.1.2.1</a>）不同的是，<code>Transfer-Encoding</code> 头字段是消息（message）的一个属性，而不是<ruby>表示形式<rt>representation</rt></ruby>的一个属性，并且在请求/响应链路中的所有接收端都 <b>可以</b> 依据所接收到的传输代码值（一个或多个）对消息体进行解码，或者向消息体应用额外的传输代码值，假设 <code>Transfer-Encoding</code> 的 <code>field-value</code> 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的头字段提供。
 </p>
 
 <blockquote>
@@ -2565,7 +2565,7 @@ Unlike <code>Content-Encoding</code> (<a href="https://tools.ietf.org/html/rfc72
 </blockquote>
 
 <p>
-响应给 HEAD 请求的响应报文，或者响应给 GET 请求的 <code>304 (Not Modified)</code> 响应报文，上述两种报文都是没有包含报文正文的，<code>Transfer-Encoding</code> <b>可以</b> 包含在上述两种响应报文中，来指明如果这个请求曾经是一个无条件 GET 请求<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup>的话，源服务器会使用一个传输编码对报文正文进行编码。这种“指明”是非必要的，但是，因为在响应链路中的任何接收端（包括源服务器）都能够在移除传输编码值，如果传输编码值是不需要的话。
+响应给 HEAD 请求的响应消息，或者响应给 GET 请求的 <code>304 (Not Modified)</code> 响应消息，上述两种消息都是没有包含消息体的，<code>Transfer-Encoding</code> <b>可以</b> 包含在上述两种响应消息中，来指明如果这个请求曾经是一个无条件 GET 请求<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup>的话，源服务器会使用一个传输编码对消息体进行编码。这种“指明”是非必要的，但是，因为在响应链路中的任何接收端（包括源服务器）都能够在移除传输编码值，如果传输编码值是不需要的话。
 </p>
 
 <blockquote>
@@ -2575,7 +2575,7 @@ A server <b>MUST NOT</b> send a <code>Transfer-Encoding</code> header field in a
 </blockquote>
 
 <p>
-服务器 <b>禁止</b> 在任何带有 <code>1xx (Informational)</code> 或者 <code>204 (No Content)</code> 状态码的响应报文里包含一个 <code>Transfer-Encoding</code> 报头域。一个服务器 <b>禁止</b> 将任何带有 <code>2xx (Successful)</code> 状态码的，并且带有一个 <code>Transfer-Encoding</code> 报头域的响应报文响应给一个 CONNECT 请求（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.6">章节 4.3.6</a>）。
+服务器 <b>禁止</b> 在任何带有 <code>1xx (Informational)</code> 或者 <code>204 (No Content)</code> 状态码的响应消息里包含一个 <code>Transfer-Encoding</code> 头字段。一个服务器 <b>禁止</b> 将任何带有 <code>2xx (Successful)</code> 状态码的，并且带有一个 <code>Transfer-Encoding</code> 头字段的响应消息响应给一个 CONNECT 请求（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.6">章节 4.3.6</a>）。
 </p>
 
 <blockquote>
@@ -2585,7 +2585,7 @@ A server <b>MUST NOT</b> send a <code>Transfer-Encoding</code> header field in a
 </blockquote>
 
 <p>
-<code>Transfer-Encoding</code> 报头域自 HTTP/1.1 起新增，一般会作如下假定：声明仅支持到 HTTP/1.0 的实现（implementations）并不会理解如何去处理一个经过传输编码过的有效载荷（transfer-encoded payload）。客户端 <b>禁止</b> 发送一个包含 <code>Transfer-Encoding</code> 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住一个之前接收到的响应报文的版本号的方式知道服务器是否可以处理这种请求。服务器 <b>禁止</b> 发送一个包含 <code>Transfer-Encoding</code> 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
+<code>Transfer-Encoding</code> 头字段自 HTTP/1.1 起新增，一般会作如下假定：声明仅支持到 HTTP/1.0 的实现（implementations）并不会理解如何去处理一个经过传输编码过的有效载荷（transfer-encoded payload）。客户端 <b>禁止</b> 发送一个包含 <code>Transfer-Encoding</code> 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住一个之前接收到的响应消息的版本号的方式知道服务器是否可以处理这种请求。服务器 <b>禁止</b> 发送一个包含 <code>Transfer-Encoding</code> 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
 </p>
 
 <blockquote>
@@ -2595,7 +2595,7 @@ A server that receives a request message with a transfer coding it does not unde
 </blockquote>
 
 <p>
-服务器接收到一个带有 <code>Transfer-Encoding</code> 的请求报文，但并不理解某个传输编码值的时候，<b>应当</b> 响应一个带有 <code>501 (Not Implemented)</code> 状态码的报文。
+服务器接收到一个带有 <code>Transfer-Encoding</code> 的请求消息，但并不理解某个传输编码值的时候，<b>应当</b> 响应一个带有 <code>501 (Not Implemented)</code> 状态码的消息。
 </p>
 </div>
 </div>
@@ -2610,8 +2610,8 @@ When a message does not have a <code>Transfer-Encoding</code> header field, a <c
 </blockquote>
 
 <p>
-当一个报文不带有 <code>Transfer-Encoding</code> 报头域的时候，<code>Content-Length</code> 报头域能够提供对于一个潜在的有效载荷（payload body）的预期的大小。<code>Content-Length</code> 是一个十进制数字，以字节（octets）形式。对于包含一个有效载荷的报文，<code>Content-Length</code> 的 <code>field-value</code>
-提供了决定报文正文在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的报文，<code>Content-Length</code> 指明了已选定的表示形式（selected representation【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-3">章节 3</a>）的大小。
+当一个消息不带有 <code>Transfer-Encoding</code> 头字段的时候，<code>Content-Length</code> 头字段能够提供对于一个潜在的有效载荷（payload body）的预期的大小。<code>Content-Length</code> 是一个十进制数字，以字节（octets）形式。对于包含一个有效载荷的消息，<code>Content-Length</code> 的 <code>field-value</code>
+提供了决定消息体在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的消息，<code>Content-Length</code> 指明了已选定的表示形式（selected representation【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-3">章节 3</a>）的大小。
 </p>
 
 <div class="org-src-container">
@@ -2641,7 +2641,7 @@ A sender <b>MUST NOT</b> send a <code>Content-Length</code> header field in any 
 </blockquote>
 
 <p>
-发送端 <b>禁止</b> 在任何带有 <code>Transfer-Encoding</code> 报头域的报文里带有一个 <code>Content-Length</code> 报头域。
+发送端 <b>禁止</b> 在任何带有 <code>Transfer-Encoding</code> 头字段的消息里带有一个 <code>Content-Length</code> 头字段。
 </p>
 
 <blockquote>
@@ -2651,7 +2651,7 @@ A user agent <b>SHOULD</b> send a <code>Content-Length</code> in a request messa
 </blockquote>
 
 <p>
-当请求报文未带有 <code>Transfer-Encoding</code> 报头域，并且报文的请求方法意味着该报文需要带有有效载荷（payload body），那么，用户代理 <b>应当</b> 在请求报文里带有一个 <code>Content-Length</code> 报头域。例如，通常会在一个 POST 请求中带有一个 <code>Content-Length</code> 报头域，即使它的值是 0（指明一个空的有效载荷）。当请求报文没有包含一个有效载荷，并且请求方法的语义并不期望报文带有报文正文的时候，用户代理 <b>不应当</b> 在请求报文中带有 <code>Content-Length</code> 报头域。
+当请求消息未带有 <code>Transfer-Encoding</code> 头字段，并且消息的请求方法意味着该消息需要带有有效载荷（payload body），那么，用户代理 <b>应当</b> 在请求消息里带有一个 <code>Content-Length</code> 头字段。例如，通常会在一个 POST 请求中带有一个 <code>Content-Length</code> 头字段，即使它的值是 0（指明一个空的有效载荷）。当请求消息没有包含一个有效载荷，并且请求方法的语义并不期望消息带有消息体的时候，用户代理 <b>不应当</b> 在请求消息中带有 <code>Content-Length</code> 头字段。
 </p>
 
 <blockquote>
@@ -2661,7 +2661,7 @@ A server <b>MAY</b> send a <code>Content-Length</code> header field in a respons
 </blockquote>
 
 <p>
-服务器 <b>可以</b> 在响应给一个 HEAD 请求（【RFC7231】章节 4.3.2）的响应中带有一个 <code>Content-Length</code> 报头域。服务器 <b>禁止</b> 在这种响应中带有 <code>Content-Length</code>，除非它的域值等于这样一个以字节表示的十进制数字：如果同样的请求使用的是 GET 请求方法的话，它的响应的有效载荷里带有的长度值。
+服务器 <b>可以</b> 在响应给一个 HEAD 请求（【RFC7231】章节 4.3.2）的响应中带有一个 <code>Content-Length</code> 头字段。服务器 <b>禁止</b> 在这种响应中带有 <code>Content-Length</code>，除非它的字段值等于这样一个以字节表示的十进制数字：如果同样的请求使用的是 GET 请求方法的话，它的响应的有效载荷里带有的长度值。
 </p>
 
 <blockquote>
@@ -2671,7 +2671,7 @@ A server <b>MAY</b> send a <code>Content-Length</code> header field in a <code>3
 </blockquote>
 
 <p>
-服务器 <b>可以</b> 在响应给一个带条件的 GET 请求（conditional GET request，【<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>】<a href="https://tools.ietf.org/html/rfc7232#section-4.1">章节 4.1</a>）的 <code>304 (Not Modified)</code> 响应报文里带有一个 <code>Content-Length</code> 报头域。服务器 <b>禁止</b> 在这种响应报文中带有 <code>Content-Length</code>，除非它的域值等于这样一个以字节表示的十进制数字：如果响应是一个 <code>200 (OK)</code> 的话，它的有效载荷里带有的长度值。
+服务器 <b>可以</b> 在响应给一个带条件的 GET 请求（conditional GET request，【<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>】<a href="https://tools.ietf.org/html/rfc7232#section-4.1">章节 4.1</a>）的 <code>304 (Not Modified)</code> 响应消息里带有一个 <code>Content-Length</code> 头字段。服务器 <b>禁止</b> 在这种响应消息中带有 <code>Content-Length</code>，除非它的字段值等于这样一个以字节表示的十进制数字：如果响应是一个 <code>200 (OK)</code> 的话，它的有效载荷里带有的长度值。
 </p>
 
 <blockquote>
@@ -2681,7 +2681,7 @@ A server <b>MUST NOT</b> send a <code>Content-Length</code> header field in any 
 </blockquote>
 
 <p>
-服务器 <b>禁止</b> 在任何带有 <code>1xx (Informational)</code>、<code>204 (No Content)</code> 状态码的报文中带有一个 <code>Content-Length</code> 报头域。服务器 <b>禁止</b> 在任何响应给一个 CONNECT 请求（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.6">章节 4.3.6</a>）的带有 <code>2xx (Successful)</code> 状态码的响应报文中带有一个 <code>Content-Length</code> 报头域。
+服务器 <b>禁止</b> 在任何带有 <code>1xx (Informational)</code>、<code>204 (No Content)</code> 状态码的消息中带有一个 <code>Content-Length</code> 头字段。服务器 <b>禁止</b> 在任何响应给一个 CONNECT 请求（【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-4.3.6">章节 4.3.6</a>）的带有 <code>2xx (Successful)</code> 状态码的响应消息中带有一个 <code>Content-Length</code> 头字段。
 </p>
 
 <blockquote>
@@ -2691,7 +2691,7 @@ Aside from the cases defined above, in the absence of <code>Transfer-Encoding</c
 </blockquote>
 
 <p>
-除了上述情况以外，在缺少 <code>Transfer-Encoding</code> 报头域的情况下，在即将发送完整个报头块之前就知道了有效载荷（payload body）的大小，一个源服务器 <b>应该</b> 带有一个 <code>Content-Length</code> 报头域。这样能够允许下游（downstream）的接收端去计量传输的进度，了解什么时候一个报文是完整的，而且可以对额外的请求进行复用连接（如果条件允许的话）。
+除了上述情况以外，在缺少 <code>Transfer-Encoding</code> 头字段的情况下，在即将发送完整个消息头部之前就知道了有效载荷（payload body）的大小，一个源服务器 <b>应该</b> 带有一个 <code>Content-Length</code> 头字段。这样能够允许下游（downstream）的接收端去计量传输的进度，了解什么时候一个消息是完整的，而且可以对额外的请求进行复用连接（如果条件允许的话）。
 </p>
 
 <blockquote>
@@ -2701,7 +2701,7 @@ Any <code>Content-Length</code> field value greater than or equal to zero is val
 </blockquote>
 
 <p>
-任何大于或等于 0 的 <code>Content-Length</code> 的域值都是合法的。因为没有预先定义有效载荷的长度限制，接收端 <b>必须</b> 能预料到特大数值（big decimal）的可能性，并且避免由于整型类型转换溢出所引起的解析错误（<a href="#orga78d282">章节 9.3</a>）。
+任何大于或等于 0 的 <code>Content-Length</code> 的字段值都是合法的。因为没有预先定义有效载荷的长度限制，接收端 <b>必须</b> 能预料到特大数值（big decimal）的可能性，并且避免由于整型类型转换溢出所引起的解析错误（<a href="#orga78d282">章节 9.3</a>）。
 </p>
 
 <blockquote>
@@ -2711,7 +2711,7 @@ If a message is received that has multiple <code>Content-Length</code> header fi
 </blockquote>
 
 <p>
-如果接收到一个报文带有多个 <code>Content-Length</code> 报头域，并且它们的 <code>field-value</code> 由相同的十进制数组成；或者一个 <code>Content-Length</code> 报头域带有一个包含一系列十进制数值的域值（例如 "Content-Length: 42 42"），表明透过上游某个报文处理程序生成（Generated）或合成（Combined）了重复的 <code>Content-Length</code> 报头域，那么，接收端 <b>必须</b> 要不将这种报文当作不合法的报文而拒绝接收；要不使用一个单一的合法的包含了决定报文正文长度的十进制值的 <code>Content-Length</code> 域来替换掉重复的 <code>field-value</code>；要不转发这个报文。
+如果接收到一个消息带有多个 <code>Content-Length</code> 头字段，并且它们的 <code>field-value</code> 由相同的十进制数组成；或者一个 <code>Content-Length</code> 头字段带有一个包含一系列十进制数值的字段值（例如 "Content-Length: 42 42"），表明透过上游某个消息处理程序生成（Generated）或合成（Combined）了重复的 <code>Content-Length</code> 头字段，那么，接收端 <b>必须</b> 要不将这种消息当作不合法的消息而拒绝接收；要不使用一个单一的合法的包含了决定消息体长度的十进制值的 <code>Content-Length</code> 域来替换掉重复的 <code>field-value</code>；要不转发这个消息。
 </p>
 
 <blockquote>
@@ -2721,14 +2721,14 @@ If a message is received that has multiple <code>Content-Length</code> header fi
 </blockquote>
 
 <p>
-<b>注意：</b> <code>Content-Length</code> 在 HTTP 上关于报文分帧的应用，明显不同于该同名域在 MIME 上的应用，MIME 上的 <code>Content-Length</code> 是一个可选域，仅用于“message/external-body”媒体类型中。
+<b>注意：</b> <code>Content-Length</code> 在 HTTP 上关于消息分帧的应用，明显不同于该同名域在 MIME 上的应用，MIME 上的 <code>Content-Length</code> 是一个可选域，仅用于“message/external-body”媒体类型中。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga7ccbf3" class="outline-4">
-<h4 id="orga7ccbf3"><a id="ID-5fee24c5-74b9-4016-b7ed-a4831cafbe69"></a>3.3.3. 报文正文的长度 (Message Body Length)</h4>
-<div class="outline-text-4" id="text-orga7ccbf3">
+<div id="outline-container-orgb9426aa" class="outline-4">
+<h4 id="orgb9426aa"><a id="ID-5fee24c5-74b9-4016-b7ed-a4831cafbe69"></a>3.3.3. 消息体的长度 (Message Body Length)</h4>
+<div class="outline-text-4" id="text-orgb9426aa">
 <blockquote>
 <p>
 The length of a message body is determined by one of the following (in order of precedence):
@@ -2736,7 +2736,7 @@ The length of a message body is determined by one of the following (in order of 
 </blockquote>
 
 <p>
-报文正文的长度取决于以下其中之一（按优先级排序）：
+消息体的长度取决于以下其中之一（按优先级排序）：
 </p>
 
 <blockquote>
@@ -2768,29 +2768,29 @@ If a message is received with both a <code>Transfer-Encoding</code> and a <code>
 </blockquote>
 
 <ol class="org-ol">
-<li>任何响应给一个 HEAD 请求的响应报文，以及任何带有 <code>1xx (Informational)</code>、<code>204 (No Content)</code>、<code>304 (Not Modified)</code> 状态码的响应报文总是结止于在报头域之后的第一个空行，无论报文中出现了什么报头域，这个报文不能包含报文正文。</li>
+<li>任何响应给一个 HEAD 请求的响应消息，以及任何带有 <code>1xx (Informational)</code>、<code>204 (No Content)</code>、<code>304 (Not Modified)</code> 状态码的响应消息总是结止于在头字段之后的第一个空行，无论消息中出现了什么头字段，这个消息不能包含消息体。</li>
 
-<li>任何响应给一个 CONNECT 请求的带有 <code>2xx (Successful)</code> 状态码的响应报文，意味着在空行结束报头域之后，这个连接将会变成一个隧道中间人。客户端 <b>必须</b> 忽略接收自这种报文里的任何 <code>Content-Length</code> 或者 <code>Transfer-Encoding</code> 报头域。</li>
+<li>任何响应给一个 CONNECT 请求的带有 <code>2xx (Successful)</code> 状态码的响应消息，意味着在空行结束头字段之后，这个连接将会变成一个隧道中间人。客户端 <b>必须</b> 忽略接收自这种消息里的任何 <code>Content-Length</code> 或者 <code>Transfer-Encoding</code> 头字段。</li>
 
 <li><p>
-如果出现了一个 <code>Transfer-Encoding</code> 报头域并且分块传输编码值（chunked transfer coding，<a href="#orgb66f233">章节 4.1</a>）是其最后一个编码值，报文正文的长度通过读取和解码分块数据直到传输编码指明数据已经完整来确定。
+如果出现了一个 <code>Transfer-Encoding</code> 头字段并且分块传输编码值（chunked transfer coding，<a href="#orgb66f233">章节 4.1</a>）是其最后一个编码值，消息体的长度通过读取和解码分块数据直到传输编码指明数据已经完整来确定。
 </p>
 
 <p>
-如果在响应报文中出现一个 <code>Transfer-Encoding</code> 报头域并且分块传输编码值不是其最后一个编码值，报文正文的长度通过读取连接直到连接被服务器关闭来确定。如果在请求报文中出现一个 <code>Transfer-Encoding</code> 报头域并且分块传输编码值不是其最后一个编码值，报文正文的长度不能被可靠地确定，服务器 <b>必须</b> 响应一个带有 <code>400 (Bad Request)</code> 状态码的响应报文然后关闭该连接。
+如果在响应消息中出现一个 <code>Transfer-Encoding</code> 头字段并且分块传输编码值不是其最后一个编码值，消息体的长度通过读取连接直到连接被服务器关闭来确定。如果在请求消息中出现一个 <code>Transfer-Encoding</code> 头字段并且分块传输编码值不是其最后一个编码值，消息体的长度不能被可靠地确定，服务器 <b>必须</b> 响应一个带有 <code>400 (Bad Request)</code> 状态码的响应消息然后关闭该连接。
 </p>
 
 <p>
-如果接收到一个报文既带有一个 <code>Transfer-Encoding</code> 又带有一个 <code>Content-Length</code> 报头域，那么 <code>Transfer-Encoding</code> 将覆盖 <code>Content-Length</code>。这种报文可能意味着一个执行请求走私（request smuggling，<a href="#org92b4d2b">章节 9.5</a>）或者响应分割（response splitting，<a href="#org34d6b3f">章节 9.4</a>）的意图，应该被当作一个错误来处理。发送端 <b>必须</b> 在转发这种报文到下游之前移除所接收到的 <code>Content-Length</code> 域。
+如果接收到一个消息既带有一个 <code>Transfer-Encoding</code> 又带有一个 <code>Content-Length</code> 头字段，那么 <code>Transfer-Encoding</code> 将覆盖 <code>Content-Length</code>。这种消息可能意味着一个执行请求走私（request smuggling，<a href="#org92b4d2b">章节 9.5</a>）或者响应分割（response splitting，<a href="#org34d6b3f">章节 9.4</a>）的意图，应该被当作一个错误来处理。发送端 <b>必须</b> 在转发这种消息到下游之前移除所接收到的 <code>Content-Length</code> 域。
 </p></li>
 
-<li>如果一个报文没有 <code>Transfer-Encoding</code> 报头域，但带有或者多个不同域值的 <code>Content-Length</code> 报头域，或者一个域值不合法的 <code>Content-Length</code>，那么这个报文的分帧是不合法的，并且接收端 <b>必须</b> 将其当作一个不可恢复的错误来对待。如果这是一个请求报文，服务器 <b>必须</b> 响应一个带有 <code>400 (Bad Request)</code> 状态码的响应报文然后关闭连接。如果这是一个代理（proxy）接收到的响应报文，那么这个代理 <b>必须</b> 关闭与服务器的连接，丢弃掉这个报文并且发送一个 <code>502 (Bad Gateway)</code> 状态码的响应报文到客户端。如果这是一个用户代理（user agent）接收到的响应报文，那么这个用户代理 <b>必须</b> 关闭与服务器的连接，并且丢弃掉这个报文。</li>
+<li>如果一个消息没有 <code>Transfer-Encoding</code> 头字段，但带有或者多个不同值的 <code>Content-Length</code> 头字段，或者一个字段值不合法的 <code>Content-Length</code>，那么这个消息的分帧是不合法的，并且接收端 <b>必须</b> 将其当作一个不可恢复的错误来对待。如果这是一个请求消息，服务器 <b>必须</b> 响应一个带有 <code>400 (Bad Request)</code> 状态码的响应消息然后关闭连接。如果这是一个代理（proxy）接收到的响应消息，那么这个代理 <b>必须</b> 关闭与服务器的连接，丢弃掉这个消息并且发送一个 <code>502 (Bad Gateway)</code> 状态码的响应消息到客户端。如果这是一个用户代理（user agent）接收到的响应消息，那么这个用户代理 <b>必须</b> 关闭与服务器的连接，并且丢弃掉这个消息。</li>
 
-<li>如果报文在没有 <code>Transfer-Encoding</code> 的情况下带有一个合法的 <code>Content-Length</code> 报头域，这个 <code>Content-Length</code> 的数值（以字节形式）定义了报文正文的预计长度。如果接收端在接收到 <code>Content-Length</code> 的 <code>field-value</code> 之前，发送端关闭了连接或者接收端超时，那么接收端 <b>必须</b> 认为该报文是不完整的，并且关闭该连接。</li>
+<li>如果消息在没有 <code>Transfer-Encoding</code> 的情况下带有一个合法的 <code>Content-Length</code> 头字段，这个 <code>Content-Length</code> 的数值（以字节形式）定义了消息体的预计长度。如果接收端在接收到 <code>Content-Length</code> 的 <code>field-value</code> 之前，发送端关闭了连接或者接收端超时，那么接收端 <b>必须</b> 认为该消息是不完整的，并且关闭该连接。</li>
 
-<li>如果这是一个请求报文，并且不符合上述各种情况，那么该报文正文的长度为 0（没有出现报文正文）。</li>
+<li>如果这是一个请求消息，并且不符合上述各种情况，那么该消息体的长度为 0（没有出现消息体）。</li>
 
-<li>否则，这是一个没有声明报文正文长度的响应报文，因此该报文正文的长度是由服务器关闭连接之前，接收端接收到的字节数来决定的。</li>
+<li>否则，这是一个没有声明消息体长度的响应消息，因此该消息体的长度是由服务器关闭连接之前，接收端接收到的字节数来决定的。</li>
 </ol>
 
 <blockquote>
@@ -2800,7 +2800,7 @@ Since there is no way to distinguish a successfully completed, close-delimited m
 </blockquote>
 
 <p>
-因为没有途径从一个被网络故障打断而只接收到一部分的报文中去辨别出一个完整、带结束定界（close-delimited）的报文，因此，服务器 <b>应当</b> 尽可能生成编码值（coding）或者长度限定（length-delimited）的报文。结束定界（close-delimited）这一功能存在的主要目的是为了向后兼容 HTTP/1.0。
+因为没有途径从一个被网络故障打断而只接收到一部分的消息中去辨别出一个完整、带结束定界（close-delimited）的消息，因此，服务器 <b>应当</b> 尽可能生成编码值（coding）或者长度限定（length-delimited）的消息。结束定界（close-delimited）这一功能存在的主要目的是为了向后兼容 HTTP/1.0。
 </p>
 
 <blockquote>
@@ -2810,7 +2810,7 @@ A server <b>MAY</b> reject a request that contains a message body but not a <cod
 </blockquote>
 
 <p>
-服务器 <b>可以</b> 通过发送一个带有 <code>411 (Length Required)</code> 状态码的响应来拒绝一个包含了一个报文正文但却没有一个 <code>Content-Length</code> 报头域的请求。
+服务器 <b>可以</b> 通过发送一个带有 <code>411 (Length Required)</code> 状态码的响应来拒绝一个包含了一个消息体但却没有一个 <code>Content-Length</code> 头字段的请求。
 </p>
 
 <blockquote>
@@ -2820,7 +2820,7 @@ Unless a transfer coding other than <code>chunked</code> has been applied, a cli
 </blockquote>
 
 <p>
-除非应用了一个除 <code>chunked</code> 以外的传输编码值，发送包含一个报文正文的请求的客户端，如果预先知道报文正文的长度，<b>应该</b> 使用一个合法的 <code>Content-Length</code> 报头域，而不是使用分块传输编码值，这是因为某些现存的服务会使用 <code>411 (Length Required)</code> 状态码的响应报文来回应这种分块的请求报文，即使这块服务理解这个分块传输编码值。因为这种服务是经由一个在呼叫（服务）之前要求预先知道内容长度的网关来实现的，并且，服务器并不能或者不愿意在处理之前先去缓冲好整个请求。
+除非应用了一个除 <code>chunked</code> 以外的传输编码值，发送包含一个消息体的请求的客户端，如果预先知道消息体的长度，<b>应该</b> 使用一个合法的 <code>Content-Length</code> 头字段，而不是使用分块传输编码值，这是因为某些现存的服务会使用 <code>411 (Length Required)</code> 状态码的响应消息来回应这种分块的请求消息，即使这块服务理解这个分块传输编码值。因为这种服务是经由一个在呼叫（服务）之前要求预先知道内容长度的网关来实现的，并且，服务器并不能或者不愿意在处理之前先去缓冲好整个请求。
 </p>
 
 <blockquote>
@@ -2830,7 +2830,7 @@ A user agent that sends a request containing a message body <b>MUST</b> send a v
 </blockquote>
 
 <p>
-发送了一个包含报文正文的请求报文的用户代理，如果它并不知道服务器能够处理 HTTP/1.1（或之后）的请求的时候，<b>必须</b> 发送一个合法的 <code>Content-Length</code> 报头域。其中，用户代理可以使用具体的配置，或者通过记住之前接收到的响应报文的版本号的方式知道服务器是否可以处理 HTTP/1.1（或之后）的请求。
+发送了一个包含消息体的请求消息的用户代理，如果它并不知道服务器能够处理 HTTP/1.1（或之后）的请求的时候，<b>必须</b> 发送一个合法的 <code>Content-Length</code> 头字段。其中，用户代理可以使用具体的配置，或者通过记住之前接收到的响应消息的版本号的方式知道服务器是否可以处理 HTTP/1.1（或之后）的请求。
 </p>
 
 <blockquote>
@@ -2840,15 +2840,15 @@ If the final response to the last request on a connection has been completely re
 </blockquote>
 
 <p>
-在一个连接中，如果一个用户代理已经完成了对应最后一个请求的最后一个完整响应报文的接收工作后，发现仍然剩余额外的数据需要读取，那么这个用户代理 <b>可以</b> 丢弃这些剩余数据，或者试图辨别这些剩余数据是否属于之前的响应正文，如果之前的报文的 <code>Content-Length</code> 的值是不正确的话可能会导致这种情况。客户端 <b>禁止</b> 将这种额外的数据作为一个单独的响应来进行处理、缓存或者转发，这是因为这种行为可能会存在<a href="https://en.wikipedia.org/w/index.php?search=cache+poisoning&amp;title=Special%3ASearch&amp;fulltext=Search">缓存中毒（Cache Poisoning）</a>的隐患。
+在一个连接中，如果一个用户代理已经完成了对应最后一个请求的最后一个完整响应消息的接收工作后，发现仍然剩余额外的数据需要读取，那么这个用户代理 <b>可以</b> 丢弃这些剩余数据，或者试图辨别这些剩余数据是否属于之前的响应主体，如果之前的消息的 <code>Content-Length</code> 的值是不正确的话可能会导致这种情况。客户端 <b>禁止</b> 将这种额外的数据作为一个单独的响应来进行处理、缓存或者转发，这是因为这种行为可能会存在<a href="https://en.wikipedia.org/w/index.php?search=cache+poisoning&amp;title=Special%3ASearch&amp;fulltext=Search">缓存中毒（Cache Poisoning）</a>的隐患。
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5ce153b" class="outline-3">
-<h3 id="org5ce153b"><a id="ID-0905d267-9dcf-4208-acc1-ff7ba9863a95"></a>3.4. 报文不完整的处理 (Handling Incomplete Messages)</h3>
-<div class="outline-text-3" id="text-org5ce153b">
+<div id="outline-container-orgfa53349" class="outline-3">
+<h3 id="orgfa53349"><a id="ID-0905d267-9dcf-4208-acc1-ff7ba9863a95"></a>3.4. 消息不完整的处理 (Handling Incomplete Messages)</h3>
+<div class="outline-text-3" id="text-orgfa53349">
 <blockquote>
 <p>
 A server that receives an incomplete request message, usually due to a canceled request or a triggered timeout exception, <b>MAY</b> send an error response prior to closing the connection.
@@ -2856,7 +2856,7 @@ A server that receives an incomplete request message, usually due to a canceled 
 </blockquote>
 
 <p>
-服务器接收到一个不完整的请求报文，通常是因为这是一个已取消的请求，或者一个触发超时的异常，<b>可以</b> 在关闭连接前发送一个错误响应。
+服务器接收到一个不完整的请求消息，通常是因为这是一个已取消的请求，或者一个触发超时的异常，<b>可以</b> 在关闭连接前发送一个错误响应。
 </p>
 
 <blockquote>
@@ -2866,7 +2866,7 @@ A client that receives an incomplete response message, which can occur when a co
 </blockquote>
 
 <p>
-当一个连接被过早地关闭或者当一个推想的分块传输代码（<a href="https://en.wikipedia.org/wiki/Chunked_transfer_encoding">chunked transfer coding</a>）解码失败时会导致客户端接收到一个不完整的响应报文，这时候客户端 <b>必须</b> 记录下这个报文是不完整的。缓存（cache）对于不完整报文的要求定义在【<a href="https://tools.ietf.org/html/rfc7234">RFC7234</a>】<a href="https://tools.ietf.org/html/rfc7234#section-3">章节 3</a> 里。
+当一个连接被过早地关闭或者当一个推想的分块传输代码（<a href="https://en.wikipedia.org/wiki/Chunked_transfer_encoding">chunked transfer coding</a>）解码失败时会导致客户端接收到一个不完整的响应消息，这时候客户端 <b>必须</b> 记录下这个消息是不完整的。缓存（cache）对于不完整消息的要求定义在【<a href="https://tools.ietf.org/html/rfc7234">RFC7234</a>】<a href="https://tools.ietf.org/html/rfc7234#section-3">章节 3</a> 里。
 </p>
 
 <blockquote>
@@ -2876,7 +2876,7 @@ If a response terminates in the middle of the header section (before the empty l
 </blockquote>
 
 <p>
-假如一个响应终止在报头块（header section）之间（在接收到空行之前），并且状态码可能需要依赖报头域才能传达响应报文的完整意义，那么客户端不能够假设这个“意义”已经传达了；客户端可能需要重复这一次请求，以便于决定下一步将如何行动。
+假如一个响应终止在消息头部（header section）之间（在接收到空行之前），并且状态码可能需要依赖头字段才能传达响应消息的完整意义，那么客户端不能够假设这个“意义”已经传达了；客户端可能需要重复这一次请求，以便于决定下一步将如何行动。
 </p>
 
 <blockquote>
@@ -2886,14 +2886,14 @@ A message body that uses the chunked transfer coding is incomplete if the zero-s
 </blockquote>
 
 <p>
-一个使用分块传输代码的报文正文，如果终止编码的 <code>zero-sized</code> 分块没有被接收到，那么这个报文正文是不完整的。一个使用一个合法 <code>Content-Length</code> 的报文，如果所接收到的报文正文的大小（按字节来算）小于给定 <code>Content-Length</code> 的大小，那么这个报文是不完整的。一个既没有使用分块传输代码，也没有提供 <code>Content-Length</code> 的响应报文，如果因为连接被关闭而终止，只要该报文所提供的报头块已经接收完整，那么可以认为报文是完整的，无论报文正文的内容被接收到多少。
+一个使用分块传输代码的消息体，如果终止编码的 <code>zero-sized</code> 分块没有被接收到，那么这个消息体是不完整的。一个使用一个合法 <code>Content-Length</code> 的消息，如果所接收到的消息体的大小（按字节来算）小于给定 <code>Content-Length</code> 的大小，那么这个消息是不完整的。一个既没有使用分块传输代码，也没有提供 <code>Content-Length</code> 的响应消息，如果因为连接被关闭而终止，只要该消息所提供的消息头部已经接收完整，那么可以认为消息是完整的，无论消息体的内容被接收到多少。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org189d602" class="outline-3">
-<h3 id="org189d602"><a id="ID-A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517"></a>3.5. 报文解析的健壮性 (Message Parsing Robustness)</h3>
-<div class="outline-text-3" id="text-org189d602">
+<div id="outline-container-org6c0e6ec" class="outline-3">
+<h3 id="org6c0e6ec"><a id="ID-A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517"></a>3.5. 消息解析的健壮性 (Message Parsing Robustness)</h3>
+<div class="outline-text-3" id="text-org6c0e6ec">
 <blockquote>
 <p>
 Older HTTP/1.0 user agent implementations might send an extra CRLF after a POST request as a workaround for some early server applications that failed to read message body content that was not terminated by a line-ending. An HTTP/1.1 user agent <b>MUST NOT</b> preface or follow a request with an extra CRLF. If terminating the request message body with a line-ending is desired, then the user agent <b>MUST</b> count the terminating CRLF octets as part of the message body length.
@@ -2901,7 +2901,7 @@ Older HTTP/1.0 user agent implementations might send an extra CRLF after a POST 
 </blockquote>
 
 <p>
-在 HTTP/1.0 时代，早期的服务器应用可能不能正确读取那些没有以换行符 <code>line-ending</code> 作为结尾的报文正文内容。因此，早期的 HTTP/1.0 版本的用户代理可能会在 POST 请求报文中发送一个额外的回车换行 CRLF 来作为一个变通方案。到了 HTTP/1.1，用户代理 <b>不能</b> 在一个请求报文首或尾再添加额外的回车换行 CRLF 了。如果要求以换行符 <code>line-ending</code> 作为请求报文正文的结束，那么用户代理 <b>必须</b> 对 CRLF 的字节数目进行计数，包含在报文正文的长度之内。
+在 HTTP/1.0 时代，早期的服务器应用可能不能正确读取那些没有以换行符 <code>line-ending</code> 作为结尾的消息体内容。因此，早期的 HTTP/1.0 版本的用户代理可能会在 POST 请求消息中发送一个额外的回车换行 CRLF 来作为一个变通方案。到了 HTTP/1.1，用户代理 <b>不能</b> 在一个请求消息首或尾再添加额外的回车换行 CRLF 了。如果要求以换行符 <code>line-ending</code> 作为请求消息体的结束，那么用户代理 <b>必须</b> 对 CRLF 的字节数目进行计数，包含在消息体的长度之内。
 </p>
 
 <blockquote>
@@ -2921,7 +2921,7 @@ Although the line terminator for the <code>start-line</code> and header fields i
 </blockquote>
 
 <p>
-虽然对于起始行 <code>start-line</code> 和报文头域（header fields）的行终结符（line terminator）是 CRLF 字符序列，但接收端 <b>可以</b> 单独将一个 LF 作为一行的终结，同时忽略 LF 之前的所有 CR。
+虽然对于起始行 <code>start-line</code> 和消息头字段（header fields）的行终结符（line terminator）是 CRLF 字符序列，但接收端 <b>可以</b> 单独将一个 LF 作为一行的终结，同时忽略 LF 之前的所有 CR。
 </p>
 
 <blockquote>
@@ -2931,7 +2931,7 @@ Although the <code>request-line</code> and <code>status-line</code> grammar rule
 </blockquote>
 
 <p>
-虽然请求行（request line）和状态行（status line）的语法规则要求每一个组件元素需要以一个空格（8位字节） <code>SP</code> 分隔，但是接收端 <b>可以</b> 改由使用更宽泛的空格限定符（whitespace-delimited word）替代 <code>SP</code> 来进行解析（parse），空格限定符由包含一个或多个 <code>SP</code>、<code>HTAB</code>、<code>VT</code> (%x0B)、<code>FF</code> (&amp;x0C) 或者单独由 <code>CR</code> 组成。但是，如果报文有多个接收端，而且这些接收端都有自己独特的健壮性的解释（interpretation），那么，这种宽泛解析（lenient parsing）的方式会引起安全隐患（见<a href="#org92b4d2b">章节 9.5</a>）。
+虽然请求行（request line）和状态行（status line）的语法规则要求每一个组件元素需要以一个空格（8位字节） <code>SP</code> 分隔，但是接收端 <b>可以</b> 改由使用更宽泛的空格限定符（whitespace-delimited word）替代 <code>SP</code> 来进行解析（parse），空格限定符由包含一个或多个 <code>SP</code>、<code>HTAB</code>、<code>VT</code> (%x0B)、<code>FF</code> (&amp;x0C) 或者单独由 <code>CR</code> 组成。但是，如果消息有多个接收端，而且这些接收端都有自己独特的健壮性的解释（interpretation），那么，这种宽泛解析（lenient parsing）的方式会引起安全隐患（见<a href="#org92b4d2b">章节 9.5</a>）。
 </p>
 
 <blockquote>
@@ -2941,7 +2941,7 @@ When a server listening only for HTTP request messages, or processing what appea
 </blockquote>
 
 <p>
-当一个服务端只针对 HTTP 请求进行监听，或者正在处理 HTTP 请求报文的起始行 <code>start-line</code> 具体有什么内容的时候，接到到一个与 HTTP 报文语法不匹配的字符（octets）序列，除以上列出的非健壮异常以外，服务端 <b>应该</b> 响应一个 <code>400 (Bad Request)</code> 的响应报文。
+当一个服务端只针对 HTTP 请求进行监听，或者正在处理 HTTP 请求消息的起始行 <code>start-line</code> 具体有什么内容的时候，接到到一个与 HTTP 消息语法不匹配的字符（octets）序列，除以上列出的非健壮异常以外，服务端 <b>应该</b> 响应一个 <code>400 (Bad Request)</code> 的响应消息。
 </p>
 </div>
 </div>
@@ -2957,7 +2957,7 @@ Transfer coding names are used to indicate an encoding transformation that has b
 </blockquote>
 
 <p>
-传输编码值（transfer coding）是用于表示已经、能够或者可能需要应用到一个有效载荷（payload body）中以确保网络传输安全的一种编码转换（encoding transformation）。与内容编码值（content coding）不同的是，传输编码值是一个报文的特性，而不是一个<ruby>表示形式<rt>representation</rt></ruby>的特性。
+传输编码值（transfer coding）是用于表示已经、能够或者可能需要应用到一个有效载荷（payload body）中以确保网络传输安全的一种编码转换（encoding transformation）。与内容编码值（content coding）不同的是，传输编码值是一个消息的特性，而不是一个<ruby>表示形式<rt>representation</rt></ruby>的特性。
 </p>
 
 <div class="org-src-container">
@@ -2992,7 +2992,7 @@ All transfer-coding names are case-insensitive and ought to be registered within
 </blockquote>
 
 <p>
-所有 <code>transfer-coding</code> 的名称都是不区分大小写的，并且应该被注册在 "HTTP Transfer Coding" 注册表中，定义在<a href="#org9d01527">章节 8.4</a> 中。它们用在报文域 <code>TE</code> （<a href="#org93513ff">章节 4.3</a>）和 <code>Transfer-Encoding</code> （<a href="#org209c019">章节 3.3.1</a>）里。
+所有 <code>transfer-coding</code> 的名称都是不区分大小写的，并且应该被注册在 "HTTP Transfer Coding" 注册表中，定义在<a href="#org9d01527">章节 8.4</a> 中。它们用在消息域 <code>TE</code> （<a href="#org93513ff">章节 4.3</a>）和 <code>Transfer-Encoding</code> （<a href="#org209c019">章节 3.3.1</a>）里。
 </p>
 </div>
 
@@ -3006,7 +3006,7 @@ The <code>chunked</code> transfer coding wraps the payload body in order to tran
 </blockquote>
 
 <p>
-使用 <code>chunked</code> 传输编码值将有效载荷（payload body）包裹为一系列的分块来传输。每个分块都带有单独的大小指标，跟随于一个 <b>可选的</b> 包含报头域的结尾之后。<code>chunked</code> 允许以一系列长度限定的（length-delimited）缓冲（buffers）的方式来传输大小未知的内容流。这种缓冲允许发送端去保持连接不关闭，以及使接收端得知在什么时候接收完整个报文。
+使用 <code>chunked</code> 传输编码值将有效载荷（payload body）包裹为一系列的分块来传输。每个分块都带有单独的大小指标，跟随于一个 <b>可选的</b> 包含头字段的结尾之后。<code>chunked</code> 允许以一系列长度限定的（length-delimited）缓冲（buffers）的方式来传输大小未知的内容流。这种缓冲允许发送端去保持连接不关闭，以及使接收端得知在什么时候接收完整个消息。
 </p>
 
 <div class="org-src-container">
@@ -3055,7 +3055,7 @@ The <code>chunked</code> encoding allows each chunk to include zero or more chun
 </blockquote>
 
 <p>
-<code>chunked</code> 编码允许每一个分块包含零个或以上分块扩展（chunk extensions） <code>chunk-ext</code>，紧跟在 <code>chunk-size</code> 之后，用于支持 per-chunk 元数据（例如一个签名或哈希值）、mid-message 控制信息，或者随机报文正文大小。
+<code>chunked</code> 编码允许每一个分块包含零个或以上分块扩展（chunk extensions） <code>chunk-ext</code>，紧跟在 <code>chunk-size</code> 之后，用于支持 per-chunk 元数据（例如一个签名或哈希值）、mid-message 控制信息，或者随机消息体大小。
 </p>
 
 <div class="org-src-container">
@@ -3083,7 +3083,7 @@ A recipient <b>MUST</b> ignore unrecognized chunk extensions. A server ought to 
 </blockquote>
 
 <p>
-一个接收端 <b>必须</b> 忽略无法识别的分块扩展。一个服务端应该将所接收到的分块扩展的总长度限制到一个由相应服务提供的合理的值上，就像服务端对一个报文的其他部分应用长度限制和超时一样，并且生成一个合适的 <code>4xx (Client Error)</code> 响应，如果超过那个长度限制的话。
+一个接收端 <b>必须</b> 忽略无法识别的分块扩展。一个服务端应该将所接收到的分块扩展的总长度限制到一个由相应服务提供的合理的值上，就像服务端对一个消息的其他部分应用长度限制和超时一样，并且生成一个合适的 <code>4xx (Client Error)</code> 响应，如果超过那个长度限制的话。
 </p>
 </div>
 </div>
@@ -3098,7 +3098,7 @@ A trailer allows the sender to include additional fields at the end of a chunked
 </blockquote>
 
 <p>
-一个拖尾（trailer）允许发送端在一个分块的报文的末尾处包含额外的头域，为了提供可以在报文正文被发送的时候动态生成的元数据，例如一个报文完整性检查（message integrity check, MIC）、数字签名（digital signature）或者后处理状态（post-processing status）等。拖尾域（trailer fields）等价于报头域（header fields），除了它们是发送在一个分块拖尾里，而不是在一个报文的报头块里。
+一个拖尾（trailer）允许发送端在一个分块的消息的末尾处包含额外的头字段，为了提供可以在消息体被发送的时候动态生成的元数据，例如一个消息完整性检查（message integrity check, MIC）、数字签名（digital signature）或者后处理状态（post-processing status）等。拖尾域（trailer fields）等价于头字段（header fields），除了它们是发送在一个分块拖尾里，而不是在一个消息的消息头部里。
 </p>
 
 <div class="org-src-container">
@@ -3113,7 +3113,7 @@ A sender <b>MUST NOT</b> generate a trailer that contains a field necessary for 
 </blockquote>
 
 <p>
-发送端 <b>禁止</b> 生成一个包含某种用于以下用途的必要域的拖尾：报文分帧（例如，<code>Transfer-Encoding</code> 和 <code>Content-Length</code>）、路由选择（例如，<code>Host</code>）、请求修饰符（例如，【RFC7231】章节 5 里定义的 <code>controls</code> 和 <code>conditionals</code>）、认证（见【RFC7235】和【RFC6265】）、响应控制数据（见【RFC7231】章节 7.1），以及决定如何处理有效载荷的域（例如，<code>Content-Encoding</code>, <code>Content-Type</code>, <code>Content-Range</code>, and <code>Trailer</code>）。
+发送端 <b>禁止</b> 生成一个包含某种用于以下用途的必要域的拖尾：消息分帧（例如，<code>Transfer-Encoding</code> 和 <code>Content-Length</code>）、路由选择（例如，<code>Host</code>）、请求修饰符（例如，【RFC7231】章节 5 里定义的 <code>controls</code> 和 <code>conditionals</code>）、认证（见【RFC7235】和【RFC6265】）、响应控制数据（见【RFC7231】章节 7.1），以及决定如何处理有效载荷的域（例如，<code>Content-Encoding</code>, <code>Content-Type</code>, <code>Content-Range</code>, and <code>Trailer</code>）。
 </p>
 
 <blockquote>
@@ -3123,7 +3123,7 @@ When a chunked message containing a non-empty trailer is received, the recipient
 </blockquote>
 
 <p>
-当接收到一个包含一个非空拖尾（non-empty trailer）的分块报文时，接收端 <b>可以</b> 像处理报头域一样的方式来处理这些拖尾里的域（除了上述禁止的域以外）。接收端 <b>必须</b> 忽略（或者认为是一个错误）任何禁止存放于拖尾里的域，这是因为如果像处理报头域一样处理它们的话可能会越过外部安全过滤机制。
+当接收到一个包含一个非空拖尾（non-empty trailer）的分块消息时，接收端 <b>可以</b> 像处理头字段一样的方式来处理这些拖尾里的域（除了上述禁止的域以外）。接收端 <b>必须</b> 忽略（或者认为是一个错误）任何禁止存放于拖尾里的域，这是因为如果像处理头字段一样处理它们的话可能会越过外部安全过滤机制。
 </p>
 
 <blockquote>
@@ -3133,7 +3133,7 @@ Unless the request includes a <code>TE</code> header field indicating "trailers"
 </blockquote>
 
 <p>
-除非请求报文里包含一个 <code>TE</code> 报头域指明允许 "trailers"（详情见章节 4.3），服务器 <b>不应该</b> 生成它相信用户代理必然会接收到的拖尾域（trailer fields）。没有包含 "trailers" 的 <code>TE</code> 报头域时，服务端应该假设拖尾域可能会在发送到用户代理的链路过程中被隐式地丢弃掉。这样的要求使得中间人能够在不用缓冲（buffering）整个响应报文的情况下去转发一个 de-chunked 的报文到一个 HTTP/1.0 接收端中去。
+除非请求消息里包含一个 <code>TE</code> 头字段指明允许 "trailers"（详情见章节 4.3），服务器 <b>不应该</b> 生成它相信用户代理必然会接收到的拖尾域（trailer fields）。没有包含 "trailers" 的 <code>TE</code> 头字段时，服务端应该假设拖尾域可能会在发送到用户代理的链路过程中被隐式地丢弃掉。这样的要求使得中间人能够在不用缓冲（buffering）整个响应消息的情况下去转发一个 de-chunked 的消息到一个 HTTP/1.0 接收端中去。
 </p>
 </div>
 </div>
@@ -3186,7 +3186,7 @@ The codings defined below can be used to compress the payload of a message.
 </blockquote>
 
 <p>
-下列编码值能够用于对一个报文里的有效载荷（payload）进行压缩。
+下列编码值能够用于对一个消息里的有效载荷（payload）进行压缩。
 </p>
 </div>
 
@@ -3256,7 +3256,7 @@ The "TE" header field in a request indicates what transfer codings, besides chun
 </blockquote>
 
 <p>
-在一个请求报文中的报头域 <code>TE</code> 指明了客户端除了愿意接受 <code>chunked</code> 以外还愿意接受哪些传输编码的响应报文，以及客户端是否愿意在分块传输编码值中接受拖尾域（trailer fields）。
+在一个请求消息中的头字段 <code>TE</code> 指明了客户端除了愿意接受 <code>chunked</code> 以外还愿意接受哪些传输编码的响应消息，以及客户端是否愿意在分块传输编码值中接受拖尾域（trailer fields）。
 </p>
 
 <blockquote>
@@ -3266,7 +3266,7 @@ The TE field-value consists of a comma-separated list of transfer coding names, 
 </blockquote>
 
 <p>
-报头域 <code>TE</code> 的域值由一个以逗号分隔的传输编码值的名称列表组成。列表内的每一项都考虑到可选参数（见章节 4）以及/或者关键词 "<code>trailers</code>"。客户端 <b>禁止</b> 在 <code>TE</code> 发送 <code>chunked</code> 传输编码值名称；对于 HTTP/1.1 接收端来说，<code>chunked</code> 总是被允许的。
+<code>TE</code> 的字段值由一个以逗号分隔的传输编码值的名称列表组成。列表内的每一项都考虑到可选参数（见章节 4）以及/或者关键词 "<code>trailers</code>"。客户端 <b>禁止</b> 在 <code>TE</code> 发送 <code>chunked</code> 传输编码值名称；对于 HTTP/1.1 接收端来说，<code>chunked</code> 总是被允许的。
 </p>
 
 <div class="org-src-container">
@@ -3302,7 +3302,7 @@ The presence of the keyword "trailers" indicates that the client is willing to a
 </blockquote>
 
 <p>
-<code>TE</code> 报头域里出现关键词 <code>trailers</code> 指明该客户端自身及其所有下游客户端都愿意在一个分块传输编码值里接受拖尾域（trailer fields，见章节 4.1.2）。对于来自一个中间人的请求，意味着以下两种情况：（a）该中间人的所有下游客户端都愿意接受拖尾域，或者，（b）该中间人为了下游的接收端，将试图先缓冲整个响应报文。需要注意的是，HTTP/1.1 并没有对一个分块的响应报文（chunked response）的大小定义任何限制，因此，中间人并不能保证能够缓冲整个报文。
+<code>TE</code> 头字段里出现关键词 <code>trailers</code> 指明该客户端自身及其所有下游客户端都愿意在一个分块传输编码值里接受拖尾域（trailer fields，见章节 4.1.2）。对于来自一个中间人的请求，意味着以下两种情况：（a）该中间人的所有下游客户端都愿意接受拖尾域，或者，（b）该中间人为了下游的接收端，将试图先缓冲整个响应消息。需要注意的是，HTTP/1.1 并没有对一个分块的响应消息（chunked response）的大小定义任何限制，因此，中间人并不能保证能够缓冲整个消息。
 </p>
 
 <blockquote>
@@ -3322,7 +3322,7 @@ If the TE field-value is empty or if no TE field is present, the only acceptable
 </blockquote>
 
 <p>
-如果报头域 <code>TE</code> 不存在或者它的域值为空，意味着仅接受 <code>chunked</code> 传输编码值。没有任何传输代码值的报文总是可打接受的。
+如果头字段 <code>TE</code> 不存在或者它的字段值为空，意味着仅接受 <code>chunked</code> 传输编码值。没有任何传输代码值的消息总是可打接受的。
 </p>
 
 <blockquote>
@@ -3332,7 +3332,7 @@ Since the TE header field only applies to the immediate connection, a sender of 
 </blockquote>
 
 <p>
-因为报头域 <code>TE</code> 仅应用于直接连接（immediate connection），因此，为了避免报头域 <code>TE</code> 被中间人转发出去（不符合 TE 的语义），<code>TE</code> 的发送端 <b>必须</b> 还要在 <code>Connection</code> 报头域（见<a href="https://tools.ietf.org/html/rfc7230#section-6.1">章节 6.1</a>）里发送一个 "TE" 连接选项（connection option）。
+因为头字段 <code>TE</code> 仅应用于直接连接（immediate connection），因此，为了避免头字段 <code>TE</code> 被中间人转发出去（不符合 TE 的语义），<code>TE</code> 的发送端 <b>必须</b> 还要在 <code>Connection</code> 头字段（见<a href="https://tools.ietf.org/html/rfc7230#section-6.1">章节 6.1</a>）里发送一个 "TE" 连接选项（connection option）。
 </p>
 </div>
 </div>
@@ -3347,7 +3347,7 @@ When a message includes a message body encoded with the chunked transfer coding 
 </blockquote>
 
 <p>
-当一个报文包含了一个使用 <code>chunked</code> 编码的报文正文，并且发送端希望通过在报文末尾附加拖尾域（trailer fields）的方式来发送元数据（metadata），那么发送端 <b>应该</b> 在报文正文之前生成一个报头域 <code>Trailer</code> 来指定有哪些域将会被出现在拖尾中。这样使得接收端在处理报文正文之前可以做好接收那些元数据的准备，如果这种报文将被流式发送，并且接收端希望在接收报文的同时对其进行完整性检验，那么这种设计将非常有用。
+当一个消息包含了一个使用 <code>chunked</code> 编码的消息体，并且发送端希望通过在消息末尾附加拖尾域（trailer fields）的方式来发送元数据（metadata），那么发送端 <b>应该</b> 在消息体之前生成一个头字段 <code>Trailer</code> 来指定有哪些域将会被出现在拖尾中。这样使得接收端在处理消息体之前可以做好接收那些元数据的准备，如果这种消息将被流式发送，并且接收端希望在接收消息的同时对其进行完整性检验，那么这种设计将非常有用。
 </p>
 
 <div class="org-src-container">
@@ -3358,9 +3358,9 @@ When a message includes a message body encoded with the chunked transfer coding 
 </div>
 </div>
 
-<div id="outline-container-org9d6a2ba" class="outline-2">
-<h2 id="org9d6a2ba"><a id="ID-f6881980-16db-4ca2-a3c8-39aa336c954f"></a>5. 报文路由（Message Routing）</h2>
-<div class="outline-text-2" id="text-org9d6a2ba">
+<div id="outline-container-orga5f14c8" class="outline-2">
+<h2 id="orga5f14c8"><a id="ID-f6881980-16db-4ca2-a3c8-39aa336c954f"></a>5. 消息路由（Message Routing）</h2>
+<div class="outline-text-2" id="text-orga5f14c8">
 <blockquote>
 <p>
 HTTP request message routing is determined by each client based on the target resource, the client's proxy configuration, and establishment or reuse of an inbound connection. The corresponding response routing follows the same connection chain back to the client.
@@ -3368,7 +3368,7 @@ HTTP request message routing is determined by each client based on the target re
 </blockquote>
 
 <p>
-HTTP 请求报文路由是取决于每个客户端，基于目标资源、客户端的代理配置，以及入站连接（inbound connection）的创建或者复用。与之对应的响应路由跟随同样一条链路反向回到客户端。
+HTTP 请求消息路由是取决于每个客户端，基于目标资源、客户端的代理配置，以及入站连接（inbound connection）的创建或者复用。与之对应的响应路由跟随同样一条链路反向回到客户端。
 </p>
 </div>
 
@@ -3467,7 +3467,7 @@ Once an inbound connection is obtained, the client sends an HTTP request message
 </blockquote>
 
 <p>
-一旦获得了一个入站连接（inbound connection），客户端会发送一个带有一个请求目标（<code>request-target</code>）的 HTTP 请求报文（<a href="#org86c9e58">章节 3</a>）。请求目标从目标 URI 里推导得出。依据请求方法（request method）以及该请求是否是一个发送到代理（proxy）的请求来分，请求目标一共有四种不同的格式。
+一旦获得了一个入站连接（inbound connection），客户端会发送一个带有一个请求目标（<code>request-target</code>）的 HTTP 请求消息（<a href="#org4fb3faf">章节 3</a>）。请求目标从目标 URI 里推导得出。依据请求方法（request method）以及该请求是否是一个发送到代理（proxy）的请求来分，请求目标一共有四种不同的格式。
 </p>
 
 <div class="org-src-container">
@@ -3504,7 +3504,7 @@ When making a request directly to an origin server, other than a CONNECT or serv
 </blockquote>
 
 <p>
-当生成一个直接导向到源服务器的请求时，除了一个 CONNECT 或者服务器范围内的 OPTIONS 请求（见下文）以外，客户端 <b>必须</b> 仅使用目标 URI 的绝对路径 <code>absolute-path</code> 组件以及查询字符串 <code>query</code> 组件作为请求目标。如果目标 URI 的 <code>path</code> 组件为空，客户端 <b>必须</b> 发送 "/" 作为请求目标的原始形式的 <code>path</code>。一个 <code>Host</code> 报头域同样会被发送，其定义见<a href="#org1e507aa">章节 5.4</a>。
+当生成一个直接导向到源服务器的请求时，除了一个 CONNECT 或者服务器范围内的 OPTIONS 请求（见下文）以外，客户端 <b>必须</b> 仅使用目标 URI 的绝对路径 <code>absolute-path</code> 组件以及查询字符串 <code>query</code> 组件作为请求目标。如果目标 URI 的 <code>path</code> 组件为空，客户端 <b>必须</b> 发送 "/" 作为请求目标的原始形式的 <code>path</code>。一个 <code>Host</code> 头字段同样会被发送，其定义见<a href="#org1e507aa">章节 5.4</a>。
 </p>
 
 <p>
@@ -3547,7 +3547,7 @@ followed by the remainder of the request message.
 </blockquote>
 
 <p>
-以及随后的请求报文的其余部分。
+以及随后的请求消息的其余部分。
 </p>
 </div>
 </div>
@@ -3577,7 +3577,7 @@ The proxy is requested to either service that request from a valid cache, if pos
 </blockquote>
 
 <p>
-代理要不被要求去处理来自一个有效缓存的请求报文（如果可能的话），要不被要求去生成同样的请求来代表客户端向服务器（或者是下一个入站代理服务器，或者是请求目标所指定的源服务器）发送请求。关于报文的这种“转发”的相关要求，定义在<a href="#org5fed8d5">章节 5.7</a> 中。
+代理要不被要求去处理来自一个有效缓存的请求消息（如果可能的话），要不被要求去生成同样的请求来代表客户端向服务器（或者是下一个入站代理服务器，或者是请求目标所指定的源服务器）发送请求。关于消息的这种“转发”的相关要求，定义在<a href="#orgb81449b">章节 5.7</a> 中。
 </p>
 
 <blockquote>
@@ -3734,7 +3734,7 @@ The "Host" header field in a request provides the host and port information from
 </blockquote>
 
 <p>
-在一个请求报文中的 <code>Host</code> 报头域提供了来自目标 URI 的主机（host）以及端口（port）信息，当源服务器对同一个 IP 地址使用多个不同主机名称来处理众多请求时，<code>Host</code> 能够让源服务器可以区分该请求所对应的资源。
+在一个请求消息中的 <code>Host</code> 头字段提供了来自目标 URI 的主机（host）以及端口（port）信息，当源服务器对同一个 IP 地址使用多个不同主机名称来处理众多请求时，<code>Host</code> 能够让源服务器可以区分该请求所对应的资源。
 </p>
 
 <div class="org-src-container">
@@ -3749,7 +3749,7 @@ A client <b>MUST</b> send a <code>Host</code> header field in all HTTP/1.1 reque
 </blockquote>
 
 <p>
-客户端 <b>必须</b> 在其发送的所有 HTTP/1.1 请求报文里包含一个 <code>Host</code> 报头域。如果目标 URI 包含一个 <code>authority</code> 组件，那么客户端 <b>必须</b> 在其发送的请求报文里将 <code>Host</code> 的域值指定为 <code>authority</code> 组件的内容，同时，排除掉 <code>authority</code> 内任何 <code>userinfo</code> 子组件以及它的 "@" 分隔符（<a href="#org72dfe0e">章节 2.7.1</a>）。如果目标 URI 里缺少或未定义 <code>authority</code> 组件，那么客户端 <b>必须</b> 在其发送的请求报文里包含一个域值为空的 <code>Host</code> 报头域。
+客户端 <b>必须</b> 在其发送的所有 HTTP/1.1 请求消息里包含一个 <code>Host</code> 头字段。如果目标 URI 包含一个 <code>authority</code> 组件，那么客户端 <b>必须</b> 在其发送的请求消息里将 <code>Host</code> 的字段值指定为 <code>authority</code> 组件的内容，同时，排除掉 <code>authority</code> 内任何 <code>userinfo</code> 子组件以及它的 "@" 分隔符（<a href="#org72dfe0e">章节 2.7.1</a>）。如果目标 URI 里缺少或未定义 <code>authority</code> 组件，那么客户端 <b>必须</b> 在其发送的请求消息里包含一个字段值为空的 <code>Host</code> 头字段。
 </p>
 
 <blockquote>
@@ -3759,7 +3759,7 @@ Since the <code>Host</code> field-value is critical information for handling a r
 </blockquote>
 
 <p>
-因为对于如何处理一个请求报文来说，<code>Host</code> 报头域的内容是一个关键信息，所以用户代理 <b>应该</b> 将 <code>Host</code> 作为报头的第一个报头域，紧随于请求行（request line）之后。
+因为对于如何处理一个请求消息来说，<code>Host</code> 头字段的内容是一个关键信息，所以用户代理 <b>应该</b> 将 <code>Host</code> 作为头部的第一个字段，紧随于请求行（request line）之后。
 </p>
 
 <blockquote>
@@ -3769,7 +3769,7 @@ For example, a GET request to the origin server for <a href="http://www.example.
 </blockquote>
 
 <p>
-例如，一个发送到源服务器的 GET 请求 <a href="http://www.example.org/pub/www/">http://www.example.org/pub/www/</a>，其请求报文的开头为：
+例如，一个发送到源服务器的 GET 请求 <a href="http://www.example.org/pub/www/">http://www.example.org/pub/www/</a>，其请求消息的开头为：
 </p>
 
 <pre class="example">
@@ -3784,12 +3784,12 @@ A client <b>MUST</b> send a <code>Host</code> header field in an HTTP/1.1 reques
 </blockquote>
 
 <p>
-客户端 <b>必须</b> 在其发送的 HTTP/1.1 请求报文里包含一个 <code>Host</code> 报头域，即使是绝对形式（<code>absolute-form</code>）的请求目标，这是因为这样做使得该 <code>Host</code> 的信息能够穿透那些老旧的可能未实现 <code>Host</code> 的 HTTP/1.0 的代理而转发出去。
+客户端 <b>必须</b> 在其发送的 HTTP/1.1 请求消息里包含一个 <code>Host</code> 头字段，即使是绝对形式（<code>absolute-form</code>）的请求目标，这是因为这样做使得该 <code>Host</code> 的信息能够穿透那些老旧的可能未实现 <code>Host</code> 的 HTTP/1.0 的代理而转发出去。
 </p>
 
 <blockquote>
 <p>
-译注：<code>Host</code> 报头域是自 HTTP/1.1 开始引入的，因此对于 HTTP/1.0 的实现而言，它就是那种“未识别的”报头域。按照 HTTP/1.0 规范【RFC1945】，未识别的报头域等同于实体头域，见<a href="https://tools.ietf.org/html/rfc1945#section-4.3">【RFC1945】章节 4.3</a>，而对于未识别的实体头域，接收端应该忽略，代理应该转发，见<a href="https://tools.ietf.org/html/rfc1945#section-7.1">【RFC1945】章节 7.1</a>。
+译注：<code>Host</code> 头字段是自 HTTP/1.1 开始引入的，因此对于 HTTP/1.0 的实现而言，它就是那种“未识别的”头字段。按照 HTTP/1.0 规范【RFC1945】，未识别的头字段等同于实体头字段，见<a href="https://tools.ietf.org/html/rfc1945#section-4.3">【RFC1945】章节 4.3</a>，而对于未识别的实体头字段，接收端应该忽略，代理应该转发，见<a href="https://tools.ietf.org/html/rfc1945#section-7.1">【RFC1945】章节 7.1</a>。
 </p>
 </blockquote>
 
@@ -3800,7 +3800,7 @@ When a proxy receives a request with an <code>absolute-form</code> of request-ta
 </blockquote>
 
 <p>
-当一个代理接收到一个带有以绝对形式表示的请求目标的请求报文时，代理 <b>必须</b> 忽略其接收到的 <code>Host</code> 报头域（如果有的话），并且将其替换为请求目标的主机信息。转发这种请求的代理 <b>必须</b> 基于其接收到的请求目标来生成一个新的 <code>Host</code> 域值，而不是直接转发原本的 <code>Host</code> 域值。
+当一个代理接收到一个带有以绝对形式表示的请求目标的请求消息时，代理 <b>必须</b> 忽略其接收到的 <code>Host</code> 头字段（如果有的话），并且将其替换为请求目标的主机信息。转发这种请求的代理 <b>必须</b> 基于其接收到的请求目标来生成一个新的 <code>Host</code> 字段值，而不是直接转发原本的 <code>Host</code> 字段值。
 </p>
 
 <blockquote>
@@ -3810,7 +3810,7 @@ Since the <code>Host</code> header field acts as an application-level routing me
 </blockquote>
 
 <p>
-因为 <code>Host</code> 报头域充当一个应用层的路由机制，对于恶意软件来说它是寻求攻击的一个热点目标，例如，<a href="https://httpwg.org/specs/rfc7234.html#security.considerations">毒害共享缓存</a>，或者将请求重定向其他非预期的服务器当中等。在没有先验证这个被拦截过的连接（intercepted connection）是否指向该主机的一个合法的 IP 地址的情况下，如果一个拦截代理（interception proxy）依赖 <code>Host</code> 的域值来将请求重定向到内部服务器（internal server），或者将 <code>Host</code> 的域值用于作为一个共享缓存的键（key）来使用，那么它会特别容易受到攻击。
+因为 <code>Host</code> 头字段充当一个应用层的路由机制，对于恶意软件来说它是寻求攻击的一个热点目标，例如，<a href="https://httpwg.org/specs/rfc7234.html#security.considerations">毒害共享缓存</a>，或者将请求重定向其他非预期的服务器当中等。在没有先验证这个被拦截过的连接（intercepted connection）是否指向该主机的一个合法的 IP 地址的情况下，如果一个拦截代理（interception proxy）依赖 <code>Host</code> 的字段值来将请求重定向到内部服务器（internal server），或者将 <code>Host</code> 的字段值用于作为一个共享缓存的键（key）来使用，那么它会特别容易受到攻击。
 </p>
 
 <blockquote>
@@ -3820,7 +3820,7 @@ A server <b>MUST</b> respond with a <code>400 (Bad Request)</code> status code t
 </blockquote>
 
 <p>
-如果任何 HTTP/1.1 的请求报文缺少一个 <code>Host</code> 报头域，或者包含超过一个以上 <code>Host</code> 报头域，或者 <code>Host</code> 的域值不合法，那么，服务器 <b>必须</b> 对这种请求响应一个带有 <code>400 (Bad Request)</code> 状态码的响应报文。
+如果任何 HTTP/1.1 的请求消息缺少一个 <code>Host</code> 头字段，或者包含超过一个以上 <code>Host</code> 头字段，或者 <code>Host</code> 的字段值不合法，那么，服务器 <b>必须</b> 对这种请求响应一个带有 <code>400 (Bad Request)</code> 状态码的响应消息。
 </p>
 </div>
 </div>
@@ -3835,7 +3835,7 @@ Since the request-target often contains only part of the user agent's target URI
 </blockquote>
 
 <p>
-因为请求目标（request target）通常仅包含用户代理的目标 URI（target URI）的一部分（见<a href="#org7ead76a">章节 5.3</a>），服务器需要重建（reconstruct）该 URI 的预定目标来正确处理请求，这种经重建的 URI 称之为 <b>有效请求 URI（effective request URI）</b>。重建的过程涉及到服务器的本地配置信息，以及相关联的请求目标、<code>Host</code> 报头域和连接的上下文（connection context）。
+因为请求目标（request target）通常仅包含用户代理的目标 URI（target URI）的一部分（见<a href="#org7ead76a">章节 5.3</a>），服务器需要重建（reconstruct）该 URI 的预定目标来正确处理请求，这种经重建的 URI 称之为 <b>有效请求 URI（effective request URI）</b>。重建的过程涉及到服务器的本地配置信息，以及相关联的请求目标、<code>Host</code> 头字段和连接的上下文（connection context）。
 </p>
 
 <blockquote>
@@ -3871,7 +3871,7 @@ If the request-target is in <code>absolute-form</code>, the effective request UR
 <ul class="org-ul">
 <li>如果服务器的配置信息（或者出站网关）提供了一个固定的 URI <code>scheme</code>，那么，这个 URI <code>scheme</code> 会用于参与重建有效请求 URI。没有提供固定的 URI <code>scheme</code>，如果该请求是在一个 TLS 安全的（TLS-secured）的 TCP 连接，那么有效请求 URI 的 <code>scheme</code> 为 "https"，否则，scheme 为 "http"。</li>
 
-<li>如果服务器的配置信息（或者出站网关）提供了一个固定的 URI <code>authority</code> 组件，那么，这个 <code>authority</code> 会用于参与重建有效请求 URI。如果没有固定的 URI <code>authority</code>，并且如果请求目标是 <code>authority-form</code> 形式，那么有效请求 URI 的 <code>authority</code> 组件与请求目标相同，如果请求目标不是 <code>authority-form</code> 形式，并且如果 <code>Host</code> 报头域提供了一个非空的域值，那么有效请求 URI 的 <code>authority</code> 组件与 <code>Host</code> 的域值相同。否则，有效请求 URI 的 <code>authority</code> 组件会被赋值为服务器所配置的默认名称，并且如果连接的 TCP 输入端口号不是有效请求 URI 的 <code>scheme</code> 所对应的默认端口号，那么需要在有效请求 URI 的 <code>authority</code> 组件后附加一个冒号（":"）以及输入端口号（十进制形式）。</li>
+<li>如果服务器的配置信息（或者出站网关）提供了一个固定的 URI <code>authority</code> 组件，那么，这个 <code>authority</code> 会用于参与重建有效请求 URI。如果没有固定的 URI <code>authority</code>，并且如果请求目标是 <code>authority-form</code> 形式，那么有效请求 URI 的 <code>authority</code> 组件与请求目标相同，如果请求目标不是 <code>authority-form</code> 形式，并且如果 <code>Host</code> 头字段提供了一个非空的字段值，那么有效请求 URI 的 <code>authority</code> 组件与 <code>Host</code> 的字段值相同。否则，有效请求 URI 的 <code>authority</code> 组件会被赋值为服务器所配置的默认名称，并且如果连接的 TCP 输入端口号不是有效请求 URI 的 <code>scheme</code> 所对应的默认端口号，那么需要在有效请求 URI 的 <code>authority</code> 组件后附加一个冒号（":"）以及输入端口号（十进制形式）。</li>
 
 <li>如果请求目标是 <code>authority-form</code> 或者 <code>asterisk-form</code>，那么有效请求 URI 的 <code>path</code> 和 <code>query</code> 组件为空。否则，<code>path</code> 和 <code>query</code> 组件与请求目标所对应的 <code>path</code> 和 <code>query</code> 相同。</li>
 
@@ -3885,7 +3885,7 @@ Example 1: the following message received over an insecure TCP connection
 </blockquote>
 
 <p>
-例一：以下报文接收于一个不安全的 TCP 连接中：
+例一：以下消息接收于一个不安全的 TCP 连接中：
 </p>
 
 <pre class="example">
@@ -3914,7 +3914,7 @@ Example 2: the following message received over a TLS-secured TCP connection
 </blockquote>
 
 <p>
-例二：以下报文接收于一个 TLS 安全的 TCP 连接中：
+例二：以下消息接收于一个 TLS 安全的 TCP 连接中：
 </p>
 
 <pre class="example">
@@ -3953,7 +3953,7 @@ Once the effective request URI has been constructed, an origin server needs to d
 </blockquote>
 
 <p>
-一旦重建好了有效请求 URI，源服务器需要确定是否对这个 URI 提供服务，通过接收到该请求的连接。例如，该请求可能被误导，刻意或者意外发送到当前服务器中，以致该请求报文的请求目标或者 <code>Host</code> 报头域内的信息与该请求报文所对应的发送端所发起的连接（connection）的信息（主机与端口）不一致。如果该连接是来自一个可信任的网关，那么这种不一致性可能还可以接受，否则，这可能代表一个企图越过安全过滤机制，欺骗服务去分发不公开的内容，或者毒害缓存。关于报文路由的安全注意事项见<a href="#org73527b5">章节 9</a>。
+一旦重建好了有效请求 URI，源服务器需要确定是否对这个 URI 提供服务，通过接收到该请求的连接。例如，该请求可能被误导，刻意或者意外发送到当前服务器中，以致该请求消息的请求目标或者 <code>Host</code> 头字段内的信息与该请求消息所对应的发送端所发起的连接（connection）的信息（主机与端口）不一致。如果该连接是来自一个可信任的网关，那么这种不一致性可能还可以接受，否则，这可能代表一个企图越过安全过滤机制，欺骗服务去分发不公开的内容，或者毒害缓存。关于消息路由的安全注意事项见<a href="#org73527b5">章节 9</a>。
 </p>
 </div>
 </div>
@@ -3968,7 +3968,7 @@ HTTP does not include a request identifier for associating a given request messa
 </blockquote>
 
 <p>
-HTTP 并不包含一个请求标记，用于关联一个给定请求报文和与之对应的一个或多个响应报文。因此，HTTP 依靠响应报文到达的顺序来一一对应在同一个连接中生成请求的顺序。出现响应报文数与请求报文数的比值大于 1 的情况仅当对该请求发送最终响应（final response，任何非 1xx 状态码的响应报文）之前，对其发送了一个或多个消息性响应报文（informational responses，状态码为 1xx 的响应报文，见<a href="https://tools.ietf.org/html/rfc7231#section-6.2">【RFC7231】章节 6.2</a>）。
+HTTP 并不包含一个请求标记，用于关联一个给定请求消息和与之对应的一个或多个响应消息。因此，HTTP 依靠响应消息到达的顺序来一一对应在同一个连接中生成请求的顺序。出现响应消息数与请求消息数的比值大于 1 的情况仅当对该请求发送最终响应（final response，任何非 1xx 状态码的响应消息）之前，对其发送了一个或多个消息性响应消息（informational responses，状态码为 1xx 的响应消息，见<a href="https://tools.ietf.org/html/rfc7231#section-6.2">【RFC7231】章节 6.2</a>）。
 </p>
 
 <blockquote>
@@ -3978,14 +3978,14 @@ A client that has more than one outstanding request on a connection <b>MUST</b> 
 </blockquote>
 
 <p>
-在一个连接中，如果客户端有超过一个未偿付的请求（outstanding request）的话，客户端 <b>必须</b> 以发送的顺序维护一个未完成请求的列表，并且 <b>必须</b> 关联每一个在该连接中接收到的响应报文到列表最高位的还未接收到最终响应（非 1xx 状态码）的请求。
+在一个连接中，如果客户端有超过一个未偿付的请求（outstanding request）的话，客户端 <b>必须</b> 以发送的顺序维护一个未完成请求的列表，并且 <b>必须</b> 关联每一个在该连接中接收到的响应消息到列表最高位的还未接收到最终响应（非 1xx 状态码）的请求。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5fed8d5" class="outline-3">
-<h3 id="org5fed8d5"><a id="ID-8b8a0096-4891-4f21-b5d3-b796c41443af"></a>5.7. 报文转发 (Message Forwarding)</h3>
-<div class="outline-text-3" id="text-org5fed8d5">
+<div id="outline-container-orgb81449b" class="outline-3">
+<h3 id="orgb81449b"><a id="ID-8b8a0096-4891-4f21-b5d3-b796c41443af"></a>5.7. 消息转发 (Message Forwarding)</h3>
+<div class="outline-text-3" id="text-orgb81449b">
 <blockquote>
 <p>
 As described in Section 2.3, intermediaries can serve a variety of roles in the processing of HTTP requests and responses. Some intermediaries are used to improve performance or availability. Others are used for access control or to filter content. Since an HTTP stream has characteristics similar to a pipe-and-filter architecture, there are no inherent limits to the extent an intermediary can enhance (or interfere) with either direction of the stream.
@@ -4004,7 +4004,7 @@ An intermediary not acting as a tunnel <b>MUST</b> implement the <code>Connectio
 </blockquote>
 
 <p>
-不充当隧道（tunnel）的中间人 <b>必须</b> 实现<a href="#org57994e1">章节 6.1</a> 中所指定的 <code>Connection</code> 报头域，并且在转发报文时排除所有仅作用于传入连接（incoming connection）的域。
+不充当隧道（tunnel）的中间人 <b>必须</b> 实现<a href="#org57994e1">章节 6.1</a> 中所指定的 <code>Connection</code> 头字段，并且在转发消息时排除所有仅作用于传入连接（incoming connection）的域。
 </p>
 
 <blockquote>
@@ -4014,7 +4014,7 @@ An intermediary <b>MUST NOT</b> forward a message to itself unless it is protect
 </blockquote>
 
 <p>
-中间人 <b>禁止</b> 转发一个报文到自身，除非它具有避免无限请求循环的保护机制。通常情况下，中间人应该了解它自身的服务器名称，包括任何别名、局部变种、文本性的 IP 地址，并将这些信息直接响应到这种请求中去。
+中间人 <b>禁止</b> 转发一个消息到自身，除非它具有避免无限请求循环的保护机制。通常情况下，中间人应该了解它自身的服务器名称，包括任何别名、局部变种、文本性的 IP 地址，并将这些信息直接响应到这种请求中去。
 </p>
 </div>
 
@@ -4028,7 +4028,7 @@ The "Via" header field indicates the presence of intermediate protocols and reci
 </blockquote>
 
 <p>
-<code>Via</code> 报头域表示在用户代理和服务器的链路之间（关于请求报文）或者源服务器和客户端链路之间（关于响应报文），出现了中间人协议和接收端，类似于电子邮件中的 <code>Received</code> 报头域（<a href="https://tools.ietf.org/html/rfc5322#section-3.6.7">【RFC5322】章节 3.6.7</a>）。<code>Via</code> 能够用于跟踪报文的转发，避免请求循环（request loops）以及标识在请求/响应链路中的各个发送端的协议功能（protocol capabilities）。
+<code>Via</code> 头字段表示在用户代理和服务器的链路之间（关于请求消息）或者源服务器和客户端链路之间（关于响应消息），出现了中间人协议和接收端，类似于电子邮件中的 <code>Received</code> 头字段（<a href="https://tools.ietf.org/html/rfc5322#section-3.6.7">【RFC5322】章节 3.6.7</a>）。<code>Via</code> 能够用于跟踪消息的转发，避免请求循环（request loops）以及标识在请求/响应链路中的各个发送端的协议功能（protocol capabilities）。
 </p>
 
 <div class="org-src-container">
@@ -4048,7 +4048,7 @@ Multiple <code>Via</code> field values represent each proxy or gateway that has 
 </blockquote>
 
 <p>
-<code>Via</code> 报头域的多个域值分别表示曾经转发过该报文的每一个代理或者网关。每个中间人都向 <code>Via</code> 附加关于报文如何被自身转发的信息，以使该最终结果按照参与转发的接收端的序列而排序的。
+<code>Via</code> 头字段的多个字段值分别表示曾经转发过该消息的每一个代理或者网关。每个中间人都向 <code>Via</code> 附加关于消息如何被自身转发的信息，以使该最终结果按照参与转发的接收端的序列而排序的。
 </p>
 
 <blockquote>
@@ -4058,7 +4058,7 @@ A proxy <b>MUST</b> send an appropriate <code>Via</code> header field, as descri
 </blockquote>
 
 <p>
-代理 <b>必须</b> 在其转发的所有报文里带有一个恰当的 <code>Via</code> 报头域，正如下面所描述的一样。一个 HTTP-to-HTTP 的网关 <b>必须</b> 在其发送的所有入站请求（inbound request）<sup><a id="fnr.8" class="footref" href="#fn.8">8</a></sup>报文里带有一个恰当的 <code>Via</code> 报头域，并且 <b>可以</b> 在其转发的所有响应报文里带有一个 <code>Via</code> 报头域。
+代理 <b>必须</b> 在其转发的所有消息里带有一个恰当的 <code>Via</code> 头字段，正如下面所描述的一样。一个 HTTP-to-HTTP 的网关 <b>必须</b> 在其发送的所有入站请求（inbound request）<sup><a id="fnr.8" class="footref" href="#fn.8">8</a></sup>消息里带有一个恰当的 <code>Via</code> 头字段，并且 <b>可以</b> 在其转发的所有响应消息里带有一个 <code>Via</code> 头字段。
 </p>
 
 <blockquote>
@@ -4068,7 +4068,7 @@ For each intermediary, the <code>received-protocol</code> indicates the protocol
 </blockquote>
 
 <p>
-对于每一个中间人，<code>received-protocol</code> 表示该报文的上游发送端所使用的协议及其版本。所以，<code>Via</code> 的域值记录了请求/响应链路所声明的协议功能，以使下游接收端对这些信息保持可见。它们能够用于确定在响应或者接下来的请求中哪些向后不兼容的功能能够被安全地使用，正如<a href="#orge5e3158">章节 2.6</a> 所述。为简洁起见，当所接收到的报文的协议是 HTTP，<code>protocol-name</code> 会被忽略。
+对于每一个中间人，<code>received-protocol</code> 表示该消息的上游发送端所使用的协议及其版本。所以，<code>Via</code> 的字段值记录了请求/响应链路所声明的协议功能，以使下游接收端对这些信息保持可见。它们能够用于确定在响应或者接下来的请求中哪些向后不兼容的功能能够被安全地使用，正如<a href="#orge5e3158">章节 2.6</a> 所述。为简洁起见，当所接收到的消息的协议是 HTTP，<code>protocol-name</code> 会被忽略。
 </p>
 
 <blockquote>
@@ -4078,7 +4078,7 @@ The <code>received-by</code> portion of the field value is normally the host and
 </blockquote>
 
 <p>
-<code>Via</code> 域值里的 <code>receive-by</code> 部分通常是接收端（服务器或者客户端）接下来转发报文所使用的主机名称和一个可选的端口号。但是，如果服务器认为该主机的真实名称是一个敏感信息的话，服务器 <b>可以</b> 将其替换为一个化名（pseudonym）。如果端口号未提供，接收端 <b>可以</b> 解释为它在默认的 TCP 端口接收到该报文。如果有提供端口号的话，TODO for the receive-protocol?
+<code>Via</code> 字段值里的 <code>receive-by</code> 部分通常是接收端（服务器或者客户端）接下来转发消息所使用的主机名称和一个可选的端口号。但是，如果服务器认为该主机的真实名称是一个敏感信息的话，服务器 <b>可以</b> 将其替换为一个化名（pseudonym）。如果端口号未提供，接收端 <b>可以</b> 解释为它在默认的 TCP 端口接收到该消息。如果有提供端口号的话，TODO for the receive-protocol?
 </p>
 
 <blockquote>
@@ -4088,7 +4088,7 @@ A sender <b>MAY</b> generate comments in the <code>Via</code> header field to id
 </blockquote>
 
 <p>
-发送端 <b>可以</b> 在 <code>Via</code> 报头域里生成注释，用于标识每个接收端的软件，类似于 <code>User-Agent</code> 和 <code>Server</code> 报头域。但是，所有在 <code>Via</code> 报头域里的注释都是可选的，并且接收端 <b>可以</b> 在转发该报文之前移除它们。
+发送端 <b>可以</b> 在 <code>Via</code> 头字段里生成注释，用于标识每个接收端的软件，类似于 <code>User-Agent</code> 和 <code>Server</code> 头字段。但是，所有在 <code>Via</code> 头字段里的注释都是可选的，并且接收端 <b>可以</b> 在转发该消息之前移除它们。
 </p>
 
 <blockquote>
@@ -4098,7 +4098,7 @@ For example, a request message could be sent from an HTTP/1.0 user agent to an i
 </blockquote>
 
 <p>
-例如，某个 HTTP/1.0 的用户代理，发送了一个请求报文到一个代号为 "fred" 的内部代理里，该内部代理使用 HTTP/1.1 来将该请求报文转发到一个名为 p.example.net 的公共代理中，该公共代理转发该请求报文到达名为 www.example.com 的源服务器。那么，www.example.com 接收到的请求报文将会带有如下的 <code>Via</code> 报头域：
+例如，某个 HTTP/1.0 的用户代理，发送了一个请求消息到一个代号为 "fred" 的内部代理里，该内部代理使用 HTTP/1.1 来将该请求消息转发到一个名为 p.example.net 的公共代理中，该公共代理转发该请求消息到达名为 www.example.com 的源服务器。那么，www.example.com 接收到的请求消息将会带有如下的 <code>Via</code> 头字段：
 </p>
 
 <pre class="example">
@@ -4122,7 +4122,7 @@ An intermediary <b>MAY</b> combine an ordered subsequence of <code>Via</code> he
 </blockquote>
 
 <p>
-中间人将 <code>Via</code> 的域值里的条目序列合并为一个单一的条目，如果这些条目的 <code>received-protocol</code> 的值相同的话。例如：
+中间人将 <code>Via</code> 的字段值里的条目序列合并为一个单一的条目，如果这些条目的 <code>received-protocol</code> 的值相同的话。例如：
 </p>
 
 <pre class="example">
@@ -4165,7 +4165,7 @@ Some intermediaries include features for transforming messages and their payload
 </blockquote>
 
 <p>
-某些中间人包含转换报文及其有效载荷（payload）的功能。代理可能出于节省缓存的存储空间或者在慢速连接中减少流量的总量的目的对报文进行转换，例如，图片格式的转换。但是，当这些转换被应用到提供给关键应用程序（例如医学图像或者科学数据分析）使用的有效载荷上的时候，特别是当使用完整性检验或者数字签名来保证所接收到的有效载荷与原始无异的时候，可能会引发业务上的问题。
+某些中间人包含转换消息及其有效载荷（payload）的功能。代理可能出于节省缓存的存储空间或者在慢速连接中减少流量的总量的目的对消息进行转换，例如，图片格式的转换。但是，当这些转换被应用到提供给关键应用程序（例如医学图像或者科学数据分析）使用的有效载荷上的时候，特别是当使用完整性检验或者数字签名来保证所接收到的有效载荷与原始无异的时候，可能会引发业务上的问题。
 </p>
 
 <blockquote>
@@ -4175,7 +4175,7 @@ An HTTP-to-HTTP proxy is called a "transforming proxy" if it is designed or conf
 </blockquote>
 
 <p>
-被设计或配置用来通过一种语义上有意义的方式来修改报文（也就是说，超出正常 HTTP 的处理要求的额外更改，以一种可能对于原始发送端有意义或者对于下游接收端有潜在意义的方式改变了报文）的一种 HTTP-to-HTTP 代理，称之为“转换代理（transforming proxy）”。例如，转换代理可以充当一个<a href="https://en.wikipedia.org/wiki/Web_annotation">共享注释服务器</a>（通过修改响应报文，让其包含一个本地注释数据库的引用）、一个恶意软件过滤器、一个格式转码器，或者一个隐私过滤器。无论客户端选择哪一种代理，这种转换都被认为是该代理所期望的。
+被设计或配置用来通过一种语义上有意义的方式来修改消息（也就是说，超出正常 HTTP 的处理要求的额外更改，以一种可能对于原始发送端有意义或者对于下游接收端有潜在意义的方式改变了消息）的一种 HTTP-to-HTTP 代理，称之为“转换代理（transforming proxy）”。例如，转换代理可以充当一个<a href="https://en.wikipedia.org/wiki/Web_annotation">共享注释服务器</a>（通过修改响应消息，让其包含一个本地注释数据库的引用）、一个恶意软件过滤器、一个格式转码器，或者一个隐私过滤器。无论客户端选择哪一种代理，这种转换都被认为是该代理所期望的。
 </p>
 
 <blockquote>
@@ -4185,7 +4185,7 @@ If a proxy receives a <code>request-target</code> with a host name that is not a
 </blockquote>
 
 <p>
-如果代理接收到一个带有一个主机名称不是一个<a href="https://zh.wikipedia.org/wiki/%E5%AE%8C%E6%95%B4%E7%B6%B2%E5%9F%9F%E5%90%8D%E7%A8%B1">完全限定域名（Fully Qualified Domain Name）</a>的 <code>request-target</code>，它 <b>可以</b> 在转发该请求报文的时候添加自已的域名到主机名称上。如果该 <code>request-target</code> 包含了一个完全限定域名，那么代理 <b>禁止</b> 改变主机名称。
+如果代理接收到一个带有一个主机名称不是一个<a href="https://zh.wikipedia.org/wiki/%E5%AE%8C%E6%95%B4%E7%B6%B2%E5%9F%9F%E5%90%8D%E7%A8%B1">完全限定域名（Fully Qualified Domain Name）</a>的 <code>request-target</code>，它 <b>可以</b> 在转发该请求消息的时候添加自已的域名到主机名称上。如果该 <code>request-target</code> 包含了一个完全限定域名，那么代理 <b>禁止</b> 改变主机名称。
 </p>
 
 <blockquote>
@@ -4205,7 +4205,7 @@ A proxy <b>MAY</b> modify the message body through application or removal of a t
 </blockquote>
 
 <p>
-代理 <b>可以</b> 通过应用或移除一个传输编码值（transfer coding，<a href="#orgdb9d59f">章节 4</a>）来修改报文正文。
+代理 <b>可以</b> 通过应用或移除一个传输编码值（transfer coding，<a href="#orgdb9d59f">章节 4</a>）来修改消息体。
 </p>
 
 <blockquote>
@@ -4215,7 +4215,7 @@ A proxy <b>MUST NOT</b> transform the payload (Section 3.3 of [RFC7231]) of a me
 </blockquote>
 
 <p>
-代理 <b>禁止</b> 对包含有 <code>no-transform</code> 缓存控制指令（Cache-Control directive，<a href="https://tools.ietf.org/html/rfc7234#section-5.2">【RFC7234】章节 5.2</a>）的报文中的有效载荷（payload，<a href="https://tools.ietf.org/html/rfc7231#section-3.3">【RFC7231】章节 3.3</a>）进行转换。
+代理 <b>禁止</b> 对包含有 <code>no-transform</code> 缓存控制指令（Cache-Control directive，<a href="https://tools.ietf.org/html/rfc7234#section-5.2">【RFC7234】章节 5.2</a>）的消息中的有效载荷（payload，<a href="https://tools.ietf.org/html/rfc7231#section-3.3">【RFC7231】章节 3.3</a>）进行转换。
 </p>
 
 <blockquote>
@@ -4225,7 +4225,7 @@ A proxy <b>MAY</b> transform the payload of a message that does not contain a <c
 </blockquote>
 
 <p>
-代理 <b>可以</b> 对并不包含有 <code>no-transform</code> 缓存控制指令的报文中的有效载荷进行转换。代理对有效载荷进行转换的时候，如果该报文未包含一个警告码为 <code>214 ("Transformation Applied")</code> 的 <code>Warning</code> 报头域的话，代理 <b>必须</b> 添加上带有该警告码的 <code>Warning</code> 报头域（见<a href="https://tools.ietf.org/html/rfc7234#section-5.5">【RFC7234】章节 5.5</a>）。代理在转换一个响应状态码为 <code>200 (OK)</code> 的报文中的有效载荷的时候，可以通过改变报文的响应状态码为 <code>203 (Non-Authoritative Information)</code> 来进一步通知下游接收端——这个报文已经被转换过（<a href="https://tools.ietf.org/html/rfc7231#section-6.3.4">【RFC7231】章节 6.3.4</a>）。
+代理 <b>可以</b> 对并不包含有 <code>no-transform</code> 缓存控制指令的消息中的有效载荷进行转换。代理对有效载荷进行转换的时候，如果该消息未包含一个警告码为 <code>214 ("Transformation Applied")</code> 的 <code>Warning</code> 头字段的话，代理 <b>必须</b> 添加上带有该警告码的 <code>Warning</code> 头字段（见<a href="https://tools.ietf.org/html/rfc7234#section-5.5">【RFC7234】章节 5.5</a>）。代理在转换一个响应状态码为 <code>200 (OK)</code> 的消息中的有效载荷的时候，可以通过改变消息的响应状态码为 <code>203 (Non-Authoritative Information)</code> 来进一步通知下游接收端——这个消息已经被转换过（<a href="https://tools.ietf.org/html/rfc7231#section-6.3.4">【RFC7231】章节 6.3.4</a>）。
 </p>
 
 <blockquote>
@@ -4235,7 +4235,7 @@ A proxy <b>SHOULD NOT</b> modify header fields that provide information about th
 </blockquote>
 
 <p>
-代理 <b>不应当</b> 修改提供有关通信链路端点、资源状态，或者<ruby>已选定的表示形式<rt>selected representation</rt></ruby>（除了有效载荷）的信息的报头域，除非该域的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
+代理 <b>不应当</b> 修改提供有关通信链路端点、资源状态，或者<ruby>已选定的表示形式<rt>selected representation</rt></ruby>（除了有效载荷）的信息的头字段，除非该域的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
 </p>
 </div>
 </div>
@@ -4253,7 +4253,7 @@ and response structures onto the data units of an underlying transport protocol 
 </blockquote>
 
 <p>
-HTTP 的报文交换是独立于底层传输层和会话层相关的连接协议。HTTP 仅假定有一个可靠的传输对请求进行按次序发送出去，以及与之对应的响应被按次序发送回来。至于如何将 HTTP 的请求结构以及报应结构映射到底层传输协议的数据单元上，并不在本规范探讨的范围之内。
+HTTP 的消息交换是独立于底层传输层和会话层相关的连接协议。HTTP 仅假定有一个可靠的传输对请求进行按次序发送出去，以及与之对应的响应被按次序发送回来。至于如何将 HTTP 的请求和响应的结构映射到底层传输协议的数据单元上，并不在本规范探讨的范围之内。
 </p>
 
 <blockquote>
@@ -4284,13 +4284,13 @@ The "Connection" header field allows the sender to indicate desired control opti
 </blockquote>
 
 <p>
-<code>Connection</code> 报头域允许发送端去指定希望如何控制当前连接的选项。为了避免下游接收端的困惑，代理或者网关 <b>必须</b> 在转发报文的时候移除或替换出现在该报文中的任何连接选项（connection options）。
+<code>Connection</code> 头字段允许发送端去指定希望如何控制当前连接的选项。为了避免下游接收端的困惑，代理或者网关 <b>必须</b> 在转发消息的时候移除或替换出现在该消息中的任何连接选项（connection options）。
 </p>
 
 <blockquote>
 <p>
 译注：
-连接选项（connection options）是一个专有名词，是特指 <code>Connection</code> 报头域的域值里的内容。
+连接选项（connection options）是一个专有名词，是特指 <code>Connection</code> 头字段的字段值里的内容。
 </p>
 </blockquote>
 
@@ -4301,7 +4301,7 @@ When a header field aside from <code>Connection</code> is used to supply control
 </blockquote>
 
 <p>
-除了 <code>Connection</code> 报头域以外，当存在某个报头域，用于提供应用在（或者仅说明）当前连接的控制信息，发送端 <b>必须</b> 在 <code>Connection</code> 报头域里列出该报头域的名称。代理或者网关在转发报文之前，<b>必须</b> 解析（parse）报文里的 <code>Connection</code> 报头域，并且对于 <code>Connection</code> 报头域内的每一个连接选项 <code>connection-option</code>，从报文中移除与之同名的报头域，然后再移除 <code>Connection</code> 报头域自身（或者将其替换为中间人自己的连接选项，用于转发报文）。
+除了 <code>Connection</code> 头字段以外，当存在某个头字段，用于提供应用在（或者仅说明）当前连接的控制信息，发送端 <b>必须</b> 在 <code>Connection</code> 头字段里列出该头字段的名称。代理或者网关在转发消息之前，<b>必须</b> 解析（parse）消息里的 <code>Connection</code> 头字段，并且对于 <code>Connection</code> 头字段内的每一个连接选项 <code>connection-option</code>，从消息中移除与之同名的头字段，然后再移除 <code>Connection</code> 头字段自身（或者将其替换为中间人自己的连接选项，用于转发消息）。
 </p>
 
 <blockquote>
@@ -4311,7 +4311,7 @@ When a header field aside from <code>Connection</code> is used to supply control
 </p>
 
 <p>
-对于 "supply control information for the current connection"，我的理解是“对当前连接施加或设置了某些控制，然后将这些控制信息提供出来”，就像对报文的有效正文应用了某种编码，需要将该编码值添加到 <code>Transfer-Encoding</code> 报头域上一样。
+对于 "supply control information for the current connection"，我的理解是“对当前连接施加或设置了某些控制，然后将这些控制信息提供出来”，就像对消息的有效正文应用了某种编码，需要将该编码值添加到 <code>Transfer-Encoding</code> 头字段上一样。
 </p>
 
 <p>
@@ -4326,12 +4326,12 @@ Hence, the <code>Connection</code> header field provides a declarative way of di
 </blockquote>
 
 <p>
-因此，<code>Connection</code> 报头域提供了一种声明式的方式来区分哪些报头域是打算只作用于当前发送端的直接接收端的（"hop-by-hop"，逐跳，即直接与之相连的接收端），哪些报头域是打算作用于链路中的所有接收端（"end-to-end"，端到端）。这样，使报文能够自描述，同时，避免将来新增的连接专用的扩展（connection-specific extensions）被旧的（即不支持该扩展的）中间人盲转发（blindly forward）。
+因此，<code>Connection</code> 头字段提供了一种声明式的方式来区分哪些头字段是打算只作用于当前发送端的直接接收端的（"hop-by-hop"，逐跳，即直接与之相连的接收端），哪些头字段是打算作用于链路中的所有接收端（"end-to-end"，端到端）。这样，使消息能够自描述，同时，避免将来新增的连接专用的扩展（connection-specific extensions）被旧的（即不支持该扩展的）中间人盲转发（blindly forward）。
 </p>
 
 <blockquote>
 <p>
-译注：<code>Connection</code> 内指定的报头域是仅作用于直接接收端的。关于 "hop-by-hop" 与 "end-to-end" 的解释见<a href="#org1fc5a04">章节 2.1</a> 相关的译注。
+译注：<code>Connection</code> 内指定的头字段是仅作用于直接接收端的。关于 "hop-by-hop" 与 "end-to-end" 的解释见<a href="#org1fc5a04">章节 2.1</a> 相关的译注。
 </p>
 </blockquote>
 
@@ -4342,7 +4342,7 @@ The <code>Connection</code> header field's value has the following grammar:
 </blockquote>
 
 <p>
-<code>Connection</code> 报头域的值的语法如下：
+<code>Connection</code> 头字段的值的语法如下：
 </p>
 
 <div class="org-src-container">
@@ -4368,7 +4368,7 @@ A sender <b>MUST NOT</b> send a connection option corresponding to a header fiel
 </blockquote>
 
 <p>
-发送端 <b>禁止</b> 发送一个与作用于所有接收端的有效载荷的报头域名称相一致的连接选项。例如，<code>Cache-Control</code> 是永远不能作为一个连接选项的（<a href="https://tools.ietf.org/html/rfc7234#section-5.2">【RFC7234】章节 5.2</a>）。
+发送端 <b>禁止</b> 发送一个与作用于所有接收端的有效载荷的头字段名称相一致的连接选项。例如，<code>Cache-Control</code> 是永远不能作为一个连接选项的（<a href="https://tools.ietf.org/html/rfc7234#section-5.2">【RFC7234】章节 5.2</a>）。
 </p>
 
 <blockquote>
@@ -4378,7 +4378,7 @@ The connection options do not always correspond to a header field present in the
 </blockquote>
 
 <p>
-连接选项并不总是对应到某个出现在报文中的报头域的，这是因为如果这种报头域并没有域值（即关联到某个连接选项的参数），那么它就不必出现在报头里了。与之相对的是，如果报文中带有某个连接专用的报头域，但并不存在一个与之对应的连接选项（即 <code>Connection</code> 里并没有包含与这个报头域名称一致的连接选项），出现这种情况通常表明该报头域是被某个中间人错误地转发过来的，并且应该被接收端所忽略掉。
+连接选项并不总是对应到某个出现在消息中的头字段的，这是因为如果这种头字段并没有字段值（即关联到某个连接选项的参数），那么它就不必出现在消息头里了。与之相对的是，如果消息中带有某个连接专用的头字段，但并不存在一个与之对应的连接选项（即 <code>Connection</code> 里并没有包含与这个头字段名称一致的连接选项），出现这种情况通常表明该头字段是被某个中间人错误地转发过来的，并且应该被接收端所忽略掉。
 </p>
 
 <blockquote>
@@ -4388,7 +4388,7 @@ When defining new connection options, specification authors ought to survey exis
 </blockquote>
 
 <p>
-当定义新的连接选项时，规范的作者们应该审视已有的报头域名称，确保新的连接选项的名称与目前已部署的报头域名称不相冲突。定义一个新的连接选项基本上会一并将同名报头域名作为保留字，用来搭载与该连接选项相关的额外信息，所以，如果发送端将这种报头域用作他用是很不明智的。
+当定义新的连接选项时，规范的作者们应该审视已有的头字段名称，确保新的连接选项的名称与目前已部署的头字段名称不相冲突。定义一个新的连接选项基本上会一并将同名头字段名作为保留字，用来搭载与该连接选项相关的额外信息，所以，如果发送端将这种头字段用作他用是很不明智的。
 </p>
 
 <blockquote>
@@ -4412,7 +4412,7 @@ in either the request or the response header fields indicates that the sender is
 </blockquote>
 
 <p>
-如果连接选项 "close" 出现在请求报文或者响应报文中，表明发送端将会在完成目前的请求/响应后关闭该连接（<a href="#orgaf47f5c">章节 6.6</a>）。
+如果连接选项 "close" 出现在请求消息或者响应消息中，表明发送端将会在完成目前的请求/响应后关闭该连接（<a href="#orgaf47f5c">章节 6.6</a>）。
 </p>
 
 <blockquote>
@@ -4422,7 +4422,7 @@ A client that does not support <a href="https://en.wikipedia.org/wiki/HTTP_persi
 </blockquote>
 
 <p>
-不支持<a href="https://zh.wikipedia.org/wiki/HTTP%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5">持久连接（Persistent）</a>的客户端 <b>必须</b> 在其发送的每个请求报文中包含有 "close" 连接选项。
+不支持<a href="https://zh.wikipedia.org/wiki/HTTP%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5">持久连接（Persistent）</a>的客户端 <b>必须</b> 在其发送的每个请求消息中包含有 "close" 连接选项。
 </p>
 
 <blockquote>
@@ -4432,7 +4432,7 @@ A server that does not support persistent connections <code>MUST</code> send the
 </blockquote>
 
 <p>
-不支持持久连接服务器 <b>必须</b> 在其发送的每个状态码不是 <code>1xx (Informational)</code> 的响应报文中包含有 "close" 连接选项。
+不支持持久连接服务器 <b>必须</b> 在其发送的每个状态码不是 <code>1xx (Informational)</code> 的响应消息中包含有 "close" 连接选项。
 </p>
 </div>
 </div>
@@ -4485,11 +4485,11 @@ A recipient determines whether a connection is persistent or not based on the mo
 </blockquote>
 
 <p>
-接收端基于最近接收到的报文的协议版本以及 <code>Connection</code> 报头域（如果有的话）来确定一个连接是否是持久连接：
+接收端基于最近接收到的消息的协议版本以及 <code>Connection</code> 头字段（如果有的话）来确定一个连接是否是持久连接：
 </p>
 
 <ul class="org-ul">
-<li><b>if</b> 接收到的报文里出现 "close" 连接选项，<b>then</b> 连接将会在当前响应之后不再维持；</li>
+<li><b>if</b> 接收到的消息里出现 "close" 连接选项，<b>then</b> 连接将会在当前响应之后不再维持；</li>
 <li><b>else if</b> 接收到的协议版本是 HTTP/1.1（或者更新），<b>then</b> 连接将会在当前响应之后继续维持；</li>
 <li><b>else if</b> 接收到的协议版本是 HTTP/1.0，并且出现 "keep-alive" 连接选项，并且该接收端不是一个代理，并且该接收端希望遵循 HTTP/1.0 的 "keep-alive" 机制，<b>then</b> 连接将会在当前响应之后继续维持；</li>
 <li><b>else</b> 连接将会在当前响应之后关闭。</li>
@@ -4508,7 +4508,7 @@ A client <b>MAY</b> send additional requests on a persistent connection until it
 </blockquote>
 
 <p>
-客户端 <b>可以</b> 在一个持久连接中发送额外的请求报文，直到它发送或接收到一个带有 "close" 连接选项的报文，或者接收到一个没有 "keep-alive" 连接选项的 HTTP/1.0 响应报文为止。
+客户端 <b>可以</b> 在一个持久连接中发送额外的请求消息，直到它发送或接收到一个带有 "close" 连接选项的消息，或者接收到一个没有 "keep-alive" 连接选项的 HTTP/1.0 响应消息为止。
 </p>
 
 <blockquote>
@@ -4518,7 +4518,7 @@ In order to remain persistent, all messages on a connection need to have a self-
 </blockquote>
 
 <p>
-为了保持持久，在一个连接中的所有报文都需要带有一个由自身所定义的（self-defined）报文长度（也就是说，并不是由连接的关闭而定义的那个长度），如<a href="#org3d27427">章节 3.3</a> 所述。服务器 <b>必须</b> 在发送响应报文后，读取整个请求报文正文或者关闭该连接，这是因为如果不这样做的话，存在于持久连接中的剩余的数据会被误解为是下一个请求报文的内容。同样，如果客户端打算在接下来的请求中复用同一个连接，那么，客户端 <b>必须</b> 读取整个响应报文正文。
+为了保持持久，在一个连接中的所有消息都需要带有一个由自身所定义的（self-defined）消息长度（也就是说，并不是由连接的关闭而定义的那个长度），如<a href="#orgd385ed5">章节 3.3</a> 所述。服务器 <b>必须</b> 在发送响应消息后，读取整个请求消息体或者关闭该连接，这是因为如果不这样做的话，存在于持久连接中的剩余的数据会被误解为是下一个请求消息的内容。同样，如果客户端打算在接下来的请求中复用同一个连接，那么，客户端 <b>必须</b> 读取整个响应消息体。
 </p>
 
 <blockquote>
@@ -4528,7 +4528,7 @@ A proxy server <b>MUST NOT</b> maintain a persistent connection with an HTTP/1.0
 </blockquote>
 
 <p>
-代理服务器 <b>禁止</b> 与一个 HTTP/1.0 客户端维持一个持久连接（见【RFC2068】章节 19.7.1 关于某些 HTTP/1.0 客户端所实现的 <code>Keep-Alive</code> 报头域的问题的信息和讨论）。
+代理服务器 <b>禁止</b> 与一个 HTTP/1.0 客户端维持一个持久连接（见【RFC2068】章节 19.7.1 关于某些 HTTP/1.0 客户端所实现的 <code>Keep-Alive</code> 头字段的问题的信息和讨论）。
 </p>
 
 <blockquote>
@@ -4562,7 +4562,7 @@ When an inbound connection is closed prematurely, a client <b>MAY</b> open a new
 </blockquote>
 
 <p>
-当一个入站连接被过早地关闭，客户端 <b>可以</b> 开启一个新的连接并自动重传被中止的请求报文序列，如果所有这些请求报文的请求方法都是幂等（<a href="https://tools.ietf.org/html/rfc7231#section-4.2.2">【RFC7231】章节 4.2.2</a>）的话。代理 <b>禁止</b> 自动重试非幂等的请求。
+当一个入站连接被过早地关闭，客户端 <b>可以</b> 开启一个新的连接并自动重传被中止的请求消息序列，如果所有这些请求消息的请求方法都是幂等（<a href="https://tools.ietf.org/html/rfc7231#section-4.2.2">【RFC7231】章节 4.2.2</a>）的话。代理 <b>禁止</b> 自动重试非幂等的请求。
 </p>
 
 <blockquote>
@@ -4597,7 +4597,7 @@ A client that supports persistent connections <b>MAY</b> "pipeline" its requests
 </blockquote>
 
 <p>
-支持持久连接的客户端 <b>可以</b> 流水线式处理它的请求（也就是说，在不需要等待响应完成的情况下发送多个请求）。服务器 <b>可以</b> 并行处理一系列的流水线化的请求，如果它们所有都带有安全的请求方法（<a href="https://tools.ietf.org/html/rfc7231#section-4.2.1">【RFC7231】章节 4.2.1</a>）的话。但服务器 <b>必须</b> 以其接收到的请求报文的顺序发送对应的响应报文。
+支持持久连接的客户端 <b>可以</b> 流水线式处理它的请求（也就是说，在不需要等待响应完成的情况下发送多个请求）。服务器 <b>可以</b> 并行处理一系列的流水线化的请求，如果它们所有都带有安全的请求方法（<a href="https://tools.ietf.org/html/rfc7231#section-4.2.1">【RFC7231】章节 4.2.1</a>）的话。但服务器 <b>必须</b> 以其接收到的请求消息的顺序发送对应的响应消息。
 </p>
 
 <blockquote>
@@ -4626,7 +4626,7 @@ A client that pipelines requests <b>SHOULD</b> retry unanswered requests if the 
 </blockquote>
 
 <p>
-客户端流水线处理请求的时候，如果连接在客户端接收到所有对应的响应报文之前被关闭了，客户端 <b>应当</b> 重试未应答过的请求。当在连接失败（连接未被服务器发送完最后一个完整响应报文之后显式关闭）后重试流水线化的请求，客户端 <b>禁止</b> 在连接建立之后立即进行流水线，这是因为如果多个请求在一个被过早关闭的连接中被发送（见<a href="#orgaf47f5c">章节 6.6</a> 所描述的 TCP 重启问题），在之前流水线的第一个剩余的响应报文可能导致一个错误的响应，可能会再一次被丢失。
+客户端流水线处理请求的时候，如果连接在客户端接收到所有对应的响应消息之前被关闭了，客户端 <b>应当</b> 重试未应答过的请求。当在连接失败（连接未被服务器发送完最后一个完整响应消息之后显式关闭）后重试流水线化的请求，客户端 <b>禁止</b> 在连接建立之后立即进行流水线，这是因为如果多个请求在一个被过早关闭的连接中被发送（见<a href="#orgaf47f5c">章节 6.6</a> 所描述的 TCP 重启问题），在之前流水线的第一个剩余的响应消息可能导致一个错误的响应，可能会再一次被丢失。
 </p>
 
 <blockquote>
@@ -4636,7 +4636,7 @@ Idempotent methods (Section 4.2.2 of [RFC7231]) are significant to pipelining be
 </blockquote>
 
 <p>
-幂等请求方法（<a href="https://tools.ietf.org/html/rfc7231#section-4.2.2">【RFC7231】章节 4.2.2</a>）对于流水线处理是很有意义的，这是因为在连接失败后它们能够被自动重试。用户代理 <b>不应当</b> 对一个非幂等请求方法之后的请求报文进行流水线处理，直到接收到该非幂等请求方法所对应的最终响应状态码（final response status code），除非该用户代理有某种方法去检测和从部分涉及到流水线序列的失败条件中恢复连接。
+幂等请求方法（<a href="https://tools.ietf.org/html/rfc7231#section-4.2.2">【RFC7231】章节 4.2.2</a>）对于流水线处理是很有意义的，这是因为在连接失败后它们能够被自动重试。用户代理 <b>不应当</b> 对一个非幂等请求方法之后的请求消息进行流水线处理，直到接收到该非幂等请求方法所对应的最终响应状态码（final response status code），除非该用户代理有某种方法去检测和从部分涉及到流水线序列的失败条件中恢复连接。
 </p>
 
 <blockquote>
@@ -4652,7 +4652,7 @@ An intermediary that receives pipelined requests <b>MAY</b> pipeline those reque
 </blockquote>
 
 <p>
-接收流水线化的请求报文的中间人，当转发这些请求到站内（inbound）的时候 <b>可以</b> 流水线处理它们，这是因为中间人能够依靠站外的（outbound）用户代理来确定哪些请求报文能够被放心地使用流水线处理。如果在接收某个响应之前，入站连接失败，正在进行流水线处理的中间人 <b>可以</b> 试图去重试一系列有待接收响应的请求，如果这些请求都带有幂等请求方法的话；否则，该正在进行流水线处理的中间人 <b>应当</b> 转发任何接收到的响应，然后关闭对应的出站连接以便那些站外用户代理能够相应地恢复。
+接收流水线化的请求消息的中间人，当转发这些请求到站内（inbound）的时候 <b>可以</b> 流水线处理它们，这是因为中间人能够依靠站外的（outbound）用户代理来确定哪些请求消息能够被放心地使用流水线处理。如果在接收某个响应之前，入站连接失败，正在进行流水线处理的中间人 <b>可以</b> 试图去重试一系列有待接收响应的请求，如果这些请求都带有幂等请求方法的话；否则，该正在进行流水线处理的中间人 <b>应当</b> 转发任何接收到的响应，然后关闭对应的出站连接以便那些站外用户代理能够相应地恢复。
 </p>
 </div>
 </div>
@@ -4753,7 +4753,7 @@ A client sending a message body <b>SHOULD</b> monitor the network connection for
 </blockquote>
 
 <p>
-客户端正在发送一个请求报文正文，对应的连接正在传输客户端的请求，这时候，客户端 <b>应当</b> 监听网络连接中的错误响应（error response）。如果该客户端观察到一个响应报文，该响应报文表明服务器并不希望接收该报文正文并且打算关闭这个连接，那么，客户端 <b>应当</b> 立即停止传输该报文正文，并关闭客户端这一端的连接。
+客户端正在发送一个请求消息体，对应的连接正在传输客户端的请求，这时候，客户端 <b>应当</b> 监听网络连接中的错误响应（error response）。如果该客户端观察到一个响应消息，该响应消息表明服务器并不希望接收该消息体并且打算关闭这个连接，那么，客户端 <b>应当</b> 立即停止传输该消息体，并关闭客户端这一端的连接。
 </p>
 </div>
 </div>
@@ -4768,7 +4768,7 @@ The <code>Connection</code> header field (Section 6.1) provides a "close" connec
 </blockquote>
 
 <p>
-<code>Connection</code> 报头域（<a href="#org57994e1">章节 6.1</a>）提供了一个 "close" 连接选项，如果服务器希望在完成接收请求报文并且发送相应的响应报文之后关闭连接，服务器 <b>应当</b> 在其发送的响应报文中包含 "close" 连接选项。
+<code>Connection</code> 头字段（<a href="#org57994e1">章节 6.1</a>）提供了一个 "close" 连接选项，如果服务器希望在完成接收请求消息并且发送相应的响应消息之后关闭连接，服务器 <b>应当</b> 在其发送的响应消息中包含 "close" 连接选项。
 </p>
 
 <blockquote>
@@ -4778,7 +4778,7 @@ A client that sends a "close" connection option <b>MUST NOT</b> send further req
 </blockquote>
 
 <p>
-客户端发送了一个带有 "close" 连接选项的请求报文之后，<b>禁止</b> 在该（已标记为关闭的）连接上进一步发送请求报文，并且 <b>必须</b> 在读取完该请求报文所对应的最后一个响应报文之后关闭这个连接。
+客户端发送了一个带有 "close" 连接选项的请求消息之后，<b>禁止</b> 在该（已标记为关闭的）连接上进一步发送请求消息，并且 <b>必须</b> 在读取完该请求消息所对应的最后一个响应消息之后关闭这个连接。
 </p>
 
 <blockquote>
@@ -4788,7 +4788,7 @@ A server that receives a "close" connection option <b>MUST</b> initiate a close 
 </blockquote>
 
 <p>
-服务器接收到一个带有 "close" 连接连接的请求报文，在其发送完该请求报文所对应的最后一个响应报文之后，<b>必须</b> 进行关闭连接的流程（见下文）。服务器 <b>应当</b> 在该连接中的最后一个响应报文中带有一个 "close" 连接选项。其后，服务器 <b>禁止</b> 在该连接中处理任何进一步的请求报文。
+服务器接收到一个带有 "close" 连接连接的请求消息，在其发送完该请求消息所对应的最后一个响应消息之后，<b>必须</b> 进行关闭连接的流程（见下文）。服务器 <b>应当</b> 在该连接中的最后一个响应消息中带有一个 "close" 连接选项。其后，服务器 <b>禁止</b> 在该连接中处理任何进一步的请求消息。
 </p>
 
 <blockquote>
@@ -4798,7 +4798,7 @@ A server that sends a "close" connection option <b>MUST</b> initiate a close of 
 </blockquote>
 
 <p>
-服务器发送了一个带有 "close" 连接选项的响应报文之后，<b>必须</b> 进行关闭连接的流程（见下文）。其后，服务器 <b>禁止</b> 在该连接中处理任何进一步的请求报文。
+服务器发送了一个带有 "close" 连接选项的响应消息之后，<b>必须</b> 进行关闭连接的流程（见下文）。其后，服务器 <b>禁止</b> 在该连接中处理任何进一步的请求消息。
 </p>
 
 <blockquote>
@@ -4808,7 +4808,7 @@ A client that receives a "close" connection option <b>MUST</b> cease sending req
 </blockquote>
 
 <p>
-客户端接收到一个带有 "close" 连接选项的响应报文之后，<b>必须</b> 在该连接中停止发送请求，并在读取完该响应报文之后关闭这个连接。如果额外的流水线化的请求已经被发送到连接，客户端 <b>不应当</b> 假设服务器会处理它们。
+客户端接收到一个带有 "close" 连接选项的响应消息之后，<b>必须</b> 在该连接中停止发送请求，并在读取完该响应消息之后关闭这个连接。如果额外的流水线化的请求已经被发送到连接，客户端 <b>不应当</b> 假设服务器会处理它们。
 </p>
 
 <blockquote>
@@ -4818,7 +4818,7 @@ If a server performs an immediate close of a TCP connection, there is a signific
 </blockquote>
 
 <p>
-如果服务器立即关闭 TCP 连接，会出现客户端将不再能够读取到最后一个 HTTP 响应的重大风险。如果服务器在一个完全关闭掉的连接中接收到来自客户端所发送的额外数据，例如客户端在接收到服务器的响应之前发送了其他请求，那么，服务器的 TCP 栈（TCP stack）将会发送一个<a href="https://zh.wikipedia.org/wiki/%E8%BF%9E%E6%8E%A5%E9%87%8D%E7%BD%AE">重置报文数据包（Reset Packet）</a>到该客户端；不幸的是，在客户端的未确认输入缓冲区（unacknowledged input buffers）能够被客户端的 HTTP 解析器读取并解释（interpret）之前，该缓冲区的数据可能会被这个重置数据包所抹去。
+如果服务器立即关闭 TCP 连接，会出现客户端将不再能够读取到最后一个 HTTP 响应的重大风险。如果服务器在一个完全关闭掉的连接中接收到来自客户端所发送的额外数据，例如客户端在接收到服务器的响应之前发送了其他请求，那么，服务器的 TCP 栈（TCP stack）将会发送一个<a href="https://zh.wikipedia.org/wiki/%E8%BF%9E%E6%8E%A5%E9%87%8D%E7%BD%AE">重置消息数据包（Reset Packet）</a>到该客户端；不幸的是，在客户端的未确认输入缓冲区（unacknowledged input buffers）能够被客户端的 HTTP 解析器读取并解释（interpret）之前，该缓冲区的数据可能会被这个重置数据包所抹去。
 </p>
 
 <blockquote>
@@ -4853,7 +4853,7 @@ The "Upgrade" header field is intended to provide a simple mechanism for transit
 </blockquote>
 
 <p>
-<code>Upgrade</code> 报头域是打算提供一个简单的方式来将同一个连接中的 HTTP/1.1 报文过渡到其他协议报文。客户端 <b>可以</b> 在其发送的请求报文中带有一个包含一系列协议的 <code>Upgrade</code> 报头域，来邀请（Invite）服务器在发送最终响应之前，将响应报文切换到一个或多个上述的协议，按优先级从高到低排序（Descending Preference）。服务器 <b>可以</b> 忽略其接收到的 <code>Upgrade</code> 报头域，如果它希望继续在该连接中使用当前协议的话。<code>Upgrade</code> 不能用于督促（Insist On）服务器改变协议。
+<code>Upgrade</code> 头字段是打算提供一个简单的方式来将同一个连接中的 HTTP/1.1 消息过渡到其他协议消息。客户端 <b>可以</b> 在其发送的请求消息中带有一个包含一系列协议的 <code>Upgrade</code> 头字段，来邀请（Invite）服务器在发送最终响应之前，将响应消息切换到一个或多个上述的协议，按优先级从高到低排序（Descending Preference）。服务器 <b>可以</b> 忽略其接收到的 <code>Upgrade</code> 头字段，如果它希望继续在该连接中使用当前协议的话。<code>Upgrade</code> 不能用于督促（Insist On）服务器改变协议。
 </p>
 
 <blockquote>
@@ -4878,7 +4878,7 @@ A server that sends a <code>101 (Switching Protocols)</code> response <b>MUST</b
 </blockquote>
 
 <p>
-服务器发送一个带有 <code>101 (Switching Protocols)</code> 状态码的响应报文时，<b>必须</b> 带有一个 <code>Upgrade</code> 报头域用于指定连接将会被切换到哪一种（或多种）新的协议上。如果将会切换多个协议层，发送端 <b>必须</b> 按协议层从低到高的顺序（Layer-ascending）列出这些协议。服务器 <b>禁止</b> 切换到一个未被客户端（在对应的请求报文中的 <code>Upgrade</code> 报头域）所指定的协议。服务器 <b>可以</b> 选择忽略掉客户端所指定优先级顺序，依据其他因素来选择需要切换到哪一种的协议上，例如依据请求的性质或者当前服务器的负荷来选择。
+服务器发送一个带有 <code>101 (Switching Protocols)</code> 状态码的响应消息时，<b>必须</b> 带有一个 <code>Upgrade</code> 头字段用于指定连接将会被切换到哪一种（或多种）新的协议上。如果将会切换多个协议层，发送端 <b>必须</b> 按协议层从低到高的顺序（Layer-ascending）列出这些协议。服务器 <b>禁止</b> 切换到一个未被客户端（在对应的请求消息中的 <code>Upgrade</code> 头字段）所指定的协议。服务器 <b>可以</b> 选择忽略掉客户端所指定优先级顺序，依据其他因素来选择需要切换到哪一种的协议上，例如依据请求的性质或者当前服务器的负荷来选择。
 </p>
 
 <blockquote>
@@ -4888,7 +4888,7 @@ A server that sends a <code>426 (Upgrade Required)</code> response <b>MUST</b> s
 </blockquote>
 
 <p>
-服务器发送了一个带有 <code>426 (Upgrade Required)</code> 状态码的响应报文时，<b>必须</b> 带有一个 <code>Upgrade</code> 报头域用于指定服务器可接受切换到哪些协议，按优先级从高到低排序。
+服务器发送了一个带有 <code>426 (Upgrade Required)</code> 状态码的响应消息时，<b>必须</b> 带有一个 <code>Upgrade</code> 头字段用于指定服务器可接受切换到哪些协议，按优先级从高到低排序。
 </p>
 
 <blockquote>
@@ -4898,7 +4898,7 @@ A server <b>MAY</b> send an <code>Upgrade</code> header field in any other respo
 </blockquote>
 
 <p>
-服务器 <b>可以</b> 在其他响应报文（也就是说该响应报文所对应的请求报文并未带有 <code>Upgrade</code> 报头域）中带有 <code>Upgrade</code> 报头域，来声明服务器自身所支持的协议列表，按优先级从高到低排序，用于通知客户端将来使用哪些协议来发送请求更合适。
+服务器 <b>可以</b> 在其他响应消息（也就是说该响应消息所对应的请求消息并未带有 <code>Upgrade</code> 头字段）中带有 <code>Upgrade</code> 头字段，来声明服务器自身所支持的协议列表，按优先级从高到低排序，用于通知客户端将来使用哪些协议来发送请求更合适。
 </p>
 
 <blockquote>
@@ -4908,7 +4908,7 @@ The following is a hypothetical example sent by a client:
 </blockquote>
 
 <p>
-假设某个客户端发送了以下一个请求报文：
+假设某个客户端发送了以下一个请求消息：
 </p>
 
 <pre class="example">
@@ -4926,7 +4926,7 @@ The capabilities and nature of the application-level communication after the pro
 </blockquote>
 
 <p>
-在协议变更以后，应用层通信的能力和性质取决于所选择的（一个或多个）新协议上。但是，在服务器直接发送了一个带有 <code>101 (Switching Protocols)</code> 状态码的过渡性响应报文（interim response）之后，服务器需要继续发送一个最终响应报文（final response）给到原先的请求，就像服务器已经在新协议连接中接收到请求报文一样（也就是说，在协议已经变更以后，服务器仍然存在一个未偿付的请求在等待满足，服务器打算以新的协议形式来满足这个请求，而不需要让客户端以新的协议形式来再一次发送该请求）
+在协议变更以后，应用层通信的能力和性质取决于所选择的（一个或多个）新协议上。但是，在服务器直接发送了一个带有 <code>101 (Switching Protocols)</code> 状态码的过渡性响应消息（interim response）之后，服务器需要继续发送一个最终响应消息（final response）给到原先的请求，就像服务器已经在新协议连接中接收到请求消息一样（也就是说，在协议已经变更以后，服务器仍然存在一个未偿付的请求在等待满足，服务器打算以新的协议形式来满足这个请求，而不需要让客户端以新的协议形式来再一次发送该请求）
 </p>
 
 <blockquote>
@@ -4942,7 +4942,7 @@ For example, if the <code>Upgrade</code> header field is received in a GET reque
 </blockquote>
 
 <p>
-例如，服务器接收到一个 GET 请求报文，带有一个 <code>Upgrade</code> 报头域的，服务器决定切换协议，它首先使用 HTTP/1.1 协议响应一个 <code>101 (Switching Protocols)</code> 过渡性报文给到该请求，然后马上再以新协议的方式响应目标资源给到该请求。这样使得连接的协议能够以 HTTP 相同的语义来进行更新，而没有带来额外报文往返的延迟成本。服务器 <b>禁止</b> 切换协议，除非其接收到的报文语义能够被新协议所遵循；一个 OPTIONS 请求能够被任何协议所遵循。
+例如，服务器接收到一个 GET 请求消息，带有一个 <code>Upgrade</code> 头字段的，服务器决定切换协议，它首先使用 HTTP/1.1 协议响应一个 <code>101 (Switching Protocols)</code> 过渡性消息给到该请求，然后马上再以新协议的方式响应目标资源给到该请求。这样使得连接的协议能够以 HTTP 相同的语义来进行更新，而没有带来额外消息往返的延迟成本。服务器 <b>禁止</b> 切换协议，除非其接收到的消息语义能够被新协议所遵循；一个 OPTIONS 请求能够被任何协议所遵循。
 </p>
 
 <blockquote>
@@ -4952,7 +4952,7 @@ The following is an example response to the above hypothetical request:
 </blockquote>
 
 <p>
-以下报文样例是对应上述假设的请求报文的响应报文：
+以下消息样例是对应上述假设的请求消息的响应消息：
 </p>
 
 <pre class="example">
@@ -4971,7 +4971,7 @@ When <code>Upgrade</code> is sent, the sender <b>MUST</b> also send a <code>Conn
 </blockquote>
 
 <p>
-当发送一个带有 <code>Upgrade</code> 报头域的报文时，发送端 <b>必须</b> 使该报文同时带上一个包含有一个 "upgrade" 连接选项的 <code>Connection</code> 报头域（<a href="#org57994e1">章节 6.1</a>），以免 <code>Upgrade</code> 报头域被没有实现这些协议的中间人意外转发出去。服务端 <b>必须</b> 忽略接收自一个 HTTP/1.0 请求报文的 <code>Upgrade</code> 报头域。
+当发送一个带有 <code>Upgrade</code> 头字段的消息时，发送端 <b>必须</b> 使该消息同时带上一个包含有一个 "upgrade" 连接选项的 <code>Connection</code> 头字段（<a href="#org57994e1">章节 6.1</a>），以免 <code>Upgrade</code> 头字段被没有实现这些协议的中间人意外转发出去。服务端 <b>必须</b> 忽略接收自一个 HTTP/1.0 请求消息的 <code>Upgrade</code> 头字段。
 </p>
 
 <blockquote>
@@ -4981,7 +4981,7 @@ A client cannot begin using an upgraded protocol on the connection until it has 
 </blockquote>
 
 <p>
-客户端不能在连接中使用新的协议，直到它将当前的请求报文的完整地发送出去（也就是说，客户端不能在发送一个报文的中途改变协议）。如果服务器接收到一个请求报文，既带有一个 <code>Upgrade</code> 报头域，也带有一个 "100-continue" 期望值（expectation）的 <code>Expect</code> 报头域（<a href="https://tools.ietf.org/html/rfc7231#section-5.1.1">【RFC7231】章节 5.1.1</a>）的时候，服务器 <b>必须</b> 在发送一个 <code>101 (Switching Protocols)</code> 响应报文之前，发送一个 <code>100 (Continue)</code> 响应报文。
+客户端不能在连接中使用新的协议，直到它将当前的请求消息的完整地发送出去（也就是说，客户端不能在发送一个消息的中途改变协议）。如果服务器接收到一个请求消息，既带有一个 <code>Upgrade</code> 头字段，也带有一个 "100-continue" 期望值（expectation）的 <code>Expect</code> 头字段（<a href="https://tools.ietf.org/html/rfc7231#section-5.1.1">【RFC7231】章节 5.1.1</a>）的时候，服务器 <b>必须</b> 在发送一个 <code>101 (Switching Protocols)</code> 响应消息之前，发送一个 <code>100 (Continue)</code> 响应消息。
 </p>
 
 <blockquote>
@@ -4991,7 +4991,7 @@ The <code>Upgrade</code> header field only applies to switching protocols on top
 </blockquote>
 
 <p>
-<code>Upgrade</code> 报头域仅应用于切换现有最顶层的连接所使用的协议，它并不能用于切换底层的连接（传输）协议，也不能用于将目前的通信切换到其他不同的连接之上。要达到上述的其他目的，使用一个 <code>3xx (Redirection)</code> 响应会更加合适（<a href="https://tools.ietf.org/html/rfc7231#section-6.4">【RFC7231】章节 6.4</a>）。
+<code>Upgrade</code> 头字段仅应用于切换现有最顶层的连接所使用的协议，它并不能用于切换底层的连接（传输）协议，也不能用于将目前的通信切换到其他不同的连接之上。要达到上述的其他目的，使用一个 <code>3xx (Redirection)</code> 响应会更加合适（<a href="https://tools.ietf.org/html/rfc7231#section-6.4">【RFC7231】章节 6.4</a>）。
 </p>
 
 <blockquote>
@@ -5023,7 +5023,7 @@ A <code>#rule</code> extension to the ABNF rules of [<a href="https://tools.ietf
 </blockquote>
 
 <p>
-<code>#rule</code> 是对<a href="https://tools.ietf.org/html/5234">【RFC5234】ABNF 规则</a>的扩展，用于提高某些报头域值定义的可读性。
+<code>#rule</code> 是对<a href="https://tools.ietf.org/html/5234">【RFC5234】ABNF 规则</a>的扩展，用于提高某些头字段值定义的可读性。
 </p>
 
 <blockquote>
@@ -5088,7 +5088,7 @@ For compatibility with legacy list rules, a recipient <b>MUST</b> parse and igno
 </blockquote>
 
 <p>
-为了兼容历史遗留的列表规则，接收端 <b>必须</b> 解析（parse）并且忽略一个合理数量的空列表元素：足以处理发送端合并域值时出现的常见的错误，但不足以处理用作<a href="https://zh.wikipedia.org/wiki/%E9%98%BB%E6%96%B7%E6%9C%8D%E5%8B%99%E6%94%BB%E6%93%8A">拒绝服务攻击</a>。也就是说，接收端 <b>必须</b> 接受满足以下句法的列表：
+为了兼容历史遗留的列表规则，接收端 <b>必须</b> 解析（parse）并且忽略一个合理数量的空列表元素：足以处理发送端合并字段值时出现的常见的错误，但不足以处理用作<a href="https://zh.wikipedia.org/wiki/%E9%98%BB%E6%96%B7%E6%9C%8D%E5%8B%99%E6%94%BB%E6%93%8A">拒绝服务攻击</a>。也就是说，接收端 <b>必须</b> 接受满足以下句法的列表：
 </p>
 
 <div class="org-src-container">
@@ -5162,9 +5162,9 @@ In contrast, the following values would be invalid, since at least one non-empty
 <h2 id="orgef7d4df">8. INAN 注意事项（IANA Considerations）</h2>
 <div class="outline-text-2" id="text-orgef7d4df">
 </div>
-<div id="outline-container-orgce68929" class="outline-3">
-<h3 id="orgce68929"><a id="ID-739d5a3f-9ed6-4667-9ac5-d0ab49951177"></a>8.1. 报头域注册 (Header Field Registration)</h3>
-<div class="outline-text-3" id="text-orgce68929">
+<div id="outline-container-org93bf595" class="outline-3">
+<h3 id="org93bf595"><a id="ID-739d5a3f-9ed6-4667-9ac5-d0ab49951177"></a>8.1. 头字段注册 (Header Field Registration)</h3>
+<div class="outline-text-3" id="text-org93bf595">
 <blockquote>
 <p>
 HTTP header fields are registered within the "Message Headers" registry maintained at <a href="http://www.iana.org/assignments/message-headers/">http://www.iana.org/assignments/message-headers/</a>.
@@ -5287,7 +5287,7 @@ Furthermore, the header field-name "Close" has been registered as "reserved", si
 <td class="org-left">Close</td>
 <td class="org-left">http</td>
 <td class="org-left">reserved</td>
-<td class="org-left"><a href="#orgce68929">Section 8.1</a></td>
+<td class="org-left"><a href="#org93bf595">Section 8.1</a></td>
 </tr>
 </tbody>
 </table>
@@ -5719,7 +5719,7 @@ This section is meant to inform developers, information providers, and users of 
 </blockquote>
 
 <p>
-本章节是打算将已知的与 HTTP 报文句法、解析，以及路由相关的安全注意事项告知开发者、信息提供商，以及用户。关于 HTTP 的语义以及有效载荷的安全注意事项放在<a href="https://tools.ietf.org/html/rfc7231">【RFC7231】</a>处理。
+本章节是打算将已知的与 HTTP 消息句法、解析，以及路由相关的安全注意事项告知开发者、信息提供商，以及用户。关于 HTTP 的语义以及有效载荷的安全注意事项放在<a href="https://tools.ietf.org/html/rfc7231">【RFC7231】</a>处理。
 </p>
 </div>
 
@@ -5733,7 +5733,7 @@ HTTP relies on the notion of an authoritative response: a response that has been
 </blockquote>
 
 <p>
-HTTP 提出了一个“权威响应（authoritative response）”的概念。权威响应是由请求报文里的目标 URI 所指定的 <code>authority</code> （权威机构、官方机构）依据请求所给定的目标资源状态来决定返回的最合适的响应。来自一个非权威来源（non-authoritative source）的响应，例如一个共享缓存，对于提升性能和可用性一般有很大作用，但是仅在该来源是受信任的或者该不受信任的响应可以被安全地使用的情况。
+HTTP 提出了一个“权威响应（authoritative response）”的概念。权威响应是由请求消息里的目标 URI 所指定的 <code>authority</code> （权威机构、官方机构）依据请求所给定的目标资源状态来决定返回的最合适的响应。来自一个非权威来源（non-authoritative source）的响应，例如一个共享缓存，对于提升性能和可用性一般有很大作用，但是仅在该来源是受信任的或者该不受信任的响应可以被安全地使用的情况。
 </p>
 
 <blockquote>
@@ -5851,7 +5851,7 @@ To promote interoperability, specific recommendations are made for minimum size 
 </blockquote>
 
 <p>
-为了提高互操作性，本规范提出了对于请求行（<a href="#orgc608d15">章节 3.1.1</a>）以及报头域（<a href="#org022942f">章节 3.2</a>）的最小值限制的具体建议。这些最小值建议，本规范选择的是即使资源受限的（implementations）也能够支持的，期望大多数的实现（implementations）会选择更大幅度的限制。
+为了提高互操作性，本规范提出了对于请求行（<a href="#orgc608d15">章节 3.1.1</a>）以及头字段（<a href="#org1f965fb">章节 3.2</a>）的最小值限制的具体建议。这些最小值建议，本规范选择的是即使资源受限的（implementations）也能够支持的，期望大多数的实现（implementations）会选择更大幅度的限制。
 </p>
 
 <blockquote>
@@ -5861,7 +5861,7 @@ A server can reject a message that has a request-target that is too long (Sectio
 </blockquote>
 
 <p>
-服务器能够拒绝一个带有过长的请求目标（<a href="https://tools.ietf.org/html/rfc7231#section-6.5.12">【RFC7231】章节 6.5.12</a>），或者过大的请求有效载荷（<a href="https://tools.ietf.org/html/rfc7231#section-6.5.11">【RFC7231】章节 6.5.11</a>）的报文。作为对 HTTP 的扩展，额外的关于容量限制的响应状态码已经定义在【<a href="https://tools.ietf.org/html/rfc6585">RFC6585</a>】。
+服务器能够拒绝一个带有过长的请求目标（<a href="https://tools.ietf.org/html/rfc7231#section-6.5.12">【RFC7231】章节 6.5.12</a>），或者过大的请求有效载荷（<a href="https://tools.ietf.org/html/rfc7231#section-6.5.11">【RFC7231】章节 6.5.11</a>）的消息。作为对 HTTP 的扩展，额外的关于容量限制的响应状态码已经定义在【<a href="https://tools.ietf.org/html/rfc6585">RFC6585</a>】。
 </p>
 
 <blockquote>
@@ -5871,7 +5871,7 @@ Recipients ought to carefully limit the extent to which they process other proto
 </blockquote>
 
 <p>
-接收端应该小心地限制其处理的除上述以外的其他协议元素的大小，包括（但不限于）请求方法，响应状态短语，报头域的名称，数字值以及报文分块。
+接收端应该小心地限制其处理的除上述以外的其他协议元素的大小，包括（但不限于）请求方法，响应状态短语，头字段的名称，数字值以及消息分块。
 </p>
 </div>
 </div>
@@ -5886,7 +5886,7 @@ Recipients ought to carefully limit the extent to which they process other proto
 </blockquote>
 
 <p>
-响应分割（<a href="https://en.wikipedia.org/wiki/HTTP_response_splitting">Response Splitting</a>，也称为“CRLF 注入”）是一种针对网页用途（Web Usage）而进行各种攻击的常见的技术，它利用了 HTTP 基于行(line-based)来进行报文分帧，以及在持久连接中请求与响应的顺序关联的性质【<a href="http://packetstormsecurity.com/papers/general/whitepaper_httpresponse.pdf">Klein</a>】。当请求穿过一个共享缓存的时候，这种技术特别具有破坏性。
+响应分割（<a href="https://en.wikipedia.org/wiki/HTTP_response_splitting">Response Splitting</a>，也称为“CRLF 注入”）是一种针对网页用途（Web Usage）而进行各种攻击的常见的技术，它利用了 HTTP 基于行(line-based)来进行消息分帧，以及在持久连接中请求与响应的顺序关联的性质【<a href="http://packetstormsecurity.com/papers/general/whitepaper_httpresponse.pdf">Klein</a>】。当请求穿过一个共享缓存的时候，这种技术特别具有破坏性。
 </p>
 
 <blockquote>
@@ -5896,7 +5896,7 @@ Response splitting exploits a vulnerability in servers (usually within an applic
 </blockquote>
 
 <p>
-响应分割利用了服务器（通常在一个应用服务器内）的一个弱点，攻击者能够在某些请求参数里带有经过编码的数据，而这些参数并不会在服务器立即解码，而是回显（echo）至对应的响应报文的报头域里。如果解码数据被精心设计得看起来像是该响应报文的结束以及后续报文的开始，那么该响应报文就被“分割”为前后两个响应报文，并且后一个“响应报文”（表面上看像是一个响应报文，但实际是原响应报文的后半部分）受控于攻击者。然后攻击者就能够在同一个持久连接中做任何请求并欺骗接收端（包括中间人）让它们相信分割过的后半部分是第二个请求的权威应答（authoritative answer）。
+响应分割利用了服务器（通常在一个应用服务器内）的一个弱点，攻击者能够在某些请求参数里带有经过编码的数据，而这些参数并不会在服务器立即解码，而是回显（echo）至对应的响应消息的头字段里。如果解码数据被精心设计得看起来像是该响应消息的结束以及后续消息的开始，那么该响应消息就被“分割”为前后两个响应消息，并且后一个“响应消息”（表面上看像是一个响应消息，但实际是原响应消息的后半部分）受控于攻击者。然后攻击者就能够在同一个持久连接中做任何请求并欺骗接收端（包括中间人）让它们相信分割过的后半部分是第二个请求的权威应答（authoritative answer）。
 </p>
 
 <blockquote>
@@ -5906,7 +5906,7 @@ For example, a parameter within the request-target might be read by an applicati
 </blockquote>
 
 <p>
-例如，在请求目标内的一个参数可能会被一个应用服务器所读取，并复用在一个重定义响应内，导致同一个参数被回显到响应报文的 <code>Location</code> 报头域内。如果该参数由客户端应用负责解码，而且服务器在将该参数放置到响应报头域的时候没有正确地对其编码，那么，攻击者能够发送多个编码过的 <code>CRLF</code> 字节以及其他内容来让该应用的单一响应报文看起来像是两个或多个响应报文。
+例如，在请求目标内的一个参数可能会被一个应用服务器所读取，并复用在一个重定义响应内，导致同一个参数被回显到响应消息的 <code>Location</code> 头字段内。如果该参数由客户端应用负责解码，而且服务器在将该参数放置到响应头字段的时候没有正确地对其编码，那么，攻击者能够发送多个编码过的 <code>CRLF</code> 字节以及其他内容来让该应用的单一响应消息看起来像是两个或多个响应消息。
 </p>
 
 <blockquote>
@@ -5916,7 +5916,7 @@ A common defense against response splitting is to filter requests for data that 
 </blockquote>
 
 <p>
-预防响应分割的一个常见方式是去过滤掉请求报文中看起来像是经过编码的 CR 以及 LF 的数据（例如，"%0D" 和 "%0A"）。但是，假设应用服务器仅执行 URI 解码（URI decoding），而不是更加模糊的数据转换，例如，字符集转码（charset transcoding），XML 实体翻译（XML entity translation），base64 解码，<code>sprintf</code> 字符串格式转换（sprintf reformatting）等等，一个更有效的缓解方式是阻止任何除了服务器自身的核心协议库以外的程序在报头块中发送一个 <code>CR</code> 或者 <code>LF</code>，这样做意味着将对报头域的输出限制为只能使用 API 的方式，通过这些 API 来过滤掉不好的字节，同时不允许应用服务器越过 API 将数据直接写入到协议流。
+预防响应分割的一个常见方式是去过滤掉请求消息中看起来像是经过编码的 CR 以及 LF 的数据（例如，"%0D" 和 "%0A"）。但是，假设应用服务器仅执行 URI 解码（URI decoding），而不是更加模糊的数据转换，例如，字符集转码（charset transcoding），XML 实体翻译（XML entity translation），base64 解码，<code>sprintf</code> 字符串格式转换（sprintf reformatting）等等，一个更有效的缓解方式是阻止任何除了服务器自身的核心协议库以外的程序在消息头部中发送一个 <code>CR</code> 或者 <code>LF</code>，这样做意味着将对头字段的输出限制为只能使用 API 的方式，通过这些 API 来过滤掉不好的字节，同时不允许应用服务器越过 API 将数据直接写入到协议流。
 </p>
 </div>
 </div>
@@ -5931,24 +5931,24 @@ Request smuggling ([Linhart]) is a technique that exploits differences in protoc
 </blockquote>
 
 <p>
-请求走私（<a href="https://www.cgisecurity.com/lib/HTTP-Request-Smuggling.pdf">Request Smuggling</a>）是一种利用多个接收端对 HTTP 报文解析的不一致性，来达到在一个表面无害的请求里隐藏（按正常规则来说应该被阻止或者禁止的）额外请求的技术。像响应分割（response splitting）一样，请求走私能够引发针对 HTTP 用途的各种攻击。
+请求走私（<a href="https://www.cgisecurity.com/lib/HTTP-Request-Smuggling.pdf">Request Smuggling</a>）是一种利用多个接收端对 HTTP 消息解析的不一致性，来达到在一个表面无害的请求里隐藏（按正常规则来说应该被阻止或者禁止的）额外请求的技术。像响应分割（response splitting）一样，请求走私能够引发针对 HTTP 用途的各种攻击。
 </p>
 
 <blockquote>
 <p>
-This specification has introduced new requirements on request parsing, particularly with regard to message framing in <a href="#orga7ccbf3">Section 3.3.3</a>, to reduce the effectiveness of request smuggling.
+This specification has introduced new requirements on request parsing, particularly with regard to message framing in <a href="#orgb9426aa">Section 3.3.3</a>, to reduce the effectiveness of request smuggling.
 </p>
 </blockquote>
 
 <p>
-本规范对请求解析（request parsing）引入了新的要求，特别是在报文分帧方面（<a href="#orga7ccbf3">章节 3.3.3</a>），以降低请求走私的影响。
+本规范对请求解析（request parsing）引入了新的要求，特别是在消息分帧方面（<a href="#orgb9426aa">章节 3.3.3</a>），以降低请求走私的影响。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgcd0c781" class="outline-3">
-<h3 id="orgcd0c781">9.6. 报文完整性 (Message Integrity)</h3>
-<div class="outline-text-3" id="text-orgcd0c781">
+<div id="outline-container-orgb1c0b51" class="outline-3">
+<h3 id="orgb1c0b51">9.6. 消息完整性 (Message Integrity)</h3>
+<div class="outline-text-3" id="text-orgb1c0b51">
 <blockquote>
 <p>
 HTTP does not define a specific mechanism for ensuring message integrity, instead relying on the error-detection ability of underlying transport protocols and the use of length or chunk-delimited framing to detect completeness. Additional integrity mechanisms, such as hash functions or digital signatures applied to the content, can be selectively added to messages via extensible metadata header fields. Historically, the lack of a single integrity mechanism has been justified by the informal nature of most HTTP communication. However, the prevalence of HTTP as an information access mechanism has resulted in its increasing use within environments where verification of message integrity is crucial.
@@ -5956,24 +5956,24 @@ HTTP does not define a specific mechanism for ensuring message integrity, instea
 </blockquote>
 
 <p>
-HTTP 并没有定义一个具体方法来保证报文的完整性，而是依靠底层传输协议的错误检测能力（error-detection ability）以及使用长度或块限定的分帧（chunk-delimited Framing）来检测完整。如果想添加额外的完整性机制，例如对内容应用哈希函数（hash functions）或者数字签名（digital sinatures），可以通过使用扩展的元数据报头域（extensible metadata header fields）来选择性地将这些额外的完整性机制应用到报文。
+HTTP 并没有定义一个具体方法来保证消息的完整性，而是依靠底层传输协议的错误检测能力（error-detection ability）以及使用长度或块限定的分帧（chunk-delimited Framing）来检测完整。如果想添加额外的完整性机制，例如对内容应用哈希函数（hash functions）或者数字签名（digital sinatures），可以通过使用扩展的元数据头字段（extensible metadata header fields）来选择性地将这些额外的完整性机制应用到消息。
 </p>
 
 <blockquote>
 <p>
-User agents are encouraged to implement configurable means for detecting and reporting failures of message integrity such that those means can be enabled within environments for which integrity is necessary. For example, a browser being used to view medical history or drug interaction information needs to indicate to the user when such information is detected by the protocol to be incomplete, expired, or corrupted during transfer. Such mechanisms might be selectively enabled via user agent extensions or the presence of message integrity metadata in a response. At a minimum, user agents ought to provide some indication that allows a user to distinguish between a complete and incomplete response message (<a href="#org5ce153b">Section 3.4</a>) when such verification is desired.
+User agents are encouraged to implement configurable means for detecting and reporting failures of message integrity such that those means can be enabled within environments for which integrity is necessary. For example, a browser being used to view medical history or drug interaction information needs to indicate to the user when such information is detected by the protocol to be incomplete, expired, or corrupted during transfer. Such mechanisms might be selectively enabled via user agent extensions or the presence of message integrity metadata in a response. At a minimum, user agents ought to provide some indication that allows a user to distinguish between a complete and incomplete response message (<a href="#orgfa53349">Section 3.4</a>) when such verification is desired.
 </p>
 </blockquote>
 
 <p>
-鼓励用户代理去实现某些可配置的方式来对报文完整性进行检测和错误报告，以使这些方式能够在必要的情形下被启用。例如，一个浏览器被用于浏览病史，或者药物相互作信息，当协议检测到这些信息在传输过程中因为某些因素导致不完整、过期，或者损坏的时候，浏览器需要向用户指出来。这些方式可能通过用户代理的扩展程序，或者某个响应中的报文完整性元数据的出现，来被选择性地启用。至少在需要进行完整性验证的时候，用户代理应该提供某些指示来让某个用户区分到完整和不完整的响应报文（<a href="#org5ce153b">章节 3.4</a>）
+鼓励用户代理去实现某些可配置的方式来对消息完整性进行检测和错误报告，以使这些方式能够在必要的情形下被启用。例如，一个浏览器被用于浏览病史，或者药物相互作信息，当协议检测到这些信息在传输过程中因为某些因素导致不完整、过期，或者损坏的时候，浏览器需要向用户指出来。这些方式可能通过用户代理的扩展程序，或者某个响应中的消息完整性元数据的出现，来被选择性地启用。至少在需要进行完整性验证的时候，用户代理应该提供某些指示来让某个用户区分到完整和不完整的响应消息（<a href="#orgfa53349">章节 3.4</a>）
 </p>
 </div>
 </div>
 
-<div id="outline-container-org6d72682" class="outline-3">
-<h3 id="org6d72682">9.7. 报文保密性 (Message Confidentiality)</h3>
-<div class="outline-text-3" id="text-org6d72682">
+<div id="outline-container-org3f3f5ee" class="outline-3">
+<h3 id="org3f3f5ee">9.7. 消息保密性 (Message Confidentiality)</h3>
+<div class="outline-text-3" id="text-org3f3f5ee">
 <blockquote>
 <p>
 HTTP relies on underlying transport protocols to provide message confidentiality when that is desired. HTTP has been specifically designed to be independent of the transport protocol, such that it can be used over many different forms of encrypted connection, with the selection of such transports being identified by the choice of URI scheme or within user agent configuration.
@@ -5981,7 +5981,7 @@ HTTP relies on underlying transport protocols to provide message confidentiality
 </blockquote>
 
 <p>
-HTTP 依靠底层传输协议在需要的时候提供报文保密性的保障。HTTP 已被专门设计为不依赖传输协议，使其能够应用在多种不同类型的加密连接之上。与 HTTP 一同被应用的还有由 URI 方案的选取或用户代理的配置所决定的传输方式的相关选项。
+HTTP 依靠底层传输协议在需要的时候提供消息保密性的保障。HTTP 已被专门设计为不依赖传输协议，使其能够应用在多种不同类型的加密连接之上。与 HTTP 一同被应用的还有由 URI 方案的选取或用户代理的配置所决定的传输方式的相关选项。
 </p>
 
 <blockquote>
@@ -6016,7 +6016,7 @@ HTTP log information is confidential in nature; its handling is often constraine
 </blockquote>
 
 <p>
-HTTP 日志信息如个涉及机密信息，日志信息需要被安全地存储，对它们的分析需要遵循正确的指导方针。对个人信息进行匿名化是有效的，但这样做还不足以阻止通过关联其他访问特征来重新识别出真实的日志痕迹的行为。因此，公布具有唯一定位一个具体客户端的访问痕迹（access traces）是危险的，即使这个唯一码只是一个假名。
+HTTP 日志信息如个涉及机密信息，日志信息需要被安全地存储，对它们的分析需要遵循正确的指导方针。对个人信息进行匿名化是有效的，但这样做还不足以阻止通过关联其他访问特征来重新识别出真实的日志痕迹的行为。因此，公布具有唯一定位一个具体客户端的访问痕迹（access traces）是危险的，即使这个唯一码只是一个化名。
 </p>
 
 <blockquote>
@@ -6130,7 +6130,7 @@ HTTP has been in use since 1990. The first version, later referred to as HTTP/0.
 </blockquote>
 
 <p>
-HTTP 自 1990 年开始被使用。第一个版本，也就是后来被称为 HTTP/0.9，是一个用于在互联网中对超文本数据进行转输的简单协议，只能使用单一的请求方法 (GET)，而且还不能带有元数据。HTTP/1.0，由【<a href="https://tools.ietf.org/html/rfc1945">RFC1945</a>】所定义，新增了一系列的请求方法以及与 MIME 相类似的报文通信机制，允许传输元数据，以及请求/响应语言的修饰符。但是，HTTP/1.0 并没有充分考虑代理的层级结构的影响、缓存、持久连接的需要，以及基于名称（name-based）的虚拟主机。这些不完全实现 HTTP 的应用都声称自身版本为 "HTTP/1.0"，并逐渐在网络中扩散，进一步迫使一个协议版本的变更来为两个正在通信的应用来确定彼此的真实的能力。
+HTTP 自 1990 年开始被使用。第一个版本，也就是后来被称为 HTTP/0.9，是一个用于在互联网中对超文本数据进行转输的简单协议，只能使用单一的请求方法 (GET)，而且还不能带有元数据。HTTP/1.0，由【<a href="https://tools.ietf.org/html/rfc1945">RFC1945</a>】所定义，新增了一系列的请求方法以及与 MIME 相类似的消息通信机制，允许传输元数据，以及请求/响应语言的修饰符。但是，HTTP/1.0 并没有充分考虑代理的层级结构的影响、缓存、持久连接的需要，以及基于名称（name-based）的虚拟主机。这些不完全实现 HTTP 的应用都声称自身版本为 "HTTP/1.0"，并逐渐在网络中扩散，进一步迫使一个协议版本的变更来为两个正在通信的应用来确定彼此的真实的能力。
 </p>
 
 <blockquote>
@@ -6150,7 +6150,7 @@ HTTP/1.1 has been designed to make supporting previous versions easy. A general-
 </blockquote>
 
 <p>
-HTTP/1.1 已被设计为使支持以前的版本变得容易。一个通用的 HTTP/1.1 服务器应该能够理解任何合法的 HTTP/1.0 格式的请求报文，并能够 HTTP/1.1 报文正确响应，并且这个响应报文只使用 HTTP/1.0 客户端所能理解（或者安全忽略）的功能。同样，一个 HTTP/1.1 客户端应该能够理解任何合法的 HTTP/1.0 响应。
+HTTP/1.1 已被设计为使支持以前的版本变得容易。一个通用的 HTTP/1.1 服务器应该能够理解任何合法的 HTTP/1.0 格式的请求消息，并能够 HTTP/1.1 消息正确响应，并且这个响应消息只使用 HTTP/1.0 客户端所能理解（或者安全忽略）的功能。同样，一个 HTTP/1.1 客户端应该能够理解任何合法的 HTTP/1.0 响应。
 </p>
 
 <blockquote>
@@ -6160,7 +6160,7 @@ Since HTTP/0.9 did not support header fields in a request, there is no mechanism
 </blockquote>
 
 <p>
-因为 HTTP/0.9 并不支持在请求报文中带有报头域，因此，没有任何方法来让其支持基于名称的虚拟主机（name-based virtual hosts，通过检查 <code>Host</code> 报头域来对资源进行选择）。任何实现基于名称的虚拟主机的服务器应该禁止支持 HTTP/0.9。大多数看起来像是 HTTP/0.9 的请求报文，实际上是因为客户端没有正确对 <code>request-target</code> 进行编码导致没有很好的构建出 HTTP/1.x 请求报文。
+因为 HTTP/0.9 并不支持在请求消息中带有头字段，因此，没有任何方法来让其支持基于名称的虚拟主机（name-based virtual hosts，通过检查 <code>Host</code> 头字段来对资源进行选择）。任何实现基于名称的虚拟主机的服务器应该禁止支持 HTTP/0.9。大多数看起来像是 HTTP/0.9 的请求消息，实际上是因为客户端没有正确对 <code>request-target</code> 进行编码导致没有很好的构建出 HTTP/1.x 请求消息。
 </p>
 </div>
 
@@ -6188,7 +6188,7 @@ The requirements that clients and servers support the <code>Host</code> header f
 </blockquote>
 
 <p>
-HTTP/1.1 与 HTTP/1.0 最重要的改变有如下：要求客户端和服务器支持 <code>Host</code> 报头域（<a href="#org1e507aa">章节 5.4</a>），如果在一个 HTTP/1.1 请求报文中没有 <code>Host</code> 的话要报告错误；接受绝对 URI（absolute URIs，<a href="#org7ead76a">章节 5.3</a>）。
+HTTP/1.1 与 HTTP/1.0 最重要的改变有如下：要求客户端和服务器支持 <code>Host</code> 头字段（<a href="#org1e507aa">章节 5.4</a>），如果在一个 HTTP/1.1 请求消息中没有 <code>Host</code> 的话要报告错误；接受绝对 URI（absolute URIs，<a href="#org7ead76a">章节 5.3</a>）。
 </p>
 
 <blockquote>
@@ -6204,7 +6204,7 @@ Older HTTP/1.0 clients assumed a one-to-one relationship of IP addresses and ser
 </blockquote>
 
 <p>
-旧的 HTTP/1.0 客户端会假定 IP 地址与服务器是一对一的关系，除了只能使用 IP 地址这种方式来将一个请求导向到它所期望到达的服务器以外，没有任何其他的方式。在 HTTP/1.1 发展过程中引入了 <code>Host</code> 报头域，它能够很快被 HTTP/1.0 浏览器所实现，另外，还需要对所有 HTTP/1.1 请求报文增加额外的要求，来确保完整采用。在写这份文档的时候，大多数基于 HTTP 的服务都已经由 <code>Host</code> 报头域来决定请求目标了。
+旧的 HTTP/1.0 客户端会假定 IP 地址与服务器是一对一的关系，除了只能使用 IP 地址这种方式来将一个请求导向到它所期望到达的服务器以外，没有任何其他的方式。在 HTTP/1.1 发展过程中引入了 <code>Host</code> 头字段，它能够很快被 HTTP/1.0 浏览器所实现，另外，还需要对所有 HTTP/1.1 请求消息增加额外的要求，来确保完整采用。在写这份文档的时候，大多数基于 HTTP 的服务都已经由 <code>Host</code> 头字段来决定请求目标了。
 </p>
 </div>
 </div>
@@ -6229,7 +6229,7 @@ Some clients and servers might wish to be compatible with these previous approac
 </blockquote>
 
 <p>
-某些客户端和服务器可能希望兼容上述这种持久连接的实现方式，通过带有一个 "<code>Connection: keep-alive</code>" 请求报头域明确地与通信双方协商。但是，HTTP/1.0 持久连接的某些带实验性质的实现（experimental implementations）是有缺陷的，例如，如果一个 HTTP/1.0 代理服务器并不理解 <code>Connection</code> 报头域而将其错误地转发到下一个入站服务器中，这样会导致连接挂起。
+某些客户端和服务器可能希望兼容上述这种持久连接的实现方式，通过带有一个 "<code>Connection: keep-alive</code>" 请求头字段明确地与通信双方协商。但是，HTTP/1.0 持久连接的某些带实验性质的实现（experimental implementations）是有缺陷的，例如，如果一个 HTTP/1.0 代理服务器并不理解 <code>Connection</code> 头字段而将其错误地转发到下一个入站服务器中，这样会导致连接挂起。
 </p>
 
 <blockquote>
@@ -6239,7 +6239,7 @@ One attempted solution was the introduction of a <code>Proxy-Connection</code> h
 </blockquote>
 
 <p>
-一个试图的解决方案是引入一个 <code>Proxy-Connection</code> 报头域特定针对于代理。实际上这样也是很难实行的，因为代理通常部署在多个通信层上，同样会带来上述的这些问题。
+一个试图的解决方案是引入一个 <code>Proxy-Connection</code> 头字段特定针对于代理。实际上这样也是很难实行的，因为代理通常部署在多个通信层上，同样会带来上述的这些问题。
 </p>
 
 <blockquote>
@@ -6249,7 +6249,7 @@ As a result, clients are encouraged not to send the <code>Proxy-Connection</code
 </blockquote>
 
 <p>
-所以，鼓励客户端不要在任何请求报文中带有 <code>Proxy-Connection</code> 报头域。
+所以，鼓励客户端不要在任何请求消息中带有 <code>Proxy-Connection</code> 头字段。
 </p>
 
 <blockquote>
@@ -6259,7 +6259,7 @@ Clients are also encouraged to consider the use of <code>Connection: keep-alive<
 </blockquote>
 
 <p>
-同样，鼓励客户端在请求报文中小心谨慎地使用 <code>Connection: keep-alive</code> 报头域，这是因为该报头域会启用与 HTTP/1.0 服务器的持久连接。客户端使用它的时候需要监听连接是否存在被挂起（hung）的请求（也就是说客户端应该停止发送报头域），并且客户端不应该在有使用代理的场合下使用这种方法。
+同样，鼓励客户端在请求消息中小心谨慎地使用 <code>Connection: keep-alive</code> 头字段，这是因为该头字段会启用与 HTTP/1.0 服务器的持久连接。客户端使用它的时候需要监听连接是否存在被挂起（hung）的请求（也就是说客户端应该停止发送头字段），并且客户端不应该在有使用代理的场合下使用这种方法。
 </p>
 </div>
 </div>
@@ -6274,14 +6274,14 @@ HTTP/1.1 introduces the <code>Transfer-Encoding</code> header field (<a href="#o
 </blockquote>
 
 <p>
-HTTP/1.1 引入了 <code>Transfer-Encoding</code> 报头域（<a href="#org209c019">章节 3.3.1</a>）。传输编码值需要在 HTTP 报文在某个遵循 MIME 协议的连接上转发之前进行解码。
+HTTP/1.1 引入了 <code>Transfer-Encoding</code> 头字段（<a href="#org209c019">章节 3.3.1</a>）。传输编码值需要在 HTTP 消息在某个遵循 MIME 协议的连接上转发之前进行解码。
 </p>
 </div>
 </div>
 </div>
 
 <div id="outline-container-orgcb65363" class="outline-3">
-<h3 id="orgcb65363">A.2. 相对 RFC 2616 的变化 (Changes from RFC 2616)</h3>
+<h3 id="orgcb65363"><a id="ID-cdfe1d9f-fe54-40a8-936b-aa02154989f9"></a>A.2. 相对 RFC 2616 的变化 (Changes from RFC 2616)</h3>
 <div class="outline-text-3" id="text-orgcb65363">
 <blockquote>
 <p>
@@ -6311,7 +6311,7 @@ Userinfo (i.e., username and password) are now disallowed in HTTP and HTTPS URIs
 </blockquote>
 
 <p>
-现在，不再允许在 HTTP 和 HTTPS URI 中出现 <code>userinfo</code> （也就是说，用户名和密码），因为它在通信线路上传输时存在安全问题。（<a href="#org72dfe0e">章节 2.7.1</a>）
+现在，不再允许在 HTTP 和 HTTPS URI 中出现 <code>userinfo</code> （也就是说，用户名和密码）了，因为它在通信线路上传输时存在安全问题。（<a href="#org72dfe0e">章节 2.7.1</a>）
 </p>
 
 <blockquote>
@@ -6326,27 +6326,27 @@ The HTTPS URI scheme is now defined by this specification; previously, it was do
 
 <blockquote>
 <p>
-HTTP messages can be (and often are) buffered by implementations; despite it sometimes being available as a stream, HTTP is fundamentally a message-oriented protocol. Minimum supported sizes for various protocol elements have been suggested, to improve interoperability. (<a href="#org86c9e58">Section 3</a>)
+HTTP messages can be (and often are) buffered by implementations; despite it sometimes being available as a stream, HTTP is fundamentally a message-oriented protocol. Minimum supported sizes for various protocol elements have been suggested, to improve interoperability. (<a href="#org4fb3faf">Section 3</a>)
 </p>
 </blockquote>
 
 <p>
-HTTP 报文能够（而且通常会）被缓冲（buffer），尽管它有时候作为流的形式来提供，HTTP 本质上来说是一种面向报文的协议（Message-oriented Protocol）。为了提高互操作性，本规则建议了各种协议元素的最小可支持的大小。（<a href="#org86c9e58">章节 3</a>）
+HTTP 消息能够（而且通常会）被缓冲（buffer），尽管它有时候作为流的形式来提供，HTTP 本质上来说是一种面向消息的协议（Message-oriented Protocol）。为了提高互操作性，本规则建议了各种协议元素的最小可支持的大小。（<a href="#org4fb3faf">章节 3</a>）
 </p>
 
 <blockquote>
 <p>
-Invalid whitespace around field-names is now required to be rejected, because accepting it represents a security vulnerability. The ABNF productions defining header fields now only list the field value. (<a href="#org022942f">Section 3.2</a>)
+Invalid whitespace around field-names is now required to be rejected, because accepting it represents a security vulnerability. The ABNF productions defining header fields now only list the field value. (<a href="#org1f965fb">Section 3.2</a>)
 </p>
 </blockquote>
 
 <p>
-现在，在域的名称（field-names）两端不能出现非法的空格字符，这是因为允许它们就意味着安全隐患。现在，定义报头域的 ABNF 规则 <code>header-field</code> 只列出了 <code>field-value</code>。（<a href="#org022942f">章节 3.2</a>）
+现在，在域的名称（field-names）两端不能出现非法的空格字符，这是因为允许它们就意味着安全隐患。现在，定义头字段的 ABNF 规则 <code>header-field</code> 只列出了 <code>field-value</code>。（<a href="#org1f965fb">章节 3.2</a>）
 </p>
 
 <blockquote>
 <p>
-译注：【RFC2616】对报文域的 ABNF <a href="https://tools.ietf.org/html/rfc2616#section-4.2">定义在这里（message-header）</a>；【RFC7231】对报头域的 ABNF <a href="#org022942f">定义在这里（header-field）</a>。
+译注：【RFC2616】对消息域的 ABNF <a href="https://tools.ietf.org/html/rfc2616#section-4.2">定义在这里（message-header）</a>；【RFC7231】对头字段的 ABNF <a href="#org1f965fb">定义在这里（header-field）</a>。
 </p>
 </blockquote>
 
@@ -6367,17 +6367,17 @@ Header fields that span multiple lines ("line folding") are deprecated. (<a href
 </blockquote>
 
 <p>
-废弃了能够横跨多行（"line folding"）的报头域。（<a href="#org4aaca07">章节 3.2.4</a>）
+废弃了能够横跨多行（"line folding"）的头字段。（<a href="#org4aaca07">章节 3.2.4</a>）
 </p>
 
 <blockquote>
 <p>
-The NUL octet is no longer allowed in comment and quoted-string text, and handling of backslash-escaping in them has been clarified. The quoted-pair rule no longer allows escaping control characters other than HTAB. Non-US-ASCII content in header fields and the reason phrase has been obsoleted and made opaque (the <code>TEXT</code> rule was removed). (<a href="#org9aed017">Section 3.2.6</a>)
+The NUL octet is no longer allowed in comment and quoted-string text, and handling of backslash-escaping in them has been clarified. The quoted-pair rule no longer allows escaping control characters other than HTAB. Non-US-ASCII content in header fields and the reason phrase has been obsoleted and made opaque (the <code>TEXT</code> rule was removed). (<a href="#orgd7938c9">Section 3.2.6</a>)
 </p>
 </blockquote>
 
 <p>
-<code>NUL</code> 字节不再允许出现在 <code>comment</code> （注释）和 <code>quoted-string</code> （以双引号包裹的字符串）里，同时，明确了使用反斜杠转义 <code>NUL</code> 字节的处理方式。<code>quoted-pair</code> 规则不再允许转义除 <code>HTAB</code> 以外的<a href="https://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E5%AD%97%E7%AC%A6">控制字符（Control Characters）</a>。在报头域（header fields）和 <code>reason-phrase</code> 中存在的非 USASCII 的内容已被弃用，并将其设置为不透明数据（移除了 <code>TEXT</code> 规则）。（<a href="#org9aed017">章节 3.2.6</a>）
+<code>NUL</code> 字节不再允许出现在 <code>comment</code> （注释）和 <code>quoted-string</code> （以双引号包裹的字符串）里，同时，明确了使用反斜杠转义 <code>NUL</code> 字节的处理方式。<code>quoted-pair</code> 规则不再允许转义除 <code>HTAB</code> 以外的<a href="https://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E5%AD%97%E7%AC%A6">控制字符（Control Characters）</a>。在头字段（header fields）和 <code>reason-phrase</code> 中存在的非 USASCII 的内容已被弃用，并将其设置为不透明数据（移除了 <code>TEXT</code> 规则）。（<a href="#orgd7938c9">章节 3.2.6</a>）
 </p>
 
 <blockquote>
@@ -6393,27 +6393,27 @@ Bogus <code>Content-Length</code> header fields are now required to be handled a
 </blockquote>
 
 <p>
-现在，要求接收端将伪造的 <code>Content-Length</code> 报头域作为错误来处理。（<a href="#orge260bed">章节 3.3.2</a>）
+现在，要求接收端将伪造的 <code>Content-Length</code> 头字段作为错误来处理。（<a href="#orge260bed">章节 3.3.2</a>）
 </p>
 
 <blockquote>
 <p>
-The algorithm for determining the message body length has been clarified to indicate all of the special cases (e.g., driven by methods or status codes) that affect it, and that new protocol elements cannot define such special cases. CONNECT is a new, special case in determining message body length. "multipart/byteranges" is no longer a way of determining message body length detection. (<a href="#orga7ccbf3">Section 3.3.3</a>)
+The algorithm for determining the message body length has been clarified to indicate all of the special cases (e.g., driven by methods or status codes) that affect it, and that new protocol elements cannot define such special cases. CONNECT is a new, special case in determining message body length. "multipart/byteranges" is no longer a way of determining message body length detection. (<a href="#orgb9426aa">Section 3.3.3</a>)
 </p>
 </blockquote>
 
 <p>
-明确指出了所有影响确定报文正文长度的算法的所有特殊情况（例如，由方法或状态码决定），并且，将来新增的协议元素不能再定义这种特殊情况。CONNECT 是新加入的影响报文正文长度的特殊情况。"multipart/byteranges" 不再是一种确定报文正文长度的检测方式。（<a href="#orga7ccbf3">章节 3.3.3</a>）
+明确指出了所有影响确定消息体长度的算法的所有特殊情况（例如，由方法或状态码决定），并且，将来新增的协议元素不能再定义这种特殊情况。CONNECT 是新加入的影响消息体长度的特殊情况。"multipart/byteranges" 不再是一种确定消息体长度的检测方式。（<a href="#orgb9426aa">章节 3.3.3</a>）
 </p>
 
 <blockquote>
 <p>
-The "identity" transfer coding token has been removed. (<a href="#org3d27427">Sections 3.3</a> and <a href="#orgdb9d59f">4</a>)
+The "identity" transfer coding token has been removed. (<a href="#orgd385ed5">Sections 3.3</a> and <a href="#orgdb9d59f">4</a>)
 </p>
 </blockquote>
 
 <p>
-移除了 "identity" 传输编码值。（<a href="#org3d27427">章节 3.3</a> 以及 <a href="#orgdb9d59f">章节 4</a>）
+移除了 "identity" 传输编码值。（<a href="#orgd385ed5">章节 3.3</a> 以及 <a href="#orgdb9d59f">章节 4</a>）
 </p>
 
 <blockquote>
@@ -6463,7 +6463,7 @@ Gateways do not need to generate <code>Via</code> header fields anymore. (<a hre
 </blockquote>
 
 <p>
-网关不再需要生成 <code>Via</code> 报头域了。（<a href="#org05e91bc">章节 5.7.1</a>）
+网关不再需要生成 <code>Via</code> 头字段了。（<a href="#org05e91bc">章节 5.7.1</a>）
 </p>
 
 <blockquote>
@@ -6473,7 +6473,7 @@ Exactly when "close" connection options have to be sent has been clarified. Also
 </blockquote>
 
 <p>
-明确了何时需要发送 "close" 连接选项（connection options）的时机。同时，要求逐跳（"hop-by-hop"）类型的报头域出现在 <code>Connection</code> 报头域内，被本规范定义为逐跳（"hop-by-hop"）类型的报头域，同样不能豁免这个要求。（<a href="#org57994e1">章节 6.1</a>）
+明确了何时需要发送 "close" 连接选项（connection options）的时机。同时，要求逐跳（"hop-by-hop"）类型的头字段出现在 <code>Connection</code> 头字段内，被本规范定义为逐跳（"hop-by-hop"）类型的头字段，同样不能豁免这个要求。（<a href="#org57994e1">章节 6.1</a>）
 </p>
 
 <blockquote>
@@ -6493,7 +6493,7 @@ The semantics of the <code>Upgrade</code> header field is now defined in respons
 </blockquote>
 
 <p>
-<code>Upgrade</code> 报头域的语义现在定义在响应里，而不再是 101（来自【RFC2817】，这是不正确的）。而且，它的域值的顺序现在是有意义的。（<a href="#orgaf25a2a">章节 6.7</a>）
+<code>Upgrade</code> 头字段的语义现在定义在响应里，而不再是 101（来自【RFC2817】，这是不正确的）。而且，它的字段值的顺序现在是有意义的。（<a href="#orgaf25a2a">章节 6.7</a>）
 </p>
 
 <blockquote>
@@ -6503,7 +6503,7 @@ Empty list elements in list productions (e.g., a list header field containing ",
 </blockquote>
 
 <p>
-废弃了列表类型的值里允许出现空元素的规则（例如，一个列表类型的报头域，包含 ", ,"）。（<a href="#org38d9a36">章节 7</a>）
+废弃了列表类型的值里允许出现空元素的规则（例如，一个列表类型的头字段，包含 ", ,"）。（<a href="#org38d9a36">章节 7</a>）
 </p>
 
 <blockquote>
@@ -6543,7 +6543,7 @@ Issues with the <code>Keep-Alive</code> and <code>Proxy-Connection</code> header
 </blockquote>
 
 <p>
-指出了与请求里的 <code>Keep-Alive</code> 和 <code>Proxy-Connection</code> 报头域相关的问题，以及对于后者的使用完全失去信心。（<a href="#org51f13ff">附录 A.1.2</a>）
+指出了与请求里的 <code>Keep-Alive</code> 和 <code>Proxy-Connection</code> 头字段相关的问题，以及对于后者的使用完全失去信心。（<a href="#org51f13ff">附录 A.1.2</a>）
 </p>
 </div>
 </div>
@@ -7040,7 +7040,7 @@ URI: http://greenbytes.de/tech/webdav/
 <div id="text-footnotes">
 
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-Message Framing，报文分帧、报文组帧，将一个报文与下一个报文进行分离。Separating one message from the next (framing).
+Message Framing，消息分帧、消息组帧，将一个消息与下一个消息进行分离。Separating one message from the next (framing).
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
@@ -7069,7 +7069,7 @@ Authoritative Access，权威访问，<a href="https://tools.ietf.org/html/rfc72
 </div>
 
 <p class="footpara">
-客户端接收到来自源服务器的状态码为 200 (OK) 的响应报文时，其中报文的 payload 没有被中间代理转换或更改过，那么这次访问就叫“权威访问”，那个无经过转换或更改的报文就叫“权威信息”。而当 200 (OK)  响应报文经过中间代理修改过时，这个报文就叫“非权威信息”，通常中间代理会将源服务器返回的 200 (OK) 状态码改为 203 (Non-Authoritative Information)。
+客户端接收到来自源服务器的状态码为 200 (OK) 的响应消息时，其中消息的 payload 没有被中间代理转换或更改过，那么这次访问就叫“权威访问”，那个无经过转换或更改的消息就叫“权威信息”。而当 200 (OK)  响应消息经过中间代理修改过时，这个消息就叫“非权威信息”，通常中间代理会将源服务器返回的 200 (OK) 状态码改为 203 (Non-Authoritative Information)。
 </p>
 
 <ul class="org-ul">
@@ -7086,7 +7086,7 @@ HEAD 请求方法在什么情况下会被改变为 GET？
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
-无条件请求（Unconditional Request），即请求报头域内不带有任何条件报头域的请求报文。详情见【<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>】。
+无条件请求（Unconditional Request），即请求头字段内不带有任何条件头字段的请求消息。详情见【<a href="https://tools.ietf.org/html/rfc7232">RFC7232</a>】。
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.8" class="footnum" href="#fnr.8">8</a></sup> <div class="footpara"><p class="footpara">

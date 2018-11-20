@@ -1822,7 +1822,7 @@ would cause the following values to be associated:
 *Note:* A user agent might be provided with a default set of quality values for certain media ranges. However, unless the user agent is a closed system that cannot interact with other rendering agents, this default set ought to be configurable by the user.
 #+END_QUOTE
 
-*注意：* 对于确定的媒体范围来说，用户代理可能被提供一个默认的质量值集合。但是，除非该用户代理是一个无法与其他[[rendering agents][渲染中介]]交互的封闭的系统，这个默认集合应该由用户来配置。
+*注意：* 对于确定的媒体范围来说，用户代理可能被提供一个默认的质量值集合。但是，除非该用户代理是一个无法与其他[[ruby:rendering%20agents][渲染中介]]交互的封闭的系统，这个默认集合应该由用户来配置。
 
 *** 5.3.3. Accept-Charset
 :PROPERTIES:
