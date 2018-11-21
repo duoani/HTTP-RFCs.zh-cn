@@ -1756,7 +1756,7 @@ A more elaborate example is
 Verbally, this would be interpreted as "=text/html= and =text/x-c= are the equally preferred media types, but if they do not exist, then send the =text/x-dvi= representation, and if that does not exist, send the =text/plain= representation".
 #+END_QUOTE
 
-通俗来说，上面例子可以解释为：“=text/html= 和 =text/x-c= 同样是最首选的媒体类型。但是，如果它们都不存在的话，发送 =text/x-dvi= 类型的[[ruby:representation][表示形式]]。如果 =text/x-dvi= 同样也不存在的话，发送 =text/plain= 类型的表示形式。”
+通俗来说，上面例子可以解释为：“=text/html= 和 =text/x-c= 同样是首选的媒体类型。但是，如果它们都不存在的话，发送 =text/x-dvi= 类型的[[ruby:representation][表示形式]]。如果 =text/x-dvi= 同样也不存在的话，发送 =text/plain= 类型的表示形式。”
 
 #+BEGIN_QUOTE
 译注：=text/html= 和 =text/x-c= 都没有指定 "q" 值，则默认权重为 1（最高优先级）。
