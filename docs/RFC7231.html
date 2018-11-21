@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-21 Wed 16:08 -->
+<!-- 2018-11-21 Wed 19:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -4361,17 +4361,29 @@ The status-code element is a three-digit integer code giving the result of the a
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-HTTP status codes are extensible. HTTP clients are not required to understand the meaning of all registered status codes, though such understanding is obviously desirable. However, a client MUST understand the class of any status code, as indicated by the first digit, and treat an unrecognized status code as being equivalent to the x00 status code of that class, with the exception that a recipient MUST NOT cache a response with an unrecognized status code.
+状态码是给出试图理解和满足请求的一个三位整数。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-For example, if an unrecognized status code of 471 is received by a client, the client can assume that there was something wrong with its request and treat the response as if it had received a 400 (Bad Request) status code. The response message will usually contain a representation that explains the status.
+HTTP status codes are extensible. HTTP clients are not required to understand the meaning of all registered status codes, though such understanding is obviously desirable. However, a client <b>MUST</b> understand the class of any status code, as indicated by the first digit, and treat an unrecognized status code as being equivalent to the x00 status code of that class, with the exception that a recipient <b>MUST NOT</b> cache a response with an unrecognized status code.
 </p>
 </blockquote>
+
+<p>
+HTTP 状态码是<ruby>可扩展的<rt>extensible</rt></ruby>。不要求 HTTP 客户端去理解所有已注册的状态码的意义，虽然这种理解明显是很值得的。但是，客户端 <b>必须</b> 理解所有状态码的种类，这些类型是由状态码的第一位数字来指明的。而且，客户端 <b>必须</b> 将它<ruby>无法识别的<rt>unrecoginized</rt></ruby>状态码当作等同于它的种类的 <code>x00</code> 状态码来对待，不过有一个区别是接收端 <b>禁止</b> 缓存带有一种它无法识别的状态码的响应。
+</p>
+
+<blockquote>
+<p>
+For example, if an unrecognized status code of <code>471</code> is received by a client, the client can assume that there was something wrong with its request and treat the response as if it had received a <code>400 (Bad Request)</code> status code. The response message will usually contain a representation that explains the status.
+</p>
+</blockquote>
+
+<p>
+例如，如果某个客户端接收到一个它无法识别的 <code>471</code> 状态码，那么，客户端可以假定为它所发送的请求出了问题，并将这个响应当作是一个 <code>400 (Bad Request)</code> 响应来对待。响应消息通常会包含有一种<ruby>表示形式<rt>representation</rt></ruby>来解释响应的状态。
+</p>
 
 <blockquote>
 <p>
@@ -4379,13 +4391,25 @@ The first digit of the status-code defines the class of response. The last two d
 </p>
 
 <ul class="org-ul">
-<li>1xx (Informational): The request was received, continuing process</li>
-<li>2xx (Successful): The request was successfully received, understood, and accepted</li>
-<li>3xx (Redirection): Further action needs to be taken in order to complete the request</li>
-<li>4xx (Client Error): The request contains bad syntax or cannot be fulfilled</li>
-<li>5xx (Server Error): The server failed to fulfill an apparently valid request</li>
+<li><a href="#org937cde4">1xx (Informational)</a>: The request was received, continuing process</li>
+<li><a href="#orge3be6d7">2xx (Successful)</a>: The request was successfully received, understood, and accepted</li>
+<li><a href="#orgdf0960e">3xx (Redirection)</a>: Further action needs to be taken in order to complete the request</li>
+<li><a href="#org187c176">4xx (Client Error)</a>: The request contains bad syntax or cannot be fulfilled</li>
+<li><a href="#orgbb53da7">5xx (Server Error)</a>: The server failed to fulfill an apparently valid request</li>
 </ul>
 </blockquote>
+
+<p>
+状态码的第一位数字定义了响应的种类。后两位数字并没有任何分类的作用。第一位数字有五个值：
+</p>
+
+<ul class="org-ul">
+<li><a href="#org937cde4">1xx (Informational)</a>：请求已被接收，目前正在持续处理该请求</li>
+<li><a href="#orge3be6d7">2xx (Successful)</a>：请求已被成功接收、理解以及接受</li>
+<li><a href="#orgdf0960e">3xx (Redirection)</a>：为完成请求，需要采取进一步的行动</li>
+<li><a href="#org187c176">4xx (Client Error)</a>：请求包含有不良的语法，或者请求不能被满足</li>
+<li><a href="#orgbb53da7">5xx (Server Error)</a>：服务器未能满足一个显然有效的请求</li>
+</ul>
 </div>
 
 <div id="outline-container-org5d42953" class="outline-3">
@@ -4393,15 +4417,24 @@ The first digit of the status-code defines the class of response. The last two d
 <div class="outline-text-3" id="text-org5d42953">
 <blockquote>
 <p>
-The status codes listed below are defined in this specification, Section 4 of [RFC7232], Section 4 of [RFC7233], and Section 3 of [RFC7235]. The reason phrases listed here are only recommendations — they can be replaced by local equivalents without affecting the protocol.
+The status codes listed below are defined in this specification, <a href="RFC7232.html#ID-c983830d-bf6f-4e61-a905-285f070f9d20">Section 4</a> of [RFC7232], <a href="RFC7233.html#ID-028da72d-1e54-4bee-ac56-3d63169c6c3f">Section 4</a> of [RFC7233], and <a href="RFC7235.html#ID-3a079a03-d926-4f70-95da-d8fcedbdf3ac">Section 3</a> of [RFC7235]. The reason phrases listed here are only recommendations — they can be replaced by local equivalents without affecting the protocol.
 </p>
 </blockquote>
 
+<p>
+下列状态码定义在本规范、<a href="RFC7232.html#ID-c983830d-bf6f-4e61-a905-285f070f9d20">【RFC7232】章节 4</a>、<a href="RFC7233.html#ID-028da72d-1e54-4bee-ac56-3d63169c6c3f">【RFC7233】章节 4</a> 和<a href="RFC7235.html#ID-3a079a03-d926-4f70-95da-d8fcedbdf3ac">【RFC7235】章节 3</a> 里。下列<ruby>原因短语<rt>reason phrases</rt></ruby>仅为建议，也就是说，在没有影响到协议的情况下，本地可以将它们替换为等效的其他短语。
+</p>
+
 <blockquote>
 <p>
-Responses with status codes that are defined as cacheable by default (e.g., 200, 203, 204, 206, 300, 301, 404, 405, 410, 414, and 501 in this specification) can be reused by a cache with heuristic expiration unless otherwise indicated by the method definition or explicit cache controls [RFC7234]; all other status codes are not cacheable by default.
+Responses with status codes that are defined as cacheable by default (e.g., <code>200</code>, <code>203</code>, <code>204</code>, <code>206</code>, <code>300</code>, <code>301</code>, <code>404</code>, <code>405</code>, <code>410</code>, <code>414</code>, and <code>501</code> in this specification) can be reused by a cache with heuristic expiration unless otherwise indicated by the method definition or explicit cache controls [<a href="RFC7234.html">RFC7234</a>]; all other status codes are not cacheable by default.
 </p>
 </blockquote>
+
+<p>
+响应如果带有被定义为默认是<ruby>可缓存的<rt>cacheable</rt></ruby>状态码（比如，本规范里的 <code>200</code>、<code>203</code>、<code>204</code>、<code>206</code>、<code>300</code>、<code>301</code>、<code>404</code>、<code>405</code>、<code>410</code>、<code>414</code> 和 <code>501</code>），那么，该响应能够被一个使用<ruby>试探性过期<rt>heuristic expiration</rt></ruby>的缓存所复用，除非在请求方法的定义或者<ruby>显式缓存控制<rt>explicit cache controls</rt></ruby>【<a href="RFC7234.html">RFC7234</a>】里另有指定；其他所有状态码默认是<ruby>不可缓存的<rt>not cacheable</rt></ruby>。
+</p>
+
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -4424,247 +4457,247 @@ Responses with status codes that are defined as cacheable by default (e.g., 200,
 <tr>
 <td class="org-right">100</td>
 <td class="org-left">Continue</td>
-<td class="org-left">Section 6.2.1</td>
+<td class="org-left"><a href="#orgb177ae0">Section 6.2.1</a></td>
 </tr>
 
 <tr>
 <td class="org-right">101</td>
 <td class="org-left">Switching Protocols</td>
-<td class="org-left">Section 6.2.2</td>
+<td class="org-left"><a href="#org17170cb">Section 6.2.2</a></td>
 </tr>
 
 <tr>
 <td class="org-right">200</td>
 <td class="org-left">OK</td>
-<td class="org-left">Section 6.3.1</td>
+<td class="org-left"><a href="#org0038347">Section 6.3.1</a></td>
 </tr>
 
 <tr>
 <td class="org-right">201</td>
 <td class="org-left">Created</td>
-<td class="org-left">Section 6.3.2</td>
+<td class="org-left"><a href="#org7621bcc">Section 6.3.2</a></td>
 </tr>
 
 <tr>
 <td class="org-right">202</td>
 <td class="org-left">Accepted</td>
-<td class="org-left">Section 6.3.3</td>
+<td class="org-left"><a href="#org90994de">Section 6.3.3</a></td>
 </tr>
 
 <tr>
 <td class="org-right">203</td>
 <td class="org-left">Non-Authoritative Information</td>
-<td class="org-left">Section 6.3.4</td>
+<td class="org-left"><a href="#org3a69f3a">Section 6.3.4</a></td>
 </tr>
 
 <tr>
 <td class="org-right">204</td>
 <td class="org-left">No Content</td>
-<td class="org-left">Section 6.3.5</td>
+<td class="org-left"><a href="#org61ddd38">Section 6.3.5</a></td>
 </tr>
 
 <tr>
 <td class="org-right">205</td>
 <td class="org-left">Reset Content</td>
-<td class="org-left">Section 6.3.6</td>
+<td class="org-left"><a href="#org9d78f6e">Section 6.3.6</a></td>
 </tr>
 
 <tr>
 <td class="org-right">206</td>
 <td class="org-left">Partial Content</td>
-<td class="org-left">Section 4.1 of [RFC7233]</td>
+<td class="org-left"><a href="RFC7233.html#ID-32182a4e-00f6-44d9-82e2-f08d98b59324">Section 4.1</a> of [RFC7233]</td>
 </tr>
 
 <tr>
 <td class="org-right">300</td>
 <td class="org-left">Multiple Choices</td>
-<td class="org-left">Section 6.4.1</td>
+<td class="org-left"><a href="#org6a26035">Section 6.4.1</a></td>
 </tr>
 
 <tr>
 <td class="org-right">301</td>
 <td class="org-left">Moved Permanently</td>
-<td class="org-left">Section 6.4.2</td>
+<td class="org-left"><a href="#orgdd25815">Section 6.4.2</a></td>
 </tr>
 
 <tr>
 <td class="org-right">302</td>
 <td class="org-left">Found</td>
-<td class="org-left">Section 6.4.3</td>
+<td class="org-left"><a href="#org1dd45d0">Section 6.4.3</a></td>
 </tr>
 
 <tr>
 <td class="org-right">303</td>
 <td class="org-left">See Other</td>
-<td class="org-left">Section 6.4.4</td>
+<td class="org-left"><a href="#orga14232d">Section 6.4.4</a></td>
 </tr>
 
 <tr>
 <td class="org-right">304</td>
 <td class="org-left">Not Modified</td>
-<td class="org-left">Section 4.1 of [RFC7232]</td>
+<td class="org-left"><a href="RFC7232.html#ID-6033b2bf-1408-4756-9929-15dd6510c7e3">Section 4.1</a> of [RFC7232]</td>
 </tr>
 
 <tr>
 <td class="org-right">305</td>
 <td class="org-left">Use Proxy</td>
-<td class="org-left">Section 6.4.5</td>
+<td class="org-left"><a href="#orgbea7275">Section 6.4.5</a></td>
 </tr>
 
 <tr>
 <td class="org-right">307</td>
 <td class="org-left">Temporary Redirect</td>
-<td class="org-left">Section 6.4.7</td>
+<td class="org-left"><a href="#orgd9247a2">Section 6.4.7</a></td>
 </tr>
 
 <tr>
 <td class="org-right">400</td>
 <td class="org-left">Bad Request</td>
-<td class="org-left">Section 6.5.1</td>
+<td class="org-left"><a href="#org6b99dfb">Section 6.5.1</a></td>
 </tr>
 
 <tr>
 <td class="org-right">401</td>
 <td class="org-left">Unauthorized</td>
-<td class="org-left">Section 3.1 of [RFC7235]</td>
+<td class="org-left"><a href="RFC7235.html#ID-50ef5918-69e6-4826-9f20-db56fdd02974">Section 3.1</a> of [RFC7235]</td>
 </tr>
 
 <tr>
 <td class="org-right">402</td>
 <td class="org-left">Payment Required</td>
-<td class="org-left">Section 6.5.2</td>
+<td class="org-left"><a href="#org42c217d">Section 6.5.2</a></td>
 </tr>
 
 <tr>
 <td class="org-right">403</td>
 <td class="org-left">Forbidden</td>
-<td class="org-left">Section 6.5.3</td>
+<td class="org-left"><a href="#org86089b5">Section 6.5.3</a></td>
 </tr>
 
 <tr>
 <td class="org-right">404</td>
 <td class="org-left">Not Found</td>
-<td class="org-left">Section 6.5.4</td>
+<td class="org-left"><a href="#org6ef9040">Section 6.5.4</a></td>
 </tr>
 
 <tr>
 <td class="org-right">405</td>
 <td class="org-left">Method Not Allowed</td>
-<td class="org-left">Section 6.5.5</td>
+<td class="org-left"><a href="#org9297a17">Section 6.5.5</a></td>
 </tr>
 
 <tr>
 <td class="org-right">406</td>
 <td class="org-left">Not Acceptable</td>
-<td class="org-left">Section 6.5.6</td>
+<td class="org-left"><a href="#orgdf502e9">Section 6.5.6</a></td>
 </tr>
 
 <tr>
 <td class="org-right">407</td>
 <td class="org-left">Proxy Authentication Required</td>
-<td class="org-left">Section 3.2 of [RFC7235]</td>
+<td class="org-left"><a href="RFC7235.html#ID-1029b0aa-9c78-463a-b3f4-a4acbfbac26f">Section 3.2</a> of [RFC7235]</td>
 </tr>
 
 <tr>
 <td class="org-right">408</td>
 <td class="org-left">Request Timeout</td>
-<td class="org-left">Section 6.5.7</td>
+<td class="org-left"><a href="#org2a53d18">Section 6.5.7</a></td>
 </tr>
 
 <tr>
 <td class="org-right">409</td>
 <td class="org-left">Conflict</td>
-<td class="org-left">Section 6.5.8</td>
+<td class="org-left"><a href="#org010d0a2">Section 6.5.8</a></td>
 </tr>
 
 <tr>
 <td class="org-right">410</td>
 <td class="org-left">Gone</td>
-<td class="org-left">Section 6.5.9</td>
+<td class="org-left"><a href="#org4072a5f">Section 6.5.9</a></td>
 </tr>
 
 <tr>
 <td class="org-right">411</td>
 <td class="org-left">Length Required</td>
-<td class="org-left">Section 6.5.10</td>
+<td class="org-left"><a href="#org014abbd">Section 6.5.10</a></td>
 </tr>
 
 <tr>
 <td class="org-right">412</td>
 <td class="org-left">Precondition Failed</td>
-<td class="org-left">Section 4.2 of [RFC7232]</td>
+<td class="org-left"><a href="RFC7232.html#ID-02e5a084-aac8-4f06-840f-507ef2489bb1">Section 4.2</a> of [RFC7232]</td>
 </tr>
 
 <tr>
 <td class="org-right">413</td>
 <td class="org-left">Payload Too Large</td>
-<td class="org-left">Section 6.5.11</td>
+<td class="org-left"><a href="#org7f816ee">Section 6.5.11</a></td>
 </tr>
 
 <tr>
 <td class="org-right">414</td>
 <td class="org-left">URI Too Long</td>
-<td class="org-left">Section 6.5.12</td>
+<td class="org-left"><a href="#orgda225c7">Section 6.5.12</a></td>
 </tr>
 
 <tr>
 <td class="org-right">415</td>
 <td class="org-left">Unsupported Media Type</td>
-<td class="org-left">Section 6.5.13</td>
+<td class="org-left"><a href="#org9aaec2d">Section 6.5.13</a></td>
 </tr>
 
 <tr>
 <td class="org-right">416</td>
 <td class="org-left">Range Not Satisfiable</td>
-<td class="org-left">Section 4.4 of [RFC7233]</td>
+<td class="org-left"><a href="RFC7233.html#ID-a2f29dcf-8c15-4b15-ab66-742f476d27f3">Section 4.4</a> of [RFC7233]</td>
 </tr>
 
 <tr>
 <td class="org-right">417</td>
 <td class="org-left">Expectation Failed</td>
-<td class="org-left">Section 6.5.14</td>
+<td class="org-left"><a href="#orgcafc9ce">Section 6.5.14</a></td>
 </tr>
 
 <tr>
 <td class="org-right">426</td>
 <td class="org-left">Upgrade Required</td>
-<td class="org-left">Section 6.5.15</td>
+<td class="org-left"><a href="#org4cc1a60">Section 6.5.15</a></td>
 </tr>
 
 <tr>
 <td class="org-right">500</td>
 <td class="org-left">Internal Server Error</td>
-<td class="org-left">Section 6.6.1</td>
+<td class="org-left"><a href="#orge703f96">Section 6.6.1</a></td>
 </tr>
 
 <tr>
 <td class="org-right">501</td>
 <td class="org-left">Not Implemented</td>
-<td class="org-left">Section 6.6.2</td>
+<td class="org-left"><a href="#org42220c0">Section 6.6.2</a></td>
 </tr>
 
 <tr>
 <td class="org-right">502</td>
 <td class="org-left">Bad Gateway</td>
-<td class="org-left">Section 6.6.3</td>
+<td class="org-left"><a href="#orgb9f52eb">Section 6.6.3</a></td>
 </tr>
 
 <tr>
 <td class="org-right">503</td>
 <td class="org-left">Service Unavailable</td>
-<td class="org-left">Section 6.6.4</td>
+<td class="org-left"><a href="#orgda430f7">Section 6.6.4</a></td>
 </tr>
 
 <tr>
 <td class="org-right">504</td>
 <td class="org-left">Gateway Timeout</td>
-<td class="org-left">Section 6.6.5</td>
+<td class="org-left"><a href="#orgb821e4f">Section 6.6.5</a></td>
 </tr>
 
 <tr>
 <td class="org-right">505</td>
 <td class="org-left">HTTP Version Not Supported</td>
-<td class="org-left">Section 6.6.6</td>
+<td class="org-left"><a href="#org1131bac">Section 6.6.6</a></td>
 </tr>
 </tbody>
 </table>
@@ -4674,11 +4707,15 @@ Responses with status codes that are defined as cacheable by default (e.g., 200,
 Note that this list is not exhaustive — it does not include extension status codes defined in other specifications. The complete list of status codes is maintained by IANA. See Section 8.2 for details.
 </p>
 </blockquote>
+
+<p>
+需要注意的是上述列表并不完整的，它并没有包含定义在其他规范里的扩展状态码。完整的状态码列表由 IANA 所维护。详情见<a href="#orgbd7074f">章节 8.2</a>。
+</p>
 </div>
 </div>
 
 <div id="outline-container-org937cde4" class="outline-3">
-<h3 id="org937cde4">6.2. 信息性 1xx / Informational 1xx</h3>
+<h3 id="org937cde4"><a id="ID-2dd7a3d1-25c2-4192-9a19-6a3cf137036e"></a>6.2. 信息性 1xx / Informational 1xx</h3>
 <div class="outline-text-3" id="text-org937cde4">
 <p>
 The 1xx (Informational) class of status code indicates an interim response for communicating connection status or request progress prior to completing the requested action and sending a final response. 1xx responses are terminated by the first empty line after the status-line (the empty line signaling the end of the header section). Since HTTP/1.0 did not define any 1xx status codes, a server MUST NOT send a 1xx response to an HTTP/1.0 client.
@@ -4694,7 +4731,7 @@ A proxy MUST forward 1xx responses unless the proxy itself requested the generat
 </div>
 
 <div id="outline-container-orgb177ae0" class="outline-4">
-<h4 id="orgb177ae0">6.2.1. 100 Continue</h4>
+<h4 id="orgb177ae0"><a id="ID-91fffa22-c6f0-476c-b69f-f76828e861f3"></a>6.2.1. 100 Continue</h4>
 <div class="outline-text-4" id="text-orgb177ae0">
 <p>
 The 100 (Continue) status code indicates that the initial part of a request has been received and has not yet been rejected by the server. The server intends to send a final response after the request has been fully received and acted upon.
@@ -4711,7 +4748,7 @@ If the request did not contain an Expect header field containing the 100-continu
 </div>
 
 <div id="outline-container-org17170cb" class="outline-4">
-<h4 id="org17170cb">6.2.2. 101 Switching Protocols</h4>
+<h4 id="org17170cb"><a id="ID-c8200a68-3b0f-4f12-bf1f-ac895c5dcf9f"></a>6.2.2. 101 Switching Protocols</h4>
 <div class="outline-text-4" id="text-org17170cb">
 <p>
 The 101 (Switching Protocols) status code indicates that the server understands and is willing to comply with the client's request, via the Upgrade header field (Section 6.7 of [RFC7230]), for a change in the application protocol being used on this connection. The server MUST generate an Upgrade header field in the response that indicates which protocol(s) will be switched to immediately after the empty line that terminates the 101 response.
@@ -4725,7 +4762,7 @@ It is assumed that the server will only agree to switch protocols when it is adv
 </div>
 
 <div id="outline-container-orge3be6d7" class="outline-3">
-<h3 id="orge3be6d7">6.3. 成功 2xx / Successful 2xx</h3>
+<h3 id="orge3be6d7"><a id="ID-795b7295-fd61-4ded-8dff-da880548f665"></a>6.3. 成功 2xx / Successful 2xx</h3>
 <div class="outline-text-3" id="text-orge3be6d7">
 <p>
 The 2xx (Successful) class of status code indicates that the client's request was successfully received, understood, and accepted.
@@ -4733,7 +4770,7 @@ The 2xx (Successful) class of status code indicates that the client's request wa
 </div>
 
 <div id="outline-container-org0038347" class="outline-4">
-<h4 id="org0038347">6.3.1. 200 OK</h4>
+<h4 id="org0038347"><a id="ID-8b00dffb-977c-496a-be64-60d2f5f46e36"></a>6.3.1. 200 OK</h4>
 <div class="outline-text-4" id="text-org0038347">
 <p>
 The 200 (OK) status code indicates that the request has succeeded. The payload sent in a 200 response depends on the request method. For the methods defined by this specification, the intended meaning of the payload can be summarized as:
@@ -4759,7 +4796,7 @@ A 200 response is cacheable by default; i.e., unless otherwise indicated by the 
 </div>
 
 <div id="outline-container-org7621bcc" class="outline-4">
-<h4 id="org7621bcc">6.3.2. 201 Created</h4>
+<h4 id="org7621bcc"><a id="ID-0f0de6df-c767-45b5-a6a9-1f45f20bba38"></a>6.3.2. 201 Created</h4>
 <div class="outline-text-4" id="text-org7621bcc">
 <p>
 The 201 (Created) status code indicates that the request has been fulfilled and has resulted in one or more new resources being created. The primary resource created by the request is identified by either a Location header field in the response or, if no Location field is received, by the effective request URI.
@@ -4772,7 +4809,7 @@ The 201 response payload typically describes and links to the resource(s) create
 </div>
 
 <div id="outline-container-org90994de" class="outline-4">
-<h4 id="org90994de">6.3.3. 202 Accepted</h4>
+<h4 id="org90994de"><a id="ID-f333c72d-3351-4339-b41a-0832ed8884ac"></a>6.3.3. 202 Accepted</h4>
 <div class="outline-text-4" id="text-org90994de">
 <p>
 The 202 (Accepted) status code indicates that the request has been accepted for processing, but the processing has not been completed. The request might or might not eventually be acted upon, as it might be disallowed when processing actually takes place. There is no facility in HTTP for re-sending a status code from an asynchronous operation.
@@ -4785,7 +4822,7 @@ The 202 response is intentionally noncommittal. Its purpose is to allow a server
 </div>
 
 <div id="outline-container-org3a69f3a" class="outline-4">
-<h4 id="org3a69f3a">6.3.4. 203 Non-Authoritative Information</h4>
+<h4 id="org3a69f3a"><a id="ID-5a18bb35-2626-4fe4-a36c-cae3a7655a60"></a>6.3.4. 203 Non-Authoritative Information</h4>
 <div class="outline-text-4" id="text-org3a69f3a">
 <p>
 The 203 (Non-Authoritative Information) status code indicates that the request was successful but the enclosed payload has been modified from that of the origin server's 200 (OK) response by a transforming proxy (Section 5.7.2 of [RFC7230]). This status code allows the proxy to notify recipients when a transformation has been applied, since that knowledge might impact later decisions regarding the content. For example, future cache validation requests for the content might only be applicable along the same request path (through the same proxies).
@@ -4802,7 +4839,7 @@ A 203 response is cacheable by default; i.e., unless otherwise indicated by the 
 </div>
 
 <div id="outline-container-org61ddd38" class="outline-4">
-<h4 id="org61ddd38">6.3.5. 204 No Content</h4>
+<h4 id="org61ddd38"><a id="ID-3a5fcefb-f004-4981-a616-0feba4c9e9e4"></a>6.3.5. 204 No Content</h4>
 <div class="outline-text-4" id="text-org61ddd38">
 <p>
 The 204 (No Content) status code indicates that the server has successfully fulfilled the request and that there is no additional content to send in the response payload body. Metadata in the response header fields refer to the target resource and its selected representation after the requested action was applied.
@@ -4831,7 +4868,7 @@ A 204 response is cacheable by default; i.e., unless otherwise indicated by the 
 </div>
 
 <div id="outline-container-org9d78f6e" class="outline-4">
-<h4 id="org9d78f6e">6.3.6. 205 Reset Content</h4>
+<h4 id="org9d78f6e"><a id="ID-545a7a5c-0589-40d5-bae4-726b8e71dd10"></a>6.3.6. 205 Reset Content</h4>
 <div class="outline-text-4" id="text-org9d78f6e">
 <p>
 The 205 (Reset Content) status code indicates that the server has fulfilled the request and desires that the user agent reset the "document view", which caused the request to be sent, to its original state as received from the origin server.
@@ -4849,7 +4886,7 @@ Since the 205 status code implies that no additional content will be provided, a
 </div>
 
 <div id="outline-container-orgdf0960e" class="outline-3">
-<h3 id="orgdf0960e">6.4. 重定向 3xx / Redirection 3xx</h3>
+<h3 id="orgdf0960e"><a id="ID-455a69c1-4d80-440e-a98c-851a296d9ce2"></a>6.4. 重定向 3xx / Redirection 3xx</h3>
 <div class="outline-text-3" id="text-orgdf0960e">
 <p>
 The 3xx (Redirection) class of status code indicates that further action needs to be taken by the user agent in order to fulfill the request. If a Location header field (Section 7.1.2) is provided, the user agent MAY automatically redirect its request to the URI referenced by the Location field value, even if the specific status code is not understood. Automatic redirection needs to done with care for methods not known to be safe, as defined in Section 4.2.1, since the user might not wish to redirect an unsafe request.
@@ -4883,7 +4920,7 @@ A client SHOULD detect and intervene in cyclical redirections (i.e., "infinite" 
 </div>
 
 <div id="outline-container-org6a26035" class="outline-4">
-<h4 id="org6a26035">6.4.1. 300 Multiple Choices</h4>
+<h4 id="org6a26035"><a id="ID-bb139936-2671-4ffc-9dd0-75af2bab7d9b"></a>6.4.1. 300 Multiple Choices</h4>
 <div class="outline-text-4" id="text-org6a26035">
 <p>
 The 300 (Multiple Choices) status code indicates that the target resource has more than one representation, each with its own more specific identifier, and information about the alternatives is being provided so that the user (or user agent) can select a preferred representation by redirecting its request to one or more of those identifiers. In other words, the server desires that the user agent engage in reactive negotiation to select the most appropriate representation(s) for its needs (Section 3.4).
@@ -4908,7 +4945,7 @@ Note: The original proposal for the 300 status code defined the URI header field
 </div>
 
 <div id="outline-container-orgdd25815" class="outline-4">
-<h4 id="orgdd25815">6.4.2. 301 Moved Permanently</h4>
+<h4 id="orgdd25815"><a id="ID-e883e3aa-aac3-46ca-83cc-2a085889f9d2"></a>6.4.2. 301 Moved Permanently</h4>
 <div class="outline-text-4" id="text-orgdd25815">
 <p>
 The 301 (Moved Permanently) status code indicates that the target resource has been assigned a new permanent URI and any future references to this resource ought to use one of the enclosed URIs. Clients with link-editing capabilities ought to automatically re-link references to the effective request URI to one or more of the new references sent by the server, where possible.
@@ -4929,7 +4966,7 @@ A 301 response is cacheable by default; i.e., unless otherwise indicated by the 
 </div>
 
 <div id="outline-container-org1dd45d0" class="outline-4">
-<h4 id="org1dd45d0">6.4.3. 302 Found</h4>
+<h4 id="org1dd45d0"><a id="ID-89acc9d5-366e-4a7c-820e-891fe25738be"></a>6.4.3. 302 Found</h4>
 <div class="outline-text-4" id="text-org1dd45d0">
 <p>
 The 302 (Found) status code indicates that the target resource resides temporarily under a different URI. Since the redirection might be altered on occasion, the client ought to continue to use the effective request URI for future requests.
@@ -4946,7 +4983,7 @@ Note: For historical reasons, a user agent MAY change the request method from PO
 </div>
 
 <div id="outline-container-orga14232d" class="outline-4">
-<h4 id="orga14232d">6.4.4. 303 See Other</h4>
+<h4 id="orga14232d"><a id="ID-12c7ea0c-85ac-401f-8132-293e6ebcf52f"></a>6.4.4. 303 See Other</h4>
 <div class="outline-text-4" id="text-orga14232d">
 <p>
 The 303 (See Other) status code indicates that the server is redirecting the user agent to a different resource, as indicated by a URI in the Location header field, which is intended to provide an indirect response to the original request. A user agent can perform a retrieval request targeting that URI (a GET or HEAD request if using HTTP), which might also be redirected, and present the eventual result as an answer to the original request. Note that the new URI in the Location header field is not considered equivalent to the effective request URI.
@@ -4967,7 +5004,7 @@ Except for responses to a HEAD request, the representation of a 303 response oug
 </div>
 
 <div id="outline-container-orgbea7275" class="outline-4">
-<h4 id="orgbea7275">6.4.5. 305 Use Proxy</h4>
+<h4 id="orgbea7275"><a id="ID-e69019b2-b071-4380-bcd7-d2fd80261d81"></a>6.4.5. 305 Use Proxy</h4>
 <div class="outline-text-4" id="text-orgbea7275">
 <p>
 The 305 (Use Proxy) status code was defined in a previous version of this specification and is now deprecated (Appendix B).
@@ -4985,7 +5022,7 @@ The 306 status code was defined in a previous version of this specification, is 
 </div>
 
 <div id="outline-container-orgd9247a2" class="outline-4">
-<h4 id="orgd9247a2">6.4.7. 307 Temporary Redirect</h4>
+<h4 id="orgd9247a2"><a id="ID-549c5916-48a9-4e75-8c68-538635c00a2c"></a>6.4.7. 307 Temporary Redirect</h4>
 <div class="outline-text-4" id="text-orgd9247a2">
 <p>
 The 307 (Temporary Redirect) status code indicates that the target resource resides temporarily under a different URI and the user agent MUST NOT change the request method if it performs an automatic redirection to that URI. Since the redirection can change over time, the client ought to continue using the original effective request URI for future requests.
@@ -5003,7 +5040,7 @@ Note: This status code is similar to 302 (Found), except that it does not allow 
 </div>
 
 <div id="outline-container-org187c176" class="outline-3">
-<h3 id="org187c176">6.5. 客户端错误 / Client Error 4xx</h3>
+<h3 id="org187c176"><a id="ID-d052de1c-5d88-41e3-baf6-c7a37a841de6"></a>6.5. 客户端错误 / Client Error 4xx</h3>
 <div class="outline-text-3" id="text-org187c176">
 <p>
 The 4xx (Client Error) class of status code indicates that the client seems to have erred. Except when responding to a HEAD request, the server SHOULD send a representation containing an explanation of the error situation, and whether it is a temporary or permanent condition. These status codes are applicable to any request method. User agents SHOULD display any included representation to the user.
@@ -5011,7 +5048,7 @@ The 4xx (Client Error) class of status code indicates that the client seems to h
 </div>
 
 <div id="outline-container-org6b99dfb" class="outline-4">
-<h4 id="org6b99dfb">6.5.1. 400 Bad Request</h4>
+<h4 id="org6b99dfb"><a id="ID-323c581a-d558-421f-a0f1-8c28fe904264"></a>6.5.1. 400 Bad Request</h4>
 <div class="outline-text-4" id="text-org6b99dfb">
 <p>
 The 400 (Bad Request) status code indicates that the server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
@@ -5020,7 +5057,7 @@ The 400 (Bad Request) status code indicates that the server cannot or will not p
 </div>
 
 <div id="outline-container-org42c217d" class="outline-4">
-<h4 id="org42c217d">6.5.2. 402 Payment Required</h4>
+<h4 id="org42c217d"><a id="ID-d4484e6e-b1a9-4ae9-b8cd-5da28a80fce7"></a>6.5.2. 402 Payment Required</h4>
 <div class="outline-text-4" id="text-org42c217d">
 <p>
 The 402 (Payment Required) status code is reserved for future use.
@@ -5029,7 +5066,7 @@ The 402 (Payment Required) status code is reserved for future use.
 </div>
 
 <div id="outline-container-org86089b5" class="outline-4">
-<h4 id="org86089b5">6.5.3. 403 Forbidden</h4>
+<h4 id="org86089b5"><a id="ID-addb601c-6b2f-45a7-97f7-9d24bdb8b585"></a>6.5.3. 403 Forbidden</h4>
 <div class="outline-text-4" id="text-org86089b5">
 <p>
 The 403 (Forbidden) status code indicates that the server understood the request but refuses to authorize it. A server that wishes to make public why the request has been forbidden can describe that reason in the response payload (if any).
@@ -5046,7 +5083,7 @@ An origin server that wishes to "hide" the current existence of a forbidden targ
 </div>
 
 <div id="outline-container-org6ef9040" class="outline-4">
-<h4 id="org6ef9040">6.5.4. 404 Not Found</h4>
+<h4 id="org6ef9040"><a id="ID-aff1f620-f950-48fe-a479-0276d2aeac0e"></a>6.5.4. 404 Not Found</h4>
 <div class="outline-text-4" id="text-org6ef9040">
 <p>
 The 404 (Not Found) status code indicates that the origin server did not find a current representation for the target resource or is not willing to disclose that one exists. A 404 status code does not indicate whether this lack of representation is temporary or permanent; the 410 (Gone) status code is preferred over 404 if the origin server knows, presumably through some configurable means, that the condition is likely to be permanent.
@@ -5059,7 +5096,7 @@ A 404 response is cacheable by default; i.e., unless otherwise indicated by the 
 </div>
 
 <div id="outline-container-org9297a17" class="outline-4">
-<h4 id="org9297a17">6.5.5. 405 Method Not Allowed</h4>
+<h4 id="org9297a17"><a id="ID-6c2a3e21-55e6-465c-b8dc-7d773d341e8f"></a>6.5.5. 405 Method Not Allowed</h4>
 <div class="outline-text-4" id="text-org9297a17">
 <p>
 The 405 (Method Not Allowed) status code indicates that the method received in the request-line is known by the origin server but not supported by the target resource. The origin server MUST generate an Allow header field in a 405 response containing a list of the target resource's currently supported methods.
@@ -5072,7 +5109,7 @@ A 405 response is cacheable by default; i.e., unless otherwise indicated by the 
 </div>
 
 <div id="outline-container-orgdf502e9" class="outline-4">
-<h4 id="orgdf502e9">6.5.6. 406 Not Acceptable</h4>
+<h4 id="orgdf502e9"><a id="ID-c600bda4-d399-4870-894f-ea4293fc173f"></a>6.5.6. 406 Not Acceptable</h4>
 <div class="outline-text-4" id="text-orgdf502e9">
 <p>
 The 406 (Not Acceptable) status code indicates that the target resource does not have a current representation that would be acceptable to the user agent, according to the proactive negotiation header fields received in the request (Section 5.3), and the server is unwilling to supply a default representation.
@@ -5085,7 +5122,7 @@ The server SHOULD generate a payload containing a list of available representati
 </div>
 
 <div id="outline-container-org2a53d18" class="outline-4">
-<h4 id="org2a53d18">6.5.7. 408 Request Timeout</h4>
+<h4 id="org2a53d18"><a id="ID-8523542a-3e33-4261-92b7-0bf706f14a57"></a>6.5.7. 408 Request Timeout</h4>
 <div class="outline-text-4" id="text-org2a53d18">
 <p>
 The 408 (Request Timeout) status code indicates that the server did not receive a complete request message within the time that it was prepared to wait. A server SHOULD send the "close" connection option (Section 6.1 of [RFC7230]) in the response, since 408 implies that the server has decided to close the connection rather than continue waiting. If the client has an outstanding request in transit, the client MAY repeat that request on a new connection.
@@ -5094,7 +5131,7 @@ The 408 (Request Timeout) status code indicates that the server did not receive 
 </div>
 
 <div id="outline-container-org010d0a2" class="outline-4">
-<h4 id="org010d0a2">6.5.8. 409 Conflict</h4>
+<h4 id="org010d0a2"><a id="ID-63517bec-7c89-4655-a6df-e5e2c8de4a17"></a>6.5.8. 409 Conflict</h4>
 <div class="outline-text-4" id="text-org010d0a2">
 <p>
 The 409 (Conflict) status code indicates that the request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the user might be able to resolve the conflict and resubmit the request. The server SHOULD generate a payload that includes enough information for a user to recognize the source of the conflict.
@@ -5107,7 +5144,7 @@ Conflicts are most likely to occur in response to a PUT request. For example, if
 </div>
 
 <div id="outline-container-org4072a5f" class="outline-4">
-<h4 id="org4072a5f">6.5.9. 410 Gone</h4>
+<h4 id="org4072a5f"><a id="ID-9b6a1a09-f457-45b9-9b66-b05916f8d1a0"></a>6.5.9. 410 Gone</h4>
 <div class="outline-text-4" id="text-org4072a5f">
 <p>
 The 410 (Gone) status code indicates that access to the target resource is no longer available at the origin server and that this condition is likely to be permanent. If the origin server does not know, or has no facility to determine, whether or not the condition is permanent, the status code 404 (Not Found) ought to be used instead.
@@ -5124,7 +5161,7 @@ A 410 response is cacheable by default; i.e., unless otherwise indicated by the 
 </div>
 
 <div id="outline-container-org014abbd" class="outline-4">
-<h4 id="org014abbd">6.5.10. 411 Length Required</h4>
+<h4 id="org014abbd"><a id="ID-57b9a13c-fa90-4ad0-a898-dbb7a80b007c"></a>6.5.10. 411 Length Required</h4>
 <div class="outline-text-4" id="text-org014abbd">
 <p>
 The 411 (Length Required) status code indicates that the server refuses to accept the request without a defined Content-Length (Section 3.3.2 of [RFC7230]). The client MAY repeat the request if it adds a valid Content-Length header field containing the length of the message body in the request message.
@@ -5133,7 +5170,7 @@ The 411 (Length Required) status code indicates that the server refuses to accep
 </div>
 
 <div id="outline-container-org7f816ee" class="outline-4">
-<h4 id="org7f816ee">6.5.11. 413 Payload Too Large</h4>
+<h4 id="org7f816ee"><a id="ID-620869b7-1f42-4bb9-a3ba-664e80d5161d"></a>6.5.11. 413 Payload Too Large</h4>
 <div class="outline-text-4" id="text-org7f816ee">
 <p>
 The 413 (Payload Too Large) status code indicates that the server is refusing to process a request because the request payload is larger than the server is willing or able to process. The server MAY close the connection to prevent the client from continuing the request.
@@ -5146,7 +5183,7 @@ If the condition is temporary, the server SHOULD generate a Retry-After header f
 </div>
 
 <div id="outline-container-orgda225c7" class="outline-4">
-<h4 id="orgda225c7">6.5.12. 414 URI Too Long</h4>
+<h4 id="orgda225c7"><a id="ID-77d1edbb-ceeb-450d-9b85-5f8c89db2f97"></a>6.5.12. 414 URI Too Long</h4>
 <div class="outline-text-4" id="text-orgda225c7">
 <p>
 The 414 (URI Too Long) status code indicates that the server is refusing to service the request because the request-target (Section 5.3 of [RFC7230]) is longer than the server is willing to interpret. This rare condition is only likely to occur when a client has improperly converted a POST request to a GET request with long query information, when the client has descended into a "black hole" of redirection (e.g., a redirected URI prefix that points to a suffix of itself) or when the server is under attack by a client attempting to exploit potential security holes.
@@ -5159,7 +5196,7 @@ A 414 response is cacheable by default; i.e., unless otherwise indicated by the 
 </div>
 
 <div id="outline-container-org9aaec2d" class="outline-4">
-<h4 id="org9aaec2d">6.5.13. 415 Unsupported Media Type</h4>
+<h4 id="org9aaec2d"><a id="ID-7c879fad-0a52-4f22-8447-38b860f3e71d"></a>6.5.13. 415 Unsupported Media Type</h4>
 <div class="outline-text-4" id="text-org9aaec2d">
 <p>
 The 415 (Unsupported Media Type) status code indicates that the origin server is refusing to service the request because the payload is in a format not supported by this method on the target resource. The format problem might be due to the request's indicated Content-Type or Content-Encoding, or as a result of inspecting the data directly.
@@ -5168,7 +5205,7 @@ The 415 (Unsupported Media Type) status code indicates that the origin server is
 </div>
 
 <div id="outline-container-orgcafc9ce" class="outline-4">
-<h4 id="orgcafc9ce">6.5.14. 417 Expectation Failed</h4>
+<h4 id="orgcafc9ce"><a id="ID-a4b990e6-b91e-422d-ad8e-cb77866ed170"></a>6.5.14. 417 Expectation Failed</h4>
 <div class="outline-text-4" id="text-orgcafc9ce">
 <p>
 The 417 (Expectation Failed) status code indicates that the expectation given in the request's Expect header field (Section 5.1.1) could not be met by at least one of the inbound servers.
@@ -5177,7 +5214,7 @@ The 417 (Expectation Failed) status code indicates that the expectation given in
 </div>
 
 <div id="outline-container-org4cc1a60" class="outline-4">
-<h4 id="org4cc1a60">6.5.15. 426 Upgrade Required</h4>
+<h4 id="org4cc1a60"><a id="ID-5d028105-552c-4079-bcfe-30809395f6c9"></a>6.5.15. 426 Upgrade Required</h4>
 <div class="outline-text-4" id="text-org4cc1a60">
 <p>
 The 426 (Upgrade Required) status code indicates that the server refuses to perform the request using the current protocol but might be willing to do so after the client upgrades to a different protocol. The server MUST send an Upgrade header field in a 426 response to indicate the required protocol(s) (Section 6.7 of [RFC7230]).
@@ -5203,7 +5240,7 @@ This service requires use of the HTTP/3.0 protocol.
 </div>
 
 <div id="outline-container-orgbb53da7" class="outline-3">
-<h3 id="orgbb53da7">6.6 服务器错误 / Server Error 5xx</h3>
+<h3 id="orgbb53da7"><a id="ID-6b95899d-bbec-474e-bcb0-3ca5dbbf0ba1"></a>6.6 服务器错误 / Server Error 5xx</h3>
 <div class="outline-text-3" id="text-orgbb53da7">
 <p>
 The 5xx (Server Error) class of status code indicates that the server is aware that it has erred or is incapable of performing the requested method. Except when responding to a HEAD request, the server SHOULD send a representation containing an explanation of the error situation, and whether it is a temporary or permanent condition. A user agent SHOULD display any included representation to the user. These response codes are applicable to any request method.
@@ -5211,7 +5248,7 @@ The 5xx (Server Error) class of status code indicates that the server is aware t
 </div>
 
 <div id="outline-container-orge703f96" class="outline-4">
-<h4 id="orge703f96">6.6.1. 500 Internal Server Error</h4>
+<h4 id="orge703f96"><a id="ID-4a288d4c-063f-4589-9ec6-3c4f246e2d8a"></a>6.6.1. 500 Internal Server Error</h4>
 <div class="outline-text-4" id="text-orge703f96">
 <p>
 The 500 (Internal Server Error) status code indicates that the server encountered an unexpected condition that prevented it from fulfilling the request.
@@ -5220,7 +5257,7 @@ The 500 (Internal Server Error) status code indicates that the server encountere
 </div>
 
 <div id="outline-container-org42220c0" class="outline-4">
-<h4 id="org42220c0">6.6.2. 501 Not Implemented</h4>
+<h4 id="org42220c0"><a id="ID-776a0530-a654-43bc-879b-186e39dbff63"></a>6.6.2. 501 Not Implemented</h4>
 <div class="outline-text-4" id="text-org42220c0">
 <p>
 The 501 (Not Implemented) status code indicates that the server does not support the functionality required to fulfill the request. This is the appropriate response when the server does not recognize the request method and is not capable of supporting it for any resource.
@@ -5233,7 +5270,7 @@ A 501 response is cacheable by default; i.e., unless otherwise indicated by the 
 </div>
 
 <div id="outline-container-orgb9f52eb" class="outline-4">
-<h4 id="orgb9f52eb">6.6.3. 502 Bad Gateway</h4>
+<h4 id="orgb9f52eb"><a id="ID-dd36be96-0bfa-4dbc-8656-132fe9509b14"></a>6.6.3. 502 Bad Gateway</h4>
 <div class="outline-text-4" id="text-orgb9f52eb">
 <p>
 The 502 (Bad Gateway) status code indicates that the server, while acting as a gateway or proxy, received an invalid response from an inbound server it accessed while attempting to fulfill the request.
@@ -5242,7 +5279,7 @@ The 502 (Bad Gateway) status code indicates that the server, while acting as a g
 </div>
 
 <div id="outline-container-orgda430f7" class="outline-4">
-<h4 id="orgda430f7">6.6.4. 503 Service Unavailable</h4>
+<h4 id="orgda430f7"><a id="ID-4e09afe4-30a3-4bbb-aa7e-23f621d42801"></a>6.6.4. 503 Service Unavailable</h4>
 <div class="outline-text-4" id="text-orgda430f7">
 <p>
 The 503 (Service Unavailable) status code indicates that the server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay. The server MAY send a Retry-After header field (Section 7.1.3) to suggest an appropriate amount of time for the client to wait before retrying the request.
@@ -5255,7 +5292,7 @@ The 503 (Service Unavailable) status code indicates that the server is currently
 </div>
 
 <div id="outline-container-orgb821e4f" class="outline-4">
-<h4 id="orgb821e4f">6.6.5. 504 Gateway Timeout</h4>
+<h4 id="orgb821e4f"><a id="ID-4502f86d-74d1-4890-b235-3155ba125cb6"></a>6.6.5. 504 Gateway Timeout</h4>
 <div class="outline-text-4" id="text-orgb821e4f">
 <p>
 The 504 (Gateway Timeout) status code indicates that the server, while acting as a gateway or proxy, did not receive a timely response from an upstream server it needed to access in order to complete the request.
@@ -5264,7 +5301,7 @@ The 504 (Gateway Timeout) status code indicates that the server, while acting as
 </div>
 
 <div id="outline-container-org1131bac" class="outline-4">
-<h4 id="org1131bac">6.6.6. 505 HTTP Version Not Supported</h4>
+<h4 id="org1131bac"><a id="ID-00dabed7-f9a1-471e-a9f6-77220446dbfa"></a>6.6.6. 505 HTTP Version Not Supported</h4>
 <div class="outline-text-4" id="text-org1131bac">
 <p>
 The 505 (HTTP Version Not Supported) status code indicates that the server does not support, or refuses to support, the major version of HTTP that was used in the request message. The server is indicating that it is unable or unwilling to complete the request using the same major version as the client, as described in Section 2.6 of [RFC7230], other than with this error message. The server SHOULD generate a representation for the 505 response that describes why that version is not supported and what other protocols are supported by that server.
@@ -5350,7 +5387,7 @@ The 505 (HTTP Version Not Supported) status code indicates that the server does 
 </div>
 </div>
 <div id="outline-container-orgbd7074f" class="outline-3">
-<h3 id="orgbd7074f">8.2. 状态码注册表 / Status Code Registry</h3>
+<h3 id="orgbd7074f"><a id="ID-c0f1fbbc-3471-430e-90be-1b120d9b449f"></a>8.2. 状态码注册表 / Status Code Registry</h3>
 <div class="outline-text-3" id="text-orgbd7074f">
 </div>
 <div id="outline-container-org97fd11b" class="outline-4">

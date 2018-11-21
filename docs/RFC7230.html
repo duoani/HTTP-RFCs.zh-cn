@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-20 Tue 19:15 -->
+<!-- 2018-11-21 Wed 19:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -2100,7 +2100,7 @@ A proxy <b>MUST</b> forward unrecognized header fields unless the <code>field-na
 </blockquote>
 
 <p>
-代理（proxy） <b>必须</b> 将未能识别的头字段转发出去，除非 <code>Connection</code> 头字段里列出了该头字段名称 <code>field-name</code> （见<a href="#org57994e1">章节 6.1</a>），或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 <b>应当</b> 忽略未能识别的头字段。这些要求使得在链路中的中间人还没有预先更新的情况下，HTTP 的功能仍能得到增强。
+代理（proxy） <b>必须</b> 将无法识别的头字段转发出去，除非 <code>Connection</code> 头字段里列出了该头字段名称 <code>field-name</code> （见<a href="#org57994e1">章节 6.1</a>），或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 <b>应当</b> 忽略无法识别的头字段。这些要求使得在链路中的中间人还没有预先更新的情况下，HTTP 的功能仍能得到增强。
 </p>
 
 <blockquote>
