@@ -30,11 +30,11 @@
 
 我也很怕会误导人，所以采用了 *中英文版本*，一段英文，一段译文。译文中还会对必要的词组进行英文标注，以及偶尔在译文后添加本人的（蹩脚的）译注，虽然这样会导致篇幅加倍，但我觉得值得的，毕竟本项目还有一个目的是学英文。
 
-那我们如何能找到最可靠的资料？最简单的办法就是：“找可能找到第一手资料！也就是说，要从最权威的渠道里获取原生资料”，本项目会原文引用H[httpwg.org](https://httpwg.org/specs/) 版本的 RFC，而不是 [tools.ietf.org](https://tools.ietf.org/) 版或者纯文本版本，是因为 httpwg.org 并没有对原文进行强制换行，但内容都是一样的。
+那我们如何能找到最可靠的资料？最简单的办法就是：“找可能找到第一手资料！也就是说，要从最权威的渠道里获取原生资料”，本项目会原文引用 [httpwg.org](https://httpwg.org/specs/) 版本的 RFC，而不是 [tools.ietf.org](https://tools.ietf.org/) 版或者纯文本版本，是因为 httpwg.org 并没有对原文进行强制换行，但内容都是一样的。
 
 ## 如何使用？
 
-我会直接转换为 HTML 版本，你可以直接访问：<https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7230.html>
+我会直接转换为 HTML 版本，你可以直接访问：<https://duoani.github.io/HTTP-RFCs.zh-cn/>
 
 ## 如何参与？
 额，老实说，这个只是我的个人项目而已，所以我选择了我最喜欢的 [Org mode](https://orgmode.org/) 来进行写作。当然，这不是我任性，实在是 Org mode 太适合于写作了，完爆 Markdown。

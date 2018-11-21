@@ -1007,7 +1007,7 @@ New header fields can be defined such that, when they are understood by a recipi
 A proxy *MUST* forward unrecognized header fields unless the =field-name= is listed in the =Connection= header field ([[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][Section 6.1]]) or the proxy is specifically configured to block, or otherwise transform, such fields. Other recipients *SHOULD* ignore unrecognized header fields. These requirements allow HTTP's functionality to be enhanced without requiring prior update of deployed intermediaries.
 #+END_QUOTE
 
-代理（proxy） *必须* 将未能识别的头字段转发出去，除非 =Connection= 头字段里列出了该头字段名称 =field-name= （见[[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][章节 6.1]]），或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 *应当* 忽略未能识别的头字段。这些要求使得在链路中的中间人还没有预先更新的情况下，HTTP 的功能仍能得到增强。
+代理（proxy） *必须* 将无法识别的头字段转发出去，除非 =Connection= 头字段里列出了该头字段名称 =field-name= （见[[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][章节 6.1]]），或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 *应当* 忽略无法识别的头字段。这些要求使得在链路中的中间人还没有预先更新的情况下，HTTP 的功能仍能得到增强。
 
 #+BEGIN_QUOTE
 All defined header fields ought to be registered with [[https://www.iana.org/][IANA]] in the "Message Headers" registry, as described in [[https://tools.ietf.org/html/rfc7231#section-8.3][Section 8.3]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]].

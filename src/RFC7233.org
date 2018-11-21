@@ -56,10 +56,19 @@
 :ID:       2859ef1f-8309-4b7d-9e22-963391b5822a
 :END:
 * 4. Responses to a Range Request
+  :PROPERTIES:
+  :ID:       028da72d-1e54-4bee-ac56-3d63169c6c3f
+  :END:
 ** 4.1. 206 Partial Content
+   :PROPERTIES:
+   :ID:       32182a4e-00f6-44d9-82e2-f08d98b59324
+   :END:
 ** 4.2. Content-Range
 ** 4.3. Combining Ranges
 ** 4.4. 416 Range Not Satisfiable
+   :PROPERTIES:
+   :ID:       a2f29dcf-8c15-4b15-ab66-742f476d27f3
+   :END:
 * 5. IANA Considerations
 ** 5.1. Range Unit Registry
 *** 5.1.1. Procedure

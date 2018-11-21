@@ -45,8 +45,17 @@
 ** 2.1. Challenge and Response
 ** 2.2. Protection Space (Realm)
 * 3. Status Code Definitions
+  :PROPERTIES:
+  :ID:       3a079a03-d926-4f70-95da-d8fcedbdf3ac
+  :END:
 ** 3.1. 401 Unauthorized
+   :PROPERTIES:
+   :ID:       50ef5918-69e6-4826-9f20-db56fdd02974
+   :END:
 ** 3.2. 407 Proxy Authentication Required
+   :PROPERTIES:
+   :ID:       1029b0aa-9c78-463a-b3f4-a4acbfbac26f
+   :END:
 * 4. Header Field Definitions
 ** 4.1. WWW-Authenticate
 ** 4.2. Authorization

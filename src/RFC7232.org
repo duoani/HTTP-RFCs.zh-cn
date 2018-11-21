@@ -71,8 +71,17 @@
 :ID:       1b40ccc8-f559-49c3-ae13-9642f9e7e9d5
 :END:
 * 4. Status Code Definitions
+  :PROPERTIES:
+  :ID:       c983830d-bf6f-4e61-a905-285f070f9d20
+  :END:
 ** 4.1. 304 Not Modified
+   :PROPERTIES:
+   :ID:       6033b2bf-1408-4756-9929-15dd6510c7e3
+   :END:
 ** 4.2. 412 Precondition Failed
+   :PROPERTIES:
+   :ID:       02e5a084-aac8-4f06-840f-507ef2489bb1
+   :END:
 * 5. Evaluation
 :PROPERTIES:
 :ID:       fce45320-6c1c-4486-a32b-2c553780d785
