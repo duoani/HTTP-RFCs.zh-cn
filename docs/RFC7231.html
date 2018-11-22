@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-21 Wed 19:12 -->
+<!-- 2018-11-22 Thu 19:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -131,24 +131,58 @@ h1.title {
   width: 100%;
 }
 
+.org-ul,
+.org-ol,
+.org-dl,
+.org-dl > dt,
+.org-dl > dd,
 .outline-2 p,
 .outline-2 blockquote,
-.outline-2 ul,
-.outline-2 ol,
-.outline-2 dl,
 .outline-2 table,
 .outline-2 pre {
   margin-top: 0;
   margin-bottom: 16px;
 }
 
-.outline-2 ul,
-.outline-2 ol {
+.org-ul,
+.org-ol,
+.org-dl {
   padding-left: 2em;
+}
+
+.org-dl > dt {
+  float: left;
+  max-width: 40%;
+  margin-bottom: 3px;
+  margin-right: 2em;
+  font-size: 110%;
+  font-family: Courier New;
+  font-weight: bolder;
+  color: #1c3030;
+  clear: left;
+}
+
+.org-dl > dd {
+  text-align: justify;
+  margin-bottom: 14pt;
+  overflow: hidden;
+  clear: right;
 }
 
 table tbody tr:nth-child(odd){
   background-color: #efefef;
+}
+
+.org-center {
+  text-align: center;
+}
+
+.org-left {
+  text-align: left;
+}
+
+.org-right {
+  text-right: right;
 }
 
 pre,
@@ -189,19 +223,6 @@ blockquote {
 .timestamp {
   font-family: Courier New;
   color: #888888;
-}
-
-dd {
-  text-align: justify;
-  margin-bottom: 14pt;
-}
-
-dt {
-  font-size: 110%;
-  font-family: Courier New;
-  color: #1c3030;
-  padding: 3px;
-  margin-bottom: 3px;
 }
 
 #table-of-contents {
@@ -269,8 +290,11 @@ dt {
   #table-of-contents {
     float: right;
     border: 1px solid #CCC;
-    max-width: 50%;
+    max-width: 75%;
     overflow: auto;
+  }
+  .org-dl > dt {
+    float: none;
   }
 }
 
@@ -384,7 +408,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org80727a7">3.1. 表示形式元数据 / Representation Metadata</a>
 <ul>
-<li><a href="#orgfebd6b5">3.1.1. 处理表示数据 / Processing Representation Data</a>
+<li><a href="#org1ef8157">3.1.1. 处理表示形式数据 / Processing Representation Data</a>
 <ul>
 <li><a href="#org9cacf10">3.1.1.1. 媒体类型 / Media Type</a></li>
 <li><a href="#org22f52a6">3.1.1.2. 字符集 / Charset</a></li>
@@ -407,7 +431,7 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#org7d8ba38">3.1.4. 标识 / Identification</a>
 <ul>
-<li><a href="#orgc47d26b">3.1.4.1. 标识一个 Representation / Identifying a Representation</a></li>
+<li><a href="#orge266174">3.1.4.1. 标识一种表示形式 / Identifying a Representation</a></li>
 <li><a href="#org6190703">3.1.4.2. Content-Location</a></li>
 </ul>
 </li>
@@ -840,7 +864,7 @@ Considering that a resource could be anything, and that the uniform interface pr
 </blockquote>
 
 <p>
-考虑到<ruby>资源<rt>resource</rt></ruby>可以是任何事物，而 HTTP 所提供的统一接口类似于一个窗口，在窗口的一边我们能够对该事物进行观察；而要想对该事物采取行动的话，只能通过消息沟通来让窗口另一边的某个独立的动作执行者来完成。因此，在沟通过程中，我们需要一种“抽象”来<ruby>表示<rt>represent</rt></ruby>（代替）该事物的<ruby>当前状态<rt>current state</rt></ruby>或<ruby>期望状态<rt>desired state</rt></ruby>。而这种“抽象”被称为 <ruby>资源的表示形式<rt>representation</rt></ruby>【<a href="http://roy.gbiv.com/pubs/dissertation/top.htm">REST</a>】。
+考虑到<ruby>资源<rt>resource</rt></ruby>可以是任何事物，而 HTTP 所提供的统一接口类似于一个窗口，在窗口的一边我们能够对该事物进行观察；而要想对该事物采取行动的话，只能通过消息沟通来让窗口另一边的某个独立的动作执行者来完成。因此，在沟通过程中，我们需要一种“抽象”来<ruby>表示<rt>represent</rt></ruby>（代替）该事物的<ruby>当前状态<rt>current state</rt></ruby>或<ruby>期望状态<rt>desired state</rt></ruby>。而这种“抽象”被称为<ruby>资源的表示形式<rt>representation</rt></ruby>【<a href="http://roy.gbiv.com/pubs/dissertation/top.htm">REST</a>】。
 </p>
 
 <blockquote>
@@ -957,9 +981,9 @@ The following header fields convey representation metadata:
 </table>
 </div>
 
-<div id="outline-container-orgfebd6b5" class="outline-4">
-<h4 id="orgfebd6b5">3.1.1. 处理表示数据 / Processing Representation Data</h4>
-<div class="outline-text-4" id="text-orgfebd6b5">
+<div id="outline-container-org1ef8157" class="outline-4">
+<h4 id="org1ef8157">3.1.1. 处理表示形式数据 / Processing Representation Data</h4>
+<div class="outline-text-4" id="text-org1ef8157">
 </div>
 <div id="outline-container-org9cacf10" class="outline-5">
 <h5 id="org9cacf10"><a id="ID-bc05d462-378f-4743-a1ee-543e01064a09"></a>3.1.1.1. 媒体类型 / Media Type</h5>
@@ -1326,7 +1350,7 @@ Unlike <code>Transfer-Encoding</code> (<a href="RFC7230.html#ID-1754823B-D0BC-41
 </blockquote>
 
 <p>
-不像 <code>Transfer-Encoding</code> （<a href="RFC7230.html#ID-1754823B-D0BC-410F-A17B-E7ADA1AA79BC">【RFC7230】章节 3.3.1</a>），列在 <code>Content-Encoding</code> 头字段上的 codings 是<ruby>表示形式<rt>representation</rt></ruby>的特性。<ruby>表示形式<rt>representation</rt></ruby>是依据其编码过的形式来进行定义的，除非在元数据的定义中另有注明，所有其他与表示形式相关的元数据皆为对这种编码过的形式进行描述的。通常，<ruby>表示形式<rt>representation</rt></ruby>仅在渲染呈现或类似的用途之前才会被解码。
+不像 <code>Transfer-Encoding</code> （<a href="RFC7230.html#ID-1754823B-D0BC-410F-A17B-E7ADA1AA79BC">【RFC7230】章节 3.3.1</a>），列在 <code>Content-Encoding</code> 头字段上的 codings 是<ruby>表示形式<rt>representation</rt></ruby>的特性。<ruby>表示形式<rt>representation</rt></ruby>是依据其编码过的形式来进行定义的。除非在元数据的定义中另有注明，所有与表示形式相关的其他元数据皆为对这种编码过的形式进行描述的。通常，<ruby>表示形式<rt>representation</rt></ruby>仅在渲染呈现或类似的用途之前才会被解码。
 </p>
 
 <blockquote>
@@ -1493,9 +1517,9 @@ However, just because multiple languages are present within a representation doe
 <h4 id="org7d8ba38">3.1.4. 标识 / Identification</h4>
 <div class="outline-text-4" id="text-org7d8ba38">
 </div>
-<div id="outline-container-orgc47d26b" class="outline-5">
-<h5 id="orgc47d26b">3.1.4.1. 标识一个 Representation / Identifying a Representation</h5>
-<div class="outline-text-5" id="text-orgc47d26b">
+<div id="outline-container-orge266174" class="outline-5">
+<h5 id="orge266174">3.1.4.1. 标识一种表示形式 / Identifying a Representation</h5>
+<div class="outline-text-5" id="text-orge266174">
 <blockquote>
 <p>
 When a complete or partial representation is transferred in a message payload, it is often desirable for the sender to supply, or the recipient to determine, an identifier for a resource corresponding to that representation.
@@ -1585,7 +1609,7 @@ If <code>Content-Location</code> is included in a <code>2xx (Successful)</code> 
 </blockquote>
 
 <p>
-如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应消息里，且它的值指向于（在转换为<ruby>绝对形式<rt>absolute form</rt></ruby>之后）一个与有效请求 URI 相同的 URI，那么，接收端 <b>可以</b> 将该有效载荷认为是对应资源在特定时间里的<ruby>当前表示形式<rt>current representation</rt></ruby>，所述“特定时间”是指由<ruby>消息始发日期<rt>message origination date</rt></ruby>所指定的时间。对于 GET（<a href="#org479e86d">章节 4.3.1</a>）或者 HEAD（<a href="#org607980d">章节 4.3.2</a>）请求来说，这与在服务器没有提供 <code>Content-Location</code> 头字段的情况下的默认语义相一致。对于类似 PUT（<a href="#org2e14fb1">章节 4.3.4</a>）或者 POST（<a href="#org24c5a01">章节 4.3.3</a>）这些会<ruby>改变状态<rt>state-changing</rt></ruby>的请求来说，这意味着服务器的响应包含了这个资源的新的<ruby>表示形式<rt>representation</rt></ruby>，由此与那些只报告动作方面的信息（例如，“<ruby>它生效了！<rt>It worked!</rt></ruby>”）的<ruby>表示形式<rt>representations</rt></ruby>作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
+如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应消息里，且它的值指向于（在转换为<ruby>绝对形式<rt>absolute form</rt></ruby>之后）一个与有效请求 URI 相同的 URI，那么，接收端 <b>可以</b> 将该有效载荷认为是对应资源在特定时间里的<ruby>当前表示形式<rt>current representation</rt></ruby>，所述“特定时间”是指由<ruby>消息始发日期<rt>message origination date</rt></ruby>所指定的时间。对于 GET（<a href="#org479e86d">章节 4.3.1</a>）或者 HEAD（<a href="#org607980d">章节 4.3.2</a>）请求来说，这与在服务器没有提供 <code>Content-Location</code> 头字段的情况下的默认语义相一致。对于类似 PUT（<a href="#org2e14fb1">章节 4.3.4</a>）或者 POST（<a href="#org24c5a01">章节 4.3.3</a>）这些会<ruby>改变资源状态<rt>state-changing</rt></ruby>的请求来说，这意味着服务器的响应包含了这个资源的新的<ruby>表示形式<rt>representation</rt></ruby>，由此与那些只报告动作方面的信息（例如，“<ruby>它生效了！<rt>It worked!</rt></ruby>”）的<ruby>表示形式<rt>representations</rt></ruby>作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
 </p>
 
 <blockquote>
@@ -1603,7 +1627,7 @@ If <code>Content-Location</code> is included in a <code>2xx (Successful)</code> 
 如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应消息里，且它的字段值指向于一个与有效请求 URI 不相同的 URI，那么，源服务器<ruby>声称<rt>claim</rt></ruby>该 URI 是一个与封装在该有效载荷内的<ruby>表示形式<rt>representation</rt></ruby>相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
 </p>
 <ul class="org-ul">
-<li>对于回应给 GET 或 HEAD 请求的一个响应，它表明了<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 指向到一个服从<ruby>内容协商<rt>content negotiation</rt></ruby>的资源，并且针对<ruby>已选定的表示形式<rt>selective representation</rt></ruby>  来说，<code>Content-Location</code> 的字段值是一个更加具体的标识符。</li>
+<li>对于回应给 GET 或 HEAD 请求的一个响应，它表明了<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 指向到一个服从<ruby>内容协商<rt>content negotiation</rt></ruby>的资源，并且针对<ruby>已选定的表示形式<rt>selected representation</rt></ruby>来说，<code>Content-Location</code> 的字段值是一个更加具体的标识符。</li>
 <li>对于回应给<ruby>会改变资源状态的请求方法<rt>state-changing method</rt></ruby>的一个 <code>201 (Created)</code> 响应，如果 <code>Content-Location</code> 的字段值与 <code>Location</code> 的字段值相同，那么，这表明这个有效载荷是新近被创建的资源的<ruby>当前表示形式<rt>current representation</rt></ruby>。</li>
 <li>否则，这个 <code>Content-Location</code> 表明了这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对<ruby>表示形式<rt>representation</rt></ruby>进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 <code>200 (OK)</code> 响应的有效载荷，<code>Content-Location</code> 的字段值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。</li>
 </ul>
@@ -1652,7 +1676,7 @@ The representation data associated with an HTTP message is either provided as th
 </blockquote>
 
 <p>
-一个 HTTP 消息相关联的<ruby>表示形式数据<rt>representation data</rt></ruby>是被提供作为消息的有效载荷，或者被消息的语义和有效请求 URI 所引用。<ruby>表示形式数据<rt>representation data</rt></ruby>是处于某种由<ruby>表示形式元数据<rt>representation metadata</rt></ruby>相关的头字段所定义的格式和编码之中的。
+与 HTTP 消息相关联的<ruby>表示形式数据<rt>representation data</rt></ruby>是被提供作为消息的有效载荷，或者被消息的语义和有效请求 URI 所引用。<ruby>表示形式数据<rt>representation data</rt></ruby>是处于某种由<ruby>表示形式元数据<rt>representation metadata</rt></ruby>相关的头字段所定义的格式和编码之中的。
 </p>
 
 <blockquote>
@@ -1662,7 +1686,7 @@ The data type of the representation data is determined via the header fields <co
 </blockquote>
 
 <p>
-<ruby>表示形式数据<rt>representation data</rt></ruby>的数据类型是由 <code>Content-Type</code> 和 <code>Content-Encoding</code> 头字段决定的。它们共同定义了一种<ruby>双层嵌套的、顺序编码的模型<rt>two-layer, ordered encoding model</rt></ruby>：
+<ruby>表示形式数据<rt>representation data</rt></ruby>的数据类型是由 <code>Content-Type</code> 和 <code>Content-Encoding</code> 头字段决定的。它们共同定义了一种<ruby>双层的、顺序编码的模型<rt>two-layer, ordered encoding model</rt></ruby>：
 </p>
 
 <div class="org-src-container">
@@ -1702,7 +1726,7 @@ In a response, the payload's purpose is defined by both the request method and t
 </blockquote>
 
 <p>
-在一个响应消息里，有效载荷的目标是由<ruby>请求方法<rt>request method</rt></ruby>和<ruby>响应状态码<rt>reponse status code</rt></ruby>两者共同来定义的。例如，一个回应给 GET 请求（<a href="#org479e86d">章节 4.3.1</a>）的 <code>200 (OK)</code> 响应消息表示在<ruby>消息发起日期<rt>message origination date</rt></ruby>（<a href="#org8e5ec45">章节 7.1.1.2</a>）所观察到的<ruby>目标资源<rt>target resource</rt></ruby>的目前状态。而一个回应给 POST 请求的 <code>200 (OK)</code> 响应消息可能表示：或者是在应用该请求以后的处理结果，或者是在应用该请求以后目标资源的新状态。带有一个错误状态码的响应消息通常会包含一个表示该错误条件的有效载荷，以描述错误状态以及如何解决错误的下一步建议。
+在一个响应消息里，有效载荷的目的是由<ruby>请求方法<rt>request method</rt></ruby>和<ruby>响应状态码<rt>reponse status code</rt></ruby>两者共同来定义的。例如，一个回应给 GET 请求（<a href="#org479e86d">章节 4.3.1</a>）的 <code>200 (OK)</code> 响应消息表示在<ruby>消息发起日期<rt>message origination date</rt></ruby>（<a href="#org8e5ec45">章节 7.1.1.2</a>）所观察到的<ruby>目标资源<rt>target resource</rt></ruby>的目前状态。而一个回应给 POST 请求的 <code>200 (OK)</code> 响应消息可能表示：或者是在应用该请求以后的处理结果，或者是在应用该请求以后目标资源的新状态。带有一个错误状态码的响应消息通常会包含一个表示该错误条件的有效载荷，以描述错误状态以及如何解决错误的下一步建议。
 </p>
 
 <blockquote>
@@ -1712,7 +1736,7 @@ Header fields that specifically describe the payload, rather than the associated
 </blockquote>
 
 <p>
-特定用于描述有效载荷（而不是描述它所关联的<ruby>表示形式<rt>representation</rt></ruby>）的头字段，被称为“<ruby>有效载荷头字段<rt>payload header fields</rt></ruby>”。有效载荷头字段被定义在本规范的其他部分中，由它们对<ruby>消息解析<rt>message parsing</rt></ruby>的影响来决定。
+专门用于描述有效载荷（而不是描述它所关联的<ruby>表示形式<rt>representation</rt></ruby>）的头字段，被称为“<ruby>有效载荷头字段<rt>payload header fields</rt></ruby>”。有效载荷头字段被定义在本规范的其他部分中，由它们对<ruby>消息解析<rt>message parsing</rt></ruby>的影响来决定。
 </p>
 
 <blockquote>
@@ -1770,7 +1794,7 @@ When responses convey payload information, whether indicating a success or an er
 </blockquote>
 
 <p>
-响应在传达有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器——在所有可用的 representations 中，究竟响应哪一种<ruby>表示形式<rt>representation</rt></ruby>才是最合适的。出于上述原因，HTTP 提供了<ruby>内容协商<rt>content negotiation</rt></ruby>的机制。
+响应在传达有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器。也就是说，在所有可用的<ruby>表示形式<rt>representations</rt></ruby>中，究竟响应哪一种<ruby>表示形式<rt>representation</rt></ruby>才是最合适的。出于上述原因，HTTP 提供了<ruby>内容协商<rt>content negotiation</rt></ruby>的机制。
 </p>
 
 <blockquote>
@@ -3459,7 +3483,7 @@ Many of the request header fields for proactive negotiation use a common paramet
 </blockquote>
 
 <p>
-许多用于<ruby>主动协商<rt>proactive negotiation</rt></ruby>的请求头字段都会使用一个名为 "q"（不区分大小写）的<ruby>通用型参数<rt>common parameter</rt></ruby>，来分别向内容的对应类型的<ruby>偏爱度<rt>preference</rt></ruby>赋予一个相对的“<ruby>权重<rt>weight</rt></ruby>”。由于同名的参数 "q" 常常用在服务器配置里来对某个资源的各种待选表现形式所对应的质量值赋予一个权重，因此，这个权重被称为“<ruby>质量值<rt>quality value</rt></ruby>”（或者称为 <code>qvalue</code>）。
+许多用于<ruby>主动协商<rt>proactive negotiation</rt></ruby>的请求头字段都会使用一个名为 "q"（不区分大小写）的<ruby>通用型参数<rt>common parameter</rt></ruby>，来分别向内容的对应类型的<ruby>偏爱度<rt>preference</rt></ruby>赋予一个相对的“<ruby>权重<rt>weight</rt></ruby>”。由于同名的参数 "q" 常常用在服务器配置里来对某个资源的各种可用的表现形式所对应的质量值赋予一个权重，因此，这个权重被称为“<ruby>质量值<rt>quality value</rt></ruby>”（或者称为 <code>qvalue</code>）。
 </p>
 
 <blockquote>
@@ -3574,7 +3598,7 @@ is interpreted as "I prefer <code>audio/basic</code>, but send me any audio type
 </blockquote>
 
 <p>
-上面例子可以解释为：“我首选（偏爱） <code>audio/basic</code>，但是，如果<ruby>最佳待选<rt>best available</rt></ruby>的质量值调低 80% 以上的话，可以发送给我任意音频类型”。
+上面例子可以解释为：“我首选（偏爱） <code>audio/basic</code>，但是，如果<ruby>最佳可用<rt>best available</rt></ruby>的质量值调低 80% 以上的话，可以发送给我任意音频类型”。
 </p>
 
 <blockquote>
@@ -3584,7 +3608,7 @@ A request without any <code>Accept</code> header field implies that the user age
 </blockquote>
 
 <p>
-一个请求里没有任何 <code>Accept</code> 头字段，意味着用户代理接受任何媒体类型的响应。如果在一个请求里出现了 <code>Accept</code>，但响应没有任何<ruby>待选表现形式<rt>available representations</rt></ruby>所带有的媒体类型是被其列为可接受的，那么，源服务器可以<ruby>遵守<rt>honor</rt></ruby> <code>Accept</code> 头字段的要求而返回一个 <code>406 (Not Acceptable)</code> 响应，也可以<ruby>忽视<rt>disregard</rt></ruby>该头字段的要求就好像它并没有受到<ruby>内容协商<rt>content negotiation</rt></ruby>的影响一样。
+一个请求里没有任何 <code>Accept</code> 头字段，意味着用户代理接受任何媒体类型的响应。如果在一个请求里出现了 <code>Accept</code>，但响应没有任何<ruby>可用的表现形式<rt>available representations</rt></ruby>所带有的媒体类型是被其列为可接受的，那么，源服务器可以<ruby>遵守<rt>honor</rt></ruby> <code>Accept</code> 头字段的要求而返回一个 <code>406 (Not Acceptable)</code> 响应，也可以<ruby>忽视<rt>disregard</rt></ruby>该头字段的要求就好像它并没有受到<ruby>内容协商<rt>content negotiation</rt></ruby>的影响一样。
 </p>
 
 <blockquote>
@@ -3908,7 +3932,7 @@ An <code>Accept-Encoding</code> header field with a combined field-value that is
 </blockquote>
 
 <p>
-如果 <code>Accept-Encoding</code> 头字段里其中一个<ruby>组合条目值<rt>combined field-value</rt></ruby>为空，意味着用户代理并不想在响应里进行任何的内容编码。如果请求里出现了 <code>Accept-Encoding</code> 头字段，但响应没有任何<ruby>待选表示形式<rt>available representations</rt></ruby>所带有的内容编码是被其列为可接受的，那么，源服务器 <b>应当</b> 在没有任何内容编码的情况下发送响应。
+如果 <code>Accept-Encoding</code> 头字段里其中一个<ruby>组合条目值<rt>combined field-value</rt></ruby>为空，意味着用户代理并不想在响应里进行任何的内容编码。如果请求里出现了 <code>Accept-Encoding</code> 头字段，但响应没有任何<ruby>可用的表示形式<rt>available representations</rt></ruby>所带有的内容编码是被其列为可接受的，那么，源服务器 <b>应当</b> 在没有任何内容编码的情况下发送响应。
 </p>
 
 <blockquote>
@@ -3974,7 +3998,7 @@ A request without any <code>Accept-Language</code> header field implies that the
 </blockquote>
 
 <p>
-如果请求里没有任何 <code>Accept-Language</code> 头字段，意味着该用户代理将会在响应里接受任何语言。如果请求里出现了该头字段，但响应没有任何<ruby>待选表示形式<rt>avaliable representations</rt></ruby>带有与之相匹配的语言标签，源服务器可以<ruby>忽视<rt>disregard</rt></ruby>该头字段的要求就好像它并没有受到<ruby>内容协商<rt>content negotiation</rt></ruby>的影响一样，可以<ruby>遵守<rt>honor</rt></ruby>该头字段的要求而返回一个 <code>406 (Not Acceptable)</code> 响应。但是，并不鼓励使用后者这种方式，这是因为后者会阻止用户访问他们可能能够使用的内容（例如，使用翻译软件等）。
+如果请求里没有任何 <code>Accept-Language</code> 头字段，意味着该用户代理将会在响应里接受任何语言。如果请求里出现了该头字段，但响应没有任何<ruby>可用的表示形式<rt>avaliable representations</rt></ruby>带有与之相匹配的语言标签，源服务器可以<ruby>忽视<rt>disregard</rt></ruby>该头字段的要求就好像它并没有受到<ruby>内容协商<rt>content negotiation</rt></ruby>的影响一样，可以<ruby>遵守<rt>honor</rt></ruby>该头字段的要求而返回一个 <code>406 (Not Acceptable)</code> 响应。但是，并不鼓励使用后者这种方式，这是因为后者会阻止用户访问他们可能能够使用的内容（例如，使用翻译软件等）。
 </p>
 
 <blockquote>
@@ -4194,7 +4218,7 @@ The "Referer" [sic] header field allows the user agent to specify a URI referenc
 </blockquote>
 
 <p>
-<code>Referer</code> 头字段让用户代理可以指定一个 URI 引用，来表明本次请求的<ruby>目标 URI<rt>target URI</rt></ruby> 是从哪一个资源那里获得的（也就是说，"referer" 指的是“引用页、引用者”，虽然这个字段名称存在拼写错误，本应该是 "referrer"）。用户代理在生成 <code>Referer</code> 头字段的时候，<b>禁止</b> 包括 URI 引用里的 <code>fragment</code> 以及 <code>userinfo</code> 组件【<a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>】。 
+<code>Referer</code> 头字段让用户代理可以指定一个 URI 引用，来表明本次请求的<ruby>目标 URI<rt>target URI</rt></ruby> 是从哪一个资源那里获得的（也就是说，"referer" 指的是“引用页、引用者”，虽然这个字段名称存在拼写错误，本应该是 "referrer"）。用户代理在生成 <code>Referer</code> 头字段的时候，<b>禁止</b> 包含有 URI 引用里的 <code>fragment</code> 以及 <code>userinfo</code> 组件【<a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>】。 
 </p>
 
 <blockquote>
@@ -4239,7 +4263,7 @@ If the target URI was obtained from a source that does not have its own URI (e.g
 </blockquote>
 
 <p>
-如果<ruby>目标 URI<rt>target URI</rt></ruby>是从一个资源那里获得的，但该资源并没有自己的 URI（比如，从键盘直接输入网址，或者在用户的书签/收藏夹内一个条目），那么，用户代理 <b>必须</b> 排除掉 <code>Referer</code> 头字段，或者将它的值赋值为 "about:blank" 来发送。
+如果<ruby>目标 URI<rt>target URI</rt></ruby>是从一个资源那里获得的，但该资源并没有自己的 URI（比如，从键盘直接输入网址，或者在用户的书签/收藏夹内的某个条目），那么，用户代理 <b>必须</b> 排除掉 <code>Referer</code> 头字段，或者将它赋值为 "about:blank" 来发送。
 </p>
 
 <blockquote>
@@ -4717,32 +4741,68 @@ Note that this list is not exhaustive — it does not include extension status c
 <div id="outline-container-org937cde4" class="outline-3">
 <h3 id="org937cde4"><a id="ID-2dd7a3d1-25c2-4192-9a19-6a3cf137036e"></a>6.2. 信息性 1xx / Informational 1xx</h3>
 <div class="outline-text-3" id="text-org937cde4">
+<blockquote>
 <p>
-The 1xx (Informational) class of status code indicates an interim response for communicating connection status or request progress prior to completing the requested action and sending a final response. 1xx responses are terminated by the first empty line after the status-line (the empty line signaling the end of the header section). Since HTTP/1.0 did not define any 1xx status codes, a server MUST NOT send a 1xx response to an HTTP/1.0 client.
+The <code>1xx (Informational)</code> class of status code indicates an interim response for communicating connection status or request progress prior to completing the requested action and sending a final response. <code>1xx</code> responses are terminated by the first empty line after the status-line (the empty line signaling the end of the header section). Since HTTP/1.0 did not define any <code>1xx</code> status codes, a server <b>MUST NOT</b> send a <code>1xx</code> response to an HTTP/1.0 client.
 </p>
+</blockquote>
 
 <p>
-A client MUST be able to parse one or more 1xx responses received prior to a final response, even if the client does not expect one. A user agent MAY ignore unexpected 1xx responses.
+<code>1xx (Informational)</code> 状态码种类表明——这是一个<ruby>过渡响应<rt>interim response</rt></ruby>，用于在完成所请求的动作以及发送一个<ruby>最终响应<rt>final response</rt></ruby>之前传递<ruby>连接状态<rt>connection status</rt></ruby>或<ruby>请求进展<rt>request progress</rt></ruby>。<code>1xx</code> 响应终止于在<ruby>状态行<rt>status-line</rt></ruby>之后的第一个<ruby>空行<rt>empty line</rt></ruby>（空行标志着<ruby>消息头部<rt>header section</rt></ruby>的结束）。由于 HTTP/1.0 并没有定义任何 <code>1xx</code> 状态码，因此，服务器 <b>禁止</b> 将 <code>1xx</code> 的响应发送到一个 HTTP/1.0 客户端上。
 </p>
 
+<blockquote>
 <p>
-A proxy MUST forward 1xx responses unless the proxy itself requested the generation of the 1xx response. For example, if a proxy adds an "Expect: 100-continue" field when it forwards a request, then it need not forward the corresponding 100 (Continue) response(s).
+A client <b>MUST</b> be able to parse one or more <code>1xx</code> responses received prior to a final response, even if the client does not expect one. A user agent <b>MAY</b> ignore unexpected <code>1xx</code> responses.
+</p>
+</blockquote>
+
+<p>
+客户端 <b>必须</b> 能够<ruby>解析<rt>parse</rt></ruby>在接收到一个最终响应之前所接收到的一个或多个 <code>1xx</code> 响应，即使这个客户端并不<ruby>期待<rt>expect</rt></ruby>这种响应。用户代理 <b>可以</b> 忽略<ruby>意料之外的<rt>unexpected</rt></ruby> <code>1xx</code> 响应。
+</p>
+
+<blockquote>
+<p>
+A proxy <b>MUST</b> forward <code>1xx</code> responses unless the proxy itself requested the generation of the <code>1xx</code> response. For example, if a proxy adds an "Expect: 100-continue" field when it forwards a request, then it need not forward the corresponding <code>100 (Continue)</code> response(s).
+</p>
+</blockquote>
+
+<p>
+代理 <b>必须</b> 转发 <code>1xx</code> 响应，除非这个 <code>1xx</code> 响应是代理自身要求对方发送的。例如，如果某个代理在转发一个请求的时候添加了一个头字段 "Expect: 100-continue"，那么，它并不需要转发对应的这一个（或多个） <code>100 (Continue)</code> 响应。
 </p>
 </div>
 
 <div id="outline-container-orgb177ae0" class="outline-4">
 <h4 id="orgb177ae0"><a id="ID-91fffa22-c6f0-476c-b69f-f76828e861f3"></a>6.2.1. 100 Continue</h4>
 <div class="outline-text-4" id="text-orgb177ae0">
+<blockquote>
 <p>
-The 100 (Continue) status code indicates that the initial part of a request has been received and has not yet been rejected by the server. The server intends to send a final response after the request has been fully received and acted upon.
+The <code>100 (Continue)</code> status code indicates that the initial part of a request has been received and has not yet been rejected by the server. The server intends to send a final response after the request has been fully received and acted upon.
 </p>
+</blockquote>
 
 <p>
-When the request contains an Expect header field that includes a 100-continue expectation, the 100 response indicates that the server wishes to receive the request payload body, as described in Section 5.1.1. The client ought to continue sending the request and discard the 100 response.
+<code>100 (Continue)</code> 状态码表明——一个请求的<ruby>初始部分<rt>initial part</rt></ruby>已经被服务器接收到了，并且它还没有被服务器所<ruby>拒绝<rt>rejected</rt></ruby>。服务器打算在完全接收到这个请求并处理好之后再发送一个<ruby>最终响应<rt>final response</rt></ruby>。
 </p>
 
+<blockquote>
 <p>
-If the request did not contain an Expect header field containing the 100-continue expectation, the client can simply discard this interim response.
+When the request contains an <code>Expect</code> header field that includes a <code>100-continue</code> expectation, the <code>100</code> response indicates that the server wishes to receive the request payload body, as described in Section 5.1.1. The client ought to continue sending the request and discard the <code>100</code> response.
+</p>
+</blockquote>
+
+<p>
+当请求带有一个 <code>Expect</code> 头字段，而这个头字段含有一个 <code>100-continue</code> <ruby>期望<rt>expectation</rt></ruby>的时候，<code>100</code> 响应表明：服务器希望去接收该<ruby>请求的有效载荷<rt>request payload body</rt></ruby>，正如<a href="#org83b8384">章节 5.1.1</a> 讲述的那样。客户端应该继续发送该请求并<ruby>丢弃掉<rt>discard</rt></ruby>这个 <code>100</code> 响应。
+</p>
+
+<blockquote>
+<p>
+If the request did not contain an <code>Expect</code> header field containing the <code>100-continue</code> expectation, the client can simply discard this interim response.
+</p>
+</blockquote>
+
+<p>
+如果请求并未带有一个含有 <code>100-continue</code> <ruby>期望<rt>expectation</rt></ruby>的 <code>Expect</code> 头字段，那么，客户端能够简单地丢弃掉这个<ruby>过渡响应<rt>interm response</rt></ruby>。
 </p>
 </div>
 </div>
@@ -4750,12 +4810,24 @@ If the request did not contain an Expect header field containing the 100-continu
 <div id="outline-container-org17170cb" class="outline-4">
 <h4 id="org17170cb"><a id="ID-c8200a68-3b0f-4f12-bf1f-ac895c5dcf9f"></a>6.2.2. 101 Switching Protocols</h4>
 <div class="outline-text-4" id="text-org17170cb">
+<blockquote>
 <p>
-The 101 (Switching Protocols) status code indicates that the server understands and is willing to comply with the client's request, via the Upgrade header field (Section 6.7 of [RFC7230]), for a change in the application protocol being used on this connection. The server MUST generate an Upgrade header field in the response that indicates which protocol(s) will be switched to immediately after the empty line that terminates the 101 response.
+The <code>101 (Switching Protocols)</code> status code indicates that the server understands and is willing to comply with the client's request, via the <code>Upgrade</code> header field (Section 6.7 of [RFC7230]), for a change in the application protocol being used on this connection. The server <b>MUST</b> generate an <code>Upgrade</code> header field in the response that indicates which protocol(s) will be switched to immediately after the empty line that terminates the <code>101</code> response.
 </p>
+</blockquote>
 
 <p>
+<code>101 (Switching Protocols)</code> 状态码表明——服务器理解并愿意按照客户端的<ruby>建议<rt>request</rt></ruby>（该建议经由 <code>Upgrade</code> 头字段来表达，见<a href="RFC7230.html#ID-62632d23-475d-4daa-8efb-3206d370573a">【RFC7230】章节 6.7</a>）来改变本次连接上正在使用的<ruby>应用协议<rt>application protocol</rt></ruby>。服务器 <b>必须</b> 在响应里生成一个 <code>Upgrade</code> 头字段，来表明：从结束该 <code>101</code> 响应的空行之后开始，将会马上切换到哪一种（或多种）协议。
+</p>
+
+<blockquote>
+<p>
 It is assumed that the server will only agree to switch protocols when it is advantageous to do so. For example, switching to a newer version of HTTP might be advantageous over older versions, and switching to a real-time, synchronous protocol might be advantageous when delivering resources that use such features.
+</p>
+</blockquote>
+
+<p>
+假定服务器将仅当对其有利的情况下才会同意切换协议。例如，切换到一个新的 HTTP 版本的好处可能会大于旧的版本，或者在投递资源的时候切换到一种<ruby>实时同步的协议<rt>real-time, synchronous protocol</rt></ruby>可能会更有优势。
 </p>
 </div>
 </div>
@@ -4764,16 +4836,23 @@ It is assumed that the server will only agree to switch protocols when it is adv
 <div id="outline-container-orge3be6d7" class="outline-3">
 <h3 id="orge3be6d7"><a id="ID-795b7295-fd61-4ded-8dff-da880548f665"></a>6.3. 成功 2xx / Successful 2xx</h3>
 <div class="outline-text-3" id="text-orge3be6d7">
+<blockquote>
 <p>
-The 2xx (Successful) class of status code indicates that the client's request was successfully received, understood, and accepted.
+The <code>2xx (Successful)</code> class of status code indicates that the client's request was successfully received, understood, and accepted.
+</p>
+</blockquote>
+
+<p>
+<code>2xx (Successful)</code> 状态码种类表明——客户端的请求已经被成功<ruby>接收<rt>received</rt></ruby>、<ruby>理解<rt>understood</rt></ruby>和<ruby>接受<rt>accepted</rt></ruby>。
 </p>
 </div>
 
 <div id="outline-container-org0038347" class="outline-4">
 <h4 id="org0038347"><a id="ID-8b00dffb-977c-496a-be64-60d2f5f46e36"></a>6.3.1. 200 OK</h4>
 <div class="outline-text-4" id="text-org0038347">
+<blockquote>
 <p>
-The 200 (OK) status code indicates that the request has succeeded. The payload sent in a 200 response depends on the request method. For the methods defined by this specification, the intended meaning of the payload can be summarized as:
+The <code>200 (OK)</code> status code indicates that the request has succeeded. The payload sent in a <code>200</code> response depends on the request method. For the methods defined by this specification, the intended meaning of the payload can be summarized as:
 </p>
 
 <dl class="org-dl">
@@ -4784,13 +4863,39 @@ The 200 (OK) status code indicates that the request has succeeded. The payload s
 <dt>OPTIONS</dt><dd>a representation of the communications options;</dd>
 <dt>TRACE</dt><dd>a representation of the request message as received by the end server.</dd>
 </dl>
+</blockquote>
 
 <p>
-Aside from responses to CONNECT, a 200 response always has a payload, though an origin server MAY generate a payload body of zero length. If no payload is desired, an origin server ought to send 204 (No Content) instead. For CONNECT, no payload is allowed because the successful result is a tunnel, which begins immediately after the 200 response header section.
+<code>200 (OK)</code> 状态码表明——请求已经成功。<code>200</code> 响应里的<ruby>有效载荷<rt>payload</rt></ruby>的含义取决于对应的<ruby>请求方法<rt>request method</rt></ruby>。对于由本规范所定义的方法来说，有效载荷想要表达的含义可以总结为：
 </p>
 
+<dl class="org-dl">
+<dt>GET</dt><dd>目标资源的一种<ruby>表示形式<rt>representation</rt></ruby>；</dd>
+<dt>HEAD</dt><dd>与 GET 一致的表示形式，但没有<ruby>表示形式数据<rt>representation data</rt></ruby>；</dd>
+<dt>POST</dt><dd>动作的状态的（或者从动作获得的结果的）一种表示形式；</dd>
+<dt>PUT, DELETE</dt><dd>动作的状态的一种表示形式；</dd>
+<dt>OPTIONS</dt><dd><ruby>通信选项<rt>communication options</rt></ruby>的一种表示形式；</dd>
+<dt>TRACE</dt><dd>如同接收自<ruby>端服务器<rt>end server</rt></ruby>一样的请求消息的一种表现形式。</dd>
+</dl>
+
+<blockquote>
 <p>
-A 200 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+Aside from responses to CONNECT, a <code>200</code> response always has a payload, though an origin server <b>MAY</b> generate a payload body of zero length. If no payload is desired, an origin server ought to send <code>204 (No Content)</code> instead. For CONNECT, no payload is allowed because the successful result is a tunnel, which begins immediately after the <code>200</code> response header section.
+</p>
+</blockquote>
+
+<p>
+除了回应给 CONNECT 的响应以外，<code>200</code> 响应总是带有一个有效载荷的，虽然源服务器 <b>可以</b> 生成一个长度为零的有效载荷。如果不想带有有效载荷，源服务器应该改为发送 <code>204 (No Content)</code> 响应。对于 CONNECT，允许不带有有效载荷是因为成功的结果是一个隧道，该隧道会在 <code>200</code> 响应头部以后马上开始建立。
+</p>
+
+<blockquote>
+<p>
+A <code>200</code> response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see <a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">Section 4.2.2</a> of [RFC7234]).
+</p>
+</blockquote>
+
+<p>
+<code>200</code> 响应默认是<ruby>可缓存的<rt>cacheable</rt></ruby>，也就是说，除非在请求方法的定义或者<ruby>显式缓存控制<rt>explicit cache controls</rt></ruby>（<a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">【RFC7234】章节 4.2.2</a>）里另有指定。
 </p>
 </div>
 </div>
@@ -4798,12 +4903,24 @@ A 200 response is cacheable by default; i.e., unless otherwise indicated by the 
 <div id="outline-container-org7621bcc" class="outline-4">
 <h4 id="org7621bcc"><a id="ID-0f0de6df-c767-45b5-a6a9-1f45f20bba38"></a>6.3.2. 201 Created</h4>
 <div class="outline-text-4" id="text-org7621bcc">
+<blockquote>
 <p>
-The 201 (Created) status code indicates that the request has been fulfilled and has resulted in one or more new resources being created. The primary resource created by the request is identified by either a Location header field in the response or, if no Location field is received, by the effective request URI.
+The <code>201 (Created)</code> status code indicates that the request has been fulfilled and has resulted in one or more new resources being created. The primary resource created by the request is identified by either a <code>Location</code> header field in the response or, if no <code>Location</code> field is received, by the effective request URI.
 </p>
+</blockquote>
 
 <p>
-The 201 response payload typically describes and links to the resource(s) created. See Section 7.2 for a discussion of the meaning and purpose of validator header fields, such as ETag and Last-Modified, in a 201 response.
+<code>201 (Created)</code> 状态码表明——请求已被<ruby>满足<rt>fulfilled</rt></ruby>并且导致了一个或多个<ruby>新资源<rt>new resources</rt></ruby>被创建。上述因请求而创建的<ruby>主要资源<rt>primary resource</rt></ruby>会被一个在响应里的 <code>Location</code> 头字段所标识，或者，如果没有接收到 <code>Location</code> 头字段的话，则通过<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 来标识。
+</p>
+
+<blockquote>
+<p>
+The <code>201</code> response payload typically describes and links to the resource(s) created. See <a href="#org4d2e5ff">Section 7.2</a> for a discussion of the meaning and purpose of validator header fields, such as <code>ETag</code> and <code>Last-Modified</code>, in a <code>201</code> response.
+</p>
+</blockquote>
+
+<p>
+<code>201</code> 响应的有效载荷通常描述并链接到新创建的资源上。对于在 <code>201</code> 响应里的<ruby>验证器头字段<rt>validator header fields</rt></ruby>的意义和目的的讨论，比如 <code>ETag</code> 和 <code>Last-Modified</code>，见<a href="#org4d2e5ff">章节 7.2</a>。
 </p>
 </div>
 </div>
@@ -4811,12 +4928,24 @@ The 201 response payload typically describes and links to the resource(s) create
 <div id="outline-container-org90994de" class="outline-4">
 <h4 id="org90994de"><a id="ID-f333c72d-3351-4339-b41a-0832ed8884ac"></a>6.3.3. 202 Accepted</h4>
 <div class="outline-text-4" id="text-org90994de">
+<blockquote>
 <p>
-The 202 (Accepted) status code indicates that the request has been accepted for processing, but the processing has not been completed. The request might or might not eventually be acted upon, as it might be disallowed when processing actually takes place. There is no facility in HTTP for re-sending a status code from an asynchronous operation.
+The <code>202 (Accepted)</code> status code indicates that the request has been accepted for processing, but the processing has not been completed. The request might or might not eventually be acted upon, as it might be disallowed when processing actually takes place. There is no facility in HTTP for re-sending a status code from an asynchronous operation.
 </p>
+</blockquote>
 
 <p>
-The 202 response is intentionally noncommittal. Its purpose is to allow a server to accept a request for some other process (perhaps a batch-oriented process that is only run once per day) without requiring that the user agent's connection to the server persist until the process is completed. The representation sent with this response ought to describe the request's current status and point to (or embed) a status monitor that can provide the user with an estimate of when the request will be fulfilled.
+<code>202 (Accepted)</code> 状态码表明——请求已被接受处理，但处理还未完成。最终可能也可能不会按照请求来行事，因为当实际进行处理的时候请求可能不被允许。HTTP 里没有任何的<ruby>技巧<rt>facility</rt></ruby>可以从一个<ruby>异步操作<rt>asynchronous operation</rt></ruby>中重发一个状态码。
+</p>
+
+<blockquote>
+<p>
+The <code>202</code> response is intentionally noncommittal. Its purpose is to allow a server to accept a request for some other process (perhaps a batch-oriented process that is only run once per day) without requiring that the user agent's connection to the server persist until the process is completed. The representation sent with this response ought to describe the request's current status and point to (or embed) a status monitor that can provide the user with an estimate of when the request will be fulfilled.
+</p>
+</blockquote>
+
+<p>
+<code>202</code> 响应有意含糊的。它的目的是允许服务器去接受一个请求来进行其他的处理（也许是一个每天仅运行一次的面向批量的处理）而不要求用户代理保持对服务器的连接直到完成该处理。随响应一起发送的<ruby>表示形式<rt>representation</rt></ruby>应该描述该请求的当前状态并且指向（或者<ruby>内嵌<rt>embed</rt></ruby>）一个<ruby>状态监听器<rt>status monitor</rt></ruby>来向用户提供“请求将会在什么时候被满足”的评估。
 </p>
 </div>
 </div>
@@ -4824,63 +4953,91 @@ The 202 response is intentionally noncommittal. Its purpose is to allow a server
 <div id="outline-container-org3a69f3a" class="outline-4">
 <h4 id="org3a69f3a"><a id="ID-5a18bb35-2626-4fe4-a36c-cae3a7655a60"></a>6.3.4. 203 Non-Authoritative Information</h4>
 <div class="outline-text-4" id="text-org3a69f3a">
+<blockquote>
 <p>
-The 203 (Non-Authoritative Information) status code indicates that the request was successful but the enclosed payload has been modified from that of the origin server's 200 (OK) response by a transforming proxy (Section 5.7.2 of [RFC7230]). This status code allows the proxy to notify recipients when a transformation has been applied, since that knowledge might impact later decisions regarding the content. For example, future cache validation requests for the content might only be applicable along the same request path (through the same proxies).
+The <code>203 (Non-Authoritative Information)</code> status code indicates that the request was successful but the enclosed payload has been modified from that of the origin server's 200 (OK) response by a transforming proxy (Section 5.7.2 of [RFC7230]). This status code allows the proxy to notify recipients when a transformation has been applied, since that knowledge might impact later decisions regarding the content. For example, future cache validation requests for the content might only be applicable along the same request path (through the same proxies).
 </p>
+</blockquote>
 
 <p>
-The 203 response is similar to the Warning code of 214 Transformation Applied (Section 5.5 of [RFC7234]), which has the advantage of being applicable to responses with any status code.
+<code>203 (Non-Authoritative Information)</code> 状态码表明——请求已成功，但
 </p>
 
+<blockquote>
 <p>
-A 203 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+The <code>203</code> response is similar to the Warning code of 214 Transformation Applied (Section 5.5 of [RFC7234]), which has the advantage of being applicable to responses with any status code.
 </p>
+</blockquote>
+
+<blockquote>
+<p>
+A <code>203</code> response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+</p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org61ddd38" class="outline-4">
 <h4 id="org61ddd38"><a id="ID-3a5fcefb-f004-4981-a616-0feba4c9e9e4"></a>6.3.5. 204 No Content</h4>
 <div class="outline-text-4" id="text-org61ddd38">
+<blockquote>
 <p>
-The 204 (No Content) status code indicates that the server has successfully fulfilled the request and that there is no additional content to send in the response payload body. Metadata in the response header fields refer to the target resource and its selected representation after the requested action was applied.
+The <code>204 (No Content)</code> status code indicates that the server has successfully fulfilled the request and that there is no additional content to send in the response payload body. Metadata in the response header fields refer to the target resource and its selected representation after the requested action was applied.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 For example, if a 204 status code is received in response to a PUT request and the response contains an ETag header field, then the PUT was successful and the ETag field-value contains the entity-tag for the new representation of that target resource.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The 204 response allows a server to indicate that the action has been successfully applied to the target resource, while implying that the user agent does not need to traverse away from its current "document view" (if any). The server assumes that the user agent will provide some indication of the success to its user, in accord with its own interface, and apply any new or updated metadata in the response to its active representation.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 For example, a 204 status code is commonly used with document editing interfaces corresponding to a "save" action, such that the document being saved remains available to the user for editing. It is also frequently used with interfaces that expect automated data transfers to be prevalent, such as within distributed version control systems.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A 204 response is terminated by the first empty line after the header fields because it cannot contain a message body.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A 204 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org9d78f6e" class="outline-4">
 <h4 id="org9d78f6e"><a id="ID-545a7a5c-0589-40d5-bae4-726b8e71dd10"></a>6.3.6. 205 Reset Content</h4>
 <div class="outline-text-4" id="text-org9d78f6e">
+<blockquote>
 <p>
 The 205 (Reset Content) status code indicates that the server has fulfilled the request and desires that the user agent reset the "document view", which caused the request to be sent, to its original state as received from the origin server.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This response is intended to support a common data entry use case where the user receives content that supports data entry (a form, notepad, canvas, etc.), enters or manipulates data in that space, causes the entered data to be submitted in a request, and then the data entry mechanism is reset for the next entry so that the user can easily initiate another input action.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Since the 205 status code implies that no additional content will be provided, a server MUST NOT generate a payload in a 205 response. In other words, a server MUST do one of the following for a 205 response: a) indicate a zero-length body for the response by including a Content-Length header field with a value of 0; b) indicate a zero-length payload for the response by including a Transfer-Encoding header field with a value of chunked and a message body consisting of a single chunk of zero-length; or, c) close the connection immediately after sending the blank line terminating the header section.
 </p>
+</blockquote>
 </div>
 </div>
 </div>
@@ -4888,10 +5045,13 @@ Since the 205 status code implies that no additional content will be provided, a
 <div id="outline-container-orgdf0960e" class="outline-3">
 <h3 id="orgdf0960e"><a id="ID-455a69c1-4d80-440e-a98c-851a296d9ce2"></a>6.4. 重定向 3xx / Redirection 3xx</h3>
 <div class="outline-text-3" id="text-orgdf0960e">
+<blockquote>
 <p>
 The 3xx (Redirection) class of status code indicates that further action needs to be taken by the user agent in order to fulfill the request. If a Location header field (Section 7.1.2) is provided, the user agent MAY automatically redirect its request to the URI referenced by the Location field value, even if the specific status code is not understood. Automatic redirection needs to done with care for methods not known to be safe, as defined in Section 4.2.1, since the user might not wish to redirect an unsafe request.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 There are several types of redirects:
 </p>
@@ -4905,136 +5065,185 @@ There are several types of redirects:
 
 <li>Redirection to a previously cached result, as in the 304 (Not Modified) status code.</li>
 </ol>
+</blockquote>
 
+<blockquote>
 <p>
 <b>Note:</b> In HTTP/1.0, the status codes 301 (Moved Permanently) and 302 (Found) were defined for the first type of redirect ([RFC1945], Section 9.3). Early user agents split on whether the method applied to the redirect target would be the same as the original request or would be rewritten as GET. Although HTTP originally defined the former semantics for 301 and 302 (to match its original implementation at CERN), and defined 303 (See Other) to match the latter semantics, prevailing practice gradually converged on the latter semantics for 301 and 302 as well. The first revision of HTTP/1.1 added 307 (Temporary Redirect) to indicate the former semantics without being impacted by divergent practice. Over 10 years later, most user agents still do method rewriting for 301 and 302; therefore, this specification makes that behavior conformant when the original request is POST.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
-A client SHOULD detect and intervene in cyclical redirections (i.e., "infinite" redirection loops).
+A client <b>SHOULD</b> detect and intervene in cyclical redirections (i.e., "infinite" redirection loops).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 <b>Note:</b> An earlier version of this specification recommended a maximum of five redirections ([RFC2068], Section 10.3). Content developers need to be aware that some clients might implement such a fixed limitation.
 </p>
+</blockquote>
 </div>
 
 <div id="outline-container-org6a26035" class="outline-4">
 <h4 id="org6a26035"><a id="ID-bb139936-2671-4ffc-9dd0-75af2bab7d9b"></a>6.4.1. 300 Multiple Choices</h4>
 <div class="outline-text-4" id="text-org6a26035">
+<blockquote>
 <p>
-The 300 (Multiple Choices) status code indicates that the target resource has more than one representation, each with its own more specific identifier, and information about the alternatives is being provided so that the user (or user agent) can select a preferred representation by redirecting its request to one or more of those identifiers. In other words, the server desires that the user agent engage in reactive negotiation to select the most appropriate representation(s) for its needs (Section 3.4).
+The <code>300 (Multiple Choices)</code> status code indicates that the target resource has more than one representation, each with its own more specific identifier, and information about the alternatives is being provided so that the user (or user agent) can select a preferred representation by redirecting its request to one or more of those identifiers. In other words, the server desires that the user agent engage in reactive negotiation to select the most appropriate representation(s) for its needs (Section 3.4).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 If the server has a preferred choice, the server SHOULD generate a Location header field containing a preferred choice's URI reference. The user agent MAY use the Location field value for automatic redirection.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 For request methods other than HEAD, the server SHOULD generate a payload in the 300 response containing a list of representation metadata and URI reference(s) from which the user or user agent can choose the one most preferred. The user agent MAY make a selection from that list automatically if it understands the provided media type. A specific format for automatic selection is not defined by this specification because HTTP tries to remain orthogonal to the definition of its payloads. In practice, the representation is provided in some easily parsed format believed to be acceptable to the user agent, as determined by shared design or content negotiation, or in some commonly accepted hypertext format.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A 300 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Note: The original proposal for the 300 status code defined the URI header field as providing a list of alternative representations, such that it would be usable for 200, 300, and 406 responses and be transferred in responses to the HEAD method. However, lack of deployment and disagreement over syntax led to both URI and Alternates (a subsequent proposal) being dropped from this specification. It is possible to communicate the list using a set of Link header fields [RFC5988], each with a relationship of "alternate", though deployment is a chicken-and-egg problem.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-orgdd25815" class="outline-4">
 <h4 id="orgdd25815"><a id="ID-e883e3aa-aac3-46ca-83cc-2a085889f9d2"></a>6.4.2. 301 Moved Permanently</h4>
 <div class="outline-text-4" id="text-orgdd25815">
+<blockquote>
 <p>
 The 301 (Moved Permanently) status code indicates that the target resource has been assigned a new permanent URI and any future references to this resource ought to use one of the enclosed URIs. Clients with link-editing capabilities ought to automatically re-link references to the effective request URI to one or more of the new references sent by the server, where possible.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The server SHOULD generate a Location header field in the response containing a preferred URI reference for the new permanent URI. The user agent MAY use the Location field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the new URI(s).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
-Note: For historical reasons, a user agent MAY change the request method from POST to GET for the subsequent request. If this behavior is undesired, the 307 (Temporary Redirect) status code can be used instead.
+<b>Note:</b> For historical reasons, a user agent MAY change the request method from POST to GET for the subsequent request. If this behavior is undesired, the 307 (Temporary Redirect) status code can be used instead.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A 301 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org1dd45d0" class="outline-4">
 <h4 id="org1dd45d0"><a id="ID-89acc9d5-366e-4a7c-820e-891fe25738be"></a>6.4.3. 302 Found</h4>
 <div class="outline-text-4" id="text-org1dd45d0">
+<blockquote>
 <p>
 The 302 (Found) status code indicates that the target resource resides temporarily under a different URI. Since the redirection might be altered on occasion, the client ought to continue to use the effective request URI for future requests.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The server SHOULD generate a Location header field in the response containing a URI reference for the different URI. The user agent MAY use the Location field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the different URI(s).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
-Note: For historical reasons, a user agent MAY change the request method from POST to GET for the subsequent request. If this behavior is undesired, the 307 (Temporary Redirect) status code can be used instead.
+<b>Note:</b> For historical reasons, a user agent MAY change the request method from POST to GET for the subsequent request. If this behavior is undesired, the 307 (Temporary Redirect) status code can be used instead.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-orga14232d" class="outline-4">
 <h4 id="orga14232d"><a id="ID-12c7ea0c-85ac-401f-8132-293e6ebcf52f"></a>6.4.4. 303 See Other</h4>
 <div class="outline-text-4" id="text-orga14232d">
+<blockquote>
 <p>
 The 303 (See Other) status code indicates that the server is redirecting the user agent to a different resource, as indicated by a URI in the Location header field, which is intended to provide an indirect response to the original request. A user agent can perform a retrieval request targeting that URI (a GET or HEAD request if using HTTP), which might also be redirected, and present the eventual result as an answer to the original request. Note that the new URI in the Location header field is not considered equivalent to the effective request URI.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This status code is applicable to any HTTP method. It is primarily used to allow the output of a POST action to redirect the user agent to a selected resource, since doing so provides the information corresponding to the POST response in a form that can be separately identified, bookmarked, and cached, independent of the original request.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A 303 response to a GET request indicates that the origin server does not have a representation of the target resource that can be transferred by the server over HTTP. However, the Location field value refers to a resource that is descriptive of the target resource, such that making a retrieval request on that other resource might result in a representation that is useful to recipients without implying that it represents the original target resource. Note that answers to the questions of what can be represented, what representations are adequate, and what might be a useful description are outside the scope of HTTP.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Except for responses to a HEAD request, the representation of a 303 response ought to contain a short hypertext note with a hyperlink to the same URI reference provided in the Location header field.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-orgbea7275" class="outline-4">
 <h4 id="orgbea7275"><a id="ID-e69019b2-b071-4380-bcd7-d2fd80261d81"></a>6.4.5. 305 Use Proxy</h4>
 <div class="outline-text-4" id="text-orgbea7275">
+<blockquote>
 <p>
 The 305 (Use Proxy) status code was defined in a previous version of this specification and is now deprecated (Appendix B).
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-orgcefeee6" class="outline-4">
 <h4 id="orgcefeee6">6.4.6. 306 (Unused)</h4>
 <div class="outline-text-4" id="text-orgcefeee6">
+<blockquote>
 <p>
 The 306 status code was defined in a previous version of this specification, is no longer used, and the code is reserved.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-orgd9247a2" class="outline-4">
 <h4 id="orgd9247a2"><a id="ID-549c5916-48a9-4e75-8c68-538635c00a2c"></a>6.4.7. 307 Temporary Redirect</h4>
 <div class="outline-text-4" id="text-orgd9247a2">
+<blockquote>
 <p>
 The 307 (Temporary Redirect) status code indicates that the target resource resides temporarily under a different URI and the user agent MUST NOT change the request method if it performs an automatic redirection to that URI. Since the redirection can change over time, the client ought to continue using the original effective request URI for future requests.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The server SHOULD generate a Location header field in the response containing a URI reference for the different URI. The user agent MAY use the Location field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the different URI(s).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Note: This status code is similar to 302 (Found), except that it does not allow changing the request method from POST to GET. This specification defines no equivalent counterpart for 301 (Moved Permanently) ([RFC7238], however, defines the status code 308 (Permanent Redirect) for this purpose).
 </p>
+</blockquote>
 </div>
 </div>
 </div>
@@ -5042,187 +5251,241 @@ Note: This status code is similar to 302 (Found), except that it does not allow 
 <div id="outline-container-org187c176" class="outline-3">
 <h3 id="org187c176"><a id="ID-d052de1c-5d88-41e3-baf6-c7a37a841de6"></a>6.5. 客户端错误 / Client Error 4xx</h3>
 <div class="outline-text-3" id="text-org187c176">
+<blockquote>
 <p>
 The 4xx (Client Error) class of status code indicates that the client seems to have erred. Except when responding to a HEAD request, the server SHOULD send a representation containing an explanation of the error situation, and whether it is a temporary or permanent condition. These status codes are applicable to any request method. User agents SHOULD display any included representation to the user.
 </p>
+</blockquote>
 </div>
 
 <div id="outline-container-org6b99dfb" class="outline-4">
 <h4 id="org6b99dfb"><a id="ID-323c581a-d558-421f-a0f1-8c28fe904264"></a>6.5.1. 400 Bad Request</h4>
 <div class="outline-text-4" id="text-org6b99dfb">
+<blockquote>
 <p>
 The 400 (Bad Request) status code indicates that the server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org42c217d" class="outline-4">
 <h4 id="org42c217d"><a id="ID-d4484e6e-b1a9-4ae9-b8cd-5da28a80fce7"></a>6.5.2. 402 Payment Required</h4>
 <div class="outline-text-4" id="text-org42c217d">
+<blockquote>
 <p>
 The 402 (Payment Required) status code is reserved for future use.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org86089b5" class="outline-4">
 <h4 id="org86089b5"><a id="ID-addb601c-6b2f-45a7-97f7-9d24bdb8b585"></a>6.5.3. 403 Forbidden</h4>
 <div class="outline-text-4" id="text-org86089b5">
+<blockquote>
 <p>
 The 403 (Forbidden) status code indicates that the server understood the request but refuses to authorize it. A server that wishes to make public why the request has been forbidden can describe that reason in the response payload (if any).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 If authentication credentials were provided in the request, the server considers them insufficient to grant access. The client SHOULD NOT automatically repeat the request with the same credentials. The client MAY repeat the request with new or different credentials. However, a request might be forbidden for reasons unrelated to the credentials.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 An origin server that wishes to "hide" the current existence of a forbidden target resource MAY instead respond with a status code of 404 (Not Found).
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org6ef9040" class="outline-4">
 <h4 id="org6ef9040"><a id="ID-aff1f620-f950-48fe-a479-0276d2aeac0e"></a>6.5.4. 404 Not Found</h4>
 <div class="outline-text-4" id="text-org6ef9040">
+<blockquote>
 <p>
 The 404 (Not Found) status code indicates that the origin server did not find a current representation for the target resource or is not willing to disclose that one exists. A 404 status code does not indicate whether this lack of representation is temporary or permanent; the 410 (Gone) status code is preferred over 404 if the origin server knows, presumably through some configurable means, that the condition is likely to be permanent.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A 404 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org9297a17" class="outline-4">
 <h4 id="org9297a17"><a id="ID-6c2a3e21-55e6-465c-b8dc-7d773d341e8f"></a>6.5.5. 405 Method Not Allowed</h4>
 <div class="outline-text-4" id="text-org9297a17">
+<blockquote>
 <p>
 The 405 (Method Not Allowed) status code indicates that the method received in the request-line is known by the origin server but not supported by the target resource. The origin server MUST generate an Allow header field in a 405 response containing a list of the target resource's currently supported methods.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A 405 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-orgdf502e9" class="outline-4">
 <h4 id="orgdf502e9"><a id="ID-c600bda4-d399-4870-894f-ea4293fc173f"></a>6.5.6. 406 Not Acceptable</h4>
 <div class="outline-text-4" id="text-orgdf502e9">
+<blockquote>
 <p>
 The 406 (Not Acceptable) status code indicates that the target resource does not have a current representation that would be acceptable to the user agent, according to the proactive negotiation header fields received in the request (Section 5.3), and the server is unwilling to supply a default representation.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The server SHOULD generate a payload containing a list of available representation characteristics and corresponding resource identifiers from which the user or user agent can choose the one most appropriate. A user agent MAY automatically select the most appropriate choice from that list. However, this specification does not define any standard for such automatic selection, as described in Section 6.4.1.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org2a53d18" class="outline-4">
 <h4 id="org2a53d18"><a id="ID-8523542a-3e33-4261-92b7-0bf706f14a57"></a>6.5.7. 408 Request Timeout</h4>
 <div class="outline-text-4" id="text-org2a53d18">
+<blockquote>
 <p>
 The 408 (Request Timeout) status code indicates that the server did not receive a complete request message within the time that it was prepared to wait. A server SHOULD send the "close" connection option (Section 6.1 of [RFC7230]) in the response, since 408 implies that the server has decided to close the connection rather than continue waiting. If the client has an outstanding request in transit, the client MAY repeat that request on a new connection.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org010d0a2" class="outline-4">
 <h4 id="org010d0a2"><a id="ID-63517bec-7c89-4655-a6df-e5e2c8de4a17"></a>6.5.8. 409 Conflict</h4>
 <div class="outline-text-4" id="text-org010d0a2">
+<blockquote>
 <p>
 The 409 (Conflict) status code indicates that the request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the user might be able to resolve the conflict and resubmit the request. The server SHOULD generate a payload that includes enough information for a user to recognize the source of the conflict.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Conflicts are most likely to occur in response to a PUT request. For example, if versioning were being used and the representation being PUT included changes to a resource that conflict with those made by an earlier (third-party) request, the origin server might use a 409 response to indicate that it can't complete the request. In this case, the response representation would likely contain information useful for merging the differences based on the revision history.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org4072a5f" class="outline-4">
 <h4 id="org4072a5f"><a id="ID-9b6a1a09-f457-45b9-9b66-b05916f8d1a0"></a>6.5.9. 410 Gone</h4>
 <div class="outline-text-4" id="text-org4072a5f">
+<blockquote>
 <p>
 The 410 (Gone) status code indicates that access to the target resource is no longer available at the origin server and that this condition is likely to be permanent. If the origin server does not know, or has no facility to determine, whether or not the condition is permanent, the status code 404 (Not Found) ought to be used instead.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The 410 response is primarily intended to assist the task of web maintenance by notifying the recipient that the resource is intentionally unavailable and that the server owners desire that remote links to that resource be removed. Such an event is common for limited-time, promotional services and for resources belonging to individuals no longer associated with the origin server's site. It is not necessary to mark all permanently unavailable resources as "gone" or to keep the mark for any length of time — that is left to the discretion of the server owner.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A 410 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org014abbd" class="outline-4">
 <h4 id="org014abbd"><a id="ID-57b9a13c-fa90-4ad0-a898-dbb7a80b007c"></a>6.5.10. 411 Length Required</h4>
 <div class="outline-text-4" id="text-org014abbd">
+<blockquote>
 <p>
 The 411 (Length Required) status code indicates that the server refuses to accept the request without a defined Content-Length (Section 3.3.2 of [RFC7230]). The client MAY repeat the request if it adds a valid Content-Length header field containing the length of the message body in the request message.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org7f816ee" class="outline-4">
 <h4 id="org7f816ee"><a id="ID-620869b7-1f42-4bb9-a3ba-664e80d5161d"></a>6.5.11. 413 Payload Too Large</h4>
 <div class="outline-text-4" id="text-org7f816ee">
+<blockquote>
 <p>
 The 413 (Payload Too Large) status code indicates that the server is refusing to process a request because the request payload is larger than the server is willing or able to process. The server MAY close the connection to prevent the client from continuing the request.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 If the condition is temporary, the server SHOULD generate a Retry-After header field to indicate that it is temporary and after what time the client MAY try again.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-orgda225c7" class="outline-4">
 <h4 id="orgda225c7"><a id="ID-77d1edbb-ceeb-450d-9b85-5f8c89db2f97"></a>6.5.12. 414 URI Too Long</h4>
 <div class="outline-text-4" id="text-orgda225c7">
+<blockquote>
 <p>
 The 414 (URI Too Long) status code indicates that the server is refusing to service the request because the request-target (Section 5.3 of [RFC7230]) is longer than the server is willing to interpret. This rare condition is only likely to occur when a client has improperly converted a POST request to a GET request with long query information, when the client has descended into a "black hole" of redirection (e.g., a redirected URI prefix that points to a suffix of itself) or when the server is under attack by a client attempting to exploit potential security holes.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A 414 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org9aaec2d" class="outline-4">
 <h4 id="org9aaec2d"><a id="ID-7c879fad-0a52-4f22-8447-38b860f3e71d"></a>6.5.13. 415 Unsupported Media Type</h4>
 <div class="outline-text-4" id="text-org9aaec2d">
+<blockquote>
 <p>
 The 415 (Unsupported Media Type) status code indicates that the origin server is refusing to service the request because the payload is in a format not supported by this method on the target resource. The format problem might be due to the request's indicated Content-Type or Content-Encoding, or as a result of inspecting the data directly.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-orgcafc9ce" class="outline-4">
 <h4 id="orgcafc9ce"><a id="ID-a4b990e6-b91e-422d-ad8e-cb77866ed170"></a>6.5.14. 417 Expectation Failed</h4>
 <div class="outline-text-4" id="text-orgcafc9ce">
+<blockquote>
 <p>
 The 417 (Expectation Failed) status code indicates that the expectation given in the request's Expect header field (Section 5.1.1) could not be met by at least one of the inbound servers.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org4cc1a60" class="outline-4">
 <h4 id="org4cc1a60"><a id="ID-5d028105-552c-4079-bcfe-30809395f6c9"></a>6.5.15. 426 Upgrade Required</h4>
 <div class="outline-text-4" id="text-org4cc1a60">
+<blockquote>
 <p>
 The 426 (Upgrade Required) status code indicates that the server refuses to perform the request using the current protocol but might be willing to do so after the client upgrades to a different protocol. The server MUST send an Upgrade header field in a 426 response to indicate the required protocol(s) (Section 6.7 of [RFC7230]).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Example:
 </p>
+</blockquote>
 
 <pre class="example">
 HTTP/1.1 426 Upgrade Required
@@ -5232,9 +5495,11 @@ Content-Length: 53
 Content-Type: text/plain
 </pre>
 
+<blockquote>
 <p>
 This service requires use of the HTTP/3.0 protocol.
 </p>
+</blockquote>
 </div>
 </div>
 </div>
@@ -5242,49 +5507,65 @@ This service requires use of the HTTP/3.0 protocol.
 <div id="outline-container-orgbb53da7" class="outline-3">
 <h3 id="orgbb53da7"><a id="ID-6b95899d-bbec-474e-bcb0-3ca5dbbf0ba1"></a>6.6 服务器错误 / Server Error 5xx</h3>
 <div class="outline-text-3" id="text-orgbb53da7">
+<blockquote>
 <p>
 The 5xx (Server Error) class of status code indicates that the server is aware that it has erred or is incapable of performing the requested method. Except when responding to a HEAD request, the server SHOULD send a representation containing an explanation of the error situation, and whether it is a temporary or permanent condition. A user agent SHOULD display any included representation to the user. These response codes are applicable to any request method.
 </p>
+</blockquote>
 </div>
 
 <div id="outline-container-orge703f96" class="outline-4">
 <h4 id="orge703f96"><a id="ID-4a288d4c-063f-4589-9ec6-3c4f246e2d8a"></a>6.6.1. 500 Internal Server Error</h4>
 <div class="outline-text-4" id="text-orge703f96">
+<blockquote>
 <p>
 The 500 (Internal Server Error) status code indicates that the server encountered an unexpected condition that prevented it from fulfilling the request.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org42220c0" class="outline-4">
 <h4 id="org42220c0"><a id="ID-776a0530-a654-43bc-879b-186e39dbff63"></a>6.6.2. 501 Not Implemented</h4>
 <div class="outline-text-4" id="text-org42220c0">
+<blockquote>
 <p>
 The 501 (Not Implemented) status code indicates that the server does not support the functionality required to fulfill the request. This is the appropriate response when the server does not recognize the request method and is not capable of supporting it for any resource.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A 501 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-orgb9f52eb" class="outline-4">
 <h4 id="orgb9f52eb"><a id="ID-dd36be96-0bfa-4dbc-8656-132fe9509b14"></a>6.6.3. 502 Bad Gateway</h4>
 <div class="outline-text-4" id="text-orgb9f52eb">
+<blockquote>
 <p>
 The 502 (Bad Gateway) status code indicates that the server, while acting as a gateway or proxy, received an invalid response from an inbound server it accessed while attempting to fulfill the request.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-orgda430f7" class="outline-4">
 <h4 id="orgda430f7"><a id="ID-4e09afe4-30a3-4bbb-aa7e-23f621d42801"></a>6.6.4. 503 Service Unavailable</h4>
 <div class="outline-text-4" id="text-orgda430f7">
+<blockquote>
 <p>
 The 503 (Service Unavailable) status code indicates that the server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay. The server MAY send a Retry-After header field (Section 7.1.3) to suggest an appropriate amount of time for the client to wait before retrying the request.
 </p>
+</blockquote>
+<blockquote>
+<p>
 
+</p>
+</blockquote>
 <p>
 <b>Note:</b> The existence of the 503 status code does not imply that a server has to use it when becoming overloaded. Some servers might simply refuse the connection.
 </p>
@@ -5294,18 +5575,22 @@ The 503 (Service Unavailable) status code indicates that the server is currently
 <div id="outline-container-orgb821e4f" class="outline-4">
 <h4 id="orgb821e4f"><a id="ID-4502f86d-74d1-4890-b235-3155ba125cb6"></a>6.6.5. 504 Gateway Timeout</h4>
 <div class="outline-text-4" id="text-orgb821e4f">
+<blockquote>
 <p>
 The 504 (Gateway Timeout) status code indicates that the server, while acting as a gateway or proxy, did not receive a timely response from an upstream server it needed to access in order to complete the request.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org1131bac" class="outline-4">
 <h4 id="org1131bac"><a id="ID-00dabed7-f9a1-471e-a9f6-77220446dbfa"></a>6.6.6. 505 HTTP Version Not Supported</h4>
 <div class="outline-text-4" id="text-org1131bac">
+<blockquote>
 <p>
 The 505 (HTTP Version Not Supported) status code indicates that the server does not support, or refuses to support, the major version of HTTP that was used in the request message. The server is indicating that it is unable or unwilling to complete the request using the same major version as the client, as described in Section 2.6 of [RFC7230], other than with this error message. The server SHOULD generate a representation for the 505 response that describes why that version is not supported and what other protocols are supported by that server.
 </p>
+</blockquote>
 </div>
 </div>
 </div>
