@@ -53,6 +53,9 @@
 ** 4.2. Freshness
 *** 4.2.1. Calculating Freshness Lifetime
 *** 4.2.2. Calculating Heuristic Freshness
+:PROPERTIES:
+:ID:       9bcea6ca-bab6-4324-9cdb-cf7855aeba01
+:END:
 *** 4.2.3. Calculating Age
 *** 4.2.4. Serving Stale Responses
 ** 4.3. Validation

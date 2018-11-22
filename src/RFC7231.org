@@ -2304,7 +2304,7 @@ Note that this list is not exhaustive — it does not include extension status c
 The =1xx (Informational)= class of status code indicates an interim response for communicating connection status or request progress prior to completing the requested action and sending a final response. =1xx= responses are terminated by the first empty line after the status-line (the empty line signaling the end of the header section). Since HTTP/1.0 did not define any =1xx= status codes, a server *MUST NOT* send a =1xx= response to an HTTP/1.0 client.
 #+END_QUOTE
 
-=1xx (Informational)= 状态码种类表明了这是一个[[ruby:interim%20response][过渡响应]]，用于在完成所请求的动作以及发送一个[[ruby:final%20response][最终响应]]之前传递[[ruby:connection%20status][连接状态]]或[[ruby:request%20progress][请求进展]]。=1xx= 响应终止于在[[ruby:status-line][状态行]]之后的第一个[[ruby:empty%20line][空行]]（空行标志着[[ruby:header%20section][消息头部]]的结束）。由于 HTTP/1.0 并没有定义任何 =1xx= 状态码，因此，服务器 *禁止* 将 =1xx= 的响应发送到一个 HTTP/1.0 客户端上。
+=1xx (Informational)= 状态码种类表明——这是一个[[ruby:interim%20response][过渡响应]]，用于在完成所请求的动作以及发送一个[[ruby:final%20response][最终响应]]之前传递[[ruby:connection%20status][连接状态]]或[[ruby:request%20progress][请求进展]]。=1xx= 响应终止于在[[ruby:status-line][状态行]]之后的第一个[[ruby:empty%20line][空行]]（空行标志着[[ruby:header%20section][消息头部]]的结束）。由于 HTTP/1.0 并没有定义任何 =1xx= 状态码，因此，服务器 *禁止* 将 =1xx= 的响应发送到一个 HTTP/1.0 客户端上。
 
 #+BEGIN_QUOTE
 A client *MUST* be able to parse one or more =1xx= responses received prior to a final response, even if the client does not expect one. A user agent *MAY* ignore unexpected =1xx= responses.
@@ -2327,7 +2327,7 @@ A proxy *MUST* forward =1xx= responses unless the proxy itself requested the gen
 The =100 (Continue)= status code indicates that the initial part of a request has been received and has not yet been rejected by the server. The server intends to send a final response after the request has been fully received and acted upon.
 #+END_QUOTE
 
-=100 (Continue)= 状态码表明了一个请求的[[ruby:initial%20part][初始部分]]已经被服务器接收到了，并且它还没有被服务器所[[ruby:rejected][拒绝]]。服务器打算在完全接收到这个请求并处理好之后再发送一个[[ruby:final%20response][最终响应]]。
+=100 (Continue)= 状态码表明——一个请求的[[ruby:initial%20part][初始部分]]已经被服务器接收到了，并且它还没有被服务器所[[ruby:rejected][拒绝]]。服务器打算在完全接收到这个请求并处理好之后再发送一个[[ruby:final%20response][最终响应]]。
 
 #+BEGIN_QUOTE
 When the request contains an =Expect= header field that includes a =100-continue= expectation, the =100= response indicates that the server wishes to receive the request payload body, as described in Section 5.1.1. The client ought to continue sending the request and discard the =100= response.
@@ -2350,7 +2350,7 @@ If the request did not contain an =Expect= header field containing the =100-cont
 The =101 (Switching Protocols)= status code indicates that the server understands and is willing to comply with the client's request, via the =Upgrade= header field (Section 6.7 of [RFC7230]), for a change in the application protocol being used on this connection. The server *MUST* generate an =Upgrade= header field in the response that indicates which protocol(s) will be switched to immediately after the empty line that terminates the =101= response.
 #+END_QUOTE
 
-=101 (Switching Protocols)= 状态码表明了服务器理解并愿意按照客户端的[[ruby:request][建议]]（该建议经由 =Upgrade= 头字段来表达，见[[id:62632d23-475d-4daa-8efb-3206d370573a][【RFC7230】章节 6.7]]）来改变本次连接上正在使用的[[ruby:application%20protocol][应用协议]]。服务器 *必须* 在响应里生成一个 =Upgrade= 头字段，来表明：从结束该 =101= 响应的空行之后开始，将会马上切换到哪一种（或多种）协议。
+=101 (Switching Protocols)= 状态码表明——服务器理解并愿意按照客户端的[[ruby:request][建议]]（该建议经由 =Upgrade= 头字段来表达，见[[id:62632d23-475d-4daa-8efb-3206d370573a][【RFC7230】章节 6.7]]）来改变本次连接上正在使用的[[ruby:application%20protocol][应用协议]]。服务器 *必须* 在响应里生成一个 =Upgrade= 头字段，来表明：从结束该 =101= 响应的空行之后开始，将会马上切换到哪一种（或多种）协议。
 
 #+BEGIN_QUOTE
 It is assumed that the server will only agree to switch protocols when it is advantageous to do so. For example, switching to a newer version of HTTP might be advantageous over older versions, and switching to a real-time, synchronous protocol might be advantageous when delivering resources that use such features.
@@ -2367,13 +2367,15 @@ It is assumed that the server will only agree to switch protocols when it is adv
 The =2xx (Successful)= class of status code indicates that the client's request was successfully received, understood, and accepted.
 #+END_QUOTE
 
+=2xx (Successful)= 状态码种类表明——客户端的请求已经被成功[[ruby:received][接收]]、[[ruby:understood][理解]]和[[ruby:accepted][接受]]。
+
 *** 6.3.1. 200 OK
 :PROPERTIES:
 :ID:       8b00dffb-977c-496a-be64-60d2f5f46e36
 :END:
 
 #+BEGIN_QUOTE
-The 200 (OK) status code indicates that the request has succeeded. The payload sent in a 200 response depends on the request method. For the methods defined by this specification, the intended meaning of the payload can be summarized as:
+The =200 (OK)= status code indicates that the request has succeeded. The payload sent in a =200= response depends on the request method. For the methods defined by this specification, the intended meaning of the payload can be summarized as:
 
 - GET :: a representation of the target resource;
 - HEAD :: the same representation as GET, but without the representation data;
@@ -2383,13 +2385,26 @@ The 200 (OK) status code indicates that the request has succeeded. The payload s
 - TRACE :: a representation of the request message as received by the end server.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Aside from responses to CONNECT, a 200 response always has a payload, though an origin server MAY generate a payload body of zero length. If no payload is desired, an origin server ought to send 204 (No Content) instead. For CONNECT, no payload is allowed because the successful result is a tunnel, which begins immediately after the 200 response header section.
-#+END_QUOTE
+=200 (OK)= 状态码表明——请求已经成功。=200= 响应里的[[ruby:payload][有效载荷]]的含义取决于对应的[[ruby:request%20method][请求方法]]。对于由本规范所定义的方法来说，有效载荷想要表达的含义可以总结为：
+
+- GET :: 目标资源的一种[[ruby:representation][表示形式]]；
+- HEAD :: 与 GET 一致的表示形式，但没有[[ruby:representation%20data][表示形式数据]]；
+- POST :: 动作的状态的（或者从动作获得的结果的）一种表示形式；
+- PUT, DELETE :: 动作的状态的一种表示形式；
+- OPTIONS :: [[ruby:communication%20options][通信选项]]的一种表示形式；
+- TRACE :: 如同接收自[[ruby:end%20server][端服务器]]一样的请求消息的一种表现形式。
 
 #+BEGIN_QUOTE
-A =200= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+Aside from responses to CONNECT, a =200= response always has a payload, though an origin server *MAY* generate a payload body of zero length. If no payload is desired, an origin server ought to send =204 (No Content)= instead. For CONNECT, no payload is allowed because the successful result is a tunnel, which begins immediately after the =200= response header section.
 #+END_QUOTE
+
+除了回应给 CONNECT 的响应以外，=200= 响应总是带有一个有效载荷的，虽然源服务器 *可以* 生成一个长度为零的有效载荷。如果不想带有有效载荷，源服务器应该改为发送 =204 (No Content)= 响应。对于 CONNECT，允许不带有有效载荷是因为成功的结果是一个隧道，该隧道会在 =200= 响应头部以后马上开始建立。
+
+#+BEGIN_QUOTE
+A =200= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
+#+END_QUOTE
+
+=200= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义或者[[ruby:explicit%20cache%20controls][显式缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）里另有指定。
 
 *** 6.3.2. 201 Created
 :PROPERTIES:
@@ -2397,12 +2412,16 @@ A =200= response is cacheable by default; i.e., unless otherwise indicated by th
 :END:
 
 #+BEGIN_QUOTE
-The =201 (Created)= status code indicates that the request has been fulfilled and has resulted in one or more new resources being created. The primary resource created by the request is identified by either a Location header field in the response or, if no Location field is received, by the effective request URI.
+The =201 (Created)= status code indicates that the request has been fulfilled and has resulted in one or more new resources being created. The primary resource created by the request is identified by either a =Location= header field in the response or, if no =Location= field is received, by the effective request URI.
 #+END_QUOTE
 
+=201 (Created)= 状态码表明——请求已被[[ruby:fulfilled][满足]]并且导致了一个或多个[[ruby:new%20resources][新资源]]被创建。上述因请求而创建的[[ruby:primary%20resource][主要资源]]会被一个在响应里的 =Location= 头字段所标识，或者，如果没有接收到 =Location= 头字段的话，则通过[[ruby:effective%20request%20URI][有效请求 URI]] 来标识。
+
 #+BEGIN_QUOTE
-The =201= response payload typically describes and links to the resource(s) created. See Section 7.2 for a discussion of the meaning and purpose of validator header fields, such as ETag and Last-Modified, in a 201 response.
+The =201= response payload typically describes and links to the resource(s) created. See [[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][Section 7.2]] for a discussion of the meaning and purpose of validator header fields, such as =ETag= and =Last-Modified=, in a =201= response.
 #+END_QUOTE
+
+=201= 响应的有效载荷通常描述并链接到新创建的资源上。对于在 =201= 响应里的[[ruby:validator%20header%20fields][验证器头字段]]的意义和目的的讨论，比如 =ETag= 和 =Last-Modified=，见[[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][章节 7.2]]。
 
 *** 6.3.3. 202 Accepted
 :PROPERTIES:
@@ -2413,9 +2432,13 @@ The =201= response payload typically describes and links to the resource(s) crea
 The =202 (Accepted)= status code indicates that the request has been accepted for processing, but the processing has not been completed. The request might or might not eventually be acted upon, as it might be disallowed when processing actually takes place. There is no facility in HTTP for re-sending a status code from an asynchronous operation.
 #+END_QUOTE
 
+=202 (Accepted)= 状态码表明——请求已被接受处理，但处理还未完成。最终可能也可能不会按照请求来行事，因为当实际进行处理的时候请求可能不被允许。HTTP 里没有任何的[[ruby:facility][技巧]]可以从一个[[ruby:asynchronous%20operation][异步操作]]中重发一个状态码。
+
 #+BEGIN_QUOTE
 The =202= response is intentionally noncommittal. Its purpose is to allow a server to accept a request for some other process (perhaps a batch-oriented process that is only run once per day) without requiring that the user agent's connection to the server persist until the process is completed. The representation sent with this response ought to describe the request's current status and point to (or embed) a status monitor that can provide the user with an estimate of when the request will be fulfilled.
 #+END_QUOTE
+
+=202= 响应有意含糊的。它的目的是允许服务器去接受一个请求来进行其他的处理（也许是一个每天仅运行一次的面向批量的处理）而不要求用户代理保持对服务器的连接直到完成该处理。随响应一起发送的[[ruby:representation][表示形式]]应该描述该请求的当前状态并且指向（或者[[ruby:embed][内嵌]]）一个[[ruby:status%20monitor][状态监听器]]来向用户提供“请求将会在什么时候被满足”的评估。
 
 *** 6.3.4. 203 Non-Authoritative Information
 :PROPERTIES:
@@ -2425,6 +2448,8 @@ The =202= response is intentionally noncommittal. Its purpose is to allow a serv
 #+BEGIN_QUOTE
 The =203 (Non-Authoritative Information)= status code indicates that the request was successful but the enclosed payload has been modified from that of the origin server's 200 (OK) response by a transforming proxy (Section 5.7.2 of [RFC7230]). This status code allows the proxy to notify recipients when a transformation has been applied, since that knowledge might impact later decisions regarding the content. For example, future cache validation requests for the content might only be applicable along the same request path (through the same proxies).
 #+END_QUOTE
+
+=203 (Non-Authoritative Information)= 状态码表明——请求已成功，但
 
 #+BEGIN_QUOTE
 The =203= response is similar to the Warning code of 214 Transformation Applied (Section 5.5 of [RFC7234]), which has the advantage of being applicable to responses with any status code.
