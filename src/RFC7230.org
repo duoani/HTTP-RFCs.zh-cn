@@ -2413,7 +2413,6 @@ As described in Section 5.2, the specific connection protocols to be used for an
 HTTP implementations are expected to engage in connection management, which includes maintaining the state of current connections, establishing a new connection or reusing an existing connection, processing messages received on a connection, detecting connection failures, and closing each connection. Most clients maintain multiple connections in parallel, including more than one connection per server endpoint. Most servers are designed to maintain thousands of concurrent connections, while controlling request queues to enable fair use and detect [[https://en.wikipedia.org/wiki/Denial-of-service_attack][denial-of-service attacks]].
 #+END_QUOTE
 
-
 ** 6.1. 连接 (Connection)
 :PROPERTIES:
 :ID:       40B2B721-F916-41EA-86FB-514FDED5B3A4
