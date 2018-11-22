@@ -132,7 +132,7 @@ HTTP 的设计目标之一是将[[ruby:resource%20identification][资源识别]]
 Considering that a resource could be anything, and that the uniform interface provided by HTTP is similar to a window through which one can observe and act upon such a thing only through the communication of messages to some independent actor on the other side, an abstraction is needed to represent ("take the place of") the current or desired state of that thing in our communications. That abstraction is called a representation [REST].
 #+END_QUOTE
 
-考虑到[[ruby:resource][资源]]可以是任何事物，而 HTTP 所提供的统一接口类似于一个窗口，在窗口的一边我们能够对该事物进行观察；而要想对该事物采取行动的话，只能通过消息沟通来让窗口另一边的某个独立的动作执行者来完成。因此，在沟通过程中，我们需要一种“抽象”来[[ruby:represent][表示]]（代替）该事物的[[ruby:current%20state][当前状态]]或[[ruby:desired%20state][期望状态]]。而这种“抽象”被称为 [[ruby:representation][资源的表示形式]]【[[http://roy.gbiv.com/pubs/dissertation/top.htm][REST]]】。
+考虑到[[ruby:resource][资源]]可以是任何事物，而 HTTP 所提供的统一接口类似于一个窗口，在窗口的一边我们能够对该事物进行观察；而要想对该事物采取行动的话，只能通过消息沟通来让窗口另一边的某个独立的动作执行者来完成。因此，在沟通过程中，我们需要一种“抽象”来[[ruby:represent][表示]]（代替）该事物的[[ruby:current%20state][当前状态]]或[[ruby:desired%20state][期望状态]]。而这种“抽象”被称为[[ruby:representation][资源的表示形式]]【[[http://roy.gbiv.com/pubs/dissertation/top.htm][REST]]】。
 
 #+BEGIN_QUOTE
 译注：术语 "representation" 一词源自一种软件架构风格的术语—— REST（Representational Style Transfer），也就是我们常常听到的 RESTful 风格。[[ruby:representation][资源的表示形式]]是[[ruby:resource][资源]]的抽象，资源一般是唯一的，而资源的表示形式可以多种多样，例如，一份银行流水账单可以认为是一种资源，按媒体类型来分，它的表示形式可以有 JSON、XML 或者二进制格式等，按时间来分，它的表示形式可以有昨日收支、今日收支、本用收支等，更详细的介绍可以[[http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm][查看这里]]。
@@ -189,7 +189,7 @@ The following header fields convey representation metadata:
 | Content-Language  | [[id:80f3e8e8-dabb-49b8-b7e6-45f83648a732][Section 3.1.3.2]] |
 | Content-Location  | [[id:91650144-4bfc-4362-b628-f96578a5c756][Section 3.1.4.2]] |
 
-*** 3.1.1. 处理表示数据 / Processing Representation Data
+*** 3.1.1. 处理表示形式数据 / Processing Representation Data
 **** 3.1.1.1. 媒体类型 / Media Type
 :PROPERTIES:
 :ID:       bc05d462-378f-4743-a1ee-543e01064a09
@@ -422,7 +422,7 @@ If one or more encodings have been applied to a representation, the sender that 
 Unlike =Transfer-Encoding= ([[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][Section 3.3.1]] of [RFC7230]), the codings listed in =Content-Encoding= are a characteristic of the representation; the representation is defined in terms of the coded form, and all other metadata about the representation is about the coded form unless otherwise noted in the metadata definition. Typically, the representation is only decoded just prior to rendering or analogous usage.
 #+END_QUOTE
 
-不像 =Transfer-Encoding= （[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][【RFC7230】章节 3.3.1]]），列在 =Content-Encoding= 头字段上的 codings 是[[ruby:representation][表示形式]]的特性。[[ruby:representation][表示形式]]是依据其编码过的形式来进行定义的，除非在元数据的定义中另有注明，所有其他与表示形式相关的元数据皆为对这种编码过的形式进行描述的。通常，[[ruby:representation][表示形式]]仅在渲染呈现或类似的用途之前才会被解码。
+不像 =Transfer-Encoding= （[[id:1754823B-D0BC-410F-A17B-E7ADA1AA79BC][【RFC7230】章节 3.3.1]]），列在 =Content-Encoding= 头字段上的 codings 是[[ruby:representation][表示形式]]的特性。[[ruby:representation][表示形式]]是依据其编码过的形式来进行定义的。除非在元数据的定义中另有注明，所有与表示形式相关的其他元数据皆为对这种编码过的形式进行描述的。通常，[[ruby:representation][表示形式]]仅在渲染呈现或类似的用途之前才会被解码。
 
 #+BEGIN_QUOTE
 If the media type includes an inherent encoding, such as a data format that is always compressed, then that encoding would not be restated in =Content-Encoding= even if it happens to be the same algorithm as one of the content codings. Such a content coding would only be listed if, for some bizarre reason, it is applied a second time to form the representation. Likewise, an origin server might choose to publish the same data as multiple representations that differ only in whether the coding is defined as part of =Content-Type= or =Content-Encoding=, since some user agents will behave differently in their handling of each response (e.g., open a "Save as ..." dialog instead of automatic decompression and rendering of content).
@@ -526,7 +526,7 @@ However, just because multiple languages are present within a representation doe
 =Content-Language= 可以应用于任意[[ruby:media%20type][媒体类型]] 的[[ruby:representation][表示形式]]里，也就是说，它并不仅限于[[ruby:textual%20documents][文本类的文档]]。
 
 *** 3.1.4. 标识 / Identification
-**** 3.1.4.1. 标识一个 Representation / Identifying a Representation
+**** 3.1.4.1. 标识一种表示形式 / Identifying a Representation
 #+BEGIN_QUOTE
 When a complete or partial representation is transferred in a message payload, it is often desirable for the sender to supply, or the recipient to determine, an identifier for a resource corresponding to that representation.
 #+END_QUOTE
@@ -583,7 +583,7 @@ The =Content-Location= value is not a replacement for the effective Request URI 
 If =Content-Location= is included in a =2xx (Successful)= response message and its value refers (after conversion to absolute form) to a URI that is the same as the effective request URI, then the recipient *MAY* consider the payload to be a current representation of that resource at the time indicated by the message origination date. For a GET ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]]) or HEAD ([[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][Section 4.3.2]]) request, this is the same as the default semantics when no =Content-Location= is provided by the server. For a state-changing request like PUT ([[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][Section 4.3.4]]) or POST ([[id:d672d01b-615b-416a-a750-0442a6901ed0][Section 4.3.3]]), it implies that the server's response contains the new representation of that resource, thereby distinguishing it from representations that might only report about the action (e.g., "It worked!"). This allows authoring applications to update their local copies without the need for a subsequent GET request.
 #+END_QUOTE
 
-如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应消息里，且它的值指向于（在转换为[[ruby:absolute%20form][绝对形式]]之后）一个与有效请求 URI 相同的 URI，那么，接收端 *可以* 将该有效载荷认为是对应资源在特定时间里的[[ruby:current%20representation][当前表示形式]]，所述“特定时间”是指由[[ruby:message%20origination%20date][消息始发日期]]所指定的时间。对于 GET（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）或者 HEAD（[[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][章节 4.3.2]]）请求来说，这与在服务器没有提供 =Content-Location= 头字段的情况下的默认语义相一致。对于类似 PUT（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）或者 POST（[[id:d672d01b-615b-416a-a750-0442a6901ed0][章节 4.3.3]]）这些会[[ruby:state-changing][改变状态]]的请求来说，这意味着服务器的响应包含了这个资源的新的[[ruby:representation][表示形式]]，由此与那些只报告动作方面的信息（例如，“[[ruby:It%20worked!][它生效了！]]”）的[[ruby:representations][表示形式]]作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
+如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应消息里，且它的值指向于（在转换为[[ruby:absolute%20form][绝对形式]]之后）一个与有效请求 URI 相同的 URI，那么，接收端 *可以* 将该有效载荷认为是对应资源在特定时间里的[[ruby:current%20representation][当前表示形式]]，所述“特定时间”是指由[[ruby:message%20origination%20date][消息始发日期]]所指定的时间。对于 GET（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）或者 HEAD（[[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][章节 4.3.2]]）请求来说，这与在服务器没有提供 =Content-Location= 头字段的情况下的默认语义相一致。对于类似 PUT（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）或者 POST（[[id:d672d01b-615b-416a-a750-0442a6901ed0][章节 4.3.3]]）这些会[[ruby:state-changing][改变资源状态]]的请求来说，这意味着服务器的响应包含了这个资源的新的[[ruby:representation][表示形式]]，由此与那些只报告动作方面的信息（例如，“[[ruby:It%20worked!][它生效了！]]”）的[[ruby:representations][表示形式]]作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
 
 #+BEGIN_QUOTE
 If =Content-Location= is included in a =2xx (Successful)= response message and its field-value refers to a URI that differs from the effective request URI, then the origin server claims that the URI is an identifier for a different resource corresponding to the enclosed representation. Such a claim can only be trusted if both identifiers share the same resource owner, which cannot be programmatically determined via HTTP.
@@ -593,7 +593,7 @@ If =Content-Location= is included in a =2xx (Successful)= response message and i
 #+END_QUOTE
 
 如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应消息里，且它的字段值指向于一个与有效请求 URI 不相同的 URI，那么，源服务器[[ruby:claim][声称]]该 URI 是一个与封装在该有效载荷内的[[ruby:representation][表示形式]]相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
-- 对于回应给 GET 或 HEAD 请求的一个响应，它表明了[[ruby:effective%20request%20URI][有效请求 URI]] 指向到一个服从[[ruby:content%20negotiation][内容协商]]的资源，并且针对[[ruby:selective%20representation][已选定的表示形式]]  来说，=Content-Location= 的字段值是一个更加具体的标识符。
+- 对于回应给 GET 或 HEAD 请求的一个响应，它表明了[[ruby:effective%20request%20URI][有效请求 URI]] 指向到一个服从[[ruby:content%20negotiation][内容协商]]的资源，并且针对[[ruby:selected%20representation][已选定的表示形式]]来说，=Content-Location= 的字段值是一个更加具体的标识符。
 - 对于回应给[[ruby:state-changing%20method][会改变资源状态的请求方法]]的一个 =201 (Created)= 响应，如果 =Content-Location= 的字段值与 =Location= 的字段值相同，那么，这表明这个有效载荷是新近被创建的资源的[[ruby:current%20representation][当前表示形式]]。
 - 否则，这个 =Content-Location= 表明了这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对[[ruby:representation][表示形式]]进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 =200 (OK)= 响应的有效载荷，=Content-Location= 的字段值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。
 
@@ -620,13 +620,13 @@ For example, if a client makes a PUT request on a negotiated resource and the or
 The representation data associated with an HTTP message is either provided as the payload body of the message or referred to by the message semantics and the effective request URI. The representation data is in a format and encoding defined by the representation metadata header fields.
 #+END_QUOTE
 
-一个 HTTP 消息相关联的[[ruby:representation%20data][表示形式数据]]是被提供作为消息的有效载荷，或者被消息的语义和有效请求 URI 所引用。[[ruby:representation%20data][表示形式数据]]是处于某种由[[ruby:representation%20metadata][表示形式元数据]]相关的头字段所定义的格式和编码之中的。
+与 HTTP 消息相关联的[[ruby:representation%20data][表示形式数据]]是被提供作为消息的有效载荷，或者被消息的语义和有效请求 URI 所引用。[[ruby:representation%20data][表示形式数据]]是处于某种由[[ruby:representation%20metadata][表示形式元数据]]相关的头字段所定义的格式和编码之中的。
 
 #+BEGIN_QUOTE
 The data type of the representation data is determined via the header fields =Content-Type= and =Content-Encoding=. These define a two-layer, ordered encoding model:
 #+END_QUOTE
 
-[[ruby:representation%20data][表示形式数据]]的数据类型是由 =Content-Type= 和 =Content-Encoding= 头字段决定的。它们共同定义了一种[[ruby:two-layer,%20ordered%20encoding%20model][双层嵌套的、顺序编码的模型]]：
+[[ruby:representation%20data][表示形式数据]]的数据类型是由 =Content-Type= 和 =Content-Encoding= 头字段决定的。它们共同定义了一种[[ruby:two-layer,%20ordered%20encoding%20model][双层的、顺序编码的模型]]：
 
 #+BEGIN_SRC text
   representation-data := Content-Encoding( Content-Type( bits ) )
@@ -652,13 +652,13 @@ The purpose of a payload in a request is defined by the method semantics. For ex
 In a response, the payload's purpose is defined by both the request method and the response status code. For example, the payload of a =200 (OK)= response to GET ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]]) represents the current state of the target resource, as observed at the time of the message origination date ([[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][Section 7.1.1.2]]), whereas the payload of the same status code in a response to POST might represent either the processing result or the new state of the target resource after applying the processing. Response messages with an error status code usually contain a payload that represents the error condition, such that it describes the error state and what next steps are suggested for resolving it.
 #+END_QUOTE
 
-在一个响应消息里，有效载荷的目标是由[[ruby:request%20method][请求方法]]和[[ruby:reponse%20status%20code][响应状态码]]两者共同来定义的。例如，一个回应给 GET 请求（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）的 =200 (OK)= 响应消息表示在[[ruby:message%20origination%20date][消息发起日期]]（[[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][章节 7.1.1.2]]）所观察到的[[ruby:target%20resource][目标资源]]的目前状态。而一个回应给 POST 请求的 =200 (OK)= 响应消息可能表示：或者是在应用该请求以后的处理结果，或者是在应用该请求以后目标资源的新状态。带有一个错误状态码的响应消息通常会包含一个表示该错误条件的有效载荷，以描述错误状态以及如何解决错误的下一步建议。
+在一个响应消息里，有效载荷的目的是由[[ruby:request%20method][请求方法]]和[[ruby:reponse%20status%20code][响应状态码]]两者共同来定义的。例如，一个回应给 GET 请求（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）的 =200 (OK)= 响应消息表示在[[ruby:message%20origination%20date][消息发起日期]]（[[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][章节 7.1.1.2]]）所观察到的[[ruby:target%20resource][目标资源]]的目前状态。而一个回应给 POST 请求的 =200 (OK)= 响应消息可能表示：或者是在应用该请求以后的处理结果，或者是在应用该请求以后目标资源的新状态。带有一个错误状态码的响应消息通常会包含一个表示该错误条件的有效载荷，以描述错误状态以及如何解决错误的下一步建议。
 
 #+BEGIN_QUOTE
 Header fields that specifically describe the payload, rather than the associated representation, are referred to as "payload header fields". Payload header fields are defined in other parts of this specification, due to their impact on message parsing.
 #+END_QUOTE
 
-特定用于描述有效载荷（而不是描述它所关联的[[ruby:representation][表示形式]]）的头字段，被称为“[[ruby:payload%20header%20fields][有效载荷头字段]]”。有效载荷头字段被定义在本规范的其他部分中，由它们对[[ruby:message%20parsing][消息解析]]的影响来决定。
+专门用于描述有效载荷（而不是描述它所关联的[[ruby:representation][表示形式]]）的头字段，被称为“[[ruby:payload%20header%20fields][有效载荷头字段]]”。有效载荷头字段被定义在本规范的其他部分中，由它们对[[ruby:message%20parsing][消息解析]]的影响来决定。
 
 #+BEGIN_QUOTE
 译注：有效载荷头字段并不是说这些头字段在有效载荷里，它们依然被放置在[[ruby:header%20section][消息头部]]里。
@@ -679,7 +679,7 @@ Header fields that specifically describe the payload, rather than the associated
 When responses convey payload information, whether indicating a success or an error, the origin server often has different ways of representing that information; for example, in different formats, languages, or encodings. Likewise, different users or user agents might have differing capabilities, characteristics, or preferences that could influence which representation, among those available, would be best to deliver. For this reason, HTTP provides mechanisms for content negotiation.
 #+END_QUOTE
 
-响应在传达有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器——在所有可用的 representations 中，究竟响应哪一种[[ruby:representation][表示形式]]才是最合适的。出于上述原因，HTTP 提供了[[ruby:content%20negotiation][内容协商]]的机制。
+响应在传达有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器。也就是说，在所有可用的[[ruby:representations][表示形式]]中，究竟响应哪一种[[ruby:representation][表示形式]]才是最合适的。出于上述原因，HTTP 提供了[[ruby:content%20negotiation][内容协商]]的机制。
 
 #+BEGIN_QUOTE
 This specification defines two patterns of content negotiation that can be made visible within the protocol: "proactive", where the server selects the representation based upon the user agent's stated preferences, and "reactive" negotiation, where the server provides a list of representations for the user agent to choose from. Other patterns of content negotiation include "conditional content", where the representation consists of multiple parts that are selectively rendered based on user agent parameters, "active content", where the representation contains a script that makes additional (more specific) requests based on the user agent characteristics, and "Transparent Content Negotiation" ([[[https://tools.ietf.org/html/rfc2295][RFC2295]]]), where content selection is performed by an intermediary. These patterns are not mutually exclusive, and each has trade-offs in applicability and practicality.
@@ -1651,7 +1651,7 @@ The following request header fields are sent by a user agent to engage in proact
 Many of the request header fields for proactive negotiation use a common parameter, named "q" (case-insensitive), to assign a relative "weight" to the preference for that associated kind of content. This weight is referred to as a "quality value" (or "qvalue") because the same parameter name is often used within server configurations to assign a weight to the relative quality of the various representations that can be selected for a resource.
 #+END_QUOTE
 
-许多用于[[ruby:proactive%20negotiation][主动协商]]的请求头字段都会使用一个名为 "q"（不区分大小写）的[[ruby:common%20parameter][通用型参数]]，来分别向内容的对应类型的[[ruby:preference][偏爱度]]赋予一个相对的“[[ruby:weight][权重]]”。由于同名的参数 "q" 常常用在服务器配置里来对某个资源的各种待选表现形式所对应的质量值赋予一个权重，因此，这个权重被称为“[[ruby:quality%20value][质量值]]”（或者称为 =qvalue=）。
+许多用于[[ruby:proactive%20negotiation][主动协商]]的请求头字段都会使用一个名为 "q"（不区分大小写）的[[ruby:common%20parameter][通用型参数]]，来分别向内容的对应类型的[[ruby:preference][偏爱度]]赋予一个相对的“[[ruby:weight][权重]]”。由于同名的参数 "q" 常常用在服务器配置里来对某个资源的各种可用的表现形式所对应的质量值赋予一个权重，因此，这个权重被称为“[[ruby:quality%20value][质量值]]”（或者称为 =qvalue=）。
 
 #+BEGIN_QUOTE
 The weight is normalized to a real number in the range 0 through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means "not acceptable". If no "q" parameter is present, the default weight is 1.
@@ -1729,13 +1729,13 @@ The example
 is interpreted as "I prefer =audio/basic=, but send me any audio type if it is the best available after an 80% markdown in quality".
 #+END_QUOTE
 
-上面例子可以解释为：“我首选（偏爱） =audio/basic=，但是，如果[[ruby:best available][最佳待选]]的质量值调低 80% 以上的话，可以发送给我任意音频类型”。
+上面例子可以解释为：“我首选（偏爱） =audio/basic=，但是，如果[[ruby:best available][最佳可用]]的质量值调低 80% 以上的话，可以发送给我任意音频类型”。
 
 #+BEGIN_QUOTE
 A request without any =Accept= header field implies that the user agent will accept any media type in response. If the header field is present in a request and none of the available representations for the response have a media type that is listed as acceptable, the origin server can either honor the header field by sending a =406 (Not Acceptable)= response or disregard the header field by treating the response as if it is not subject to content negotiation.
 #+END_QUOTE
 
-一个请求里没有任何 =Accept= 头字段，意味着用户代理接受任何媒体类型的响应。如果在一个请求里出现了 =Accept=，但响应没有任何[[ruby:available%20representations][待选表现形式]]所带有的媒体类型是被其列为可接受的，那么，源服务器可以[[ruby:honor][遵守]] =Accept= 头字段的要求而返回一个 =406 (Not Acceptable)= 响应，也可以[[ruby:disregard][忽视]]该头字段的要求就好像它并没有受到[[ruby:content%20negotiation][内容协商]]的影响一样。
+一个请求里没有任何 =Accept= 头字段，意味着用户代理接受任何媒体类型的响应。如果在一个请求里出现了 =Accept=，但响应没有任何[[ruby:available%20representations][可用的表现形式]]所带有的媒体类型是被其列为可接受的，那么，源服务器可以[[ruby:honor][遵守]] =Accept= 头字段的要求而返回一个 =406 (Not Acceptable)= 响应，也可以[[ruby:disregard][忽视]]该头字段的要求就好像它并没有受到[[ruby:content%20negotiation][内容协商]]的影响一样。
 
 #+BEGIN_QUOTE
 译注：也就是说，客户端提供了 =Accept= 头字段后并不能保证源服务器会按照它的要求来响应内容，选择权仍然在源服务器中。因为这是[[ruby:proactive%20content%20negotiation][主动内容协商]]嘛。
@@ -1929,7 +1929,7 @@ A server tests whether a content-coding for a given representation is acceptable
 An =Accept-Encoding= header field with a combined field-value that is empty implies that the user agent does not want any content-coding in response. If an =Accept-Encoding= header field is present in a request and none of the available representations for the response have a content-coding that is listed as acceptable, the origin server *SHOULD* send a response without any content-coding.
 #+END_QUOTE
 
-如果 =Accept-Encoding= 头字段里其中一个[[ruby:combined%20field-value][组合条目值]]为空，意味着用户代理并不想在响应里进行任何的内容编码。如果请求里出现了 =Accept-Encoding= 头字段，但响应没有任何[[ruby:available%20representations][待选表示形式]]所带有的内容编码是被其列为可接受的，那么，源服务器 *应当* 在没有任何内容编码的情况下发送响应。
+如果 =Accept-Encoding= 头字段里其中一个[[ruby:combined%20field-value][组合条目值]]为空，意味着用户代理并不想在响应里进行任何的内容编码。如果请求里出现了 =Accept-Encoding= 头字段，但响应没有任何[[ruby:available%20representations][可用的表示形式]]所带有的内容编码是被其列为可接受的，那么，源服务器 *应当* 在没有任何内容编码的情况下发送响应。
 
 #+BEGIN_QUOTE
 *Note:* Most HTTP/1.0 applications do not recognize or obey qvalues associated with content-codings. This means that qvalues might not work and are not permitted with x-gzip or x-compress.
@@ -1974,7 +1974,7 @@ would mean: "I prefer Danish, but will accept British English and other types of
 A request without any =Accept-Language= header field implies that the user agent will accept any language in response. If the header field is present in a request and none of the available representations for the response have a matching language tag, the origin server can either disregard the header field by treating the response as if it is not subject to content negotiation or honor the header field by sending a =406 (Not Acceptable)= response. However, the latter is not encouraged, as doing so can prevent users from accessing content that they might be able to use (with translation software, for example).
 #+END_QUOTE
 
-如果请求里没有任何 =Accept-Language= 头字段，意味着该用户代理将会在响应里接受任何语言。如果请求里出现了该头字段，但响应没有任何[[ruby:avaliable%20representations][待选表示形式]]带有与之相匹配的语言标签，源服务器可以[[ruby:disregard][忽视]]该头字段的要求就好像它并没有受到[[ruby:content%20negotiation][内容协商]]的影响一样，可以[[ruby:honor][遵守]]该头字段的要求而返回一个 =406 (Not Acceptable)= 响应。但是，并不鼓励使用后者这种方式，这是因为后者会阻止用户访问他们可能能够使用的内容（例如，使用翻译软件等）。
+如果请求里没有任何 =Accept-Language= 头字段，意味着该用户代理将会在响应里接受任何语言。如果请求里出现了该头字段，但响应没有任何[[ruby:avaliable%20representations][可用的表示形式]]带有与之相匹配的语言标签，源服务器可以[[ruby:disregard][忽视]]该头字段的要求就好像它并没有受到[[ruby:content%20negotiation][内容协商]]的影响一样，可以[[ruby:honor][遵守]]该头字段的要求而返回一个 =406 (Not Acceptable)= 响应。但是，并不鼓励使用后者这种方式，这是因为后者会阻止用户访问他们可能能够使用的内容（例如，使用翻译软件等）。
 
 #+BEGIN_QUOTE
 Note that some recipients treat the order in which language tags are listed as an indication of descending priority, particularly for tags that are assigned equal quality values (no value is the same as q=1). However, this behavior cannot be relied upon. For consistency and to maximize interoperability, many user agents assign each language tag a unique quality value while also listing them in order of decreasing quality. Additional discussion of language priority lists can be found in [[https://tools.ietf.org/html/rfc4647#section-2.3][Section 2.3]] of [RFC4647].
@@ -2087,7 +2087,7 @@ A server *SHOULD NOT* use the =From= header field for access control or authenti
 The "Referer" [sic] header field allows the user agent to specify a URI reference for the resource from which the target URI was obtained (i.e., the "referrer", though the field name is misspelled). A user agent *MUST NOT* include the =fragment= and =userinfo= components of the URI reference [[[https://tools.ietf.org/html/rfc3986][RFC3986]]], if any, when generating the =Referer= field value.
 #+END_QUOTE
 
-=Referer= 头字段让用户代理可以指定一个 URI 引用，来表明本次请求的[[ruby:target%20URI][目标 URI]] 是从哪一个资源那里获得的（也就是说，"referer" 指的是“引用页、引用者”，虽然这个字段名称存在拼写错误，本应该是 "referrer"）。用户代理在生成 =Referer= 头字段的时候，*禁止* 包括 URI 引用里的 =fragment= 以及 =userinfo= 组件【[[https://tools.ietf.org/html/rfc3986][RFC3986]]】。 
+=Referer= 头字段让用户代理可以指定一个 URI 引用，来表明本次请求的[[ruby:target%20URI][目标 URI]] 是从哪一个资源那里获得的（也就是说，"referer" 指的是“引用页、引用者”，虽然这个字段名称存在拼写错误，本应该是 "referrer"）。用户代理在生成 =Referer= 头字段的时候，*禁止* 包含有 URI 引用里的 =fragment= 以及 =userinfo= 组件【[[https://tools.ietf.org/html/rfc3986][RFC3986]]】。 
 
 #+BEGIN_QUOTE
 译注：自【RFC7231】开始，已不再允许在 HTTP 和 HTTPS URI 中出现 =userinfo= （也就是说，用户名和密码）了，因为它在通信线路上传输时存在安全问题（见[[id:cdfe1d9f-fe54-40a8-936b-aa02154989f9][【RFC7230】附录 A.1]]）。而 =fragment= 标识是保留给客户端处理的，也不必提交到服务器上。
@@ -2117,7 +2117,7 @@ Example:
 If the target URI was obtained from a source that does not have its own URI (e.g., input from the user keyboard, or an entry within the user's bookmarks/favorites), the user agent *MUST* either exclude the =Referer= field or send it with a value of "about:blank".
 #+END_QUOTE
 
-如果[[ruby:target%20URI][目标 URI]]是从一个资源那里获得的，但该资源并没有自己的 URI（比如，从键盘直接输入网址，或者在用户的书签/收藏夹内一个条目），那么，用户代理 *必须* 排除掉 =Referer= 头字段，或者将它的值赋值为 "about:blank" 来发送。
+如果[[ruby:target%20URI][目标 URI]]是从一个资源那里获得的，但该资源并没有自己的 URI（比如，从键盘直接输入网址，或者在用户的书签/收藏夹内的某个条目），那么，用户代理 *必须* 排除掉 =Referer= 头字段，或者将它赋值为 "about:blank" 来发送。
 
 #+BEGIN_QUOTE
 译注：从网站统计的角度上看，用户通过在浏览器上直接输入网址或书签对网站进行访问的行为，就是所谓的[[https://baike.baidu.com/item/%25E7%259B%25B4%25E6%258E%25A5%25E8%25AE%25BF%25E9%2597%25AE/8845360?fr=aladdin#2][直接访问]]。服务器的判断依据是请求是否有 =Referer= 或者其值是否为 "about:blank"。
@@ -2247,47 +2247,47 @@ Responses with status codes that are defined as cacheable by default (e.g., =200
 
 | Code | Reason-Phrase                 | Defined in...            |
 |------+-------------------------------+--------------------------|
-|  100 | Continue                      | [[id:91fffa22-c6f0-476c-b69f-f76828e861f3][Section 6.2.1]]            |
-|  101 | Switching Protocols           | [[id:c8200a68-3b0f-4f12-bf1f-ac895c5dcf9f][Section 6.2.2]]            |
-|  200 | OK                            | [[id:8b00dffb-977c-496a-be64-60d2f5f46e36][Section 6.3.1]]            |
-|  201 | Created                       | [[id:0f0de6df-c767-45b5-a6a9-1f45f20bba38][Section 6.3.2]]            |
-|  202 | Accepted                      | [[id:f333c72d-3351-4339-b41a-0832ed8884ac][Section 6.3.3]]            |
-|  203 | Non-Authoritative Information | [[id:5a18bb35-2626-4fe4-a36c-cae3a7655a60][Section 6.3.4]]            |
-|  204 | No Content                    | [[id:3a5fcefb-f004-4981-a616-0feba4c9e9e4][Section 6.3.5]]            |
-|  205 | Reset Content                 | [[id:545a7a5c-0589-40d5-bae4-726b8e71dd10][Section 6.3.6]]            |
-|  206 | Partial Content               | [[id:32182a4e-00f6-44d9-82e2-f08d98b59324][Section 4.1]] of [RFC7233] |
-|  300 | Multiple Choices              | [[id:bb139936-2671-4ffc-9dd0-75af2bab7d9b][Section 6.4.1]]            |
-|  301 | Moved Permanently             | [[id:e883e3aa-aac3-46ca-83cc-2a085889f9d2][Section 6.4.2]]            |
-|  302 | Found                         | [[id:89acc9d5-366e-4a7c-820e-891fe25738be][Section 6.4.3]]            |
-|  303 | See Other                     | [[id:12c7ea0c-85ac-401f-8132-293e6ebcf52f][Section 6.4.4]]            |
-|  304 | Not Modified                  | [[id:6033b2bf-1408-4756-9929-15dd6510c7e3][Section 4.1]] of [RFC7232] |
-|  305 | Use Proxy                     | [[id:e69019b2-b071-4380-bcd7-d2fd80261d81][Section 6.4.5]]            |
-|  307 | Temporary Redirect            | [[id:549c5916-48a9-4e75-8c68-538635c00a2c][Section 6.4.7]]            |
-|  400 | Bad Request                   | [[id:323c581a-d558-421f-a0f1-8c28fe904264][Section 6.5.1]]            |
-|  401 | Unauthorized                  | [[id:50ef5918-69e6-4826-9f20-db56fdd02974][Section 3.1]] of [RFC7235] |
-|  402 | Payment Required              | [[id:d4484e6e-b1a9-4ae9-b8cd-5da28a80fce7][Section 6.5.2]]            |
-|  403 | Forbidden                     | [[id:addb601c-6b2f-45a7-97f7-9d24bdb8b585][Section 6.5.3]]            |
-|  404 | Not Found                     | [[id:aff1f620-f950-48fe-a479-0276d2aeac0e][Section 6.5.4]]            |
-|  405 | Method Not Allowed            | [[id:6c2a3e21-55e6-465c-b8dc-7d773d341e8f][Section 6.5.5]]            |
-|  406 | Not Acceptable                | [[id:c600bda4-d399-4870-894f-ea4293fc173f][Section 6.5.6]]            |
-|  407 | Proxy Authentication Required | [[id:1029b0aa-9c78-463a-b3f4-a4acbfbac26f][Section 3.2]] of [RFC7235] |
-|  408 | Request Timeout               | [[id:8523542a-3e33-4261-92b7-0bf706f14a57][Section 6.5.7]]            |
-|  409 | Conflict                      | [[id:63517bec-7c89-4655-a6df-e5e2c8de4a17][Section 6.5.8]]            |
-|  410 | Gone                          | [[id:9b6a1a09-f457-45b9-9b66-b05916f8d1a0][Section 6.5.9]]            |
-|  411 | Length Required               | [[id:57b9a13c-fa90-4ad0-a898-dbb7a80b007c][Section 6.5.10]]           |
-|  412 | Precondition Failed           | [[id:02e5a084-aac8-4f06-840f-507ef2489bb1][Section 4.2]] of [RFC7232] |
-|  413 | Payload Too Large             | [[id:620869b7-1f42-4bb9-a3ba-664e80d5161d][Section 6.5.11]]           |
-|  414 | URI Too Long                  | [[id:77d1edbb-ceeb-450d-9b85-5f8c89db2f97][Section 6.5.12]]           |
-|  415 | Unsupported Media Type        | [[id:7c879fad-0a52-4f22-8447-38b860f3e71d][Section 6.5.13]]           |
-|  416 | Range Not Satisfiable         | [[id:a2f29dcf-8c15-4b15-ab66-742f476d27f3][Section 4.4]] of [RFC7233] |
-|  417 | Expectation Failed            | [[id:a4b990e6-b91e-422d-ad8e-cb77866ed170][Section 6.5.14]]           |
-|  426 | Upgrade Required              | [[id:5d028105-552c-4079-bcfe-30809395f6c9][Section 6.5.15]]           |
-|  500 | Internal Server Error         | [[id:4a288d4c-063f-4589-9ec6-3c4f246e2d8a][Section 6.6.1]]            |
-|  501 | Not Implemented               | [[id:776a0530-a654-43bc-879b-186e39dbff63][Section 6.6.2]]            |
-|  502 | Bad Gateway                   | [[id:dd36be96-0bfa-4dbc-8656-132fe9509b14][Section 6.6.3]]            |
-|  503 | Service Unavailable           | [[id:4e09afe4-30a3-4bbb-aa7e-23f621d42801][Section 6.6.4]]            |
-|  504 | Gateway Timeout               | [[id:4502f86d-74d1-4890-b235-3155ba125cb6][Section 6.6.5]]            |
-|  505 | HTTP Version Not Supported    | [[id:00dabed7-f9a1-471e-a9f6-77220446dbfa][Section 6.6.6]]            |
+| 100  | Continue                      | [[id:91fffa22-c6f0-476c-b69f-f76828e861f3][Section 6.2.1]]            |
+| 101  | Switching Protocols           | [[id:c8200a68-3b0f-4f12-bf1f-ac895c5dcf9f][Section 6.2.2]]            |
+| 200  | OK                            | [[id:8b00dffb-977c-496a-be64-60d2f5f46e36][Section 6.3.1]]            |
+| 201  | Created                       | [[id:0f0de6df-c767-45b5-a6a9-1f45f20bba38][Section 6.3.2]]            |
+| 202  | Accepted                      | [[id:f333c72d-3351-4339-b41a-0832ed8884ac][Section 6.3.3]]            |
+| 203  | Non-Authoritative Information | [[id:5a18bb35-2626-4fe4-a36c-cae3a7655a60][Section 6.3.4]]            |
+| 204  | No Content                    | [[id:3a5fcefb-f004-4981-a616-0feba4c9e9e4][Section 6.3.5]]            |
+| 205  | Reset Content                 | [[id:545a7a5c-0589-40d5-bae4-726b8e71dd10][Section 6.3.6]]            |
+| 206  | Partial Content               | [[id:32182a4e-00f6-44d9-82e2-f08d98b59324][Section 4.1]] of [RFC7233] |
+| 300  | Multiple Choices              | [[id:bb139936-2671-4ffc-9dd0-75af2bab7d9b][Section 6.4.1]]            |
+| 301  | Moved Permanently             | [[id:e883e3aa-aac3-46ca-83cc-2a085889f9d2][Section 6.4.2]]            |
+| 302  | Found                         | [[id:89acc9d5-366e-4a7c-820e-891fe25738be][Section 6.4.3]]            |
+| 303  | See Other                     | [[id:12c7ea0c-85ac-401f-8132-293e6ebcf52f][Section 6.4.4]]            |
+| 304  | Not Modified                  | [[id:6033b2bf-1408-4756-9929-15dd6510c7e3][Section 4.1]] of [RFC7232] |
+| 305  | Use Proxy                     | [[id:e69019b2-b071-4380-bcd7-d2fd80261d81][Section 6.4.5]]            |
+| 307  | Temporary Redirect            | [[id:549c5916-48a9-4e75-8c68-538635c00a2c][Section 6.4.7]]            |
+| 400  | Bad Request                   | [[id:323c581a-d558-421f-a0f1-8c28fe904264][Section 6.5.1]]            |
+| 401  | Unauthorized                  | [[id:50ef5918-69e6-4826-9f20-db56fdd02974][Section 3.1]] of [RFC7235] |
+| 402  | Payment Required              | [[id:d4484e6e-b1a9-4ae9-b8cd-5da28a80fce7][Section 6.5.2]]            |
+| 403  | Forbidden                     | [[id:addb601c-6b2f-45a7-97f7-9d24bdb8b585][Section 6.5.3]]            |
+| 404  | Not Found                     | [[id:aff1f620-f950-48fe-a479-0276d2aeac0e][Section 6.5.4]]            |
+| 405  | Method Not Allowed            | [[id:6c2a3e21-55e6-465c-b8dc-7d773d341e8f][Section 6.5.5]]            |
+| 406  | Not Acceptable                | [[id:c600bda4-d399-4870-894f-ea4293fc173f][Section 6.5.6]]            |
+| 407  | Proxy Authentication Required | [[id:1029b0aa-9c78-463a-b3f4-a4acbfbac26f][Section 3.2]] of [RFC7235] |
+| 408  | Request Timeout               | [[id:8523542a-3e33-4261-92b7-0bf706f14a57][Section 6.5.7]]            |
+| 409  | Conflict                      | [[id:63517bec-7c89-4655-a6df-e5e2c8de4a17][Section 6.5.8]]            |
+| 410  | Gone                          | [[id:9b6a1a09-f457-45b9-9b66-b05916f8d1a0][Section 6.5.9]]            |
+| 411  | Length Required               | [[id:57b9a13c-fa90-4ad0-a898-dbb7a80b007c][Section 6.5.10]]           |
+| 412  | Precondition Failed           | [[id:02e5a084-aac8-4f06-840f-507ef2489bb1][Section 4.2]] of [RFC7232] |
+| 413  | Payload Too Large             | [[id:620869b7-1f42-4bb9-a3ba-664e80d5161d][Section 6.5.11]]           |
+| 414  | URI Too Long                  | [[id:77d1edbb-ceeb-450d-9b85-5f8c89db2f97][Section 6.5.12]]           |
+| 415  | Unsupported Media Type        | [[id:7c879fad-0a52-4f22-8447-38b860f3e71d][Section 6.5.13]]           |
+| 416  | Range Not Satisfiable         | [[id:a2f29dcf-8c15-4b15-ab66-742f476d27f3][Section 4.4]] of [RFC7233] |
+| 417  | Expectation Failed            | [[id:a4b990e6-b91e-422d-ad8e-cb77866ed170][Section 6.5.14]]           |
+| 426  | Upgrade Required              | [[id:5d028105-552c-4079-bcfe-30809395f6c9][Section 6.5.15]]           |
+| 500  | Internal Server Error         | [[id:4a288d4c-063f-4589-9ec6-3c4f246e2d8a][Section 6.6.1]]            |
+| 501  | Not Implemented               | [[id:776a0530-a654-43bc-879b-186e39dbff63][Section 6.6.2]]            |
+| 502  | Bad Gateway                   | [[id:dd36be96-0bfa-4dbc-8656-132fe9509b14][Section 6.6.3]]            |
+| 503  | Service Unavailable           | [[id:4e09afe4-30a3-4bbb-aa7e-23f621d42801][Section 6.6.4]]            |
+| 504  | Gateway Timeout               | [[id:4502f86d-74d1-4890-b235-3155ba125cb6][Section 6.6.5]]            |
+| 505  | HTTP Version Not Supported    | [[id:00dabed7-f9a1-471e-a9f6-77220446dbfa][Section 6.6.6]]            |
 
 #+BEGIN_QUOTE
 Note that this list is not exhaustive — it does not include extension status codes defined in other specifications. The complete list of status codes is maintained by IANA. See Section 8.2 for details.
