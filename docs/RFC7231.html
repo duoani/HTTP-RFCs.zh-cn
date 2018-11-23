@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-22 Thu 19:22 -->
+<!-- 2018-11-23 Fri 19:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -504,18 +504,18 @@ for the JavaScript code in this tag.
 <li><a href="#org5d42953">6.1. 状态码概况 / Overview of Status Codes</a></li>
 <li><a href="#org937cde4">6.2. 信息性 1xx / Informational 1xx</a>
 <ul>
-<li><a href="#orgb177ae0">6.2.1. 100 Continue</a></li>
-<li><a href="#org17170cb">6.2.2. 101 Switching Protocols</a></li>
+<li><a href="#org5873748">6.2.1. 100 继续 / 100 Continue</a></li>
+<li><a href="#org0ef1d89">6.2.2. 101 切换协议 / 101 Switching Protocols</a></li>
 </ul>
 </li>
 <li><a href="#orge3be6d7">6.3. 成功 2xx / Successful 2xx</a>
 <ul>
 <li><a href="#org0038347">6.3.1. 200 OK</a></li>
-<li><a href="#org7621bcc">6.3.2. 201 Created</a></li>
-<li><a href="#org90994de">6.3.3. 202 Accepted</a></li>
-<li><a href="#org3a69f3a">6.3.4. 203 Non-Authoritative Information</a></li>
+<li><a href="#org71047ad">6.3.2. 201 已创建 / 201 Created</a></li>
+<li><a href="#orgfd43abd">6.3.3. 202 已接受 / 202 Accepted</a></li>
+<li><a href="#org4562efd">6.3.4. 203 非权威信息 / 203 Non-Authoritative Information</a></li>
 <li><a href="#org61ddd38">6.3.5. 204 No Content</a></li>
-<li><a href="#org9d78f6e">6.3.6. 205 Reset Content</a></li>
+<li><a href="#orgd06ba28">6.3.6. 205 重置内容 / 205 Reset Content</a></li>
 </ul>
 </li>
 <li><a href="#orgdf0960e">6.4. 重定向 3xx / Redirection 3xx</a>
@@ -548,7 +548,7 @@ for the JavaScript code in this tag.
 <li><a href="#org4cc1a60">6.5.15. 426 Upgrade Required</a></li>
 </ul>
 </li>
-<li><a href="#orgbb53da7">6.6 服务器错误 / Server Error 5xx</a>
+<li><a href="#org033011b">6.6. 服务器错误 / Server Error 5xx</a>
 <ul>
 <li><a href="#orge703f96">6.6.1. 500 Internal Server Error</a></li>
 <li><a href="#org42220c0">6.6.2. 501 Not Implemented</a></li>
@@ -1627,9 +1627,9 @@ If <code>Content-Location</code> is included in a <code>2xx (Successful)</code> 
 如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应消息里，且它的字段值指向于一个与有效请求 URI 不相同的 URI，那么，源服务器<ruby>声称<rt>claim</rt></ruby>该 URI 是一个与封装在该有效载荷内的<ruby>表示形式<rt>representation</rt></ruby>相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
 </p>
 <ul class="org-ul">
-<li>对于回应给 GET 或 HEAD 请求的一个响应，它表明了<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 指向到一个服从<ruby>内容协商<rt>content negotiation</rt></ruby>的资源，并且针对<ruby>已选定的表示形式<rt>selected representation</rt></ruby>来说，<code>Content-Location</code> 的字段值是一个更加具体的标识符。</li>
-<li>对于回应给<ruby>会改变资源状态的请求方法<rt>state-changing method</rt></ruby>的一个 <code>201 (Created)</code> 响应，如果 <code>Content-Location</code> 的字段值与 <code>Location</code> 的字段值相同，那么，这表明这个有效载荷是新近被创建的资源的<ruby>当前表示形式<rt>current representation</rt></ruby>。</li>
-<li>否则，这个 <code>Content-Location</code> 表明了这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对<ruby>表示形式<rt>representation</rt></ruby>进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 <code>200 (OK)</code> 响应的有效载荷，<code>Content-Location</code> 的字段值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。</li>
+<li>对于回应给 GET 或 HEAD 请求的一个响应，它表明：<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 指向到一个服从<ruby>内容协商<rt>content negotiation</rt></ruby>的资源，并且针对<ruby>已选定的表示形式<rt>selected representation</rt></ruby>来说，<code>Content-Location</code> 的字段值是一个更加具体的标识符。</li>
+<li>对于回应给<ruby>会改变资源状态的请求方法<rt>state-changing method</rt></ruby>的一个 <code>201 (Created)</code> 响应，如果 <code>Content-Location</code> 的字段值与 <code>Location</code> 的字段值相同，表明：这个有效载荷是新近被创建的资源的<ruby>当前表示形式<rt>current representation</rt></ruby>。</li>
+<li>否则，这个 <code>Content-Location</code> 表明：这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对<ruby>表示形式<rt>representation</rt></ruby>进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 <code>200 (OK)</code> 响应的有效载荷，<code>Content-Location</code> 的字段值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。</li>
 </ul>
 
 <blockquote>
@@ -1915,7 +1915,7 @@ A server might choose not to send an initial representation, other than the list
 </blockquote>
 
 <p>
-服务器可能选择不发送一个初始表示形式，而是只发送<ruby>备选列表<rt>list of alternatives</rt></ruby>，从而表明它首选由用户代理来执行的被动型协商。例如，列在带有 <code>300 (Multiple Choices)</code> 和 <code>406 (Not Acceptable)</code> 状态码的响应里的<ruby>备选物<rt>alternatives</rt></ruby>，包含了关于<ruby>可用的表示形式<rt>available representations</rt></ruby>的信息以便用户或用户代理作出选择。
+服务器可能选择不发送一个初始表示形式，而是只发送<ruby>备选列表<rt>list of alternatives</rt></ruby>，从而表明：它首选由用户代理来执行的被动型协商。例如，列在带有 <code>300 (Multiple Choices)</code> 和 <code>406 (Not Acceptable)</code> 状态码的响应里的<ruby>备选物<rt>alternatives</rt></ruby>，包含了关于<ruby>可用的表示形式<rt>available representations</rt></ruby>的信息以便用户或用户代理作出选择。
 </p>
 
 <blockquote>
@@ -2737,7 +2737,7 @@ CONNECT is intended only for use in requests to a proxy. An origin server that r
 </blockquote>
 
 <p>
-CONNECT 只能用在向代理发送的请求里。源服务器接收到一个发送给它自己的 CONNECT 请求时，<b>可以</b> 回应一个 <code>2xx (Successful)</code> 状态码来表明连接已被建立好。但是，大多数源服务器并没有<ruby>实现<rt>implement</rt></ruby> CONNECT。
+CONNECT 只能用在向代理发送的请求里。源服务器接收到一个发送给它自己的 CONNECT 请求时，<b>可以</b> 回应一个 <code>2xx (Successful)</code> 状态码来表明：连接已被建立好。但是，大多数源服务器并没有<ruby>实现<rt>implement</rt></ruby> CONNECT。
 </p>
 
 <blockquote>
@@ -2769,7 +2769,7 @@ The recipient proxy can establish a tunnel either by directly connecting to the 
 </blockquote>
 
 <p>
-作为接收端的<ruby>代理<rt>proxy</rt></ruby>能够通过以下方式建立一个隧道：直接连接到请求目标；或者，如果该代理被配置为使用另一个代理的话，转发该 CONNECT 请求到下一个<ruby>入站代理<rt>inbound proxy</rt></ruby>。任何 <code>2xx (Successful)</code> 响应都表明发送端（以及所有入站代理）将会在成功响应的<ruby>消息头部<rt>header section</rt></ruby>末尾的空行（该空行表示消息头部结束）以后，马上切换为<ruby>隧道模式<rt>tunnel mode</rt></ruby>，而在这个空行之后所接收到的数据，是来自由<ruby>请求目标<rt>request target</rt></ruby>所标识的源服务器的。其他任何不是表示成功的响应则表明这个隧道还没有形成，该连接仍然受到 HTTP 支配（而不是由隧道所扩展的协议来支配，例如 TLS）。
+作为接收端的<ruby>代理<rt>proxy</rt></ruby>能够通过以下方式建立一个隧道：直接连接到请求目标；或者，如果该代理被配置为使用另一个代理的话，转发该 CONNECT 请求到下一个<ruby>入站代理<rt>inbound proxy</rt></ruby>。任何 <code>2xx (Successful)</code> 响应都表明：发送端（以及所有入站代理）将会在成功响应的<ruby>消息头部<rt>header section</rt></ruby>末尾的空行（该空行表示消息头部结束）以后，马上切换为<ruby>隧道模式<rt>tunnel mode</rt></ruby>，而在这个空行之后所接收到的数据，是来自由<ruby>请求目标<rt>request target</rt></ruby>所标识的源服务器的。其他任何不是表示成功的响应则表明这个隧道还没有形成，该连接仍然受到 HTTP 支配（而不是由隧道所扩展的协议来支配，例如 TLS）。
 </p>
 
 <blockquote>
@@ -3232,7 +3232,7 @@ Requirements for clients:
 <li>客户端 <b>禁止</b> 在一个没有<ruby>消息体<rt>message body</rt></ruby>的请求里生成一个 <code>100-continue</code> 期望。</li>
 <li>客户端在发送请求的消息体之前，如果打算等待服务器的 <code>100 (Continue)</code>，<b>必须</b> 发送一个包含 <code>100-continue</code> 期望的 <code>Expect</code> 头字段。</li>
 <li>客户端在发送了一个 <code>100-continue</code> 期望以后，并不要求去等待任意具体的时长。这时候客户端甚至 <b>可以</b> 在未接收到任何响应的情况下就开始发送消息体。再者，由于 <code>100 (Continue)</code> 响应不能经由一个 HTTP/1.0 中间人来转发，因此，这种情况下的客户端 <b>不应当</b> 在发送消息体之前无限期地等待。</li>
-<li>客户端接收到一个 <code>417 (Expectation Failed)</code> 状态码的响应，该响应是回应给一个包含 <code>100-continue</code> 期望的请求的，这时候，客户端 <b>应当</b> 再次发起这个请求，但这次请求不会再带有 <code>100-continue</code> 期望，这是因为这个 <code>417</code> 响应只不过是表明该<ruby>响应链路<rt>response chain</rt></ruby>并不支持期望（比如，它经过一个 HTTP/1.0 服务器）。</li>
+<li>客户端接收到一个 <code>417 (Expectation Failed)</code> 状态码的响应，该响应是回应给一个包含 <code>100-continue</code> 期望的请求的，这时候，客户端 <b>应当</b> 再次发起这个请求，但这次请求不会再带有 <code>100-continue</code> 期望，这是因为这个 <code>417</code> 响应只不过是表明：该<ruby>响应链路<rt>response chain</rt></ruby>并不支持期望（比如，它经过一个 HTTP/1.0 服务器）。</li>
 </ul>
 
 <blockquote>
@@ -3260,9 +3260,9 @@ Requirements for servers:
 
 <ul class="org-ul">
 <li>当服务器接收到一个 HTTP/1.0 的请求，并且该请求包含一个 <code>100-continue</code> 期望的时候，服务器 <b>必须</b> 忽略掉这个期望。</li>
-<li>如果服务器已经接收到部分或全部消息体，或者消息分帧表明这个请求并没有消息体的话，服务器 <b>可以</b> 省略发送一个 <code>100 (Continue)</code> 响应到对应的请求上。</li>
+<li>如果服务器已经接收到部分或全部消息体；或者消息分帧表明这个请求并没有消息体，那么，服务器 <b>可以</b> 省略发送一个 <code>100 (Continue)</code> 响应到对应的请求上。</li>
 <li>服务器发送了一个 <code>100 (Continue)</code> 响应，一旦接收到并处理完消息体以后，<b>必须</b> 发送一个<ruby>最终状态码<rt>final status code</rt></ruby>，除非连接被过早地关闭了。</li>
-<li>如果服务器在读取完整个消息体之前就响应了一个最终状态码，那么，服务器 <b>应当</b> 在该响应里表明它是打算关闭这个连接呢，还是继续读取和丢弃这个请求消息（见<a href="RFC7230.html#ID-5051d9ad-6b2e-45b0-be58-42b9dce34b89">【RFC7230】章节 6.6</a>）。</li>
+<li>如果服务器在读取完整个消息体之前就响应了一个最终状态码，那么，服务器 <b>应当</b> 在该响应里表明：它是打算关闭这个连接呢，还是继续读取和丢弃这个请求消息（见<a href="RFC7230.html#ID-5051d9ad-6b2e-45b0-be58-42b9dce34b89">【RFC7230】章节 6.6</a>）？</li>
 </ul>
 
 <blockquote>
@@ -3272,7 +3272,7 @@ An origin server <b>MUST</b>, upon receiving an HTTP/1.1 (or later) request-line
 </blockquote>
 
 <p>
-源服务器 <b>必须</b> 依据所接收到的 HTTP/1.1（或更新的）<ruby>请求行<rt>request-line</rt></ruby>，以及包含有一个 <code>100-continue</code> 期望并表明随后将会有一个请求消息体到来的完整的<ruby>消息头部<rt>header section</rt></ruby>，来决定：是立即发送一个带有最终状态码的响应呢，如果该状态仅仅通过检测请求行和头字段就可以确定到的话；还是立即发送一个 <code>100 (Continue)</code> 响应来<ruby>促使<rt>encourage</rt></ruby>客户端去发送该请求的消息体呢？源服务器在发送 <code>100 (Continue)</code> 响应之前 <b>禁止</b> 等待消息体。
+源服务器 <b>必须</b> 依据：所接收到的 HTTP/1.1（或更新的）<ruby>请求行<rt>request-line</rt></ruby>，以及包含有一个 <code>100-continue</code> 期望并表明随后将会有一个请求消息体到来的完整的<ruby>消息头部<rt>header section</rt></ruby>，来决定：是立即发送一个带有最终状态码的响应呢，如果该状态仅仅通过检测请求行和头字段就可以确定到的话；还是立即发送一个 <code>100 (Continue)</code> 响应来<ruby>促使<rt>encourage</rt></ruby>客户端去发送该请求的消息体呢？源服务器在发送 <code>100 (Continue)</code> 响应之前 <b>禁止</b> 等待消息体。
 </p>
 
 <blockquote>
@@ -3282,7 +3282,7 @@ A proxy <b>MUST</b>, upon receiving an HTTP/1.1 (or later) request-line and a co
 </blockquote>
 
 <p>
-代理 <b>必须</b> 依据依据所接收到的 HTTP/1.1（或更新的）<ruby>请求行<rt>request-line</rt></ruby>，以及包含有一个 <code>100-continue</code> 期望并表明随后将会有一个请求消息体到来的完整的<ruby>消息头部<rt>header section</rt></ruby>，来决定：是立即发送一个带有最终状态码的响应呢，如果该状态仅仅通过检测请求行和头字段就可以确定到的话；还是开始通过发送一个对应的请求行和消息头部到下一个<ruby>入站服务器<rt>inbound server</rt></ruby>，来沿着源服务器的方向转发这个请求呢？如果这个代理（依据本地配置或者过去的交互）相信下一个入站服务器仅支持 HTTP/1.0 的话，这个代理 <b>可以</b> 立即生成一个 <code>100 (Continue)</code> 响应来促使客户端开始发送该请求的消息体。
+代理 <b>必须</b> 依据：依据所接收到的 HTTP/1.1（或更新的）<ruby>请求行<rt>request-line</rt></ruby>，以及包含有一个 <code>100-continue</code> 期望并表明随后将会有一个请求消息体到来的完整的<ruby>消息头部<rt>header section</rt></ruby>，来决定：是立即发送一个带有最终状态码的响应呢，如果该状态仅仅通过检测请求行和头字段就可以确定到的话；还是开始通过发送一个对应的请求行和消息头部到下一个<ruby>入站服务器<rt>inbound server</rt></ruby>，来沿着源服务器的方向转发这个请求呢？如果这个代理（依据本地配置或者过去的交互）相信下一个入站服务器仅支持 HTTP/1.0 的话，这个代理 <b>可以</b> 立即生成一个 <code>100 (Continue)</code> 响应来促使客户端开始发送该请求的消息体。
 </p>
 
 <blockquote>
@@ -3298,7 +3298,7 @@ A proxy <b>MUST</b>, upon receiving an HTTP/1.1 (or later) request-line and a co
 </blockquote>
 
 <p>
-注意：<code>Expect</code> 头字段早在 HTTP/1.1 规范的第一版【RFC2068】时就已经被引入，当时它是有两个作用的：一是用于请求一个 <code>100 (Continue)</code> 过渡响应，二是作为一种通用机制来表明这是一种“<ruby>必须理解<rt>must-understand</rt></ruby>”的<ruby>扩展<rt>extensions</rt></ruby>。但是，这种扩展机制并没有得到客户端的应用，而且这个所谓的“必须理解”的要求也没有得到很多服务器的实现，致使这种扩展机制变得<ruby>无用<rt>useless</rt></ruby>。本规范已经移除了这种扩展机制以简化 <code>100-continue</code> 的定义和处理。
+注意：<code>Expect</code> 头字段早在 HTTP/1.1 规范的第一版【RFC2068】时就已经被引入，当时它是有两个作用的：一是用于请求一个 <code>100 (Continue)</code> 过渡响应，二是作为一种通用机制来表明：这是一种“<ruby>必须理解<rt>must-understand</rt></ruby>”的<ruby>扩展<rt>extensions</rt></ruby>。但是，这种扩展机制并没有得到客户端的应用，而且这个所谓的“必须理解”的要求也没有得到很多服务器的实现，致使这种扩展机制变得<ruby>无用<rt>useless</rt></ruby>。本规范已经移除了这种扩展机制以简化 <code>100-continue</code> 的定义和处理。
 </p>
 </div>
 </div>
@@ -3328,7 +3328,7 @@ The <code>Max-Forwards</code> value is a decimal integer indicating the remainin
 </blockquote>
 
 <p>
-<code>Max-Forwards</code> 的值是一个十进制整数，表明这个请求消息能够被转发的剩余次数。
+<code>Max-Forwards</code> 的值是一个十进制整数——这个请求消息能够被转发的剩余次数。
 </p>
 
 <blockquote>
@@ -3525,7 +3525,7 @@ The "Accept" header field can be used by user agents to specify response media t
 </blockquote>
 
 <p>
-用户代理可以使用 <code>Accept</code> 头字段来<ruby>指定<rt>specify</rt></ruby>可以接受响应的哪些<ruby>媒体类型<rt>media types</rt></ruby>。<code>Accept</code> 头字段可以用来<ruby>表明<rt>indicate</rt></ruby>请求是明确限定在一个<ruby>期望类型<rt>desired types</rt></ruby>的小集合，正如请求一个<ruby>内嵌图片<rt>in-line image</rt></ruby>这种情况一样。
+用户代理可以使用 <code>Accept</code> 头字段来<ruby>指定<rt>specify</rt></ruby>可以接受响应的哪些<ruby>媒体类型<rt>media types</rt></ruby>。<code>Accept</code> 头字段可以用来<ruby>表明<rt>indicate</rt></ruby>：请求是明确限定在一个<ruby>期望类型<rt>desired types</rt></ruby>的小集合的，正如请求一个<ruby>内嵌图片<rt>in-line image</rt></ruby>这种情况一样。
 </p>
 
 <div class="org-src-container">
@@ -3789,7 +3789,7 @@ The "Accept-Charset" header field can be sent by a user agent to indicate what c
 </blockquote>
 
 <p>
-用户代理可以发送 <code>Accept-Charset</code> 头字段来表明在文本类型的响应内容中，它接受哪些<ruby>字符集<rt>charsets</rt></ruby>。这个头字段让那些能够理解更加综合或者更加专业的字符集的用户代理，可以向那些能够以所述字符集来表示信息的源服务器，来表达这种信号：与之通信的客户端具备这种能力。
+用户代理可以发送 <code>Accept-Charset</code> 头字段来表明：在文本类型的响应内容中，它接受哪些<ruby>字符集<rt>charsets</rt></ruby>。这个头字段让那些能够理解更加综合或者更加专业的字符集的用户代理，可以向那些能够以所述字符集来表示信息的源服务器，来表达这种信号：与之通信的客户端具备这种能力。
 </p>
 
 <div class="org-src-container">
@@ -3804,7 +3804,7 @@ Charset names are defined in <a href="#org22f52a6">Section 3.1.1.2</a>. A user a
 </blockquote>
 
 <p>
-字符集名称的定义见<a href="#org22f52a6">章节 3.1.1.2</a>。用户代理 <b>可以</b> 向每个字符集关联一个质量值，来表明该用户对于那种字符集的相对偏爱度，其定义见<a href="#org26f02dc">章节 5.3.1</a>。以下是一个例子：
+字符集名称的定义见<a href="#org22f52a6">章节 3.1.1.2</a>。用户代理 <b>可以</b> 向每个字符集关联一个质量值，来表明：该用户对于那种字符集的相对偏爱度，其定义见<a href="#org26f02dc">章节 5.3.1</a>。以下是一个例子：
 </p>
 
 <div class="org-src-container">
@@ -3854,7 +3854,7 @@ The "Accept-Encoding" header field can be used by user agents to indicate what r
 </blockquote>
 
 <p>
-用户代理可以使用 <code>Accept-Encoding</code> 头字段来表明在响应中，它接受哪些响应<ruby>内容编码<rt>content-codings</rt></ruby>（<a href="#org72efdb3">章节 3.1.2.1</a>）。"identity" 标记用于作为一个“<ruby>没有编码<rt>no encoding</rt></ruby>”的同义词以便在首选不编码的情况下进行通信。
+用户代理可以使用 <code>Accept-Encoding</code> 头字段来表明：在响应中，它接受哪些响应<ruby>内容编码<rt>content-codings</rt></ruby>（<a href="#org72efdb3">章节 3.1.2.1</a>）。"identity" 标记用于作为一个“<ruby>没有编码<rt>no encoding</rt></ruby>”的同义词以便在首选不编码的情况下进行通信。
 </p>
 
 <div class="org-src-container">
@@ -3957,7 +3957,7 @@ The "Accept-Language" header field can be used by user agents to indicate the se
 </blockquote>
 
 <p>
-用户代理可以使用 <code>Accept-Language</code> 头字段来表明在响应中首选使用的<ruby>自然语言<rt>natural language</rt></ruby>集合。<ruby>语言标签<rt>language tags</rt></ruby>的定义见<a href="#org2f3fd1f">章节 3.1.3.1</a>。
+用户代理可以使用 <code>Accept-Language</code> 头字段来表明：在响应中首选使用的<ruby>自然语言<rt>natural language</rt></ruby>集合。<ruby>语言标签<rt>language tags</rt></ruby>的定义见<a href="#org2f3fd1f">章节 3.1.3.1</a>。
 </p>
 
 <div class="org-src-container">
@@ -4218,7 +4218,7 @@ The "Referer" [sic] header field allows the user agent to specify a URI referenc
 </blockquote>
 
 <p>
-<code>Referer</code> 头字段让用户代理可以指定一个 URI 引用，来表明本次请求的<ruby>目标 URI<rt>target URI</rt></ruby> 是从哪一个资源那里获得的（也就是说，"referer" 指的是“引用页、引用者”，虽然这个字段名称存在拼写错误，本应该是 "referrer"）。用户代理在生成 <code>Referer</code> 头字段的时候，<b>禁止</b> 包含有 URI 引用里的 <code>fragment</code> 以及 <code>userinfo</code> 组件【<a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>】。 
+<code>Referer</code> 头字段让用户代理可以指定一个 URI 引用，来表明：本次请求的<ruby>目标 URI<rt>target URI</rt></ruby> 是从哪一个资源那里获得的（也就是说，"referer" 指的是“引用页、引用者”，虽然这个字段名称存在拼写错误，本应该是 "referrer"）。用户代理在生成 <code>Referer</code> 头字段的时候，<b>禁止</b> 包含有 URI 引用里的 <code>fragment</code> 以及 <code>userinfo</code> 组件【<a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>】。 
 </p>
 
 <blockquote>
@@ -4396,7 +4396,7 @@ HTTP status codes are extensible. HTTP clients are not required to understand th
 </blockquote>
 
 <p>
-HTTP 状态码是<ruby>可扩展的<rt>extensible</rt></ruby>。不要求 HTTP 客户端去理解所有已注册的状态码的意义，虽然这种理解明显是很值得的。但是，客户端 <b>必须</b> 理解所有状态码的种类，这些类型是由状态码的第一位数字来指明的。而且，客户端 <b>必须</b> 将它<ruby>无法识别的<rt>unrecoginized</rt></ruby>状态码当作等同于它的种类的 <code>x00</code> 状态码来对待，不过有一个区别是接收端 <b>禁止</b> 缓存带有一种它无法识别的状态码的响应。
+HTTP 状态码是<ruby>可扩展的<rt>extensible</rt></ruby>。不要求 HTTP 客户端去理解所有已注册的状态码的意义，虽然这种理解明显是很值得的。但是，客户端 <b>必须</b> 理解所有状态码的种类，这些类型是由状态码的第一位数字来指明的。而且，客户端 <b>必须</b> 将它<ruby>无法识别的<rt>unrecoginized</rt></ruby>状态码当作等同于它的种类的 <code>x00</code> 状态码来对待，不过有一个区别是接收端 <b>禁止</b> 缓存带有它无法识别的状态码的响应。
 </p>
 
 <blockquote>
@@ -4419,7 +4419,7 @@ The first digit of the status-code defines the class of response. The last two d
 <li><a href="#orge3be6d7">2xx (Successful)</a>: The request was successfully received, understood, and accepted</li>
 <li><a href="#orgdf0960e">3xx (Redirection)</a>: Further action needs to be taken in order to complete the request</li>
 <li><a href="#org187c176">4xx (Client Error)</a>: The request contains bad syntax or cannot be fulfilled</li>
-<li><a href="#orgbb53da7">5xx (Server Error)</a>: The server failed to fulfill an apparently valid request</li>
+<li><a href="#org033011b">5xx (Server Error)</a>: The server failed to fulfill an apparently valid request</li>
 </ul>
 </blockquote>
 
@@ -4430,9 +4430,9 @@ The first digit of the status-code defines the class of response. The last two d
 <ul class="org-ul">
 <li><a href="#org937cde4">1xx (Informational)</a>：请求已被接收，目前正在持续处理该请求</li>
 <li><a href="#orge3be6d7">2xx (Successful)</a>：请求已被成功接收、理解以及接受</li>
-<li><a href="#orgdf0960e">3xx (Redirection)</a>：为完成请求，需要采取进一步的行动</li>
-<li><a href="#org187c176">4xx (Client Error)</a>：请求包含有不良的语法，或者请求不能被满足</li>
-<li><a href="#orgbb53da7">5xx (Server Error)</a>：服务器未能满足一个显然有效的请求</li>
+<li><a href="#orgdf0960e">3xx (Redirection)</a>：为完成请求，需要采取进一步的动作</li>
+<li><a href="#org187c176">4xx (Client Error)</a>：请求包含有不良的语法，或者请求不能被<ruby>实现<rt>fulfill</rt></ruby></li>
+<li><a href="#org033011b">5xx (Server Error)</a>：服务器未能<ruby>实现<rt>fulfill</rt></ruby>一个显然有效的请求</li>
 </ul>
 </div>
 
@@ -4481,13 +4481,13 @@ Responses with status codes that are defined as cacheable by default (e.g., <cod
 <tr>
 <td class="org-right">100</td>
 <td class="org-left">Continue</td>
-<td class="org-left"><a href="#orgb177ae0">Section 6.2.1</a></td>
+<td class="org-left"><a href="#org5873748">Section 6.2.1</a></td>
 </tr>
 
 <tr>
 <td class="org-right">101</td>
 <td class="org-left">Switching Protocols</td>
-<td class="org-left"><a href="#org17170cb">Section 6.2.2</a></td>
+<td class="org-left"><a href="#org0ef1d89">Section 6.2.2</a></td>
 </tr>
 
 <tr>
@@ -4499,19 +4499,19 @@ Responses with status codes that are defined as cacheable by default (e.g., <cod
 <tr>
 <td class="org-right">201</td>
 <td class="org-left">Created</td>
-<td class="org-left"><a href="#org7621bcc">Section 6.3.2</a></td>
+<td class="org-left"><a href="#org71047ad">Section 6.3.2</a></td>
 </tr>
 
 <tr>
 <td class="org-right">202</td>
 <td class="org-left">Accepted</td>
-<td class="org-left"><a href="#org90994de">Section 6.3.3</a></td>
+<td class="org-left"><a href="#orgfd43abd">Section 6.3.3</a></td>
 </tr>
 
 <tr>
 <td class="org-right">203</td>
 <td class="org-left">Non-Authoritative Information</td>
-<td class="org-left"><a href="#org3a69f3a">Section 6.3.4</a></td>
+<td class="org-left"><a href="#org4562efd">Section 6.3.4</a></td>
 </tr>
 
 <tr>
@@ -4523,7 +4523,7 @@ Responses with status codes that are defined as cacheable by default (e.g., <cod
 <tr>
 <td class="org-right">205</td>
 <td class="org-left">Reset Content</td>
-<td class="org-left"><a href="#org9d78f6e">Section 6.3.6</a></td>
+<td class="org-left"><a href="#orgd06ba28">Section 6.3.6</a></td>
 </tr>
 
 <tr>
@@ -4748,7 +4748,7 @@ The <code>1xx (Informational)</code> class of status code indicates an interim r
 </blockquote>
 
 <p>
-<code>1xx (Informational)</code> 状态码种类表明——这是一个<ruby>过渡响应<rt>interim response</rt></ruby>，用于在完成所请求的动作以及发送一个<ruby>最终响应<rt>final response</rt></ruby>之前传递<ruby>连接状态<rt>connection status</rt></ruby>或<ruby>请求进展<rt>request progress</rt></ruby>。<code>1xx</code> 响应终止于在<ruby>状态行<rt>status-line</rt></ruby>之后的第一个<ruby>空行<rt>empty line</rt></ruby>（空行标志着<ruby>消息头部<rt>header section</rt></ruby>的结束）。由于 HTTP/1.0 并没有定义任何 <code>1xx</code> 状态码，因此，服务器 <b>禁止</b> 将 <code>1xx</code> 的响应发送到一个 HTTP/1.0 客户端上。
+<code>1xx (Informational)</code> 状态码种类表明：这是一个<ruby>过渡响应<rt>interim response</rt></ruby>，用于在完成所请求的动作以及发送一个<ruby>最终响应<rt>final response</rt></ruby>之前传递<ruby>连接状态<rt>connection status</rt></ruby>或<ruby>请求进展<rt>request progress</rt></ruby>。<code>1xx</code> 响应终止于<ruby>状态行<rt>status-line</rt></ruby>之后的第一个<ruby>空行<rt>empty line</rt></ruby>（空行标志着<ruby>消息头部<rt>header section</rt></ruby>的结束）。由于 HTTP/1.0 并没有定义任何 <code>1xx</code> 状态码，因此，服务器 <b>禁止</b> 将 <code>1xx</code> 的响应发送到一个 HTTP/1.0 客户端上。
 </p>
 
 <blockquote>
@@ -4758,7 +4758,7 @@ A client <b>MUST</b> be able to parse one or more <code>1xx</code> responses rec
 </blockquote>
 
 <p>
-客户端 <b>必须</b> 能够<ruby>解析<rt>parse</rt></ruby>在接收到一个最终响应之前所接收到的一个或多个 <code>1xx</code> 响应，即使这个客户端并不<ruby>期待<rt>expect</rt></ruby>这种响应。用户代理 <b>可以</b> 忽略<ruby>意料之外的<rt>unexpected</rt></ruby> <code>1xx</code> 响应。
+客户端 <b>必须</b> 能够<ruby>解析<rt>parse</rt></ruby>在接收到一个最终响应之前所接收到的一个或多个 <code>1xx</code> 响应，即使这个客户端并不<ruby>期待<rt>expect</rt></ruby>接收。用户代理 <b>可以</b> 忽略<ruby>意料之外的<rt>unexpected</rt></ruby> <code>1xx</code> 响应。
 </p>
 
 <blockquote>
@@ -4768,13 +4768,13 @@ A proxy <b>MUST</b> forward <code>1xx</code> responses unless the proxy itself r
 </blockquote>
 
 <p>
-代理 <b>必须</b> 转发 <code>1xx</code> 响应，除非这个 <code>1xx</code> 响应是代理自身要求对方发送的。例如，如果某个代理在转发一个请求的时候添加了一个头字段 "Expect: 100-continue"，那么，它并不需要转发对应的这一个（或多个） <code>100 (Continue)</code> 响应。
+代理 <b>必须</b> 转发 <code>1xx</code> 响应，除非这个 <code>1xx</code> 响应是代理自身要求对方发送的。例如，如果某个代理在转发一个请求的时候添加了一个头字段 "Expect: 100-continue"，那么，它并不需要转发对应的那个（或多个） <code>100 (Continue)</code> 响应。
 </p>
 </div>
 
-<div id="outline-container-orgb177ae0" class="outline-4">
-<h4 id="orgb177ae0"><a id="ID-91fffa22-c6f0-476c-b69f-f76828e861f3"></a>6.2.1. 100 Continue</h4>
-<div class="outline-text-4" id="text-orgb177ae0">
+<div id="outline-container-org5873748" class="outline-4">
+<h4 id="org5873748"><a id="ID-91fffa22-c6f0-476c-b69f-f76828e861f3"></a>6.2.1. 100 继续 / 100 Continue</h4>
+<div class="outline-text-4" id="text-org5873748">
 <blockquote>
 <p>
 The <code>100 (Continue)</code> status code indicates that the initial part of a request has been received and has not yet been rejected by the server. The server intends to send a final response after the request has been fully received and acted upon.
@@ -4782,7 +4782,7 @@ The <code>100 (Continue)</code> status code indicates that the initial part of a
 </blockquote>
 
 <p>
-<code>100 (Continue)</code> 状态码表明——一个请求的<ruby>初始部分<rt>initial part</rt></ruby>已经被服务器接收到了，并且它还没有被服务器所<ruby>拒绝<rt>rejected</rt></ruby>。服务器打算在完全接收到这个请求并处理好之后再发送一个<ruby>最终响应<rt>final response</rt></ruby>。
+<code>100 (Continue)</code> 状态码表明：一个请求的<ruby>初始部分<rt>initial part</rt></ruby>已经被服务器接收，并且它还没有被服务器<ruby>拒绝<rt>rejected</rt></ruby>。服务器打算在请求完全接收完毕并处理好之后再发送一个<ruby>最终响应<rt>final response</rt></ruby>。
 </p>
 
 <blockquote>
@@ -4792,7 +4792,7 @@ When the request contains an <code>Expect</code> header field that includes a <c
 </blockquote>
 
 <p>
-当请求带有一个 <code>Expect</code> 头字段，而这个头字段含有一个 <code>100-continue</code> <ruby>期望<rt>expectation</rt></ruby>的时候，<code>100</code> 响应表明：服务器希望去接收该<ruby>请求的有效载荷<rt>request payload body</rt></ruby>，正如<a href="#org83b8384">章节 5.1.1</a> 讲述的那样。客户端应该继续发送该请求并<ruby>丢弃掉<rt>discard</rt></ruby>这个 <code>100</code> 响应。
+当请求带有一个 <code>Expect</code> 头字段，而这个头字段含有一个 <code>100-continue</code> <ruby>期望<rt>expectation</rt></ruby>的时候，<code>100</code> 响应表明：服务器希望去接收<ruby>请求的有效载荷<rt>request payload body</rt></ruby>，正如<a href="#org83b8384">章节 5.1.1</a> 讲述的那样。客户端应该继续发送请求的剩余部分并<ruby>丢弃<rt>discard</rt></ruby>这个 <code>100</code> 响应。
 </p>
 
 <blockquote>
@@ -4802,14 +4802,14 @@ If the request did not contain an <code>Expect</code> header field containing th
 </blockquote>
 
 <p>
-如果请求并未带有一个含有 <code>100-continue</code> <ruby>期望<rt>expectation</rt></ruby>的 <code>Expect</code> 头字段，那么，客户端能够简单地丢弃掉这个<ruby>过渡响应<rt>interm response</rt></ruby>。
+如果请求并未带有一个含有 <code>100-continue</code> <ruby>期望<rt>expectation</rt></ruby>的 <code>Expect</code> 头字段，那么，客户端能够简单地丢弃这个<ruby>过渡响应<rt>interm response</rt></ruby>。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org17170cb" class="outline-4">
-<h4 id="org17170cb"><a id="ID-c8200a68-3b0f-4f12-bf1f-ac895c5dcf9f"></a>6.2.2. 101 Switching Protocols</h4>
-<div class="outline-text-4" id="text-org17170cb">
+<div id="outline-container-org0ef1d89" class="outline-4">
+<h4 id="org0ef1d89"><a id="ID-c8200a68-3b0f-4f12-bf1f-ac895c5dcf9f"></a>6.2.2. 101 切换协议 / 101 Switching Protocols</h4>
+<div class="outline-text-4" id="text-org0ef1d89">
 <blockquote>
 <p>
 The <code>101 (Switching Protocols)</code> status code indicates that the server understands and is willing to comply with the client's request, via the <code>Upgrade</code> header field (Section 6.7 of [RFC7230]), for a change in the application protocol being used on this connection. The server <b>MUST</b> generate an <code>Upgrade</code> header field in the response that indicates which protocol(s) will be switched to immediately after the empty line that terminates the <code>101</code> response.
@@ -4817,7 +4817,7 @@ The <code>101 (Switching Protocols)</code> status code indicates that the server
 </blockquote>
 
 <p>
-<code>101 (Switching Protocols)</code> 状态码表明——服务器理解并愿意按照客户端的<ruby>建议<rt>request</rt></ruby>（该建议经由 <code>Upgrade</code> 头字段来表达，见<a href="RFC7230.html#ID-62632d23-475d-4daa-8efb-3206d370573a">【RFC7230】章节 6.7</a>）来改变本次连接上正在使用的<ruby>应用协议<rt>application protocol</rt></ruby>。服务器 <b>必须</b> 在响应里生成一个 <code>Upgrade</code> 头字段，来表明：从结束该 <code>101</code> 响应的空行之后开始，将会马上切换到哪一种（或多种）协议。
+<code>101 (Switching Protocols)</code> 状态码表明：服务器理解并愿意按照客户端的<ruby>请求<rt>request</rt></ruby>（该请求经由 <code>Upgrade</code> 头字段来表达，见<a href="RFC7230.html#ID-62632d23-475d-4daa-8efb-3206d370573a">【RFC7230】章节 6.7</a>）来改变本次连接正在使用的<ruby>应用协议<rt>application protocol</rt></ruby>。服务器 <b>必须</b> 在响应里生成一个 <code>Upgrade</code> 头字段，来表明：从结束该 <code>101</code> 响应的空行之后开始，将会马上切换到哪一种（或多种）协议。
 </p>
 
 <blockquote>
@@ -4827,7 +4827,7 @@ It is assumed that the server will only agree to switch protocols when it is adv
 </blockquote>
 
 <p>
-假定服务器将仅当对其有利的情况下才会同意切换协议。例如，切换到一个新的 HTTP 版本的好处可能会大于旧的版本，或者在投递资源的时候切换到一种<ruby>实时同步的协议<rt>real-time, synchronous protocol</rt></ruby>可能会更有优势。
+假定服务器将仅当对其有利的情况下才会同意切换协议。例如，切换到一个新版本的 HTTP 的好处可能会大于旧版本，或者在交付资源的时候切换到一种<ruby>实时同步的协议<rt>real-time, synchronous protocol</rt></ruby>可能会更有优势。
 </p>
 </div>
 </div>
@@ -4843,7 +4843,7 @@ The <code>2xx (Successful)</code> class of status code indicates that the client
 </blockquote>
 
 <p>
-<code>2xx (Successful)</code> 状态码种类表明——客户端的请求已经被成功<ruby>接收<rt>received</rt></ruby>、<ruby>理解<rt>understood</rt></ruby>和<ruby>接受<rt>accepted</rt></ruby>。
+<code>2xx (Successful)</code> 状态码种类表明：客户端的请求已经被成功<ruby>接收<rt>received</rt></ruby>、<ruby>理解<rt>understood</rt></ruby>和<ruby>接受<rt>accepted</rt></ruby>。
 </p>
 </div>
 
@@ -4866,16 +4866,16 @@ The <code>200 (OK)</code> status code indicates that the request has succeeded. 
 </blockquote>
 
 <p>
-<code>200 (OK)</code> 状态码表明——请求已经成功。<code>200</code> 响应里的<ruby>有效载荷<rt>payload</rt></ruby>的含义取决于对应的<ruby>请求方法<rt>request method</rt></ruby>。对于由本规范所定义的方法来说，有效载荷想要表达的含义可以总结为：
+<code>200 (OK)</code> 状态码表明：请求已经成功。<code>200</code> 响应里的<ruby>有效载荷<rt>payload</rt></ruby>的含义取决于对应的<ruby>请求方法<rt>request method</rt></ruby>。对于由本规范所定义的方法来说，有效载荷想要表达的含义可以总结为：
 </p>
 
 <dl class="org-dl">
 <dt>GET</dt><dd>目标资源的一种<ruby>表示形式<rt>representation</rt></ruby>；</dd>
-<dt>HEAD</dt><dd>与 GET 一致的表示形式，但没有<ruby>表示形式数据<rt>representation data</rt></ruby>；</dd>
-<dt>POST</dt><dd>动作的状态的（或者从动作获得的结果的）一种表示形式；</dd>
+<dt>HEAD</dt><dd>与 GET 一样的表示形式，但没有<ruby>表示形式数据<rt>representation data</rt></ruby>；</dd>
+<dt>POST</dt><dd>动作的状态（或者从动作获得的结果）的一种表示形式；</dd>
 <dt>PUT, DELETE</dt><dd>动作的状态的一种表示形式；</dd>
 <dt>OPTIONS</dt><dd><ruby>通信选项<rt>communication options</rt></ruby>的一种表示形式；</dd>
-<dt>TRACE</dt><dd>如同接收自<ruby>端服务器<rt>end server</rt></ruby>一样的请求消息的一种表现形式。</dd>
+<dt>TRACE</dt><dd>如同接收自<ruby>终端服务器<rt>end server</rt></ruby>一样的请求消息的一种表现形式。</dd>
 </dl>
 
 <blockquote>
@@ -4885,7 +4885,7 @@ Aside from responses to CONNECT, a <code>200</code> response always has a payloa
 </blockquote>
 
 <p>
-除了回应给 CONNECT 的响应以外，<code>200</code> 响应总是带有一个有效载荷的，虽然源服务器 <b>可以</b> 生成一个长度为零的有效载荷。如果不想带有有效载荷，源服务器应该改为发送 <code>204 (No Content)</code> 响应。对于 CONNECT，允许不带有有效载荷是因为成功的结果是一个隧道，该隧道会在 <code>200</code> 响应头部以后马上开始建立。
+除了回应给 CONNECT 的响应以外，<code>200</code> 响应总是带有一个有效载荷的，尽管源服务器 <b>可以</b> 生成一个长度为零的有效载荷。如果不想带有有效载荷，源服务器应该改为发送 <code>204 (No Content)</code> 响应。对于 CONNECT，不允许带有有效载荷是因为它的成功结果是一个<ruby>隧道<rt>tunnel</rt></ruby>，而该隧道会在 <code>200</code> 响应头部以后马上开始建立。
 </p>
 
 <blockquote>
@@ -4895,14 +4895,14 @@ A <code>200</code> response is cacheable by default; i.e., unless otherwise indi
 </blockquote>
 
 <p>
-<code>200</code> 响应默认是<ruby>可缓存的<rt>cacheable</rt></ruby>，也就是说，除非在请求方法的定义或者<ruby>显式缓存控制<rt>explicit cache controls</rt></ruby>（<a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">【RFC7234】章节 4.2.2</a>）里另有指定。
+<code>200</code> 响应默认是<ruby>可缓存的<rt>cacheable</rt></ruby>，也就是说，除非在请求方法的定义里另有指定，或者显式带有<ruby>缓存控制<rt>cache controls</rt></ruby>（<a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">【RFC7234】章节 4.2.2</a>）。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org7621bcc" class="outline-4">
-<h4 id="org7621bcc"><a id="ID-0f0de6df-c767-45b5-a6a9-1f45f20bba38"></a>6.3.2. 201 Created</h4>
-<div class="outline-text-4" id="text-org7621bcc">
+<div id="outline-container-org71047ad" class="outline-4">
+<h4 id="org71047ad"><a id="ID-0f0de6df-c767-45b5-a6a9-1f45f20bba38"></a>6.3.2. 201 已创建 / 201 Created</h4>
+<div class="outline-text-4" id="text-org71047ad">
 <blockquote>
 <p>
 The <code>201 (Created)</code> status code indicates that the request has been fulfilled and has resulted in one or more new resources being created. The primary resource created by the request is identified by either a <code>Location</code> header field in the response or, if no <code>Location</code> field is received, by the effective request URI.
@@ -4910,7 +4910,7 @@ The <code>201 (Created)</code> status code indicates that the request has been f
 </blockquote>
 
 <p>
-<code>201 (Created)</code> 状态码表明——请求已被<ruby>满足<rt>fulfilled</rt></ruby>并且导致了一个或多个<ruby>新资源<rt>new resources</rt></ruby>被创建。上述因请求而创建的<ruby>主要资源<rt>primary resource</rt></ruby>会被一个在响应里的 <code>Location</code> 头字段所标识，或者，如果没有接收到 <code>Location</code> 头字段的话，则通过<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 来标识。
+<code>201 (Created)</code> 状态码表明：请求已被<ruby>实现<rt>fulfilled</rt></ruby>并且导致了一个或多个<ruby>新资源<rt>new resources</rt></ruby>被创建。上述因请求而创建的<ruby>主要资源<rt>primary resource</rt></ruby>会被一个在响应里的 <code>Location</code> 头字段所标识，或者，如果没有接收到 <code>Location</code> 头字段的话，则通过<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 来识别。
 </p>
 
 <blockquote>
@@ -4920,14 +4920,14 @@ The <code>201</code> response payload typically describes and links to the resou
 </blockquote>
 
 <p>
-<code>201</code> 响应的有效载荷通常描述并链接到新创建的资源上。对于在 <code>201</code> 响应里的<ruby>验证器头字段<rt>validator header fields</rt></ruby>的意义和目的的讨论，比如 <code>ETag</code> 和 <code>Last-Modified</code>，见<a href="#org4d2e5ff">章节 7.2</a>。
+<code>201</code> 响应的有效载荷通常描述并链接到新创建的资源上。对于在 <code>201</code> 响应里的<ruby>验证器头字段<rt>validator header fields</rt></ruby>（比如 <code>ETag</code> 和 <code>Last-Modified</code>）的意义和目的的讨论，见<a href="#org4d2e5ff">章节 7.2</a>。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org90994de" class="outline-4">
-<h4 id="org90994de"><a id="ID-f333c72d-3351-4339-b41a-0832ed8884ac"></a>6.3.3. 202 Accepted</h4>
-<div class="outline-text-4" id="text-org90994de">
+<div id="outline-container-orgfd43abd" class="outline-4">
+<h4 id="orgfd43abd"><a id="ID-f333c72d-3351-4339-b41a-0832ed8884ac"></a>6.3.3. 202 已接受 / 202 Accepted</h4>
+<div class="outline-text-4" id="text-orgfd43abd">
 <blockquote>
 <p>
 The <code>202 (Accepted)</code> status code indicates that the request has been accepted for processing, but the processing has not been completed. The request might or might not eventually be acted upon, as it might be disallowed when processing actually takes place. There is no facility in HTTP for re-sending a status code from an asynchronous operation.
@@ -4935,7 +4935,7 @@ The <code>202 (Accepted)</code> status code indicates that the request has been 
 </blockquote>
 
 <p>
-<code>202 (Accepted)</code> 状态码表明——请求已被接受处理，但处理还未完成。最终可能也可能不会按照请求来行事，因为当实际进行处理的时候请求可能不被允许。HTTP 里没有任何的<ruby>技巧<rt>facility</rt></ruby>可以从一个<ruby>异步操作<rt>asynchronous operation</rt></ruby>中重发一个状态码。
+<code>202 (Accepted)</code> 状态码表明：请求已被接受处理，但处理尚未完成。最终可能也可能不会按照请求来行事，因为当实际进行处理的时候该请求可能被拒绝。HTTP 里没有任何的<ruby>技巧<rt>facility</rt></ruby>可以从一个<ruby>异步操作<rt>asynchronous operation</rt></ruby>中重发一个状态码。
 </p>
 
 <blockquote>
@@ -4945,35 +4945,43 @@ The <code>202</code> response is intentionally noncommittal. Its purpose is to a
 </blockquote>
 
 <p>
-<code>202</code> 响应有意含糊的。它的目的是允许服务器去接受一个请求来进行其他的处理（也许是一个每天仅运行一次的面向批量的处理）而不要求用户代理保持对服务器的连接直到完成该处理。随响应一起发送的<ruby>表示形式<rt>representation</rt></ruby>应该描述该请求的当前状态并且指向（或者<ruby>内嵌<rt>embed</rt></ruby>）一个<ruby>状态监听器<rt>status monitor</rt></ruby>来向用户提供“请求将会在什么时候被满足”的评估。
+<code>202</code> 响应有意含糊的。它的目的是为了让服务器可以接受一个请求来进行其他的处理（也许是一个每天仅运行一次的面向批量的处理）而不要求用户代理<ruby>保持<rt>persist</rt></ruby>对服务器的连接直到完成该处理。随响应一起发送的<ruby>表示形式<rt>representation</rt></ruby>应该描述该请求的当前状态并且指向（或者<ruby>内嵌<rt>embed</rt></ruby>）一个<ruby>状态监听器<rt>status monitor</rt></ruby>来向用户提供“请求将会在什么时候被实现”的评估。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org3a69f3a" class="outline-4">
-<h4 id="org3a69f3a"><a id="ID-5a18bb35-2626-4fe4-a36c-cae3a7655a60"></a>6.3.4. 203 Non-Authoritative Information</h4>
-<div class="outline-text-4" id="text-org3a69f3a">
+<div id="outline-container-org4562efd" class="outline-4">
+<h4 id="org4562efd"><a id="ID-5a18bb35-2626-4fe4-a36c-cae3a7655a60"></a>6.3.4. 203 非权威信息 / 203 Non-Authoritative Information</h4>
+<div class="outline-text-4" id="text-org4562efd">
 <blockquote>
 <p>
-The <code>203 (Non-Authoritative Information)</code> status code indicates that the request was successful but the enclosed payload has been modified from that of the origin server's 200 (OK) response by a transforming proxy (Section 5.7.2 of [RFC7230]). This status code allows the proxy to notify recipients when a transformation has been applied, since that knowledge might impact later decisions regarding the content. For example, future cache validation requests for the content might only be applicable along the same request path (through the same proxies).
+The <code>203 (Non-Authoritative Information)</code> status code indicates that the request was successful but the enclosed payload has been modified from that of the origin server's <code>200 (OK)</code> response by a transforming proxy (<a href="RFC7230.html#ID-b6641b58-3ac6-4fce-9c44-a3715ffdc8a0">Section 5.7.2</a> of [RFC7230]). This status code allows the proxy to notify recipients when a transformation has been applied, since that knowledge might impact later decisions regarding the content. For example, future cache validation requests for the content might only be applicable along the same request path (through the same proxies).
 </p>
 </blockquote>
 
 <p>
-<code>203 (Non-Authoritative Information)</code> 状态码表明——请求已成功，但
+<code>203 (Non-Authoritative Information)</code> 状态码表明：请求已成功，但是，由源服务器所生成的 <code>200 (OK)</code> 响应内的有效载荷已经被链路中的某个<ruby>转换代理<rt>transforming proxy</rt></ruby>（<a href="RFC7230.html#ID-b6641b58-3ac6-4fce-9c44-a3715ffdc8a0">【RFC7230】章节 5.7.2</a>）修改过了。这个状态码让代理在对响应的有效载荷执行过转换时可以通知接收端，因为这种信息可能会影响到接收端以后对内容的相关决定。例如，今后对于该内容的<ruby>缓存有效期验证请求<rt>cache validation requests</rt></ruby>可能只适用于沿着相同的请求路径（途经相同的代理）。
 </p>
 
 <blockquote>
 <p>
-The <code>203</code> response is similar to the Warning code of 214 Transformation Applied (Section 5.5 of [RFC7234]), which has the advantage of being applicable to responses with any status code.
+The <code>203</code> response is similar to the <code>Warning</code> code of <code>214 Transformation Applied</code> (<a href="RFC7234.html#ID-84f5867e-4a3e-45fa-b085-dd23e8598a6b">Section 5.5</a> of [RFC7234]), which has the advantage of being applicable to responses with any status code.
 </p>
 </blockquote>
 
+<p>
+<code>203</code> 响应类似于 <code>214 Transformation Applied</code> 这个 <code>Warning</code> 码（<a href="RFC7234.html#ID-84f5867e-4a3e-45fa-b085-dd23e8598a6b">【RFC7234】章节 5.5</a>），后者的好处是适用于带有任何状态码的响应。
+</p>
+
 <blockquote>
 <p>
-A <code>203</code> response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+A <code>203</code> response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see <a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">Section 4.2.2</a> of [RFC7234]).
 </p>
 </blockquote>
+
+<p>
+<code>203</code> 响应默认是<ruby>可缓存的<rt>cacheable</rt></ruby>，也就是说，除非在请求方法的定义里另有指定，或者显式带有<ruby>缓存控制<rt>cache controls</rt></ruby>（<a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">【RFC7234】章节 4.2.2</a>）。
+</p>
 </div>
 </div>
 
@@ -4986,46 +4994,74 @@ The <code>204 (No Content)</code> status code indicates that the server has succ
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-For example, if a 204 status code is received in response to a PUT request and the response contains an ETag header field, then the PUT was successful and the ETag field-value contains the entity-tag for the new representation of that target resource.
+<code>204 (No Content)</code> 状态码表明：服务器已经<ruby>实现<rt>fulfilled</rt></ruby>了这个请求，并且没有额外的内容需要发送到响应的有效载荷里。在<ruby>执行<rt>apply</rt></ruby>完所请求的动作以后，响应头字段里的<ruby>元数据<rt>metadata</rt></ruby>会引用目标资源及其<ruby>选定的表示形式<rt>selected representation</rt></ruby>。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The 204 response allows a server to indicate that the action has been successfully applied to the target resource, while implying that the user agent does not need to traverse away from its current "document view" (if any). The server assumes that the user agent will provide some indication of the success to its user, in accord with its own interface, and apply any new or updated metadata in the response to its active representation.
+For example, if a <code>204</code> status code is received in response to a PUT request and the response contains an <code>ETag</code> header field, then the PUT was successful and the <code>ETag</code> field-value contains the <code>entity-tag</code> for the new representation of that target resource.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-For example, a 204 status code is commonly used with document editing interfaces corresponding to a "save" action, such that the document being saved remains available to the user for editing. It is also frequently used with interfaces that expect automated data transfers to be prevalent, such as within distributed version control systems.
+例如，在回应给某个 PUT 请求的响应里，如果该响应带一个 <code>204</code> 状态码，并且包含有一个 <code>ETag</code> 头字段，说明这个 PUT 请求已被成功执行并且 <code>ETag</code> 的字段值所包含的 <code>entity-tag</code> 是那个目标资源的<ruby>新的表示形式<rt>new representation</rt></ruby>。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-A 204 response is terminated by the first empty line after the header fields because it cannot contain a message body.
+The <code>204</code> response allows a server to indicate that the action has been successfully applied to the target resource, while implying that the user agent does not need to traverse away from its current "document view" (if any). The server assumes that the user agent will provide some indication of the success to its user, in accord with its own interface, and apply any new or updated metadata in the response to its active representation.
 </p>
 </blockquote>
 
+<p>
+<code>204</code> 响应让服务器可以去指出动作已被成功对目标资源<ruby>应用（执行）<rt>apply</rt></ruby>，而这意味着用户代理并不需要切换它当前的“文档视图”（如果有的话）。服务器假定用户代理会向它的用户提供与它自身接口相符的某些成功指示，并且会将响应里的所有新的或更新过的元数据<ruby>应用<rt>apply</rt></ruby>到用户代理的<ruby>活动表示形式<rt>active representation</rt></ruby>上。
+</p>
+
 <blockquote>
 <p>
-A 204 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+For example, a <code>204</code> status code is commonly used with document editing interfaces corresponding to a "save" action, such that the document being saved remains available to the user for editing. It is also frequently used with interfaces that expect automated data transfers to be prevalent, such as within distributed version control systems.
 </p>
 </blockquote>
+
+<p>
+例如，<code>204</code> 状态码通常使用在一个执行“保存”动作的文档编辑接口中，这样，文档在保存过程中仍然可以给用户继续编辑。它也经常用在期待流行自动化数据传输的接口中，比如在分布式版本控制系统当中。
+</p>
+
+<blockquote>
+<p>
+A <code>204</code> response is terminated by the first empty line after the header fields because it cannot contain a message body.
+</p>
+</blockquote>
+
+<p>
+<code>204</code> 响应结束于头字段之后的第一个空行，因为它并不能带有一个<ruby>消息体<rt>message body</rt></ruby>。
+</p>
+
+<blockquote>
+<p>
+A <code>204</code> response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see <a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">Section 4.2.2</a> of [RFC7234]).
+</p>
+</blockquote>
+
+<p>
+<code>204</code> 响应默认是<ruby>可缓存的<rt>cacheable</rt></ruby>，也就是说，除非在请求方法的定义里另有指定，或者显式带有<ruby>缓存控制<rt>cache controls</rt></ruby>（<a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">【RFC7234】章节 4.2.2</a>）。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org9d78f6e" class="outline-4">
-<h4 id="org9d78f6e"><a id="ID-545a7a5c-0589-40d5-bae4-726b8e71dd10"></a>6.3.6. 205 Reset Content</h4>
-<div class="outline-text-4" id="text-org9d78f6e">
+<div id="outline-container-orgd06ba28" class="outline-4">
+<h4 id="orgd06ba28"><a id="ID-545a7a5c-0589-40d5-bae4-726b8e71dd10"></a>6.3.6. 205 重置内容 / 205 Reset Content</h4>
+<div class="outline-text-4" id="text-orgd06ba28">
 <blockquote>
 <p>
-The 205 (Reset Content) status code indicates that the server has fulfilled the request and desires that the user agent reset the "document view", which caused the request to be sent, to its original state as received from the origin server.
+The <code>205 (Reset Content)</code> status code indicates that the server has fulfilled the request and desires that the user agent reset the "document view", which caused the request to be sent, to its original state as received from the origin server.
 </p>
 </blockquote>
+
+<p>
+<code>205 (Reset Content)</code> 状态码表明：服务器已经<ruby>实现<rt>fulfilled</rt></ruby>了这个请求，并且很希望用户代理将“文档视图”重置为原始状态——这将导致发起请求——以源服务器的响应作为重置的后结果。
+</p>
 
 <blockquote>
 <p>
@@ -5033,11 +5069,25 @@ This response is intended to support a common data entry use case where the user
 </p>
 </blockquote>
 
+<p>
+这种响应意图去支持一种通用的数据录入用例，用户接收到支持数据录入的内容（一个表单、笔记本、画布等），在那个位置上输入或操作数据，引起已输入的数据被一个请求所提交，然后数据录入机制会被重置来为下一次录入做准备，以便于用户可以轻松地初始化其他输入动作。
+</p>
+
 <blockquote>
 <p>
-Since the 205 status code implies that no additional content will be provided, a server MUST NOT generate a payload in a 205 response. In other words, a server MUST do one of the following for a 205 response: a) indicate a zero-length body for the response by including a Content-Length header field with a value of 0; b) indicate a zero-length payload for the response by including a Transfer-Encoding header field with a value of chunked and a message body consisting of a single chunk of zero-length; or, c) close the connection immediately after sending the blank line terminating the header section.
+Since the <code>205</code> status code implies that no additional content will be provided, a server <b>MUST NOT</b> generate a payload in a <code>205</code> response. In other words, a server <b>MUST</b> do one of the following for a <code>205</code> response: a) indicate a zero-length body for the response by including a <code>Content-Length</code> header field with a value of 0; b) indicate a zero-length payload for the response by including a <code>Transfer-Encoding</code> header field with a value of <code>chunked</code> and a message body consisting of a single chunk of zero-length; or, c) close the connection immediately after sending the blank line terminating the header section.
 </p>
 </blockquote>
+
+<p>
+因为 <code>205</code> 状态码意味着不会提供额外的内容，服务器 <b>禁止</b> 在 <code>205</code> 响应里生成有效载荷。换句话说，服务器 <b>必须</b> 对 205 响应做以下其中之一的处理：
+</p>
+
+<ul class="org-ul">
+<li>通过包含一个值为 0 的 <code>Content-Length</code> 头字段来表明：响应有一个长度为零的消息体；</li>
+<li>通过包含一个值为 <code>chunked</code> 的 <code>Transfer-Encoding</code>，并且消息体由单独一个长度为零的<ruby>分块<rt>chunk</rt></ruby>组成，来表明：响应有一个长度为零的有效载荷；</li>
+<li>在发送空行来结束消息头部以后，马上关闭连接。</li>
+</ul>
 </div>
 </div>
 </div>
@@ -5047,9 +5097,13 @@ Since the 205 status code implies that no additional content will be provided, a
 <div class="outline-text-3" id="text-orgdf0960e">
 <blockquote>
 <p>
-The 3xx (Redirection) class of status code indicates that further action needs to be taken by the user agent in order to fulfill the request. If a Location header field (Section 7.1.2) is provided, the user agent MAY automatically redirect its request to the URI referenced by the Location field value, even if the specific status code is not understood. Automatic redirection needs to done with care for methods not known to be safe, as defined in Section 4.2.1, since the user might not wish to redirect an unsafe request.
+The <code>3xx (Redirection)</code> class of status code indicates that further action needs to be taken by the user agent in order to fulfill the request. If a <code>Location</code> header field (<a href="#orgad9277e">Section 7.1.2</a>) is provided, the user agent <b>MAY</b> automatically redirect its request to the URI referenced by the <code>Location</code> field value, even if the specific status code is not understood. Automatic redirection needs to done with care for methods not known to be safe, as defined in <a href="#org9cf22b2">Section 4.2.1</a>, since the user might not wish to redirect an unsafe request.
 </p>
 </blockquote>
+
+<p>
+<code>3xx (Redirection)</code> 状态码种类表明：需要用户代理采取进一步的动作才能<ruby>实现<rt>fulfill</rt></ruby>请求。如果提供了一个 <code>Location</code> 头字段（<a href="#orgad9277e">章节 7.1.2</a>），用户代理 <b>可以</b> 自动<ruby>重定向<rt>redirect</rt></ruby>它的请求到 <code>Location</code> 的字段值所指定的 URI 引用，即使它不理解具体的状态码。自动重定向需要小心处理那些不知道是否安全的方法，见<a href="#org9cf22b2">章节 4.2.1</a>，因为用户可能并不希望重定向一个不安全的请求。
+</p>
 
 <blockquote>
 <p>
@@ -5057,21 +5111,36 @@ There are several types of redirects:
 </p>
 
 <ol class="org-ol">
-<li>Redirects that indicate the resource might be available at a different URI, as provided by the Location field, as in the status codes 301 (Moved Permanently), 302 (Found), and 307 (Temporary Redirect).</li>
+<li>Redirects that indicate the resource might be available at a different URI, as provided by the <code>Location</code> field, as in the status codes <code>301 (Moved Permanently)</code>, <code>302 (Found)</code>, and <code>307 (Temporary Redirect)</code>.</li>
 
-<li>Redirection that offers a choice of matching resources, each capable of representing the original request target, as in the 300 (Multiple Choices) status code.</li>
+<li>Redirection that offers a choice of matching resources, each capable of representing the original request target, as in the <code>300 (Multiple Choices)</code> status code.</li>
 
-<li>Redirection to a different resource, identified by the Location field, that can represent an indirect response to the request, as in the 303 (See Other) status code.</li>
+<li>Redirection to a different resource, identified by the <code>Location</code> field, that can represent an indirect response to the request, as in the <code>303 (See Other)</code> status code.</li>
 
-<li>Redirection to a previously cached result, as in the 304 (Not Modified) status code.</li>
+<li>Redirection to a previously cached result, as in the <code>304 (Not Modified)</code> status code.</li>
 </ol>
 </blockquote>
 
+<p>
+重定向有若干类型：
+</p>
+
+<ol class="org-ol">
+<li>状态码为 <code>301 (Moved Permanently)</code>、<code>302 (Found)</code>、<code>307 (Temporary Redirect)</code> 的重定向表明：资源可能在 <code>Location</code> 头字段所提供的另一个不同 URI 上可用。</li>
+<li>状态码为 <code>300 (Multiple Choices)</code> 的重定向提供了对于匹配到的资源的一种选择，每种都能够表示原始的请求目标。</li>
+<li>状态码 <code>303 (See Other)</code>，重定向到由 <code>Location</code> 字段所标识的另一个不同资源上，能够表示回应给请求的一种<ruby>间接响应<rt>indirect response</rt></ruby>。</li>
+<li>状态码 <code>304 (Not Modified)</code>，重定向到上一个缓存结果。</li>
+</ol>
+
 <blockquote>
 <p>
-<b>Note:</b> In HTTP/1.0, the status codes 301 (Moved Permanently) and 302 (Found) were defined for the first type of redirect ([RFC1945], Section 9.3). Early user agents split on whether the method applied to the redirect target would be the same as the original request or would be rewritten as GET. Although HTTP originally defined the former semantics for 301 and 302 (to match its original implementation at CERN), and defined 303 (See Other) to match the latter semantics, prevailing practice gradually converged on the latter semantics for 301 and 302 as well. The first revision of HTTP/1.1 added 307 (Temporary Redirect) to indicate the former semantics without being impacted by divergent practice. Over 10 years later, most user agents still do method rewriting for 301 and 302; therefore, this specification makes that behavior conformant when the original request is POST.
+<b>Note:</b> In HTTP/1.0, the status codes <code>301 (Moved Permanently)</code> and <code>302 (Found)</code> were defined for the first type of redirect ([RFC1945], <a href="https://tools.ietf.org/html/rfc1945#section-9.3">Section 9.3</a>). Early user agents split on whether the method applied to the redirect target would be the same as the original request or would be rewritten as GET. Although HTTP originally defined the former semantics for <code>301</code> and <code>302</code> (to match its original implementation at CERN), and defined <code>303 (See Other)</code> to match the latter semantics, prevailing practice gradually converged on the latter semantics for <code>301</code> and <code>302</code> as well. The first revision of HTTP/1.1 added <code>307</code> (Temporary Redirect) to indicate the former semantics without being impacted by divergent practice. Over 10 years later, most user agents still do method rewriting for <code>301</code> and <code>302</code>; therefore, this specification makes that behavior conformant when the original request is POST.
 </p>
 </blockquote>
+
+<p>
+<b>注意：</b> 在 HTTP/1.0 中，<code>301 (Moved Permanently)</code> 和 <code>302 (Found)</code> 状态码是定义为上述第一种重定向类型的（<a href="https://tools.ietf.org/html/rfc1945#section-9.3">【RFC1945】章节 9.3</a>）。早期的用户代理有一个分歧：应用到重定向目标的请求方法是使用与原来请求的方法一样呢，还是改写为 GET。
+</p>
 
 <blockquote>
 <p>
@@ -5504,9 +5573,9 @@ This service requires use of the HTTP/3.0 protocol.
 </div>
 </div>
 
-<div id="outline-container-orgbb53da7" class="outline-3">
-<h3 id="orgbb53da7"><a id="ID-6b95899d-bbec-474e-bcb0-3ca5dbbf0ba1"></a>6.6 服务器错误 / Server Error 5xx</h3>
-<div class="outline-text-3" id="text-orgbb53da7">
+<div id="outline-container-org033011b" class="outline-3">
+<h3 id="org033011b"><a id="ID-6b95899d-bbec-474e-bcb0-3ca5dbbf0ba1"></a>6.6. 服务器错误 / Server Error 5xx</h3>
+<div class="outline-text-3" id="text-org033011b">
 <blockquote>
 <p>
 The 5xx (Server Error) class of status code indicates that the server is aware that it has erred or is incapable of performing the requested method. Except when responding to a HEAD request, the server SHOULD send a representation containing an explanation of the error situation, and whether it is a temporary or permanent condition. A user agent SHOULD display any included representation to the user. These response codes are applicable to any request method.
