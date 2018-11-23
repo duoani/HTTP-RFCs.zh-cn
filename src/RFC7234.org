@@ -80,6 +80,9 @@
 :ID:       8414ec2d-e5b5-4f9c-8160-c354c12b7504
 :END:
 ** 5.5. Warning
+:PROPERTIES:
+:ID:       84f5867e-4a3e-45fa-b085-dd23e8598a6b
+:END:
 *** 5.5.1. Warning: 110 - "Response is Stale"
 *** 5.5.2. Warning: 111 - "Revalidation Failed"
 *** 5.5.3. Warning: 112 - "Disconnected Operation"
