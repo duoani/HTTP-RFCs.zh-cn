@@ -2537,26 +2537,35 @@ Since the =205= status code implies that no additional content will be provided,
 :END:
 
 #+BEGIN_QUOTE
-The =3xx (Redirection)= class of status code indicates that further action needs to be taken by the user agent in order to fulfill the request. If a =Location= header field ([[id:bc2baf29-0bf6-4816-865c-3d33f5fe38e3][Section 7.1.2]]) is provided, the user agent *MAY* automatically redirect its request to the URI referenced by the =Location= field value, even if the specific status code is not understood. Automatic redirection needs to done with care for methods not known to be safe, as defined in Section 4.2.1, since the user might not wish to redirect an unsafe request.
+The =3xx (Redirection)= class of status code indicates that further action needs to be taken by the user agent in order to fulfill the request. If a =Location= header field ([[id:bc2baf29-0bf6-4816-865c-3d33f5fe38e3][Section 7.1.2]]) is provided, the user agent *MAY* automatically redirect its request to the URI referenced by the =Location= field value, even if the specific status code is not understood. Automatic redirection needs to done with care for methods not known to be safe, as defined in [[id:2f967e3d-8694-430b-ad06-e748fd39b281][Section 4.2.1]], since the user might not wish to redirect an unsafe request.
 #+END_QUOTE
 
-=3xx (Redirection)= 状态码种类表明：需要用户代理采取进一步的动作才能[[ruby:fulfill][实现]]请求。如果提供了一个 =Location= 头字段（[[id:bc2baf29-0bf6-4816-865c-3d33f5fe38e3][章节 7.1.2]]），用户代理 *可以* 自动重定向它的请求到 =Location= 的字段值所指定的 URI 引用，即使它不理解具体的状态码。自动重定向需要
+=3xx (Redirection)= 状态码种类表明：需要用户代理采取进一步的动作才能[[ruby:fulfill][实现]]请求。如果提供了一个 =Location= 头字段（[[id:bc2baf29-0bf6-4816-865c-3d33f5fe38e3][章节 7.1.2]]），用户代理 *可以* 自动[[ruby:redirect][重定向]]它的请求到 =Location= 的字段值所指定的 URI 引用，即使它不理解具体的状态码。自动重定向需要小心处理那些不知道是否安全的方法，见[[id:2f967e3d-8694-430b-ad06-e748fd39b281][章节 4.2.1]]，因为用户可能并不希望重定向一个不安全的请求。
 
 #+BEGIN_QUOTE
 There are several types of redirects:
 
-1. Redirects that indicate the resource might be available at a different URI, as provided by the Location field, as in the status codes 301 (Moved Permanently), 302 (Found), and 307 (Temporary Redirect).
+1. Redirects that indicate the resource might be available at a different URI, as provided by the =Location= field, as in the status codes =301 (Moved Permanently)=, =302 (Found)=, and =307 (Temporary Redirect)=.
 
-2. Redirection that offers a choice of matching resources, each capable of representing the original request target, as in the 300 (Multiple Choices) status code.
+2. Redirection that offers a choice of matching resources, each capable of representing the original request target, as in the =300 (Multiple Choices)= status code.
 
-3. Redirection to a different resource, identified by the Location field, that can represent an indirect response to the request, as in the 303 (See Other) status code.
+3. Redirection to a different resource, identified by the =Location= field, that can represent an indirect response to the request, as in the =303 (See Other)= status code.
 
-4. Redirection to a previously cached result, as in the 304 (Not Modified) status code.
+4. Redirection to a previously cached result, as in the =304 (Not Modified)= status code.
 #+END_QUOTE
+
+重定向有若干类型：
+
+1. 状态码为 =301 (Moved Permanently)=、=302 (Found)=、=307 (Temporary Redirect)= 的重定向表明：资源可能在 =Location= 头字段所提供的另一个不同 URI 上可用。
+2. 状态码为 =300 (Multiple Choices)= 的重定向提供了对于匹配到的资源的一种选择，每种都能够表示原始的请求目标。
+3. 状态码 =303 (See Other)=，重定向到由 =Location= 字段所标识的另一个不同资源上，能够表示回应给请求的一种[[ruby:indirect%20response][间接响应]]。
+4. 状态码 =304 (Not Modified)=，重定向到上一个缓存结果。 
 
 #+BEGIN_QUOTE
-*Note:* In HTTP/1.0, the status codes 301 (Moved Permanently) and 302 (Found) were defined for the first type of redirect ([RFC1945], Section 9.3). Early user agents split on whether the method applied to the redirect target would be the same as the original request or would be rewritten as GET. Although HTTP originally defined the former semantics for 301 and 302 (to match its original implementation at CERN), and defined 303 (See Other) to match the latter semantics, prevailing practice gradually converged on the latter semantics for 301 and 302 as well. The first revision of HTTP/1.1 added 307 (Temporary Redirect) to indicate the former semantics without being impacted by divergent practice. Over 10 years later, most user agents still do method rewriting for 301 and 302; therefore, this specification makes that behavior conformant when the original request is POST.
+*Note:* In HTTP/1.0, the status codes =301 (Moved Permanently)= and =302 (Found)= were defined for the first type of redirect ([RFC1945], [[https://tools.ietf.org/html/rfc1945#section-9.3][Section 9.3]]). Early user agents split on whether the method applied to the redirect target would be the same as the original request or would be rewritten as GET. Although HTTP originally defined the former semantics for =301= and =302= (to match its original implementation at CERN), and defined =303 (See Other)= to match the latter semantics, prevailing practice gradually converged on the latter semantics for =301= and =302= as well. The first revision of HTTP/1.1 added =307= (Temporary Redirect) to indicate the former semantics without being impacted by divergent practice. Over 10 years later, most user agents still do method rewriting for =301= and =302=; therefore, this specification makes that behavior conformant when the original request is POST.
 #+END_QUOTE
+
+*注意：* 在 HTTP/1.0 中，=301 (Moved Permanently)= 和 =302 (Found)= 状态码是定义为上述第一种重定向类型的（[[https://tools.ietf.org/html/rfc1945#section-9.3][【RFC1945】章节 9.3]]）。早期的用户代理有一个分歧：应用到重定向目标的请求方法是使用与原来请求的方法一样呢，还是改写为 GET。
 
 #+BEGIN_QUOTE
 A client *SHOULD* detect and intervene in cyclical redirections (i.e., "infinite" redirection loops).
