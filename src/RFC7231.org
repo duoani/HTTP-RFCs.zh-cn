@@ -685,7 +685,7 @@ When responses convey payload information, whether indicating a success or an er
 This specification defines two patterns of content negotiation that can be made visible within the protocol: "proactive", where the server selects the representation based upon the user agent's stated preferences, and "reactive" negotiation, where the server provides a list of representations for the user agent to choose from. Other patterns of content negotiation include "conditional content", where the representation consists of multiple parts that are selectively rendered based on user agent parameters, "active content", where the representation contains a script that makes additional (more specific) requests based on the user agent characteristics, and "Transparent Content Negotiation" ([[[https://tools.ietf.org/html/rfc2295][RFC2295]]]), where content selection is performed by an intermediary. These patterns are not mutually exclusive, and each has trade-offs in applicability and practicality.
 #+END_QUOTE
 
-本规范定义了两种内容协商的模式，使之能够在协议里可见：“[[ruby:proactive][主动型]]”和“[[ruby:reactive][被动型]]”。对于主动型内容协商，服务器会依据用户代理申明的偏好来选择 representation。对于被动型内容协商，服务会提供一系列的[[ruby:representations][表示形式]]供用户代理选择。其他的内容协商的模式包括：“[[ruby:conditional%20content][条件内容]]”，[[ruby:representation][表示形式]]由多个部分组成，源服务器基于用户代理的参数来选择性地渲染各个部分；“[[ruby:active%20content][活动内容]]”，[[ruby:representation][表示形式]]含有一个脚本，该脚本可以基于用户代理的特性来生成额外的（更加具体的）请求；“[[ruby:Transparent%20Content%20Negotiation][透明内容协商]]”（【[[https://tools.ietf.org/html/rfc2295][RFC2295]]】），由一个中间人来执行内容选择。这些模式不是[[ruby:mutually%20exclusive][互斥的]]，每种都有其[[ruby:applicability][适应性]]和[[ruby:practicality][实用性]]。
+本规范定义了两种内容协商的模式，使之能够在协议里可见：“[[ruby:proactive][主动型]]”和“[[ruby:reactive][响应式]]”。对于主动型内容协商，服务器会依据用户代理申明的偏好来选择 representation。对于响应式内容协商，服务会提供一系列的[[ruby:representations][表示形式]]供用户代理选择。其他的内容协商的模式包括：“[[ruby:conditional%20content][条件内容]]”，[[ruby:representation][表示形式]]由多个部分组成，源服务器基于用户代理的参数来选择性地渲染各个部分；“[[ruby:active%20content][活动内容]]”，[[ruby:representation][表示形式]]含有一个脚本，该脚本可以基于用户代理的特性来生成额外的（更加具体的）请求；“[[ruby:Transparent%20Content%20Negotiation][透明内容协商]]”（【[[https://tools.ietf.org/html/rfc2295][RFC2295]]】），由一个中间人来执行内容选择。这些模式不是[[ruby:mutually%20exclusive][互斥的]]，每种都有其[[ruby:applicability][适应性]]和[[ruby:practicality][实用性]]。
 
 #+BEGIN_QUOTE
 Note that, in all cases, HTTP is not aware of the resource semantics. The consistency with which an origin server responds to requests, over time and over the varying dimensions of content negotiation, and thus the "sameness" of a resource's observed representations over time, is determined entirely by whatever entity or algorithm selects or generates those responses. HTTP pays no attention to the man behind the curtain.
@@ -735,12 +735,12 @@ A =Vary= header field ([[id:ca7f8781-b183-4563-a90a-b9b7ad4f1032][Section 7.1.4]
 
 =Vary= 头字段（[[id:ca7f8781-b183-4563-a90a-b9b7ad4f1032][章节 7.1.4]]）通常用来指明主动型协商的选择算法会用到请求信息的哪些部分。
 
-*** 3.4.2. 被动型协商 / Reactive Negotiation
+*** 3.4.2. 响应式协商 / Reactive Negotiation
 #+BEGIN_QUOTE
 With reactive negotiation (a.k.a., agent-driven negotiation), selection of the best response representation (regardless of the status code) is performed by the user agent after receiving an initial response from the origin server that contains a list of resources for alternative representations. If the user agent is not satisfied by the initial response representation, it can perform a GET request on one or more of the alternative resources, selected based on metadata included in the list, to obtain a different form of representation for that response. Selection of alternatives might be performed automatically by the user agent or manually by the user selecting from a generated (possibly hypertext) menu.
 #+END_QUOTE
 
-使用[[ruby:reactive%20negotiation][被动型协商]]（也称[[ruby:agent-driven%20negotiation][代理驱动型协商]]），选择哪一个作为响应的[[ruby:best%20representation][最佳表示形式]]（且不论[[ruby:response%20status%20code][响应状态码]]）是由用户代理在接收到一个来自源服务器的[[ruby:initial%20response][初始响应]]之后执行的。这个初始响应会包含[[ruby:alternative%20representations][备选的表示形式]]的一个列表。如果用户代理不满意初始响应的表示形式，它可以（基于包含在上述列表中的元数据来）选择向一个或多个备选表示形式所对应的 URI 发起 GET 请求来获得其得的表示形式。选择哪一种备选表示形式可能是由用户代理自动执行，也可能是由用户从一个生成好的菜单（也许是超文本）里手动选择。
+使用[[ruby:reactive%20negotiation][响应式协商]]（也称[[ruby:agent-driven%20negotiation][代理驱动型协商]]），选择哪一个作为响应的[[ruby:best%20representation][最佳表示形式]]（且不论[[ruby:response%20status%20code][响应状态码]]）是由用户代理在接收到一个来自源服务器的[[ruby:initial%20response][初始响应]]之后执行的。这个初始响应会包含[[ruby:alternative%20representations][备选的表示形式]]的一个列表。如果用户代理不满意初始响应的表示形式，它可以（基于包含在上述列表中的元数据来）选择向一个或多个备选表示形式所对应的 URI 发起 GET 请求来获得其得的表示形式。选择哪一种备选表示形式可能是由用户代理自动执行，也可能是由用户从一个生成好的菜单（也许是超文本）里手动选择。
 
 #+BEGIN_QUOTE
 Note that the above refers to representations of the response, in general, not representations of the resource. The alternative representations are only considered representations of the target resource if the response in which those alternatives are provided has the semantics of being a representation of the target resource (e.g., a =200 (OK)= response to a GET request) or has the semantics of providing links to alternative representations for the target resource (e.g., a =300 (Multiple Choices)= response to a GET request).
@@ -752,19 +752,19 @@ Note that the above refers to representations of the response, in general, not r
 A server might choose not to send an initial representation, other than the list of alternatives, and thereby indicate that reactive negotiation by the user agent is preferred. For example, the alternatives listed in responses with the =300 (Multiple Choices)= and =406 (Not Acceptable)= status codes include information about the available representations so that the user or user agent can react by making a selection.
 #+END_QUOTE
 
-服务器可能选择不发送一个初始表示形式，而是只发送[[ruby:list%20of%20alternatives][备选列表]]，从而表明：它首选由用户代理来执行的被动型协商。例如，列在带有 =300 (Multiple Choices)= 和 =406 (Not Acceptable)= 状态码的响应里的[[ruby:alternatives][备选物]]，包含了关于[[ruby:available%20representations][可用的表示形式]]的信息以便用户或用户代理作出选择。
+服务器可能选择不发送一个初始表示形式，而是只发送[[ruby:list%20of%20alternatives][备选列表]]，从而表明：它首选由用户代理来执行的响应式协商。例如，列在带有 =300 (Multiple Choices)= 和 =406 (Not Acceptable)= 状态码的响应里的[[ruby:alternatives][备选物]]，包含了关于[[ruby:available%20representations][可用的表示形式]]的信息以便用户或用户代理作出选择。
 
 #+BEGIN_QUOTE
 Reactive negotiation is advantageous when the response would vary over commonly used dimensions (such as type, language, or encoding), when the origin server is unable to determine a user agent's capabilities from examining the request, and generally when public caches are used to distribute server load and reduce network usage.
 #+END_QUOTE
 
-被动型协商适用于以下情况：当响应会随常用维度（例如类型、语言、编码等）而变化；当源服务器无法通过检测请求而确定用户代理的能力；当使用[[ruby:public%20caches][公共缓存]]来分发服务器的负载和降低网络使用。
+响应式协商适用于以下情况：当响应会随常用维度（例如类型、语言、编码等）而变化；当源服务器无法通过检测请求而确定用户代理的能力；当使用[[ruby:public%20caches][公共缓存]]来分发服务器的负载和降低网络使用。
 
 #+BEGIN_QUOTE
 Reactive negotiation suffers from the disadvantages of transmitting a list of alternatives to the user agent, which degrades user-perceived latency if transmitted in the header section, and needing a second request to obtain an alternate representation. Furthermore, this specification does not define a mechanism for supporting automatic selection, though it does not prevent such a mechanism from being developed as an extension.
 #+END_QUOTE
 
-被动型协商存在以下缺点：需要传递备选列表到用户代理，并且需要另一个请求来获得一种备选表示形式。
+响应式协商存在以下缺点：需要传递备选列表到用户代理，并且需要另一个请求来获得一种备选表示形式。
 在消息头部里传递备选列表势必会导致[[ruby:degrades%20user-perceived%20latency][用户观感延时的降级]]。而且，本规范并没有定义用于支持自动选择的机制，但它也没有阻止这样一种机制发展成为扩展。
 
 #+BEGIN_QUOTE
@@ -2562,97 +2562,134 @@ There are several types of redirects:
 4. 状态码 =304 (Not Modified)=，重定向到上一个缓存结果。 
 
 #+BEGIN_QUOTE
-*Note:* In HTTP/1.0, the status codes =301 (Moved Permanently)= and =302 (Found)= were defined for the first type of redirect ([RFC1945], [[https://tools.ietf.org/html/rfc1945#section-9.3][Section 9.3]]). Early user agents split on whether the method applied to the redirect target would be the same as the original request or would be rewritten as GET. Although HTTP originally defined the former semantics for =301= and =302= (to match its original implementation at CERN), and defined =303 (See Other)= to match the latter semantics, prevailing practice gradually converged on the latter semantics for =301= and =302= as well. The first revision of HTTP/1.1 added =307= (Temporary Redirect) to indicate the former semantics without being impacted by divergent practice. Over 10 years later, most user agents still do method rewriting for =301= and =302=; therefore, this specification makes that behavior conformant when the original request is POST.
+*Note:* In HTTP/1.0, the status codes =301 (Moved Permanently)= and =302 (Found)= were defined for the first type of redirect ([RFC1945], [[https://tools.ietf.org/html/rfc1945#section-9.3][Section 9.3]]). Early user agents split on whether the method applied to the redirect target would be the same as the original request or would be rewritten as GET. Although HTTP originally defined the former semantics for =301= and =302= (to match its original implementation at CERN), and defined =303 (See Other)= to match the latter semantics, prevailing practice gradually converged on the latter semantics for =301= and =302= as well. The first revision of HTTP/1.1 added =307 (Temporary Redirect)= to indicate the former semantics without being impacted by divergent practice. Over 10 years later, most user agents still do method rewriting for =301= and =302=; therefore, this specification makes that behavior conformant when the original request is POST.
 #+END_QUOTE
 
-*注意：* 在 HTTP/1.0 中，=301 (Moved Permanently)= 和 =302 (Found)= 状态码是定义为上述第一种重定向类型的（[[https://tools.ietf.org/html/rfc1945#section-9.3][【RFC1945】章节 9.3]]）。早期的用户代理有一个分歧：应用到重定向目标的请求方法是使用与原来请求的方法一样呢，还是改写为 GET。
+*注意：* 在 HTTP/1.0 中，=301 (Moved Permanently)= 和 =302 (Found)= 状态码是定义为上述第一种重定向类型的（[[https://tools.ietf.org/html/rfc1945#section-9.3][【RFC1945】章节 9.3]]）。早期的用户代理有一个分歧——应用到重定向目标的请求方法是使用与原来请求的方法一样呢，还是[[ruby:rewrite][改写]]为 GET 方法呢？虽然 HTTP 最初将 =301= 和 =302= 定义为前者语义（来匹配它在 CERN 的最初实现），将 =303 (See Other)= 定义为后者语义，但是主流实现通常将 =301= 和 =302= 也转化为后者语义。HTTP/1.1 第一个修订版新增了 =307 (Temporary Redirect)= 来表明前者语言，以免受到实现上分歧的影响。其后十多年以来，大多数用户代理仍然对 =301= 和 =302= 的重定向使用方法重写的方式（即后者语义），所以，当原始请求是 POST 的时候，本规范顺应了这种行为。
 
 #+BEGIN_QUOTE
 A client *SHOULD* detect and intervene in cyclical redirections (i.e., "infinite" redirection loops).
 #+END_QUOTE
 
+客户端 *应当* 检测并调停[[ruby:cyclical][循环重定向]]（也就是说，无限重定向循环）。
+
 #+BEGIN_QUOTE
 *Note:* An earlier version of this specification recommended a maximum of five redirections ([RFC2068], Section 10.3). Content developers need to be aware that some clients might implement such a fixed limitation.
 #+END_QUOTE
 
-*** 6.4.1. 300 Multiple Choices
+*注意：* 本规范早期的版本推荐最多 5 次重定向（【RFC2068】章节 10.3）。内容开始者需要意识到某些客户端可能实现了这种固定次数的限制。
+
+*** 6.4.1. 300 多重选择 / 300 Multiple Choices
 :PROPERTIES:
 :ID:       bb139936-2671-4ffc-9dd0-75af2bab7d9b
 :END:
 
 #+BEGIN_QUOTE
-The =300 (Multiple Choices)= status code indicates that the target resource has more than one representation, each with its own more specific identifier, and information about the alternatives is being provided so that the user (or user agent) can select a preferred representation by redirecting its request to one or more of those identifiers. In other words, the server desires that the user agent engage in reactive negotiation to select the most appropriate representation(s) for its needs (Section 3.4).
+The =300 (Multiple Choices)= status code indicates that the target resource has more than one representation, each with its own more specific identifier, and information about the alternatives is being provided so that the user (or user agent) can select a preferred representation by redirecting its request to one or more of those identifiers. In other words, the server desires that the user agent engage in reactive negotiation to select the most appropriate representation(s) for its needs ([[id:c45cb9ca-1e51-4738-8c43-231e7316ea86][Section 3.4]]).
 #+END_QUOTE
+
+=300 (Multiple Choices)= 表明：目标资源有一个以上的表示形式，每种都具有更加明确的标识符，并提供了备选表示形式相关的信息以便用户（或者用户代理）能够通过重定向它的请求到一个或多个那些标识符来选择[[ruby:preferred%20representation][最优的表示形式]]。换句话说，服务器希望用户代理参与进响应式协商来选择它需要的最合适的表现形式（[[id:c45cb9ca-1e51-4738-8c43-231e7316ea86][章节 3.4]]）。
 
 #+BEGIN_QUOTE
-If the server has a preferred choice, the server SHOULD generate a Location header field containing a preferred choice's URI reference. The user agent MAY use the Location field value for automatic redirection.
+If the server has a preferred choice, the server *SHOULD* generate a =Location= header field containing a preferred choice's URI reference. The user agent *MAY* use the =Location= field value for automatic redirection.
 #+END_QUOTE
+
+如果服务器有一个最优选择，那么它 *应当* 生成一个包含最优选择的 URI 引用的 =Location= 头字段。用户代理 *可以* 使用 =Location= 字段的值自动重定向。
 
 #+BEGIN_QUOTE
-For request methods other than HEAD, the server SHOULD generate a payload in the 300 response containing a list of representation metadata and URI reference(s) from which the user or user agent can choose the one most preferred. The user agent MAY make a selection from that list automatically if it understands the provided media type. A specific format for automatic selection is not defined by this specification because HTTP tries to remain orthogonal to the definition of its payloads. In practice, the representation is provided in some easily parsed format believed to be acceptable to the user agent, as determined by shared design or content negotiation, or in some commonly accepted hypertext format.
+For request methods other than HEAD, the server *SHOULD* generate a payload in the =300= response containing a list of representation metadata and URI reference(s) from which the user or user agent can choose the one most preferred. The user agent *MAY* make a selection from that list automatically if it understands the provided media type. A specific format for automatic selection is not defined by this specification because HTTP tries to remain orthogonal to the definition of its payloads. In practice, the representation is provided in some easily parsed format believed to be acceptable to the user agent, as determined by shared design or content negotiation, or in some commonly accepted hypertext format.
 #+END_QUOTE
+
+对于除 HEAD 以外的请求方法，服务器 *应当* 在 =300= 响应里生成一个有效载荷来包含一个有各种[[ruby:representation%20metadata][表示形式元数据]]以及 URI 引用的列表，使得用户或都用户代理可以从中选出一个最优表示形式。如果用户代理了解所提供的媒体类型的话，它 *可以* 自动从中选择一个。本规范并同有定义自动选择的具体格式，那是因为 HTTP 试图与它的有效载荷的定义保持[[ruby:orthogonal][正交]]。在实践过程中，表示形式会以某种被认为是便于用户代理去解析的格式来提——这取决于共享设计或[[ruby:content%20negotiation][内容协商]]；又或者以某些普遍被接受的超文本格式来提供。
 
 #+BEGIN_QUOTE
-A 300 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+A =300= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
+
+=300= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
+
 
 #+BEGIN_QUOTE
-Note: The original proposal for the 300 status code defined the URI header field as providing a list of alternative representations, such that it would be usable for 200, 300, and 406 responses and be transferred in responses to the HEAD method. However, lack of deployment and disagreement over syntax led to both URI and Alternates (a subsequent proposal) being dropped from this specification. It is possible to communicate the list using a set of Link header fields [RFC5988], each with a relationship of "alternate", though deployment is a chicken-and-egg problem.
+Note: The original proposal for the =300= status code defined the =URI= header field as providing a list of alternative representations, such that it would be usable for =200=, =300=, and =406= responses and be transferred in responses to the HEAD method. However, lack of deployment and disagreement over syntax led to both =URI= and =Alternates= (a subsequent proposal) being dropped from this specification. It is possible to communicate the list using a set of =Link= header fields [[[https://tools.ietf.org/html/rfc5988][RFC5988]]], each with a relationship of "alternate", though deployment is a chicken-and-egg problem.
 #+END_QUOTE
 
-*** 6.4.2. 301 Moved Permanently
+*注意：* =300= 状态码最初的提案定义了名叫 =URI= 的头字段来提供一个备选表示形式的列表，以便它能用于 =200=、=300=、=406= 响应并且能在回应给 HEAD 方法的响应回进行传输。尽管如此，缺乏部署并且句法上的争议导致本规范放弃了 =URI= 和 =Alternates= （随后的一个提案）两者。有可能使用一系列的 =Link= 头字段【[[https://tools.ietf.org/html/rfc5988][RFC5988]]】来表达上述列表，每个 =Link= 值都与备选有关，虽然其部署还是一个“鸡和蛋”的问题。
+
+*** 6.4.2. 301 永久移动 / 301 Moved Permanently
 :PROPERTIES:
 :ID:       e883e3aa-aac3-46ca-83cc-2a085889f9d2
 :END:
 
 #+BEGIN_QUOTE
-The 301 (Moved Permanently) status code indicates that the target resource has been assigned a new permanent URI and any future references to this resource ought to use one of the enclosed URIs. Clients with link-editing capabilities ought to automatically re-link references to the effective request URI to one or more of the new references sent by the server, where possible.
+The =301 (Moved Permanently)= status code indicates that the target resource has been assigned a new permanent URI and any future references to this resource ought to use one of the enclosed URIs. Clients with link-editing capabilities ought to automatically re-link references to the effective request URI to one or more of the new references sent by the server, where possible.
 #+END_QUOTE
+
+=301 (Move Permanently)= 状态码表明：目标资源已被[[ruby:assign][分配]]到一个新的永久 URI 上，将来对本资源的任何引用都应该使用本次响应所提供的新 URIs 之一。对于具有[[ruby:link-editing][链接编辑]]能力的客户端应该自动将链接到有效请求 URI 的引用重新链接到由服务器传过来的新的引用上。
 
 #+BEGIN_QUOTE
-The server SHOULD generate a Location header field in the response containing a preferred URI reference for the new permanent URI. The user agent MAY use the Location field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the new URI(s).
+The server *SHOULD* generate a =Location= header field in the response containing a preferred URI reference for the new permanent URI. The user agent *MAY* use the =Location= field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the new URI(s).
 #+END_QUOTE
+
+服务器 *应当* 在响应里生成一个 =Location= 头字段来包含新的永久 URI 引用中最优的那一个。用户代理 *可以* 使用 =Location= 的字段值来自动重定向。服务器的响应有效载荷通常会包含一个简短的超文本[[ruby:note][注解]]，其内有一个指向这个（或多个）新 URI 的超链接。
 
 #+BEGIN_QUOTE
-*Note:* For historical reasons, a user agent MAY change the request method from POST to GET for the subsequent request. If this behavior is undesired, the 307 (Temporary Redirect) status code can be used instead.
+*Note:* For historical reasons, a user agent *MAY* change the request method from POST to GET for the subsequent request. If this behavior is undesired, the =307 (Temporary Redirect)= status code can be used instead.
 #+END_QUOTE
+
+由于历史的原因，用户代理 *可以* 在接下来的请求里将 POST 方法改变为 GET 方法。如果不希望这种行为，可以使用 =307 (Temporary Redirect)= 状态码来代替。
 
 #+BEGIN_QUOTE
-A 301 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+A =301= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
 
-*** 6.4.3. 302 Found
+=301= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
+
+*** 6.4.3. 302 发现 / 302 Found
 :PROPERTIES:
 :ID:       89acc9d5-366e-4a7c-820e-891fe25738be
 :END:
 
 #+BEGIN_QUOTE
-The 302 (Found) status code indicates that the target resource resides temporarily under a different URI. Since the redirection might be altered on occasion, the client ought to continue to use the effective request URI for future requests.
+The =302 (Found)= status code indicates that the target resource resides temporarily under a different URI. Since the redirection might be altered on occasion, the client ought to continue to use the effective request URI for future requests.
 #+END_QUOTE
+
+=302 (Found)= 状态码表明：目标资源临时处在一个不同的 URI 之下。因为重定向可以会再次改变，客户端应该在将来的请求中继续使用原来的[[ruby:effective%20request%20URI][有效请求 URI]]（而不是使用本次响应中 =Location= 字段所指的那个 URI）。
 
 #+BEGIN_QUOTE
-The server SHOULD generate a Location header field in the response containing a URI reference for the different URI. The user agent MAY use the Location field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the different URI(s).
+The server *SHOULD* generate a =Location= header field in the response containing a URI reference for the different URI. The user agent *MAY* use the =Location= field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the different URI(s).
 #+END_QUOTE
+
+服务器 *应当* 在响应里生成一个 =Location= 头字段来包含一个这个不同的 URI 引用。用户代理 *可以* 使用 =Location= 的字段值来自动重定向。服务器的响应有效载荷通常会包含一个简短的超文本[[ruby:note][注解]]，其内有一个指向这个（或多个）新 URI 的超链接。
 
 #+BEGIN_QUOTE
-*Note:* For historical reasons, a user agent MAY change the request method from POST to GET for the subsequent request. If this behavior is undesired, the 307 (Temporary Redirect) status code can be used instead.
+*Note:* For historical reasons, a user agent *MAY* change the request method from POST to GET for the subsequent request. If this behavior is undesired, the =307 (Temporary Redirect)= status code can be used instead.
 #+END_QUOTE
 
-*** 6.4.4. 303 See Other
+由于历史的原因，用户代理 *可以* 在接下来的请求里将 POST 方法改变为 GET 方法。如果不希望这种行为，可以使用 =307 (Temporary Redirect)= 状态码来代替。
+
+*** 6.4.4. 303 参见其他 / See Other
 :PROPERTIES:
 :ID:       12c7ea0c-85ac-401f-8132-293e6ebcf52f
 :END:
 
 #+BEGIN_QUOTE
-The 303 (See Other) status code indicates that the server is redirecting the user agent to a different resource, as indicated by a URI in the Location header field, which is intended to provide an indirect response to the original request. A user agent can perform a retrieval request targeting that URI (a GET or HEAD request if using HTTP), which might also be redirected, and present the eventual result as an answer to the original request. Note that the new URI in the Location header field is not considered equivalent to the effective request URI.
+The =303 (See Other)= status code indicates that the server is redirecting the user agent to a different resource, as indicated by a URI in the =Location= header field, which is intended to provide an indirect response to the original request. A user agent can perform a retrieval request targeting that URI (a GET or HEAD request if using HTTP), which might also be redirected, and present the eventual result as an answer to the original request. Note that the new URI in the =Location= header field is not considered equivalent to the effective request URI.
+#+END_QUOTE
+
+=303 (See Other)= 状态码表明：服务器让用户代理重新定向到一个不同的资源上，正如在 =Location= 的字段值里所示的 URI 上，其意图是提供一个[[ruby:indirect][间接]]的响应到原始请求。用户代理可以执行一个[[ruby:retrieval%20request][检索请求]]（如果使用 HTTP 的话就是一个 GET 或者 HEAD）来定位这个 URI，这样同样可以重定向，并呈现最终结果来作为这个原始请求的应答。需要注意的是在 =Location= 头字段里的新 URI 不被视为等同于[[ruby:effective%20request%20URI][有效请求 URI]]。 
+
+#+BEGIN_QUOTE
+译注：=300= 的 =Location= 字段值所指的 URI 表示资源有多个表示形式，而 =301= 和 =302= 中 =Location= 的 URI 表示资源在不同的位置上，这些 URI 所代表是同一个资源，而 =303= 中 =Location= 的 URI 所指的是另一个不同的资源，所以有“间接”的意义。同时，正因为 =303= 的有效请求 URI 所代表的资源与 =Location= 的 URI 不是同一个，因为才有上述的“不视为等同”。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
 This status code is applicable to any HTTP method. It is primarily used to allow the output of a POST action to redirect the user agent to a selected resource, since doing so provides the information corresponding to the POST response in a form that can be separately identified, bookmarked, and cached, independent of the original request.
 #+END_QUOTE
 
+这个状态码适用于任何 HTTP 方法。它主要用来让一个 POST 动作的输出结果可以将用户代理重定向到一个选定的资源上，因为这样做提供对应于这个 POST 响应的信息，以一种能够被单独标识、保存书签、缓存的方式。
+
 #+BEGIN_QUOTE
-A 303 response to a GET request indicates that the origin server does not have a representation of the target resource that can be transferred by the server over HTTP. However, the Location field value refers to a resource that is descriptive of the target resource, such that making a retrieval request on that other resource might result in a representation that is useful to recipients without implying that it represents the original target resource. Note that answers to the questions of what can be represented, what representations are adequate, and what might be a useful description are outside the scope of HTTP.
+A =303= response to a GET request indicates that the origin server does not have a representation of the target resource that can be transferred by the server over HTTP. However, the =Location= field value refers to a resource that is descriptive of the target resource, such that making a retrieval request on that other resource might result in a representation that is useful to recipients without implying that it represents the original target resource. Note that answers to the questions of what can be represented, what representations are adequate, and what might be a useful description are outside the scope of HTTP.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
