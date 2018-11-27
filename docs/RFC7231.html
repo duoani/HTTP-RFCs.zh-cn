@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-26 Mon 19:28 -->
+<!-- 2018-11-27 Tue 19:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -489,7 +489,7 @@ for the JavaScript code in this tag.
 <li><a href="#org39787e1">5.3.5. Accept-Language</a></li>
 </ul>
 </li>
-<li><a href="#orgeec6089">5.4. 身份验证凭证 / Authentication Credentials</a></li>
+<li><a href="#orgb139583">5.4. 认证凭证 / Authentication Credentials</a></li>
 <li><a href="#org178e82e">5.5. 请求上下文/ Request Context</a>
 <ul>
 <li><a href="#org7309791">5.5.1. From</a></li>
@@ -514,7 +514,7 @@ for the JavaScript code in this tag.
 <li><a href="#org71047ad">6.3.2. 201 已创建 / 201 Created</a></li>
 <li><a href="#orgfd43abd">6.3.3. 202 已接受 / 202 Accepted</a></li>
 <li><a href="#org4562efd">6.3.4. 203 非权威信息 / 203 Non-Authoritative Information</a></li>
-<li><a href="#org61ddd38">6.3.5. 204 No Content</a></li>
+<li><a href="#org891df5a">6.3.5. 204 无内容 / 204 No Content</a></li>
 <li><a href="#orgd06ba28">6.3.6. 205 重置内容 / 205 Reset Content</a></li>
 </ul>
 </li>
@@ -523,29 +523,29 @@ for the JavaScript code in this tag.
 <li><a href="#orgb57062e">6.4.1. 300 多重选择 / 300 Multiple Choices</a></li>
 <li><a href="#org5db647a">6.4.2. 301 永久移动 / 301 Moved Permanently</a></li>
 <li><a href="#orge4daa3b">6.4.3. 302 发现 / 302 Found</a></li>
-<li><a href="#orgf680724">6.4.4. 303 参见其他 / See Other</a></li>
-<li><a href="#orgbea7275">6.4.5. 305 Use Proxy</a></li>
-<li><a href="#orgcefeee6">6.4.6. 306 (Unused)</a></li>
-<li><a href="#orgd9247a2">6.4.7. 307 Temporary Redirect</a></li>
+<li><a href="#org07eea47">6.4.4. 303 查看其他 / See Other</a></li>
+<li><a href="#orgf42d58d">6.4.5. 305 使用代理 / 305 Use Proxy</a></li>
+<li><a href="#org96ec0d0">6.4.6. 305 未使用 / 306 (Unused)</a></li>
+<li><a href="#orgc649e59">6.4.7. 307 临时重定向 / 307 Temporary Redirect</a></li>
 </ul>
 </li>
 <li><a href="#org187c176">6.5. 客户端错误 / Client Error 4xx</a>
 <ul>
-<li><a href="#org6b99dfb">6.5.1. 400 Bad Request</a></li>
-<li><a href="#org42c217d">6.5.2. 402 Payment Required</a></li>
-<li><a href="#org86089b5">6.5.3. 403 Forbidden</a></li>
-<li><a href="#org6ef9040">6.5.4. 404 Not Found</a></li>
-<li><a href="#org9297a17">6.5.5. 405 Method Not Allowed</a></li>
-<li><a href="#orgdf502e9">6.5.6. 406 Not Acceptable</a></li>
-<li><a href="#org2a53d18">6.5.7. 408 Request Timeout</a></li>
-<li><a href="#org010d0a2">6.5.8. 409 Conflict</a></li>
-<li><a href="#org4072a5f">6.5.9. 410 Gone</a></li>
-<li><a href="#org014abbd">6.5.10. 411 Length Required</a></li>
-<li><a href="#org7f816ee">6.5.11. 413 Payload Too Large</a></li>
-<li><a href="#orgda225c7">6.5.12. 414 URI Too Long</a></li>
-<li><a href="#org9aaec2d">6.5.13. 415 Unsupported Media Type</a></li>
-<li><a href="#orgcafc9ce">6.5.14. 417 Expectation Failed</a></li>
-<li><a href="#org4cc1a60">6.5.15. 426 Upgrade Required</a></li>
+<li><a href="#orgdfa5d2b">6.5.1. 400 无效请求 / 400 Bad Request</a></li>
+<li><a href="#org3ad4406">6.5.2. 402 要求付费 / 402 Payment Required</a></li>
+<li><a href="#orgd8d2944">6.5.3. 403 禁止 / 403 Forbidden</a></li>
+<li><a href="#org8c2bb1c">6.5.4. 404 没有找到 / 404 Not Found</a></li>
+<li><a href="#org6aeff14">6.5.5. 405 方法不允许 / 405 Method Not Allowed</a></li>
+<li><a href="#orgd48a631">6.5.6. 406 不接受 / 406 Not Acceptable</a></li>
+<li><a href="#org79ddb85">6.5.7. 408 请求超时 / 408 Request Timeout</a></li>
+<li><a href="#org14cfbd3">6.5.8. 409 冲突 / 409 Conflict</a></li>
+<li><a href="#org7a07528">6.5.9. 410 已不在 / 410 Gone</a></li>
+<li><a href="#orgbc61cd6">6.5.10. 411 要求长度 / 411 Length Required</a></li>
+<li><a href="#org54d3341">6.5.11. 413 有效载荷过大 / 413 Payload Too Large</a></li>
+<li><a href="#orgdc2c95b">6.5.12. 414 URI 过长 / 414 URI Too Long</a></li>
+<li><a href="#org7804f77">6.5.13. 415 不支持的媒体类型 / 415 Unsupported Media Type</a></li>
+<li><a href="#org631d1f7">6.5.14. 417 期望错误 / 417 Expectation Failed</a></li>
+<li><a href="#orgb0c8615">6.5.15. 426 要求升级 / 426 Upgrade Required</a></li>
 </ul>
 </li>
 <li><a href="#org033011b">6.6. 服务器错误 / Server Error 5xx</a>
@@ -3058,7 +3058,7 @@ A client sends request header fields to provide more information about the reque
 </blockquote>
 
 <p>
-客户端发送<ruby>请求头字段<rt>request header fields</rt></ruby>来提供更多关于请求上下文的信息，基于目标资源的状态来使请求<ruby>带有条件<rt>conditional</rt></ruby>，提议响应的<ruby>首选格式<rt>preferred formats</rt></ruby>，提供身份凭证，或者更改预期的请求处理。这些头字段充当请求的<ruby>修饰符<rt>modifiers</rt></ruby>，类似于一门编程语言中参与函数调用的参数一样。
+客户端发送<ruby>请求头字段<rt>request header fields</rt></ruby>来提供更多关于请求上下文的信息，基于目标资源的状态来使请求<ruby>带有条件<rt>conditional</rt></ruby>，提议响应的<ruby>首选格式<rt>preferred formats</rt></ruby>，提供认证凭证，或者更改预期的请求处理。这些头字段充当请求的<ruby>修饰符<rt>modifiers</rt></ruby>，类似于一门编程语言中参与函数调用的参数一样。
 </p>
 </div>
 
@@ -3173,7 +3173,7 @@ A <code>100-continue</code> expectation informs recipients that the client is ab
 </blockquote>
 
 <p>
-<code>100-continue</code> 这个期望向接收端告知了这样一个信息：客户端即将在本次请求中发送一个（假定是很大的）消息体，如果之前所发送的请求行以及头字段不足以引起一个立即成功、重定向或者错误响应的时候，它希望能够从接收端那里接收到一个 <code>100 (Continue)</code> 的<ruby>过渡响应<rt>interim response</rt></ruby>，让客户端在真正要发送这个消息体之前，可以等待服务器的指示来确认是否有必要发送这个消息体。当消息体的体积巨大，或者客户端预见到可能出现错误（例如，当首次发送一个<ruby>会改变资源状态的请求方法<rt>state-changing method</rt></ruby>的时候没有预先校验身份凭证）的时候，这样做可以提高效率。
+<code>100-continue</code> 这个期望向接收端告知了这样一个信息：客户端即将在本次请求中发送一个（假定是很大的）消息体，如果之前所发送的请求行以及头字段不足以引起一个立即成功、重定向或者错误响应的时候，它希望能够从接收端那里接收到一个 <code>100 (Continue)</code> 的<ruby>过渡响应<rt>interim response</rt></ruby>，让客户端在真正要发送这个消息体之前，可以等待服务器的指示来确认是否有必要发送这个消息体。当消息体的体积巨大，或者客户端预见到可能出现错误（例如，当首次发送一个<ruby>会改变资源状态的请求方法<rt>state-changing method</rt></ruby>的时候没有预先校验认证凭证）的时候，这样做可以提高效率。
 </p>
 
 <blockquote>
@@ -3423,7 +3423,7 @@ HTTP 的<ruby>条件请求头字段<rt>conditional request fields</rt></ruby>【
 </div>
 
 <div id="outline-container-org07183ec" class="outline-3">
-<h3 id="org07183ec">5.3. 内容协商 / Content Negotiation</h3>
+<h3 id="org07183ec"><a id="ID-99513880-9381-41eb-91ee-483b42d025e8"></a>5.3. 内容协商 / Content Negotiation</h3>
 <div class="outline-text-3" id="text-org07183ec">
 <blockquote>
 <p>
@@ -4054,9 +4054,9 @@ Since intelligibility is highly dependent on the individual user, user agents ne
 </div>
 </div>
 
-<div id="outline-container-orgeec6089" class="outline-3">
-<h3 id="orgeec6089">5.4. 身份验证凭证 / Authentication Credentials</h3>
-<div class="outline-text-3" id="text-orgeec6089">
+<div id="outline-container-orgb139583" class="outline-3">
+<h3 id="orgb139583">5.4. 认证凭证 / Authentication Credentials</h3>
+<div class="outline-text-3" id="text-orgb139583">
 <blockquote>
 <p>
 Two header fields are used for carrying authentication credentials, as defined in [<a href="RFC7235.html">RFC7235</a>]. Note that various custom mechanisms for user authentication use the <code>Cookie</code> header field for this purpose, as defined in [<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>].
@@ -4064,7 +4064,7 @@ Two header fields are used for carrying authentication credentials, as defined i
 </blockquote>
 
 <p>
-以下两个头字段是用于装载身份验证凭证的，其定义见【<a href="RFC7235.html">RFC7235</a>】。需要注意的是，很多种用于用户身份验证的自定义机制使用了 <code>Cookie</code> 头字段来实现上述目的，其定义见【<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>】。
+以下两个头字段是用于装载认证凭证的，其定义见【<a href="RFC7235.html">RFC7235</a>】。需要注意的是，很多种用于用户身份验证的自定义机制使用了 <code>Cookie</code> 头字段来实现上述目的，其定义见【<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>】。
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4386,7 +4386,7 @@ The status-code element is a three-digit integer code giving the result of the a
 </blockquote>
 
 <p>
-状态码是给出试图理解和满足请求的一个三位整数。
+状态码是为试图理解和满足请求而给出结果的一个三位整数。
 </p>
 
 <blockquote>
@@ -4517,7 +4517,7 @@ Responses with status codes that are defined as cacheable by default (e.g., <cod
 <tr>
 <td class="org-right">204</td>
 <td class="org-left">No Content</td>
-<td class="org-left"><a href="#org61ddd38">Section 6.3.5</a></td>
+<td class="org-left"><a href="#org891df5a">Section 6.3.5</a></td>
 </tr>
 
 <tr>
@@ -4553,7 +4553,7 @@ Responses with status codes that are defined as cacheable by default (e.g., <cod
 <tr>
 <td class="org-right">303</td>
 <td class="org-left">See Other</td>
-<td class="org-left"><a href="#orgf680724">Section 6.4.4</a></td>
+<td class="org-left"><a href="#org07eea47">Section 6.4.4</a></td>
 </tr>
 
 <tr>
@@ -4565,19 +4565,19 @@ Responses with status codes that are defined as cacheable by default (e.g., <cod
 <tr>
 <td class="org-right">305</td>
 <td class="org-left">Use Proxy</td>
-<td class="org-left"><a href="#orgbea7275">Section 6.4.5</a></td>
+<td class="org-left"><a href="#orgf42d58d">Section 6.4.5</a></td>
 </tr>
 
 <tr>
 <td class="org-right">307</td>
 <td class="org-left">Temporary Redirect</td>
-<td class="org-left"><a href="#orgd9247a2">Section 6.4.7</a></td>
+<td class="org-left"><a href="#orgc649e59">Section 6.4.7</a></td>
 </tr>
 
 <tr>
 <td class="org-right">400</td>
 <td class="org-left">Bad Request</td>
-<td class="org-left"><a href="#org6b99dfb">Section 6.5.1</a></td>
+<td class="org-left"><a href="#orgdfa5d2b">Section 6.5.1</a></td>
 </tr>
 
 <tr>
@@ -4589,31 +4589,31 @@ Responses with status codes that are defined as cacheable by default (e.g., <cod
 <tr>
 <td class="org-right">402</td>
 <td class="org-left">Payment Required</td>
-<td class="org-left"><a href="#org42c217d">Section 6.5.2</a></td>
+<td class="org-left"><a href="#org3ad4406">Section 6.5.2</a></td>
 </tr>
 
 <tr>
 <td class="org-right">403</td>
 <td class="org-left">Forbidden</td>
-<td class="org-left"><a href="#org86089b5">Section 6.5.3</a></td>
+<td class="org-left"><a href="#orgd8d2944">Section 6.5.3</a></td>
 </tr>
 
 <tr>
 <td class="org-right">404</td>
 <td class="org-left">Not Found</td>
-<td class="org-left"><a href="#org6ef9040">Section 6.5.4</a></td>
+<td class="org-left"><a href="#org8c2bb1c">Section 6.5.4</a></td>
 </tr>
 
 <tr>
 <td class="org-right">405</td>
 <td class="org-left">Method Not Allowed</td>
-<td class="org-left"><a href="#org9297a17">Section 6.5.5</a></td>
+<td class="org-left"><a href="#org6aeff14">Section 6.5.5</a></td>
 </tr>
 
 <tr>
 <td class="org-right">406</td>
 <td class="org-left">Not Acceptable</td>
-<td class="org-left"><a href="#orgdf502e9">Section 6.5.6</a></td>
+<td class="org-left"><a href="#orgd48a631">Section 6.5.6</a></td>
 </tr>
 
 <tr>
@@ -4625,25 +4625,25 @@ Responses with status codes that are defined as cacheable by default (e.g., <cod
 <tr>
 <td class="org-right">408</td>
 <td class="org-left">Request Timeout</td>
-<td class="org-left"><a href="#org2a53d18">Section 6.5.7</a></td>
+<td class="org-left"><a href="#org79ddb85">Section 6.5.7</a></td>
 </tr>
 
 <tr>
 <td class="org-right">409</td>
 <td class="org-left">Conflict</td>
-<td class="org-left"><a href="#org010d0a2">Section 6.5.8</a></td>
+<td class="org-left"><a href="#org14cfbd3">Section 6.5.8</a></td>
 </tr>
 
 <tr>
 <td class="org-right">410</td>
 <td class="org-left">Gone</td>
-<td class="org-left"><a href="#org4072a5f">Section 6.5.9</a></td>
+<td class="org-left"><a href="#org7a07528">Section 6.5.9</a></td>
 </tr>
 
 <tr>
 <td class="org-right">411</td>
 <td class="org-left">Length Required</td>
-<td class="org-left"><a href="#org014abbd">Section 6.5.10</a></td>
+<td class="org-left"><a href="#orgbc61cd6">Section 6.5.10</a></td>
 </tr>
 
 <tr>
@@ -4655,19 +4655,19 @@ Responses with status codes that are defined as cacheable by default (e.g., <cod
 <tr>
 <td class="org-right">413</td>
 <td class="org-left">Payload Too Large</td>
-<td class="org-left"><a href="#org7f816ee">Section 6.5.11</a></td>
+<td class="org-left"><a href="#org54d3341">Section 6.5.11</a></td>
 </tr>
 
 <tr>
 <td class="org-right">414</td>
 <td class="org-left">URI Too Long</td>
-<td class="org-left"><a href="#orgda225c7">Section 6.5.12</a></td>
+<td class="org-left"><a href="#orgdc2c95b">Section 6.5.12</a></td>
 </tr>
 
 <tr>
 <td class="org-right">415</td>
 <td class="org-left">Unsupported Media Type</td>
-<td class="org-left"><a href="#org9aaec2d">Section 6.5.13</a></td>
+<td class="org-left"><a href="#org7804f77">Section 6.5.13</a></td>
 </tr>
 
 <tr>
@@ -4679,13 +4679,13 @@ Responses with status codes that are defined as cacheable by default (e.g., <cod
 <tr>
 <td class="org-right">417</td>
 <td class="org-left">Expectation Failed</td>
-<td class="org-left"><a href="#orgcafc9ce">Section 6.5.14</a></td>
+<td class="org-left"><a href="#org631d1f7">Section 6.5.14</a></td>
 </tr>
 
 <tr>
 <td class="org-right">426</td>
 <td class="org-left">Upgrade Required</td>
-<td class="org-left"><a href="#org4cc1a60">Section 6.5.15</a></td>
+<td class="org-left"><a href="#orgb0c8615">Section 6.5.15</a></td>
 </tr>
 
 <tr>
@@ -4910,7 +4910,7 @@ The <code>201 (Created)</code> status code indicates that the request has been f
 </blockquote>
 
 <p>
-<code>201 (Created)</code> 状态码表明：请求已被<ruby>实现<rt>fulfilled</rt></ruby>并且导致了一个或多个<ruby>新资源<rt>new resources</rt></ruby>被创建。上述因请求而创建的<ruby>主要资源<rt>primary resource</rt></ruby>会被一个在响应里的 <code>Location</code> 头字段所标识，或者，如果没有接收到 <code>Location</code> 头字段的话，则通过<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 来识别。
+<code>201 (Created)</code> 状态码表明：请求已被<ruby>实现<rt>fulfilled</rt></ruby>并且引起了一个或多个<ruby>新资源<rt>new resources</rt></ruby>被创建。上述因请求而创建的<ruby>主要资源<rt>primary resource</rt></ruby>会被一个在响应里的 <code>Location</code> 头字段所标识，或者，如果没有接收到 <code>Location</code> 头字段的话，则通过<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 来识别。
 </p>
 
 <blockquote>
@@ -4935,7 +4935,7 @@ The <code>202 (Accepted)</code> status code indicates that the request has been 
 </blockquote>
 
 <p>
-<code>202 (Accepted)</code> 状态码表明：请求已被接受处理，但处理尚未完成。最终可能也可能不会按照请求来行事，因为当实际进行处理的时候该请求可能被拒绝。HTTP 里没有任何的<ruby>技巧<rt>facility</rt></ruby>可以从一个<ruby>异步操作<rt>asynchronous operation</rt></ruby>中重发一个状态码。
+<code>202 (Accepted)</code> 状态码表明：请求已被接受处理，但处理尚未<ruby>完成<rt>completed</rt></ruby>。最终可能也可能不会按照请求来行事，因为当实际进行处理的时候该请求可能被拒绝。HTTP 里没有任何的<ruby>技巧<rt>facility</rt></ruby>可以从一个<ruby>异步操作<rt>asynchronous operation</rt></ruby>中重发一个状态码。
 </p>
 
 <blockquote>
@@ -4985,9 +4985,9 @@ A <code>203</code> response is cacheable by default; i.e., unless otherwise indi
 </div>
 </div>
 
-<div id="outline-container-org61ddd38" class="outline-4">
-<h4 id="org61ddd38"><a id="ID-3a5fcefb-f004-4981-a616-0feba4c9e9e4"></a>6.3.5. 204 No Content</h4>
-<div class="outline-text-4" id="text-org61ddd38">
+<div id="outline-container-org891df5a" class="outline-4">
+<h4 id="org891df5a"><a id="ID-3a5fcefb-f004-4981-a616-0feba4c9e9e4"></a>6.3.5. 204 无内容 / 204 No Content</h4>
+<div class="outline-text-4" id="text-org891df5a">
 <blockquote>
 <p>
 The <code>204 (No Content)</code> status code indicates that the server has successfully fulfilled the request and that there is no additional content to send in the response payload body. Metadata in the response header fields refer to the target resource and its selected representation after the requested action was applied.
@@ -5060,7 +5060,7 @@ The <code>205 (Reset Content)</code> status code indicates that the server has f
 </blockquote>
 
 <p>
-<code>205 (Reset Content)</code> 状态码表明：服务器已经<ruby>实现<rt>fulfilled</rt></ruby>了这个请求，并且很希望用户代理将“文档视图”重置为原始状态——这将导致发起请求——以源服务器的响应作为重置的后结果。
+<code>205 (Reset Content)</code> 状态码表明：服务器已经<ruby>实现<rt>fulfilled</rt></ruby>了这个请求，并且很希望用户代理将“文档视图”重置为原始状态——这将导致发起请求——以源服务器的响应作为重置后的结果。
 </p>
 
 <blockquote>
@@ -5149,7 +5149,7 @@ A client <b>SHOULD</b> detect and intervene in cyclical redirections (i.e., "inf
 </blockquote>
 
 <p>
-客户端 <b>应当</b> 检测并调停<ruby>循环重定向<rt>cyclical</rt></ruby>（也就是说，无限重定向循环）。
+客户端 <b>应当</b> 检测并调停<ruby>循环重定向<rt>cyclical redirections</rt></ruby>（也就是说，无限重定向循环）。
 </p>
 
 <blockquote>
@@ -5159,7 +5159,7 @@ A client <b>SHOULD</b> detect and intervene in cyclical redirections (i.e., "inf
 </blockquote>
 
 <p>
-<b>注意：</b> 本规范早期的版本推荐最多 5 次重定向（【RFC2068】章节 10.3）。内容开始者需要意识到某些客户端可能实现了这种固定次数的限制。
+<b>注意：</b> 本规范早期的版本推荐最多 5 次重定向（【RFC2068】章节 10.3）。<ruby>内容开发者<rt>content developers</rt></ruby>需要意识到某些客户端可能实现了这种固定次数的限制。
 </p>
 </div>
 
@@ -5193,7 +5193,7 @@ For request methods other than HEAD, the server <b>SHOULD</b> generate a payload
 </blockquote>
 
 <p>
-对于除 HEAD 以外的请求方法，服务器 <b>应当</b> 在 <code>300</code> 响应里生成一个有效载荷来包含一个有各种<ruby>表示形式元数据<rt>representation metadata</rt></ruby>以及 URI 引用的列表，使得用户或都用户代理可以从中选出一个最优表示形式。如果用户代理了解所提供的媒体类型的话，它 <b>可以</b> 自动从中选择一个。本规范并同有定义自动选择的具体格式，那是因为 HTTP 试图与它的有效载荷的定义保持<ruby>正交<rt>orthogonal</rt></ruby>。在实践过程中，表示形式会以某种被认为是便于用户代理去解析的格式来提——这取决于共享设计或<ruby>内容协商<rt>content negotiation</rt></ruby>；又或者以某些普遍被接受的超文本格式来提供。
+对于除 HEAD 以外的请求方法，服务器 <b>应当</b> 在 <code>300</code> 响应里生成一个有效载荷来包含一个列表，列表中有各种<ruby>表示形式元数据<rt>representation metadata</rt></ruby>以及 URI 引用，让用户或者用户代理可以从中选出一个最优表示形式。如果用户代理了解所提供的媒体类型的话，它 <b>可以</b> 自动从中选择一个。本规范并没有定义自动选择的具体格式，那是因为 HTTP 试图与它的有效载荷的定义保持<ruby>正交<rt>orthogonal</rt></ruby>。在实践过程中，表示形式会以某种被认为是便于用户代理去解析的格式来提供——这取决于共享设计或<ruby>内容协商<rt>content negotiation</rt></ruby>；又或者以某些普遍被接受的超文本格式来提供。
 </p>
 
 <blockquote>
@@ -5239,7 +5239,8 @@ The server <b>SHOULD</b> generate a <code>Location</code> header field in the re
 </blockquote>
 
 <p>
-服务器 <b>应当</b> 在响应里生成一个 <code>Location</code> 头字段来包含新的永久 URI 引用中最优的那一个。用户代理 <b>可以</b> 使用 <code>Location</code> 的字段值来自动重定向。服务器的响应有效载荷通常会包含一个简短的超文本<ruby>注解<rt>note</rt></ruby>，其内有一个指向这个（或多个）新 URI 的超链接。
+服务器 <b>应当</b> 在响应里生成一个 <code>Location</code> 头字段来包含新的永久 URI 引用中最优的那一个。用户代e在皮耶entation
+ <b>可以</b> 使用 <code>Location</code> 的字段值来<ruby>自动重定向<rt>automatic redirection</rt></ruby>。服务器的响应有效载荷通常会包含一个简短的超文本<ruby>注释<rt>note</rt></ruby>，其内有一个指向这个（或多个）新 URI 的超链接。
 </p>
 
 <blockquote>
@@ -5284,7 +5285,7 @@ The server <b>SHOULD</b> generate a <code>Location</code> header field in the re
 </blockquote>
 
 <p>
-服务器 <b>应当</b> 在响应里生成一个 <code>Location</code> 头字段来包含一个这个不同的 URI 引用。用户代理 <b>可以</b> 使用 <code>Location</code> 的字段值来自动重定向。服务器的响应有效载荷通常会包含一个简短的超文本<ruby>注解<rt>note</rt></ruby>，其内有一个指向这个（或多个）新 URI 的超链接。
+服务器 <b>应当</b> 在响应里生成一个 <code>Location</code> 头字段来包含这个不同的 URI 引用。用户代理 <b>可以</b> 使用 <code>Location</code> 的字段值来自动重定向。服务器的响应有效载荷通常会包含一个简短的超文本<ruby>注释<rt>note</rt></ruby>，其内有一个指向这个（或多个）新 URI 的超链接。
 </p>
 
 <blockquote>
@@ -5299,9 +5300,9 @@ The server <b>SHOULD</b> generate a <code>Location</code> header field in the re
 </div>
 </div>
 
-<div id="outline-container-orgf680724" class="outline-4">
-<h4 id="orgf680724"><a id="ID-12c7ea0c-85ac-401f-8132-293e6ebcf52f"></a>6.4.4. 303 参见其他 / See Other</h4>
-<div class="outline-text-4" id="text-orgf680724">
+<div id="outline-container-org07eea47" class="outline-4">
+<h4 id="org07eea47"><a id="ID-12c7ea0c-85ac-401f-8132-293e6ebcf52f"></a>6.4.4. 303 查看其他 / See Other</h4>
+<div class="outline-text-4" id="text-org07eea47">
 <blockquote>
 <p>
 The <code>303 (See Other)</code> status code indicates that the server is redirecting the user agent to a different resource, as indicated by a URI in the <code>Location</code> header field, which is intended to provide an indirect response to the original request. A user agent can perform a retrieval request targeting that URI (a GET or HEAD request if using HTTP), which might also be redirected, and present the eventual result as an answer to the original request. Note that the new URI in the <code>Location</code> header field is not considered equivalent to the effective request URI.
@@ -5309,12 +5310,12 @@ The <code>303 (See Other)</code> status code indicates that the server is redire
 </blockquote>
 
 <p>
-<code>303 (See Other)</code> 状态码表明：服务器让用户代理重新定向到一个不同的资源上，正如在 <code>Location</code> 的字段值里所示的 URI 上，其意图是提供一个<ruby>间接<rt>indirect</rt></ruby>的响应到原始请求。用户代理可以执行一个<ruby>检索请求<rt>retrieval request</rt></ruby>（如果使用 HTTP 的话就是一个 GET 或者 HEAD）来定位这个 URI，这样同样可以重定向，并呈现最终结果来作为这个原始请求的应答。需要注意的是在 <code>Location</code> 头字段里的新 URI 不被视为等同于<ruby>有效请求 URI<rt>effective request URI</rt></ruby>。 
+<code>303 (See Other)</code> 状态码表明：服务器让用户代理重新定向到一个不同的资源上，正如在 <code>Location</code> 的字段值里所示的 URI 上，其意图是提供一个<ruby>间接<rt>indirect</rt></ruby>的响应到原始请求。用户代理可以执行一个<ruby>检索请求<rt>retrieval request</rt></ruby>（如果使用 HTTP 的话就是一个 GET 或者 HEAD）来定位这个 URI，这样同样可以重定向，并呈现最终结果来作为这个<ruby>原始请求<rt>original request</rt></ruby>的应答。需要注意的是在 <code>Location</code> 头字段里的新 URI 不被视为等同于<ruby>有效请求 URI<rt>effective request URI</rt></ruby>。 
 </p>
 
 <blockquote>
 <p>
-译注：<code>300</code> 的 <code>Location</code> 字段值所指的 URI 表示资源有多个表示形式，而 <code>301</code> 和 <code>302</code> 中 <code>Location</code> 的 URI 表示资源在不同的位置上，这些 URI 所代表是同一个资源，而 <code>303</code> 中 <code>Location</code> 的 URI 所指的是另一个不同的资源，所以有“间接”的意义。同时，正因为 <code>303</code> 的有效请求 URI 所代表的资源与 <code>Location</code> 的 URI 不是同一个，因为才有上述的“不视为等同”。
+译注：<code>300</code> 的 <code>Location</code> 字段值所指的 URI 表示资源有多个表示形式，<code>301</code> 和 <code>302</code> 中 <code>Location</code> 的 URI 表示资源在不同的位置上，这些 URI 所代表是同一个资源。与上述状态码不同的是，<code>303</code> 中 <code>Location</code> 的 URI 所指的是另一个不同的资源，所以有“间接”的意义。同时，正因为 <code>303</code> 的有效请求 URI 所代表的资源与 <code>Location</code> 的 URI 不是同一个，因为才有上述的“不视为等同”。
 </p>
 </blockquote>
 
@@ -5325,7 +5326,7 @@ This status code is applicable to any HTTP method. It is primarily used to allow
 </blockquote>
 
 <p>
-这个状态码适用于任何 HTTP 方法。它主要用来让一个 POST 动作的输出结果可以将用户代理重定向到一个选定的资源上，因为这样做提供对应于这个 POST 响应的信息，以一种能够被单独标识、保存书签、缓存的方式。
+这个状态码适用于任何 HTTP 方法。它主要用来让一个 POST 动作的输出结果可以将用户代理重定向到一个选定的资源上，因为这样做可以以一种能够被单独<ruby>标识<rt>indentified</rt></ruby>、<ruby>保存书签<rt>bookmarked</rt></ruby>、<ruby>缓存<rt>cached</rt></ruby>的方式来提供这个 POST 响应对应的信息，而不依赖于原始请求。
 </p>
 
 <blockquote>
@@ -5334,56 +5335,84 @@ A <code>303</code> response to a GET request indicates that the origin server do
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-Except for responses to a HEAD request, the representation of a 303 response ought to contain a short hypertext note with a hyperlink to the same URI reference provided in the Location header field.
+回应给 GET 请求的一个 <code>303</code> 响应表明：源服务器不存在一个目标资源的<ruby>表示形式<rt>representation</rt></ruby>能够通过 HTTP 来传输。尽管如此，<code>Location</code> 的字段值引用了另一个资源来描述这个目标资源，以便于向这个新资源发起一个检索请求时可以得到一个可用于接收端的表示形式而不必有任何暗示它（这个表示形式）代表了原始的目标资源。
 </p>
-</blockquote>
-</div>
-</div>
-
-<div id="outline-container-orgbea7275" class="outline-4">
-<h4 id="orgbea7275"><a id="ID-e69019b2-b071-4380-bcd7-d2fd80261d81"></a>6.4.5. 305 Use Proxy</h4>
-<div class="outline-text-4" id="text-orgbea7275">
-<blockquote>
-<p>
-The 305 (Use Proxy) status code was defined in a previous version of this specification and is now deprecated (Appendix B).
-</p>
-</blockquote>
-</div>
-</div>
-
-<div id="outline-container-orgcefeee6" class="outline-4">
-<h4 id="orgcefeee6">6.4.6. 306 (Unused)</h4>
-<div class="outline-text-4" id="text-orgcefeee6">
-<blockquote>
-<p>
-The 306 status code was defined in a previous version of this specification, is no longer used, and the code is reserved.
-</p>
-</blockquote>
-</div>
-</div>
-
-<div id="outline-container-orgd9247a2" class="outline-4">
-<h4 id="orgd9247a2"><a id="ID-549c5916-48a9-4e75-8c68-538635c00a2c"></a>6.4.7. 307 Temporary Redirect</h4>
-<div class="outline-text-4" id="text-orgd9247a2">
-<blockquote>
-<p>
-The 307 (Temporary Redirect) status code indicates that the target resource resides temporarily under a different URI and the user agent MUST NOT change the request method if it performs an automatic redirection to that URI. Since the redirection can change over time, the client ought to continue using the original effective request URI for future requests.
-</p>
-</blockquote>
 
 <blockquote>
 <p>
-The server SHOULD generate a Location header field in the response containing a URI reference for the different URI. The user agent MAY use the Location field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the different URI(s).
+Except for responses to a HEAD request, the representation of a <code>303</code> response ought to contain a short hypertext note with a hyperlink to the same URI reference provided in the <code>Location</code> header field.
 </p>
 </blockquote>
 
+<p>
+除了回应给 HEAD 请求的响应以外，<code>303</code> 响应的表示形式应该包含一个简短的超文本<ruby>注释<rt>note</rt></ruby>，其内有一个与 <code>Location</code> 头字段相同的 URI 的超链接。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf42d58d" class="outline-4">
+<h4 id="orgf42d58d"><a id="ID-e69019b2-b071-4380-bcd7-d2fd80261d81"></a>6.4.5. 305 使用代理 / 305 Use Proxy</h4>
+<div class="outline-text-4" id="text-orgf42d58d">
 <blockquote>
 <p>
-Note: This status code is similar to 302 (Found), except that it does not allow changing the request method from POST to GET. This specification defines no equivalent counterpart for 301 (Moved Permanently) ([RFC7238], however, defines the status code 308 (Permanent Redirect) for this purpose).
+The <code>305 (Use Proxy)</code> status code was defined in a previous version of this specification and is now deprecated (<a href="#org9b37d9f">Appendix B</a>).
 </p>
 </blockquote>
+
+<p>
+<code>305 (Use Proxy)</code> 状态码是本规范之前的版本所定义的，现在已经弃用（<a href="#org9b37d9f">附录 B</a>）。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org96ec0d0" class="outline-4">
+<h4 id="org96ec0d0">6.4.6. 305 未使用 / 306 (Unused)</h4>
+<div class="outline-text-4" id="text-org96ec0d0">
+<blockquote>
+<p>
+The <code>306</code> status code was defined in a previous version of this specification, is no longer used, and the code is reserved.
+</p>
+</blockquote>
+
+<p>
+306 状态码是本规范之前的版本所定义的，已经不再使用，同时保留该状态码。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc649e59" class="outline-4">
+<h4 id="orgc649e59"><a id="ID-549c5916-48a9-4e75-8c68-538635c00a2c"></a>6.4.7. 307 临时重定向 / 307 Temporary Redirect</h4>
+<div class="outline-text-4" id="text-orgc649e59">
+<blockquote>
+<p>
+The <code>307 (Temporary Redirect)</code> status code indicates that the target resource resides temporarily under a different URI and the user agent <b>MUST NOT</b> change the request method if it performs an automatic redirection to that URI. Since the redirection can change over time, the client ought to continue using the original effective request URI for future requests.
+</p>
+</blockquote>
+
+<p>
+<code>307 (Temporary Redirect)</code> 状态码表明：目标资源临时处在一个不同的 URI 之下，并且如果用户代理执行自动重定向到该 URI 的话，<b>禁止</b> 改变请求方法。因为重定向可能随时会改变，客户端应该在将来的请求中继续使用原来的<ruby>有效请求 URI<rt>effective request URI</rt></ruby>（而不是使用本次响应中 <code>Location</code> 字段所指的那个 URI）。
+</p>
+
+<blockquote>
+<p>
+The server <b>SHOULD</b> generate a <code>Location</code> header field in the response containing a URI reference for the different URI. The user agent <b>MAY</b> use the <code>Location</code> field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the different URI(s).
+</p>
+</blockquote>
+
+<p>
+服务器 <b>应当</b> 在响应里生成一个 <code>Location</code> 头字段来包含一个这个不同的 URI 引用。用户代理 <b>可以</b> 使用 <code>Location</code> 的字段值来自动重定向。服务器的响应有效载荷通常会包含一个简短的超文本<ruby>注释<rt>note</rt></ruby>，其内有一个指向这个（或多个）新 URI 的超链接。
+</p>
+
+<blockquote>
+<p>
+<b>Note:</b> This status code is similar to <code>302 (Found)</code>, except that it does not allow changing the request method from POST to GET. This specification defines no equivalent counterpart for <code>301 (Moved Permanently)</code> ([<a href="https://tools.ietf.org/html/rfc7238">RFC7238</a>], however, defines the status code <code>308 (Permanent Redirect)</code> for this purpose).
+</p>
+</blockquote>
+
+<p>
+<b>注意：</b> 本状态码和 <code>302 (Found)</code> 类似，不同之处在于它并不允许请求方法从 POST 改变到 GET。本规范并没有（像 <code>307</code> 之于 <code>302</code> 一样）为 <code>301 (Moved Permanently)</code> 定义对应的等效版本（不过为此目的【<a href="https://tools.ietf.org/html/rfc7238">RFC7238</a>】定义了 <code>308 (Permanent Redirect)</code> 状态码）。
+</p>
 </div>
 </div>
 </div>
@@ -5393,172 +5422,248 @@ Note: This status code is similar to 302 (Found), except that it does not allow 
 <div class="outline-text-3" id="text-org187c176">
 <blockquote>
 <p>
-The 4xx (Client Error) class of status code indicates that the client seems to have erred. Except when responding to a HEAD request, the server SHOULD send a representation containing an explanation of the error situation, and whether it is a temporary or permanent condition. These status codes are applicable to any request method. User agents SHOULD display any included representation to the user.
-</p>
-</blockquote>
-</div>
-
-<div id="outline-container-org6b99dfb" class="outline-4">
-<h4 id="org6b99dfb"><a id="ID-323c581a-d558-421f-a0f1-8c28fe904264"></a>6.5.1. 400 Bad Request</h4>
-<div class="outline-text-4" id="text-org6b99dfb">
-<blockquote>
-<p>
-The 400 (Bad Request) status code indicates that the server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
-</p>
-</blockquote>
-</div>
-</div>
-
-<div id="outline-container-org42c217d" class="outline-4">
-<h4 id="org42c217d"><a id="ID-d4484e6e-b1a9-4ae9-b8cd-5da28a80fce7"></a>6.5.2. 402 Payment Required</h4>
-<div class="outline-text-4" id="text-org42c217d">
-<blockquote>
-<p>
-The 402 (Payment Required) status code is reserved for future use.
-</p>
-</blockquote>
-</div>
-</div>
-
-<div id="outline-container-org86089b5" class="outline-4">
-<h4 id="org86089b5"><a id="ID-addb601c-6b2f-45a7-97f7-9d24bdb8b585"></a>6.5.3. 403 Forbidden</h4>
-<div class="outline-text-4" id="text-org86089b5">
-<blockquote>
-<p>
-The 403 (Forbidden) status code indicates that the server understood the request but refuses to authorize it. A server that wishes to make public why the request has been forbidden can describe that reason in the response payload (if any).
+The <code>4xx (Client Error)</code> class of status code indicates that the client seems to have erred. Except when responding to a HEAD request, the server <b>SHOULD</b> send a representation containing an explanation of the error situation, and whether it is a temporary or permanent condition. These status codes are applicable to any request method. User agents <b>SHOULD</b> display any included representation to the user.
 </p>
 </blockquote>
 
+<p>
+<code>4xx (Client Error)</code> 状态码种类表明：客户端貌似有错误。除了响应给 HEAD 请求的情况以外，服务器 <b>应当</b> 在其发送的响应里带有一个表示形式来解释这种<ruby>错误情况<rt>error situation</rt></ruby>，以及这是暂时还是永久的<ruby>状况<rt>condition</rt></ruby>。这些状态码适用于任何请求方法。用户代理 <b>应当</b> 向用户展示其内的任何表示形式。
+</p>
+</div>
+
+<div id="outline-container-orgdfa5d2b" class="outline-4">
+<h4 id="orgdfa5d2b"><a id="ID-323c581a-d558-421f-a0f1-8c28fe904264"></a>6.5.1. 400 无效请求 / 400 Bad Request</h4>
+<div class="outline-text-4" id="text-orgdfa5d2b">
 <blockquote>
 <p>
-If authentication credentials were provided in the request, the server considers them insufficient to grant access. The client SHOULD NOT automatically repeat the request with the same credentials. The client MAY repeat the request with new or different credentials. However, a request might be forbidden for reasons unrelated to the credentials.
+The <code>400 (Bad Request)</code> status code indicates that the server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-An origin server that wishes to "hide" the current existence of a forbidden target resource MAY instead respond with a status code of 404 (Not Found).
+<code>400 (Bad Request)</code> 状态码表明：由于某些被认为是客户端的错误，导致服务器<ruby>无法<rt>cannot</rt></ruby>或者<ruby>不会<rt>will not</rt></ruby>处理这个请求（比如，错误的请求<ruby>句法<rt>syntax</rt></ruby>、无效的请求报文<ruby>分帧<rt>framing</rt></ruby>、欺骗性的请求<ruby>路由<rt>routing</rt></ruby>等）。
 </p>
-</blockquote>
 </div>
 </div>
 
-<div id="outline-container-org6ef9040" class="outline-4">
-<h4 id="org6ef9040"><a id="ID-aff1f620-f950-48fe-a479-0276d2aeac0e"></a>6.5.4. 404 Not Found</h4>
-<div class="outline-text-4" id="text-org6ef9040">
+<div id="outline-container-org3ad4406" class="outline-4">
+<h4 id="org3ad4406"><a id="ID-d4484e6e-b1a9-4ae9-b8cd-5da28a80fce7"></a>6.5.2. 402 要求付费 / 402 Payment Required</h4>
+<div class="outline-text-4" id="text-org3ad4406">
 <blockquote>
 <p>
-The 404 (Not Found) status code indicates that the origin server did not find a current representation for the target resource or is not willing to disclose that one exists. A 404 status code does not indicate whether this lack of representation is temporary or permanent; the 410 (Gone) status code is preferred over 404 if the origin server knows, presumably through some configurable means, that the condition is likely to be permanent.
+The <code>402 (Payment Required)</code> status code is reserved for future use.
 </p>
 </blockquote>
+
+<p>
+<code>402 (Payment Required)</code> 状态码保留为将来使用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd8d2944" class="outline-4">
+<h4 id="orgd8d2944"><a id="ID-addb601c-6b2f-45a7-97f7-9d24bdb8b585"></a>6.5.3. 403 禁止 / 403 Forbidden</h4>
+<div class="outline-text-4" id="text-orgd8d2944">
+<blockquote>
+<p>
+The <code>403 (Forbidden)</code> status code indicates that the server understood the request but refuses to authorize it. A server that wishes to make public why the request has been forbidden can describe that reason in the response payload (if any).
+</p>
+</blockquote>
+
+<p>
+<code>403 (Forbidden)</code> 状态码表明：服务器理解请求但拒绝授权。如果服务器希望公布“为什么这个请求被禁止”的话，可以在<ruby>响应有效载荷<rt>response payload</rt></ruby>（如果有的话）里描述其原因。
+</p>
 
 <blockquote>
 <p>
-A 404 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+If authentication credentials were provided in the request, the server considers them insufficient to grant access. The client <b>SHOULD NOT</b> automatically repeat the request with the same credentials. The client <b>MAY</b> repeat the request with new or different credentials. However, a request might be forbidden for reasons unrelated to the credentials.
 </p>
 </blockquote>
-</div>
-</div>
 
-<div id="outline-container-org9297a17" class="outline-4">
-<h4 id="org9297a17"><a id="ID-6c2a3e21-55e6-465c-b8dc-7d773d341e8f"></a>6.5.5. 405 Method Not Allowed</h4>
-<div class="outline-text-4" id="text-org9297a17">
-<blockquote>
 <p>
-The 405 (Method Not Allowed) status code indicates that the method received in the request-line is known by the origin server but not supported by the target resource. The origin server MUST generate an Allow header field in a 405 response containing a list of the target resource's currently supported methods.
+如果该请求提供了<ruby>认证凭据<rt>authentication credentials</rt></ruby>，那么 <code>404</code> 表示服务器认为它们还不足以予以访问。客户端 <b>不应当</b> 使用相同的凭据来自动重复这个请求。客户端 <b>可以</b> 使用新的或不同的凭据来重复该请求。尽管如此，请求可能出于凭据不相关的其他原因而被禁止。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-A 405 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
-</p>
-</blockquote>
-</div>
-</div>
-
-<div id="outline-container-orgdf502e9" class="outline-4">
-<h4 id="orgdf502e9"><a id="ID-c600bda4-d399-4870-894f-ea4293fc173f"></a>6.5.6. 406 Not Acceptable</h4>
-<div class="outline-text-4" id="text-orgdf502e9">
-<blockquote>
-<p>
-The 406 (Not Acceptable) status code indicates that the target resource does not have a current representation that would be acceptable to the user agent, according to the proactive negotiation header fields received in the request (Section 5.3), and the server is unwilling to supply a default representation.
+An origin server that wishes to "hide" the current existence of a forbidden target resource <b>MAY</b> instead respond with a status code of <code>404 (Not Found)</code>.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The server SHOULD generate a payload containing a list of available representation characteristics and corresponding resource identifiers from which the user or user agent can choose the one most appropriate. A user agent MAY automatically select the most appropriate choice from that list. However, this specification does not define any standard for such automatic selection, as described in Section 6.4.1.
+如果源服务器希望对这个请求“隐藏”被禁止的目标资源的存在的话，它 <b>可以</b> 使用 <code>404 (Not Found)</code> 来代替 <code>403</code>。
 </p>
-</blockquote>
 </div>
 </div>
 
-<div id="outline-container-org2a53d18" class="outline-4">
-<h4 id="org2a53d18"><a id="ID-8523542a-3e33-4261-92b7-0bf706f14a57"></a>6.5.7. 408 Request Timeout</h4>
-<div class="outline-text-4" id="text-org2a53d18">
+<div id="outline-container-org8c2bb1c" class="outline-4">
+<h4 id="org8c2bb1c"><a id="ID-aff1f620-f950-48fe-a479-0276d2aeac0e"></a>6.5.4. 404 没有找到 / 404 Not Found</h4>
+<div class="outline-text-4" id="text-org8c2bb1c">
 <blockquote>
 <p>
-The 408 (Request Timeout) status code indicates that the server did not receive a complete request message within the time that it was prepared to wait. A server SHOULD send the "close" connection option (Section 6.1 of [RFC7230]) in the response, since 408 implies that the server has decided to close the connection rather than continue waiting. If the client has an outstanding request in transit, the client MAY repeat that request on a new connection.
+The <code>404 (Not Found)</code> status code indicates that the origin server did not find a current representation for the target resource or is not willing to disclose that one exists. A <code>404</code> status code does not indicate whether this lack of representation is temporary or permanent; the <code>410 (Gone)</code> status code is preferred over <code>404</code> if the origin server knows, presumably through some configurable means, that the condition is likely to be permanent.
 </p>
 </blockquote>
-</div>
-</div>
 
-<div id="outline-container-org010d0a2" class="outline-4">
-<h4 id="org010d0a2"><a id="ID-63517bec-7c89-4655-a6df-e5e2c8de4a17"></a>6.5.8. 409 Conflict</h4>
-<div class="outline-text-4" id="text-org010d0a2">
-<blockquote>
 <p>
-The 409 (Conflict) status code indicates that the request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the user might be able to resolve the conflict and resubmit the request. The server SHOULD generate a payload that includes enough information for a user to recognize the source of the conflict.
+<code>404 (Not Found)</code> 状态码表明：源服务器没有找到目标资源的一个<ruby>当前表示形式<rt>current representation</rt></ruby>，或者不想公开它的存在。<code>404</code> 状态码并没有表明表示形式的缺失是暂时的还是永久的。如果服务器（假定通过某些可配置的手段）得知这种状况很可能是永久的，那么，使用 <code>410 (Gone)</code> 状态码优于 <code>404</code>。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-Conflicts are most likely to occur in response to a PUT request. For example, if versioning were being used and the representation being PUT included changes to a resource that conflict with those made by an earlier (third-party) request, the origin server might use a 409 response to indicate that it can't complete the request. In this case, the response representation would likely contain information useful for merging the differences based on the revision history.
+A <code>404</code> response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see <a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">Section 4.2.2</a> of [RFC7234]).
 </p>
 </blockquote>
+
+<p>
+<code>404</code> 响应默认是<ruby>可缓存的<rt>cacheable</rt></ruby>，也就是说，除非在请求方法的定义里另有指定，或者显式带有<ruby>缓存控制<rt>cache controls</rt></ruby>（<a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">【RFC7234】章节 4.2.2</a>）。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org4072a5f" class="outline-4">
-<h4 id="org4072a5f"><a id="ID-9b6a1a09-f457-45b9-9b66-b05916f8d1a0"></a>6.5.9. 410 Gone</h4>
-<div class="outline-text-4" id="text-org4072a5f">
+<div id="outline-container-org6aeff14" class="outline-4">
+<h4 id="org6aeff14"><a id="ID-6c2a3e21-55e6-465c-b8dc-7d773d341e8f"></a>6.5.5. 405 方法不允许 / 405 Method Not Allowed</h4>
+<div class="outline-text-4" id="text-org6aeff14">
 <blockquote>
 <p>
-The 410 (Gone) status code indicates that access to the target resource is no longer available at the origin server and that this condition is likely to be permanent. If the origin server does not know, or has no facility to determine, whether or not the condition is permanent, the status code 404 (Not Found) ought to be used instead.
+The <code>405 (Method Not Allowed)</code> status code indicates that the method received in the request-line is known by the origin server but not supported by the target resource. The origin server <b>MUST</b> generate an <code>Allow</code> header field in a <code>405</code> response containing a list of the target resource's currently supported methods.
 </p>
 </blockquote>
+
+<p>
+<code>405 (Method Not Allowed)</code> 状态码表明：接收自<ruby>请求行<rt>request-line</rt></ruby>的方法为源服务器所知，但不为目标资源所支持。源服务器 <b>必须</b> 在 <code>405</code> 响应里生成一个 <code>Allow</code> 头字段来包含目标资源目前所支持的一系列的方法。
+</p>
 
 <blockquote>
 <p>
-The 410 response is primarily intended to assist the task of web maintenance by notifying the recipient that the resource is intentionally unavailable and that the server owners desire that remote links to that resource be removed. Such an event is common for limited-time, promotional services and for resources belonging to individuals no longer associated with the origin server's site. It is not necessary to mark all permanently unavailable resources as "gone" or to keep the mark for any length of time — that is left to the discretion of the server owner.
+A <code>405</code> response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see <a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">Section 4.2.2</a> of [RFC7234]).
 </p>
 </blockquote>
+
+<p>
+<code>405</code> 响应默认是<ruby>可缓存的<rt>cacheable</rt></ruby>，也就是说，除非在请求方法的定义里另有指定，或者显式带有<ruby>缓存控制<rt>cache controls</rt></ruby>（<a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">【RFC7234】章节 4.2.2</a>）。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd48a631" class="outline-4">
+<h4 id="orgd48a631"><a id="ID-c600bda4-d399-4870-894f-ea4293fc173f"></a>6.5.6. 406 不接受 / 406 Not Acceptable</h4>
+<div class="outline-text-4" id="text-orgd48a631">
+<blockquote>
+<p>
+The <code>406 (Not Acceptable)</code> status code indicates that the target resource does not have a current representation that would be acceptable to the user agent, according to the proactive negotiation header fields received in the request (<a href="#org07183ec">Section 5.3</a>), and the server is unwilling to supply a default representation.
+</p>
+</blockquote>
+
+<p>
+<code>406 (Not Acceptable)</code> 状态码表明：根据在请求里接收到的主动协商相关的头字段（<a href="#org07183ec">章节 5.3</a>）来看，目标资源没有一种用户代理<ruby>能接受的<rt>acceptable</rt></ruby><ruby>当前表示形式<rt>current representation</rt></ruby>，而且服务器并不愿意提供一个默认的表示形式。
+</p>
 
 <blockquote>
 <p>
-A 410 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+The server <b>SHOULD</b> generate a payload containing a list of available representation characteristics and corresponding resource identifiers from which the user or user agent can choose the one most appropriate. A user agent <b>MAY</b> automatically select the most appropriate choice from that list. However, this specification does not define any standard for such automatic selection, as described in <a href="#orgb57062e">Section 6.4.1</a>.
 </p>
 </blockquote>
+
+<p>
+服务器 <b>应当</b> 生成一个有效载荷来包含一个列表，列表中有各种可用的表示形式的特点及其对应的资源定位符，让用户或者用户代理可以从中选择一个最合适的。用户代理 <b>可以</b> 从该列表中<ruby>自动选择<rt>automatically select</rt></ruby>最合适的表示形式。但是，本规范并没有为这种自动选择定义任何标准，见<a href="#orgb57062e">章节 6.4.1</a>。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org014abbd" class="outline-4">
-<h4 id="org014abbd"><a id="ID-57b9a13c-fa90-4ad0-a898-dbb7a80b007c"></a>6.5.10. 411 Length Required</h4>
-<div class="outline-text-4" id="text-org014abbd">
+<div id="outline-container-org79ddb85" class="outline-4">
+<h4 id="org79ddb85"><a id="ID-8523542a-3e33-4261-92b7-0bf706f14a57"></a>6.5.7. 408 请求超时 / 408 Request Timeout</h4>
+<div class="outline-text-4" id="text-org79ddb85">
 <blockquote>
 <p>
-The 411 (Length Required) status code indicates that the server refuses to accept the request without a defined Content-Length (Section 3.3.2 of [RFC7230]). The client MAY repeat the request if it adds a valid Content-Length header field containing the length of the message body in the request message.
+The <code>408 (Request Timeout)</code> status code indicates that the server did not receive a complete request message within the time that it was prepared to wait. A server <b>SHOULD</b> send the "close" connection option (<a href="RFC7230.html#ID-40B2B721-F916-41EA-86FB-514FDED5B3A4">Section 6.1</a> of [RFC7230]) in the response, since <code>408</code> implies that the server has decided to close the connection rather than continue waiting. If the client has an outstanding request in transit, the client <b>MAY</b> repeat that request on a new connection.
 </p>
 </blockquote>
+
+<p>
+<code>408 (Request Timeout)</code> 状态码表明：服务器并没有在等待时间内接收到一个完整的请求消息。由于 <code>408</code> 意味着服务器已经决定关闭连接而不是继续等待，因此，服务器 <b>应当</b> 在响应中发送一个 "close" 连接选项（<a href="RFC7230.html#ID-40B2B721-F916-41EA-86FB-514FDED5B3A4">【RFC7230】章节 6.1</a>）。如果客户端有一个<ruby>未偿付<rt>outstanding</rt></ruby>的请求（也就是说，服务器未响应该请求）正在连接中传输，那么，客户端 <b>可以</b> 在一个新的连接中重复该请求。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org7f816ee" class="outline-4">
-<h4 id="org7f816ee"><a id="ID-620869b7-1f42-4bb9-a3ba-664e80d5161d"></a>6.5.11. 413 Payload Too Large</h4>
-<div class="outline-text-4" id="text-org7f816ee">
+<div id="outline-container-org14cfbd3" class="outline-4">
+<h4 id="org14cfbd3"><a id="ID-63517bec-7c89-4655-a6df-e5e2c8de4a17"></a>6.5.8. 409 冲突 / 409 Conflict</h4>
+<div class="outline-text-4" id="text-org14cfbd3">
+<blockquote>
+<p>
+The <code>409 (Conflict)</code> status code indicates that the request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the user might be able to resolve the conflict and resubmit the request. The server <b>SHOULD</b> generate a payload that includes enough information for a user to recognize the source of the conflict.
+</p>
+</blockquote>
+
+<p>
+<code>409 (Conflict)</code> 状态码表明：由于请求与目标资源的当前状态存在冲突，请求无法完成。本状态码用在用户可能有能力解决冲突并且重新提交该请求的情况。服务器 <b>应当</b> 生成一个有效载荷来包含足够的信息，让用户可以识别出冲突的源头。
+</p>
+
+<blockquote>
+<p>
+Conflicts are most likely to occur in response to a PUT request. For example, if versioning were being used and the representation being PUT included changes to a resource that conflict with those made by an earlier (third-party) request, the origin server might use a <code>409</code> response to indicate that it can't complete the request. In this case, the response representation would likely contain information useful for merging the differences based on the revision history.
+</p>
+</blockquote>
+
+<p>
+冲突很可能发生在回应给 PUT 请求的响应里。例如，如果使用了<ruby>版本控制<rt>versioning</rt></ruby>，并且将要被 PUT 的表示形式包含了对资源的变更，这些变更与一个更早的（第三方）请求相冲突，那么，源服务器可以使用一个 <code>409</code> 响应来表明它不能完成该请求。在这种情况下，响应的表示形式可能会包含有助于基于<ruby>修订记录<rt>revision history</rt></ruby>来合并差异的信息。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7a07528" class="outline-4">
+<h4 id="org7a07528"><a id="ID-9b6a1a09-f457-45b9-9b66-b05916f8d1a0"></a>6.5.9. 410 已不在 / 410 Gone</h4>
+<div class="outline-text-4" id="text-org7a07528">
+<blockquote>
+<p>
+The <code>410 (Gone)</code> status code indicates that access to the target resource is no longer available at the origin server and that this condition is likely to be permanent. If the origin server does not know, or has no facility to determine, whether or not the condition is permanent, the status code <code>404 (Not Found)</code> ought to be used instead.
+</p>
+</blockquote>
+
+<p>
+<code>410 (Gone)</code> 状态码表明：对目标资源的访问在源服务器上已经不再可用，并且这种状况很可能是永久的。如果源服务器并不了解，或者不容易确定，这种状况是否是永久的，那么，应该使用 <code>404 (Not Found)</code> 状态码来代替。
+</p>
+
+<blockquote>
+<p>
+The <code>410</code> response is primarily intended to assist the task of web maintenance by notifying the recipient that the resource is intentionally unavailable and that the server owners desire that remote links to that resource be removed. Such an event is common for limited-time, promotional services and for resources belonging to individuals no longer associated with the origin server's site. It is not necessary to mark all permanently unavailable resources as "gone" or to keep the mark for any length of time — that is left to the discretion of the server owner.
+</p>
+</blockquote>
+
+<p>
+<code>410</code> 响应主要是为了辅助网站维护的工作——通过通知接收端这个资源是有意设为不可用的，并且<ruby>服务器所有者<rt>server owners</rt></ruby>希望这些引用该资源的<ruby>远程链接<rt>remote links</rt></ruby>得到删除。常见于限定时间的促销活动和属于个人的资源不再与源服务器的网站相关联的情况。不需要将所有永久不可用的资源都标记为 "gone" 或者将这些标记维护在任意长的时间里——那是留给服务器所有者来决定的。
+</p>
+
+<blockquote>
+<p>
+A <code>410</code> response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see <a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">Section 4.2.2</a> of [RFC7234]).
+</p>
+</blockquote>
+
+<p>
+<code>410</code> 响应默认是<ruby>可缓存的<rt>cacheable</rt></ruby>，也就是说，除非在请求方法的定义里另有指定，或者显式带有<ruby>缓存控制<rt>cache controls</rt></ruby>（<a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">【RFC7234】章节 4.2.2</a>）。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbc61cd6" class="outline-4">
+<h4 id="orgbc61cd6"><a id="ID-57b9a13c-fa90-4ad0-a898-dbb7a80b007c"></a>6.5.10. 411 要求长度 / 411 Length Required</h4>
+<div class="outline-text-4" id="text-orgbc61cd6">
+<blockquote>
+<p>
+The <code>411 (Length Required)</code> status code indicates that the server refuses to accept the request without a defined <code>Content-Length</code> (<a href="RFC7230.html#ID-7b3e90b9-3ae5-402b-922c-2342d361c79f">Section 3.3.2</a> of [RFC7230]). The client <b>MAY</b> repeat the request if it adds a valid <code>Content-Length</code> header field containing the length of the message body in the request message.
+</p>
+</blockquote>
+
+<p>
+<code>411 (Length Required)</code> 状态码表明：服务器拒绝接受这个没有定义 <code>Content-Length</code> （<a href="RFC7230.html#ID-7b3e90b9-3ae5-402b-922c-2342d361c79f">【RFC7230】章节 3.3.3</a>）的请求。如果客户端在请求消息中添加了一个包含<ruby>消息体<rt>message body</rt></ruby>长度的合法 <code>Content-Length</code> 头字段，那么，客户端 <b>可以</b> 重复这个请求。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org54d3341" class="outline-4">
+<h4 id="org54d3341"><a id="ID-620869b7-1f42-4bb9-a3ba-664e80d5161d"></a>6.5.11. 413 有效载荷过大 / 413 Payload Too Large</h4>
+<div class="outline-text-4" id="text-org54d3341">
 <blockquote>
 <p>
 The 413 (Payload Too Large) status code indicates that the server is refusing to process a request because the request payload is larger than the server is willing or able to process. The server MAY close the connection to prevent the client from continuing the request.
@@ -5573,9 +5678,9 @@ If the condition is temporary, the server SHOULD generate a Retry-After header f
 </div>
 </div>
 
-<div id="outline-container-orgda225c7" class="outline-4">
-<h4 id="orgda225c7"><a id="ID-77d1edbb-ceeb-450d-9b85-5f8c89db2f97"></a>6.5.12. 414 URI Too Long</h4>
-<div class="outline-text-4" id="text-orgda225c7">
+<div id="outline-container-orgdc2c95b" class="outline-4">
+<h4 id="orgdc2c95b"><a id="ID-77d1edbb-ceeb-450d-9b85-5f8c89db2f97"></a>6.5.12. 414 URI 过长 / 414 URI Too Long</h4>
+<div class="outline-text-4" id="text-orgdc2c95b">
 <blockquote>
 <p>
 The 414 (URI Too Long) status code indicates that the server is refusing to service the request because the request-target (Section 5.3 of [RFC7230]) is longer than the server is willing to interpret. This rare condition is only likely to occur when a client has improperly converted a POST request to a GET request with long query information, when the client has descended into a "black hole" of redirection (e.g., a redirected URI prefix that points to a suffix of itself) or when the server is under attack by a client attempting to exploit potential security holes.
@@ -5590,9 +5695,9 @@ A 414 response is cacheable by default; i.e., unless otherwise indicated by the 
 </div>
 </div>
 
-<div id="outline-container-org9aaec2d" class="outline-4">
-<h4 id="org9aaec2d"><a id="ID-7c879fad-0a52-4f22-8447-38b860f3e71d"></a>6.5.13. 415 Unsupported Media Type</h4>
-<div class="outline-text-4" id="text-org9aaec2d">
+<div id="outline-container-org7804f77" class="outline-4">
+<h4 id="org7804f77"><a id="ID-7c879fad-0a52-4f22-8447-38b860f3e71d"></a>6.5.13. 415 不支持的媒体类型 / 415 Unsupported Media Type</h4>
+<div class="outline-text-4" id="text-org7804f77">
 <blockquote>
 <p>
 The 415 (Unsupported Media Type) status code indicates that the origin server is refusing to service the request because the payload is in a format not supported by this method on the target resource. The format problem might be due to the request's indicated Content-Type or Content-Encoding, or as a result of inspecting the data directly.
@@ -5601,9 +5706,9 @@ The 415 (Unsupported Media Type) status code indicates that the origin server is
 </div>
 </div>
 
-<div id="outline-container-orgcafc9ce" class="outline-4">
-<h4 id="orgcafc9ce"><a id="ID-a4b990e6-b91e-422d-ad8e-cb77866ed170"></a>6.5.14. 417 Expectation Failed</h4>
-<div class="outline-text-4" id="text-orgcafc9ce">
+<div id="outline-container-org631d1f7" class="outline-4">
+<h4 id="org631d1f7"><a id="ID-a4b990e6-b91e-422d-ad8e-cb77866ed170"></a>6.5.14. 417 期望错误 / 417 Expectation Failed</h4>
+<div class="outline-text-4" id="text-org631d1f7">
 <blockquote>
 <p>
 The 417 (Expectation Failed) status code indicates that the expectation given in the request's Expect header field (Section 5.1.1) could not be met by at least one of the inbound servers.
@@ -5612,9 +5717,9 @@ The 417 (Expectation Failed) status code indicates that the expectation given in
 </div>
 </div>
 
-<div id="outline-container-org4cc1a60" class="outline-4">
-<h4 id="org4cc1a60"><a id="ID-5d028105-552c-4079-bcfe-30809395f6c9"></a>6.5.15. 426 Upgrade Required</h4>
-<div class="outline-text-4" id="text-org4cc1a60">
+<div id="outline-container-orgb0c8615" class="outline-4">
+<h4 id="orgb0c8615"><a id="ID-5d028105-552c-4079-bcfe-30809395f6c9"></a>6.5.15. 426 要求升级 / 426 Upgrade Required</h4>
+<div class="outline-text-4" id="text-orgb0c8615">
 <blockquote>
 <p>
 The 426 (Upgrade Required) status code indicates that the server refuses to perform the request using the current protocol but might be willing to do so after the client upgrades to a different protocol. The server MUST send an Upgrade header field in a 426 response to indicate the required protocol(s) (Section 6.7 of [RFC7230]).
@@ -5918,7 +6023,9 @@ The 505 (HTTP Version Not Supported) status code indicates that the server does 
 </div>
 </div>
 <div id="outline-container-org9b37d9f" class="outline-2">
-<h2 id="org9b37d9f">B. 相对 RFC 2616 的变化 / Changes from RFC 2616</h2>
+<h2 id="org9b37d9f"><a id="ID-b9da2375-731c-4b8a-a7d5-b07352c045a9"></a>B. 相对 RFC 2616 的变化 / Changes from RFC 2616</h2>
+<div class="outline-text-2" id="text-org9b37d9f">
+</div>
 </div>
 <div id="outline-container-orgc3125d2" class="outline-2">
 <h2 id="orgc3125d2">C. 引入的 ABNF 规则 / Imported ABNF</h2>
