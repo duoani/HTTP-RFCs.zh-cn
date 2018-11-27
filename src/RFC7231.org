@@ -1628,6 +1628,9 @@ HTTP 的[[ruby:conditional%20request%20fields][条件请求头字段]]【[[file:
 | If-Range            | [[id:2859ef1f-8309-4b7d-9e22-963391b5822a][Section 3.2]] of [RFC7233] |
 
 ** 5.3. 内容协商 / Content Negotiation
+:PROPERTIES:
+:ID:       99513880-9381-41eb-91ee-483b42d025e8
+:END:
 
 #+BEGIN_QUOTE
 The following request header fields are sent by a user agent to engage in proactive negotiation of the response content, as defined in [[id:c1d92ed4-69d5-4575-88c2-090534949ccf][Section 3.4.1]]. The preferences sent in these fields apply to any content in the response, including representations of the target resource, representations of error or processing status, and potentially even the miscellaneous text strings that might appear within the protocol.
@@ -2600,7 +2603,7 @@ If the server has a preferred choice, the server *SHOULD* generate a =Location= 
 For request methods other than HEAD, the server *SHOULD* generate a payload in the =300= response containing a list of representation metadata and URI reference(s) from which the user or user agent can choose the one most preferred. The user agent *MAY* make a selection from that list automatically if it understands the provided media type. A specific format for automatic selection is not defined by this specification because HTTP tries to remain orthogonal to the definition of its payloads. In practice, the representation is provided in some easily parsed format believed to be acceptable to the user agent, as determined by shared design or content negotiation, or in some commonly accepted hypertext format.
 #+END_QUOTE
 
-对于除 HEAD 以外的请求方法，服务器 *应当* 在 =300= 响应里生成一个有效载荷来包含一个有各种[[ruby:representation%20metadata][表示形式元数据]]以及 URI 引用的列表，使得用户或者用户代理可以从中选出一个最优表示形式。如果用户代理了解所提供的媒体类型的话，它 *可以* 自动从中选择一个。本规范并没有定义自动选择的具体格式，那是因为 HTTP 试图与它的有效载荷的定义保持[[ruby:orthogonal][正交]]。在实践过程中，表示形式会以某种被认为是便于用户代理去解析的格式来提供——这取决于共享设计或[[ruby:content%20negotiation][内容协商]]；又或者以某些普遍被接受的超文本格式来提供。
+对于除 HEAD 以外的请求方法，服务器 *应当* 在 =300= 响应里生成一个有效载荷来包含一个列表，列表中有各种[[ruby:representation%20metadata][表示形式元数据]]以及 URI 引用，让用户或者用户代理可以从中选出一个最优表示形式。如果用户代理了解所提供的媒体类型的话，它 *可以* 自动从中选择一个。本规范并没有定义自动选择的具体格式，那是因为 HTTP 试图与它的有效载荷的定义保持[[ruby:orthogonal][正交]]。在实践过程中，表示形式会以某种被认为是便于用户代理去解析的格式来提供——这取决于共享设计或[[ruby:content%20negotiation][内容协商]]；又或者以某些普遍被接受的超文本格式来提供。
 
 #+BEGIN_QUOTE
 A =300= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
@@ -2630,7 +2633,8 @@ The =301 (Moved Permanently)= status code indicates that the target resource has
 The server *SHOULD* generate a =Location= header field in the response containing a preferred URI reference for the new permanent URI. The user agent *MAY* use the =Location= field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the new URI(s).
 #+END_QUOTE
 
-服务器 *应当* 在响应里生成一个 =Location= 头字段来包含新的永久 URI 引用中最优的那一个。用户代理 *可以* 使用 =Location= 的字段值来[[ruby:automatic%20redirection][自动重定向]]。服务器的响应有效载荷通常会包含一个简短的超文本[[ruby:note][注释]]，其内有一个指向这个（或多个）新 URI 的超链接。
+服务器 *应当* 在响应里生成一个 =Location= 头字段来包含新的永久 URI 引用中最优的那一个。用户代e在皮耶entation
+ *可以* 使用 =Location= 的字段值来[[ruby:automatic%20redirection][自动重定向]]。服务器的响应有效载荷通常会包含一个简短的超文本[[ruby:note][注释]]，其内有一个指向这个（或多个）新 URI 的超链接。
 
 #+BEGIN_QUOTE
 *Note:* For historical reasons, a user agent *MAY* change the request method from POST to GET for the subsequent request. If this behavior is undesired, the =307 (Temporary Redirect)= status code can be used instead.
@@ -2807,11 +2811,13 @@ An origin server that wishes to "hide" the current existence of a forbidden targ
 The =404 (Not Found)= status code indicates that the origin server did not find a current representation for the target resource or is not willing to disclose that one exists. A =404= status code does not indicate whether this lack of representation is temporary or permanent; the =410 (Gone)= status code is preferred over =404= if the origin server knows, presumably through some configurable means, that the condition is likely to be permanent.
 #+END_QUOTE
 
-=404 (Not Found)= 状态码表明：源服务器没有找到目标资源的一个当前表示形式，或者不想公开它的存在。
+=404 (Not Found)= 状态码表明：源服务器没有找到目标资源的一个[[ruby:current%20representation][当前表示形式]]，或者不想公开它的存在。=404= 状态码并没有表明表示形式的缺失是暂时的还是永久的。如果服务器（假定通过某些可配置的手段）得知这种状况很可能是永久的，那么，使用 =410 (Gone)= 状态码优于 =404=。
 
 #+BEGIN_QUOTE
-A =404= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+A =404= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
+
+=404= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
 
 *** 6.5.5. 405 方法不允许 / 405 Method Not Allowed
 :PROPERTIES:
@@ -2819,12 +2825,16 @@ A =404= response is cacheable by default; i.e., unless otherwise indicated by th
 :END:
 
 #+BEGIN_QUOTE
-The 405 (Method Not Allowed) status code indicates that the method received in the request-line is known by the origin server but not supported by the target resource. The origin server MUST generate an Allow header field in a 405 response containing a list of the target resource's currently supported methods.
+The =405 (Method Not Allowed)= status code indicates that the method received in the request-line is known by the origin server but not supported by the target resource. The origin server *MUST* generate an =Allow= header field in a =405= response containing a list of the target resource's currently supported methods.
 #+END_QUOTE
 
+=405 (Method Not Allowed)= 状态码表明：接收自[[ruby:request-line][请求行]]的方法为源服务器所知，但不为目标资源所支持。源服务器 *必须* 在 =405= 响应里生成一个 =Allow= 头字段来包含目标资源目前所支持的一系列的方法。
+
 #+BEGIN_QUOTE
-A 405 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+A =405= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
+
+=405= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
 
 *** 6.5.6. 406 不接受 / 406 Not Acceptable
 :PROPERTIES:
@@ -2832,12 +2842,16 @@ A 405 response is cacheable by default; i.e., unless otherwise indicated by the 
 :END:
 
 #+BEGIN_QUOTE
-The 406 (Not Acceptable) status code indicates that the target resource does not have a current representation that would be acceptable to the user agent, according to the proactive negotiation header fields received in the request (Section 5.3), and the server is unwilling to supply a default representation.
+The =406 (Not Acceptable)= status code indicates that the target resource does not have a current representation that would be acceptable to the user agent, according to the proactive negotiation header fields received in the request ([[id:99513880-9381-41eb-91ee-483b42d025e8][Section 5.3]]), and the server is unwilling to supply a default representation.
 #+END_QUOTE
 
+=406 (Not Acceptable)= 状态码表明：根据在请求里接收到的主动协商相关的头字段（[[id:99513880-9381-41eb-91ee-483b42d025e8][章节 5.3]]）来看，目标资源没有一种用户代理[[ruby:acceptable][能接受的]][[ruby:current%20representation][当前表示形式]]，而且服务器并不愿意提供一个默认的表示形式。
+
 #+BEGIN_QUOTE
-The server SHOULD generate a payload containing a list of available representation characteristics and corresponding resource identifiers from which the user or user agent can choose the one most appropriate. A user agent MAY automatically select the most appropriate choice from that list. However, this specification does not define any standard for such automatic selection, as described in Section 6.4.1.
+The server *SHOULD* generate a payload containing a list of available representation characteristics and corresponding resource identifiers from which the user or user agent can choose the one most appropriate. A user agent *MAY* automatically select the most appropriate choice from that list. However, this specification does not define any standard for such automatic selection, as described in [[id:bb139936-2671-4ffc-9dd0-75af2bab7d9b][Section 6.4.1]].
 #+END_QUOTE
+
+服务器 *应当* 生成一个有效载荷来包含一个列表，列表中有各种可用的表示形式的特点及其对应的资源定位符，让用户或者用户代理可以从中选择一个最合适的。用户代理 *可以* 从该列表中[[ruby:automatically%20select][自动选择]]最合适的表示形式。但是，本规范并没有为这种自动选择定义任何标准，见[[id:bb139936-2671-4ffc-9dd0-75af2bab7d9b][章节 6.4.1]]。
 
 *** 6.5.7. 408 请求超时 / 408 Request Timeout
 :PROPERTIES:
