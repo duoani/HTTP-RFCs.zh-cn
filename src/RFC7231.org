@@ -2881,22 +2881,28 @@ Conflicts are most likely to occur in response to a PUT request. For example, if
 
 冲突很可能发生在回应给 PUT 请求的响应里。例如，如果使用了[[ruby:versioning][版本控制]]，并且将要被 PUT 的表示形式包含了对资源的变更，这些变更与一个更早的（第三方）请求相冲突，那么，源服务器可以使用一个 =409= 响应来表明它不能完成该请求。在这种情况下，响应的表示形式可能会包含有助于基于[[ruby:revision%20history][修订记录]]来合并差异的信息。
 
-*** 6.5.9. 410 Gone
+*** 6.5.9. 410 已不在 / 410 Gone
 :PROPERTIES:
 :ID:       9b6a1a09-f457-45b9-9b66-b05916f8d1a0
 :END:
 
 #+BEGIN_QUOTE
-The 410 (Gone) status code indicates that access to the target resource is no longer available at the origin server and that this condition is likely to be permanent. If the origin server does not know, or has no facility to determine, whether or not the condition is permanent, the status code 404 (Not Found) ought to be used instead.
+The =410 (Gone)= status code indicates that access to the target resource is no longer available at the origin server and that this condition is likely to be permanent. If the origin server does not know, or has no facility to determine, whether or not the condition is permanent, the status code =404 (Not Found)= ought to be used instead.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The 410 response is primarily intended to assist the task of web maintenance by notifying the recipient that the resource is intentionally unavailable and that the server owners desire that remote links to that resource be removed. Such an event is common for limited-time, promotional services and for resources belonging to individuals no longer associated with the origin server's site. It is not necessary to mark all permanently unavailable resources as "gone" or to keep the mark for any length of time — that is left to the discretion of the server owner.
-#+END_QUOTE
+=410 (Gone)= 状态码表明：对目标资源的访问在源服务器上已经不再可用，并且这种状况很可能是永久的。如果源服务器并不了解，或者不容易确定，这种状况是否是永久的，那么，应该使用 =404 (Not Found)= 状态码来代替。
 
 #+BEGIN_QUOTE
-A 410 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+The =410= response is primarily intended to assist the task of web maintenance by notifying the recipient that the resource is intentionally unavailable and that the server owners desire that remote links to that resource be removed. Such an event is common for limited-time, promotional services and for resources belonging to individuals no longer associated with the origin server's site. It is not necessary to mark all permanently unavailable resources as "gone" or to keep the mark for any length of time — that is left to the discretion of the server owner.
 #+END_QUOTE
+
+=410= 响应主要是为了辅助网站维护的工作——通过通知接收端这个资源是有意设为不可用的，并且[[ruby:server%20owners][服务器所有者]]希望这些引用该资源的[[ruby:remote%20links][远程链接]]得到删除。常见于限定时间的促销活动和属于个人的资源不再与源服务器的网站相关联的情况。不需要将所有永久不可用的资源都标记为 "gone" 或者将这些标记维护在任意长的时间里——那是留给服务器所有者来决定的。
+
+#+BEGIN_QUOTE
+A =410= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
+#+END_QUOTE
+
+=410= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
 
 *** 6.5.10. 411 要求长度 / 411 Length Required
 :PROPERTIES:
@@ -2904,8 +2910,10 @@ A 410 response is cacheable by default; i.e., unless otherwise indicated by the 
 :END:
 
 #+BEGIN_QUOTE
-The 411 (Length Required) status code indicates that the server refuses to accept the request without a defined Content-Length (Section 3.3.2 of [RFC7230]). The client MAY repeat the request if it adds a valid Content-Length header field containing the length of the message body in the request message.
+The =411 (Length Required)= status code indicates that the server refuses to accept the request without a defined =Content-Length= ([[id:7b3e90b9-3ae5-402b-922c-2342d361c79f][Section 3.3.2]] of [RFC7230]). The client *MAY* repeat the request if it adds a valid =Content-Length= header field containing the length of the message body in the request message.
 #+END_QUOTE
+
+=411 (Length Required)= 状态码表明：服务器拒绝接受这个没有定义 =Content-Length= （[[id:7b3e90b9-3ae5-402b-922c-2342d361c79f][【RFC7230】章节 3.3.3]]）的请求。如果客户端在请求消息中添加了一个包含[[ruby:message%20body][消息体]]长度的合法 =Content-Length= 头字段，那么，客户端 *可以* 重复这个请求。
 
 *** 6.5.11. 413 有效载荷过大 / 413 Payload Too Large
 :PROPERTIES:
