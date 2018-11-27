@@ -2755,7 +2755,7 @@ The server *SHOULD* generate a =Location= header field in the response containin
 The =4xx (Client Error)= class of status code indicates that the client seems to have erred. Except when responding to a HEAD request, the server *SHOULD* send a representation containing an explanation of the error situation, and whether it is a temporary or permanent condition. These status codes are applicable to any request method. User agents *SHOULD* display any included representation to the user.
 #+END_QUOTE
 
-=4xx (Client Error)= 状态码种类表明：客户端貌似有错误。除了响应给 HEAD 请求的情况以外，服务器 *应当* 在其发送的响应里带有一个表示形式来解释这种[[ruby:error%20situation][错误事态]]，以及这是暂时还是永久的[[ruby:condition][状况]]。这些状态码适用于任何请求方法。用户代理 *应当* 向用户展示其内的任何表示形式。
+=4xx (Client Error)= 状态码种类表明：客户端貌似有错误。除了响应给 HEAD 请求的情况以外，服务器 *应当* 在其发送的响应里带有一个表示形式来解释这种[[ruby:error%20situation][错误情况]]，以及这是暂时还是永久的[[ruby:condition][状况]]。这些状态码适用于任何请求方法。用户代理 *应当* 向用户展示其内的任何表示形式。
 
 *** 6.5.1. 400 无效请求 / 400 Bad Request
 :PROPERTIES:
@@ -2859,8 +2859,10 @@ The server *SHOULD* generate a payload containing a list of available representa
 :END:
 
 #+BEGIN_QUOTE
-The 408 (Request Timeout) status code indicates that the server did not receive a complete request message within the time that it was prepared to wait. A server SHOULD send the "close" connection option (Section 6.1 of [RFC7230]) in the response, since 408 implies that the server has decided to close the connection rather than continue waiting. If the client has an outstanding request in transit, the client MAY repeat that request on a new connection.
+The =408 (Request Timeout)= status code indicates that the server did not receive a complete request message within the time that it was prepared to wait. A server *SHOULD* send the "close" connection option ([[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][Section 6.1]] of [RFC7230]) in the response, since =408= implies that the server has decided to close the connection rather than continue waiting. If the client has an outstanding request in transit, the client *MAY* repeat that request on a new connection.
 #+END_QUOTE
+
+=408 (Request Timeout)= 状态码表明：服务器并没有在等待时间内接收到一个完整的请求消息。由于 =408= 意味着服务器已经决定关闭连接而不是继续等待，因此，服务器 *应当* 在响应中发送一个 "close" 连接选项（[[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][【RFC7230】章节 6.1]]）。如果客户端有一个[[ruby:outstanding][未偿付]]的请求（也就是说，服务器未响应该请求）正在连接中传输，那么，客户端 *可以* 在一个新的连接中重复该请求。
 
 *** 6.5.8. 409 冲突 / 409 Conflict
 :PROPERTIES:
@@ -2868,12 +2870,16 @@ The 408 (Request Timeout) status code indicates that the server did not receive 
 :END:
 
 #+BEGIN_QUOTE
-The 409 (Conflict) status code indicates that the request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the user might be able to resolve the conflict and resubmit the request. The server SHOULD generate a payload that includes enough information for a user to recognize the source of the conflict.
+The =409 (Conflict)= status code indicates that the request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the user might be able to resolve the conflict and resubmit the request. The server *SHOULD* generate a payload that includes enough information for a user to recognize the source of the conflict.
 #+END_QUOTE
 
+=409 (Conflict)= 状态码表明：由于请求与目标资源的当前状态存在冲突，请求无法完成。本状态码用在用户可能有能力解决冲突并且重新提交该请求的情况。服务器 *应当* 生成一个有效载荷来包含足够的信息，让用户可以识别出冲突的源头。
+
 #+BEGIN_QUOTE
-Conflicts are most likely to occur in response to a PUT request. For example, if versioning were being used and the representation being PUT included changes to a resource that conflict with those made by an earlier (third-party) request, the origin server might use a 409 response to indicate that it can't complete the request. In this case, the response representation would likely contain information useful for merging the differences based on the revision history.
+Conflicts are most likely to occur in response to a PUT request. For example, if versioning were being used and the representation being PUT included changes to a resource that conflict with those made by an earlier (third-party) request, the origin server might use a =409= response to indicate that it can't complete the request. In this case, the response representation would likely contain information useful for merging the differences based on the revision history.
 #+END_QUOTE
+
+冲突很可能发生在回应给 PUT 请求的响应里。例如，如果使用了[[ruby:versioning][版本控制]]，并且将要被 PUT 的表示形式包含了对资源的变更，这些变更与一个更早的（第三方）请求相冲突，那么，源服务器可以使用一个 =409= 响应来表明它不能完成该请求。在这种情况下，响应的表示形式可能会包含有助于基于[[ruby:revision%20history][修订记录]]来合并差异的信息。
 
 *** 6.5.9. 410 Gone
 :PROPERTIES:
