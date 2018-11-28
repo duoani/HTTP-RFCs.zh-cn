@@ -3104,13 +3104,25 @@ The =505 (HTTP Version Not Supported)= status code indicates that the server doe
 :ID:       30e7b781-4a14-4519-abb9-63ec43516b98
 :END:
 
+#+BEGIN_QUOTE
 The response header fields allow the server to pass additional information about the response beyond what is placed in the status-line. These header fields give information about the server, about further access to the target resource, or about related resources.
+#+END_QUOTE
 
+除了放在[[ruby:status-line][状态行]]的响应信息以外，[[ruby:response%20header%20fields][响应头字段]]让服务器可以传递额外的响应相关信息。这些头字段给出了关于服务器、关于对目标资源的后续访问、或者关于相关联的资源的信息。
+
+#+BEGIN_QUOTE
 Although each response header field has a defined meaning, in general, the precise semantics might be further refined by the semantics of the request method and/or response status code.
+#+END_QUOTE
+
+跃然每种响应头字段都定义了含义，但通常情况下，更精确的语义可能经由[[ruby:request%20method][请求方法]]以及（或者）[[ruby:response%20status%20code][响应状态码]]来进一步精炼。
 
 ** 7.1. Control Data
 
+#+BEGIN_QUOTE
 Response header fields can supply control data that supplements the status code, directs caching, or instructs the client where to go next.
+#+END_QUOTE
+
+响应头字段能够提供以下方面的控制数据：补充状态码（如 =Location= 头字段提供了 =302= 重定向所需的 URI）；指导缓存；指导客户端下一步去哪里。
 
 | Header Field Name | Defined in...            |
 |-------------------+--------------------------|
@@ -3124,10 +3136,17 @@ Response header fields can supply control data that supplements the status code,
 | Warning           | [[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][Section 5.5]] of [RFC7234] |
 
 *** 7.1.1. Origination Date
+
 **** 7.1.1.1. Date/Time Formats
 
 #+BEGIN_QUOTE
-Prior to 1995, there were three different formats commonly used by servers to communicate timestamps. For compatibility with old implementations, all three are defined here. The preferred format is a fixed-length and single-zone subset of the date and time specification used by the Internet Message Format [RFC5322].
+Prior to 1995, there were three different formats commonly used by servers to communicate timestamps. For compatibility with old implementations, all three are defined here. The preferred format is a fixed-length and single-zone subset of the date and time specification used by the Internet Message Format [[[https://tools.ietf.org/html/rfc5322][RFC5322]]].
+#+END_QUOTE
+
+1995 年前，总共有三种不同的格式常用于服务器来传达[[ruby:timestamps][时间戳]]。为了兼容旧有的实现，所有这三种都定义在这里。首选的格式是[[ruby:Internet%20Message%20Format][互联网消息格式]]【[[https://tools.ietf.org/html/rfc5322][RFC5322]]】所使用的日期和时间规范——一种固定长度的、单一时区的时间格式。
+
+#+BEGIN_QUOTE
+译注：所谓“单一时区”是因为 IMF（Internet Message Format）日期和时间规范里的[[ruby:zone][时区]]支持多时间（虽然定义为已淘汰），这里取其 =obs-zone= ABNF 规则里的一个字集，见[[https://tools.ietf.org/html/rfc5322#section-3.3][【RFC5322】章节 3.3]]。
 #+END_QUOTE
 
 #+BEGIN_SRC text
@@ -3138,6 +3157,8 @@ Prior to 1995, there were three different formats commonly used by servers to co
 An example of the preferred format is
 #+END_QUOTE
 
+首选格式的一个例子：
+
 #+BEGIN_EXAMPLE
   Sun, 06 Nov 1994 08:49:37 GMT    ; IMF-fixdate
 #+END_EXAMPLE
@@ -3146,22 +3167,30 @@ An example of the preferred format is
 Examples of the two obsolete formats are
 #+END_QUOTE
 
+两种已淘汰格式的例子：
+
 #+BEGIN_EXAMPLE
-Sunday, 06-Nov-94 08:49:37 GMT   ; obsolete RFC 850 format
-Sun Nov  6 08:49:37 1994         ; ANSI C's asctime() format
+  Sunday, 06-Nov-94 08:49:37 GMT   ; obsolete RFC 850 format
+  Sun Nov  6 08:49:37 1994         ; ANSI C's asctime() format
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-A recipient that parses a timestamp value in an HTTP header field MUST accept all three HTTP-date formats. When a sender generates a header field that contains one or more timestamps defined as HTTP-date, the sender MUST generate those timestamps in the IMF-fixdate format.
+A recipient that parses a timestamp value in an HTTP header field *MUST* accept all three HTTP-date formats. When a sender generates a header field that contains one or more timestamps defined as HTTP-date, the sender *MUST* generate those timestamps in the =IMF-fixdate= format.
 #+END_QUOTE
+
+接收端对某个 HTTP 头字段里的时间戳值进行[[ruby:parse][解析]]的时候，*必须* 接受所有这三种 HTTP 日期格式。当发送端生成带有一个或多个作为 =HTTP-date= 的时间戳的头字段时，发送端 *必须* 以 =IMF-fixdate= 格式生成那些时间戳（即本规范首选的那一种格式）。
 
 #+BEGIN_QUOTE
 An HTTP-date value represents time as an instance of Coordinated Universal Time (UTC). The first two formats indicate UTC by the three-letter abbreviation for Greenwich Mean Time, "GMT", a predecessor of the UTC name; values in the asctime format are assumed to be in UTC. A sender that generates HTTP-date values from a local clock ought to use NTP ([RFC5905]) or some similar protocol to synchronize its clock to UTC.
 #+END_QUOTE
 
+一个 =HTTP-date= 的值表示一个[[ruby:Coordinated%20Universal%20Time][世界标准时间]]（UTC）。上述三个例子中的前两例通过[[ruby:Greenwich%20Mean%20Time][格林威治标准时间]]——UTC 名称的前身——的三个英文字母缩写 "GMT" 来表明是 UTC。而 =asctime= 格式（即上述第三例）假定时间是 UTC 的。发送端从本地时钟生成 =HTTP-date= 值的时候，应该使用 NTP（【[[https://tools.ietf.org/html/rfc5905][RFC5905]]】）或者其他类似的协议来将本地时间同步为 UTC。
+
 #+BEGIN_QUOTE
 Preferred format:
 #+END_QUOTE
+
+首选的格式：
 
 #+BEGIN_SRC text
   IMF-fixdate  = day-name "," SP date1 SP time-of-day SP GMT
@@ -3208,6 +3237,8 @@ Preferred format:
 Obsolete formats:
 #+END_QUOTE
 
+淘汰的格式：
+
 #+BEGIN_SRC text
   obs-date     = rfc850-date / asctime-date 
   rfc850-date  = day-name-l "," SP date2 SP time-of-day SP GMT
@@ -3228,8 +3259,10 @@ Obsolete formats:
 #+END_SRC
 
 #+BEGIN_QUOTE
-HTTP-date is case sensitive. A sender *MUST NOT* generate additional whitespace in an HTTP-date beyond that specifically included as SP in the grammar. The semantics of day-name, day, month, year, and time-of-day are the same as those defined for the Internet Message Format constructs with the corresponding name ([RFC5322], Section 3.3).
+HTTP-date is case sensitive. A sender *MUST NOT* generate additional whitespace in an HTTP-date beyond that specifically included as =SP= in the grammar. The semantics of day-name, day, month, year, and time-of-day are the same as those defined for the Internet Message Format constructs with the corresponding name ([RFC5322], Section 3.3).
 #+END_QUOTE
+
+=HTTP-date= 是区分大小写的。发送端 *禁止* 在一个 =HTTP-date= 里生成除在语法中明确添加了 =SP= 以外的额外空格。
 
 #+BEGIN_QUOTE
 Recipients of a timestamp value in rfc850-date format, which uses a two-digit year, *MUST* interpret a timestamp that appears to be more than 50 years in the future as representing the most recent year in the past that had the same last two digits.
