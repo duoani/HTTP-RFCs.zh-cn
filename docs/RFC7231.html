@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-27 Tue 19:22 -->
+<!-- 2018-11-28 Wed 19:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -550,12 +550,12 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#org033011b">6.6. 服务器错误 / Server Error 5xx</a>
 <ul>
-<li><a href="#orge703f96">6.6.1. 500 Internal Server Error</a></li>
-<li><a href="#org42220c0">6.6.2. 501 Not Implemented</a></li>
-<li><a href="#orgb9f52eb">6.6.3. 502 Bad Gateway</a></li>
-<li><a href="#orgda430f7">6.6.4. 503 Service Unavailable</a></li>
-<li><a href="#orgb821e4f">6.6.5. 504 Gateway Timeout</a></li>
-<li><a href="#org1131bac">6.6.6. 505 HTTP Version Not Supported</a></li>
+<li><a href="#org8d80adb">6.6.1. 500 服务器内部错误 / 500 Internal Server Error</a></li>
+<li><a href="#orged2019a">6.6.2. 501 没有实现 / 501 Not Implemented</a></li>
+<li><a href="#org5f9a199">6.6.3. 502 无效网关 / 502 Bad Gateway</a></li>
+<li><a href="#org6442e4a">6.6.4. 503 服务不可用 / 503 Service Unavailable</a></li>
+<li><a href="#orgaccae0d">6.6.5. 504 网关超时 / 504 Gateway Timeout</a></li>
+<li><a href="#org8414fb8">6.6.6. 505 HTTP 版本不支持 / 505 HTTP Version Not Supported</a></li>
 </ul>
 </li>
 </ul>
@@ -4691,37 +4691,37 @@ Responses with status codes that are defined as cacheable by default (e.g., <cod
 <tr>
 <td class="org-right">500</td>
 <td class="org-left">Internal Server Error</td>
-<td class="org-left"><a href="#orge703f96">Section 6.6.1</a></td>
+<td class="org-left"><a href="#org8d80adb">Section 6.6.1</a></td>
 </tr>
 
 <tr>
 <td class="org-right">501</td>
 <td class="org-left">Not Implemented</td>
-<td class="org-left"><a href="#org42220c0">Section 6.6.2</a></td>
+<td class="org-left"><a href="#orged2019a">Section 6.6.2</a></td>
 </tr>
 
 <tr>
 <td class="org-right">502</td>
 <td class="org-left">Bad Gateway</td>
-<td class="org-left"><a href="#orgb9f52eb">Section 6.6.3</a></td>
+<td class="org-left"><a href="#org5f9a199">Section 6.6.3</a></td>
 </tr>
 
 <tr>
 <td class="org-right">503</td>
 <td class="org-left">Service Unavailable</td>
-<td class="org-left"><a href="#orgda430f7">Section 6.6.4</a></td>
+<td class="org-left"><a href="#org6442e4a">Section 6.6.4</a></td>
 </tr>
 
 <tr>
 <td class="org-right">504</td>
 <td class="org-left">Gateway Timeout</td>
-<td class="org-left"><a href="#orgb821e4f">Section 6.6.5</a></td>
+<td class="org-left"><a href="#orgaccae0d">Section 6.6.5</a></td>
 </tr>
 
 <tr>
 <td class="org-right">505</td>
 <td class="org-left">HTTP Version Not Supported</td>
-<td class="org-left"><a href="#org1131bac">Section 6.6.6</a></td>
+<td class="org-left"><a href="#org8414fb8">Section 6.6.6</a></td>
 </tr>
 </tbody>
 </table>
@@ -5102,7 +5102,7 @@ The <code>3xx (Redirection)</code> class of status code indicates that further a
 </blockquote>
 
 <p>
-<code>3xx (Redirection)</code> 状态码种类表明：需要用户代理采取进一步的动作才能<ruby>实现<rt>fulfill</rt></ruby>请求。如果提供了一个 <code>Location</code> 头字段（<a href="#orgad9277e">章节 7.1.2</a>），用户代理 <b>可以</b> 自动<ruby>重定向<rt>redirect</rt></ruby>它的请求到 <code>Location</code> 的字段值所指定的 URI 引用，即使它不理解具体的状态码。自动重定向需要小心处理那些不知道是否安全的方法，见<a href="#org9cf22b2">章节 4.2.1</a>，因为用户可能并不希望重定向一个不安全的请求。
+<code>3xx (Redirection)</code> 状态码种类表明：需要用户代理采取进一步的动作才能<ruby>实现<rt>fulfill</rt></ruby>这个请求。如果提供了一个 <code>Location</code> 头字段（<a href="#orgad9277e">章节 7.1.2</a>），用户代理 <b>可以</b> 自动<ruby>重定向<rt>redirect</rt></ruby>它的请求到 <code>Location</code> 的字段值所指定的 URI 引用，即使它不理解具体的状态码。自动重定向需要小心处理那些不知道是否安全的方法，见<a href="#org9cf22b2">章节 4.2.1</a>，因为用户可能并不希望重定向一个不安全的请求。
 </p>
 
 <blockquote>
@@ -5173,7 +5173,7 @@ The <code>300 (Multiple Choices)</code> status code indicates that the target re
 </blockquote>
 
 <p>
-<code>300 (Multiple Choices)</code> 表明：目标资源有一个以上的表示形式，每种都具有更加明确的标识符，并提供了备选表示形式相关的信息以便用户（或者用户代理）能够通过重定向它的请求到一个或多个那些标识符来选择<ruby>最优的表示形式<rt>preferred representation</rt></ruby>。换句话说，服务器希望用户代理参与进响应式协商来选择它需要的最合适的表现形式（<a href="#org7e87af6">章节 3.4</a>）。
+<code>300 (Multiple Choices)</code> 表明：目标资源有一个以上的表示形式，每种都具有更加明确的标识符，并提供了备选表示形式相关的信息以便用户（或者用户代理）能够通过重定向它的请求到一个或多个那些标识符来选择<ruby>最优的表示形式<rt>preferred representation</rt></ruby>。换句话说，服务器希望用户代理参与<ruby>进响应式协商<rt>reactive negotiation</rt></ruby>来选择它需要的最合适的表现形式（<a href="#org7e87af6">章节 3.4</a>）。
 </p>
 
 <blockquote>
@@ -5183,7 +5183,7 @@ If the server has a preferred choice, the server <b>SHOULD</b> generate a <code>
 </blockquote>
 
 <p>
-如果服务器有一个最优选择，那么它 <b>应当</b> 生成一个包含最优选择的 URI 引用的 <code>Location</code> 头字段。用户代理 <b>可以</b> 使用 <code>Location</code> 字段的值自动重定向。
+如果服务器有一个<ruby>最优选择<rt>preferred choice</rt></ruby>，那么它 <b>应当</b> 生成一个 <code>Location</code> 头字段来包含最优选择的 URI 引用。用户代理 <b>可以</b> 使用 <code>Location</code> 字段的值自动重定向。
 </p>
 
 <blockquote>
@@ -5214,7 +5214,7 @@ Note: The original proposal for the <code>300</code> status code defined the <co
 </blockquote>
 
 <p>
-<b>注意：</b> <code>300</code> 状态码最初的提案定义了名叫 <code>URI</code> 的头字段来提供一个备选表示形式的列表，以便它能用于 <code>200</code>、<code>300</code>、<code>406</code> 响应并且能在回应给 HEAD 方法的响应回进行传输。尽管如此，缺乏部署并且句法上的争议导致本规范放弃了 <code>URI</code> 和 <code>Alternates</code> （随后的一个提案）两者。有可能使用一系列的 <code>Link</code> 头字段【<a href="https://tools.ietf.org/html/rfc5988">RFC5988</a>】来表达上述列表，每个 <code>Link</code> 值都与备选有关，虽然其部署还是一个“鸡和蛋”的问题。
+<b>注意：</b> <code>300</code> 状态码最初的提案定义了名叫 <code>URI</code> 的头字段来提供一个备选表示形式的列表，以便它能用在 <code>200</code>、<code>300</code>、<code>406</code> 响应里并且能在回应给 HEAD 方法的响应回进行传输。尽管如此，缺乏部署并且句法上的争议导致本规范放弃了 <code>URI</code> 和 <code>Alternates</code> （随后的一个提案）两者。有可能使用一系列的 <code>Link</code> 头字段【<a href="https://tools.ietf.org/html/rfc5988">RFC5988</a>】来表达上述列表，每个 <code>Link</code> 值都与备选有关，虽然其部署还是一个“鸡和蛋”的问题。
 </p>
 </div>
 </div>
@@ -5401,7 +5401,7 @@ The server <b>SHOULD</b> generate a <code>Location</code> header field in the re
 </blockquote>
 
 <p>
-服务器 <b>应当</b> 在响应里生成一个 <code>Location</code> 头字段来包含一个这个不同的 URI 引用。用户代理 <b>可以</b> 使用 <code>Location</code> 的字段值来自动重定向。服务器的响应有效载荷通常会包含一个简短的超文本<ruby>注释<rt>note</rt></ruby>，其内有一个指向这个（或多个）新 URI 的超链接。
+服务器 <b>应当</b> 在响应里生成一个 <code>Location</code> 头字段来包含这个不同的 URI 引用。用户代理 <b>可以</b> 使用 <code>Location</code> 的字段值来自动重定向。服务器的响应有效载荷通常会包含一个简短的超文本<ruby>注释<rt>note</rt></ruby>，其内有一个指向这个（或多个）新 URI 的超链接。
 </p>
 
 <blockquote>
@@ -5427,7 +5427,7 @@ The <code>4xx (Client Error)</code> class of status code indicates that the clie
 </blockquote>
 
 <p>
-<code>4xx (Client Error)</code> 状态码种类表明：客户端貌似有错误。除了响应给 HEAD 请求的情况以外，服务器 <b>应当</b> 在其发送的响应里带有一个表示形式来解释这种<ruby>错误情况<rt>error situation</rt></ruby>，以及这是暂时还是永久的<ruby>状况<rt>condition</rt></ruby>。这些状态码适用于任何请求方法。用户代理 <b>应当</b> 向用户展示其内的任何表示形式。
+<code>4xx (Client Error)</code> 状态码种类表明：客户端貌似有错误。除了响应给 HEAD 请求的这种情况以外，服务器 <b>应当</b> 在其发送的响应里包含一个表示形式来解释这种<ruby>错误情况<rt>error situation</rt></ruby>，以及这是暂时还是永久的<ruby>状况<rt>condition</rt></ruby>。这些状态码适用于任何请求方法。用户代理 <b>应当</b> 向用户展示其内的任何表示形式。
 </p>
 </div>
 
@@ -5471,7 +5471,7 @@ The <code>403 (Forbidden)</code> status code indicates that the server understoo
 </blockquote>
 
 <p>
-<code>403 (Forbidden)</code> 状态码表明：服务器理解请求但拒绝授权。如果服务器希望公布“为什么这个请求被禁止”的话，可以在<ruby>响应有效载荷<rt>response payload</rt></ruby>（如果有的话）里描述其原因。
+<code>403 (Forbidden)</code> 状态码表明：服务器理解这个请求但拒绝授权。如果服务器希望公布“为什么这个请求被禁止”的话，可以在<ruby>响应有效载荷<rt>response payload</rt></ruby>（如果有的话）里描述其原因。
 </p>
 
 <blockquote>
@@ -5491,7 +5491,7 @@ An origin server that wishes to "hide" the current existence of a forbidden targ
 </blockquote>
 
 <p>
-如果源服务器希望对这个请求“隐藏”被禁止的目标资源的存在的话，它 <b>可以</b> 使用 <code>404 (Not Found)</code> 来代替 <code>403</code>。
+如果源服务器希望对这个请求“隐藏”被禁止的目标资源的存在，它 <b>可以</b> 使用 <code>404 (Not Found)</code> 来代替 <code>403</code>。
 </p>
 </div>
 </div>
@@ -5556,7 +5556,7 @@ The <code>406 (Not Acceptable)</code> status code indicates that the target reso
 </blockquote>
 
 <p>
-<code>406 (Not Acceptable)</code> 状态码表明：根据在请求里接收到的主动协商相关的头字段（<a href="#org07183ec">章节 5.3</a>）来看，目标资源没有一种用户代理<ruby>能接受的<rt>acceptable</rt></ruby><ruby>当前表示形式<rt>current representation</rt></ruby>，而且服务器并不愿意提供一个默认的表示形式。
+<code>406 (Not Acceptable)</code> 状态码表明：根据在这个请求里接收到的主动协商相关的头字段（<a href="#org07183ec">章节 5.3</a>）来看，目标资源没有一种用户代理<ruby>能接受的<rt>acceptable</rt></ruby><ruby>当前表示形式<rt>current representation</rt></ruby>，而且服务器并不愿意提供一个默认的表示形式。
 </p>
 
 <blockquote>
@@ -5596,7 +5596,7 @@ The <code>409 (Conflict)</code> status code indicates that the request could not
 </blockquote>
 
 <p>
-<code>409 (Conflict)</code> 状态码表明：由于请求与目标资源的当前状态存在冲突，请求无法完成。本状态码用在用户可能有能力解决冲突并且重新提交该请求的情况。服务器 <b>应当</b> 生成一个有效载荷来包含足够的信息，让用户可以识别出冲突的源头。
+<code>409 (Conflict)</code> 状态码表明：由于这个请求与目标资源的当前状态存在冲突，请求无法完成。本状态码用在用户可能有能力解决冲突并且重新提交该请求的情况。服务器 <b>应当</b> 生成一个有效载荷来包含足够的信息，让用户可以识别出冲突的源头。
 </p>
 
 <blockquote>
@@ -5631,7 +5631,7 @@ The <code>410</code> response is primarily intended to assist the task of web ma
 </blockquote>
 
 <p>
-<code>410</code> 响应主要是为了辅助网站维护的工作——通过通知接收端这个资源是有意设为不可用的，并且<ruby>服务器所有者<rt>server owners</rt></ruby>希望这些引用该资源的<ruby>远程链接<rt>remote links</rt></ruby>得到删除。常见于限定时间的促销活动和属于个人的资源不再与源服务器的网站相关联的情况。不需要将所有永久不可用的资源都标记为 "gone" 或者将这些标记维护在任意长的时间里——那是留给服务器所有者来决定的。
+<code>410</code> 响应主要是为了辅助网站维护的工作——通过通知接收端这个资源是有意设为不可用的，并且<ruby>服务器所有者<rt>server owners</rt></ruby>希望这些引用该资源的<ruby>远程链接<rt>remote links</rt></ruby>得到删除。常见于限定时间的促销活动和属于个人的资源不再与源服务器的网站相关联的情况。不需要将所有永久不可用的资源都标记为 "gone" 或者将这些标记维持在任意长的时间里——那是留给服务器所有者来决定的。
 </p>
 
 <blockquote>
@@ -5666,15 +5666,23 @@ The <code>411 (Length Required)</code> status code indicates that the server ref
 <div class="outline-text-4" id="text-org54d3341">
 <blockquote>
 <p>
-The 413 (Payload Too Large) status code indicates that the server is refusing to process a request because the request payload is larger than the server is willing or able to process. The server MAY close the connection to prevent the client from continuing the request.
+The <code>413 (Payload Too Large)</code> status code indicates that the server is refusing to process a request because the request payload is larger than the server is willing or able to process. The server <b>MAY</b> close the connection to prevent the client from continuing the request.
 </p>
 </blockquote>
 
+<p>
+<code>413 (Payload Too Large)</code> 状态码表明：服务器拒绝处理这个请求，因为请求的有效载荷的大小超出了服务器所愿意或能够处理的限制。服务器 <b>可以</b> 关闭连接来阻止客户端继续这个请求。
+</p>
+
 <blockquote>
 <p>
-If the condition is temporary, the server SHOULD generate a Retry-After header field to indicate that it is temporary and after what time the client MAY try again.
+If the condition is temporary, the server <b>SHOULD</b> generate a <code>Retry-After</code> header field to indicate that it is temporary and after what time the client <b>MAY</b> try again.
 </p>
 </blockquote>
+
+<p>
+如果这种状况是暂时的，服务器 <b>应当</b> 生成一个 <code>Retry-After</code> 头字段来表明：这只是暂时的，在什么时间以后客户端 <b>可以</b> 重试。
+</p>
 </div>
 </div>
 
@@ -5683,15 +5691,35 @@ If the condition is temporary, the server SHOULD generate a Retry-After header f
 <div class="outline-text-4" id="text-orgdc2c95b">
 <blockquote>
 <p>
-The 414 (URI Too Long) status code indicates that the server is refusing to service the request because the request-target (Section 5.3 of [RFC7230]) is longer than the server is willing to interpret. This rare condition is only likely to occur when a client has improperly converted a POST request to a GET request with long query information, when the client has descended into a "black hole" of redirection (e.g., a redirected URI prefix that points to a suffix of itself) or when the server is under attack by a client attempting to exploit potential security holes.
+The <code>414 (URI Too Long)</code> status code indicates that the server is refusing to service the request because the request-target (<a href="RFC7230.html#ID-16a8fba9-40f8-4b2c-ba5f-2f6522362c3a">Section 5.3</a> of [RFC7230]) is longer than the server is willing to interpret. This rare condition is only likely to occur when a client has improperly converted a POST request to a GET request with long query information, when the client has descended into a "black hole" of redirection (e.g., a redirected URI prefix that points to a suffix of itself) or when the server is under attack by a client attempting to exploit potential security holes.
+</p>
+</blockquote>
+
+<p>
+<code>414 (URI Too Long)</code> 状态码表明：服务器拒绝服务这个请求，因为<ruby>请求目标<rt>request-target</rt></ruby>（<a href="RFC7230.html#ID-16a8fba9-40f8-4b2c-ba5f-2f6522362c3a">【RFC7230】章节 5.3</a>）的长度超出了服务器所愿意<ruby>解释<rt>interpret</rt></ruby>的限制。这种状况极少出现，仅可能发生在：当客户端将一个 POST 请求不恰当地转换为一个带有超长<ruby>查询信息<rt>query information</rt></ruby>的 GET 请求的时候；当客户端坠入一个重定向“<ruby>黑洞<rt>black hole</rt></ruby>”（比如，一个重定向的 URI 前缀指向到它自己的一个后缀上）的时候；当服务器被客户端试图挖掘潜在的安全漏洞的时候。
+</p>
+
+<blockquote>
+<p>
+译注：重定向“黑洞”，例如每次重定向把旧的 URI 作为新的 URI 的一部分，导致在若干次重定向后 URI 超长。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-A 414 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+译注：某些服务器使用了固定长度的缓冲来读取或操作请求 URI，当 GET 后的参数超过某个数值后，可能会产生缓冲区溢出。
 </p>
 </blockquote>
+
+<blockquote>
+<p>
+A <code>414</code> response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see <a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">Section 4.2.2</a> of [RFC7234]).
+</p>
+</blockquote>
+
+<p>
+<code>414</code> 响应默认是<ruby>可缓存的<rt>cacheable</rt></ruby>，也就是说，除非在请求方法的定义里另有指定，或者显式带有<ruby>缓存控制<rt>cache controls</rt></ruby>（<a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">【RFC7234】章节 4.2.2</a>）。
+</p>
 </div>
 </div>
 
@@ -5700,9 +5728,13 @@ A 414 response is cacheable by default; i.e., unless otherwise indicated by the 
 <div class="outline-text-4" id="text-org7804f77">
 <blockquote>
 <p>
-The 415 (Unsupported Media Type) status code indicates that the origin server is refusing to service the request because the payload is in a format not supported by this method on the target resource. The format problem might be due to the request's indicated Content-Type or Content-Encoding, or as a result of inspecting the data directly.
+The <code>415 (Unsupported Media Type)</code> status code indicates that the origin server is refusing to service the request because the payload is in a format not supported by this method on the target resource. The format problem might be due to the request's indicated <code>Content-Type</code> or <code>Content-Encoding</code>, or as a result of inspecting the data directly.
 </p>
 </blockquote>
+
+<p>
+<code>415 (Unsupported Media Type)</code> 状态码表明：源服务器拒绝服务这个请求，因为有效载荷处于某种格式，请求方法不支持将该种格式作用到目标资源上。这种格式问题可能是由于这个请求所指明的 <code>Content-Type</code> 或 <code>Content-Encoding</code>，或者直接检查数据得出的结果。
+</p>
 </div>
 </div>
 
@@ -5711,9 +5743,13 @@ The 415 (Unsupported Media Type) status code indicates that the origin server is
 <div class="outline-text-4" id="text-org631d1f7">
 <blockquote>
 <p>
-The 417 (Expectation Failed) status code indicates that the expectation given in the request's Expect header field (Section 5.1.1) could not be met by at least one of the inbound servers.
+The <code>417 (Expectation Failed)</code> status code indicates that the expectation given in the request's <code>Expect</code> header field (<a href="#org83b8384">Section 5.1.1</a>) could not be met by at least one of the inbound servers.
 </p>
 </blockquote>
+
+<p>
+<code>417 (Expectation Failed)</code> 状态码表明：请求中的 <code>Expect</code> 头字段（<a href="#org83b8384">章节 5.1.1</a>）所给定的<ruby>期望<rt>expectation</rt></ruby>不能被至少一个<ruby>入站服务器<rt>inbound servers</rt></ruby>所<ruby>完成<rt>meet</rt></ruby>。
+</p>
 </div>
 </div>
 
@@ -5722,9 +5758,13 @@ The 417 (Expectation Failed) status code indicates that the expectation given in
 <div class="outline-text-4" id="text-orgb0c8615">
 <blockquote>
 <p>
-The 426 (Upgrade Required) status code indicates that the server refuses to perform the request using the current protocol but might be willing to do so after the client upgrades to a different protocol. The server MUST send an Upgrade header field in a 426 response to indicate the required protocol(s) (Section 6.7 of [RFC7230]).
+The <code>426 (Upgrade Required)</code> status code indicates that the server refuses to perform the request using the current protocol but might be willing to do so after the client upgrades to a different protocol. The server <b>MUST</b> send an <code>Upgrade</code> header field in a <code>426</code> response to indicate the required protocol(s) (<a href="RFC7230.html#ID-62632d23-475d-4daa-8efb-3206d370573a">Section 6.7</a> of [RFC7230]).
 </p>
 </blockquote>
+
+<p>
+<code>426 (Upgrade Required)</code> 状态码表明：服务器拒绝使用当前协议来执行这个请求，但是，在客户端升级到一种不同的协议后，它可能愿意这样做。服务器 <b>必须</b> 在 <code>426</code> 响应里带有一个 <code>Upgrade</code> 头字段来指明所要求的一个或多个协议（<a href="RFC7230.html#ID-62632d23-475d-4daa-8efb-3206d370573a">【RFC7230】章节 6.7</a>）。
+</p>
 
 <blockquote>
 <p>
@@ -5732,19 +5772,19 @@ Example:
 </p>
 </blockquote>
 
+<p>
+例如：
+</p>
+
 <pre class="example">
 HTTP/1.1 426 Upgrade Required
 Upgrade: HTTP/3.0
 Connection: Upgrade
 Content-Length: 53
 Content-Type: text/plain
-</pre>
 
-<blockquote>
-<p>
 This service requires use of the HTTP/3.0 protocol.
-</p>
-</blockquote>
+</pre>
 </div>
 </div>
 </div>
@@ -5754,86 +5794,126 @@ This service requires use of the HTTP/3.0 protocol.
 <div class="outline-text-3" id="text-org033011b">
 <blockquote>
 <p>
-The 5xx (Server Error) class of status code indicates that the server is aware that it has erred or is incapable of performing the requested method. Except when responding to a HEAD request, the server SHOULD send a representation containing an explanation of the error situation, and whether it is a temporary or permanent condition. A user agent SHOULD display any included representation to the user. These response codes are applicable to any request method.
-</p>
-</blockquote>
-</div>
-
-<div id="outline-container-orge703f96" class="outline-4">
-<h4 id="orge703f96"><a id="ID-4a288d4c-063f-4589-9ec6-3c4f246e2d8a"></a>6.6.1. 500 Internal Server Error</h4>
-<div class="outline-text-4" id="text-orge703f96">
-<blockquote>
-<p>
-The 500 (Internal Server Error) status code indicates that the server encountered an unexpected condition that prevented it from fulfilling the request.
-</p>
-</blockquote>
-</div>
-</div>
-
-<div id="outline-container-org42220c0" class="outline-4">
-<h4 id="org42220c0"><a id="ID-776a0530-a654-43bc-879b-186e39dbff63"></a>6.6.2. 501 Not Implemented</h4>
-<div class="outline-text-4" id="text-org42220c0">
-<blockquote>
-<p>
-The 501 (Not Implemented) status code indicates that the server does not support the functionality required to fulfill the request. This is the appropriate response when the server does not recognize the request method and is not capable of supporting it for any resource.
+The <code>5xx (Server Error)</code> class of status code indicates that the server is aware that it has erred or is incapable of performing the requested method. Except when responding to a HEAD request, the server <b>SHOULD</b> send a representation containing an explanation of the error situation, and whether it is a temporary or permanent condition. A user agent <b>SHOULD</b> display any included representation to the user. These response codes are applicable to any request method.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A 501 response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see Section 4.2.2 of [RFC7234]).
+<code>5xx (Server Error)</code> 状态码种类表明：服务器意识到它有错误或者它无法执行所请求的方法。除了响应给 HEAD 请求这种情况以外，服务器 <b>应当</b> 在其发送的响应里包含一个表示形式来解释这种<ruby>错误情况<rt>error situation</rt></ruby>，以及这是暂时还是永久的<ruby>状况<rt>condition</rt></ruby>。用户代理 <b>应当</b> 向用户展示其内的任何表示形式。这些状态码适用于任何请求方法。
 </p>
-</blockquote>
-</div>
 </div>
 
-<div id="outline-container-orgb9f52eb" class="outline-4">
-<h4 id="orgb9f52eb"><a id="ID-dd36be96-0bfa-4dbc-8656-132fe9509b14"></a>6.6.3. 502 Bad Gateway</h4>
-<div class="outline-text-4" id="text-orgb9f52eb">
+<div id="outline-container-org8d80adb" class="outline-4">
+<h4 id="org8d80adb"><a id="ID-4a288d4c-063f-4589-9ec6-3c4f246e2d8a"></a>6.6.1. 500 服务器内部错误 / 500 Internal Server Error</h4>
+<div class="outline-text-4" id="text-org8d80adb">
 <blockquote>
 <p>
-The 502 (Bad Gateway) status code indicates that the server, while acting as a gateway or proxy, received an invalid response from an inbound server it accessed while attempting to fulfill the request.
+The <code>500 (Internal Server Error)</code> status code indicates that the server encountered an unexpected condition that prevented it from fulfilling the request.
 </p>
 </blockquote>
-</div>
-</div>
 
-<div id="outline-container-orgda430f7" class="outline-4">
-<h4 id="orgda430f7"><a id="ID-4e09afe4-30a3-4bbb-aa7e-23f621d42801"></a>6.6.4. 503 Service Unavailable</h4>
-<div class="outline-text-4" id="text-orgda430f7">
-<blockquote>
 <p>
-The 503 (Service Unavailable) status code indicates that the server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay. The server MAY send a Retry-After header field (Section 7.1.3) to suggest an appropriate amount of time for the client to wait before retrying the request.
-</p>
-</blockquote>
-<blockquote>
-<p>
-
-</p>
-</blockquote>
-<p>
-<b>Note:</b> The existence of the 503 status code does not imply that a server has to use it when becoming overloaded. Some servers might simply refuse the connection.
+<code>500 (Internal Server Error)</code> 状态码表明：服务器遇到一种异常状况阻止了它<ruby>实现<rt>fulfill</rt></ruby>这个请求。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb821e4f" class="outline-4">
-<h4 id="orgb821e4f"><a id="ID-4502f86d-74d1-4890-b235-3155ba125cb6"></a>6.6.5. 504 Gateway Timeout</h4>
-<div class="outline-text-4" id="text-orgb821e4f">
+<div id="outline-container-orged2019a" class="outline-4">
+<h4 id="orged2019a"><a id="ID-776a0530-a654-43bc-879b-186e39dbff63"></a>6.6.2. 501 没有实现 / 501 Not Implemented</h4>
+<div class="outline-text-4" id="text-orged2019a">
 <blockquote>
 <p>
-The 504 (Gateway Timeout) status code indicates that the server, while acting as a gateway or proxy, did not receive a timely response from an upstream server it needed to access in order to complete the request.
+The <code>501 (Not Implemented)</code> status code indicates that the server does not support the functionality required to fulfill the request. This is the appropriate response when the server does not recognize the request method and is not capable of supporting it for any resource.
 </p>
 </blockquote>
+
+<p>
+<code>501 (Not Implemented)</code> 状态码表明：服务器并不支持<ruby>实现<rt>fulfill</rt></ruby>这个请求所需要的功能。当服务器无法识别出请求方法并且它无法支持任何资源的时候，响应这个状态码是很合适。
+</p>
+
+<blockquote>
+<p>
+A <code>501</code> response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see <a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">Section 4.2.2</a> of [RFC7234]).
+</p>
+</blockquote>
+
+<p>
+<code>501</code> 响应默认是<ruby>可缓存的<rt>cacheable</rt></ruby>，也就是说，除非在请求方法的定义里另有指定，或者显式带有<ruby>缓存控制<rt>cache controls</rt></ruby>（<a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">【RFC7234】章节 4.2.2</a>）。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org1131bac" class="outline-4">
-<h4 id="org1131bac"><a id="ID-00dabed7-f9a1-471e-a9f6-77220446dbfa"></a>6.6.6. 505 HTTP Version Not Supported</h4>
-<div class="outline-text-4" id="text-org1131bac">
+<div id="outline-container-org5f9a199" class="outline-4">
+<h4 id="org5f9a199"><a id="ID-dd36be96-0bfa-4dbc-8656-132fe9509b14"></a>6.6.3. 502 无效网关 / 502 Bad Gateway</h4>
+<div class="outline-text-4" id="text-org5f9a199">
 <blockquote>
 <p>
-The 505 (HTTP Version Not Supported) status code indicates that the server does not support, or refuses to support, the major version of HTTP that was used in the request message. The server is indicating that it is unable or unwilling to complete the request using the same major version as the client, as described in Section 2.6 of [RFC7230], other than with this error message. The server SHOULD generate a representation for the 505 response that describes why that version is not supported and what other protocols are supported by that server.
+The <code>502 (Bad Gateway)</code> status code indicates that the server, while acting as a gateway or proxy, received an invalid response from an inbound server it accessed while attempting to fulfill the request.
+</p>
+</blockquote>
+
+<p>
+<code>502 (Bad Gateway)</code> 状态码表明：当服务器充当一个网关或代理的时候，在它试图<ruby>实现<rt>fulfill</rt></ruby>这个请求的时候，从一个<ruby>站内服务器<rt>inbound server</rt></ruby>里接收到一个无效的响应。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6442e4a" class="outline-4">
+<h4 id="org6442e4a"><a id="ID-4e09afe4-30a3-4bbb-aa7e-23f621d42801"></a>6.6.4. 503 服务不可用 / 503 Service Unavailable</h4>
+<div class="outline-text-4" id="text-org6442e4a">
+<blockquote>
+<p>
+The <code>503 (Service Unavailable)</code> status code indicates that the server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay. The server <b>MAY</b> send a <code>Retry-After</code> header field (<a href="#orgbf05a48">Section 7.1.3</a>) to suggest an appropriate amount of time for the client to wait before retrying the request.
+</p>
+</blockquote>
+
+<p>
+<code>503 (Service Unavailable)</code> 状态码表明：由于临时的<ruby>过载<rt>overload</rt></ruby>或者计划好的<ruby>维护<rt>maintenance</rt></ruby>，导致服务器当前无法处理这个请求，可能等一段时间后就会恢复过来。服务器 <b>可以</b> 在其发送的响应里带有一个 <code>Retry-After</code> 头字段（<a href="#orgbf05a48">章节 7.1.3</a>）来向客户端建议一个合适的等待时长再进行重试请求。
+</p>
+
+<blockquote>
+<p>
+<b>Note:</b> The existence of the <code>503</code> status code does not imply that a server has to use it when becoming overloaded. Some servers might simply refuse the connection.
+</p>
+</blockquote>
+
+<p>
+<b>注意：</b> <code>503</code> 的存在并不意味着当服务器出现过载的时候必须使用它。某些服务器可能只是简单地拒绝连接。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgaccae0d" class="outline-4">
+<h4 id="orgaccae0d"><a id="ID-4502f86d-74d1-4890-b235-3155ba125cb6"></a>6.6.5. 504 网关超时 / 504 Gateway Timeout</h4>
+<div class="outline-text-4" id="text-orgaccae0d">
+<blockquote>
+<p>
+The <code>504 (Gateway Timeout)</code> status code indicates that the server, while acting as a gateway or proxy, did not receive a timely response from an upstream server it needed to access in order to complete the request.
+</p>
+</blockquote>
+
+<p>
+<code>504 (Gateway Timeout)</code> 状态码表明：当服务器充当一个网关或代理的时候，它并没有在限时内从上游服务器——为了<ruby>完成<rt>complete</rt></ruby>这个请求而需要访问的服务器——接收到一个响应。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8414fb8" class="outline-4">
+<h4 id="org8414fb8"><a id="ID-00dabed7-f9a1-471e-a9f6-77220446dbfa"></a>6.6.6. 505 HTTP 版本不支持 / 505 HTTP Version Not Supported</h4>
+<div class="outline-text-4" id="text-org8414fb8">
+<blockquote>
+<p>
+The <code>505 (HTTP Version Not Supported)</code> status code indicates that the server does not support, or refuses to support, the major version of HTTP that was used in the request message. The server is indicating that it is unable or unwilling to complete the request using the same major version as the client, as described in Section 2.6 of [RFC7230], other than with this error message. The server <b>SHOULD</b> generate a representation for the <code>505</code> response that describes why that version is not supported and what other protocols are supported by that server.
+</p>
+</blockquote>
+
+<p>
+<code>505 (HTTP Version Not Supported)</code> 状态码表明：服务器并不支持，或者拒绝支持，用在这个请求消息里的 HTTP 的<ruby>主版本<rt>major version</rt></ruby>。服务器表明它不能或不愿意使用与客户端相同的 HTTP 主版本来完成这个请求，详情见<a href="RFC7230.html#ID-d1387674-a388-4ea6-9165-1ded175d90b4">【RFC7230】章节 2.6</a>；而是使用这个错误消息。服务器 <b>应当</b> 为 <code>505</code> 响应生成一个表示形式来描述“为什么不支持那个版本”以及“服务器支持其他哪些协议”。
+</p>
+
+<blockquote>
+<p>
+译注：HTTP 使用“&lt;主版本&gt;.&lt;次版本&gt;”这种<ruby>编号方案<rt>numbering scheme</rt></ruby>来表明协议的版本，如 HTTP/1.0、HTTP/1.1 等。详情见<a href="RFC7230.html#ID-d1387674-a388-4ea6-9165-1ded175d90b4">【RFC7230】章节 2.6</a>。
 </p>
 </blockquote>
 </div>
@@ -5844,60 +5924,736 @@ The 505 (HTTP Version Not Supported) status code indicates that the server does 
 <div id="outline-container-org5a5286c" class="outline-2">
 <h2 id="org5a5286c"><a id="ID-30e7b781-4a14-4519-abb9-63ec43516b98"></a>7. 响应头字段 / Response Header Fields</h2>
 <div class="outline-text-2" id="text-org5a5286c">
+<blockquote>
+<p>
+The response header fields allow the server to pass additional information about the response beyond what is placed in the status-line. These header fields give information about the server, about further access to the target resource, or about related resources.
+</p>
+</blockquote>
+
+<p>
+除了放在<ruby>状态行<rt>status-line</rt></ruby>的响应信息以外，<ruby>响应头字段<rt>response header fields</rt></ruby>让服务器可以传递额外的响应相关信息。这些头字段给出了关于服务器、关于对目标资源的后续访问、或者关于相关联的资源的信息。
+</p>
+
+<blockquote>
+<p>
+Although each response header field has a defined meaning, in general, the precise semantics might be further refined by the semantics of the request method and/or response status code.
+</p>
+</blockquote>
+
+<p>
+跃然每种响应头字段都定义了含义，但通常情况下，更精确的语义可能经由<ruby>请求方法<rt>request method</rt></ruby>以及（或者）<ruby>响应状态码<rt>response status code</rt></ruby>来进一步精炼。
+</p>
 </div>
+
 <div id="outline-container-orge68fb41" class="outline-3">
 <h3 id="orge68fb41">7.1. Control Data</h3>
 <div class="outline-text-3" id="text-orge68fb41">
+<blockquote>
+<p>
+Response header fields can supply control data that supplements the status code, directs caching, or instructs the client where to go next.
+</p>
+</blockquote>
+
+<p>
+响应头字段能够提供以下方面的控制数据：补充状态码（如 <code>Location</code> 头字段提供了 <code>302</code> 重定向所需的 URI）；指导缓存；指导客户端下一步去哪里。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Header Field Name</th>
+<th scope="col" class="org-left">Defined in&#x2026;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Age</td>
+<td class="org-left"><a href="RFC7234.html#ID-0fda7a59-2592-493d-9ce1-01e72543c6c0">Section 5.1</a> of [RFC7234]</td>
+</tr>
+
+<tr>
+<td class="org-left">Cache-Control</td>
+<td class="org-left"><a href="RFC7234.html#ID-03c2dad4-a6d2-4d3c-b087-d08717bf09ec">Section 5.2</a> of [RFC7234]</td>
+</tr>
+
+<tr>
+<td class="org-left">Expires</td>
+<td class="org-left"><a href="RFC7234.html#ID-18d3caca-869d-4ae8-8038-2c57cd36fef5">Section 5.3</a> of [RFC7234]</td>
+</tr>
+
+<tr>
+<td class="org-left">Date</td>
+<td class="org-left"><a href="#org8e5ec45">Section 7.1.1.2</a></td>
+</tr>
+
+<tr>
+<td class="org-left">Location</td>
+<td class="org-left"><a href="#orgad9277e">Section 7.1.2</a></td>
+</tr>
+
+<tr>
+<td class="org-left">Retry-After</td>
+<td class="org-left"><a href="#orgbf05a48">Section 7.1.3</a></td>
+</tr>
+
+<tr>
+<td class="org-left">Vary</td>
+<td class="org-left"><a href="#org5ddc30c">Section 7.1.4</a></td>
+</tr>
+
+<tr>
+<td class="org-left">Warning</td>
+<td class="org-left"><a href="RFC7234.html#ID-84f5867e-4a3e-45fa-b085-dd23e8598a6b">Section 5.5</a> of [RFC7234]</td>
+</tr>
+</tbody>
+</table>
 </div>
+
 <div id="outline-container-org67adfb6" class="outline-4">
 <h4 id="org67adfb6">7.1.1. Origination Date</h4>
 <div class="outline-text-4" id="text-org67adfb6">
 </div>
 <div id="outline-container-org8c425df" class="outline-5">
 <h5 id="org8c425df">7.1.1.1. Date/Time Formats</h5>
+<div class="outline-text-5" id="text-org8c425df">
+<blockquote>
+<p>
+Prior to 1995, there were three different formats commonly used by servers to communicate timestamps. For compatibility with old implementations, all three are defined here. The preferred format is a fixed-length and single-zone subset of the date and time specification used by the Internet Message Format [<a href="https://tools.ietf.org/html/rfc5322">RFC5322</a>].
+</p>
+</blockquote>
+
+<p>
+1995 年前，总共有三种不同的格式常用于服务器来传达<ruby>时间戳<rt>timestamps</rt></ruby>。为了兼容旧有的实现，所有这三种都定义在这里。首选的格式是<ruby>互联网消息格式<rt>Internet Message Format</rt></ruby>【<a href="https://tools.ietf.org/html/rfc5322">RFC5322</a>】所使用的日期和时间规范——一种固定长度的、单一时区的时间格式。
+</p>
+
+<blockquote>
+<p>
+译注：所谓“单一时区”是因为 IMF（Internet Message Format）日期和时间规范里的<ruby>时区<rt>zone</rt></ruby>支持多时间（虽然定义为已淘汰），这里取其 <code>obs-zone</code> ABNF 规则里的一个字集，见<a href="https://tools.ietf.org/html/rfc5322#section-3.3">【RFC5322】章节 3.3</a>。
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">HTTP-date    = IMF-fixdate / obs-date
+</pre>
 </div>
+
+<blockquote>
+<p>
+An example of the preferred format is
+</p>
+</blockquote>
+
+<p>
+首选格式的一个例子：
+</p>
+
+<pre class="example">
+Sun, 06 Nov 1994 08:49:37 GMT    ; IMF-fixdate
+</pre>
+
+<blockquote>
+<p>
+Examples of the two obsolete formats are
+</p>
+</blockquote>
+
+<p>
+两种已淘汰格式的例子：
+</p>
+
+<pre class="example">
+Sunday, 06-Nov-94 08:49:37 GMT   ; obsolete RFC 850 format
+Sun Nov  6 08:49:37 1994         ; ANSI C's asctime() format
+</pre>
+
+<blockquote>
+<p>
+A recipient that parses a timestamp value in an HTTP header field <b>MUST</b> accept all three HTTP-date formats. When a sender generates a header field that contains one or more timestamps defined as HTTP-date, the sender <b>MUST</b> generate those timestamps in the <code>IMF-fixdate</code> format.
+</p>
+</blockquote>
+
+<p>
+接收端对某个 HTTP 头字段里的时间戳值进行<ruby>解析<rt>parse</rt></ruby>的时候，<b>必须</b> 接受所有这三种 HTTP 日期格式。当发送端生成带有一个或多个作为 <code>HTTP-date</code> 的时间戳的头字段时，发送端 <b>必须</b> 以 <code>IMF-fixdate</code> 格式生成那些时间戳（即本规范首选的那一种格式）。
+</p>
+
+<blockquote>
+<p>
+An HTTP-date value represents time as an instance of Coordinated Universal Time (UTC). The first two formats indicate UTC by the three-letter abbreviation for Greenwich Mean Time, "GMT", a predecessor of the UTC name; values in the asctime format are assumed to be in UTC. A sender that generates HTTP-date values from a local clock ought to use NTP ([RFC5905]) or some similar protocol to synchronize its clock to UTC.
+</p>
+</blockquote>
+
+<p>
+一个 <code>HTTP-date</code> 的值表示一个<ruby>世界标准时间<rt>Coordinated Universal Time</rt></ruby>（UTC）。上述三个例子中的前两例通过<ruby>格林威治标准时间<rt>Greenwich Mean Time</rt></ruby>——UTC 名称的前身——的三个英文字母缩写 "GMT" 来表明是 UTC。而 <code>asctime</code> 格式（即上述第三例）假定时间是 UTC 的。发送端从本地时钟生成 <code>HTTP-date</code> 值的时候，应该使用 NTP（【<a href="https://tools.ietf.org/html/rfc5905">RFC5905</a>】）或者其他类似的协议来将本地时间同步为 UTC。
+</p>
+
+<blockquote>
+<p>
+Preferred format:
+</p>
+</blockquote>
+
+<p>
+首选的格式：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">IMF-fixdate  = day-name "," SP date1 SP time-of-day SP GMT
+; fixed length/zone/capitalization subset of the format
+; see Section 3.3 of [RFC5322]
+
+day-name     = %x4D.6F.6E ; "Mon", case-sensitive
+             / %x54.75.65 ; "Tue", case-sensitive
+             / %x57.65.64 ; "Wed", case-sensitive
+             / %x54.68.75 ; "Thu", case-sensitive
+             / %x46.72.69 ; "Fri", case-sensitive
+             / %x53.61.74 ; "Sat", case-sensitive
+             / %x53.75.6E ; "Sun", case-sensitive
+
+date1        = day SP month SP year
+             ; e.g., 02 Jun 1982
+
+day          = 2DIGIT
+month        = %x4A.61.6E ; "Jan", case-sensitive
+             / %x46.65.62 ; "Feb", case-sensitive
+             / %x4D.61.72 ; "Mar", case-sensitive
+             / %x41.70.72 ; "Apr", case-sensitive
+             / %x4D.61.79 ; "May", case-sensitive
+             / %x4A.75.6E ; "Jun", case-sensitive
+             / %x4A.75.6C ; "Jul", case-sensitive
+             / %x41.75.67 ; "Aug", case-sensitive
+             / %x53.65.70 ; "Sep", case-sensitive
+             / %x4F.63.74 ; "Oct", case-sensitive
+             / %x4E.6F.76 ; "Nov", case-sensitive
+             / %x44.65.63 ; "Dec", case-sensitive
+year         = 4DIGIT
+
+GMT          = %x47.4D.54 ; "GMT", case-sensitive
+
+time-of-day  = hour ":" minute ":" second
+             ; 00:00:00 - 23:59:60 (leap second)
+
+hour         = 2DIGIT               
+minute       = 2DIGIT               
+second       = 2DIGIT               
+</pre>
+</div>
+
+<blockquote>
+<p>
+Obsolete formats:
+</p>
+</blockquote>
+
+<p>
+淘汰的格式：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">obs-date     = rfc850-date / asctime-date 
+rfc850-date  = day-name-l "," SP date2 SP time-of-day SP GMT
+date2        = day "-" month "-" 2DIGIT
+             ; e.g., 02-Jun-82
+
+day-name-l   = %x4D.6F.6E.64.61.79    ; "Monday", case-sensitive
+       / %x54.75.65.73.64.61.79       ; "Tuesday", case-sensitive
+       / %x57.65.64.6E.65.73.64.61.79 ; "Wednesday", case-sensitive
+       / %x54.68.75.72.73.64.61.79    ; "Thursday", case-sensitive
+       / %x46.72.69.64.61.79          ; "Friday", case-sensitive
+       / %x53.61.74.75.72.64.61.79    ; "Saturday", case-sensitive
+       / %x53.75.6E.64.61.79          ; "Sunday", case-sensitive
+
+asctime-date = day-name SP date3 SP time-of-day SP year
+date3        = month SP ( 2DIGIT / ( SP 1DIGIT ))
+             ; e.g., Jun  2
+</pre>
+</div>
+
+<blockquote>
+<p>
+HTTP-date is case sensitive. A sender <b>MUST NOT</b> generate additional whitespace in an HTTP-date beyond that specifically included as <code>SP</code> in the grammar. The semantics of day-name, day, month, year, and time-of-day are the same as those defined for the Internet Message Format constructs with the corresponding name ([RFC5322], Section 3.3).
+</p>
+</blockquote>
+
+<p>
+<code>HTTP-date</code> 是区分大小写的。发送端 <b>禁止</b> 在一个 <code>HTTP-date</code> 里生成除在语法中明确添加了 <code>SP</code> 以外的额外空格。
+</p>
+
+<blockquote>
+<p>
+Recipients of a timestamp value in rfc850-date format, which uses a two-digit year, <b>MUST</b> interpret a timestamp that appears to be more than 50 years in the future as representing the most recent year in the past that had the same last two digits.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Recipients of timestamp values are encouraged to be robust in parsing timestamps unless otherwise restricted by the field definition. For example, messages are occasionally forwarded over HTTP from a non-HTTP source that might generate any of the date and time specifications defined by the Internet Message Format.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> HTTP requirements for the date/time stamp format apply only to their usage within the protocol stream. Implementations are not required to use these formats for user presentation, request logging, etc.
+</p>
+</blockquote>
+</div>
+</div>
+
 <div id="outline-container-org8e5ec45" class="outline-5">
 <h5 id="org8e5ec45"><a id="ID-5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1"></a>7.1.1.2. Data</h5>
 <div class="outline-text-5" id="text-org8e5ec45">
+<blockquote>
+<p>
+The "Date" header field represents the date and time at which the message was originated, having the same semantics as the Origination Date Field (orig-date) defined in Section 3.6.1 of [RFC5322]. The field value is an HTTP-date, as defined in Section 7.1.1.1.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Date = HTTP-date
+</pre>
+</div>
+
+<blockquote>
+<p>
+An example is
+</p>
+</blockquote>
+
+<pre class="example">
+Date: Tue, 15 Nov 1994 08:12:31 GMT
+</pre>
+
+<blockquote>
+<p>
+When a Date header field is generated, the sender SHOULD generate its field value as the best available approximation of the date and time of message generation. In theory, the date ought to represent the moment just before the payload is generated. In practice, the date can be generated at any time during message origination.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+An origin server <b>MUST NOT</b> send a Date header field if it does not have a clock capable of providing a reasonable approximation of the current instance in Coordinated Universal Time. An origin server MAY send a Date header field if the response is in the 1xx (Informational) or 5xx (Server Error) class of status codes. An origin server MUST send a Date header field in all other cases.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A recipient with a clock that receives a response message without a Date header field <b>MUST</b> record the time it was received and append a corresponding Date header field to the message's header section if it is cached or forwarded downstream.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A user agent <b>MAY</b> send a Date header field in a request, though generally will not do so unless it is believed to convey useful information to the server. For example, custom applications of HTTP might convey a Date if the server is expected to adjust its interpretation of the user's request based on differences between the user agent and server clocks.
+</p>
+</blockquote>
 </div>
 </div>
 </div>
+
 <div id="outline-container-orgad9277e" class="outline-4">
 <h4 id="orgad9277e"><a id="ID-bc2baf29-0bf6-4816-865c-3d33f5fe38e3"></a>7.1.2. Location</h4>
 <div class="outline-text-4" id="text-orgad9277e">
+<blockquote>
+<p>
+The "Location" header field is used in some responses to refer to a specific resource in relation to the response. The type of relationship is defined by the combination of request method and status code semantics.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Location = URI-reference
+</pre>
+</div>
+
+<blockquote>
+<p>
+The field value consists of a single URI-reference. When it has the form of a relative reference ([RFC3986], Section 4.2), the final value is computed by resolving it against the effective request URI ([RFC3986], Section 5).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+For 201 (Created) responses, the <code>Location</code> value refers to the primary resource created by the request. For <code>3xx (Redirection)</code> responses, the Location value refers to the preferred target resource for automatically redirecting the request.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If the Location value provided in a <code>3xx (Redirection)</code> response does not have a fragment component, a user agent <b>MUST</b> process the redirection as if the value inherits the fragment component of the URI reference used to generate the request target (i.e., the redirection inherits the original reference's fragment, if any).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+For example, a GET request generated for the URI reference "<a href="http://www.example.org/~tim">http://www.example.org/~tim</a>" might result in a 303 (See Other) response containing the header field:
+</p>
+</blockquote>
+
+<pre class="example">
+Location: /People.html#tim
+</pre>
+
+<blockquote>
+<p>
+which suggests that the user agent redirect to "<a href="http://www.example.org/People.html#tim">http://www.example.org/People.html#tim</a>"
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Likewise, a GET request generated for the URI reference "<a href="http://www.example.org/index.html#larry">http://www.example.org/index.html#larry</a>" might result in a 301 (Moved Permanently) response containing the header field:
+</p>
+</blockquote>
+
+<pre class="example">
+Location: http://www.example.net/index.html
+</pre>
+
+<blockquote>
+<p>
+which suggests that the user agent redirect to "<a href="http://www.example.net/index.html#larry">http://www.example.net/index.html#larry</a>", preserving the original fragment identifier.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+There are circumstances in which a fragment identifier in a <code>Location</code> value would not be appropriate. For example, the Location header field in a 201 (Created) response is supposed to provide a URI that is specific to the created resource.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> Some recipients attempt to recover from Location fields that are not valid URI references. This specification does not mandate or define such processing, but does allow it for the sake of robustness.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> The <code>Content-Location</code> header field (Section 3.1.4.2) differs from Location in that the Content-Location refers to the most specific resource corresponding to the enclosed representation. It is therefore possible for a response to contain both the Location and Content-Location header fields.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-orgbf05a48" class="outline-4">
-<h4 id="orgbf05a48">7.1.3. Retry-After</h4>
+<h4 id="orgbf05a48"><a id="ID-f7b225e0-95f5-4d59-81c2-afbf6abb1656"></a>7.1.3. Retry-After</h4>
+<div class="outline-text-4" id="text-orgbf05a48">
+<blockquote>
+<p>
+Servers send the "Retry-After" header field to indicate how long the user agent ought to wait before making a follow-up request. When sent with a 503 (Service Unavailable) response, Retry-After indicates how long the service is expected to be unavailable to the client. When sent with any 3xx (Redirection) response, Retry-After indicates the minimum time that the user agent is asked to wait before issuing the redirected request.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The value of this field can be either an HTTP-date or a number of seconds to delay after the response is received.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Retry-After = HTTP-date / delay-seconds
+</pre>
 </div>
+
+<blockquote>
+<p>
+A delay-seconds value is a non-negative decimal integer, representing time in seconds.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">delay-seconds  = 1*DIGIT
+</pre>
+</div>
+
+<blockquote>
+<p>
+Two examples of its use are
+</p>
+</blockquote>
+
+<pre class="example">
+Retry-After: Fri, 31 Dec 1999 23:59:59 GMT
+Retry-After: 120
+</pre>
+
+<blockquote>
+<p>
+In the latter example, the delay is 2 minutes.
+</p>
+</blockquote>
+</div>
+</div>
+
 <div id="outline-container-org5ddc30c" class="outline-4">
 <h4 id="org5ddc30c"><a id="ID-ca7f8781-b183-4563-a90a-b9b7ad4f1032"></a>7.1.4. Vary</h4>
 <div class="outline-text-4" id="text-org5ddc30c">
+<blockquote>
+<p>
+The "Vary" header field in a response describes what parts of a request message, aside from the method, Host header field, and request target, might influence the origin server's process for selecting and representing this response. The value consists of either a single asterisk ("*") or a list of header field names (case-insensitive).
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Vary = "*" / 1#field-name
+</pre>
+</div>
+
+<blockquote>
+<p>
+A Vary field value consisting of a comma-separated list of names indicates that the named request header fields, known as the selecting header fields, might have a role in selecting the representation. The potential selecting header fields are not limited to those defined by this specification.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+For example, a response that contains
+</p>
+</blockquote>
+
+<pre class="example">
+Vary: accept-encoding, accept-language
+</pre>
+
+<blockquote>
+<p>
+indicates that the origin server might have used the request's Accept-Encoding and Accept-Language fields (or lack thereof) as determining factors while choosing the content for this response.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+An origin server might send Vary with a list of fields for two purposes:
+</p>
+
+<ol class="org-ol">
+<li>To inform cache recipients that they MUST NOT use this response to satisfy a later request unless the later request has the same values for the listed fields as the original request (Section 4.1 of [RFC7234]). In other words, Vary expands the cache key required to match a new request to the stored cache entry.</li>
+<li>To inform user agent recipients that this response is subject to content negotiation (Section 5.3) and that a different representation might be sent in a subsequent request if additional parameters are provided in the listed header fields (proactive negotiation).</li>
+</ol>
+</blockquote>
+
+<blockquote>
+<p>
+An origin server SHOULD send a Vary header field when its algorithm for selecting a representation varies based on aspects of the request message other than the method and request target, unless the variance cannot be crossed or the origin server has been deliberately configured to prevent cache transparency. For example, there is no need to send the Authorization field name in Vary because reuse across users is constrained by the field definition (Section 4.2 of [RFC7235]). Likewise, an origin server might use Cache-Control directives (Section 5.2 of [RFC7234]) to supplant Vary if it considers the variance less significant than the performance cost of Vary's impact on caching.
+</p>
+</blockquote>
 </div>
 </div>
 </div>
+
 <div id="outline-container-org4d2e5ff" class="outline-3">
 <h3 id="org4d2e5ff"><a id="ID-efd98bfe-3f3c-4d75-9fa9-041a5af2f917"></a>7.2. Validator Header Fields</h3>
 <div class="outline-text-3" id="text-org4d2e5ff">
+<blockquote>
+<p>
+Validator header fields convey metadata about the selected representation (Section 3). In responses to safe requests, validator fields describe the selected representation chosen by the origin server while handling the response. Note that, depending on the status code semantics, the selected representation for a given response is not necessarily the same as the representation enclosed as response payload.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+In a successful response to a state-changing request, validator fields describe the new representation that has replaced the prior selected representation as a result of processing the request.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+For example, an ETag header field in a 201 (Created) response communicates the entity-tag of the newly created resource's representation, so that it can be used in later conditional requests to prevent the "lost update" problem [RFC7232].
+</p>
+</blockquote>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Header Field Name</th>
+<th scope="col" class="org-left">Defined in&#x2026;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">ETag</td>
+<td class="org-left">Section 2.3 of [RFC7232]</td>
+</tr>
+
+<tr>
+<td class="org-left">Last-Modified</td>
+<td class="org-left">Section 2.2 of [RFC7232]</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
+
 <div id="outline-container-org847a265" class="outline-3">
 <h3 id="org847a265">7.3. Authentication Challenges</h3>
+<div class="outline-text-3" id="text-org847a265">
+<blockquote>
+<p>
+Authentication challenges indicate what mechanisms are available for the client to provide authentication credentials in future requests.
+</p>
+</blockquote>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Header Field Name</th>
+<th scope="col" class="org-left">Defined in&#x2026;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">WWW-Authenticate</td>
+<td class="org-left">Section 4.1 of [RFC7235]</td>
+</tr>
+
+<tr>
+<td class="org-left">Proxy-Authenticate</td>
+<td class="org-left">Section 4.3 of [RFC7235]</td>
+</tr>
+</tbody>
+</table>
 </div>
+</div>
+
 <div id="outline-container-orgee15c9d" class="outline-3">
 <h3 id="orgee15c9d">7.4. Response Context</h3>
 <div class="outline-text-3" id="text-orgee15c9d">
+<blockquote>
+<p>
+The remaining response header fields provide more information about the target resource for potential use in later requests.
+</p>
+</blockquote>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Header Field Name</th>
+<th scope="col" class="org-left">Defined in&#x2026;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Accept-Ranges</td>
+<td class="org-left">Section 2.3 of [RFC7233]</td>
+</tr>
+
+<tr>
+<td class="org-left">Allow</td>
+<td class="org-left">Section 7.4.1</td>
+</tr>
+
+<tr>
+<td class="org-left">Server</td>
+<td class="org-left">Section 7.4.2</td>
+</tr>
+</tbody>
+</table>
 </div>
+
 <div id="outline-container-orgbfaeb5b" class="outline-4">
 <h4 id="orgbfaeb5b"><a id="ID-f8577773-512f-4d68-8f5d-444368db7c29"></a>7.4.1. Allow</h4>
 <div class="outline-text-4" id="text-orgbfaeb5b">
+<blockquote>
+<p>
+The "Allow" header field lists the set of methods advertised as supported by the target resource. The purpose of this field is strictly to inform the recipient of valid request methods associated with the resource.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Allow = #method
+</pre>
+</div>
+
+<blockquote>
+<p>
+Example of use:
+</p>
+</blockquote>
+
+<pre class="example">
+Allow: GET, HEAD, PUT
+</pre>
+
+<blockquote>
+<p>
+The actual set of allowed methods is defined by the origin server at the time of each request. An origin server MUST generate an Allow field in a 405 (Method Not Allowed) response and MAY do so in any other response. An empty Allow field value indicates that the resource allows no methods, which might occur in a 405 response if the resource has been temporarily disabled by configuration.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A proxy <b>MUST NOT</b> modify the Allow header field — it does not need to understand all of the indicated methods in order to handle them according to the generic message handling rules.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-orgb253800" class="outline-4">
 <h4 id="orgb253800">7.4.2. Server</h4>
+<div class="outline-text-4" id="text-orgb253800">
+<blockquote>
+<p>
+The "Server" header field contains information about the software used by the origin server to handle the request, which is often used by clients to help identify the scope of reported interoperability problems, to work around or tailor requests to avoid particular server limitations, and for analytics regarding server or operating system use. An origin server MAY generate a Server field in its responses.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Server = product *( RWS ( product / comment ) )
+</pre>
+</div>
+
+<blockquote>
+<p>
+The Server field-value consists of one or more product identifiers, each followed by zero or more comments (Section 3.2 of [RFC7230]), which together identify the origin server software and its significant subproducts. By convention, the product identifiers are listed in decreasing order of their significance for identifying the origin server software. Each product identifier consists of a name and optional version, as defined in Section 5.5.3.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Example:
+</p>
+</blockquote>
+
+<pre class="example">
+Server: CERN/3.0 libwww/2.17
+</pre>
+
+<blockquote>
+<p>
+An origin server <b>SHOULD NOT</b> generate a Server field containing needlessly fine-grained detail and <b>SHOULD</b> limit the addition of subproducts by third parties. Overly long and detailed Server field values increase response latency and potentially reveal internal implementation details that might make it (slightly) easier for attackers to find and exploit known security holes.
+</p>
+</blockquote>
 </div>
 </div>
 </div>
+</div>
+
 <div id="outline-container-orgb1bfeaa" class="outline-2">
 <h2 id="orgb1bfeaa">8. IANA 注意事项 / IANA Considerations</h2>
 <div class="outline-text-2" id="text-orgb1bfeaa">
