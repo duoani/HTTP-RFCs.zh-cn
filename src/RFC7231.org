@@ -3380,57 +3380,79 @@ A user agent *MAY* send a =Date= header field in a request, though generally wil
 The "Location" header field is used in some responses to refer to a specific resource in relation to the response. The type of relationship is defined by the combination of request method and status code semantics.
 #+END_QUOTE
 
+=Location= 头字段用在某些响应里，来引用一个与这个响应有关系的特定资源。这种关系的类型由请求方法和状态码两者的语义相结合而定义。
+
 #+BEGIN_SRC text
   Location = URI-reference
 #+END_SRC
 
 #+BEGIN_QUOTE
-The field value consists of a single URI-reference. When it has the form of a relative reference ([RFC3986], Section 4.2), the final value is computed by resolving it against the effective request URI ([RFC3986], Section 5).
+The field value consists of a single =URI-reference=. When it has the form of a relative reference ([RFC3986], [[https://tools.ietf.org/html/rfc3986#section-4.2][Section 4.2]]), the final value is computed by resolving it against the effective request URI ([RFC3986], [[https://tools.ietf.org/html/rfc3986#section-5][Section 5]]).
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-For 201 (Created) responses, the =Location= value refers to the primary resource created by the request. For =3xx (Redirection)= responses, the Location value refers to the preferred target resource for automatically redirecting the request.
-#+END_QUOTE
+字段值由单个 =URI-reference= 组成。如果这个 =URI-reference= 是[[ruby:relative%20reference][相对引用]]的形式（[[https://tools.ietf.org/html/rfc3986#section-4.2][【RFC3986】章节 4.2]]），那么，字段的最终值通过将它相对于[[ruby:effective%20request%20URI][有效请求 URI]]进行[[ruby:resolving][引用解释]]来计算得出（[[https://tools.ietf.org/html/rfc3986#section-5][【RFC3986】章节 5]]）。
 
 #+BEGIN_QUOTE
-If the Location value provided in a =3xx (Redirection)= response does not have a fragment component, a user agent *MUST* process the redirection as if the value inherits the fragment component of the URI reference used to generate the request target (i.e., the redirection inherits the original reference's fragment, if any).
+For =201 (Created)= responses, the =Location= value refers to the primary resource created by the request. For =3xx (Redirection)= responses, the =Location= value refers to the preferred target resource for automatically redirecting the request.
 #+END_QUOTE
 
+对于 =201 (Created)= 响应，=Location= 的值引用的是由于这个请求而创建的[[ruby:primary%20resource][主要资源]]。对于 =3xx (Redirection)= 响应，=Location= 的值引用的是最优的目标资源，用于自动重定向请求。
+
 #+BEGIN_QUOTE
-For example, a GET request generated for the URI reference "http://www.example.org/~tim" might result in a 303 (See Other) response containing the header field:
+If the =Location= value provided in a =3xx (Redirection)= response does not have a =fragment= component, a user agent *MUST* process the redirection as if the value inherits the =fragment= component of the URI reference used to generate the request target (i.e., the redirection inherits the original reference's =fragment=, if any).
 #+END_QUOTE
+
+如果 =3xx (Redirection)= 响应所提供的 =Location= 头字段值不带有 =fragment= 组件（[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]]），用户代理 *必须* 将 =Location= 的值当作继承了用于生成请求目标的那个 URI 引用的 =fragment= 组件一样，来处理这个重定向（也就是说，这个重定向继承了[[ruby:original%20reference][原始引用]]的 =fragment=，如果存在 =fragment= 的话）。
+
+#+BEGIN_QUOTE
+For example, a GET request generated for the URI reference "http\colon{}//www.example.org/~tim" might result in a =303 (See Other)= response containing the header field:
+#+END_QUOTE
+
+例如，生成一个 GET 请求到 URI 引用 "http\colon{}//www.example.org/~tim"，可能返回一个 =303 (See Other)= 响应，带有以下头字段：
 
 #+BEGIN_EXAMPLE
   Location: /People.html#tim
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-which suggests that the user agent redirect to "http://www.example.org/People.html#tim"
+which suggests that the user agent redirect to "http\colon{}//www.example.org/People.html#tim"
 #+END_QUOTE
 
+意思是建议用户代理重定向到 "http\colon{}//www.example.org/People.html#tim"。
+
 #+BEGIN_QUOTE
-Likewise, a GET request generated for the URI reference "http://www.example.org/index.html#larry" might result in a 301 (Moved Permanently) response containing the header field:
+Likewise, a GET request generated for the URI reference "http\colon{}//www.example.org/index.html#larry" might result in a =301 (Moved Permanently)= response containing the header field:
 #+END_QUOTE
+
+同样，生成一个 GET 请求到 URI 引用 "http\colon{}//www.example.org/index.html#larry"，可能返回一个 =301 (Moved Permanently)= 响应，带有以下头字段：
 
 #+BEGIN_EXAMPLE
   Location: http://www.example.net/index.html
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-which suggests that the user agent redirect to "http://www.example.net/index.html#larry", preserving the original fragment identifier.
+which suggests that the user agent redirect to "http\colon{}//www.example.net/index.html#larry", preserving the original =fragment= identifier.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-There are circumstances in which a fragment identifier in a =Location= value would not be appropriate. For example, the Location header field in a 201 (Created) response is supposed to provide a URI that is specific to the created resource.
-#+END_QUOTE
+意思是建议用户代理重定向到 "http\colon{}//www.example.net/index.html#larry"，保留了原来的 =fragment= 标识符。
 
 #+BEGIN_QUOTE
-*Note:* Some recipients attempt to recover from Location fields that are not valid URI references. This specification does not mandate or define such processing, but does allow it for the sake of robustness.
+There are circumstances in which a =fragment= identifier in a =Location= value would not be appropriate. For example, the =Location= header field in a =201 (Created)= response is supposed to provide a URI that is specific to the created resource.
 #+END_QUOTE
 
+某些情况下，=fragment= 标识符出现在 =Location= 的值里是不太合适的。例如，在一个 =201 (Created)= 响应里的 =Location= 头字段期望提供的是一个针对于新创建资源的 URI。
+
 #+BEGIN_QUOTE
-*Note:* The =Content-Location= header field (Section 3.1.4.2) differs from Location in that the Content-Location refers to the most specific resource corresponding to the enclosed representation. It is therefore possible for a response to contain both the Location and Content-Location header fields.
+*Note:* Some recipients attempt to recover from =Location= fields that are not valid URI references. This specification does not mandate or define such processing, but does allow it for the sake of robustness.
 #+END_QUOTE
+
+*注意：* 某些接收端试图从 =Location= 的无效 URI 引用中恢复过来。本规范并没有授权也没有定义这种操作，但出于健壮性的原因而允许它的存在。
+
+#+BEGIN_QUOTE
+*Note:* The =Content-Location= header field ([[id:91650144-4bfc-4362-b628-f96578a5c756][Section 3.1.4.2]]) differs from =Location= in that the =Content-Location= refers to the most specific resource corresponding to the enclosed representation. It is therefore possible for a response to contain both the =Location= and =Content-Location= header fields.
+#+END_QUOTE
+
+=Content-Location= 头字段（[[id:91650144-4bfc-4362-b628-f96578a5c756][章节 3.1.4.2]]）与 =Location= 的不同之处在于：=Content-Location= 引用的是有效载荷内的表示形式所对应的最明确的资源。因此，在一个响应里同时包含 =Location= 和 =Content-Location= 丙个头字段是可能的。
 
 *** 7.1.3. Retry-After
 :PROPERTIES:
