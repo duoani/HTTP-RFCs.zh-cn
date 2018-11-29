@@ -583,7 +583,7 @@ The =Content-Location= value is not a replacement for the effective Request URI 
 If =Content-Location= is included in a =2xx (Successful)= response message and its value refers (after conversion to absolute form) to a URI that is the same as the effective request URI, then the recipient *MAY* consider the payload to be a current representation of that resource at the time indicated by the message origination date. For a GET ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]]) or HEAD ([[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][Section 4.3.2]]) request, this is the same as the default semantics when no =Content-Location= is provided by the server. For a state-changing request like PUT ([[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][Section 4.3.4]]) or POST ([[id:d672d01b-615b-416a-a750-0442a6901ed0][Section 4.3.3]]), it implies that the server's response contains the new representation of that resource, thereby distinguishing it from representations that might only report about the action (e.g., "It worked!"). This allows authoring applications to update their local copies without the need for a subsequent GET request.
 #+END_QUOTE
 
-如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应消息里，且它的值指向于（在转换为[[ruby:absolute%20form][绝对形式]]之后）一个与有效请求 URI 相同的 URI，那么，接收端 *可以* 将该有效载荷认为是对应资源在特定时间里的[[ruby:current%20representation][当前表示形式]]，所述“特定时间”是指由[[ruby:message%20origination%20date][消息始发日期]]所指定的时间。对于 GET（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）或者 HEAD（[[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][章节 4.3.2]]）请求来说，这与在服务器没有提供 =Content-Location= 头字段的情况下的默认语义相一致。对于类似 PUT（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）或者 POST（[[id:d672d01b-615b-416a-a750-0442a6901ed0][章节 4.3.3]]）这些会[[ruby:state-changing][改变资源状态]]的请求来说，这意味着服务器的响应包含了这个资源的新的[[ruby:representation][表示形式]]，由此与那些只报告动作方面的信息（例如，“[[ruby:It%20worked!][它生效了！]]”）的[[ruby:representations][表示形式]]作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
+如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应消息里，且它的值指向于（在转换为[[ruby:absolute%20form][绝对形式]]之后）一个与有效请求 URI 相同的 URI，那么，接收端 *可以* 将该有效载荷认为是对应资源在特定时间里的[[ruby:current%20representation][当前表示形式]]，所述“特定时间”是指由[[ruby:message%20origination%20date][消息创始日期]]所指定的时间。对于 GET（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）或者 HEAD（[[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][章节 4.3.2]]）请求来说，这与在服务器没有提供 =Content-Location= 头字段的情况下的默认语义相一致。对于类似 PUT（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）或者 POST（[[id:d672d01b-615b-416a-a750-0442a6901ed0][章节 4.3.3]]）这些会[[ruby:state-changing][改变资源状态]]的请求来说，这意味着服务器的响应包含了这个资源的新的[[ruby:representation][表示形式]]，由此与那些只报告动作方面的信息（例如，“[[ruby:It%20worked!][它生效了！]]”）的[[ruby:representations][表示形式]]作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
 
 #+BEGIN_QUOTE
 If =Content-Location= is included in a =2xx (Successful)= response message and its field-value refers to a URI that differs from the effective request URI, then the origin server claims that the URI is an identifier for a different resource corresponding to the enclosed representation. Such a claim can only be trusted if both identifiers share the same resource owner, which cannot be programmatically determined via HTTP.
@@ -652,7 +652,7 @@ The purpose of a payload in a request is defined by the method semantics. For ex
 In a response, the payload's purpose is defined by both the request method and the response status code. For example, the payload of a =200 (OK)= response to GET ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]]) represents the current state of the target resource, as observed at the time of the message origination date ([[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][Section 7.1.1.2]]), whereas the payload of the same status code in a response to POST might represent either the processing result or the new state of the target resource after applying the processing. Response messages with an error status code usually contain a payload that represents the error condition, such that it describes the error state and what next steps are suggested for resolving it.
 #+END_QUOTE
 
-在一个响应消息里，有效载荷的目的是由[[ruby:request%20method][请求方法]]和[[ruby:reponse%20status%20code][响应状态码]]两者共同来定义的。例如，一个回应给 GET 请求（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）的 =200 (OK)= 响应消息表示在[[ruby:message%20origination%20date][消息发起日期]]（[[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][章节 7.1.1.2]]）所观察到的[[ruby:target%20resource][目标资源]]的目前状态。而一个回应给 POST 请求的 =200 (OK)= 响应消息可能表示：或者是在应用该请求以后的处理结果，或者是在应用该请求以后目标资源的新状态。带有一个错误状态码的响应消息通常会包含一个表示该错误条件的有效载荷，以描述错误状态以及如何解决错误的下一步建议。
+在一个响应消息里，有效载荷的目的是由[[ruby:request%20method][请求方法]]和[[ruby:reponse%20status%20code][响应状态码]]两者共同来定义的。例如，一个回应给 GET 请求（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）的 =200 (OK)= 响应消息表示在[[ruby:message%20origination%20date][消息创始日期]]（[[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][章节 7.1.1.2]]）所观察到的[[ruby:target%20resource][目标资源]]的目前状态。而一个回应给 POST 请求的 =200 (OK)= 响应消息可能表示：或者是在应用该请求以后的处理结果，或者是在应用该请求以后目标资源的新状态。带有一个错误状态码的响应消息通常会包含一个表示该错误条件的有效载荷，以描述错误状态以及如何解决错误的下一步建议。
 
 #+BEGIN_QUOTE
 Header fields that specifically describe the payload, rather than the associated representation, are referred to as "payload header fields". Payload header fields are defined in other parts of this specification, due to their impact on message parsing.
@@ -2930,7 +2930,7 @@ The =413 (Payload Too Large)= status code indicates that the server is refusing 
 If the condition is temporary, the server *SHOULD* generate a =Retry-After= header field to indicate that it is temporary and after what time the client *MAY* try again.
 #+END_QUOTE
 
-如果这种状况是暂时的，服务器 *应当* 生成一个 =Retry-After= 头字段来表明：这只是暂时的，在什么时间以后客户端 *可以* 重试。
+如果这种状况是暂时的，服务器 *应当* 生成一个 =Retry-After= 头字段来表明：这只是暂时的，以及在什么时间以后客户端 *可以* 重试。
 
 *** 6.5.12. 414 URI 过长 / 414 URI Too Long
 :PROPERTIES:
@@ -3082,7 +3082,7 @@ The =503 (Service Unavailable)= status code indicates that the server is current
 The =504 (Gateway Timeout)= status code indicates that the server, while acting as a gateway or proxy, did not receive a timely response from an upstream server it needed to access in order to complete the request.
 #+END_QUOTE
 
-=504 (Gateway Timeout)= 状态码表明：当服务器充当一个网关或代理的时候，它并没有在限时内从上游服务器——为了[[ruby:complete][完成]]这个请求而需要访问的服务器——接收到一个响应。
+=504 (Gateway Timeout)= 状态码表明：当服务器充当一个网关或代理的时候，它并没有在限时内从[[ruby:upstream%20server][上游服务器]]——为了[[ruby:complete][完成]]这个请求而需要访问的服务器——接收到一个响应。
 
 *** 6.6.6. 505 HTTP 版本不支持 / 505 HTTP Version Not Supported
 :PROPERTIES:
@@ -3114,7 +3114,7 @@ The response header fields allow the server to pass additional information about
 Although each response header field has a defined meaning, in general, the precise semantics might be further refined by the semantics of the request method and/or response status code.
 #+END_QUOTE
 
-跃然每种响应头字段都定义了含义，但通常情况下，更精确的语义可能经由[[ruby:request%20method][请求方法]]以及（或者）[[ruby:response%20status%20code][响应状态码]]来进一步精炼。
+虽然每种响应头字段都定义了含义，但通常情况下，更精确的语义可能经由[[ruby:request%20method][请求方法]]以及（或者）[[ruby:response%20status%20code][响应状态码]]来进一步精炼。
 
 ** 7.1. 控制数据 / Control Data
 
@@ -3135,9 +3135,12 @@ Response header fields can supply control data that supplements the status code,
 | Vary              | [[id:ca7f8781-b183-4563-a90a-b9b7ad4f1032][Section 7.1.4]]            |
 | Warning           | [[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][Section 5.5]] of [RFC7234] |
 
-*** 7.1.1. 发起日期 / Origination Date
+*** 7.1.1. 创始日期 / Origination Date
 
 **** 7.1.1.1. 日期时间格式 / Date/Time Formats
+:PROPERTIES:
+:ID:       2091e4af-684f-4511-aaa1-8094dc7dcb21
+:END:
 
 #+BEGIN_QUOTE
 Prior to 1995, there were three different formats commonly used by servers to communicate timestamps. For compatibility with old implementations, all three are defined here. The preferred format is a fixed-length and single-zone subset of the date and time specification used by the Internet Message Format [[[https://tools.ietf.org/html/rfc5322][RFC5322]]].
@@ -3146,7 +3149,7 @@ Prior to 1995, there were three different formats commonly used by servers to co
 1995 年前，总共有三种不同的格式常用于服务器来传达[[ruby:timestamps][时间戳]]。为了兼容旧有的实现，所有这三种都定义在这里。首选的格式是[[ruby:Internet%20Message%20Format][互联网消息格式]]【[[https://tools.ietf.org/html/rfc5322][RFC5322]]】所使用的日期和时间规范——一种固定长度的、单一时区的时间格式。
 
 #+BEGIN_QUOTE
-译注：所谓“单一时区”是因为 IMF（Internet Message Format）日期和时间规范里的[[ruby:zone][时区]]支持多时间（虽然定义为已淘汰），这里取其 =obs-zone= ABNF 规则里的一个字集，见[[https://tools.ietf.org/html/rfc5322#section-3.3][【RFC5322】章节 3.3]]。
+译注：所谓“单一时区”是因为 IMF（Internet Message Format）日期和时间规范里的[[ruby:zone][时区]]支持多时区（虽然定义为已淘汰），这里取其 =obs-zone= ABNF 规则里的一个子集，见[[https://tools.ietf.org/html/rfc5322#section-3.3][【RFC5322】章节 3.3]]。
 #+END_QUOTE
 
 #+BEGIN_SRC text
@@ -3325,8 +3328,10 @@ Recipients of timestamp values are encouraged to be robust in parsing timestamps
 :END:
 
 #+BEGIN_QUOTE
-The "Date" header field represents the date and time at which the message was originated, having the same semantics as the Origination Date Field (=orig-date=) defined in Section 3.6.1 of [RFC5322]. The field value is an =HTTP-date=, as defined in Section 7.1.1.1.
+The "Date" header field represents the date and time at which the message was originated, having the same semantics as the Origination Date Field (=orig-date=) defined in [[https://tools.ietf.org/html/rfc5322#section-3.6.1][Section 3.6.1]] of [RFC5322]. The field value is an =HTTP-date=, as defined in [[id:2091e4af-684f-4511-aaa1-8094dc7dcb21][Section 7.1.1.1]].
 #+END_QUOTE
+
+=Date= 头字段表示在消息[[ruby:originated][创始]]的日期和时间，与定义在[[https://tools.ietf.org/html/rfc5322#section-3.6.1][【RFC5322】章节 3.6.1]] 里的[[ruby:Origination%20Date%20Field][创始日期字段]]（=orig-date=）具有相同的语义。它的字段值是一个 =HTTP-date=，正如[[id:2091e4af-684f-4511-aaa1-8094dc7dcb21][章节 7.1.1.1]] 所定义。
 
 #+BEGIN_SRC text
   Date = HTTP-date
@@ -3336,25 +3341,35 @@ The "Date" header field represents the date and time at which the message was or
 An example is
 #+END_QUOTE
 
+一个例子：
+
 #+BEGIN_EXAMPLE
   Date: Tue, 15 Nov 1994 08:12:31 GMT
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-When a Date header field is generated, the sender SHOULD generate its field value as the best available approximation of the date and time of message generation. In theory, the date ought to represent the moment just before the payload is generated. In practice, the date can be generated at any time during message origination.
+When a =Date= header field is generated, the sender *SHOULD* generate its field value as the best available approximation of the date and time of message generation. In theory, the date ought to represent the moment just before the payload is generated. In practice, the date can be generated at any time during message origination.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-An origin server *MUST NOT* send a Date header field if it does not have a clock capable of providing a reasonable approximation of the current instance in Coordinated Universal Time. An origin server MAY send a Date header field if the response is in the 1xx (Informational) or 5xx (Server Error) class of status codes. An origin server MUST send a Date header field in all other cases.
-#+END_QUOTE
+当生成一个 =Date= 头字段的时候，发送端 *应当* 将它的值生成为最接近消息生成的时间。理论上，该时间应该代表有效载荷就要生成好之前的时候。实践过程中，该时间可以生成为消息创始过程中的任意时候。
 
 #+BEGIN_QUOTE
-A recipient with a clock that receives a response message without a Date header field *MUST* record the time it was received and append a corresponding Date header field to the message's header section if it is cached or forwarded downstream.
+An origin server *MUST NOT* send a =Date= header field if it does not have a clock capable of providing a reasonable approximation of the current instance in Coordinated Universal Time. An origin server *MAY* send a =Date= header field if the response is in the =1xx (Informational)= or =5xx (Server Error)= class of status codes. An origin server *MUST* send a =Date= header field in all other cases.
 #+END_QUOTE
 
+如果源服务器不具有[[ruby:clock%20capable][记时功能]]来提供一个合理的接近当前 UTC 的时间，*禁止* 在其发送的响应里带有 =Date= 头字段。如果响应的状态码种类是 =1xx (Informational)= 或者 =5xx (Server Error)=，源服务器 *可以* 在响应里带有 =Date= 头字段。源服务器 *必须* 在所有其他情况下带有一个 =Date= 头字段。
+
 #+BEGIN_QUOTE
-A user agent *MAY* send a Date header field in a request, though generally will not do so unless it is believed to convey useful information to the server. For example, custom applications of HTTP might convey a Date if the server is expected to adjust its interpretation of the user's request based on differences between the user agent and server clocks.
+A recipient with a clock that receives a response message without a =Date= header field *MUST* record the time it was received and append a corresponding =Date= header field to the message's header section if it is cached or forwarded downstream.
 #+END_QUOTE
+
+当带有记时功能的接收端接收到一个没有 =Date= 头字段的响应消息的时候，哪果响应被缓存或被转发到下游，服务器 *必须* 记录下它接收到响应的时间，并且附加一个对应的 =Date= 头字段到消息的头部。
+
+#+BEGIN_QUOTE
+A user agent *MAY* send a =Date= header field in a request, though generally will not do so unless it is believed to convey useful information to the server. For example, custom applications of HTTP might convey a =Date= if the server is expected to adjust its interpretation of the user's request based on differences between the user agent and server clocks.
+#+END_QUOTE
+
+用户代理 *可以* 在请求里带有一个 =Date= 头字段，虽然一般不会这么做，除非认为它传达了有用的信息给到服务器。例如，某些 HTTP 的客户应用程序可能会传达一个 =Date= 如果服务器期望用它基于用户代理与服务器时间上的不同来调整对用户请求的[[ruby:interpretation][解释]]。
 
 *** 7.1.2. Location
 :PROPERTIES:

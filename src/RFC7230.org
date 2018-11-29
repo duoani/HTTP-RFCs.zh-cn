@@ -981,7 +981,7 @@ obs-fold       = CRLF 1*( SP / HTAB )
 The =field-name= token labels the corresponding =field-value= as having the semantics defined by that header field. For example, the =Date= header field is defined in [[https://tools.ietf.org/html/rfc7231#section-7.1.1.2][Section 7.1.1.2]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]] as containing the origination timestamp for the message in which it appears.
 #+END_QUOTE
 
-头字段名称 =field-name= 将其对应的头字段值 =field-value= 算作这个消息带有相应头字段的语义。例如，定义在【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-7.1.1.2][章节 7.1.1.2]] 的 =Date= 头字段的出现说明消息包含了原始时间戳。
+头字段名称 =field-name= 将其对应的头字段值 =field-value= 算作这个消息带有相应头字段的语义。例如，定义在【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-7.1.1.2][章节 7.1.1.2]] 的 =Date= 头字段的出现表明包含了这个消息的创始时间戳。
 
 *** 3.2.1. 域的可扩展性 (Field Extensibility)
 :PROPERTIES:
@@ -3211,7 +3211,7 @@ This section is meant to inform developers, information providers, and users of 
 HTTP relies on the notion of an authoritative response: a response that has been determined by (or at the direction of) the authority identified within the target URI to be the most appropriate response for that request given the state of the target resource at the time of response message origination. Providing a response from a non-authoritative source, such as a shared cache, is often useful to improve performance and availability, but only to the extent that the source can be trusted or the distrusted response can be safely used.
 #+END_QUOTE
 
-HTTP 提出了一个“权威响应（authoritative response）”的概念。权威响应是由请求消息里的目标 URI 所指定的 =authority= （权威机构、官方机构）依据请求所给定的目标资源状态来决定返回的最合适的响应。来自一个非权威来源（non-authoritative source）的响应，例如一个共享缓存，对于提升性能和可用性一般有很大作用，但是仅在该来源是受信任的或者该不受信任的响应可以被安全地使用的情况。
+HTTP 提出了一个“权威响应（authoritative response）”的概念——由目标 URI 所表明的 =authority= （权威机构、官方机构）所决定（或指导）的最合适于这个请求的一种响应。它给出了创建响应消息那时候的目标资源状态。提供自一个非权威来源（non-authoritative source）——例如一个共享缓存——的响应，一般对于提升性能和可用性有很大作用，但是仅在该来源是受信任的或者该不受信任的响应可以被安全地使用的情况。
 
 #+BEGIN_QUOTE
 译注：
