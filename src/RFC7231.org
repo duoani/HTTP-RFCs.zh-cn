@@ -3116,7 +3116,7 @@ Although each response header field has a defined meaning, in general, the preci
 
 跃然每种响应头字段都定义了含义，但通常情况下，更精确的语义可能经由[[ruby:request%20method][请求方法]]以及（或者）[[ruby:response%20status%20code][响应状态码]]来进一步精炼。
 
-** 7.1. Control Data
+** 7.1. 控制数据 / Control Data
 
 #+BEGIN_QUOTE
 Response header fields can supply control data that supplements the status code, directs caching, or instructs the client where to go next.
@@ -3135,9 +3135,9 @@ Response header fields can supply control data that supplements the status code,
 | Vary              | [[id:ca7f8781-b183-4563-a90a-b9b7ad4f1032][Section 7.1.4]]            |
 | Warning           | [[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][Section 5.5]] of [RFC7234] |
 
-*** 7.1.1. Origination Date
+*** 7.1.1. 发起日期 / Origination Date
 
-**** 7.1.1.1. Date/Time Formats
+**** 7.1.1.1. 日期时间格式 / Date/Time Formats
 
 #+BEGIN_QUOTE
 Prior to 1995, there were three different formats commonly used by servers to communicate timestamps. For compatibility with old implementations, all three are defined here. The preferred format is a fixed-length and single-zone subset of the date and time specification used by the Internet Message Format [[[https://tools.ietf.org/html/rfc5322][RFC5322]]].
@@ -3167,7 +3167,7 @@ An example of the preferred format is
 Examples of the two obsolete formats are
 #+END_QUOTE
 
-两种已淘汰格式的例子：
+两种已淘汰的格式的例子：
 
 #+BEGIN_EXAMPLE
   Sunday, 06-Nov-94 08:49:37 GMT   ; obsolete RFC 850 format
@@ -3175,13 +3175,13 @@ Examples of the two obsolete formats are
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-A recipient that parses a timestamp value in an HTTP header field *MUST* accept all three HTTP-date formats. When a sender generates a header field that contains one or more timestamps defined as HTTP-date, the sender *MUST* generate those timestamps in the =IMF-fixdate= format.
+A recipient that parses a timestamp value in an HTTP header field *MUST* accept all three =HTTP-date= formats. When a sender generates a header field that contains one or more timestamps defined as =HTTP-date=, the sender *MUST* generate those timestamps in the =IMF-fixdate= format.
 #+END_QUOTE
 
 接收端对某个 HTTP 头字段里的时间戳值进行[[ruby:parse][解析]]的时候，*必须* 接受所有这三种 HTTP 日期格式。当发送端生成带有一个或多个作为 =HTTP-date= 的时间戳的头字段时，发送端 *必须* 以 =IMF-fixdate= 格式生成那些时间戳（即本规范首选的那一种格式）。
 
 #+BEGIN_QUOTE
-An HTTP-date value represents time as an instance of Coordinated Universal Time (UTC). The first two formats indicate UTC by the three-letter abbreviation for Greenwich Mean Time, "GMT", a predecessor of the UTC name; values in the asctime format are assumed to be in UTC. A sender that generates HTTP-date values from a local clock ought to use NTP ([RFC5905]) or some similar protocol to synchronize its clock to UTC.
+An =HTTP-date= value represents time as an instance of Coordinated Universal Time (UTC). The first two formats indicate UTC by the three-letter abbreviation for Greenwich Mean Time, "GMT", a predecessor of the UTC name; values in the asctime format are assumed to be in UTC. A sender that generates =HTTP-date= values from a local clock ought to use NTP ([[[https://tools.ietf.org/html/rfc5905][RFC5905]]]) or some similar protocol to synchronize its clock to UTC.
 #+END_QUOTE
 
 一个 =HTTP-date= 的值表示一个[[ruby:Coordinated%20Universal%20Time][世界标准时间]]（UTC）。上述三个例子中的前两例通过[[ruby:Greenwich%20Mean%20Time][格林威治标准时间]]——UTC 名称的前身——的三个英文字母缩写 "GMT" 来表明是 UTC。而 =asctime= 格式（即上述第三例）假定时间是 UTC 的。发送端从本地时钟生成 =HTTP-date= 值的时候，应该使用 NTP（【[[https://tools.ietf.org/html/rfc5905][RFC5905]]】）或者其他类似的协议来将本地时间同步为 UTC。
@@ -3237,7 +3237,7 @@ Preferred format:
 Obsolete formats:
 #+END_QUOTE
 
-淘汰的格式：
+已淘汰的格式：
 
 #+BEGIN_SRC text
   obs-date     = rfc850-date / asctime-date 
@@ -3259,30 +3259,73 @@ Obsolete formats:
 #+END_SRC
 
 #+BEGIN_QUOTE
-HTTP-date is case sensitive. A sender *MUST NOT* generate additional whitespace in an HTTP-date beyond that specifically included as =SP= in the grammar. The semantics of day-name, day, month, year, and time-of-day are the same as those defined for the Internet Message Format constructs with the corresponding name ([RFC5322], Section 3.3).
+=HTTP-date= is case sensitive. A sender *MUST NOT* generate additional whitespace in an =HTTP-date= beyond that specifically included as =SP= in the grammar. The semantics of =day-name=, =day=, =month=, =year=, and =time-of-day= are the same as those defined for the Internet Message Format constructs with the corresponding name ([RFC5322], [[https://tools.ietf.org/html/rfc5322#section-3.3][Section 3.3]]).
 #+END_QUOTE
 
-=HTTP-date= 是区分大小写的。发送端 *禁止* 在一个 =HTTP-date= 里生成除在语法中明确添加了 =SP= 以外的额外空格。
+=HTTP-date= 是区分大小写的。发送端 *禁止* 在一个 =HTTP-date= 里生成除在语法中明确添加了 =SP= 以外的额外空格。=day-name=、=day=、=month=、=year= 以及 =time-of-day= 的语义与[[ruby:Internet%20Message%20Format][互联网消息格式]]里所定义同名结构的语义相一致（[[https://tools.ietf.org/html/rfc5322#section-3.3][【RFC5322】章节 3.3]]）。
 
 #+BEGIN_QUOTE
-Recipients of a timestamp value in rfc850-date format, which uses a two-digit year, *MUST* interpret a timestamp that appears to be more than 50 years in the future as representing the most recent year in the past that had the same last two digits.
+Recipients of a timestamp value in =rfc850-date= format, which uses a two-digit year, *MUST* interpret a timestamp that appears to be more than 50 years in the future as representing the most recent year in the past that had the same last two digits.
+#+END_QUOTE
+
+=rfc850-date= 格式的时间戳使用两位数字来表示年份，如果接收端接收到一个 =rfc850-date= 格式的时间戳，*必须* 将时间戳里看起来像是未来 50 年以上的年份为过去最近具有这两位数字相同的年份。 
+
+#+BEGIN_QUOTE
+译注：
+由于两位数字表示的年份无法表现出世纪，因此，要将一个 2 位数字表示的年份转换为 4 位数字表示的年份时可将这个 2 位数字的年份限定在距今前后 50 年内。如果这 2 位数比当前年的差超过 50 年，则认为是过去时间。
+
+例如，假设当前年份为 2018 年，要转换的时间戳的月、日、时、分、秒以及毫秒数与当前瞬时时间一致（即不考虑除年份以外的因素）：
+
+- 如果 2 位数字的年份为 02，那么 02 比 18 小，则认为是过去时间，距今最近的 02 年是 2002 年，那么 2002 就是转换的结果；
+- 如果 2 位数字的年份为 20，那么 20 比 18 大，则认为是未来时间，且 2020 距今（2018）只相差 2 年，不超过 50 年，那么 2020 就是转换的结果；
+- 如果 2 位数字的年份为 68，那么 68 比 18 大，则认为是未来时间，且 2068 距今（2018）只相差 50 年，不超过 50 年，那么 2068 就是转换的结果；
+- 如果 2 位数字的年份为 69，那么 69 比 18 大，则认为是未来时间，且 2069 距今（2018）只相差 51 年，不超过 50 年，那么 1969 就是转换的结果。
+
+再给一个详细的转换表：
+
+| 2位数年份 | 在2017年时转换为 | 在2018年时转换为 | 在2020年转换为 |
+| <c>       | <c>              | <c>              | <c>            |
+|-----------+------------------+------------------+----------------|
+| 1         | 2001             | 2001             |           2001 |
+| 2         | 2002             | 2002             |           2002 |
+| 16        | 2016             | 2016             |           2016 |
+| 17        | 2017             | 2017             |           2017 |
+| 18        | 2018             | 2018             |           2018 |
+| 19        | 2019             | 2019             |           2019 |
+| 20        | 2020             | 2020             |           2020 |
+| 21        | 2021             | 2021             |           2021 |
+| 22        | 2022             | 2022             |           2022 |
+| 65        | 2065             | 2065             |           2065 |
+| 66        | 2066             | 2066             |           2066 |
+| 67        | 2067             | 2067             |           2067 |
+| 68        | 1968             | 2068             |           2068 |
+| 69        | 1969             | 1969             |           2069 |
+| 70        | 1970             | 1970             |           2070 |
+| 71        | 1971             | 1971             |           1971 |
+| 72        | 1972             | 1972             |           1972 |
+| 87        | 1987             | 1987             |           1987 |
+| 99        | 1999             | 1999             |           1999 |
 #+END_QUOTE
 
 #+BEGIN_QUOTE
 Recipients of timestamp values are encouraged to be robust in parsing timestamps unless otherwise restricted by the field definition. For example, messages are occasionally forwarded over HTTP from a non-HTTP source that might generate any of the date and time specifications defined by the Internet Message Format.
 #+END_QUOTE
 
+鼓励接收端在[[ruby:parse][解析]]时间戳的时候足够[[ruby:robust][健壮]]，除非被字段的定义另有限制。例如，不定期地从某个非 HTTP 源通过 HTTP 转发的消息，可能生成[[ruby:Internet%20Message%20Format][互联网消息格式]]所使用的日期和时间规范里的任何一种格式。
+
 #+BEGIN_QUOTE
 *Note:* HTTP requirements for the date/time stamp format apply only to their usage within the protocol stream. Implementations are not required to use these formats for user presentation, request logging, etc.
 #+END_QUOTE
 
-**** 7.1.1.2. Data
+*注意：* HTTP 对时间戳的格式要求仅应用于它们在协议流里的用途。不要求[[ruby:implementations][实现]]使用这些格式来进行用户展示、请求日志记录等。
+
+**** 7.1.1.2. Date
 :PROPERTIES:
 :ID:       5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1
 :END:
 
 #+BEGIN_QUOTE
-The "Date" header field represents the date and time at which the message was originated, having the same semantics as the Origination Date Field (orig-date) defined in Section 3.6.1 of [RFC5322]. The field value is an HTTP-date, as defined in Section 7.1.1.1.
+The "Date" header field represents the date and time at which the message was originated, having the same semantics as the Origination Date Field (=orig-date=) defined in Section 3.6.1 of [RFC5322]. The field value is an =HTTP-date=, as defined in Section 7.1.1.1.
 #+END_QUOTE
 
 #+BEGIN_SRC text
@@ -3452,7 +3495,7 @@ An origin server might send Vary with a list of fields for two purposes:
 An origin server SHOULD send a Vary header field when its algorithm for selecting a representation varies based on aspects of the request message other than the method and request target, unless the variance cannot be crossed or the origin server has been deliberately configured to prevent cache transparency. For example, there is no need to send the Authorization field name in Vary because reuse across users is constrained by the field definition (Section 4.2 of [RFC7235]). Likewise, an origin server might use Cache-Control directives (Section 5.2 of [RFC7234]) to supplant Vary if it considers the variance less significant than the performance cost of Vary's impact on caching.
 #+END_QUOTE
 
-** 7.2. Validator Header Fields
+** 7.2. 验证器头字段 / Validator Header Fields
 :PROPERTIES:
 :ID:       efd98bfe-3f3c-4d75-9fa9-041a5af2f917
 :END:
@@ -3474,7 +3517,7 @@ For example, an ETag header field in a 201 (Created) response communicates the e
 | ETag              | Section 2.3 of [RFC7232] |
 | Last-Modified     | Section 2.2 of [RFC7232] |
 
-** 7.3. Authentication Challenges
+** 7.3. 认证质询 / Authentication Challenges
 
 #+BEGIN_QUOTE
 Authentication challenges indicate what mechanisms are available for the client to provide authentication credentials in future requests.
@@ -3485,7 +3528,7 @@ Authentication challenges indicate what mechanisms are available for the client 
 | WWW-Authenticate  | Section 4.1 of [RFC7235] |
 | Proxy-Authenticate | Section 4.3 of [RFC7235] |
 
-** 7.4. Response Context
+** 7.4. 响应上下文 / Response Context
 
 #+BEGIN_QUOTE
 The remaining response header fields provide more information about the target resource for potential use in later requests.
