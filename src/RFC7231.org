@@ -3691,64 +3691,917 @@ An origin server *SHOULD NOT* generate a =Server= field containing needlessly fi
 :PROPERTIES:
 :ID:       193d7ad5-9c6d-4bf7-98f1-6984a42af639
 :END:
+
+The "Hypertext Transfer Protocol (HTTP) Method Registry" defines the namespace for the request method token (Section 4). The method registry has been created and is now maintained at <http://www.iana.org/assignments/http-methods>.
+
 *** 8.1.1. Procedure
+
+HTTP method registrations MUST include the following fields:
+
+- Method Name (see Section 4)
+- Safe ("yes" or "no", see Section 4.2.1)
+- Idempotent ("yes" or "no", see Section 4.2.2)
+- Pointer to specification text
+- Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
+
 *** 8.1.2. Considerations for New Methods
+
+Standardized methods are generic; that is, they are potentially applicable to any resource, not just one particular media type, kind of resource, or application. As such, it is preferred that new methods be registered in a document that isn't specific to a single application or data format, since orthogonal technologies deserve orthogonal specification.
+
+Since message parsing (Section 3.3 of [RFC7230]) needs to be independent of method semantics (aside from responses to HEAD), definitions of new methods cannot change the parsing algorithm or prohibit the presence of a message body on either the request or the response message. Definitions of new methods can specify that only a zero-length message body is allowed by requiring a Content-Length header field with a value of "0".
+
+A new method definition needs to indicate whether it is safe (Section 4.2.1), idempotent (Section 4.2.2), cacheable (Section 4.2.3), what semantics are to be associated with the payload body if any is present in the request and what refinements the method makes to header field or status code semantics. If the new method is cacheable, its definition ought to describe how, and under what conditions, a cache can store a response and use it to satisfy a subsequent request. The new method ought to describe whether it can be made conditional (Section 5.2) and, if so, how a server responds when the condition is false. Likewise, if the new method might have some use for partial response semantics ([RFC7233]), it ought to document this, too.
+
+*Note:* Avoid defining a method name that starts with "M-", since that prefix might be misinterpreted as having the semantics assigned to it by [RFC2774].
+
 *** 8.1.3. Registrations
+
+The "Hypertext Transfer Protocol (HTTP) Method Registry" has been populated with the registrations below:
+
+| Method  | Safe | Idempotent | Reference     |
+|---------+------+------------+---------------|
+| CONNECT | no   | no         | Section 4.3.6 |
+| DELETE  | no   | yes        | Section 4.3.5 |
+| GET     | yes  | yes        | Section 4.3.1 |
+| HEAD    | yes  | yes        | Section 4.3.2 |
+| OPTIONS | yes  | yes        | Section 4.3.7 |
+| POST    | no   | no         | Section 4.3.3 |
+| PUT     | no   | yes        | Section 4.3.4 |
+| TRACE   | yes  | yes        | Section 4.3.8 |
+
 ** 8.2. 状态码注册表 / Status Code Registry
 :PROPERTIES:
 :ID:       c0f1fbbc-3471-430e-90be-1b120d9b449f
 :END:
+
+The "Hypertext Transfer Protocol (HTTP) Status Code Registry" defines the namespace for the response status-code token (Section 6). The status code registry is maintained at <http://www.iana.org/assignments/http-status-codes>.
+
+This section replaces the registration procedure for HTTP Status Codes previously defined in Section 7.1 of [RFC2817].
+
 *** 8.2.1. Procedure
+
+A registration MUST include the following fields:
+
+- Status Code (3 digits)
+- Short Description
+- Pointer to specification text
+- Values to be added to the HTTP status code namespace require IETF Review (see [RFC5226], Section 4.1).
+
 *** 8.2.2. Considerations for New Status Codes
+
+When it is necessary to express semantics for a response that are not defined by current status codes, a new status code can be registered. Status codes are generic; they are potentially applicable to any resource, not just one particular media type, kind of resource, or application of HTTP. As such, it is preferred that new status codes be registered in a document that isn't specific to a single application.
+
+New status codes are required to fall under one of the categories defined in Section 6. To allow existing parsers to process the response message, new status codes cannot disallow a payload, although they can mandate a zero-length payload body.
+
+Proposals for new status codes that are not yet widely deployed ought to avoid allocating a specific number for the code until there is clear consensus that it will be registered; instead, early drafts can use a notation such as "4NN", or "3N0" .. "3N9", to indicate the class of the proposed status code(s) without consuming a number prematurely.
+
+The definition of a new status code ought to explain the request conditions that would cause a response containing that status code (e.g., combinations of request header fields and/or method(s)) along with any dependencies on response header fields (e.g., what fields are required, what fields can modify the semantics, and what header field semantics are further refined when used with the new status code).
+
+The definition of a new status code ought to specify whether or not it is cacheable. Note that all status codes can be cached if the response they occur in has explicit freshness information; however, status codes that are defined as being cacheable are allowed to be cached without explicit freshness information. Likewise, the definition of a status code can place constraints upon cache behavior. See [RFC7234] for more information.
+
+Finally, the definition of a new status code ought to indicate whether the payload has any implied association with an identified resource (Section 3.1.4.1).
+
 *** 8.2.3. Registrations
+
+The status code registry has been updated with the registrations below:
+
+| Value | Description                   | Reference      |
+|-------+-------------------------------+----------------|
+|   100 | Continue                      | Section 6.2.1  |
+|   101 | Switching Protocols           | Section 6.2.2  |
+|   200 | OK                            | Section 6.3.1  |
+|   201 | Created                       | Section 6.3.2  |
+|   202 | Accepted                      | Section 6.3.3  |
+|   203 | Non-Authoritative Information | Section 6.3.4  |
+|   204 | No Content                    | Section 6.3.5  |
+|   205 | Reset Content                 | Section 6.3.6  |
+|   300 | Multiple Choices              | Section 6.4.1  |
+|   301 | Moved Permanently             | Section 6.4.2  |
+|   302 | Found                         | Section 6.4.3  |
+|   303 | See Other                     | Section 6.4.4  |
+|   305 | Use Proxy                     | Section 6.4.5  |
+|   306 | (Unused)                      | Section 6.4.6  |
+|   307 | Temporary Redirect            | Section 6.4.7  |
+|   400 | Bad Request                   | Section 6.5.1  |
+|   402 | Payment Required              | Section 6.5.2  |
+|   403 | Forbidden                     | Section 6.5.3  |
+|   404 | Not Found                     | Section 6.5.4  |
+|   405 | Method Not Allowed            | Section 6.5.5  |
+|   406 | Not Acceptable                | Section 6.5.6  |
+|   408 | Request Timeout               | Section 6.5.7  |
+|   409 | Conflict                      | Section 6.5.8  |
+|   410 | Gone                          | Section 6.5.0  |
+|   411 | Length Required               | Section 6.5.10 |
+|   413 | Payload Too Large             | Section 6.5.11 |
+|   414 | URI Too Long                  | Section 6.5.12 |
+|   415 | Unsupported Media Type        | Section 6.5.13 |
+|   417 | Expectation Failed            | Section 6.5.14 |
+|   426 | Upgrade Required              | Section 6.5.15 |
+|   500 | Internal Server Error         | Section 6.6.1  |
+|   501 | Not Implemented               | Section 6.6.2  |
+|   502 | Bad Gateway                   | Section 6.6.3  |
+|   503 | Service Unavailable           | Section 6.6.4  |
+|   504 | Gateway Timeout               | Section 6.6.5  |
+|   505 | HTTP Version Not Supported    | Section 6.6.6  |
+
 ** 8.3. 头字段注册表 / Header Field Registry
+
+HTTP header fields are registered within the "Message Headers" registry located at <http://www.iana.org/assignments/message-headers>, as defined by [BCP90].
+
 *** 8.3.1. Considerations for New Header Fields
+
+Header fields are key:value pairs that can be used to communicate data about the message, its payload, the target resource, or the connection (i.e., control data). See Section 3.2 of [RFC7230] for a general definition of header field syntax in HTTP messages.
+
+The requirements for header field names are defined in [BCP90].
+
+Authors of specifications defining new fields are advised to keep the name as short as practical and not to prefix the name with "X-" unless the header field will never be used on the Internet. (The "X-" prefix idiom has been extensively misused in practice; it was intended to only be used as a mechanism for avoiding name collisions inside proprietary software or intranet processing, since the prefix would ensure that private names never collide with a newly registered Internet name; see [BCP178] for further information).
+
+New header field values typically have their syntax defined using ABNF ([RFC5234]), using the extension defined in Section 7 of [RFC7230] as necessary, and are usually constrained to the range of US-ASCII characters. Header fields needing a greater range of characters can use an encoding such as the one defined in [RFC5987].
+
+Leading and trailing whitespace in raw field values is removed upon field parsing (Section 3.2.4 of [RFC7230]). Field definitions where leading or trailing whitespace in values is significant will have to use a container syntax such as quoted-string (Section 3.2.6 of [RFC7230]).
+
+Because commas (",") are used as a generic delimiter between field-values, they need to be treated with care if they are allowed in the field-value. Typically, components that might contain a comma are protected with double-quotes using the quoted-string ABNF production.
+
+For example, a textual date and a URI (either of which might contain a comma) could be safely carried in field-values like these:
+
+#+BEGIN_EXAMPLE
+  Example-URI-Field: "http://example.com/a.html,foo",
+                     "http://without-a-comma.example.com/"
+  Example-Date-Field: "Sat, 04 May 1996", "Wed, 14 Sep 2005"
+#+END_EXAMPLE
+
+Note that double-quote delimiters almost always are used with the quoted-string production; using a different syntax inside double-quotes will likely cause unnecessary confusion.
+
+Many header fields use a format including (case-insensitively) named parameters (for instance, Content-Type, defined in Section 3.1.1.5). Allowing both unquoted (token) and quoted (quoted-string) syntax for the parameter value enables recipients to use existing parser components. When allowing both forms, the meaning of a parameter value ought to be independent of the syntax used for it (for an example, see the notes on parameter handling for media types in Section 3.1.1.1).
+
+Authors of specifications defining new header fields are advised to consider documenting:
+
+- Whether the field is a single value or whether it can be a list (delimited by commas; see Section 3.2 of [RFC7230]).
+
+  If it does not use the list syntax, document how to treat messages where the field occurs multiple times (a sensible default would be to ignore the field, but this might not always be the right choice).
+
+  Note that intermediaries and software libraries might combine multiple header field instances into a single one, despite the field's definition not allowing the list syntax. A robust format enables recipients to discover these situations (good example: "Content-Type", as the comma can only appear inside quoted strings; bad example: "Location", as a comma can occur inside a URI).
+
+- Under what conditions the header field can be used; e.g., only in responses or requests, in all messages, only on responses to a particular request method, etc.
+
+- Whether the field should be stored by origin servers that understand it upon a PUT request.
+
+- Whether the field semantics are further refined by the context, such as by existing request methods or status codes.
+
+- Whether it is appropriate to list the field-name in the Connection header field (i.e., if the header field is to be hop-by-hop; see Section 6.1 of [RFC7230]).
+
+- Under what conditions intermediaries are allowed to insert, delete, or modify the field's value.
+
+- Whether it is appropriate to list the field-name in a Vary response header field (e.g., when the request header field is used by an origin server's content selection algorithm; see Section 7.1.4).
+
+- Whether the header field is useful or allowable in trailers (see Section 4.1 of [RFC7230]).
+
+- Whether the header field ought to be preserved across redirects.
+
+- Whether it introduces any additional security considerations, such as disclosure of privacy-related data.
+
 *** 8.3.2. Registrations
+
+The "Message Headers" registry has been updated with the following permanent registrations:
+
+| Header Field Name | Protocol | Status   | Reference       |
+|-------------------+----------+----------+-----------------|
+| Accept            | http     | standard | Section 5.3.2   |
+| Accept-Charset    | http     | standard | Section 5.3.3   |
+| Accept-Encoding   | http     | standard | Section 5.3.4   |
+| Accept-Language   | http     | standard | Section 5.3.5   |
+| Allow             | http     | standard | Section 7.4.1   |
+| Content-Encoding  | http     | standard | Section 3.1.2.2 |
+| Content-Language  | http     | standard | Section 3.1.3.2 |
+| Content-Location  | http     | standard | Section 3.1.4.2 |
+| Content-Type      | http     | standard | Section 3.1.1.5 |
+| Date              | http     | standard | Section 7.1.1.2 |
+| Expect            | http     | standard | Section 5.1.1   |
+| From              | http     | standard | Section 5.5.1   |
+| Location          | http     | standard | Section 7.1.2   |
+| Max-Forwards      | http     | standard | Section 5.1.2   |
+| MIME-Version      | http     | standard | Appendix A.1    |
+| Referer           | http     | standard | Section 5.5.2   |
+| Retry-After       | http     | standard | Section 7.1.3   |
+| Server            | http     | standard | Section 7.4.2   |
+| UserAgent         | http     | standard | Section 5.5.3   |
+| Vary              | http     | standard | Section 7.1.4   |
+
+The change controller for the above registrations is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
+
 ** 8.4. 内容编码值注册表 / Content Coding Registry
 :PROPERTIES:
 :ID:       87f2ed30-a48b-4c31-a181-8e3a33ba1080
 :END:
+
+The "HTTP Content Coding Registry" defines the namespace for content coding names (Section 4.2 of [RFC7230]). The content coding registry is maintained at <http://www.iana.org/assignments/http-parameters>.
+
 *** 8.4.1. Procedure
+
+Content coding registrations MUST include the following fields:
+
+Name
+Description
+Pointer to specification text
+Names of content codings MUST NOT overlap with names of transfer codings (Section 4 of [RFC7230]), unless the encoding transformation is identical (as is the case for the compression codings defined in Section 4.2 of [RFC7230]).
+
+Values to be added to this namespace require IETF Review (see Section 4.1 of [RFC5226]) and MUST conform to the purpose of content coding defined in this section.
+
 *** 8.4.2. Registrations
+
+The "HTTP Content Coding Registry" has been updated with the registrations below:
+
+| Name     | Description                                             | Reference     |
+|----------+---------------------------------------------------------+---------------|
+| identity | Reserved (synonym for "no encoding" in Accept-Encoding) | Section 5.3.4 |
+
 * 9. 安全注意事项 / Security Considerations
+
+This section is meant to inform developers, information providers, and users of known security concerns relevant to HTTP semantics and its use for transferring information over the Internet. Considerations related to message syntax, parsing, and routing are discussed in Section 9 of [RFC7230].
+
+The list of considerations below is not exhaustive. Most security concerns related to HTTP semantics are about securing server-side applications (code behind the HTTP interface), securing user agent processing of payloads received via HTTP, or secure use of the Internet in general, rather than security of the protocol. Various organizations maintain topical information and links to current research on Web application security (e.g., [OWASP]).
+
 ** 9.1. 基于文件和路径名称的攻击 / Attacks Based on File and Path Names
 :PROPERTIES:
 :ID:       9195be98-bd4e-40ae-a5a0-6af920044f02
 :END:
+
+Origin servers frequently make use of their local file system to manage the mapping from effective request URI to resource representations. Most file systems are not designed to protect against malicious file or path names. Therefore, an origin server needs to avoid accessing names that have a special significance to the system when mapping the request target to files, folders, or directories.
+
+For example, UNIX, Microsoft Windows, and other operating systems use ".." as a path component to indicate a directory level above the current one, and they use specially named paths or file names to send data to system devices. Similar naming conventions might exist within other types of storage systems. Likewise, local storage systems have an annoying tendency to prefer user-friendliness over security when handling invalid or unexpected characters, recomposition of decomposed characters, and case-normalization of case-insensitive names.
+
+Attacks based on such special names tend to focus on either denial-of-service (e.g., telling the server to read from a COM port) or disclosure of configuration and source files that are not meant to be served.
+
 ** 9.2. 基于命令、代码、查询注入 / Attacks Based on Command, Code, or Query Injection
+
+Origin servers often use parameters within the URI as a means of identifying system services, selecting database entries, or choosing a data source. However, data received in a request cannot be trusted. An attacker could construct any of the request data elements (method, request-target, header fields, or body) to contain data that might be misinterpreted as a command, code, or query when passed through a command invocation, language interpreter, or database interface.
+
+For example, SQL injection is a common attack wherein additional query language is inserted within some part of the request-target or header fields (e.g., Host, Referer, etc.). If the received data is used directly within a SELECT statement, the query language might be interpreted as a database command instead of a simple string value. This type of implementation vulnerability is extremely common, in spite of being easy to prevent.
+
+In general, resource implementations ought to avoid use of request data in contexts that are processed or interpreted as instructions. Parameters ought to be compared to fixed strings and acted upon as a result of that comparison, rather than passed through an interface that is not prepared for untrusted data. Received data that isn't based on fixed parameters ought to be carefully filtered or encoded to avoid being misinterpreted.
+
+Similar considerations apply to request data when it is stored and later processed, such as within log files, monitoring tools, or when included within a data format that allows embedded scripts.
+
 ** 9.3. 个人信息的披露 / Disclosure of Personal Information
+
+Clients are often privy to large amounts of personal information, including both information provided by the user to interact with resources (e.g., the user's name, location, mail address, passwords, encryption keys, etc.) and information about the user's browsing activity over time (e.g., history, bookmarks, etc.). Implementations need to prevent unintentional disclosure of personal information.
+
 ** 9.4. URLs 敏感信息的披露 / Disclosure of Sensitive Information in URLs
 :PROPERTIES:
 :ID:       ed824807-db16-4f5b-ab13-2366f5cfc0f3
 :END:
+
+URIs are intended to be shared, not secured, even when they identify secure resources. URIs are often shown on displays, added to templates when a page is printed, and stored in a variety of unprotected bookmark lists. It is therefore unwise to include information within a URI that is sensitive, personally identifiable, or a risk to disclose.
+
+Authors of services ought to avoid GET-based forms for the submission of sensitive data because that data will be placed in the request-target. Many existing servers, proxies, and user agents log or display the request-target in places where it might be visible to third parties. Such services ought to use POST-based form submission instead.
+
+Since the Referer header field tells a target site about the context that resulted in a request, it has the potential to reveal information about the user's immediate browsing history and any personal information that might be found in the referring resource's URI. Limitations on the Referer header field are described in Section 5.5.2 to address some of its security considerations.
+
 ** 9.5. Disclosure of Fragment after Redirects
+
+Although fragment identifiers used within URI references are not sent in requests, implementers ought to be aware that they will be visible to the user agent and any extensions or scripts running as a result of the response. In particular, when a redirect occurs and the original request's fragment identifier is inherited by the new reference in Location (Section 7.1.2), this might have the effect of disclosing one site's fragment to another site. If the first site uses personal information in fragments, it ought to ensure that redirects to other sites include a (possibly empty) fragment component in order to block that inheritance.
+
 ** 9.6. Disclosure of Product Information
+
+The User-Agent (Section 5.5.3), Via (Section 5.7.1 of [RFC7230]), and Server (Section 7.4.2) header fields often reveal information about the respective sender's software systems. In theory, this can make it easier for an attacker to exploit known security holes; in practice, attackers tend to try all potential holes regardless of the apparent software versions being used.
+
+Proxies that serve as a portal through a network firewall ought to take special precautions regarding the transfer of header information that might identify hosts behind the firewall. The Via header field allows intermediaries to replace sensitive machine names with pseudonyms.
+
 ** 9.7. 浏览器指纹识别 / Browser Fingerprinting
 :PROPERTIES:
 :ID:       58ca9032-65b1-47ff-b759-d1cedc245d4b
 :END:
+
+Browser fingerprinting is a set of techniques for identifying a specific user agent over time through its unique set of characteristics. These characteristics might include information related to its TCP behavior, feature capabilities, and scripting environment, though of particular interest here is the set of unique characteristics that might be communicated via HTTP. Fingerprinting is considered a privacy concern because it enables tracking of a user agent's behavior over time without the corresponding controls that the user might have over other forms of data collection (e.g., cookies). Many general-purpose user agents (i.e., Web browsers) have taken steps to reduce their fingerprints.
+
+There are a number of request header fields that might reveal information to servers that is sufficiently unique to enable fingerprinting. The From header field is the most obvious, though it is expected that From will only be sent when self-identification is desired by the user. Likewise, Cookie header fields are deliberately designed to enable re-identification, so fingerprinting concerns only apply to situations where cookies are disabled or restricted by the user agent's configuration.
+
+The User-Agent header field might contain enough information to uniquely identify a specific device, usually when combined with other characteristics, particularly if the user agent sends excessive details about the user's system or extensions. However, the source of unique information that is least expected by users is proactive negotiation (Section 5.3), including the Accept, Accept-Charset, Accept-Encoding, and Accept-Language header fields.
+
+In addition to the fingerprinting concern, detailed use of the Accept-Language header field can reveal information the user might consider to be of a private nature. For example, understanding a given language set might be strongly correlated to membership in a particular ethnic group. An approach that limits such loss of privacy would be for a user agent to omit the sending of Accept-Language except for sites that have been whitelisted, perhaps via interaction after detecting a Vary header field that indicates language negotiation might be useful.
+
+In environments where proxies are used to enhance privacy, user agents ought to be conservative in sending proactive negotiation header fields. General-purpose user agents that provide a high degree of header field configurability ought to inform users about the loss of privacy that might result if too much detail is provided. As an extreme privacy measure, proxies could filter the proactive negotiation header fields in relayed requests.
+
 * 10. 鸣谢 / Acknowledgements
+
+See Section 10 of [RFC7230].
+
 * 11. 参考资料 / References
 ** 11.1. Normative References
+
+- [RFC2045] :: Freed, N. and N. Borenstein, “Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies”, RFC 2045, November 1996.
+- [RFC2046] :: Freed, N. and N. Borenstein, “Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types”, RFC 2046, November 1996.
+- [RFC2119] :: Bradner, S., “Key words for use in RFCs to Indicate Requirement Levels”, BCP 14, RFC 2119, March 1997.
+- [RFC3986] :: Berners-Lee, T., Fielding, R., and L. Masinter, “Uniform Resource Identifier (URI): Generic Syntax”, STD 66, RFC 3986, January 2005.
+- [RFC4647] :: Phillips, A., Ed. and M. Davis, Ed., “Matching of Language Tags”, BCP 47, RFC 4647, September 2006.
+- [RFC5234] :: Crocker, D., Ed. and P. Overell, “Augmented BNF for Syntax Specifications: ABNF”, STD 68, RFC 5234, January 2008.
+- [RFC5646] :: Phillips, A., Ed. and M. Davis, Ed., “Tags for Identifying Languages”, BCP 47, RFC 5646, September 2009.
+- [RFC6365] :: Hoffman, P. and J. Klensin, “Terminology Used in Internationalization in the IETF”, BCP 166, RFC 6365, September 2011.
+- [RFC7230] :: Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing”, RFC 7230, June 2014.
+- [RFC7232] :: Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests”, RFC 7232, June 2014.
+- [RFC7233] :: Fielding, R., Ed., Lafon, Y., Ed., and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Range Requests”, RFC 7233, June 2014.
+- [RFC7234] :: Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Caching”, RFC 7234, June 2014.
+- [RFC7235] :: Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Authentication”, RFC 7235, June 2014.
+
 ** 11.2. Informative References
+
+- [BCP13] :: Freed, N., Klensin, J., and T. Hansen, “Media Type Specifications and Registration Procedures”, BCP 13, RFC 6838, January 2013.
+- [BCP178] :: Saint-Andre, P., Crocker, D., and M. Nottingham, “Deprecating the "X-" Prefix and Similar Constructs in Application Protocols”, BCP 178, RFC 6648, June 2012.
+- [BCP90] :: lyne, G., Nottingham, M., and J. Mogul, “Registration Procedures for Message Header Fields”, BCP 90, RFC 3864, September 2004.
+- [OWASP] :: van der Stock, A., Ed., “A Guide to Building Secure Web Applications and Web Services”, The Open Web Application Security Project (OWASP) 2.0.1, July 2005, <https://www.owasp.org/>.
+- [REST] :: Fielding, R., “Architectural Styles and the Design of Network-based Software Architectures”, Doctoral Dissertation, University of California, Irvine, September 2000, <http://roy.gbiv.com/pubs/dissertation/top.htm>.
+- [RFC1945] :: Berners-Lee, T., Fielding, R., and H. Nielsen, “Hypertext Transfer Protocol -- HTTP/1.0”, RFC 1945, May 1996.
+- [RFC2049] :: Freed, N. and N. Borenstein, “Multipurpose Internet Mail Extensions (MIME) Part Five: Conformance Criteria and Examples”, RFC 2049, November 1996.
+- [RFC2068] :: Fielding, R., Gettys, J., Mogul, J., Nielsen, H., and T. Berners-Lee, “Hypertext Transfer Protocol -- HTTP/1.1”, RFC 2068, January 1997.
+- [RFC2295] :: Holtman, K. and A. Mutz, “Transparent Content Negotiation in HTTP”, RFC 2295, March 1998.
+- [RFC2388] :: Masinter, L., “Returning Values from Forms: multipart/form-data”, RFC 2388, August 1998.
+- [RFC2557] :: Palme, F., Hopmann, A., Shelness, N., and E. Stefferud, “MIME Encapsulation of Aggregate Documents, such as HTML (MHTML)”, RFC 2557, March 1999.
+- [RFC2616] :: Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, “Hypertext Transfer Protocol -- HTTP/1.1”, RFC 2616, June 1999.
+- [RFC2774] :: Frystyk, H., Leach, P., and S. Lawrence, “An HTTP Extension Framework”, RFC 2774, February 2000.
+- [RFC2817] :: Khare, R. and S. Lawrence, “Upgrading to TLS Within HTTP/1.1”, RFC 2817, May 2000.
+- [RFC2978] :: Freed, N. and J. Postel, “IANA Charset Registration Procedures”, BCP 19, RFC 2978, October 2000.
+- [RFC5226] :: Narten, T. and H. Alvestrand, “Guidelines for Writing an IANA Considerations Section in RFCs”, BCP 26, RFC 5226, May 2008.
+- [RFC5246] :: Dierks, T. and E. Rescorla, “The Transport Layer Security (TLS) Protocol Version 1.2”, RFC 5246, August 2008.
+- [RFC5322] :: Resnick, P., “Internet Message Format”, RFC 5322, October 2008.
+- [RFC5789] :: Dusseault, L. and J. Snell, “PATCH Method for HTTP”, RFC 5789, March 2010.
+- [RFC5905] :: Mills, D., Martin, J., Ed., Burbank, J., and W. Kasch, “Network Time Protocol Version 4: Protocol and Algorithms Specification”, RFC 5905, June 2010.
+- [RFC5987] :: Reschke, J., “Character Set and Language Encoding for Hypertext Transfer Protocol (HTTP) Header Field Parameters”, RFC 5987, August 2010.
+- [RFC5988] :: Nottingham, M., “Web Linking”, RFC 5988, October 2010.
+- [RFC6265] :: Barth, A., “HTTP State Management Mechanism”, RFC 6265, April 2011.
+- [RFC6266] :: Reschke, J., “Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)”, RFC 6266, June 2011.
+- [RFC7238] :: Reschke, J., “The Hypertext Transfer Protocol (HTTP) Status Code 308 (Permanent Redirect)”, RFC 7238, June 2014.
+
 * A. HTTP 与 MIME 的区别 / Defferences between HTTP and MIME
 :PROPERTIES:
 :ID:       84208afd-e458-4f40-97cc-2e9535523797
 :END:
+
+HTTP/1.1 uses many of the constructs defined for the Internet Message Format [RFC5322] and the Multipurpose Internet Mail Extensions (MIME) [RFC2045] to allow a message body to be transmitted in an open variety of representations and with extensible header fields. However, RFC 2045 is focused only on email; applications of HTTP have many characteristics that differ from email; hence, HTTP has features that differ from MIME. These differences were carefully chosen to optimize performance over binary connections, to allow greater freedom in the use of new media types, to make date comparisons easier, and to acknowledge the practice of some early HTTP servers and clients.
+
+This appendix describes specific areas where HTTP differs from MIME. Proxies and gateways to and from strict MIME environments need to be aware of these differences and provide the appropriate conversions where necessary.
+
 ** A.1. MIME-VERSION
+
+HTTP is not a MIME-compliant protocol. However, messages can include a single MIME-Version header field to indicate what version of the MIME protocol was used to construct the message. Use of the MIME-Version header field indicates that the message is in full conformance with the MIME protocol (as defined in [RFC2045]). Senders are responsible for ensuring full conformance (where possible) when exporting HTTP messages to strict MIME environments.
+
 ** A.2. Conversion to Canonical Form
+
+MIME requires that an Internet mail body part be converted to canonical form prior to being transferred, as described in Section 4 of [RFC2049]. Section 3.1.1.3 of this document describes the forms allowed for subtypes of the "text" media type when transmitted over HTTP. [RFC2046] requires that content with a type of "text" represent line breaks as CRLF and forbids the use of CR or LF outside of line break sequences. HTTP allows CRLF, bare CR, and bare LF to indicate a line break within text content.
+
+A proxy or gateway from HTTP to a strict MIME environment ought to translate all line breaks within the text media types described in Section 3.1.1.3 of this document to the RFC 2049 canonical form of CRLF. Note, however, this might be complicated by the presence of a Content-Encoding and by the fact that HTTP allows the use of some charsets that do not use octets 13 and 10 to represent CR and LF, respectively.
+
+Conversion will break any cryptographic checksums applied to the original content unless the original content is already in canonical form. Therefore, the canonical form is recommended for any content that uses such checksums in HTTP.
+
 ** A.3. Conversion of Date Formats
+
+HTTP/1.1 uses a restricted set of date formats (Section 7.1.1.1) to simplify the process of date comparison. Proxies and gateways from other protocols ought to ensure that any Date header field present in a message conforms to one of the HTTP/1.1 formats and rewrite the date if necessary.
+
 ** A.4. Conversion of Content-Encoding
+
+MIME does not include any concept equivalent to HTTP/1.1's Content-Encoding header field. Since this acts as a modifier on the media type, proxies and gateways from HTTP to MIME-compliant protocols ought to either change the value of the Content-Type header field or decode the representation before forwarding the message. (Some experimental applications of Content-Type for Internet mail have used a media-type parameter of ";conversions=<content-coding>" to perform a function equivalent to Content-Encoding. However, this parameter is not part of the MIME standards).
+
 ** A.5. Conversion of Content-Transfer-Encoding
+
+HTTP does not use the Content-Transfer-Encoding field of MIME. Proxies and gateways from MIME-compliant protocols to HTTP need to remove any Content-Transfer-Encoding prior to delivering the response message to an HTTP client.
+
+Proxies and gateways from HTTP to MIME-compliant protocols are responsible for ensuring that the message is in the correct format and encoding for safe transport on that protocol, where "safe transport" is defined by the limitations of the protocol being used. Such a proxy or gateway ought to transform and label the data with an appropriate Content-Transfer-Encoding if doing so will improve the likelihood of safe transport over the destination protocol.
+
 ** A.6. MHTML and Line Length Limitations
+
+HTTP implementations that share code with MHTML [RFC2557] implementations need to be aware of MIME line length limitations. Since HTTP does not have this limitation, HTTP does not fold long lines. MHTML messages being transported by HTTP follow all conventions of MHTML, including line length limitations and folding, canonicalization, etc., since HTTP transfers message-bodies as payload and, aside from the "multipart/byteranges" type (Appendix A of [RFC7233]), does not interpret the content or any MIME header lines that might be contained therein.
+
 * B. 相对 RFC 2616 的变化 / Changes from RFC 2616
 :PROPERTIES:
 :ID:       b9da2375-731c-4b8a-a7d5-b07352c045a9
 :END:
+
+The primary changes in this revision have been editorial in nature: extracting the messaging syntax and partitioning HTTP semantics into separate documents for the core features, conditional requests, partial requests, caching, and authentication. The conformance language has been revised to clearly target requirements and the terminology has been improved to distinguish payload from representations and representations from resources.
+
+A new requirement has been added that semantics embedded in a URI be disabled when those semantics are inconsistent with the request method, since this is a common cause of interoperability failure. (Section 2)
+
+An algorithm has been added for determining if a payload is associated with a specific identifier. (Section 3.1.4.1)
+
+The default charset of ISO-8859-1 for text media types has been removed; the default is now whatever the media type definition says. Likewise, special treatment of ISO-8859-1 has been removed from the Accept-Charset header field. (Section 3.1.1.3 and Section 5.3.3)
+
+The definition of Content-Location has been changed to no longer affect the base URI for resolving relative URI references, due to poor implementation support and the undesirable effect of potentially breaking relative links in content-negotiated resources. (Section 3.1.4.2)
+
+To be consistent with the method-neutral parsing algorithm of [RFC7230], the definition of GET has been relaxed so that requests can have a body, even though a body has no meaning for GET. (Section 4.3.1)
+
+Servers are no longer required to handle all Content-* header fields and use of Content-Range has been explicitly banned in PUT requests. (Section 4.3.4)
+
+Definition of the CONNECT method has been moved from [RFC2817] to this specification. (Section 4.3.6)
+
+The OPTIONS and TRACE request methods have been defined as being safe. (Section 4.3.7 and Section 4.3.8)
+
+The Expect header field's extension mechanism has been removed due to widely-deployed broken implementations. (Section 5.1.1)
+
+The Max-Forwards header field has been restricted to the OPTIONS and TRACE methods; previously, extension methods could have used it as well. (Section 5.1.2)
+
+The "about:blank" URI has been suggested as a value for the Referer header field when no referring URI is applicable, which distinguishes that case from others where the Referer field is not sent or has been removed. (Section 5.5.2)
+
+The following status codes are now cacheable (that is, they can be stored and reused by a cache without explicit freshness information present): 204, 404, 405, 414, 501. (Section 6)
+
+The 201 (Created) status description has been changed to allow for the possibility that more than one resource has been created. (Section 6.3.2)
+
+The definition of 203 (Non-Authoritative Information) has been broadened to include cases of payload transformations as well. (Section 6.3.4)
+
+The set of request methods that are safe to automatically redirect is no longer closed; user agents are able to make that determination based upon the request method semantics. The redirect status codes 301, 302, and 307 no longer have normative requirements on response payloads and user interaction. (Section 6.4)
+
+The status codes 301 and 302 have been changed to allow user agents to rewrite the method from POST to GET. (Sections 6.4.2 and 6.4.3)
+
+The description of the 303 (See Other) status code has been changed to allow it to be cached if explicit freshness information is given, and a specific definition has been added for a 303 response to GET. (Section 6.4.4)
+
+The 305 (Use Proxy) status code has been deprecated due to security concerns regarding in-band configuration of a proxy. (Section 6.4.5)
+
+The 400 (Bad Request) status code has been relaxed so that it isn't limited to syntax errors. (Section 6.5.1)
+
+The 426 (Upgrade Required) status code has been incorporated from [RFC2817]. (Section 6.5.15)
+
+The target of requirements on HTTP-date and the Date header field have been reduced to those systems generating the date, rather than all systems sending a date. (Section 7.1.1)
+
+The syntax of the Location header field has been changed to allow all URI references, including relative references and fragments, along with some clarifications as to when use of fragments would not be appropriate. (Section 7.1.2)
+
+Allow has been reclassified as a response header field, removing the option to specify it in a PUT request. Requirements relating to the content of Allow have been relaxed; correspondingly, clients are not required to always trust its value. (Section 7.4.1)
+
+A Method Registry has been defined. (Section 8.1)
+
+The Status Code Registry has been redefined by this specification; previously, it was defined in Section 7.1 of [RFC2817]. (Section 8.2)
+
+Registration of content codings has been changed to require IETF Review. (Section 8.4)
+
+The Content-Disposition header field has been removed since it is now defined by [RFC6266].
+
+The Content-MD5 header field has been removed because it was inconsistently implemented with respect to partial responses.
+
 * C. 引入的 ABNF 规则 / Imported ABNF
+
+The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), HTAB (horizontal tab), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+
+The rules below are defined in [RFC7230]:
+
+#+BEGIN_SRC text
+  BWS           = <BWS, see [RFC7230], Section 3.2.3>
+  OWS           = <OWS, see [RFC7230], Section 3.2.3>
+  RWS           = <RWS, see [RFC7230], Section 3.2.3>
+  URI-reference = <URI-reference, see [RFC7230], Section 2.7>
+  absolute-URI  = <absolute-URI, see [RFC7230], Section 2.7>
+  comment       = <comment, see [RFC7230], Section 3.2.6>
+  field-name    = <comment, see [RFC7230], Section 3.2>
+  partial-URI   = <partial-URI, see [RFC7230], Section 2.7>
+  quoted-string = <quoted-string, see [RFC7230], Section 3.2.6>
+  token         = <token, see [RFC7230], Section 3.2.6>
+#+END_SRC
+
 * D. ABNF 规则集合 Collected ABNF
+
+In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
+
+#+BEGIN_SRC text
+  Accept = [ ( "," / ( media-range [ accept-params ] ) ) *( OWS "," [
+   OWS ( media-range [ accept-params ] ) ] ) ]
+  Accept-Charset = *( "," OWS ) ( ( charset / "*" ) [ weight ] ) *( OWS
+   "," [ OWS ( ( charset / "*" ) [ weight ] ) ] )
+  Accept-Encoding = [ ( "," / ( codings [ weight ] ) ) *( OWS "," [ OWS
+   ( codings [ weight ] ) ] ) ]
+  Accept-Language = *( "," OWS ) ( language-range [ weight ] ) *( OWS
+   "," [ OWS ( language-range [ weight ] ) ] )
+  Allow = [ ( "," / method ) *( OWS "," [ OWS method ] ) ]
+
+  BWS = <BWS, see [RFC7230], Section 3.2.3>
+
+  Content-Encoding = *( "," OWS ) content-coding *( OWS "," [ OWS
+   content-coding ] )
+  Content-Language = *( "," OWS ) language-tag *( OWS "," [ OWS
+   language-tag ] )
+  Content-Location = absolute-URI / partial-URI
+  Content-Type = media-type
+
+  Date = HTTP-date
+
+  Expect = "100-continue"
+
+  From = mailbox
+
+  GMT = %x47.4D.54 ; GMT
+
+  HTTP-date = IMF-fixdate / obs-date
+
+  IMF-fixdate = day-name "," SP date1 SP time-of-day SP GMT
+
+  Location = URI-reference
+
+  Max-Forwards = 1*DIGIT
+
+  OWS = <OWS, see [RFC7230], Section 3.2.3>
+
+  RWS = <RWS, see [RFC7230], Section 3.2.3>
+  Referer = absolute-URI / partial-URI
+  Retry-After = HTTP-date / delay-seconds
+
+  Server = product *( RWS ( product / comment ) )
+
+  URI-reference = <URI-reference, see [RFC7230], Section 2.7>
+  User-Agent = product *( RWS ( product / comment ) )
+
+  Vary = "*" / ( *( "," OWS ) field-name *( OWS "," [ OWS field-name ]
+   ) )
+
+  absolute-URI = <absolute-URI, see [RFC7230], Section 2.7>
+  accept-ext = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
+  accept-params = weight *accept-ext
+  asctime-date = day-name SP date3 SP time-of-day SP year
+
+  charset = token
+  codings = content-coding / "identity" / "*"
+  comment = <comment, see [RFC7230], Section 3.2.6>
+  content-coding = token
+
+  date1 = day SP month SP year
+  date2 = day "-" month "-" 2DIGIT
+  date3 = month SP ( 2DIGIT / ( SP DIGIT ) )
+  day = 2DIGIT
+  day-name = %x4D.6F.6E ; Mon
+   / %x54.75.65 ; Tue
+   / %x57.65.64 ; Wed
+   / %x54.68.75 ; Thu
+   / %x46.72.69 ; Fri
+   / %x53.61.74 ; Sat
+   / %x53.75.6E ; Sun
+  day-name-l = %x4D.6F.6E.64.61.79 ; Monday
+   / %x54.75.65.73.64.61.79 ; Tuesday
+   / %x57.65.64.6E.65.73.64.61.79 ; Wednesday
+   / %x54.68.75.72.73.64.61.79 ; Thursday
+   / %x46.72.69.64.61.79 ; Friday
+   / %x53.61.74.75.72.64.61.79 ; Saturday
+   / %x53.75.6E.64.61.79 ; Sunday
+  delay-seconds = 1*DIGIT
+
+  field-name = <comment, see [RFC7230], Section 3.2>
+
+  hour = 2DIGIT
+
+  language-range = <language-range, see [RFC4647], Section 2.1>
+  language-tag = <Language-Tag, see [RFC5646], Section 2.1>
+
+  mailbox = <mailbox, see [RFC5322], Section 3.4>
+  media-range = ( "*/*" / ( type "/*" ) / ( type "/" subtype ) ) *( OWS
+   ";" OWS parameter )
+  media-type = type "/" subtype *( OWS ";" OWS parameter )
+  method = token
+  minute = 2DIGIT
+  month = %x4A.61.6E ; Jan
+   / %x46.65.62 ; Feb
+   / %x4D.61.72 ; Mar
+   / %x41.70.72 ; Apr
+   / %x4D.61.79 ; May
+   / %x4A.75.6E ; Jun
+   / %x4A.75.6C ; Jul
+   / %x41.75.67 ; Aug
+   / %x53.65.70 ; Sep
+   / %x4F.63.74 ; Oct
+   / %x4E.6F.76 ; Nov
+   / %x44.65.63 ; Dec
+
+  obs-date = rfc850-date / asctime-date
+
+  parameter = token "=" ( token / quoted-string )
+  partial-URI = <partial-URI, see [RFC7230], Section 2.7>
+  product = token [ "/" product-version ]
+  product-version = token
+
+  quoted-string = <quoted-string, see [RFC7230], Section 3.2.6>
+  qvalue = ( "0" [ "." *3DIGIT ] ) / ( "1" [ "." *3"0" ] )
+
+  rfc850-date = day-name-l "," SP date2 SP time-of-day SP GMT
+
+  second = 2DIGIT
+  subtype = token
+
+  time-of-day = hour ":" minute ":" second
+  token = <token, see [RFC7230], Section 3.2.6>
+  type = token
+
+  weight = OWS ";" OWS "q=" qvalue
+
+  year = 4DIGIT
+#+END_SRC
+
 * Index
+
+- 1
+  - 100 Continue (status code)  6.1, 6.2.1, 8.2.3
+  - 100-continue (expect value)  5.1.1
+  - 101 Switching Protocols (status code)  6.1, 6.2.2, 8.2.3
+  - 1xx Informational (status code class)  6.2
+- 2
+  - 200 OK (status code)  6.1, 6.3.1, 8.2.3
+  - 201 Created (status code)  6.1, 6.3.2, 8.2.3, B
+  - 202 Accepted (status code)  6.1, 6.3.3, 8.2.3
+  - 203 Non-Authoritative Information (status code)  6.1, 6.3.4, 8.2.3, B
+  - 204 No Content (status code)  6.1, 6.3.5, 8.2.3
+  - 205 Reset Content (status code)  6.1, 6.3.6, 8.2.3
+  - 2xx Successful (status code class)  6.3
+- 3
+  - 300 Multiple Choices (status code)  6.1, 6.4.1, 6.5.6, 8.2.3
+  - 301 Moved Permanently (status code)  6.1, 6.4.2, 8.2.3, B
+  - 302 Found (status code)  6.1, 6.4.3, 8.2.3, B
+  - 303 See Other (status code)  6.1, 6.4.4, 8.2.3, B
+  - 305 Use Proxy (status code)  6.1, 6.4.5, 8.2.3, B
+  - 306 (Unused) (status code)  6.4.6, 8.2.3
+  - 307 Temporary Redirect (status code)  6.1, 6.4.7, 8.2.3
+  - 3xx Redirection (status code class)  6.4, B
+- 4
+  - 400 Bad Request (status code)  6.1, 6.5.1, 8.2.3, B
+  - 402 Payment Required (status code)  6.1, 6.5.2, 8.2.3
+  - 403 Forbidden (status code)  6.1, 6.5.3, 8.2.3
+  - 404 Not Found (status code)  6.1, 6.5.4, 8.2.3
+  - 405 Method Not Allowed (status code)  6.1, 6.5.5, 8.2.3
+  - 406 Not Acceptable (status code)  6.1, 6.5.6, 8.2.3
+  - 408 Request Timeout (status code)  6.1, 6.5.7, 8.2.3
+  - 409 Conflict (status code)  6.1, 6.5.8, 8.2.3
+  - 410 Gone (status code)  6.1, 6.5.9, 8.2.3
+  - 411 Length Required (status code)  6.1, 6.5.10, 8.2.3
+  - 413 Payload Too Large (status code)  6.1, 6.5.11, 8.2.3
+  - 414 URI Too Long (status code)  6.1, 6.5.12, 8.2.3
+  - 415 Unsupported Media Type (status code)  6.1, 6.5.13, 8.2.3
+  - 417 Expectation Failed (status code)  6.1, 6.5.14, 8.2.3
+  - 426 Upgrade Required (status code)  6.1, 6.5.15, 8.2.3, B
+  - 4xx Client Error (status code class)  6.5
+- 5
+  - 500 Internal Server Error (status code)  6.1, 6.6.1, 8.2.3
+  - 501 Not Implemented (status code)  6.1, 6.6.2, 8.2.3
+  - 502 Bad Gateway (status code)  6.1, 6.6.3, 8.2.3
+  - 503 Service Unavailable (status code)  6.1, 6.6.4, 8.2.3
+  - 504 Gateway Timeout (status code)  6.1, 6.6.5, 8.2.3
+  - 505 HTTP Version Not Supported (status code)  6.1, 6.6.6, 8.2.3
+  - 5xx Server Error (status code class)  6.6
+- A
+  - Accept header field  3.1.1.1, 5.3, 5.3.2, 8.3.2
+  - Accept-Charset header field  5.3, 5.3.3, 8.3.2, B
+  - Accept-Encoding header field  3.1.2.1, 5.3, 5.3.4, 8.3.2, 8.4.2
+  - Accept-Language header field  3.1.3.1, 5.3, 5.3.5, 8.3.2
+  - Allow header field  4.1, 7.4, 7.4.1, 8.3.2, B
+- B
+  - BCP13  3.1.1.1, 11.2
+  - BCP178  8.3.1, 11.2
+  - BCP90  8.3, 8.3.1, 11.2
+- C
+  - cacheable  4.2.3
+  - compress (content coding)  3.1.2.1
+  - conditional request  5.2
+  - CONNECT method  4.1, 4.3.6, 8.1.3, B
+  - content coding  3.1.2.1
+  - content negotiation  1
+  - Content-Encoding header field  3.1, 3.1.2.1, 3.1.2.2, 8.3.2
+  - Content-Language header field  3.1, 3.1.3.2, 8.3.2
+  - Content-Location header field  3.1, 3.1.4.2, 4.3.3, 7.1.2, 8.3.2, B
+  - Content-Transfer-Encoding header field  A.5
+  - Content-Type header field  3.1, 3.1.1.1, 3.1.1.5, 8.3.1, 8.3.2
+- D
+  - Date header field  3.3, 7.1, 7.1.1.2, 8.3.2
+  - deflate (content coding)  3.1.2.1
+  - DELETE method  4.1, 4.3.5, 8.1.3
+- E
+  - Expect header field  5.1, 5.1.1, 6.2.1, 6.5.14, 8.3.2, B
+- F
+  - From header field  5.5, 5.5.1, 8.3.2
+- G
+  - GET method  3, 3.1.4.2, 3.3, 4.1, 4.3.1, 8.1.3, B
+  - Grammar  
+    - Accept  5.3.2
+    - Accept-Charset  5.3.3
+    - Accept-Encoding  5.3.4
+    - accept-ext  5.3.2
+    - Accept-Language  5.3.5
+    - accept-params  5.3.2
+    - Allow  7.4.1
+    - asctime-date  7.1.1.1
+    - charset  3.1.1.2
+    - codings  5.3.4
+    - content-coding  3.1.2.1
+    - Content-Encoding  3.1.2.2
+    - Content-Language  3.1.3.2
+    - Content-Location  3.1.4.2
+    - Content-Type  3.1.1.5
+    - Date  7.1.1.2
+    - date1  7.1.1.1
+    - day  7.1.1.1
+    - day-name  7.1.1.1
+    - day-name-l  7.1.1.1
+    - delay-seconds  7.1.3
+    - Expect  5.1.1
+    - From  5.5.1
+    - GMT  7.1.1.1
+    - hour  7.1.1.1
+    - HTTP-date  7.1.1.1
+    - IMF-fixdate  7.1.1.1
+    - language-range  5.3.5
+    - language-tag  3.1.3.1
+    - Location  7.1.2
+    - Max-Forwards  5.1.2
+    - media-range  5.3.2
+    - media-type  3.1.1.1
+    - method  4.1
+    - minute  7.1.1.1
+    - month  7.1.1.1
+    - obs-date  7.1.1.1
+    - parameter  3.1.1.1
+    - product  5.5.3
+    - product-version  5.5.3
+    - qvalue  5.3.1
+    - Referer  5.5.2
+    - Retry-After  7.1.3
+    - rfc850-date  7.1.1.1
+    - second  7.1.1.1
+    - Server  7.4.2
+    - subtype  3.1.1.1
+    - time-of-day  7.1.1.1
+    - type  3.1.1.1
+    - User-Agent  5.5.3
+    - Vary  7.1.4
+    - weight  5.3.1
+    - year  7.1.1.1
+  - gzip (content coding)  3.1.2.1
+- H
+  - HEAD method  3.1.4.2, 4.1, 4.3.2, 8.1.3
+- I
+  - idempotent  4.2.2
+- L
+  - Location header field  4.3.3, 6.4, 7.1, 7.1.2, 8.3.2, 9.5, B
+- M
+  - Max-Forwards header field  4.3.7, 4.3.8, 5.1, 5.1.2, 8.3.2, B
+  - MIME-Version header field  8.3.2, A.1
+- O
+  - OPTIONS method  4.1, 4.3.7, 5.1.2, 8.1.3, B, B, B
+  - OWASP  9, 11.2
+- P
+  - payload  3.3
+  - POST method  3.1.4.2, 3.3, 4.1, 4.3.3, 8.1.3
+  - PUT method  3.1.4.2, 3.3, 4.1, 4.3.4, 8.1.3, B
+- R
+  - Referer header field  5.5, 5.5.2, 8.3.2, 9.4, B
+  - representation  3
+  - REST  3, 4.1, 11.2
+  - Retry-After header field  6.6.4, 7.1, 7.1.3, 8.3.2
+  - RFC1945  6.4, 11.2
+    - Section 9.3  6.4
+  - RFC2045  3.1.1.3, 11.1, A, A.1
+  - RFC2046  3.1.1.1, 3.1.1.4, 3.1.1.5, 11.1, A.2
+    - Section 4.5.1  3.1.1.5
+    - Section 5.1.1  3.1.1.4
+  - RFC2049  11.2, A.2
+    - Section 4  A.2
+  - RFC2068  5.1.1, 6.4, 11.2
+    - Section 10.3  6.4
+  - RFC2119  1.1, 11.1
+  - RFC2295  3.4, 11.2
+  - RFC2388  3.1.1.4, 11.2
+  - RFC2557  3.1.4.2, 11.2, A.6
+    - Section 4  3.1.4.2
+  - RFC2616  5.3.5, 11.2
+    - Section 14.4  5.3.5
+  - RFC2774  8.1.2, 11.2
+  - RFC2817  8.2, 11.2, B, B, B
+    - Section 7.1  8.2, B
+  - RFC2978  3.1.1.2, 11.2
+  - RFC3986  5.5.2, 7.1.2, 7.1.2, 11.1
+    - Section 4.2  7.1.2
+    - Section 5  7.1.2
+  - RFC4647  5.3.5, 5.3.5, 5.3.5, 5.3.5, 11.1
+    - Section 2.1  5.3.5
+    - Section 2.3  5.3.5
+    - Section 3  5.3.5
+    - Section 3.3.1  5.3.5
+  - RFC5226  8.1.1, 8.2.1, 8.4.1, 11.2
+    - Section 4.1  8.1.1, 8.2.1, 8.4.1
+  - RFC5234  1.2, 8.3.1, 11.1, C
+    - Appendix B.1  C
+  - RFC5246  4.3.6, 11.2
+  - RFC5322  5.5.1, 5.5.1, 7.1.1.1, 7.1.1.1, 7.1.1.1, 7.1.1.2, 11.2, A
+    - Section 3.3  7.1.1.1, 7.1.1.1
+    - Section 3.4  5.5.1, 5.5.1
+    - Section 3.6.1  7.1.1.2
+  - RFC5646  3.1.3.1, 3.1.3.1, 3.1.3.1, 11.1
+    - Section 2.1  3.1.3.1
+  - RFC5789  4.3.4, 11.2
+  - RFC5905  7.1.1.1, 11.2
+  - RFC5987  8.3.1, 11.2
+  - RFC5988  6.4.1, 11.2
+  - RFC6265  4.3.8, 5.4, 11.2
+  - RFC6266  11.2, B
+  - RFC6365  1.2, 3.1.1.2, 11.1
+  - RFC7230  1, 1.1, 1.2, 2, 2, 2, 3.1.2.1, 3.1.2.1, 3.1.2.1, 3.1.2.2, 3.1.4.1, 3.1.4.2, 3.3, 3.3, 3.3, 4.3.6, 4.3.7, 4.3.8, 4.3.8, 5.1, 5.1, 5.1.1, 5.5.3, 6.2.2, 6.3.4, 6.5.7, 6.5.10, 6.5.12, 6.5.15, 6.6.6, 7.4.2, 8.1.2, 8.3.1, 8.3.1, 8.3.1, 8.3.1, 8.3.1, 8.3.1, 8.3.1, 8.4, 8.4.1, 8.4.1, 9, 9.6, 10, 11.1, B, C, C, C, C, C, C, C, C, C, C, C, D
+    - Section 1.2  D
+    - Section 2.5  1.1
+    - Section 2.6  6.6.6
+    - Section 2.7  2, C, C, C
+    - Section 3.2  5.5.3, 7.4.2, 8.3.1, 8.3.1, C
+    - Section 3.2.3  C, C, C
+    - Section 3.2.4  8.3.1
+    - Section 3.2.6  8.3.1, C, C, C
+    - Section 3.3.1  3.1.2.2, 3.3
+    - Section 3.3  8.1.2
+    - Section 3.3.2  3.3, 6.5.10
+    - Section 4  8.4.1
+    - Section 4.1  8.3.1
+    - Section 4.2.1  3.1.2.1
+    - Section 4.2  8.4, 8.4.1
+    - Section 4.2.2  3.1.2.1
+    - Section 4.2.3  3.1.2.1
+    - Section 4.3  5.1
+    - Section 4.4  3.3
+    - Section 5.3  2, 4.3.6, 4.3.7, 6.5.12
+    - Section 5.4  5.1
+    - Section 5.5  2, 3.1.4.1, 3.1.4.2
+    - Section 5.7.1  4.3.8, 9.6
+    - Section 5.7.2  6.3.4
+    - Section 6.1  6.5.7, 8.3.1
+    - Section 6.6  5.1.1
+    - Section 6.7  6.2.2, 6.5.15
+    - Section 7  1.2, 8.3.1
+    - Section 8.3.1  4.3.8
+    - Section 9  9
+    - Section 10  10
+  - RFC7232  3, 4.1, 5.2, 5.2, 5.2, 5.2, 5.2, 5.2, 6.1, 6.1, 6.1, 7.2, 7.2, 7.2, 11.1
+    - Section 2.2  7.2
+    - Section 2.3  7.2
+    - Section 3.1  5.2
+    - Section 3.2  5.2
+    - Section 3.3  5.2
+    - Section 3.4  5.2
+    - Section 4  6.1
+    - Section 4.1  6.1
+    - Section 4.2  6.1
+    - Section 5  5.2
+  - RFC7233  3.1.1.4, 3.3, 4.3.1, 4.3.4, 5.1, 5.2, 6.1, 6.1, 6.1, 7.4, 8.1.2, 11.1, A.6
+    - Section 2.3  7.4
+    - Section 3.1  5.1
+    - Section 3.2  5.2
+    - Section 4  6.1
+    - Section 4.1  6.1
+    - Section 4.2  3.3, 4.3.4
+    - Section 4.4  6.1
+    - Appendix A  A.6
+  - RFC7234  4.2.3, 4.3.1, 4.3.2, 4.3.2, 4.3.3, 4.3.4, 4.3.5, 5.1, 5.1, 6.1, 6.3.1, 6.3.4, 6.3.4, 6.3.5, 6.4.1, 6.4.2, 6.5.4, 6.5.5, 6.5.9, 6.5.12, 6.6.2, 7.1, 7.1, 7.1, 7.1, 7.1.4, 7.1.4, 8.2.2, 11.1
+    - Section 4.1  7.1.4
+    - Section 4.2.1  4.3.3
+    - Section 4.2.2  6.3.1, 6.3.4, 6.3.5, 6.4.1, 6.4.2, 6.5.4, 6.5.5, 6.5.9, 6.5.12, 6.6.2
+    - Section 4.3.5  4.3.2
+    - Section 4.4  4.3.4, 4.3.5
+    - Section 5.1  7.1
+    - Section 5.2  4.3.1, 4.3.2, 5.1, 7.1, 7.1.4
+    - Section 5.3  7.1
+    - Section 5.4  5.1
+    - Section 5.5  6.3.4, 7.1
+  - RFC7235  4.3.8, 5.4, 5.4, 5.4, 6.1, 6.1, 6.1, 7.1.4, 7.3, 7.3, 11.1
+    - Section 3  6.1
+    - Section 3.1  6.1
+    - Section 3.2  6.1
+    - Section 4.1  7.3
+    - Section 4.2  5.4, 7.1.4
+    - Section 4.3  7.3
+    - Section 4.4  5.4
+  - RFC7238  6.4.7, 11.2
+- S
+  - safe  4.2.1
+  - selected representation  3, 7.2
+  - Server header field  7.4, 7.4.2, 8.3.2, 9.6
+  - Status Codes Classes  
+    - 1xx Informational  6.2
+    - 2xx Successful  6.3
+    - 3xx Redirection  6.4, B
+    - 4xx Client Error  6.5
+    - 5xx Server Error  6.6
+- T
+  - TRACE method  4.1, 4.3.8, 5.1.2, 8.1.3, B, B, B
+- U
+  - User-Agent header field  5.5, 5.5.3, 7.4.2, 8.3.2, 9.6
+- V
+  - Vary header field  3.4.1, 7.1, 7.1.4, 8.3.1, 8.3.2
+- X
+  - x-compress (content coding)  3.1.2.1
+  - x-gzip (content coding)  3.1.2.1
+
 * Author' Addresses
+
+#+BEGIN_EXAMPLE
+Roy T. Fielding (editor)
+Adobe Systems Incorporated
+345 Park Ave
+San Jose, CA 95110
+USA
+Email: fielding@gbiv.com
+URI: http://roy.gbiv.com/
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+greenbytes GmbH
+Hafenweg 16
+Muenster, NW 48155
+Germany
+Email: julian.reschke@greenbytes.de
+URI: http://greenbytes.de/tech/webdav/
+#+END_EXAMPLE
 
 * Footnotes
 
