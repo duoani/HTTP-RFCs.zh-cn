@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-21 Wed 19:12 -->
+<!-- 2018-11-30 Fri 19:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7235: Hypertext Transfer Protocol (HTTP/1.1): Authentication</title>
@@ -131,24 +131,58 @@ h1.title {
   width: 100%;
 }
 
+.org-ul,
+.org-ol,
+.org-dl,
+.org-dl > dt,
+.org-dl > dd,
 .outline-2 p,
 .outline-2 blockquote,
-.outline-2 ul,
-.outline-2 ol,
-.outline-2 dl,
 .outline-2 table,
 .outline-2 pre {
   margin-top: 0;
   margin-bottom: 16px;
 }
 
-.outline-2 ul,
-.outline-2 ol {
+.org-ul,
+.org-ol,
+.org-dl {
   padding-left: 2em;
+}
+
+.org-dl > dt {
+  float: left;
+  max-width: 40%;
+  margin-bottom: 3px;
+  margin-right: 2em;
+  font-size: 110%;
+  font-family: Courier New;
+  font-weight: bolder;
+  color: #1c3030;
+  clear: left;
+}
+
+.org-dl > dd {
+  text-align: justify;
+  margin-bottom: 14pt;
+  overflow: hidden;
+  clear: right;
 }
 
 table tbody tr:nth-child(odd){
   background-color: #efefef;
+}
+
+.org-center {
+  text-align: center;
+}
+
+.org-left {
+  text-align: left;
+}
+
+.org-right {
+  text-align: right;
 }
 
 pre,
@@ -189,19 +223,6 @@ blockquote {
 .timestamp {
   font-family: Courier New;
   color: #888888;
-}
-
-dd {
-  text-align: justify;
-  margin-bottom: 14pt;
-}
-
-dt {
-  font-size: 110%;
-  font-family: Courier New;
-  color: #1c3030;
-  padding: 3px;
-  margin-bottom: 3px;
 }
 
 #table-of-contents {
@@ -269,8 +290,11 @@ dt {
   #table-of-contents {
     float: right;
     border: 1px solid #CCC;
-    max-width: 50%;
+    max-width: 75%;
     overflow: auto;
+  }
+  .org-dl > dt {
+    float: none;
   }
 }
 
@@ -510,7 +534,9 @@ ISSN: 2070-1721
 <div class="outline-text-2" id="text-orged22948">
 </div>
 <div id="outline-container-orgfa32f4b" class="outline-3">
-<h3 id="orgfa32f4b">4.1. WWW-Authenticate</h3>
+<h3 id="orgfa32f4b"><a id="ID-22f79cd1-20cc-4ac0-bd68-643e0d51fe7d"></a>4.1. WWW-Authenticate</h3>
+<div class="outline-text-3" id="text-orgfa32f4b">
+</div>
 </div>
 <div id="outline-container-org83ecc17" class="outline-3">
 <h3 id="org83ecc17"><a id="ID-14671c8e-e5a4-4f9d-ad1d-6460328ed7f5"></a>4.2. Authorization</h3>
@@ -518,7 +544,9 @@ ISSN: 2070-1721
 </div>
 </div>
 <div id="outline-container-org440e962" class="outline-3">
-<h3 id="org440e962">4.3. Proxy-Authenticate</h3>
+<h3 id="org440e962"><a id="ID-7f949af1-00e3-4909-adc7-219da68f0457"></a>4.3. Proxy-Authenticate</h3>
+<div class="outline-text-3" id="text-org440e962">
+</div>
 </div>
 <div id="outline-container-org18ce3e0" class="outline-3">
 <h3 id="org18ce3e0"><a id="ID-89c3125a-e7ef-48ea-a2c1-ff4c57214389"></a>4.4. Proxy-Authorization</h3>

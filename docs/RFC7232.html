@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-21 Wed 19:12 -->
+<!-- 2018-11-30 Fri 19:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7232: Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests</title>
@@ -131,24 +131,58 @@ h1.title {
   width: 100%;
 }
 
+.org-ul,
+.org-ol,
+.org-dl,
+.org-dl > dt,
+.org-dl > dd,
 .outline-2 p,
 .outline-2 blockquote,
-.outline-2 ul,
-.outline-2 ol,
-.outline-2 dl,
 .outline-2 table,
 .outline-2 pre {
   margin-top: 0;
   margin-bottom: 16px;
 }
 
-.outline-2 ul,
-.outline-2 ol {
+.org-ul,
+.org-ol,
+.org-dl {
   padding-left: 2em;
+}
+
+.org-dl > dt {
+  float: left;
+  max-width: 40%;
+  margin-bottom: 3px;
+  margin-right: 2em;
+  font-size: 110%;
+  font-family: Courier New;
+  font-weight: bolder;
+  color: #1c3030;
+  clear: left;
+}
+
+.org-dl > dd {
+  text-align: justify;
+  margin-bottom: 14pt;
+  overflow: hidden;
+  clear: right;
 }
 
 table tbody tr:nth-child(odd){
   background-color: #efefef;
+}
+
+.org-center {
+  text-align: center;
+}
+
+.org-left {
+  text-align: left;
+}
+
+.org-right {
+  text-align: right;
 }
 
 pre,
@@ -189,19 +223,6 @@ blockquote {
 .timestamp {
   font-family: Courier New;
   color: #888888;
-}
-
-dd {
-  text-align: justify;
-  margin-bottom: 14pt;
-}
-
-dt {
-  font-size: 110%;
-  font-family: Courier New;
-  color: #1c3030;
-  padding: 3px;
-  margin-bottom: 3px;
 }
 
 #table-of-contents {
@@ -269,8 +290,11 @@ dt {
   #table-of-contents {
     float: right;
     border: 1px solid #CCC;
-    max-width: 50%;
+    max-width: 75%;
     overflow: auto;
+  }
+  .org-dl > dt {
+    float: none;
   }
 }
 
@@ -486,7 +510,9 @@ ISSN: 2070-1721                                                June 2014
 <h3 id="orgf118f79">2.1. Weak versus Strong</h3>
 </div>
 <div id="outline-container-org3974cdd" class="outline-3">
-<h3 id="org3974cdd">2.2. Last-Modified</h3>
+<h3 id="org3974cdd"><a id="ID-9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840"></a>2.2. Last-Modified</h3>
+<div class="outline-text-3" id="text-org3974cdd">
+</div>
 </div>
 <div id="outline-container-org55436d6" class="outline-3">
 <h3 id="org55436d6">2.2.1. Generation</h3>
@@ -495,7 +521,7 @@ ISSN: 2070-1721                                                June 2014
 <h3 id="org21ffbba">2.2.2. Comparison</h3>
 </div>
 <div id="outline-container-orgf0f9907" class="outline-3">
-<h3 id="orgf0f9907">2.3. ETag</h3>
+<h3 id="orgf0f9907"><a id="ID-0244a602-2c4a-46aa-96c4-3bd14c3eb244"></a>2.3. ETag</h3>
 <div class="outline-text-3" id="text-orgf0f9907">
 </div>
 <div id="outline-container-org893de60" class="outline-4">

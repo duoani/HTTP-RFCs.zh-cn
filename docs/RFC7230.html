@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-29 Thu 19:31 -->
+<!-- 2018-11-30 Fri 19:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -510,22 +510,22 @@ for the JavaScript code in this tag.
 <li><a href="#org38d9a36">7. ABNF 列表扩展：#rule（ABNF List Extension: #rule）</a></li>
 <li><a href="#orgef7d4df">8. INAN 注意事项（IANA Considerations）</a>
 <ul>
-<li><a href="#org93bf595">8.1. 头字段注册 (Header Field Registration)</a></li>
-<li><a href="#orgb199c78">8.2. URI 方案注册 (URI Scheme Registration)</a></li>
-<li><a href="#org5c99af6">8.3. 互联网媒体类型注册 (Internet Media Type Registration)</a>
+<li><a href="#orgcb44ff6">8.1. 头字段登记 (Header Field Registration)</a></li>
+<li><a href="#orgc59e234">8.2. URI 方案登记 (URI Scheme Registration)</a></li>
+<li><a href="#org766acbc">8.3. 互联网媒体类型登记 (Internet Media Type Registration)</a>
 <ul>
 <li><a href="#orgd8838e8">8.3.1. Internet Media Type message/http</a></li>
 <li><a href="#org611cc4b">8.3.2. Internet Media Type application/http</a></li>
 </ul>
 </li>
-<li><a href="#org9d01527">8.4. 传输编码注册 (Transfer Coding Registry)</a>
+<li><a href="#org1a055f7">8.4. 传输编码登记 (Transfer Coding Registry)</a>
 <ul>
 <li><a href="#org289cb9a">8.4.1. Procedure</a></li>
 <li><a href="#org746d72e">8.4.2. Registration</a></li>
 </ul>
 </li>
-<li><a href="#org35437a5">8.5. 内容编码注册 (Content Coding Registration)</a></li>
-<li><a href="#org25a7234">8.6. 升级令牌注册 (Upgrade Token Registry)</a>
+<li><a href="#orgd85bb78">8.5. 内容编码登记 (Content Coding Registration)</a></li>
+<li><a href="#org8e8607e">8.6. 升级令牌登记 (Upgrade Token Registry)</a>
 <ul>
 <li><a href="#org7b6d350">8.6.1. Procedure</a></li>
 <li><a href="#org09cbcd3">8.6.2. Upgrade Token Registration</a></li>
@@ -1207,7 +1207,7 @@ This specification targets conformance criteria according to the role of a parti
 </blockquote>
 
 <p>
-本规范旨在为参与 HTTP 通信的角色制定一致性准则。因此，HTTP 对一致性的要求着眼于发送端、接收端、客户端、服务端、用户代理、中间人、源服务器、代理、网关和缓存，取决于哪些行为被要求所约束。附加的要求着眼于实现（implementations）、资源所有者以及应用于超出单一通信时的协议元素注册（protocol element registrations）。
+本规范旨在为参与 HTTP 通信的角色制定一致性准则。因此，HTTP 对一致性的要求着眼于发送端、接收端、客户端、服务端、用户代理、中间人、源服务器、代理、网关和缓存，取决于哪些行为被要求所约束。附加的要求着眼于实现（implementations）、资源所有者以及应用于超出单一通信时的协议元素登记条目（protocol element registrations）。
 </p>
 
 <blockquote>
@@ -1635,7 +1635,7 @@ If the host identifier is provided as an IP address, the origin server is the li
 </blockquote>
 
 <p>
-如果 <code>host</code> 标识符以 IP 地址的形式来提供，表示源服务器就是在那个 IP 地址对应的 TCP 端口的监听器；如果 <code>host</code> 是一个已注册的名称（registered name，可以理解为域名），所谓“已注册的名称”，是一个用于名称解释服务（name resolution service）的间接标识，例如域名系统（DNS）用于查找源服务器的地址；如果 <code>port</code> 子组件为空或未提供，那么 TCP 默认使用 80（WWW 服务的保留端口）端口。
+如果 <code>host</code> 标识符以 IP 地址的形式来提供，表示源服务器就是在那个 IP 地址对应的 TCP 端口的监听器；如果 <code>host</code> 是一个已登记的名称（registered name，可以理解为域名），所谓“已登记的名称”，是一个用于名称解释服务（name resolution service）的间接标识，例如域名系统（DNS）用于查找源服务器的地址；如果 <code>port</code> 子组件为空或未提供，那么 TCP 默认使用 80（WWW 服务的保留端口）端口。
 </p>
 
 <blockquote>
@@ -1938,7 +1938,7 @@ The request methods defined by this specification can be found in Section 4 of [
 </blockquote>
 
 <p>
-本规范所定义的请求方法（request method）连同关于 HTTP 方法注册表（HTTP method registry）以及对于定义新方法的注意事项的相关信息，见<a href="https://tools.ietf.org/html/rfc7231#section-4">【RFC7231】章节 4</a>。
+本规范所定义的请求方法（request method）连同关于 HTTP 方法登记表（HTTP method registry）以及对于定义新方法的注意事项的相关信息，见<a href="https://tools.ietf.org/html/rfc7231#section-4">【RFC7231】章节 4</a>。
 </p>
 
 <blockquote>
@@ -2024,7 +2024,7 @@ The <code>status-code</code> element is a 3-digit integer code describing the re
 </blockquote>
 
 <p>
-状态码 <code>status-code</code> 是一个 3 位整数值，用于描述服务器尝试理解以及满足客户端相应请求的处理结果。接收端应该依据消息的状态码所定义的语义来解释（interprete）消息的剩余部分（即除了状态行以外的部分）。对于状态码的语义的相关信息，包括状态码的分类（由状态码的第一位数字来指定）、本规范所定义的状态码、定义新状态码的注意事项，以及 IANA 注册表，见<a href="https://tools.ietf.org/html/rfc7231#section-6">【RFC7231】章节 6</a>。
+状态码 <code>status-code</code> 是一个 3 位整数值，用于描述服务器尝试理解以及满足客户端相应请求的处理结果。接收端应该依据消息的状态码所定义的语义来解释（interprete）消息的剩余部分（即除了状态行以外的部分）。对于状态码的语义的相关信息，包括状态码的分类（由状态码的第一位数字来指定）、本规范所定义的状态码、定义新状态码的注意事项，以及 IANA 登记表，见<a href="https://tools.ietf.org/html/rfc7231#section-6">【RFC7231】章节 6</a>。
 </p>
 
 <div class="org-src-container">
@@ -2134,7 +2134,7 @@ All defined header fields ought to be registered with <a href="https://www.iana.
 </blockquote>
 
 <p>
-所有已定义的头字段都应该被注册到 IANA 的 "Message Headers" 注册表中，详细描述见【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-8.3">章节 8.3</a>。
+所有已定义的头字段都应该被登记到 IANA 的 "Message Headers" 登记表中，详细描述见【<a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>】<a href="https://tools.ietf.org/html/rfc7231#section-8.3">章节 8.3</a>。
 </p>
 </div>
 </div>
@@ -2254,7 +2254,7 @@ Messages are parsed using a generic algorithm, independent of the individual hea
 </blockquote>
 
 <p>
-消息使用通用的算法进行解析（parse），不依赖个别的头字段名。对一个给定的头字段值里的内容进行解析（parse）会在消息解释（interpretation）的偏后阶段进行，通常在消息的整个头字段块（header section）都已经被处理（process）好之后。因此，本规范不再使用 ABNF 规则去定义每一个头字段“键-值”对（"Field-Name: Field Value" pair），正如上个版本的做法。取而代之的是，本规范使用以每一个已注册的头字段的名称来命名的 ABNF 规则，每个规则里定义了相应的头字段所对应的字段值（也就是说，通过一个通用头字段解析器从消息头部中抽取出 <code>field-value</code> 以后的内容）的合法语法。
+消息使用通用的算法进行解析（parse），不依赖个别的头字段名。对一个给定的头字段值里的内容进行解析（parse）会在消息解释（interpretation）的偏后阶段进行，通常在消息的整个头字段块（header section）都已经被处理（process）好之后。因此，本规范不再使用 ABNF 规则去定义每一个头字段“键-值”对（"Field-Name: Field Value" pair），正如上个版本的做法。取而代之的是，本规范使用以每一个已登记的头字段的名称来命名的 ABNF 规则，每个规则里定义了相应的头字段所对应的字段值（也就是说，通过一个通用头字段解析器从消息头部中抽取出 <code>field-value</code> 以后的内容）的合法语法。
 </p>
 
 <blockquote>
@@ -3016,7 +3016,7 @@ All transfer-coding names are case-insensitive and ought to be registered within
 </blockquote>
 
 <p>
-所有 <code>transfer-coding</code> 的名称都是不区分大小写的，并且应该被注册在 "HTTP Transfer Coding" 注册表中，定义在<a href="#org9d01527">章节 8.4</a> 中。它们用在消息域 <code>TE</code> （<a href="#org93513ff">章节 4.3</a>）和 <code>Transfer-Encoding</code> （<a href="#org209c019">章节 3.3.1</a>）里。
+所有 <code>transfer-coding</code> 的名称都是不区分大小写的，并且应该被登记在 "HTTP Transfer Coding" 登记表中，定义在<a href="#org1a055f7">章节 8.4</a> 中。它们用在消息域 <code>TE</code> （<a href="#org93513ff">章节 4.3</a>）和 <code>Transfer-Encoding</code> （<a href="#org209c019">章节 3.3.1</a>）里。
 </p>
 </div>
 
@@ -5025,12 +5025,12 @@ The <code>Upgrade</code> header field only applies to switching protocols on top
 
 <blockquote>
 <p>
-This specification only defines the protocol name "HTTP" for use by the family of Hypertext Transfer Protocols, as defined by the HTTP version rules of <a href="#orge5e3158">Section 2.6</a> and future updates to this specification. Additional tokens ought to be registered with IANA using the registration procedure defined in <a href="#org25a7234">Section 8.6</a>.
+This specification only defines the protocol name "HTTP" for use by the family of Hypertext Transfer Protocols, as defined by the HTTP version rules of <a href="#orge5e3158">Section 2.6</a> and future updates to this specification. Additional tokens ought to be registered with IANA using the registration procedure defined in <a href="#org8e8607e">Section 8.6</a>.
 </p>
 </blockquote>
 
 <p>
-按照<a href="#orge5e3158">章节 2.6</a> 中 HTTP 版本规则所定义的，以及将来对本规范的更新，本规范仅定义提供给超文传输协议家族使用的的协议名称 "HTTP"。更多的标记应该使用定义在<a href="#org25a7234">章节 8.6</a> 的注册手续到 IANA 进行注册。
+按照<a href="#orge5e3158">章节 2.6</a> 中 HTTP 版本规则所定义的，以及将来对本规范的更新，本规范仅定义提供给超文传输协议家族使用的的协议名称 "HTTP"。更多的标记应该使用定义在<a href="#org8e8607e">章节 8.6</a> 的登记手续到 IANA 进行登记。
 </p>
 </div>
 </div>
@@ -5185,9 +5185,9 @@ In contrast, the following values would be invalid, since at least one non-empty
 <h2 id="orgef7d4df">8. INAN 注意事项（IANA Considerations）</h2>
 <div class="outline-text-2" id="text-orgef7d4df">
 </div>
-<div id="outline-container-org93bf595" class="outline-3">
-<h3 id="org93bf595"><a id="ID-739d5a3f-9ed6-4667-9ac5-d0ab49951177"></a>8.1. 头字段注册 (Header Field Registration)</h3>
-<div class="outline-text-3" id="text-org93bf595">
+<div id="outline-container-orgcb44ff6" class="outline-3">
+<h3 id="orgcb44ff6"><a id="ID-739d5a3f-9ed6-4667-9ac5-d0ab49951177"></a>8.1. 头字段登记 (Header Field Registration)</h3>
+<div class="outline-text-3" id="text-orgcb44ff6">
 <blockquote>
 <p>
 HTTP header fields are registered within the "Message Headers" registry maintained at <a href="http://www.iana.org/assignments/message-headers/">http://www.iana.org/assignments/message-headers/</a>.
@@ -5310,7 +5310,7 @@ Furthermore, the header field-name "Close" has been registered as "reserved", si
 <td class="org-left">Close</td>
 <td class="org-left">http</td>
 <td class="org-left">reserved</td>
-<td class="org-left"><a href="#org93bf595">Section 8.1</a></td>
+<td class="org-left"><a href="#orgcb44ff6">Section 8.1</a></td>
 </tr>
 </tbody>
 </table>
@@ -5323,9 +5323,9 @@ The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Forc
 </div>
 </div>
 
-<div id="outline-container-orgb199c78" class="outline-3">
-<h3 id="orgb199c78">8.2. URI 方案注册 (URI Scheme Registration)</h3>
-<div class="outline-text-3" id="text-orgb199c78">
+<div id="outline-container-orgc59e234" class="outline-3">
+<h3 id="orgc59e234">8.2. URI 方案登记 (URI Scheme Registration)</h3>
+<div class="outline-text-3" id="text-orgc59e234">
 <blockquote>
 <p>
 IANA maintains the registry of URI Schemes [BCP115] at <a href="http://www.iana.org/assignments/uri-schemes/">http://www.iana.org/assignments/uri-schemes/</a>.
@@ -5372,9 +5372,9 @@ This document defines the following URI schemes, so the "Permanent URI Schemes" 
 </div>
 </div>
 
-<div id="outline-container-org5c99af6" class="outline-3">
-<h3 id="org5c99af6">8.3. 互联网媒体类型注册 (Internet Media Type Registration)</h3>
-<div class="outline-text-3" id="text-org5c99af6">
+<div id="outline-container-org766acbc" class="outline-3">
+<h3 id="org766acbc">8.3. 互联网媒体类型登记 (Internet Media Type Registration)</h3>
+<div class="outline-text-3" id="text-org766acbc">
 <blockquote>
 <p>
 IANA maintains the registry of Internet media types [BCP13] at <a href="http://www.iana.org/assignments/media-types">http://www.iana.org/assignments/media-types</a>.
@@ -5461,9 +5461,9 @@ Change controller: IESG
 </div>
 </div>
 </div>
-<div id="outline-container-org9d01527" class="outline-3">
-<h3 id="org9d01527"><a id="ID-DA2ABD5F-DFF0-408B-93D4-73D21E20B3CF"></a>8.4. 传输编码注册 (Transfer Coding Registry)</h3>
-<div class="outline-text-3" id="text-org9d01527">
+<div id="outline-container-org1a055f7" class="outline-3">
+<h3 id="org1a055f7"><a id="ID-DA2ABD5F-DFF0-408B-93D4-73D21E20B3CF"></a>8.4. 传输编码登记 (Transfer Coding Registry)</h3>
+<div class="outline-text-3" id="text-org1a055f7">
 <blockquote>
 <p>
 The "HTTP Transfer Coding Registry" defines the namespace for transfer coding names. It is maintained at <a href="http://www.iana.org/assignments/http-parameters">http://www.iana.org/assignments/http-parameters</a>.
@@ -5574,9 +5574,9 @@ The "HTTP Transfer Coding Registry" has been updated with the registrations belo
 </div>
 </div>
 
-<div id="outline-container-org35437a5" class="outline-3">
-<h3 id="org35437a5">8.5. 内容编码注册 (Content Coding Registration)</h3>
-<div class="outline-text-3" id="text-org35437a5">
+<div id="outline-container-orgd85bb78" class="outline-3">
+<h3 id="orgd85bb78">8.5. 内容编码登记 (Content Coding Registration)</h3>
+<div class="outline-text-3" id="text-orgd85bb78">
 <blockquote>
 <p>
 IANA maintains the "HTTP Content Coding Registry" at <a href="http://www.iana.org/assignments/http-parameters">http://www.iana.org/assignments/http-parameters</a>.
@@ -5641,9 +5641,9 @@ The "HTTP Content Coding Registry" has been updated with the registrations below
 </div>
 </div>
 
-<div id="outline-container-org25a7234" class="outline-3">
-<h3 id="org25a7234"><a id="ID-0f7982b5-e447-4406-ae69-4f389768f50b"></a>8.6. 升级令牌注册 (Upgrade Token Registry)</h3>
-<div class="outline-text-3" id="text-org25a7234">
+<div id="outline-container-org8e8607e" class="outline-3">
+<h3 id="org8e8607e"><a id="ID-0f7982b5-e447-4406-ae69-4f389768f50b"></a>8.6. 升级令牌登记 (Upgrade Token Registry)</h3>
+<div class="outline-text-3" id="text-org8e8607e">
 <blockquote>
 <p>
 The "Hypertext Transfer Protocol (HTTP) Upgrade Token Registry" defines the namespace for protocol-name tokens used to identify protocols in the Upgrade header field. The registry is maintained at <a href="http://www.iana.org/assignments/http-upgrade-tokens">http://www.iana.org/assignments/http-upgrade-tokens</a>.
@@ -5784,7 +5784,7 @@ When a registered name is used in the <code>authority</code> component, the "htt
 </blockquote>
 
 <p>
-当某个注册名称用在 <code>authority</code> 组件中的时候，"http" URI 方案（<a href="#org72dfe0e">章节 2.7.1</a>）依靠用户的本地名称解析服务来确定哪里能够找到权威响应（authoritative responses）。这意味着任何对于用户的网络主机映射表（network host table）、缓存名称，或者名称解析库的攻击都会成为一个攻击确立权威的隐患。同样，用户选择哪一个服务器用于域名解析服务（domain name service, DNS），以及其获取域名解析结果的服务器所在层级，都有可能影响到地址映射的可靠性。DNS 安全性扩展（DNSSEC，DNS Security Extensions，【<a href="https://tools.ietf.org/html/rfc4033">RFC4033</a>】）是一种提高可靠性的方式。
+当某个已登记的名称用在 <code>authority</code> 组件中的时候，"http" URI 方案（<a href="#org72dfe0e">章节 2.7.1</a>）依靠用户的本地名称解析服务来确定哪里能够找到权威响应（authoritative responses）。这意味着任何对于用户的网络主机映射表（network host table）、缓存名称，或者名称解析库的攻击都会成为一个攻击确立权威的隐患。同样，用户选择哪一个服务器用于域名解析服务（domain name service, DNS），以及其获取域名解析结果的服务器所在层级，都有可能影响到地址映射的可靠性。DNS 安全性扩展（DNSSEC，DNS Security Extensions，【<a href="https://tools.ietf.org/html/rfc4033">RFC4033</a>】）是一种提高可靠性的方式。
 </p>
 
 <blockquote>
@@ -6531,22 +6531,22 @@ Empty list elements in list productions (e.g., a list header field containing ",
 
 <blockquote>
 <p>
-Registration of Transfer Codings now requires IETF Review (<a href="#org9d01527">Section 8.4</a>)
+Registration of Transfer Codings now requires IETF Review (<a href="#org1a055f7">Section 8.4</a>)
 </p>
 </blockquote>
 
 <p>
-注册传输编码值（transfer codings）现在需要经过 IETF 的复审。（<a href="#org9d01527">章节 8.4</a>）
+登记传输编码值（transfer codings）现在需要经过 IETF 的复审。（<a href="#org1a055f7">章节 8.4</a>）
 </p>
 
 <blockquote>
 <p>
-This specification now defines the Upgrade Token Registry, previously defined in Section 7.2 of [RFC2817]. (<a href="#org25a7234">Section 8.6</a>)
+This specification now defines the Upgrade Token Registry, previously defined in Section 7.2 of [RFC2817]. (<a href="#org8e8607e">Section 8.6</a>)
 </p>
 </blockquote>
 
 <p>
-本规范现在定义了升级标记注册表（Upgrade Token Registry），之前是定义在<a href="https://tools.ietf.org/html/rfc2817#section-7.2">【RFC2817】章节 7.2</a> 里的。（<a href="#org25a7234">章节 8.6</a>）
+本规范现在定义了升级标记登记表（Upgrade Token Registry），之前是定义在<a href="https://tools.ietf.org/html/rfc2817#section-7.2">【RFC2817】章节 7.2</a> 里的。（<a href="#org8e8607e">章节 8.6</a>）
 </p>
 
 <blockquote>

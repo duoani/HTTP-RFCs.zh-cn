@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-29 Thu 19:31 -->
+<!-- 2018-11-30 Fri 19:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -587,30 +587,30 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#orgb1bfeaa">8. IANA 注意事项 / IANA Considerations</a>
 <ul>
-<li><a href="#org04dcb6c">8.1. 方法注册表 / Method Registry</a>
+<li><a href="#orgc54a2b7">8.1. 方法登记表 / Method Registry</a>
 <ul>
-<li><a href="#orgbd9a42f">8.1.1. Procedure</a></li>
-<li><a href="#orgba5b1d5">8.1.2. Considerations for New Methods</a></li>
-<li><a href="#org4689641">8.1.3. Registrations</a></li>
+<li><a href="#org7807fe8">8.1.1. 手续 / Procedure</a></li>
+<li><a href="#org26be609">8.1.2. 新方法的注意事项 / Considerations for New Methods</a></li>
+<li><a href="#orgcbba20f">8.1.3. 登记 / Registrations</a></li>
 </ul>
 </li>
-<li><a href="#orgbd7074f">8.2. 状态码注册表 / Status Code Registry</a>
+<li><a href="#org71363a7">8.2. 状态码登记表 / Status Code Registry</a>
 <ul>
-<li><a href="#org97fd11b">8.2.1. Procedure</a></li>
-<li><a href="#org0c87ec2">8.2.2. Considerations for New Status Codes</a></li>
-<li><a href="#org091139b">8.2.3. Registrations</a></li>
+<li><a href="#org50facc1">8.2.1. 手续 / Procedure</a></li>
+<li><a href="#org98b6801">8.2.2. 新状态码的注意事项 / Considerations for New Status Codes</a></li>
+<li><a href="#org2c35351">8.2.3. 登记 / Registrations</a></li>
 </ul>
 </li>
-<li><a href="#org623103b">8.3. 头字段注册表 / Header Field Registry</a>
+<li><a href="#org3d9574e">8.3. 头字段登记表 / Header Field Registry</a>
 <ul>
-<li><a href="#org97979b4">8.3.1. Considerations for New Header Fields</a></li>
-<li><a href="#orgc14b9da">8.3.2. Registrations</a></li>
+<li><a href="#orgdd29cdd">8.3.1. 新头字段的注意事项 / Considerations for New Header Fields</a></li>
+<li><a href="#orgd7b571e">8.3.2. 登记 / Registrations</a></li>
 </ul>
 </li>
-<li><a href="#orgb8f27ff">8.4. 内容编码值注册表 / Content Coding Registry</a>
+<li><a href="#orgbeb299d">8.4. 内容编码值登记表 / Content Coding Registry</a>
 <ul>
-<li><a href="#org1c5ac4f">8.4.1. Procedure</a></li>
-<li><a href="#orgbee91f3">8.4.2. Registrations</a></li>
+<li><a href="#org757b27b">8.4.1. 手续 / Procedure</a></li>
+<li><a href="#org5565efd">8.4.2. 登记 / Registrations</a></li>
 </ul>
 </li>
 </ul>
@@ -940,7 +940,7 @@ The following header fields convey representation metadata:
 </blockquote>
 
 <p>
-以下头字段负责传达<ruby>表示形式元数据<rt>representation metadata</rt></ruby>：
+以下头字段负责运载<ruby>表示形式元数据<rt>representation metadata</rt></ruby>：
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1027,7 +1027,7 @@ The <code>type</code>, <code>subtype</code>, and <code>parameter name</code> tok
 </blockquote>
 
 <p>
-上面 ABNF 列出的规则里，<code>type</code>、<code>subtype</code> 以及 <code>parameter</code> 的 <code>name</code> 这三个 token（标记）是不区分大小写的。<code>parameter</code> 的 <code>value</code> 不一定区分大小写，取决于 <code>parameter</code> 的 <code>name</code> 的语义。一个 <code>parameter</code> 的出现与否可能会对一个媒体类型的处理有重要意义，取决于该 <code>parameter</code> 在<ruby>媒体类型注册表<rt>media type registry</rt></ruby>里的定义。
+上面 ABNF 列出的规则里，<code>type</code>、<code>subtype</code> 以及 <code>parameter</code> 的 <code>name</code> 这三个 token（标记）是不区分大小写的。<code>parameter</code> 的 <code>value</code> 不一定区分大小写，取决于 <code>parameter</code> 的 <code>name</code> 的语义。一个 <code>parameter</code> 的出现与否可能会对一个媒体类型的处理有重要意义，取决于该 <code>parameter</code> 在<ruby>媒体类型登记表<rt>media type registry</rt></ruby>里的定义。
 </p>
 
 <blockquote>
@@ -1060,7 +1060,7 @@ Internet media types ought to be registered with IANA according to the procedure
 </blockquote>
 
 <p>
-应该按照<a href="https://tools.ietf.org/html/rfc6838">【BCP13】</a>所定义的流程，将<ruby>互联网媒体类型<rt>Internet media types</rt></ruby>注册在 IANA 里。
+应该按照<a href="https://tools.ietf.org/html/rfc6838">【BCP13】</a>所定义的手续，将<ruby>互联网媒体类型<rt>Internet media types</rt></ruby>登记在 IANA 里。
 </p>
 
 <blockquote>
@@ -1100,7 +1100,7 @@ Charset names ought to be registered in the IANA "Character Sets" registry (<a h
 </blockquote>
 
 <p>
-应该按照定义在<a href="https://tools.ietf.org/html/rfc2978">【RFC2978】</a>的流程，将<ruby>字符集名称<rt>charset names</rt></ruby>注册在 IANA 的 "Character Sets" 注册表里。
+应该按照定义在<a href="https://tools.ietf.org/html/rfc2978">【RFC2978】</a>的手续，将<ruby>字符集名称<rt>charset names</rt></ruby>登记在 IANA 的 "Character Sets" 登记表里。
 </p>
 </div>
 </div>
@@ -1115,7 +1115,7 @@ Internet media types are registered with a canonical form in order to be interop
 </blockquote>
 
 <p>
-<ruby>互联网媒体类型<rt>Internet media types</rt></ruby>是使用一种<ruby>规范形式<rt>canonical form</rt></ruby>来注册的，以便于在具有不同本地编码格式的系统之间能够相互操作。经由 HTTP 来选择或传输的<ruby>资源表示形式<rt>representations</rt></ruby>应该使用规范形式，其原因已经在<ruby>多用途互联网邮件扩展<rt>Multipurpose Internet Mail Extensions</rt></ruby>（MIME）【<a href="https://tools.ietf.org/html/rfc2045">RFC2045</a>】里描述过了。然而，电子邮件调度（即存储和转发消息到其他对方）的性能特征跟在 HTTP 和 Web（其于服务器的信息服务）中通用的性能特征有明显的区别。此外，在 MIME 里为了兼容旧的邮件传输协议所设计的约束并不适用于 HTTP（见<a href="#orgc9f7ec8">附录 A</a>）。
+<ruby>互联网媒体类型<rt>Internet media types</rt></ruby>是使用一种<ruby>规范形式<rt>canonical form</rt></ruby>来登记的，以便于在具有不同本地编码格式的系统之间能够相互操作。经由 HTTP 来选择或传输的<ruby>资源表示形式<rt>representations</rt></ruby>应该使用规范形式，其原因已经在<ruby>多用途互联网邮件扩展<rt>Multipurpose Internet Mail Extensions</rt></ruby>（MIME）【<a href="https://tools.ietf.org/html/rfc2045">RFC2045</a>】里描述过了。然而，电子邮件调度（即存储和转发消息到其他对方）的性能特征跟在 HTTP 和 Web（其于服务器的信息服务）中通用的性能特征有明显的区别。此外，在 MIME 里为了兼容旧的邮件传输协议所设计的约束并不适用于 HTTP（见<a href="#orgc9f7ec8">附录 A</a>）。
 </p>
 
 <blockquote>
@@ -1271,12 +1271,12 @@ content coding 的值指明了一种已经或能够应用到一个<ruby>表示�
 
 <blockquote>
 <p>
-All content-coding values are case-insensitive and ought to be registered within the "HTTP Content Coding Registry", as defined in <a href="#orgb8f27ff">Section 8.4</a>. They are used in the <code>Accept-Encoding</code> (<a href="#org6451ddf">Section 5.3.4</a>) and <code>Content-Encoding</code> (<a href="#org17a1ce7">Section 3.1.2.2</a>) header fields.
+All content-coding values are case-insensitive and ought to be registered within the "HTTP Content Coding Registry", as defined in <a href="#orgbeb299d">Section 8.4</a>. They are used in the <code>Accept-Encoding</code> (<a href="#org6451ddf">Section 5.3.4</a>) and <code>Content-Encoding</code> (<a href="#org17a1ce7">Section 3.1.2.2</a>) header fields.
 </p>
 </blockquote>
 
 <p>
-所有 <code>content-coding</code> 的值都是不区分大小写的，并且应该注册到 "HTTP Content Coding Registry" 注册表里，如<a href="#orgb8f27ff">章节 8.4</a> 所述。它们用在 <code>Accept-Encoding</code> （<a href="#org6451ddf">章节 5.3.4</a>）和 <code>Content-Encoding</code> （<a href="#org17a1ce7">章节 3.1.2.2</a>）头字段里。
+所有 <code>content-coding</code> 的值都是不区分大小写的，并且应该登记到 "HTTP Content Coding Registry" 登记表里，如<a href="#orgbeb299d">章节 8.4</a> 所述。它们用在 <code>Accept-Encoding</code> （<a href="#org6451ddf">章节 5.3.4</a>）和 <code>Content-Encoding</code> （<a href="#org17a1ce7">章节 3.1.2.2</a>）头字段里。
 </p>
 
 <blockquote>
@@ -1794,7 +1794,7 @@ When responses convey payload information, whether indicating a success or an er
 </blockquote>
 
 <p>
-响应在传达有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器。也就是说，在所有可用的<ruby>表示形式<rt>representations</rt></ruby>中，究竟响应哪一种<ruby>表示形式<rt>representation</rt></ruby>才是最合适的。出于上述原因，HTTP 提供了<ruby>内容协商<rt>content negotiation</rt></ruby>的机制。
+响应在运载有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器。也就是说，在所有可用的<ruby>表示形式<rt>representations</rt></ruby>中，究竟响应哪一种<ruby>表示形式<rt>representation</rt></ruby>才是最合适的。出于上述原因，HTTP 提供了<ruby>内容协商<rt>content negotiation</rt></ruby>的机制。
 </p>
 
 <blockquote>
@@ -2091,12 +2091,12 @@ All general-purpose servers <b>MUST</b> support the methods GET and HEAD. All ot
 
 <blockquote>
 <p>
-Additional methods, outside the scope of this specification, have been standardized for use in HTTP. All such methods ought to be registered within the "Hypertext Transfer Protocol (HTTP) Method Registry" maintained by IANA, as defined in <a href="#org04dcb6c">Section 8.1</a>.
+Additional methods, outside the scope of this specification, have been standardized for use in HTTP. All such methods ought to be registered within the "Hypertext Transfer Protocol (HTTP) Method Registry" maintained by IANA, as defined in <a href="#orgc54a2b7">Section 8.1</a>.
 </p>
 </blockquote>
 
 <p>
-超出本规范所定义的额外方法，它们在 HTTP 的使用方式已经被标准化。应该把所有这些方法注册在由 IANA 维护的 "Hypertext Transfer Protocol (HTTP) Method Registry" 注册表中，其定义见<a href="#org04dcb6c">章节 8.1</a>。
+超出本规范所定义的额外方法，它们在 HTTP 的使用方式已经被标准化。应该把所有这些方法登记在由 IANA 维护的 "Hypertext Transfer Protocol (HTTP) Method Registry" 登记表中，其定义见<a href="#orgc54a2b7">章节 8.1</a>。
 </p>
 
 <blockquote>
@@ -2187,7 +2187,7 @@ When a resource is constructed such that parameters within the effective request
 </div>
 
 <div id="outline-container-orgf6e425a" class="outline-4">
-<h4 id="orgf6e425a">4.2.2. 幂等方法 / Idempotent Methods</h4>
+<h4 id="orgf6e425a"><a id="ID-6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f"></a>4.2.2. 幂等方法 / Idempotent Methods</h4>
 <div class="outline-text-4" id="text-orgf6e425a">
 <blockquote>
 <p>
@@ -2228,7 +2228,7 @@ Idempotent methods are distinguished because the request can be repeated automat
 </div>
 
 <div id="outline-container-org1aba746" class="outline-4">
-<h4 id="org1aba746">4.2.3. 可缓存方法 / Cacheable Methods</h4>
+<h4 id="org1aba746"><a id="ID-47bc2f73-8c50-4ca2-a875-4f2cbd297e98"></a>4.2.3. 可缓存方法 / Cacheable Methods</h4>
 <div class="outline-text-4" id="text-org1aba746">
 <blockquote>
 <p>
@@ -3573,7 +3573,7 @@ Each <code>media-range</code> might be followed by zero or more applicable media
 </blockquote>
 
 <p>
-<b>注意：</b> 之所以使用 "q" 参数名来分隔媒体参数与扩展参数是出于<ruby>历史实践<rt>historical practice</rt></ruby>的原因。虽然这样做导致了 "q" 这个名字不能用来作为一个媒体类型的范围——基于 IANA 媒体类型注册表里的没有注册任何 "q" 参数，以及在 <code>Accept</code> 里极少使用媒体类型参数这些事实，相信不太可能会发生这种情况。将来新增的媒体类型会被劝阻注册任何命名为 "q" 的参数。
+<b>注意：</b> 之所以使用 "q" 参数名来分隔媒体参数与扩展参数是出于<ruby>历史实践<rt>historical practice</rt></ruby>的原因。虽然这样做导致了 "q" 这个名字不能用来作为一个媒体类型的范围——基于 IANA 媒体类型登记表里的没有登记任何 "q" 参数，以及在 <code>Accept</code> 里极少使用媒体类型参数这些事实，相信不太可能会发生这种情况。将来新增的媒体类型会被劝阻登记任何命名为 "q" 的参数。
 </p>
 
 <blockquote>
@@ -4304,7 +4304,7 @@ The "User-Agent" header field contains information about the user agent originat
 </blockquote>
 
 <p>
-<code>User-Agent</code> 头字段包含了<ruby>发起请求<rt>originating the request</rt></ruby>的用户代理的相关信息。<code>User-Agent</code> 常被服务器用来帮助识别报告出互操作性问题的范围，<ruby>变通<rt>work around</rt></ruby>或<ruby>调整<rt>tailor</rt></ruby>响应以避免个别用户代理的限制，以及分析浏览器或操作系统的使用情况等。用户代理 <b>应当</b> 在每个请求里包含一个 <code>User-Agent</code> 头字段，除非被明确配置为不要这样做。
+<code>User-Agent</code> 头字段包含了<ruby>发起请求<rt>originating the request</rt></ruby>的用户代理的相关信息。<code>User-Agent</code> 常被服务器用来帮助识别报告出互操作问题的范围，<ruby>变通<rt>work around</rt></ruby>或<ruby>调整<rt>tailor</rt></ruby>响应以避免个别用户代理的限制，以及分析浏览器或操作系统的使用情况等。用户代理 <b>应当</b> 在每个请求里包含一个 <code>User-Agent</code> 头字段，除非被明确配置为不要这样做。
 </p>
 
 <div class="org-src-container">
@@ -4314,12 +4314,12 @@ The "User-Agent" header field contains information about the user agent originat
 
 <blockquote>
 <p>
-The <code>User-Agent</code> field-value consists of one or more product identifiers, each followed by zero or more comments (<a href="RFC7230.html#ID-a6c4dceb-8a19-4799-a39b-b7240755c672">Section 3.2</a> of [RFC7230]), which together identify the user agent software and its significant subproducts. By convention, the product identifiers are listed in decreasing order of their significance for identifying the user agent software. Each product identifier consists of a name and optional version.
+The <code>User-Agent</code> field-value consists of one or more <code>product</code> identifiers, each followed by zero or more comments (<a href="RFC7230.html#ID-a6c4dceb-8a19-4799-a39b-b7240755c672">Section 3.2</a> of [RFC7230]), which together identify the user agent software and its significant subproducts. By convention, the <code>product</code> identifiers are listed in decreasing order of their significance for identifying the user agent software. Each <code>product</code> identifier consists of a name and optional version.
 </p>
 </blockquote>
 
 <p>
-<code>User-Agent</code> 的字段值由一个或多个<ruby>产品标识符<rt>product identifiers</rt></ruby>组成，每个产品标识符后面跟随零个或多个注释（<a href="RFC7230.html#ID-a6c4dceb-8a19-4799-a39b-b7240755c672">【RFC7230】章节 3.2</a>），它们一起标识了该用户代理软件以及它的重要的<ruby>子产品<rt>subproducts</rt></ruby>。按照惯例，这些产品标识符是按其标识用户代理软件的重要性的降序顺序排列的。每个产品标识符由一个名称和一个可选的版本组成。
+<code>User-Agent</code> 的字段值由一个或多个 <code>product</code> 标识符构成，每个 <code>product</code> 后面跟随着零个或多个 <code>comment</code> 注释（<a href="RFC7230.html#ID-a6c4dceb-8a19-4799-a39b-b7240755c672">【RFC7230】章节 3.2</a>），它们一起标识了该用户代理软件以及它的重要的<ruby>子产品<rt>subproducts</rt></ruby>。按照惯例，这些 <code>product</code> 标识符是按其标识用户代理软件的重要性的降序顺序排列的。每个 <code>product</code> 标识符由一个名称和一个可选的版本构成。
 </p>
 
 <div class="org-src-container">
@@ -4330,12 +4330,12 @@ product-version = token
 
 <blockquote>
 <p>
-A sender <b>SHOULD</b> limit generated product identifiers to what is necessary to identify the product; a sender <b>MUST NOT</b> generate advertising or other nonessential information within the product identifier. A sender <b>SHOULD NOT</b> generate information in <code>product-version</code> that is not a version identifier (i.e., successive versions of the same product name ought to differ only in the <code>product-version</code> portion of the product identifier).
+A sender <b>SHOULD</b> limit generated <code>product</code> identifiers to what is necessary to identify the product; a sender <b>MUST NOT</b> generate advertising or other nonessential information within the product identifier. A sender <b>SHOULD NOT</b> generate information in <code>product-version</code> that is not a <code>version</code> identifier (i.e., successive versions of the same product name ought to differ only in the <code>product-version</code> portion of the <code>product</code> identifier).
 </p>
 </blockquote>
 
 <p>
-发送端 <b>应当</b> 将所生成的产品标识符限制为必要于标识该产品的那些标识符。发送端 <b>禁止</b> 将广告或其他非本质信息生成到产品标识符内部。发送端 <b>不应当</b> 将非版本标识符的信息生成到 <code>product-version</code> 内部（也就是说，同一个产品名称的连续版本之间区别应该仅在于产品标识符的 <code>product-version</code> 部分）。
+发送端 <b>应当</b> 将所生成的 <code>product</code> 标识符限制为必要于标识该产品的那些标识符。发送端 <b>禁止</b> 将广告或其他非本质信息生成到 <code>product</code> 标识符内部。发送端 <b>不应当</b> 将不是一个 <code>version</code> 标识符的信息生成到 <code>product-version</code> 内部（也就是说，同一个产品名称的连续版本之间区别应该仅在于 <code>product</code> 标识符的 <code>product-version</code> 部分）。
 </p>
 
 <blockquote>
@@ -4359,12 +4359,12 @@ A user agent <b>SHOULD NOT</b> generate a <code>User-Agent</code> field containi
 </blockquote>
 
 <p>
-用户代理 <b>不应当</b> 生成一个包含不必要的<ruby>细粒度详尽信息<rt>fine-grained detail</rt></ruby> 的 <code>User-Agent</code> 头字段，同时，<b>应当</b> 限制被第三方添加子产品到该字段中。太过长或详尽的 <code>User-Agent</code> 字段值会加大请求的延迟以及违背用户意愿而被识别出（“<ruby>指纹识别<rt>fingerprinting</rt></ruby>”）的风险。
+用户代理 <b>不应当</b> 生成一个包含不必要的<ruby>细粒度详尽信息<rt>fine-grained detail</rt></ruby>的 <code>User-Agent</code> 头字段，同时，<b>应当</b> 限制被第三方添加子产品到该字段中。太过长或详尽的 <code>User-Agent</code> 字段值会加大请求的延迟，以及违背用户意愿而被识别出（“<ruby>指纹识别<rt>fingerprinting</rt></ruby>”）的风险。
 </p>
 
 <blockquote>
 <p>
-Likewise, implementations are encouraged not to use the product tokens of other implementations in order to declare compatibility with them, as this circumvents the purpose of the field. If a user agent masquerades as a different user agent, recipients can assume that the user intentionally desires to see responses tailored for that identified user agent, even if they might not work as well for the actual user agent being used.
+Likewise, implementations are encouraged not to use the <code>product</code> tokens of other implementations in order to declare compatibility with them, as this circumvents the purpose of the field. If a user agent masquerades as a different user agent, recipients can assume that the user intentionally desires to see responses tailored for that identified user agent, even if they might not work as well for the actual user agent being used.
 </p>
 </blockquote>
 
@@ -4396,7 +4396,7 @@ HTTP status codes are extensible. HTTP clients are not required to understand th
 </blockquote>
 
 <p>
-HTTP 状态码是<ruby>可扩展的<rt>extensible</rt></ruby>。不要求 HTTP 客户端去理解所有已注册的状态码的意义，虽然这种理解明显是很值得的。但是，客户端 <b>必须</b> 理解所有状态码的种类，这些类型是由状态码的第一位数字来指明的。而且，客户端 <b>必须</b> 将它<ruby>无法识别的<rt>unrecoginized</rt></ruby>状态码当作等同于它的种类的 <code>x00</code> 状态码来对待，不过有一个区别是接收端 <b>禁止</b> 缓存带有它无法识别的状态码的响应。
+HTTP 状态码是<ruby>可扩展的<rt>extensible</rt></ruby>。不要求 HTTP 客户端去理解所有已登记的状态码的意义，虽然这种理解明显是很值得的。但是，客户端 <b>必须</b> 理解所有状态码的种类，这些类型是由状态码的第一位数字来指明的。而且，客户端 <b>必须</b> 将它<ruby>无法识别的<rt>unrecoginized</rt></ruby>状态码当作等同于它的种类的 <code>x00</code> 状态码来对待，不过有一个区别是接收端 <b>禁止</b> 缓存带有它无法识别的状态码的响应。
 </p>
 
 <blockquote>
@@ -4733,7 +4733,7 @@ Note that this list is not exhaustive — it does not include extension status c
 </blockquote>
 
 <p>
-需要注意的是上述列表并不完整的，它并没有包含定义在其他规范里的扩展状态码。完整的状态码列表由 IANA 所维护。详情见<a href="#orgbd7074f">章节 8.2</a>。
+需要注意的是上述列表并不完整的，它并没有包含定义在其他规范里的扩展状态码。完整的状态码列表由 IANA 所维护。详情见<a href="#org71363a7">章节 8.2</a>。
 </p>
 </div>
 </div>
@@ -5941,7 +5941,7 @@ Although each response header field has a defined meaning, in general, the preci
 </blockquote>
 
 <p>
-虽然每种响应头字段都定义了含义，但通常情况下，更精确的语义可能经由<ruby>请求方法<rt>request method</rt></ruby>以及（或者）<ruby>响应状态码<rt>response status code</rt></ruby>来进一步精炼。
+虽然每种响应头字段都定义了含义，但通常情况下，更精确的语义可能经由<ruby>请求方法<rt>request method</rt></ruby>以及（或者）<ruby>响应状态码<rt>response status code</rt></ruby>来进一步优化。
 </p>
 </div>
 
@@ -6192,13 +6192,13 @@ Recipients of a timestamp value in <code>rfc850-date</code> format, which uses a
 </blockquote>
 
 <p>
-<code>rfc850-date</code> 格式的时间戳使用两位数字来表示年份，如果接收端接收到一个 <code>rfc850-date</code> 格式的时间戳，<b>必须</b> 将时间戳里看起来像是未来 50 年以上的年份为过去最近具有这两位数字相同的年份。 
+<code>rfc850-date</code> 格式的时间戳使用两位数字来表示年份，如果接收端接收到一个 <code>rfc850-date</code> 格式的时间戳，<b>必须</b> 将时间戳里看起来像是未来 50 年以上的年份作为过去最近具有这两位数字相同的年份来对待。 
 </p>
 
 <blockquote>
 <p>
 译注：
-由于两位数字表示的年份无法表现出世纪，因此，要将一个 2 位数字表示的年份转换为 4 位数字表示的年份时可将这个 2 位数字的年份限定在距今前后 50 年内。如果这 2 位数比当前年的差超过 50 年，则认为是过去时间。
+由于 2 位数字表示的年份无法表现出世纪，因此，要将一个 2 位数字表示的年份转换为 4 位数字表示的年份时可将这个 2 位数字的年份限定在距今前后 50 年内。如果这 2 位数与当前年的差超过 50 年，则认为是过去时间。
 </p>
 
 <p>
@@ -6208,8 +6208,8 @@ Recipients of a timestamp value in <code>rfc850-date</code> format, which uses a
 <ul class="org-ul">
 <li>如果 2 位数字的年份为 02，那么 02 比 18 小，则认为是过去时间，距今最近的 02 年是 2002 年，那么 2002 就是转换的结果；</li>
 <li>如果 2 位数字的年份为 20，那么 20 比 18 大，则认为是未来时间，且 2020 距今（2018）只相差 2 年，不超过 50 年，那么 2020 就是转换的结果；</li>
-<li>如果 2 位数字的年份为 68，那么 68 比 18 大，则认为是未来时间，且 2068 距今（2018）只相差 50 年，不超过 50 年，那么 2068 就是转换的结果；</li>
-<li>如果 2 位数字的年份为 69，那么 69 比 18 大，则认为是未来时间，且 2069 距今（2018）只相差 51 年，不超过 50 年，那么 1969 就是转换的结果。</li>
+<li>如果 2 位数字的年份为 68，那么 68 比 18 大，则认为是未来时间，且 2068 距今（2018）相差 50 年，不超过 50 年，那么 2068 就是转换的结果；</li>
+<li>如果 2 位数字的年份为 69，那么 69 比 18 大，则认为是未来时间，且 2069 距今（2018）相差 51 年，超过了 50 年，那么 1969 就是转换的结果。</li>
 </ul>
 
 <p>
@@ -6464,7 +6464,7 @@ A user agent <b>MAY</b> send a <code>Date</code> header field in a request, thou
 </blockquote>
 
 <p>
-用户代理 <b>可以</b> 在请求里带有一个 <code>Date</code> 头字段，虽然一般不会这么做，除非认为它传达了有用的信息给到服务器。例如，某些 HTTP 的客户应用程序可能会传达一个 <code>Date</code> 如果服务器期望用它基于用户代理与服务器时间上的不同来调整对用户请求的<ruby>解释<rt>interpretation</rt></ruby>。
+用户代理 <b>可以</b> 在请求里带有一个 <code>Date</code> 头字段，虽然一般不会这么做，除非认为它运载了有用的信息给到服务器。例如，某些 HTTP 的客户应用程序可能会传达一个 <code>Date</code> 如果服务器期望用它基于用户代理与服务器时间上的不同来调整对用户请求的<ruby>解释<rt>interpretation</rt></ruby>。
 </p>
 </div>
 </div>
@@ -6593,7 +6593,7 @@ There are circumstances in which a <code>fragment</code> identifier in a <code>L
 </blockquote>
 
 <p>
-<code>Content-Location</code> 头字段（<a href="#org6190703">章节 3.1.4.2</a>）与 <code>Location</code> 的不同之处在于：<code>Content-Location</code> 引用的是有效载荷内的表示形式所对应的最明确的资源。因此，在一个响应里同时包含 <code>Location</code> 和 <code>Content-Location</code> 丙个头字段是可能的。
+<code>Content-Location</code> 头字段（<a href="#org6190703">章节 3.1.4.2</a>）与 <code>Location</code> 的不同之处在于：<code>Content-Location</code> 引用的是有效载荷内的表示形式所对应的最明确的资源。因此，在一个响应里同时包含 <code>Location</code> 和 <code>Content-Location</code> 两个头字段是可能的。
 </p>
 </div>
 </div>
@@ -6603,15 +6603,23 @@ There are circumstances in which a <code>fragment</code> identifier in a <code>L
 <div class="outline-text-4" id="text-orgbf05a48">
 <blockquote>
 <p>
-Servers send the "Retry-After" header field to indicate how long the user agent ought to wait before making a follow-up request. When sent with a 503 (Service Unavailable) response, Retry-After indicates how long the service is expected to be unavailable to the client. When sent with any 3xx (Redirection) response, Retry-After indicates the minimum time that the user agent is asked to wait before issuing the redirected request.
+Servers send the "Retry-After" header field to indicate how long the user agent ought to wait before making a follow-up request. When sent with a <code>503 (Service Unavailable)</code> response, <code>Retry-After</code> indicates how long the service is expected to be unavailable to the client. When sent with any <code>3xx (Redirection)</code> response, <code>Retry-After</code> indicates the minimum time that the user agent is asked to wait before issuing the redirected request.
 </p>
 </blockquote>
 
+<p>
+服务器在其发送的响应里带有 <code>Retry-After</code> 头字段表明：用户代理在发送后续请求之前应该等待多长时间。当 <code>503 (Service Unavailable)</code> 响应里带有 <code>Retry-After</code>，表明：服务预期在多长时间内对客户端不可用。当 <code>3xx (Redirection)</code> 响应里带有 <code>Retry-After</code>，表明：要求用户代理在执行重定向请求之前要等待的最小时间。
+</p>
+
 <blockquote>
 <p>
-The value of this field can be either an HTTP-date or a number of seconds to delay after the response is received.
+The value of this field can be either an <code>HTTP-date</code> or a number of seconds to delay after the response is received.
 </p>
 </blockquote>
+
+<p>
+这个字段的值可以是一个 <code>HTTP-date</code>，也可以是接收到响应以后的延迟秒数。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Retry-After = HTTP-date / delay-seconds
@@ -6620,9 +6628,13 @@ The value of this field can be either an HTTP-date or a number of seconds to del
 
 <blockquote>
 <p>
-A delay-seconds value is a non-negative decimal integer, representing time in seconds.
+A <code>delay-seconds</code> value is a non-negative decimal integer, representing time in seconds.
 </p>
 </blockquote>
+
+<p>
+<code>delay-seconds</code> 的值是一个十进制非负整数，表示秒数。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">delay-seconds  = 1*DIGIT
@@ -6635,6 +6647,10 @@ Two examples of its use are
 </p>
 </blockquote>
 
+<p>
+两个例子：
+</p>
+
 <pre class="example">
 Retry-After: Fri, 31 Dec 1999 23:59:59 GMT
 Retry-After: 120
@@ -6645,6 +6661,10 @@ Retry-After: 120
 In the latter example, the delay is 2 minutes.
 </p>
 </blockquote>
+
+<p>
+在第二个例子中，延迟是 2 分钟。
+</p>
 </div>
 </div>
 
@@ -6653,9 +6673,13 @@ In the latter example, the delay is 2 minutes.
 <div class="outline-text-4" id="text-org5ddc30c">
 <blockquote>
 <p>
-The "Vary" header field in a response describes what parts of a request message, aside from the method, Host header field, and request target, might influence the origin server's process for selecting and representing this response. The value consists of either a single asterisk ("*") or a list of header field names (case-insensitive).
+The "Vary" header field in a response describes what parts of a request message, aside from the method, <code>Host</code> header field, and request target, might influence the origin server's process for selecting and representing this response. The value consists of either a single asterisk ("*") or a list of header field names (case-insensitive).
 </p>
 </blockquote>
+
+<p>
+响应里的 <code>Vary</code> 头字描述了：在请求消息里，除了请求方法、<code>Host</code> 头字段、请求目标以外，还有什么部分可能会影响到源服务器对这个响应的<ruby>选择和表示<rt>selecting and representing</rt></ruby>的处理。它的值可以由单独一个星号（"*"）构成，也可由一个头字段名称（不区分大小写）的列表构成。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Vary = "*" / 1#field-name
@@ -6664,9 +6688,13 @@ The "Vary" header field in a response describes what parts of a request message,
 
 <blockquote>
 <p>
-A Vary field value consisting of a comma-separated list of names indicates that the named request header fields, known as the selecting header fields, might have a role in selecting the representation. The potential selecting header fields are not limited to those defined by this specification.
+A <code>Vary</code> field value consisting of a comma-separated list of names indicates that the named request header fields, known as the selecting header fields, might have a role in selecting the representation. The potential selecting header fields are not limited to those defined by this specification.
 </p>
 </blockquote>
+
+<p>
+<code>Vary</code> 的字段值由以<ruby>英文逗号分隔<rt>comma-separated</rt></ruby>的名称构成时，表明：所<ruby>指名<rt>named</rt></ruby>的请求头字段，称为<ruby>选择头字段<rt>selecting header fields</rt></ruby>，可能在选择<ruby>表示形式<rt>representation</rt></ruby>过程中发挥了作用。可能作为选择头字段的字段不限于本规范所定义的那些。
+</p>
 
 <blockquote>
 <p>
@@ -6674,32 +6702,53 @@ For example, a response that contains
 </p>
 </blockquote>
 
+<p>
+例如，一个响应包含了如下字段：
+</p>
+
 <pre class="example">
 Vary: accept-encoding, accept-language
 </pre>
 
 <blockquote>
 <p>
-indicates that the origin server might have used the request's Accept-Encoding and Accept-Language fields (or lack thereof) as determining factors while choosing the content for this response.
+indicates that the origin server might have used the request's <code>Accept-Encoding</code> and <code>Accept-Language</code> fields (or lack thereof) as determining factors while choosing the content for this response.
 </p>
 </blockquote>
 
+<p>
+表明：源服务器可能已经使用（或者说由于缺少）该请求的 <code>Accept-Encoding</code> 和 <code>Accept-Language</code> 字段作为决定因素来选择这个响应的内容。
+</p>
+
 <blockquote>
 <p>
-An origin server might send Vary with a list of fields for two purposes:
+An origin server might send <code>Vary</code> with a list of fields for two purposes:
 </p>
 
 <ol class="org-ol">
-<li>To inform cache recipients that they MUST NOT use this response to satisfy a later request unless the later request has the same values for the listed fields as the original request (Section 4.1 of [RFC7234]). In other words, Vary expands the cache key required to match a new request to the stored cache entry.</li>
-<li>To inform user agent recipients that this response is subject to content negotiation (Section 5.3) and that a different representation might be sent in a subsequent request if additional parameters are provided in the listed header fields (proactive negotiation).</li>
+<li>To inform cache recipients that they <b>MUST NOT</b> use this response to satisfy a later request unless the later request has the same values for the listed fields as the original request (<a href="RFC7234.html#ID-352eb301-a424-48e9-9027-3c6633da4b77">Section 4.1</a> of [RFC7234]). In other words, <code>Vary</code> expands the cache key required to match a new request to the stored cache entry.</li>
+<li>To inform user agent recipients that this response is subject to content negotiation (<a href="#org07183ec">Section 5.3</a>) and that a different representation might be sent in a subsequent request if additional parameters are provided in the listed header fields (proactive negotiation).</li>
 </ol>
 </blockquote>
 
+<p>
+源服务器可能出于以下两种目的来发送带有一个字段列表的 <code>Vary</code>：
+</p>
+
+<ol class="org-ol">
+<li>去告诉<ruby>缓存接收端<rt>cache recipients</rt></ruby>它们，<b>禁止</b> 使用这个响应来满足后续的请求，除非后续请求带有这个列表所罗列的字段，并且对应的值与原来的请求的字段值相同（<a href="RFC7234.html#ID-352eb301-a424-48e9-9027-3c6633da4b77">【RFC7234】章节 4.1</a>）。换句话说，<code>Vary</code> 扩展缓存服务器用来对新请求与所存储的缓存条目进行匹配所需要的<ruby>键<rt>key</rt></ruby>。</li>
+<li>去告诉用户代理接收端它们，这个响应受到<ruby>内容协商<rt>content negotiation</rt></ruby>（<a href="#org07183ec">章节 5.3</a>）的影响，并且，如果后续请求在这个列表所罗列的头字段里提供额外的参数的话，会发送一个不同的表示形式（<ruby>主动型协商<rt>proactive negotiation</rt></ruby>）。</li>
+</ol>
+
 <blockquote>
 <p>
-An origin server SHOULD send a Vary header field when its algorithm for selecting a representation varies based on aspects of the request message other than the method and request target, unless the variance cannot be crossed or the origin server has been deliberately configured to prevent cache transparency. For example, there is no need to send the Authorization field name in Vary because reuse across users is constrained by the field definition (Section 4.2 of [RFC7235]). Likewise, an origin server might use Cache-Control directives (Section 5.2 of [RFC7234]) to supplant Vary if it considers the variance less significant than the performance cost of Vary's impact on caching.
+An origin server <b>SHOULD</b> send a <code>Vary</code> header field when its algorithm for selecting a representation varies based on aspects of the request message other than the method and request target, unless the variance cannot be crossed or the origin server has been deliberately configured to prevent cache transparency. For example, there is no need to send the <code>Authorization</code> field name in <code>Vary</code> because reuse across users is constrained by the field definition (<a href="RFC7235.html#ID-14671c8e-e5a4-4f9d-ad1d-6460328ed7f5">Section 4.2</a> of [RFC7235]). Likewise, an origin server might use <code>Cache-Control</code> directives (<a href="RFC7234.html#ID-03c2dad4-a6d2-4d3c-b087-d08717bf09ec">Section 5.2</a> of [RFC7234]) to supplant <code>Vary</code> if it considers the variance less significant than the performance cost of Vary's impact on caching.
 </p>
 </blockquote>
+
+<p>
+当源服务器对表示形式的选择算法改变为基于请求消息的多个方面，而不是只基于请求方法或者请求目标的时候，源服务器 <b>应当</b> 在其发送的响应里带有一个 <code>Vary</code> 头字段，除非这种改变不能被<ruby>逾越<rt>crossed</rt></ruby>或者源服务器是被刻意配置为阻止<ruby>缓存服务器的透明性<rt>cache transparency</rt></ruby>。例如，不需要在 <code>Vary</code> 里带有 <code>Authorization</code> 字段名，因为<ruby>用户间<rt>across users</rt></ruby>的复用受到这个字段的<ruby>约束<rt>constrained</rt></ruby>（<a href="RFC7235.html#ID-14671c8e-e5a4-4f9d-ad1d-6460328ed7f5">【RFC7235】章节 4.2</a>）。同样，如果源服务器认为这种改变对比 <code>Vary</code> 对缓存的<ruby>性能损耗<rt>performance cost</rt></ruby>的影响来说不是那么重要的话，它可能会使用 <code>Cache-Control</code> 指令（<a href="RFC7234.html#ID-03c2dad4-a6d2-4d3c-b087-d08717bf09ec">【RFC7234】章节 5.2</a>）来取代 <code>Vary</code>。
+</p>
 </div>
 </div>
 </div>
@@ -6709,9 +6758,13 @@ An origin server SHOULD send a Vary header field when its algorithm for selectin
 <div class="outline-text-3" id="text-org6496d0f">
 <blockquote>
 <p>
-Validator header fields convey metadata about the selected representation (Section 3). In responses to safe requests, validator fields describe the selected representation chosen by the origin server while handling the response. Note that, depending on the status code semantics, the selected representation for a given response is not necessarily the same as the representation enclosed as response payload.
+Validator header fields convey metadata about the selected representation (<a href="#org117585a">Section 3</a>). In responses to safe requests, validator fields describe the selected representation chosen by the origin server while handling the response. Note that, depending on the status code semantics, the selected representation for a given response is not necessarily the same as the representation enclosed as response payload.
 </p>
 </blockquote>
+
+<p>
+<ruby>验证器头字段<rt>validator header fields</rt></ruby>负责运载关于<ruby>已选定的表示形式<rt>selected representation</rt></ruby>的元数据（<a href="#org117585a">章节 3</a>）。回应给<ruby>安全请求<rt>safe requests</rt></ruby>的响应中，验证器头字段描述了由源服务器所选定的表示形式。需要注意的是，根据状态码的语义，对于一个给定的响应的已选定的表示形式，不必和封装为响应有效载荷的表示形式相同。
+</p>
 
 <blockquote>
 <p>
@@ -6719,11 +6772,19 @@ In a successful response to a state-changing request, validator fields describe 
 </p>
 </blockquote>
 
+<p>
+在回应给<ruby>会改变状态<rt>state-changing</rt></ruby>的请求的成功响应里，验证器头字段描述了：作为处理这个请求的结果，这个新的表示形式已经替换了之前所选定的表示形式。
+</p>
+
 <blockquote>
 <p>
-For example, an ETag header field in a 201 (Created) response communicates the entity-tag of the newly created resource's representation, so that it can be used in later conditional requests to prevent the "lost update" problem [RFC7232].
+For example, an <code>ETag</code> header field in a <code>201 (Created)</code> response communicates the <code>entity-tag</code> of the newly created resource's representation, so that it can be used in later conditional requests to prevent the "lost update" problem [<a href="RFC7232.html">RFC7232</a>].
 </p>
 </blockquote>
+
+<p>
+例如，在 <code>201 (Created)</code> 响应里的 <code>ETag</code> 头字段传达了新创建的响应的表示形式的 <code>entity-tag</code>，以便它能够用在接下来的<ruby>条件请求<rt>contional requests</rt></ruby>中来阻止“<ruby>丢失更新<rt>lost update</rt></ruby>”的问题【<a href="RFC7232.html">RFC7232</a>】。
+</p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -6742,12 +6803,12 @@ For example, an ETag header field in a 201 (Created) response communicates the e
 <tbody>
 <tr>
 <td class="org-left">ETag</td>
-<td class="org-left">Section 2.3 of [RFC7232]</td>
+<td class="org-left"><a href="RFC7232.html#ID-0244a602-2c4a-46aa-96c4-3bd14c3eb244">Section 2.3</a> of [RFC7232]</td>
 </tr>
 
 <tr>
 <td class="org-left">Last-Modified</td>
-<td class="org-left">Section 2.2 of [RFC7232]</td>
+<td class="org-left"><a href="RFC7232.html#ID-9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840">Section 2.2</a> of [RFC7232]</td>
 </tr>
 </tbody>
 </table>
@@ -6762,6 +6823,10 @@ For example, an ETag header field in a 201 (Created) response communicates the e
 Authentication challenges indicate what mechanisms are available for the client to provide authentication credentials in future requests.
 </p>
 </blockquote>
+
+<p>
+<ruby>认证质询<rt>authentication challenges</rt></ruby>表明：在未来的请求当中，客户端有什么能用的机制来提供认证质询。
+</p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -6780,12 +6845,12 @@ Authentication challenges indicate what mechanisms are available for the client 
 <tbody>
 <tr>
 <td class="org-left">WWW-Authenticate</td>
-<td class="org-left">Section 4.1 of [RFC7235]</td>
+<td class="org-left"><a href="RFC7235.html#ID-22f79cd1-20cc-4ac0-bd68-643e0d51fe7d">Section 4.1</a> of [RFC7235]</td>
 </tr>
 
 <tr>
 <td class="org-left">Proxy-Authenticate</td>
-<td class="org-left">Section 4.3 of [RFC7235]</td>
+<td class="org-left"><a href="RFC7235.html#ID-7f949af1-00e3-4909-adc7-219da68f0457">Section 4.3</a> of [RFC7235]</td>
 </tr>
 </tbody>
 </table>
@@ -6800,6 +6865,10 @@ Authentication challenges indicate what mechanisms are available for the client 
 The remaining response header fields provide more information about the target resource for potential use in later requests.
 </p>
 </blockquote>
+
+<p>
+剩下的响应头字段提供了接下来请求可能会用到的目标资源相关的更多信息。
+</p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -6818,17 +6887,17 @@ The remaining response header fields provide more information about the target r
 <tbody>
 <tr>
 <td class="org-left">Accept-Ranges</td>
-<td class="org-left">Section 2.3 of [RFC7233]</td>
+<td class="org-left"><a href="RFC7233.html#ID-cf601084-e3af-41bc-9ff7-8f903ca59fa8">Section 2.3</a> of [RFC7233]</td>
 </tr>
 
 <tr>
 <td class="org-left">Allow</td>
-<td class="org-left">Section 7.4.1</td>
+<td class="org-left"><a href="#orgbfaeb5b">Section 7.4.1</a></td>
 </tr>
 
 <tr>
 <td class="org-left">Server</td>
-<td class="org-left">Section 7.4.2</td>
+<td class="org-left"><a href="#orgb253800">Section 7.4.2</a></td>
 </tr>
 </tbody>
 </table>
@@ -6843,6 +6912,10 @@ The "Allow" header field lists the set of methods advertised as supported by the
 </p>
 </blockquote>
 
+<p>
+<code>Allow</code> 头字段列出了声明目标资源所支持的一系列方法。这个字段的目的是确切通知给接收端这个资源有哪些有效的请求方法。
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">Allow = #method
 </pre>
@@ -6854,32 +6927,48 @@ Example of use:
 </p>
 </blockquote>
 
+<p>
+使用示例：
+</p>
+
 <pre class="example">
 Allow: GET, HEAD, PUT
 </pre>
 
 <blockquote>
 <p>
-The actual set of allowed methods is defined by the origin server at the time of each request. An origin server MUST generate an Allow field in a 405 (Method Not Allowed) response and MAY do so in any other response. An empty Allow field value indicates that the resource allows no methods, which might occur in a 405 response if the resource has been temporarily disabled by configuration.
+The actual set of allowed methods is defined by the origin server at the time of each request. An origin server <b>MUST</b> generate an <code>Allow</code> field in a <code>405 (Method Not Allowed)</code> response and <b>MAY</b> do so in any other response. An empty <code>Allow</code> field value indicates that the resource allows no methods, which might occur in a <code>405</code> response if the resource has been temporarily disabled by configuration.
 </p>
 </blockquote>
 
+<p>
+实际的可用方法集是由源服务器在每次处理请求的时候定义的。源服务器 <b>必须</b> 在 <code>405 (Method Not Allowed)</code> 响应里生成一个 <code>Allow</code> 字段，也 <b>可以</b> 在任何其他响应中这样做。<code>Allow</code> 的字段值为空表明：这个资源不允许任何方法，这可能发生在一个 <code>405</code> 响应里，如果这个资源已被配置为临时禁用的话。
+</p>
+
 <blockquote>
 <p>
-A proxy <b>MUST NOT</b> modify the Allow header field — it does not need to understand all of the indicated methods in order to handle them according to the generic message handling rules.
+A proxy <b>MUST NOT</b> modify the <code>Allow</code> header field — it does not need to understand all of the indicated methods in order to handle them according to the generic message handling rules.
 </p>
 </blockquote>
+
+<p>
+代理 <b>禁止</b> 修改 <code>Allow</code> 头字段，因为代理并不需要去了解所有这些方法，为了按照通用消息处理规则来处理它们。
+</p>
 </div>
 </div>
 
 <div id="outline-container-orgb253800" class="outline-4">
-<h4 id="orgb253800">7.4.2. Server</h4>
+<h4 id="orgb253800"><a id="ID-9fb6944e-e603-4494-908c-7610fc72220a"></a>7.4.2. Server</h4>
 <div class="outline-text-4" id="text-orgb253800">
 <blockquote>
 <p>
-The "Server" header field contains information about the software used by the origin server to handle the request, which is often used by clients to help identify the scope of reported interoperability problems, to work around or tailor requests to avoid particular server limitations, and for analytics regarding server or operating system use. An origin server MAY generate a Server field in its responses.
+The "Server" header field contains information about the software used by the origin server to handle the request, which is often used by clients to help identify the scope of reported interoperability problems, to work around or tailor requests to avoid particular server limitations, and for analytics regarding server or operating system use. An origin server <b>MAY</b> generate a <code>Server</code> field in its responses.
 </p>
 </blockquote>
+
+<p>
+<code>Server</code> 头字段包含了源服务器处理这个请求所使用的软件的相关信息。客户端常用它来协助识别所报告出互操作问题的范围，<ruby>变通<rt>work around</rt></ruby>或<ruby>调整<rt>tailor</rt></ruby>请求以避免个别服务器的限制，以及分析服务器或操作系统的使用情况等。源服务器 <b>可以</b> 在它的响应里生成一个 <code>Server</code> 字段。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Server = product *( RWS ( product / comment ) )
@@ -6888,9 +6977,13 @@ The "Server" header field contains information about the software used by the or
 
 <blockquote>
 <p>
-The Server field-value consists of one or more product identifiers, each followed by zero or more comments (Section 3.2 of [RFC7230]), which together identify the origin server software and its significant subproducts. By convention, the product identifiers are listed in decreasing order of their significance for identifying the origin server software. Each product identifier consists of a name and optional version, as defined in Section 5.5.3.
+The <code>Server</code> field-value consists of one or more <code>product</code> identifiers, each followed by zero or more comments (<a href="RFC7230.html#ID-a6c4dceb-8a19-4799-a39b-b7240755c672">Section 3.2</a> of [RFC7230]), which together identify the origin server software and its significant subproducts. By convention, the <code>product</code> identifiers are listed in decreasing order of their significance for identifying the origin server software. Each <code>product</code> identifier consists of a name and optional version, as defined in <a href="#org382027f">Section 5.5.3</a>.
 </p>
 </blockquote>
+
+<p>
+<code>Server</code> 的字段值由一个或多个 <code>product</code> 标识符构成，每个 <code>product</code> 后面跟随着零个或多个 <code>comment</code> 注释（<a href="RFC7230.html#ID-a6c4dceb-8a19-4799-a39b-b7240755c672">【RFC7230】章节 3.2</a>），它们一起标识了该源服务器软件以及它的重要的<ruby>子产品<rt>subproducts</rt></ruby>。按照惯例，这些 <code>product</code> 标识符是按其标识源服务器软件的重要性的降序顺序排列的。每个 <code>product</code> 标识符由一个名称和一个可选的版本构成，正如<a href="#org382027f">章节 5.5.3</a> 所述。
+</p>
 
 <blockquote>
 <p>
@@ -6898,15 +6991,23 @@ Example:
 </p>
 </blockquote>
 
+<p>
+例如：
+</p>
+
 <pre class="example">
 Server: CERN/3.0 libwww/2.17
 </pre>
 
 <blockquote>
 <p>
-An origin server <b>SHOULD NOT</b> generate a Server field containing needlessly fine-grained detail and <b>SHOULD</b> limit the addition of subproducts by third parties. Overly long and detailed Server field values increase response latency and potentially reveal internal implementation details that might make it (slightly) easier for attackers to find and exploit known security holes.
+An origin server <b>SHOULD NOT</b> generate a <code>Server</code> field containing needlessly fine-grained detail and <b>SHOULD</b> limit the addition of subproducts by third parties. Overly long and detailed <code>Server</code> field values increase response latency and potentially reveal internal implementation details that might make it (slightly) easier for attackers to find and exploit known security holes.
 </p>
 </blockquote>
+
+<p>
+源服务器 <b>不应当</b> 生成一个包含不必要的<ruby>细粒度详尽信息<rt>fine-grained</rt></ruby>的 <code>Server</code> 字段，同时，<b>应当</b> 限制被第三方添加子产品到该字段中。太过长或详尽的 <code>Server</code> 字段值会加大响应的延迟，以及可能泄露内部信息细节使得它（稍微）更容易被攻击者找到和挖掘已知的安全漏洞。
+</p>
 </div>
 </div>
 </div>
@@ -6916,142 +7017,2033 @@ An origin server <b>SHOULD NOT</b> generate a Server field containing needlessly
 <h2 id="orgb1bfeaa">8. IANA 注意事项 / IANA Considerations</h2>
 <div class="outline-text-2" id="text-orgb1bfeaa">
 </div>
-<div id="outline-container-org04dcb6c" class="outline-3">
-<h3 id="org04dcb6c"><a id="ID-193d7ad5-9c6d-4bf7-98f1-6984a42af639"></a>8.1. 方法注册表 / Method Registry</h3>
-<div class="outline-text-3" id="text-org04dcb6c">
+<div id="outline-container-orgc54a2b7" class="outline-3">
+<h3 id="orgc54a2b7"><a id="ID-193d7ad5-9c6d-4bf7-98f1-6984a42af639"></a>8.1. 方法登记表 / Method Registry</h3>
+<div class="outline-text-3" id="text-orgc54a2b7">
+<blockquote>
+<p>
+The "Hypertext Transfer Protocol (HTTP) Method Registry" defines the namespace for the request method token (<a href="#org5b4a18e">Section 4</a>). The method registry has been created and is now maintained at <a href="http://www.iana.org/assignments/http-methods">http://www.iana.org/assignments/http-methods</a>.
+</p>
+</blockquote>
+
+<p>
+《超文本传输协议（HTTP）方法登记表》定义了请求方法的标记（<a href="#org5b4a18e">章节 4</a>）的命名空间。这个方法登记表已被创建并维护在 <a href="http://www.iana.org/assignments/http-methods">http://www.iana.org/assignments/http-methods</a>。
+</p>
 </div>
-<div id="outline-container-orgbd9a42f" class="outline-4">
-<h4 id="orgbd9a42f">8.1.1. Procedure</h4>
-</div>
-<div id="outline-container-orgba5b1d5" class="outline-4">
-<h4 id="orgba5b1d5">8.1.2. Considerations for New Methods</h4>
-</div>
-<div id="outline-container-org4689641" class="outline-4">
-<h4 id="org4689641">8.1.3. Registrations</h4>
-</div>
-</div>
-<div id="outline-container-orgbd7074f" class="outline-3">
-<h3 id="orgbd7074f"><a id="ID-c0f1fbbc-3471-430e-90be-1b120d9b449f"></a>8.2. 状态码注册表 / Status Code Registry</h3>
-<div class="outline-text-3" id="text-orgbd7074f">
-</div>
-<div id="outline-container-org97fd11b" class="outline-4">
-<h4 id="org97fd11b">8.2.1. Procedure</h4>
-</div>
-<div id="outline-container-org0c87ec2" class="outline-4">
-<h4 id="org0c87ec2">8.2.2. Considerations for New Status Codes</h4>
-</div>
-<div id="outline-container-org091139b" class="outline-4">
-<h4 id="org091139b">8.2.3. Registrations</h4>
-</div>
-</div>
-<div id="outline-container-org623103b" class="outline-3">
-<h3 id="org623103b">8.3. 头字段注册表 / Header Field Registry</h3>
-<div class="outline-text-3" id="text-org623103b">
-</div>
-<div id="outline-container-org97979b4" class="outline-4">
-<h4 id="org97979b4">8.3.1. Considerations for New Header Fields</h4>
-</div>
-<div id="outline-container-orgc14b9da" class="outline-4">
-<h4 id="orgc14b9da">8.3.2. Registrations</h4>
-</div>
-</div>
-<div id="outline-container-orgb8f27ff" class="outline-3">
-<h3 id="orgb8f27ff"><a id="ID-87f2ed30-a48b-4c31-a181-8e3a33ba1080"></a>8.4. 内容编码值注册表 / Content Coding Registry</h3>
-<div class="outline-text-3" id="text-orgb8f27ff">
-</div>
-<div id="outline-container-org1c5ac4f" class="outline-4">
-<h4 id="org1c5ac4f">8.4.1. Procedure</h4>
-</div>
-<div id="outline-container-orgbee91f3" class="outline-4">
-<h4 id="orgbee91f3">8.4.2. Registrations</h4>
+
+<div id="outline-container-org7807fe8" class="outline-4">
+<h4 id="org7807fe8">8.1.1. 手续 / Procedure</h4>
+<div class="outline-text-4" id="text-org7807fe8">
+<blockquote>
+<p>
+HTTP method registrations <b>MUST</b> include the following fields:
+</p>
+
+<ul class="org-ul">
+<li>Method Name (see <a href="#org5b4a18e">Section 4</a>)</li>
+<li>Safe ("yes" or "no", see <a href="#org9cf22b2">Section 4.2.1</a>)</li>
+<li>Idempotent ("yes" or "no", see <a href="#orgf6e425a">Section 4.2.2</a>)</li>
+<li>Pointer to specification text</li>
+<li>Values to be added to this namespace require IETF Review (see [RFC5226], <a href="https://tools.ietf.org/html/rfc5226#section-4.1">Section 4.1</a>).</li>
+</ul>
+</blockquote>
+
+<p>
+HTTP 方法的登记 <b>必须</b> 包括以下几个字段：
+</p>
+
+<ul class="org-ul">
+<li>方法名称（见<a href="#org5b4a18e">章节 4</a>）</li>
+<li>安全（“是”或“否”，见<a href="#org9cf22b2">章节 4.2.1</a>）</li>
+<li>幂等（“是”或“否”，见<a href="#orgf6e425a">章节 4.2.2</a>）</li>
+<li>指向规范文本的指针</li>
+<li>添加到这个命名空间的值要求由 IETF 复审（见<a href="https://tools.ietf.org/html/rfc5226#section-4.1">【RFC5226】章节 4.1</a>）。</li>
+</ul>
 </div>
 </div>
+
+<div id="outline-container-org26be609" class="outline-4">
+<h4 id="org26be609">8.1.2. 新方法的注意事项 / Considerations for New Methods</h4>
+<div class="outline-text-4" id="text-org26be609">
+<blockquote>
+<p>
+Standardized methods are generic; that is, they are potentially applicable to any resource, not just one particular media type, kind of resource, or application. As such, it is preferred that new methods be registered in a document that isn't specific to a single application or data format, since orthogonal technologies deserve orthogonal specification.
+</p>
+</blockquote>
+
+<p>
+规范化的方法是通用的，也就是说，它们可能适用于任何资源，而不只是个别媒体类型、资源类型或者应用程序。这样，登记在文档里的新方法最好不要特定用于某一种应用程序或者数据格式，因为正交的技术值得使用正交的规范。
+</p>
+
+<blockquote>
+<p>
+Since message parsing (<a href="RFC7230.html#ID-74ac5c85-d91e-43ab-bb2f-6c5957da5f5c">Section 3.3</a> of [RFC7230]) needs to be independent of method semantics (aside from responses to HEAD), definitions of new methods cannot change the parsing algorithm or prohibit the presence of a message body on either the request or the response message. Definitions of new methods can specify that only a zero-length message body is allowed by requiring a <code>Content-Length</code> header field with a value of "0".
+</p>
+</blockquote>
+
+<p>
+因为消息解析（<a href="RFC7230.html#ID-74ac5c85-d91e-43ab-bb2f-6c5957da5f5c">【RFC7230】章节 3.3</a>）需要独立于方法的语义（除了响应给 HEAD 的消息以外），新方法的定义不能改变这个解析算法或者禁止消息体出现在请求或响应消息里。通过要求带有一个值为 "0" 的 <code>Content-Length</code> 头字段，新方法的定义能够指定只允许一个长度为零的消息体。
+</p>
+
+<blockquote>
+<p>
+A new method definition needs to indicate whether it is safe (<a href="#org9cf22b2">Section 4.2.1</a>), idempotent (<a href="#orgf6e425a">Section 4.2.2</a>), cacheable (<a href="#org1aba746">Section 4.2.3</a>), what semantics are to be associated with the payload body if any is present in the request and what refinements the method makes to header field or status code semantics. If the new method is cacheable, its definition ought to describe how, and under what conditions, a cache can store a response and use it to satisfy a subsequent request. The new method ought to describe whether it can be made conditional (<a href="#orgb31b803">Section 5.2</a>) and, if so, how a server responds when the condition is false. Likewise, if the new method might have some use for partial response semantics ([<a href="RFC7233.html">RFC7233</a>]), it ought to document this, too.
+</p>
+</blockquote>
+
+<p>
+新方法的定义需要表明：它是否是安全的（<a href="#org9cf22b2">章节 4.2.1</a>）、幂等的（<a href="#orgf6e425a">章节 4.2.2</a>）、可缓存的（<a href="#org1aba746">章节 4.2.3</a>）；如果有效载荷出现在请求里，它的语义是什么；以及这个方法对头字段或者状态码两者的语义有什么优化。如果新方法是可缓存的，它的定义应该描述如何以及在什么条件下，缓存服务器能够存储一个响应以及使用它来满足随后的一个请求。新方法应该描述它是否可以条件化（<a href="#orgb31b803">章节 5.2</a>），以及，如果可以的话，当条件为否的时候服务器要如何响应。同样，如果新方法可能在<ruby>部分响应<rt>partial response</rt></ruby>的语义（【<a href="RFC7233.html">RFC7233</a>】）上有某些用法，它也应该要注明一下。
+</p>
+
+<blockquote>
+<p>
+<b>Note:</b> Avoid defining a method name that starts with "M-", since that prefix might be misinterpreted as having the semantics assigned to it by [<a href="https://tools.ietf.org/html/rfc2774">RFC2774</a>].
+</p>
+</blockquote>
+
+<p>
+<b>注意：</b> 避免定义一个方法名称以 "M-" 开头，因为这个前缀可能被误解为它具有【<a href="https://tools.ietf.org/html/rfc2774">RFC2774</a>】所赋予的语义。
+</p>
 </div>
+</div>
+
+<div id="outline-container-orgcbba20f" class="outline-4">
+<h4 id="orgcbba20f">8.1.3. 登记 / Registrations</h4>
+<div class="outline-text-4" id="text-orgcbba20f">
+<blockquote>
+<p>
+The "Hypertext Transfer Protocol (HTTP) Method Registry" has been populated with the registrations below:
+</p>
+</blockquote>
+
+<p>
+《超文本传输协议（HTTP）方法登记表》已填充以下条目：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Method</th>
+<th scope="col" class="org-left">Safe</th>
+<th scope="col" class="org-left">Idempotent</th>
+<th scope="col" class="org-left">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">CONNECT</td>
+<td class="org-left">no</td>
+<td class="org-left">no</td>
+<td class="org-left"><a href="#org3103350">Section 4.3.6</a></td>
+</tr>
+
+<tr>
+<td class="org-left">DELETE</td>
+<td class="org-left">no</td>
+<td class="org-left">yes</td>
+<td class="org-left"><a href="#orgf7b2242">Section 4.3.5</a></td>
+</tr>
+
+<tr>
+<td class="org-left">GET</td>
+<td class="org-left">yes</td>
+<td class="org-left">yes</td>
+<td class="org-left"><a href="#org479e86d">Section 4.3.1</a></td>
+</tr>
+
+<tr>
+<td class="org-left">HEAD</td>
+<td class="org-left">yes</td>
+<td class="org-left">yes</td>
+<td class="org-left"><a href="#org607980d">Section 4.3.2</a></td>
+</tr>
+
+<tr>
+<td class="org-left">OPTIONS</td>
+<td class="org-left">yes</td>
+<td class="org-left">yes</td>
+<td class="org-left"><a href="#org85c174f">Section 4.3.7</a></td>
+</tr>
+
+<tr>
+<td class="org-left">POST</td>
+<td class="org-left">no</td>
+<td class="org-left">no</td>
+<td class="org-left"><a href="#org24c5a01">Section 4.3.3</a></td>
+</tr>
+
+<tr>
+<td class="org-left">PUT</td>
+<td class="org-left">no</td>
+<td class="org-left">yes</td>
+<td class="org-left"><a href="#org2e14fb1">Section 4.3.4</a></td>
+</tr>
+
+<tr>
+<td class="org-left">TRACE</td>
+<td class="org-left">yes</td>
+<td class="org-left">yes</td>
+<td class="org-left"><a href="#orgda48f54">Section 4.3.8</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org71363a7" class="outline-3">
+<h3 id="org71363a7"><a id="ID-c0f1fbbc-3471-430e-90be-1b120d9b449f"></a>8.2. 状态码登记表 / Status Code Registry</h3>
+<div class="outline-text-3" id="text-org71363a7">
+<blockquote>
+<p>
+The "Hypertext Transfer Protocol (HTTP) Status Code Registry" defines the namespace for the response status-code token (Section 6). The status code registry is maintained at <a href="http://www.iana.org/assignments/http-status-codes">http://www.iana.org/assignments/http-status-codes</a>.
+</p>
+</blockquote>
+
+<p>
+《超文本传输协议（HTTP）状态码登记表》定义了响应状态码的标记（<a href="#org5b4a18e">章节 4</a>）的命名空间。这个状态码登记表已被创建并维护在 <a href="http://www.iana.org/assignments/http-status-codes">http://www.iana.org/assignments/http-status-codes</a>。
+</p>
+
+<blockquote>
+<p>
+This section replaces the registration procedure for HTTP Status Codes previously defined in <a href="https://tools.ietf.org/html/rfc2817#section-7.1">Section 7.1</a> of [RFC2817].
+</p>
+</blockquote>
+
+<p>
+本章节替换了之前定义在<a href="https://tools.ietf.org/html/rfc2817#section-7.1">【RFC2817】章节 7.1</a> 里的 HTTP 状态码登记手续。
+</p>
+</div>
+
+<div id="outline-container-org50facc1" class="outline-4">
+<h4 id="org50facc1">8.2.1. 手续 / Procedure</h4>
+<div class="outline-text-4" id="text-org50facc1">
+<blockquote>
+<p>
+A registration <b>MUST</b> include the following fields:
+</p>
+
+<ul class="org-ul">
+<li>Status Code (3 digits)</li>
+<li>Short Description</li>
+<li>Pointer to specification text</li>
+<li>Values to be added to the HTTP status code namespace require IETF Review (see [RFC5226], <a href="https://tools.ietf.org/html/rfc5226#section-4.1">Section 4.1</a>).</li>
+</ul>
+</blockquote>
+
+<p>
+登记 <b>必须</b> 包括以下字段：
+</p>
+
+<ul class="org-ul">
+<li>状态码（3 位数字）</li>
+<li>简短描述</li>
+<li>指向规范文本的指针</li>
+<li>添加到 HTTP 状态码命名空间的值要求由 IETF 复审（见<a href="https://tools.ietf.org/html/rfc5226#section-4.1">【RFC5226】章节 4.1</a>）。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org98b6801" class="outline-4">
+<h4 id="org98b6801">8.2.2. 新状态码的注意事项 / Considerations for New Status Codes</h4>
+<div class="outline-text-4" id="text-org98b6801">
+<blockquote>
+<p>
+When it is necessary to express semantics for a response that are not defined by current status codes, a new status code can be registered. Status codes are generic; they are potentially applicable to any resource, not just one particular media type, kind of resource, or application of HTTP. As such, it is preferred that new status codes be registered in a document that isn't specific to a single application.
+</p>
+</blockquote>
+
+<p>
+当有必要对响应表达一种未被目前的状态码所定义的语义的时候，可以登记新的状态码。状态码是通用的，它们可能适用于任何资源，而不只是个别媒体类型、资源类型或者 HTTP 应用程序。这样，登记在文档里的新状态码最好不要特定用于某一种应用程序。
+</p>
+
+<blockquote>
+<p>
+New status codes are required to fall under one of the categories defined in <a href="#org1463c22">Section 6</a>. To allow existing parsers to process the response message, new status codes cannot disallow a payload, although they can mandate a zero-length payload body.
+</p>
+</blockquote>
+
+<p>
+新的状态码被要求归入定义在<a href="#org1463c22">章节 6</a> 中的种类里。为了让已有的<ruby>解析器<rt>parsers</rt></ruby>可以处理这个响应消息，新状态码不能禁用有效载荷，尽管它们能够要求一个长度为零的有效载荷。
+</p>
+
+<blockquote>
+<p>
+Proposals for new status codes that are not yet widely deployed ought to avoid allocating a specific number for the code until there is clear consensus that it will be registered; instead, early drafts can use a notation such as "4NN", or "3N0" .. "3N9", to indicate the class of the proposed status code(s) without consuming a number prematurely.
+</p>
+</blockquote>
+
+<p>
+对于未广泛布置的新状态码的提案，应该避免分配一个具体的编号数字，直到对它将会被登记达成统一的共识。而是，前期的草案可以使用一种标记法，比如 "4NN"、"3N0"……"3N9"，来表明提案状态码的类型，而不用过早地占用一个编号数字。
+</p>
+
+<blockquote>
+<p>
+The definition of a new status code ought to explain the request conditions that would cause a response containing that status code (e.g., combinations of request header fields and/or method(s)) along with any dependencies on response header fields (e.g., what fields are required, what fields can modify the semantics, and what header field semantics are further refined when used with the new status code).
+</p>
+</blockquote>
+
+<p>
+新状态码的定义应该<ruby>解释<rt>explain</rt></ruby>在什么请求条件下会导致回应这个状态码的响应（比如，各种请求头字段和（或者）请求方法的组合情况），以及这种响应所依赖的所有响应头字段（比如，什么字段是必要的，什么字段能够修改这种语义，以及当使用这个新状态码的时候，什么头字段的语义会被进一步优化）。
+</p>
+
+<blockquote>
+<p>
+The definition of a new status code ought to specify whether or not it is cacheable. Note that all status codes can be cached if the response they occur in has explicit freshness information; however, status codes that are defined as being cacheable are allowed to be cached without explicit freshness information. Likewise, the definition of a status code can place constraints upon cache behavior. See [RFC7234] for more information.
+</p>
+</blockquote>
+
+<p>
+新状态码的定义应该明确它是否是可缓存的。需要注意的是，所有状态码能够被缓存，仅当这个响应里带有明确的<ruby>新鲜度信息<rt>freshness information</rt></ruby>；但是，定义为可缓存的状态码是允许在没有明确的新鲜度信息的情况下被缓存的。同样，状态码的定义能够在缓存行为上施加约束。更多信息见【RFC7234】。
+</p>
+
+<p>
+新方法的定义需要表明：它是否是安全的（<a href="#org9cf22b2">章节 4.2.1</a>）、幂等的（<a href="#orgf6e425a">章节 4.2.2</a>）、可缓存的（<a href="#org1aba746">章节 4.2.3</a>）；如果有效载荷出现在请求里，它的语义是什么；以及这个方法对头字段或者状态码两者的语义有什么优化。如果新方法是可缓存的，它的定义应该描述如何以及在什么条件下，缓存服务器能够存储一个响应以及使用它来满足随后的一个请求。新方法应该描述它是否可以条件化（<a href="#orgb31b803">章节 5.2</a>），以及，如果可以的话，当条件为否的时候服务器要如何响应。同样，如果新方法可能在<ruby>部分响应<rt>partial response</rt></ruby>的语义（【<a href="RFC7233.html">RFC7233</a>】）上有某些用法，它也应该要注明一下。
+</p>
+
+<blockquote>
+<p>
+Finally, the definition of a new status code ought to indicate whether the payload has any implied association with an identified resource (Section 3.1.4.1).
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org2c35351" class="outline-4">
+<h4 id="org2c35351">8.2.3. 登记 / Registrations</h4>
+<div class="outline-text-4" id="text-org2c35351">
+<blockquote>
+<p>
+The status code registry has been updated with the registrations below:
+</p>
+</blockquote>
+
+<p>
+状态码登记表已更新为以下条目：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">Value</th>
+<th scope="col" class="org-left">Description</th>
+<th scope="col" class="org-left">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">100</td>
+<td class="org-left">Continue</td>
+<td class="org-left">Section 6.2.1</td>
+</tr>
+
+<tr>
+<td class="org-right">101</td>
+<td class="org-left">Switching Protocols</td>
+<td class="org-left">Section 6.2.2</td>
+</tr>
+
+<tr>
+<td class="org-right">200</td>
+<td class="org-left">OK</td>
+<td class="org-left">Section 6.3.1</td>
+</tr>
+
+<tr>
+<td class="org-right">201</td>
+<td class="org-left">Created</td>
+<td class="org-left">Section 6.3.2</td>
+</tr>
+
+<tr>
+<td class="org-right">202</td>
+<td class="org-left">Accepted</td>
+<td class="org-left">Section 6.3.3</td>
+</tr>
+
+<tr>
+<td class="org-right">203</td>
+<td class="org-left">Non-Authoritative Information</td>
+<td class="org-left">Section 6.3.4</td>
+</tr>
+
+<tr>
+<td class="org-right">204</td>
+<td class="org-left">No Content</td>
+<td class="org-left">Section 6.3.5</td>
+</tr>
+
+<tr>
+<td class="org-right">205</td>
+<td class="org-left">Reset Content</td>
+<td class="org-left">Section 6.3.6</td>
+</tr>
+
+<tr>
+<td class="org-right">300</td>
+<td class="org-left">Multiple Choices</td>
+<td class="org-left">Section 6.4.1</td>
+</tr>
+
+<tr>
+<td class="org-right">301</td>
+<td class="org-left">Moved Permanently</td>
+<td class="org-left">Section 6.4.2</td>
+</tr>
+
+<tr>
+<td class="org-right">302</td>
+<td class="org-left">Found</td>
+<td class="org-left">Section 6.4.3</td>
+</tr>
+
+<tr>
+<td class="org-right">303</td>
+<td class="org-left">See Other</td>
+<td class="org-left">Section 6.4.4</td>
+</tr>
+
+<tr>
+<td class="org-right">305</td>
+<td class="org-left">Use Proxy</td>
+<td class="org-left">Section 6.4.5</td>
+</tr>
+
+<tr>
+<td class="org-right">306</td>
+<td class="org-left">(Unused)</td>
+<td class="org-left">Section 6.4.6</td>
+</tr>
+
+<tr>
+<td class="org-right">307</td>
+<td class="org-left">Temporary Redirect</td>
+<td class="org-left">Section 6.4.7</td>
+</tr>
+
+<tr>
+<td class="org-right">400</td>
+<td class="org-left">Bad Request</td>
+<td class="org-left">Section 6.5.1</td>
+</tr>
+
+<tr>
+<td class="org-right">402</td>
+<td class="org-left">Payment Required</td>
+<td class="org-left">Section 6.5.2</td>
+</tr>
+
+<tr>
+<td class="org-right">403</td>
+<td class="org-left">Forbidden</td>
+<td class="org-left">Section 6.5.3</td>
+</tr>
+
+<tr>
+<td class="org-right">404</td>
+<td class="org-left">Not Found</td>
+<td class="org-left">Section 6.5.4</td>
+</tr>
+
+<tr>
+<td class="org-right">405</td>
+<td class="org-left">Method Not Allowed</td>
+<td class="org-left">Section 6.5.5</td>
+</tr>
+
+<tr>
+<td class="org-right">406</td>
+<td class="org-left">Not Acceptable</td>
+<td class="org-left">Section 6.5.6</td>
+</tr>
+
+<tr>
+<td class="org-right">408</td>
+<td class="org-left">Request Timeout</td>
+<td class="org-left">Section 6.5.7</td>
+</tr>
+
+<tr>
+<td class="org-right">409</td>
+<td class="org-left">Conflict</td>
+<td class="org-left">Section 6.5.8</td>
+</tr>
+
+<tr>
+<td class="org-right">410</td>
+<td class="org-left">Gone</td>
+<td class="org-left">Section 6.5.0</td>
+</tr>
+
+<tr>
+<td class="org-right">411</td>
+<td class="org-left">Length Required</td>
+<td class="org-left">Section 6.5.10</td>
+</tr>
+
+<tr>
+<td class="org-right">413</td>
+<td class="org-left">Payload Too Large</td>
+<td class="org-left">Section 6.5.11</td>
+</tr>
+
+<tr>
+<td class="org-right">414</td>
+<td class="org-left">URI Too Long</td>
+<td class="org-left">Section 6.5.12</td>
+</tr>
+
+<tr>
+<td class="org-right">415</td>
+<td class="org-left">Unsupported Media Type</td>
+<td class="org-left">Section 6.5.13</td>
+</tr>
+
+<tr>
+<td class="org-right">417</td>
+<td class="org-left">Expectation Failed</td>
+<td class="org-left">Section 6.5.14</td>
+</tr>
+
+<tr>
+<td class="org-right">426</td>
+<td class="org-left">Upgrade Required</td>
+<td class="org-left">Section 6.5.15</td>
+</tr>
+
+<tr>
+<td class="org-right">500</td>
+<td class="org-left">Internal Server Error</td>
+<td class="org-left">Section 6.6.1</td>
+</tr>
+
+<tr>
+<td class="org-right">501</td>
+<td class="org-left">Not Implemented</td>
+<td class="org-left">Section 6.6.2</td>
+</tr>
+
+<tr>
+<td class="org-right">502</td>
+<td class="org-left">Bad Gateway</td>
+<td class="org-left">Section 6.6.3</td>
+</tr>
+
+<tr>
+<td class="org-right">503</td>
+<td class="org-left">Service Unavailable</td>
+<td class="org-left">Section 6.6.4</td>
+</tr>
+
+<tr>
+<td class="org-right">504</td>
+<td class="org-left">Gateway Timeout</td>
+<td class="org-left">Section 6.6.5</td>
+</tr>
+
+<tr>
+<td class="org-right">505</td>
+<td class="org-left">HTTP Version Not Supported</td>
+<td class="org-left">Section 6.6.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3d9574e" class="outline-3">
+<h3 id="org3d9574e">8.3. 头字段登记表 / Header Field Registry</h3>
+<div class="outline-text-3" id="text-org3d9574e">
+<blockquote>
+<p>
+HTTP header fields are registered within the "Message Headers" registry located at <a href="http://www.iana.org/assignments/message-headers">http://www.iana.org/assignments/message-headers</a>, as defined by [BCP90].
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-orgdd29cdd" class="outline-4">
+<h4 id="orgdd29cdd">8.3.1. 新头字段的注意事项 / Considerations for New Header Fields</h4>
+<div class="outline-text-4" id="text-orgdd29cdd">
+<blockquote>
+<p>
+Header fields are key:value pairs that can be used to communicate data about the message, its payload, the target resource, or the connection (i.e., control data). See Section 3.2 of [RFC7230] for a general definition of header field syntax in HTTP messages.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The requirements for header field names are defined in [BCP90].
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Authors of specifications defining new fields are advised to keep the name as short as practical and not to prefix the name with "X-" unless the header field will never be used on the Internet. (The "X-" prefix idiom has been extensively misused in practice; it was intended to only be used as a mechanism for avoiding name collisions inside proprietary software or intranet processing, since the prefix would ensure that private names never collide with a newly registered Internet name; see [BCP178] for further information).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+New header field values typically have their syntax defined using ABNF ([RFC5234]), using the extension defined in Section 7 of [RFC7230] as necessary, and are usually constrained to the range of US-ASCII characters. Header fields needing a greater range of characters can use an encoding such as the one defined in [RFC5987].
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Leading and trailing whitespace in raw field values is removed upon field parsing (Section 3.2.4 of [RFC7230]). Field definitions where leading or trailing whitespace in values is significant will have to use a container syntax such as quoted-string (Section 3.2.6 of [RFC7230]).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Because commas (",") are used as a generic delimiter between field-values, they need to be treated with care if they are allowed in the field-value. Typically, components that might contain a comma are protected with double-quotes using the quoted-string ABNF production.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+For example, a textual date and a URI (either of which might contain a comma) could be safely carried in field-values like these:
+</p>
+</blockquote>
+
+<pre class="example">
+Example-URI-Field: "http://example.com/a.html,foo",
+                   "http://without-a-comma.example.com/"
+Example-Date-Field: "Sat, 04 May 1996", "Wed, 14 Sep 2005"
+</pre>
+
+<blockquote>
+<p>
+Note that double-quote delimiters almost always are used with the quoted-string production; using a different syntax inside double-quotes will likely cause unnecessary confusion.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Many header fields use a format including (case-insensitively) named parameters (for instance, Content-Type, defined in Section 3.1.1.5). Allowing both unquoted (token) and quoted (quoted-string) syntax for the parameter value enables recipients to use existing parser components. When allowing both forms, the meaning of a parameter value ought to be independent of the syntax used for it (for an example, see the notes on parameter handling for media types in Section 3.1.1.1).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Authors of specifications defining new header fields are advised to consider documenting:
+</p>
+
+<ul class="org-ul">
+<li><p>
+Whether the field is a single value or whether it can be a list (delimited by commas; see Section 3.2 of [RFC7230]).
+</p>
+
+<p>
+If it does not use the list syntax, document how to treat messages where the field occurs multiple times (a sensible default would be to ignore the field, but this might not always be the right choice).
+</p>
+
+<p>
+Note that intermediaries and software libraries might combine multiple header field instances into a single one, despite the field's definition not allowing the list syntax. A robust format enables recipients to discover these situations (good example: "Content-Type", as the comma can only appear inside quoted strings; bad example: "Location", as a comma can occur inside a URI).
+</p></li>
+
+<li>Under what conditions the header field can be used; e.g., only in responses or requests, in all messages, only on responses to a particular request method, etc.</li>
+
+<li>Whether the field should be stored by origin servers that understand it upon a PUT request.</li>
+
+<li>Whether the field semantics are further refined by the context, such as by existing request methods or status codes.</li>
+
+<li>Whether it is appropriate to list the field-name in the Connection header field (i.e., if the header field is to be hop-by-hop; see Section 6.1 of [RFC7230]).</li>
+
+<li>Under what conditions intermediaries are allowed to insert, delete, or modify the field's value.</li>
+
+<li>Whether it is appropriate to list the field-name in a Vary response header field (e.g., when the request header field is used by an origin server's content selection algorithm; see Section 7.1.4).</li>
+
+<li>Whether the header field is useful or allowable in trailers (see Section 4.1 of [RFC7230]).</li>
+
+<li>Whether the header field ought to be preserved across redirects.</li>
+
+<li>Whether it introduces any additional security considerations, such as disclosure of privacy-related data.</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgd7b571e" class="outline-4">
+<h4 id="orgd7b571e">8.3.2. 登记 / Registrations</h4>
+<div class="outline-text-4" id="text-orgd7b571e">
+<blockquote>
+<p>
+The "Message Headers" registry has been updated with the following permanent registrations:
+</p>
+</blockquote>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Header Field Name</th>
+<th scope="col" class="org-left">Protocol</th>
+<th scope="col" class="org-left">Status</th>
+<th scope="col" class="org-left">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Accept</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.3.2</td>
+</tr>
+
+<tr>
+<td class="org-left">Accept-Charset</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.3.3</td>
+</tr>
+
+<tr>
+<td class="org-left">Accept-Encoding</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.3.4</td>
+</tr>
+
+<tr>
+<td class="org-left">Accept-Language</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.3.5</td>
+</tr>
+
+<tr>
+<td class="org-left">Allow</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 7.4.1</td>
+</tr>
+
+<tr>
+<td class="org-left">Content-Encoding</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 3.1.2.2</td>
+</tr>
+
+<tr>
+<td class="org-left">Content-Language</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 3.1.3.2</td>
+</tr>
+
+<tr>
+<td class="org-left">Content-Location</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 3.1.4.2</td>
+</tr>
+
+<tr>
+<td class="org-left">Content-Type</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 3.1.1.5</td>
+</tr>
+
+<tr>
+<td class="org-left">Date</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 7.1.1.2</td>
+</tr>
+
+<tr>
+<td class="org-left">Expect</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.1.1</td>
+</tr>
+
+<tr>
+<td class="org-left">From</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.5.1</td>
+</tr>
+
+<tr>
+<td class="org-left">Location</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 7.1.2</td>
+</tr>
+
+<tr>
+<td class="org-left">Max-Forwards</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.1.2</td>
+</tr>
+
+<tr>
+<td class="org-left">MIME-Version</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Appendix A.1</td>
+</tr>
+
+<tr>
+<td class="org-left">Referer</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.5.2</td>
+</tr>
+
+<tr>
+<td class="org-left">Retry-After</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 7.1.3</td>
+</tr>
+
+<tr>
+<td class="org-left">Server</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 7.4.2</td>
+</tr>
+
+<tr>
+<td class="org-left">UserAgent</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.5.3</td>
+</tr>
+
+<tr>
+<td class="org-left">Vary</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 7.1.4</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>
+The change controller for the above registrations is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbeb299d" class="outline-3">
+<h3 id="orgbeb299d"><a id="ID-87f2ed30-a48b-4c31-a181-8e3a33ba1080"></a>8.4. 内容编码值登记表 / Content Coding Registry</h3>
+<div class="outline-text-3" id="text-orgbeb299d">
+<blockquote>
+<p>
+The "HTTP Content Coding Registry" defines the namespace for content coding names (Section 4.2 of [RFC7230]). The content coding registry is maintained at <a href="http://www.iana.org/assignments/http-parameters">http://www.iana.org/assignments/http-parameters</a>.
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-org757b27b" class="outline-4">
+<h4 id="org757b27b">8.4.1. 手续 / Procedure</h4>
+<div class="outline-text-4" id="text-org757b27b">
+<blockquote>
+<p>
+Content coding registrations MUST include the following fields:
+</p>
+
+<ul class="org-ul">
+<li>Name</li>
+<li>Description</li>
+<li>Pointer to specification text</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+Names of content codings MUST NOT overlap with names of transfer codings (Section 4 of [RFC7230]), unless the encoding transformation is identical (as is the case for the compression codings defined in Section 4.2 of [RFC7230]).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Values to be added to this namespace require IETF Review (see Section 4.1 of [RFC5226]) and MUST conform to the purpose of content coding defined in this section.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org5565efd" class="outline-4">
+<h4 id="org5565efd">8.4.2. 登记 / Registrations</h4>
+<div class="outline-text-4" id="text-org5565efd">
+<blockquote>
+<p>
+The "HTTP Content Coding Registry" has been updated with the registrations below:
+</p>
+</blockquote>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Name</th>
+<th scope="col" class="org-left">Description</th>
+<th scope="col" class="org-left">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">identity</td>
+<td class="org-left">Reserved (synonym for "no encoding" in Accept-Encoding)</td>
+<td class="org-left">Section 5.3.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgc08e2c6" class="outline-2">
 <h2 id="orgc08e2c6">9. 安全注意事项 / Security Considerations</h2>
 <div class="outline-text-2" id="text-orgc08e2c6">
+<blockquote>
+<p>
+This section is meant to inform developers, information providers, and users of known security concerns relevant to HTTP semantics and its use for transferring information over the Internet. Considerations related to message syntax, parsing, and routing are discussed in Section 9 of [RFC7230].
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The list of considerations below is not exhaustive. Most security concerns related to HTTP semantics are about securing server-side applications (code behind the HTTP interface), securing user agent processing of payloads received via HTTP, or secure use of the Internet in general, rather than security of the protocol. Various organizations maintain topical information and links to current research on Web application security (e.g., [OWASP]).
+</p>
+</blockquote>
 </div>
+
 <div id="outline-container-org64f3a9f" class="outline-3">
 <h3 id="org64f3a9f"><a id="ID-9195be98-bd4e-40ae-a5a0-6af920044f02"></a>9.1. 基于文件和路径名称的攻击 / Attacks Based on File and Path Names</h3>
 <div class="outline-text-3" id="text-org64f3a9f">
+<blockquote>
+<p>
+Origin servers frequently make use of their local file system to manage the mapping from effective request URI to resource representations. Most file systems are not designed to protect against malicious file or path names. Therefore, an origin server needs to avoid accessing names that have a special significance to the system when mapping the request target to files, folders, or directories.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+For example, UNIX, Microsoft Windows, and other operating systems use ".." as a path component to indicate a directory level above the current one, and they use specially named paths or file names to send data to system devices. Similar naming conventions might exist within other types of storage systems. Likewise, local storage systems have an annoying tendency to prefer user-friendliness over security when handling invalid or unexpected characters, recomposition of decomposed characters, and case-normalization of case-insensitive names.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Attacks based on such special names tend to focus on either denial-of-service (e.g., telling the server to read from a COM port) or disclosure of configuration and source files that are not meant to be served.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-org16209ea" class="outline-3">
 <h3 id="org16209ea">9.2. 基于命令、代码、查询注入 / Attacks Based on Command, Code, or Query Injection</h3>
+<div class="outline-text-3" id="text-org16209ea">
+<blockquote>
+<p>
+Origin servers often use parameters within the URI as a means of identifying system services, selecting database entries, or choosing a data source. However, data received in a request cannot be trusted. An attacker could construct any of the request data elements (method, request-target, header fields, or body) to contain data that might be misinterpreted as a command, code, or query when passed through a command invocation, language interpreter, or database interface.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+For example, SQL injection is a common attack wherein additional query language is inserted within some part of the request-target or header fields (e.g., Host, Referer, etc.). If the received data is used directly within a SELECT statement, the query language might be interpreted as a database command instead of a simple string value. This type of implementation vulnerability is extremely common, in spite of being easy to prevent.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+In general, resource implementations ought to avoid use of request data in contexts that are processed or interpreted as instructions. Parameters ought to be compared to fixed strings and acted upon as a result of that comparison, rather than passed through an interface that is not prepared for untrusted data. Received data that isn't based on fixed parameters ought to be carefully filtered or encoded to avoid being misinterpreted.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Similar considerations apply to request data when it is stored and later processed, such as within log files, monitoring tools, or when included within a data format that allows embedded scripts.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org088e6f0" class="outline-3">
 <h3 id="org088e6f0">9.3. 个人信息的披露 / Disclosure of Personal Information</h3>
+<div class="outline-text-3" id="text-org088e6f0">
+<blockquote>
+<p>
+Clients are often privy to large amounts of personal information, including both information provided by the user to interact with resources (e.g., the user's name, location, mail address, passwords, encryption keys, etc.) and information about the user's browsing activity over time (e.g., history, bookmarks, etc.). Implementations need to prevent unintentional disclosure of personal information.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org73c0e2a" class="outline-3">
 <h3 id="org73c0e2a"><a id="ID-ed824807-db16-4f5b-ab13-2366f5cfc0f3"></a>9.4. URLs 敏感信息的披露 / Disclosure of Sensitive Information in URLs</h3>
 <div class="outline-text-3" id="text-org73c0e2a">
+<blockquote>
+<p>
+URIs are intended to be shared, not secured, even when they identify secure resources. URIs are often shown on displays, added to templates when a page is printed, and stored in a variety of unprotected bookmark lists. It is therefore unwise to include information within a URI that is sensitive, personally identifiable, or a risk to disclose.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Authors of services ought to avoid GET-based forms for the submission of sensitive data because that data will be placed in the request-target. Many existing servers, proxies, and user agents log or display the request-target in places where it might be visible to third parties. Such services ought to use POST-based form submission instead.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Since the Referer header field tells a target site about the context that resulted in a request, it has the potential to reveal information about the user's immediate browsing history and any personal information that might be found in the referring resource's URI. Limitations on the Referer header field are described in Section 5.5.2 to address some of its security considerations.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-org25a250a" class="outline-3">
 <h3 id="org25a250a">9.5. Disclosure of Fragment after Redirects</h3>
+<div class="outline-text-3" id="text-org25a250a">
+<blockquote>
+<p>
+Although fragment identifiers used within URI references are not sent in requests, implementers ought to be aware that they will be visible to the user agent and any extensions or scripts running as a result of the response. In particular, when a redirect occurs and the original request's fragment identifier is inherited by the new reference in Location (Section 7.1.2), this might have the effect of disclosing one site's fragment to another site. If the first site uses personal information in fragments, it ought to ensure that redirects to other sites include a (possibly empty) fragment component in order to block that inheritance.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org6f777ff" class="outline-3">
 <h3 id="org6f777ff">9.6. Disclosure of Product Information</h3>
+<div class="outline-text-3" id="text-org6f777ff">
+<blockquote>
+<p>
+The User-Agent (Section 5.5.3), Via (Section 5.7.1 of [RFC7230]), and Server (Section 7.4.2) header fields often reveal information about the respective sender's software systems. In theory, this can make it easier for an attacker to exploit known security holes; in practice, attackers tend to try all potential holes regardless of the apparent software versions being used.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Proxies that serve as a portal through a network firewall ought to take special precautions regarding the transfer of header information that might identify hosts behind the firewall. The Via header field allows intermediaries to replace sensitive machine names with pseudonyms.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org588cbb2" class="outline-3">
 <h3 id="org588cbb2"><a id="ID-58ca9032-65b1-47ff-b759-d1cedc245d4b"></a>9.7. 浏览器指纹识别 / Browser Fingerprinting</h3>
 <div class="outline-text-3" id="text-org588cbb2">
+<blockquote>
+<p>
+Browser fingerprinting is a set of techniques for identifying a specific user agent over time through its unique set of characteristics. These characteristics might include information related to its TCP behavior, feature capabilities, and scripting environment, though of particular interest here is the set of unique characteristics that might be communicated via HTTP. Fingerprinting is considered a privacy concern because it enables tracking of a user agent's behavior over time without the corresponding controls that the user might have over other forms of data collection (e.g., cookies). Many general-purpose user agents (i.e., Web browsers) have taken steps to reduce their fingerprints.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+There are a number of request header fields that might reveal information to servers that is sufficiently unique to enable fingerprinting. The From header field is the most obvious, though it is expected that From will only be sent when self-identification is desired by the user. Likewise, Cookie header fields are deliberately designed to enable re-identification, so fingerprinting concerns only apply to situations where cookies are disabled or restricted by the user agent's configuration.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The User-Agent header field might contain enough information to uniquely identify a specific device, usually when combined with other characteristics, particularly if the user agent sends excessive details about the user's system or extensions. However, the source of unique information that is least expected by users is proactive negotiation (Section 5.3), including the Accept, Accept-Charset, Accept-Encoding, and Accept-Language header fields.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+In addition to the fingerprinting concern, detailed use of the Accept-Language header field can reveal information the user might consider to be of a private nature. For example, understanding a given language set might be strongly correlated to membership in a particular ethnic group. An approach that limits such loss of privacy would be for a user agent to omit the sending of Accept-Language except for sites that have been whitelisted, perhaps via interaction after detecting a Vary header field that indicates language negotiation might be useful.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+In environments where proxies are used to enhance privacy, user agents ought to be conservative in sending proactive negotiation header fields. General-purpose user agents that provide a high degree of header field configurability ought to inform users about the loss of privacy that might result if too much detail is provided. As an extreme privacy measure, proxies could filter the proactive negotiation header fields in relayed requests.
+</p>
+</blockquote>
 </div>
 </div>
 </div>
+
 <div id="outline-container-org1702724" class="outline-2">
 <h2 id="org1702724">10. 鸣谢 / Acknowledgements</h2>
+<div class="outline-text-2" id="text-org1702724">
+<blockquote>
+<p>
+See Section 10 of [RFC7230].
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org1b106b3" class="outline-2">
 <h2 id="org1b106b3">11. 参考资料 / References</h2>
 <div class="outline-text-2" id="text-org1b106b3">
 </div>
 <div id="outline-container-org1cb72c1" class="outline-3">
 <h3 id="org1cb72c1">11.1. Normative References</h3>
+<div class="outline-text-3" id="text-org1cb72c1">
+<dl class="org-dl">
+<dt>[RFC2045]</dt><dd>Freed, N. and N. Borenstein, “Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies”, RFC 2045, November 1996.</dd>
+<dt>[RFC2046]</dt><dd>Freed, N. and N. Borenstein, “Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types”, RFC 2046, November 1996.</dd>
+<dt>[RFC2119]</dt><dd>Bradner, S., “Key words for use in RFCs to Indicate Requirement Levels”, BCP 14, RFC 2119, March 1997.</dd>
+<dt>[RFC3986]</dt><dd>Berners-Lee, T., Fielding, R., and L. Masinter, “Uniform Resource Identifier (URI): Generic Syntax”, STD 66, RFC 3986, January 2005.</dd>
+<dt>[RFC4647]</dt><dd>Phillips, A., Ed. and M. Davis, Ed., “Matching of Language Tags”, BCP 47, RFC 4647, September 2006.</dd>
+<dt>[RFC5234]</dt><dd>Crocker, D., Ed. and P. Overell, “Augmented BNF for Syntax Specifications: ABNF”, STD 68, RFC 5234, January 2008.</dd>
+<dt>[RFC5646]</dt><dd>Phillips, A., Ed. and M. Davis, Ed., “Tags for Identifying Languages”, BCP 47, RFC 5646, September 2009.</dd>
+<dt>[RFC6365]</dt><dd>Hoffman, P. and J. Klensin, “Terminology Used in Internationalization in the IETF”, BCP 166, RFC 6365, September 2011.</dd>
+<dt>[RFC7230]</dt><dd>Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing”, RFC 7230, June 2014.</dd>
+<dt>[RFC7232]</dt><dd>Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests”, RFC 7232, June 2014.</dd>
+<dt>[RFC7233]</dt><dd>Fielding, R., Ed., Lafon, Y., Ed., and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Range Requests”, RFC 7233, June 2014.</dd>
+<dt>[RFC7234]</dt><dd>Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Caching”, RFC 7234, June 2014.</dd>
+<dt>[RFC7235]</dt><dd>Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Authentication”, RFC 7235, June 2014.</dd>
+</dl>
 </div>
+</div>
+
 <div id="outline-container-orgb0730d9" class="outline-3">
 <h3 id="orgb0730d9">11.2. Informative References</h3>
+<div class="outline-text-3" id="text-orgb0730d9">
+<dl class="org-dl">
+<dt>[BCP13]</dt><dd>Freed, N., Klensin, J., and T. Hansen, “Media Type Specifications and Registration Procedures”, BCP 13, RFC 6838, January 2013.</dd>
+<dt>[BCP178]</dt><dd>Saint-Andre, P., Crocker, D., and M. Nottingham, “Deprecating the "X-" Prefix and Similar Constructs in Application Protocols”, BCP 178, RFC 6648, June 2012.</dd>
+<dt>[BCP90]</dt><dd>lyne, G., Nottingham, M., and J. Mogul, “Registration Procedures for Message Header Fields”, BCP 90, RFC 3864, September 2004.</dd>
+<dt>[OWASP]</dt><dd>van der Stock, A., Ed., “A Guide to Building Secure Web Applications and Web Services”, The Open Web Application Security Project (OWASP) 2.0.1, July 2005, <a href="https://www.owasp.org/">https://www.owasp.org/</a>.</dd>
+<dt>[REST]</dt><dd>Fielding, R., “Architectural Styles and the Design of Network-based Software Architectures”, Doctoral Dissertation, University of California, Irvine, September 2000, <a href="http://roy.gbiv.com/pubs/dissertation/top.htm">http://roy.gbiv.com/pubs/dissertation/top.htm</a>.</dd>
+<dt>[RFC1945]</dt><dd>Berners-Lee, T., Fielding, R., and H. Nielsen, “Hypertext Transfer Protocol &#x2013; HTTP/1.0”, RFC 1945, May 1996.</dd>
+<dt>[RFC2049]</dt><dd>Freed, N. and N. Borenstein, “Multipurpose Internet Mail Extensions (MIME) Part Five: Conformance Criteria and Examples”, RFC 2049, November 1996.</dd>
+<dt>[RFC2068]</dt><dd>Fielding, R., Gettys, J., Mogul, J., Nielsen, H., and T. Berners-Lee, “Hypertext Transfer Protocol &#x2013; HTTP/1.1”, RFC 2068, January 1997.</dd>
+<dt>[RFC2295]</dt><dd>Holtman, K. and A. Mutz, “Transparent Content Negotiation in HTTP”, RFC 2295, March 1998.</dd>
+<dt>[RFC2388]</dt><dd>Masinter, L., “Returning Values from Forms: multipart/form-data”, RFC 2388, August 1998.</dd>
+<dt>[RFC2557]</dt><dd>Palme, F., Hopmann, A., Shelness, N., and E. Stefferud, “MIME Encapsulation of Aggregate Documents, such as HTML (MHTML)”, RFC 2557, March 1999.</dd>
+<dt>[RFC2616]</dt><dd>Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, “Hypertext Transfer Protocol &#x2013; HTTP/1.1”, RFC 2616, June 1999.</dd>
+<dt>[RFC2774]</dt><dd>Frystyk, H., Leach, P., and S. Lawrence, “An HTTP Extension Framework”, RFC 2774, February 2000.</dd>
+<dt>[RFC2817]</dt><dd>Khare, R. and S. Lawrence, “Upgrading to TLS Within HTTP/1.1”, RFC 2817, May 2000.</dd>
+<dt>[RFC2978]</dt><dd>Freed, N. and J. Postel, “IANA Charset Registration Procedures”, BCP 19, RFC 2978, October 2000.</dd>
+<dt>[RFC5226]</dt><dd>Narten, T. and H. Alvestrand, “Guidelines for Writing an IANA Considerations Section in RFCs”, BCP 26, RFC 5226, May 2008.</dd>
+<dt>[RFC5246]</dt><dd>Dierks, T. and E. Rescorla, “The Transport Layer Security (TLS) Protocol Version 1.2”, RFC 5246, August 2008.</dd>
+<dt>[RFC5322]</dt><dd>Resnick, P., “Internet Message Format”, RFC 5322, October 2008.</dd>
+<dt>[RFC5789]</dt><dd>Dusseault, L. and J. Snell, “PATCH Method for HTTP”, RFC 5789, March 2010.</dd>
+<dt>[RFC5905]</dt><dd>Mills, D., Martin, J., Ed., Burbank, J., and W. Kasch, “Network Time Protocol Version 4: Protocol and Algorithms Specification”, RFC 5905, June 2010.</dd>
+<dt>[RFC5987]</dt><dd>Reschke, J., “Character Set and Language Encoding for Hypertext Transfer Protocol (HTTP) Header Field Parameters”, RFC 5987, August 2010.</dd>
+<dt>[RFC5988]</dt><dd>Nottingham, M., “Web Linking”, RFC 5988, October 2010.</dd>
+<dt>[RFC6265]</dt><dd>Barth, A., “HTTP State Management Mechanism”, RFC 6265, April 2011.</dd>
+<dt>[RFC6266]</dt><dd>Reschke, J., “Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)”, RFC 6266, June 2011.</dd>
+<dt>[RFC7238]</dt><dd>Reschke, J., “The Hypertext Transfer Protocol (HTTP) Status Code 308 (Permanent Redirect)”, RFC 7238, June 2014.</dd>
+</dl>
 </div>
 </div>
+</div>
+
 <div id="outline-container-orgc9f7ec8" class="outline-2">
 <h2 id="orgc9f7ec8"><a id="ID-84208afd-e458-4f40-97cc-2e9535523797"></a>A. HTTP 与 MIME 的区别 / Defferences between HTTP and MIME</h2>
 <div class="outline-text-2" id="text-orgc9f7ec8">
+<blockquote>
+<p>
+HTTP/1.1 uses many of the constructs defined for the Internet Message Format [RFC5322] and the Multipurpose Internet Mail Extensions (MIME) [RFC2045] to allow a message body to be transmitted in an open variety of representations and with extensible header fields. However, RFC 2045 is focused only on email; applications of HTTP have many characteristics that differ from email; hence, HTTP has features that differ from MIME. These differences were carefully chosen to optimize performance over binary connections, to allow greater freedom in the use of new media types, to make date comparisons easier, and to acknowledge the practice of some early HTTP servers and clients.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This appendix describes specific areas where HTTP differs from MIME. Proxies and gateways to and from strict MIME environments need to be aware of these differences and provide the appropriate conversions where necessary.
+</p>
+</blockquote>
 </div>
+
 <div id="outline-container-org5e69c70" class="outline-3">
 <h3 id="org5e69c70">A.1. MIME-VERSION</h3>
+<div class="outline-text-3" id="text-org5e69c70">
+<blockquote>
+<p>
+HTTP is not a MIME-compliant protocol. However, messages can include a single MIME-Version header field to indicate what version of the MIME protocol was used to construct the message. Use of the MIME-Version header field indicates that the message is in full conformance with the MIME protocol (as defined in [RFC2045]). Senders are responsible for ensuring full conformance (where possible) when exporting HTTP messages to strict MIME environments.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org6beafbd" class="outline-3">
 <h3 id="org6beafbd">A.2. Conversion to Canonical Form</h3>
+<div class="outline-text-3" id="text-org6beafbd">
+<blockquote>
+<p>
+MIME requires that an Internet mail body part be converted to canonical form prior to being transferred, as described in Section 4 of [RFC2049]. Section 3.1.1.3 of this document describes the forms allowed for subtypes of the "text" media type when transmitted over HTTP. [RFC2046] requires that content with a type of "text" represent line breaks as CRLF and forbids the use of CR or LF outside of line break sequences. HTTP allows CRLF, bare CR, and bare LF to indicate a line break within text content.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A proxy or gateway from HTTP to a strict MIME environment ought to translate all line breaks within the text media types described in Section 3.1.1.3 of this document to the RFC 2049 canonical form of CRLF. Note, however, this might be complicated by the presence of a Content-Encoding and by the fact that HTTP allows the use of some charsets that do not use octets 13 and 10 to represent CR and LF, respectively.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Conversion will break any cryptographic checksums applied to the original content unless the original content is already in canonical form. Therefore, the canonical form is recommended for any content that uses such checksums in HTTP.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org372beac" class="outline-3">
 <h3 id="org372beac">A.3. Conversion of Date Formats</h3>
+<div class="outline-text-3" id="text-org372beac">
+<blockquote>
+<p>
+HTTP/1.1 uses a restricted set of date formats (Section 7.1.1.1) to simplify the process of date comparison. Proxies and gateways from other protocols ought to ensure that any Date header field present in a message conforms to one of the HTTP/1.1 formats and rewrite the date if necessary.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org6064441" class="outline-3">
 <h3 id="org6064441">A.4. Conversion of Content-Encoding</h3>
+<div class="outline-text-3" id="text-org6064441">
+<blockquote>
+<p>
+MIME does not include any concept equivalent to HTTP/1.1's Content-Encoding header field. Since this acts as a modifier on the media type, proxies and gateways from HTTP to MIME-compliant protocols ought to either change the value of the Content-Type header field or decode the representation before forwarding the message. (Some experimental applications of Content-Type for Internet mail have used a media-type parameter of ";conversions=&lt;content-coding&gt;" to perform a function equivalent to Content-Encoding. However, this parameter is not part of the MIME standards).
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org6eb57d2" class="outline-3">
 <h3 id="org6eb57d2">A.5. Conversion of Content-Transfer-Encoding</h3>
+<div class="outline-text-3" id="text-org6eb57d2">
+<blockquote>
+<p>
+HTTP does not use the Content-Transfer-Encoding field of MIME. Proxies and gateways from MIME-compliant protocols to HTTP need to remove any Content-Transfer-Encoding prior to delivering the response message to an HTTP client.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Proxies and gateways from HTTP to MIME-compliant protocols are responsible for ensuring that the message is in the correct format and encoding for safe transport on that protocol, where "safe transport" is defined by the limitations of the protocol being used. Such a proxy or gateway ought to transform and label the data with an appropriate Content-Transfer-Encoding if doing so will improve the likelihood of safe transport over the destination protocol.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-orgbad58ce" class="outline-3">
 <h3 id="orgbad58ce">A.6. MHTML and Line Length Limitations</h3>
+<div class="outline-text-3" id="text-orgbad58ce">
+<blockquote>
+<p>
+HTTP implementations that share code with MHTML [RFC2557] implementations need to be aware of MIME line length limitations. Since HTTP does not have this limitation, HTTP does not fold long lines. MHTML messages being transported by HTTP follow all conventions of MHTML, including line length limitations and folding, canonicalization, etc., since HTTP transfers message-bodies as payload and, aside from the "multipart/byteranges" type (Appendix A of [RFC7233]), does not interpret the content or any MIME header lines that might be contained therein.
+</p>
+</blockquote>
 </div>
 </div>
+</div>
+
 <div id="outline-container-org9b37d9f" class="outline-2">
 <h2 id="org9b37d9f"><a id="ID-b9da2375-731c-4b8a-a7d5-b07352c045a9"></a>B. 相对 RFC 2616 的变化 / Changes from RFC 2616</h2>
 <div class="outline-text-2" id="text-org9b37d9f">
+<blockquote>
+<p>
+The primary changes in this revision have been editorial in nature: extracting the messaging syntax and partitioning HTTP semantics into separate documents for the core features, conditional requests, partial requests, caching, and authentication. The conformance language has been revised to clearly target requirements and the terminology has been improved to distinguish payload from representations and representations from resources.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A new requirement has been added that semantics embedded in a URI be disabled when those semantics are inconsistent with the request method, since this is a common cause of interoperability failure. (Section 2)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+An algorithm has been added for determining if a payload is associated with a specific identifier. (Section 3.1.4.1)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The default charset of ISO-8859-1 for text media types has been removed; the default is now whatever the media type definition says. Likewise, special treatment of ISO-8859-1 has been removed from the Accept-Charset header field. (Section 3.1.1.3 and Section 5.3.3)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The definition of Content-Location has been changed to no longer affect the base URI for resolving relative URI references, due to poor implementation support and the undesirable effect of potentially breaking relative links in content-negotiated resources. (Section 3.1.4.2)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+To be consistent with the method-neutral parsing algorithm of [RFC7230], the definition of GET has been relaxed so that requests can have a body, even though a body has no meaning for GET. (Section 4.3.1)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Servers are no longer required to handle all Content-* header fields and use of Content-Range has been explicitly banned in PUT requests. (Section 4.3.4)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Definition of the CONNECT method has been moved from [RFC2817] to this specification. (Section 4.3.6)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The OPTIONS and TRACE request methods have been defined as being safe. (Section 4.3.7 and Section 4.3.8)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The Expect header field's extension mechanism has been removed due to widely-deployed broken implementations. (Section 5.1.1)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The Max-Forwards header field has been restricted to the OPTIONS and TRACE methods; previously, extension methods could have used it as well. (Section 5.1.2)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The "about:blank" URI has been suggested as a value for the Referer header field when no referring URI is applicable, which distinguishes that case from others where the Referer field is not sent or has been removed. (Section 5.5.2)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The following status codes are now cacheable (that is, they can be stored and reused by a cache without explicit freshness information present): 204, 404, 405, 414, 501. (Section 6)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The 201 (Created) status description has been changed to allow for the possibility that more than one resource has been created. (Section 6.3.2)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The definition of 203 (Non-Authoritative Information) has been broadened to include cases of payload transformations as well. (Section 6.3.4)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The set of request methods that are safe to automatically redirect is no longer closed; user agents are able to make that determination based upon the request method semantics. The redirect status codes 301, 302, and 307 no longer have normative requirements on response payloads and user interaction. (Section 6.4)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The status codes 301 and 302 have been changed to allow user agents to rewrite the method from POST to GET. (Sections 6.4.2 and 6.4.3)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The description of the 303 (See Other) status code has been changed to allow it to be cached if explicit freshness information is given, and a specific definition has been added for a 303 response to GET. (Section 6.4.4)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The 305 (Use Proxy) status code has been deprecated due to security concerns regarding in-band configuration of a proxy. (Section 6.4.5)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The 400 (Bad Request) status code has been relaxed so that it isn't limited to syntax errors. (Section 6.5.1)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The 426 (Upgrade Required) status code has been incorporated from [RFC2817]. (Section 6.5.15)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The target of requirements on HTTP-date and the Date header field have been reduced to those systems generating the date, rather than all systems sending a date. (Section 7.1.1)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The syntax of the Location header field has been changed to allow all URI references, including relative references and fragments, along with some clarifications as to when use of fragments would not be appropriate. (Section 7.1.2)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Allow has been reclassified as a response header field, removing the option to specify it in a PUT request. Requirements relating to the content of Allow have been relaxed; correspondingly, clients are not required to always trust its value. (Section 7.4.1)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A Method Registry has been defined. (Section 8.1)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The Status Code Registry has been redefined by this specification; previously, it was defined in Section 7.1 of [RFC2817]. (Section 8.2)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Registration of content codings has been changed to require IETF Review. (Section 8.4)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The Content-Disposition header field has been removed since it is now defined by [RFC6266].
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The Content-MD5 header field has been removed because it was inconsistently implemented with respect to partial responses.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-orgc3125d2" class="outline-2">
 <h2 id="orgc3125d2">C. 引入的 ABNF 规则 / Imported ABNF</h2>
+<div class="outline-text-2" id="text-orgc3125d2">
+<blockquote>
+<p>
+The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), HTAB (horizontal tab), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The rules below are defined in [RFC7230]:
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">BWS           = &lt;BWS, see [RFC7230], Section 3.2.3&gt;
+OWS           = &lt;OWS, see [RFC7230], Section 3.2.3&gt;
+RWS           = &lt;RWS, see [RFC7230], Section 3.2.3&gt;
+URI-reference = &lt;URI-reference, see [RFC7230], Section 2.7&gt;
+absolute-URI  = &lt;absolute-URI, see [RFC7230], Section 2.7&gt;
+comment       = &lt;comment, see [RFC7230], Section 3.2.6&gt;
+field-name    = &lt;comment, see [RFC7230], Section 3.2&gt;
+partial-URI   = &lt;partial-URI, see [RFC7230], Section 2.7&gt;
+quoted-string = &lt;quoted-string, see [RFC7230], Section 3.2.6&gt;
+token         = &lt;token, see [RFC7230], Section 3.2.6&gt;
+</pre>
 </div>
+</div>
+</div>
+
 <div id="outline-container-org19b465a" class="outline-2">
 <h2 id="org19b465a">D. ABNF 规则集合 Collected ABNF</h2>
+<div class="outline-text-2" id="text-org19b465a">
+<blockquote>
+<p>
+In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Accept = [ ( "," / ( media-range [ accept-params ] ) ) *( OWS "," [
+ OWS ( media-range [ accept-params ] ) ] ) ]
+Accept-Charset = *( "," OWS ) ( ( charset / "*" ) [ weight ] ) *( OWS
+ "," [ OWS ( ( charset / "*" ) [ weight ] ) ] )
+Accept-Encoding = [ ( "," / ( codings [ weight ] ) ) *( OWS "," [ OWS
+ ( codings [ weight ] ) ] ) ]
+Accept-Language = *( "," OWS ) ( language-range [ weight ] ) *( OWS
+ "," [ OWS ( language-range [ weight ] ) ] )
+Allow = [ ( "," / method ) *( OWS "," [ OWS method ] ) ]
+
+BWS = &lt;BWS, see [RFC7230], Section 3.2.3&gt;
+
+Content-Encoding = *( "," OWS ) content-coding *( OWS "," [ OWS
+ content-coding ] )
+Content-Language = *( "," OWS ) language-tag *( OWS "," [ OWS
+ language-tag ] )
+Content-Location = absolute-URI / partial-URI
+Content-Type = media-type
+
+Date = HTTP-date
+
+Expect = "100-continue"
+
+From = mailbox
+
+GMT = %x47.4D.54 ; GMT
+
+HTTP-date = IMF-fixdate / obs-date
+
+IMF-fixdate = day-name "," SP date1 SP time-of-day SP GMT
+
+Location = URI-reference
+
+Max-Forwards = 1*DIGIT
+
+OWS = &lt;OWS, see [RFC7230], Section 3.2.3&gt;
+
+RWS = &lt;RWS, see [RFC7230], Section 3.2.3&gt;
+Referer = absolute-URI / partial-URI
+Retry-After = HTTP-date / delay-seconds
+
+Server = product *( RWS ( product / comment ) )
+
+URI-reference = &lt;URI-reference, see [RFC7230], Section 2.7&gt;
+User-Agent = product *( RWS ( product / comment ) )
+
+Vary = "*" / ( *( "," OWS ) field-name *( OWS "," [ OWS field-name ]
+ ) )
+
+absolute-URI = &lt;absolute-URI, see [RFC7230], Section 2.7&gt;
+accept-ext = OWS ";" OWS token [ "=" ( token / quoted-string ) ]
+accept-params = weight *accept-ext
+asctime-date = day-name SP date3 SP time-of-day SP year
+
+charset = token
+codings = content-coding / "identity" / "*"
+comment = &lt;comment, see [RFC7230], Section 3.2.6&gt;
+content-coding = token
+
+date1 = day SP month SP year
+date2 = day "-" month "-" 2DIGIT
+date3 = month SP ( 2DIGIT / ( SP DIGIT ) )
+day = 2DIGIT
+day-name = %x4D.6F.6E ; Mon
+ / %x54.75.65 ; Tue
+ / %x57.65.64 ; Wed
+ / %x54.68.75 ; Thu
+ / %x46.72.69 ; Fri
+ / %x53.61.74 ; Sat
+ / %x53.75.6E ; Sun
+day-name-l = %x4D.6F.6E.64.61.79 ; Monday
+ / %x54.75.65.73.64.61.79 ; Tuesday
+ / %x57.65.64.6E.65.73.64.61.79 ; Wednesday
+ / %x54.68.75.72.73.64.61.79 ; Thursday
+ / %x46.72.69.64.61.79 ; Friday
+ / %x53.61.74.75.72.64.61.79 ; Saturday
+ / %x53.75.6E.64.61.79 ; Sunday
+delay-seconds = 1*DIGIT
+
+field-name = &lt;comment, see [RFC7230], Section 3.2&gt;
+
+hour = 2DIGIT
+
+language-range = &lt;language-range, see [RFC4647], Section 2.1&gt;
+language-tag = &lt;Language-Tag, see [RFC5646], Section 2.1&gt;
+
+mailbox = &lt;mailbox, see [RFC5322], Section 3.4&gt;
+media-range = ( "*/*" / ( type "/*" ) / ( type "/" subtype ) ) *( OWS
+ ";" OWS parameter )
+media-type = type "/" subtype *( OWS ";" OWS parameter )
+method = token
+minute = 2DIGIT
+month = %x4A.61.6E ; Jan
+ / %x46.65.62 ; Feb
+ / %x4D.61.72 ; Mar
+ / %x41.70.72 ; Apr
+ / %x4D.61.79 ; May
+ / %x4A.75.6E ; Jun
+ / %x4A.75.6C ; Jul
+ / %x41.75.67 ; Aug
+ / %x53.65.70 ; Sep
+ / %x4F.63.74 ; Oct
+ / %x4E.6F.76 ; Nov
+ / %x44.65.63 ; Dec
+
+obs-date = rfc850-date / asctime-date
+
+parameter = token "=" ( token / quoted-string )
+partial-URI = &lt;partial-URI, see [RFC7230], Section 2.7&gt;
+product = token [ "/" product-version ]
+product-version = token
+
+quoted-string = &lt;quoted-string, see [RFC7230], Section 3.2.6&gt;
+qvalue = ( "0" [ "." *3DIGIT ] ) / ( "1" [ "." *3"0" ] )
+
+rfc850-date = day-name-l "," SP date2 SP time-of-day SP GMT
+
+second = 2DIGIT
+subtype = token
+
+time-of-day = hour ":" minute ":" second
+token = &lt;token, see [RFC7230], Section 3.2.6&gt;
+type = token
+
+weight = OWS ";" OWS "q=" qvalue
+
+year = 4DIGIT
+</pre>
 </div>
+</div>
+</div>
+
 <div id="outline-container-org91aa32b" class="outline-2">
 <h2 id="org91aa32b">Index</h2>
+<div class="outline-text-2" id="text-org91aa32b">
+<ul class="org-ul">
+<li>1
+<ul class="org-ul">
+<li>100 Continue (status code)  6.1, 6.2.1, 8.2.3</li>
+<li>100-continue (expect value)  5.1.1</li>
+<li>101 Switching Protocols (status code)  6.1, 6.2.2, 8.2.3</li>
+<li>1xx Informational (status code class)  6.2</li>
+</ul></li>
+<li>2
+<ul class="org-ul">
+<li>200 OK (status code)  6.1, 6.3.1, 8.2.3</li>
+<li>201 Created (status code)  6.1, 6.3.2, 8.2.3, B</li>
+<li>202 Accepted (status code)  6.1, 6.3.3, 8.2.3</li>
+<li>203 Non-Authoritative Information (status code)  6.1, 6.3.4, 8.2.3, B</li>
+<li>204 No Content (status code)  6.1, 6.3.5, 8.2.3</li>
+<li>205 Reset Content (status code)  6.1, 6.3.6, 8.2.3</li>
+<li>2xx Successful (status code class)  6.3</li>
+</ul></li>
+<li>3
+<ul class="org-ul">
+<li>300 Multiple Choices (status code)  6.1, 6.4.1, 6.5.6, 8.2.3</li>
+<li>301 Moved Permanently (status code)  6.1, 6.4.2, 8.2.3, B</li>
+<li>302 Found (status code)  6.1, 6.4.3, 8.2.3, B</li>
+<li>303 See Other (status code)  6.1, 6.4.4, 8.2.3, B</li>
+<li>305 Use Proxy (status code)  6.1, 6.4.5, 8.2.3, B</li>
+<li>306 (Unused) (status code)  6.4.6, 8.2.3</li>
+<li>307 Temporary Redirect (status code)  6.1, 6.4.7, 8.2.3</li>
+<li>3xx Redirection (status code class)  6.4, B</li>
+</ul></li>
+<li>4
+<ul class="org-ul">
+<li>400 Bad Request (status code)  6.1, 6.5.1, 8.2.3, B</li>
+<li>402 Payment Required (status code)  6.1, 6.5.2, 8.2.3</li>
+<li>403 Forbidden (status code)  6.1, 6.5.3, 8.2.3</li>
+<li>404 Not Found (status code)  6.1, 6.5.4, 8.2.3</li>
+<li>405 Method Not Allowed (status code)  6.1, 6.5.5, 8.2.3</li>
+<li>406 Not Acceptable (status code)  6.1, 6.5.6, 8.2.3</li>
+<li>408 Request Timeout (status code)  6.1, 6.5.7, 8.2.3</li>
+<li>409 Conflict (status code)  6.1, 6.5.8, 8.2.3</li>
+<li>410 Gone (status code)  6.1, 6.5.9, 8.2.3</li>
+<li>411 Length Required (status code)  6.1, 6.5.10, 8.2.3</li>
+<li>413 Payload Too Large (status code)  6.1, 6.5.11, 8.2.3</li>
+<li>414 URI Too Long (status code)  6.1, 6.5.12, 8.2.3</li>
+<li>415 Unsupported Media Type (status code)  6.1, 6.5.13, 8.2.3</li>
+<li>417 Expectation Failed (status code)  6.1, 6.5.14, 8.2.3</li>
+<li>426 Upgrade Required (status code)  6.1, 6.5.15, 8.2.3, B</li>
+<li>4xx Client Error (status code class)  6.5</li>
+</ul></li>
+<li>5
+<ul class="org-ul">
+<li>500 Internal Server Error (status code)  6.1, 6.6.1, 8.2.3</li>
+<li>501 Not Implemented (status code)  6.1, 6.6.2, 8.2.3</li>
+<li>502 Bad Gateway (status code)  6.1, 6.6.3, 8.2.3</li>
+<li>503 Service Unavailable (status code)  6.1, 6.6.4, 8.2.3</li>
+<li>504 Gateway Timeout (status code)  6.1, 6.6.5, 8.2.3</li>
+<li>505 HTTP Version Not Supported (status code)  6.1, 6.6.6, 8.2.3</li>
+<li>5xx Server Error (status code class)  6.6</li>
+</ul></li>
+<li>A
+<ul class="org-ul">
+<li>Accept header field  3.1.1.1, 5.3, 5.3.2, 8.3.2</li>
+<li>Accept-Charset header field  5.3, 5.3.3, 8.3.2, B</li>
+<li>Accept-Encoding header field  3.1.2.1, 5.3, 5.3.4, 8.3.2, 8.4.2</li>
+<li>Accept-Language header field  3.1.3.1, 5.3, 5.3.5, 8.3.2</li>
+<li>Allow header field  4.1, 7.4, 7.4.1, 8.3.2, B</li>
+</ul></li>
+<li>B
+<ul class="org-ul">
+<li>BCP13  3.1.1.1, 11.2</li>
+<li>BCP178  8.3.1, 11.2</li>
+<li>BCP90  8.3, 8.3.1, 11.2</li>
+</ul></li>
+<li>C
+<ul class="org-ul">
+<li>cacheable  4.2.3</li>
+<li>compress (content coding)  3.1.2.1</li>
+<li>conditional request  5.2</li>
+<li>CONNECT method  4.1, 4.3.6, 8.1.3, B</li>
+<li>content coding  3.1.2.1</li>
+<li>content negotiation  1</li>
+<li>Content-Encoding header field  3.1, 3.1.2.1, 3.1.2.2, 8.3.2</li>
+<li>Content-Language header field  3.1, 3.1.3.2, 8.3.2</li>
+<li>Content-Location header field  3.1, 3.1.4.2, 4.3.3, 7.1.2, 8.3.2, B</li>
+<li>Content-Transfer-Encoding header field  A.5</li>
+<li>Content-Type header field  3.1, 3.1.1.1, 3.1.1.5, 8.3.1, 8.3.2</li>
+</ul></li>
+<li>D
+<ul class="org-ul">
+<li>Date header field  3.3, 7.1, 7.1.1.2, 8.3.2</li>
+<li>deflate (content coding)  3.1.2.1</li>
+<li>DELETE method  4.1, 4.3.5, 8.1.3</li>
+</ul></li>
+<li>E
+<ul class="org-ul">
+<li>Expect header field  5.1, 5.1.1, 6.2.1, 6.5.14, 8.3.2, B</li>
+</ul></li>
+<li>F
+<ul class="org-ul">
+<li>From header field  5.5, 5.5.1, 8.3.2</li>
+</ul></li>
+<li>G
+<ul class="org-ul">
+<li>GET method  3, 3.1.4.2, 3.3, 4.1, 4.3.1, 8.1.3, B</li>
+<li>Grammar  
+<ul class="org-ul">
+<li>Accept  5.3.2</li>
+<li>Accept-Charset  5.3.3</li>
+<li>Accept-Encoding  5.3.4</li>
+<li>accept-ext  5.3.2</li>
+<li>Accept-Language  5.3.5</li>
+<li>accept-params  5.3.2</li>
+<li>Allow  7.4.1</li>
+<li>asctime-date  7.1.1.1</li>
+<li>charset  3.1.1.2</li>
+<li>codings  5.3.4</li>
+<li>content-coding  3.1.2.1</li>
+<li>Content-Encoding  3.1.2.2</li>
+<li>Content-Language  3.1.3.2</li>
+<li>Content-Location  3.1.4.2</li>
+<li>Content-Type  3.1.1.5</li>
+<li>Date  7.1.1.2</li>
+<li>date1  7.1.1.1</li>
+<li>day  7.1.1.1</li>
+<li>day-name  7.1.1.1</li>
+<li>day-name-l  7.1.1.1</li>
+<li>delay-seconds  7.1.3</li>
+<li>Expect  5.1.1</li>
+<li>From  5.5.1</li>
+<li>GMT  7.1.1.1</li>
+<li>hour  7.1.1.1</li>
+<li>HTTP-date  7.1.1.1</li>
+<li>IMF-fixdate  7.1.1.1</li>
+<li>language-range  5.3.5</li>
+<li>language-tag  3.1.3.1</li>
+<li>Location  7.1.2</li>
+<li>Max-Forwards  5.1.2</li>
+<li>media-range  5.3.2</li>
+<li>media-type  3.1.1.1</li>
+<li>method  4.1</li>
+<li>minute  7.1.1.1</li>
+<li>month  7.1.1.1</li>
+<li>obs-date  7.1.1.1</li>
+<li>parameter  3.1.1.1</li>
+<li>product  5.5.3</li>
+<li>product-version  5.5.3</li>
+<li>qvalue  5.3.1</li>
+<li>Referer  5.5.2</li>
+<li>Retry-After  7.1.3</li>
+<li>rfc850-date  7.1.1.1</li>
+<li>second  7.1.1.1</li>
+<li>Server  7.4.2</li>
+<li>subtype  3.1.1.1</li>
+<li>time-of-day  7.1.1.1</li>
+<li>type  3.1.1.1</li>
+<li>User-Agent  5.5.3</li>
+<li>Vary  7.1.4</li>
+<li>weight  5.3.1</li>
+<li>year  7.1.1.1</li>
+</ul></li>
+<li>gzip (content coding)  3.1.2.1</li>
+</ul></li>
+<li>H
+<ul class="org-ul">
+<li>HEAD method  3.1.4.2, 4.1, 4.3.2, 8.1.3</li>
+</ul></li>
+<li>I
+<ul class="org-ul">
+<li>idempotent  4.2.2</li>
+</ul></li>
+<li>L
+<ul class="org-ul">
+<li>Location header field  4.3.3, 6.4, 7.1, 7.1.2, 8.3.2, 9.5, B</li>
+</ul></li>
+<li>M
+<ul class="org-ul">
+<li>Max-Forwards header field  4.3.7, 4.3.8, 5.1, 5.1.2, 8.3.2, B</li>
+<li>MIME-Version header field  8.3.2, A.1</li>
+</ul></li>
+<li>O
+<ul class="org-ul">
+<li>OPTIONS method  4.1, 4.3.7, 5.1.2, 8.1.3, B, B, B</li>
+<li>OWASP  9, 11.2</li>
+</ul></li>
+<li>P
+<ul class="org-ul">
+<li>payload  3.3</li>
+<li>POST method  3.1.4.2, 3.3, 4.1, 4.3.3, 8.1.3</li>
+<li>PUT method  3.1.4.2, 3.3, 4.1, 4.3.4, 8.1.3, B</li>
+</ul></li>
+<li>R
+<ul class="org-ul">
+<li>Referer header field  5.5, 5.5.2, 8.3.2, 9.4, B</li>
+<li>representation  3</li>
+<li>REST  3, 4.1, 11.2</li>
+<li>Retry-After header field  6.6.4, 7.1, 7.1.3, 8.3.2</li>
+<li>RFC1945  6.4, 11.2
+<ul class="org-ul">
+<li>Section 9.3  6.4</li>
+</ul></li>
+<li>RFC2045  3.1.1.3, 11.1, A, A.1</li>
+<li>RFC2046  3.1.1.1, 3.1.1.4, 3.1.1.5, 11.1, A.2
+<ul class="org-ul">
+<li>Section 4.5.1  3.1.1.5</li>
+<li>Section 5.1.1  3.1.1.4</li>
+</ul></li>
+<li>RFC2049  11.2, A.2
+<ul class="org-ul">
+<li>Section 4  A.2</li>
+</ul></li>
+<li>RFC2068  5.1.1, 6.4, 11.2
+<ul class="org-ul">
+<li>Section 10.3  6.4</li>
+</ul></li>
+<li>RFC2119  1.1, 11.1</li>
+<li>RFC2295  3.4, 11.2</li>
+<li>RFC2388  3.1.1.4, 11.2</li>
+<li>RFC2557  3.1.4.2, 11.2, A.6
+<ul class="org-ul">
+<li>Section 4  3.1.4.2</li>
+</ul></li>
+<li>RFC2616  5.3.5, 11.2
+<ul class="org-ul">
+<li>Section 14.4  5.3.5</li>
+</ul></li>
+<li>RFC2774  8.1.2, 11.2</li>
+<li>RFC2817  8.2, 11.2, B, B, B
+<ul class="org-ul">
+<li>Section 7.1  8.2, B</li>
+</ul></li>
+<li>RFC2978  3.1.1.2, 11.2</li>
+<li>RFC3986  5.5.2, 7.1.2, 7.1.2, 11.1
+<ul class="org-ul">
+<li>Section 4.2  7.1.2</li>
+<li>Section 5  7.1.2</li>
+</ul></li>
+<li>RFC4647  5.3.5, 5.3.5, 5.3.5, 5.3.5, 11.1
+<ul class="org-ul">
+<li>Section 2.1  5.3.5</li>
+<li>Section 2.3  5.3.5</li>
+<li>Section 3  5.3.5</li>
+<li>Section 3.3.1  5.3.5</li>
+</ul></li>
+<li>RFC5226  8.1.1, 8.2.1, 8.4.1, 11.2
+<ul class="org-ul">
+<li>Section 4.1  8.1.1, 8.2.1, 8.4.1</li>
+</ul></li>
+<li>RFC5234  1.2, 8.3.1, 11.1, C
+<ul class="org-ul">
+<li>Appendix B.1  C</li>
+</ul></li>
+<li>RFC5246  4.3.6, 11.2</li>
+<li>RFC5322  5.5.1, 5.5.1, 7.1.1.1, 7.1.1.1, 7.1.1.1, 7.1.1.2, 11.2, A
+<ul class="org-ul">
+<li>Section 3.3  7.1.1.1, 7.1.1.1</li>
+<li>Section 3.4  5.5.1, 5.5.1</li>
+<li>Section 3.6.1  7.1.1.2</li>
+</ul></li>
+<li>RFC5646  3.1.3.1, 3.1.3.1, 3.1.3.1, 11.1
+<ul class="org-ul">
+<li>Section 2.1  3.1.3.1</li>
+</ul></li>
+<li>RFC5789  4.3.4, 11.2</li>
+<li>RFC5905  7.1.1.1, 11.2</li>
+<li>RFC5987  8.3.1, 11.2</li>
+<li>RFC5988  6.4.1, 11.2</li>
+<li>RFC6265  4.3.8, 5.4, 11.2</li>
+<li>RFC6266  11.2, B</li>
+<li>RFC6365  1.2, 3.1.1.2, 11.1</li>
+<li>RFC7230  1, 1.1, 1.2, 2, 2, 2, 3.1.2.1, 3.1.2.1, 3.1.2.1, 3.1.2.2, 3.1.4.1, 3.1.4.2, 3.3, 3.3, 3.3, 4.3.6, 4.3.7, 4.3.8, 4.3.8, 5.1, 5.1, 5.1.1, 5.5.3, 6.2.2, 6.3.4, 6.5.7, 6.5.10, 6.5.12, 6.5.15, 6.6.6, 7.4.2, 8.1.2, 8.3.1, 8.3.1, 8.3.1, 8.3.1, 8.3.1, 8.3.1, 8.3.1, 8.4, 8.4.1, 8.4.1, 9, 9.6, 10, 11.1, B, C, C, C, C, C, C, C, C, C, C, C, D
+<ul class="org-ul">
+<li>Section 1.2  D</li>
+<li>Section 2.5  1.1</li>
+<li>Section 2.6  6.6.6</li>
+<li>Section 2.7  2, C, C, C</li>
+<li>Section 3.2  5.5.3, 7.4.2, 8.3.1, 8.3.1, C</li>
+<li>Section 3.2.3  C, C, C</li>
+<li>Section 3.2.4  8.3.1</li>
+<li>Section 3.2.6  8.3.1, C, C, C</li>
+<li>Section 3.3.1  3.1.2.2, 3.3</li>
+<li>Section 3.3  8.1.2</li>
+<li>Section 3.3.2  3.3, 6.5.10</li>
+<li>Section 4  8.4.1</li>
+<li>Section 4.1  8.3.1</li>
+<li>Section 4.2.1  3.1.2.1</li>
+<li>Section 4.2  8.4, 8.4.1</li>
+<li>Section 4.2.2  3.1.2.1</li>
+<li>Section 4.2.3  3.1.2.1</li>
+<li>Section 4.3  5.1</li>
+<li>Section 4.4  3.3</li>
+<li>Section 5.3  2, 4.3.6, 4.3.7, 6.5.12</li>
+<li>Section 5.4  5.1</li>
+<li>Section 5.5  2, 3.1.4.1, 3.1.4.2</li>
+<li>Section 5.7.1  4.3.8, 9.6</li>
+<li>Section 5.7.2  6.3.4</li>
+<li>Section 6.1  6.5.7, 8.3.1</li>
+<li>Section 6.6  5.1.1</li>
+<li>Section 6.7  6.2.2, 6.5.15</li>
+<li>Section 7  1.2, 8.3.1</li>
+<li>Section 8.3.1  4.3.8</li>
+<li>Section 9  9</li>
+<li>Section 10  10</li>
+</ul></li>
+<li>RFC7232  3, 4.1, 5.2, 5.2, 5.2, 5.2, 5.2, 5.2, 6.1, 6.1, 6.1, 7.2, 7.2, 7.2, 11.1
+<ul class="org-ul">
+<li>Section 2.2  7.2</li>
+<li>Section 2.3  7.2</li>
+<li>Section 3.1  5.2</li>
+<li>Section 3.2  5.2</li>
+<li>Section 3.3  5.2</li>
+<li>Section 3.4  5.2</li>
+<li>Section 4  6.1</li>
+<li>Section 4.1  6.1</li>
+<li>Section 4.2  6.1</li>
+<li>Section 5  5.2</li>
+</ul></li>
+<li>RFC7233  3.1.1.4, 3.3, 4.3.1, 4.3.4, 5.1, 5.2, 6.1, 6.1, 6.1, 7.4, 8.1.2, 11.1, A.6
+<ul class="org-ul">
+<li>Section 2.3  7.4</li>
+<li>Section 3.1  5.1</li>
+<li>Section 3.2  5.2</li>
+<li>Section 4  6.1</li>
+<li>Section 4.1  6.1</li>
+<li>Section 4.2  3.3, 4.3.4</li>
+<li>Section 4.4  6.1</li>
+<li>Appendix A  A.6</li>
+</ul></li>
+<li>RFC7234  4.2.3, 4.3.1, 4.3.2, 4.3.2, 4.3.3, 4.3.4, 4.3.5, 5.1, 5.1, 6.1, 6.3.1, 6.3.4, 6.3.4, 6.3.5, 6.4.1, 6.4.2, 6.5.4, 6.5.5, 6.5.9, 6.5.12, 6.6.2, 7.1, 7.1, 7.1, 7.1, 7.1.4, 7.1.4, 8.2.2, 11.1
+<ul class="org-ul">
+<li>Section 4.1  7.1.4</li>
+<li>Section 4.2.1  4.3.3</li>
+<li>Section 4.2.2  6.3.1, 6.3.4, 6.3.5, 6.4.1, 6.4.2, 6.5.4, 6.5.5, 6.5.9, 6.5.12, 6.6.2</li>
+<li>Section 4.3.5  4.3.2</li>
+<li>Section 4.4  4.3.4, 4.3.5</li>
+<li>Section 5.1  7.1</li>
+<li>Section 5.2  4.3.1, 4.3.2, 5.1, 7.1, 7.1.4</li>
+<li>Section 5.3  7.1</li>
+<li>Section 5.4  5.1</li>
+<li>Section 5.5  6.3.4, 7.1</li>
+</ul></li>
+<li>RFC7235  4.3.8, 5.4, 5.4, 5.4, 6.1, 6.1, 6.1, 7.1.4, 7.3, 7.3, 11.1
+<ul class="org-ul">
+<li>Section 3  6.1</li>
+<li>Section 3.1  6.1</li>
+<li>Section 3.2  6.1</li>
+<li>Section 4.1  7.3</li>
+<li>Section 4.2  5.4, 7.1.4</li>
+<li>Section 4.3  7.3</li>
+<li>Section 4.4  5.4</li>
+</ul></li>
+<li>RFC7238  6.4.7, 11.2</li>
+</ul></li>
+<li>S
+<ul class="org-ul">
+<li>safe  4.2.1</li>
+<li>selected representation  3, 7.2</li>
+<li>Server header field  7.4, 7.4.2, 8.3.2, 9.6</li>
+<li>Status Codes Classes  
+<ul class="org-ul">
+<li>1xx Informational  6.2</li>
+<li>2xx Successful  6.3</li>
+<li>3xx Redirection  6.4, B</li>
+<li>4xx Client Error  6.5</li>
+<li>5xx Server Error  6.6</li>
+</ul></li>
+</ul></li>
+<li>T
+<ul class="org-ul">
+<li>TRACE method  4.1, 4.3.8, 5.1.2, 8.1.3, B, B, B</li>
+</ul></li>
+<li>U
+<ul class="org-ul">
+<li>User-Agent header field  5.5, 5.5.3, 7.4.2, 8.3.2, 9.6</li>
+</ul></li>
+<li>V
+<ul class="org-ul">
+<li>Vary header field  3.4.1, 7.1, 7.1.4, 8.3.1, 8.3.2</li>
+</ul></li>
+<li>X
+<ul class="org-ul">
+<li>x-compress (content coding)  3.1.2.1</li>
+<li>x-gzip (content coding)  3.1.2.1</li>
+</ul></li>
+</ul>
 </div>
+</div>
+
 <div id="outline-container-org40e7e5d" class="outline-2">
 <h2 id="org40e7e5d">Author' Addresses</h2>
+<div class="outline-text-2" id="text-org40e7e5d">
+<pre class="example">
+Roy T. Fielding (editor)
+Adobe Systems Incorporated
+345 Park Ave
+San Jose, CA 95110
+USA
+Email: fielding@gbiv.com
+URI: http://roy.gbiv.com/
+</pre>
+
+<pre class="example">
+greenbytes GmbH
+Hafenweg 16
+Muenster, NW 48155
+Germany
+Email: julian.reschke@greenbytes.de
+URI: http://greenbytes.de/tech/webdav/
+</pre>
+</div>
 </div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
