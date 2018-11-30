@@ -3271,18 +3271,18 @@ Obsolete formats:
 Recipients of a timestamp value in =rfc850-date= format, which uses a two-digit year, *MUST* interpret a timestamp that appears to be more than 50 years in the future as representing the most recent year in the past that had the same last two digits.
 #+END_QUOTE
 
-=rfc850-date= 格式的时间戳使用两位数字来表示年份，如果接收端接收到一个 =rfc850-date= 格式的时间戳，*必须* 将时间戳里看起来像是未来 50 年以上的年份为过去最近具有这两位数字相同的年份。 
+=rfc850-date= 格式的时间戳使用两位数字来表示年份，如果接收端接收到一个 =rfc850-date= 格式的时间戳，*必须* 将时间戳里看起来像是未来 50 年以上的年份作为过去最近具有这两位数字相同的年份来对待。 
 
 #+BEGIN_QUOTE
 译注：
-由于两位数字表示的年份无法表现出世纪，因此，要将一个 2 位数字表示的年份转换为 4 位数字表示的年份时可将这个 2 位数字的年份限定在距今前后 50 年内。如果这 2 位数比当前年的差超过 50 年，则认为是过去时间。
+由于 2 位数字表示的年份无法表现出世纪，因此，要将一个 2 位数字表示的年份转换为 4 位数字表示的年份时可将这个 2 位数字的年份限定在距今前后 50 年内。如果这 2 位数与当前年的差超过 50 年，则认为是过去时间。
 
 例如，假设当前年份为 2018 年，要转换的时间戳的月、日、时、分、秒以及毫秒数与当前瞬时时间一致（即不考虑除年份以外的因素）：
 
 - 如果 2 位数字的年份为 02，那么 02 比 18 小，则认为是过去时间，距今最近的 02 年是 2002 年，那么 2002 就是转换的结果；
 - 如果 2 位数字的年份为 20，那么 20 比 18 大，则认为是未来时间，且 2020 距今（2018）只相差 2 年，不超过 50 年，那么 2020 就是转换的结果；
-- 如果 2 位数字的年份为 68，那么 68 比 18 大，则认为是未来时间，且 2068 距今（2018）只相差 50 年，不超过 50 年，那么 2068 就是转换的结果；
-- 如果 2 位数字的年份为 69，那么 69 比 18 大，则认为是未来时间，且 2069 距今（2018）只相差 51 年，不超过 50 年，那么 1969 就是转换的结果。
+- 如果 2 位数字的年份为 68，那么 68 比 18 大，则认为是未来时间，且 2068 距今（2018）相差 50 年，不超过 50 年，那么 2068 就是转换的结果；
+- 如果 2 位数字的年份为 69，那么 69 比 18 大，则认为是未来时间，且 2069 距今（2018）相差 51 年，超过了 50 年，那么 1969 就是转换的结果。
 
 再给一个详细的转换表：
 
@@ -3452,7 +3452,7 @@ There are circumstances in which a =fragment= identifier in a =Location= value w
 *Note:* The =Content-Location= header field ([[id:91650144-4bfc-4362-b628-f96578a5c756][Section 3.1.4.2]]) differs from =Location= in that the =Content-Location= refers to the most specific resource corresponding to the enclosed representation. It is therefore possible for a response to contain both the =Location= and =Content-Location= header fields.
 #+END_QUOTE
 
-=Content-Location= 头字段（[[id:91650144-4bfc-4362-b628-f96578a5c756][章节 3.1.4.2]]）与 =Location= 的不同之处在于：=Content-Location= 引用的是有效载荷内的表示形式所对应的最明确的资源。因此，在一个响应里同时包含 =Location= 和 =Content-Location= 丙个头字段是可能的。
+=Content-Location= 头字段（[[id:91650144-4bfc-4362-b628-f96578a5c756][章节 3.1.4.2]]）与 =Location= 的不同之处在于：=Content-Location= 引用的是有效载荷内的表示形式所对应的最明确的资源。因此，在一个响应里同时包含 =Location= 和 =Content-Location= 两个头字段是可能的。
 
 *** 7.1.3. Retry-After
 :PROPERTIES:
@@ -3460,20 +3460,26 @@ There are circumstances in which a =fragment= identifier in a =Location= value w
 :END:
 
 #+BEGIN_QUOTE
-Servers send the "Retry-After" header field to indicate how long the user agent ought to wait before making a follow-up request. When sent with a 503 (Service Unavailable) response, Retry-After indicates how long the service is expected to be unavailable to the client. When sent with any 3xx (Redirection) response, Retry-After indicates the minimum time that the user agent is asked to wait before issuing the redirected request.
+Servers send the "Retry-After" header field to indicate how long the user agent ought to wait before making a follow-up request. When sent with a =503 (Service Unavailable)= response, =Retry-After= indicates how long the service is expected to be unavailable to the client. When sent with any =3xx (Redirection)= response, =Retry-After= indicates the minimum time that the user agent is asked to wait before issuing the redirected request.
 #+END_QUOTE
 
+服务器在其发送的响应里带有 =Retry-After= 头字段表明：用户代理在发送后续请求之前应该等待多长时间。当 =503 (Service Unavailable)= 响应里带有 =Retry-After=，表明：服务预期在多长时间内对客户端不可用。当 =3xx (Redirection)= 响应里带有 =Retry-After=，表明：要求用户代理在执行重定向请求之前要等待的最小时间。
+
 #+BEGIN_QUOTE
-The value of this field can be either an HTTP-date or a number of seconds to delay after the response is received.
+The value of this field can be either an =HTTP-date= or a number of seconds to delay after the response is received.
 #+END_QUOTE
+
+这个字段的值可以是一个 =HTTP-date=，也可以是接收到响应以后的延迟秒数。
 
 #+BEGIN_SRC text
   Retry-After = HTTP-date / delay-seconds
 #+END_SRC
 
 #+BEGIN_QUOTE
-A delay-seconds value is a non-negative decimal integer, representing time in seconds.
+A =delay-seconds= value is a non-negative decimal integer, representing time in seconds.
 #+END_QUOTE
+
+=delay-seconds= 的值是一个十进制非负整数，表示秒数。
 
 #+BEGIN_SRC text
   delay-seconds  = 1*DIGIT
@@ -3482,6 +3488,8 @@ A delay-seconds value is a non-negative decimal integer, representing time in se
 #+BEGIN_QUOTE
 Two examples of its use are
 #+END_QUOTE
+
+两个例子：
 
 #+BEGIN_EXAMPLE
   Retry-After: Fri, 31 Dec 1999 23:59:59 GMT
@@ -3492,13 +3500,15 @@ Two examples of its use are
 In the latter example, the delay is 2 minutes.
 #+END_QUOTE
 
+在第二个例子中，延迟是 2 分钟。
+
 *** 7.1.4. Vary
 :PROPERTIES:
 :ID:       ca7f8781-b183-4563-a90a-b9b7ad4f1032
 :END:
 
 #+BEGIN_QUOTE
-The "Vary" header field in a response describes what parts of a request message, aside from the method, Host header field, and request target, might influence the origin server's process for selecting and representing this response. The value consists of either a single asterisk ("*") or a list of header field names (case-insensitive).
+The "Vary" header field in a response describes what parts of a request message, aside from the method, =Host= header field, and request target, might influence the origin server's process for selecting and representing this response. The value consists of either a single asterisk ("*") or a list of header field names (case-insensitive).
 #+END_QUOTE
 
 #+BEGIN_SRC text
