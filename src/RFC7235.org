@@ -58,11 +58,17 @@
    :END:
 * 4. Header Field Definitions
 ** 4.1. WWW-Authenticate
+:PROPERTIES:
+:ID:       22f79cd1-20cc-4ac0-bd68-643e0d51fe7d
+:END:
 ** 4.2. Authorization
 :PROPERTIES:
 :ID:       14671c8e-e5a4-4f9d-ad1d-6460328ed7f5
 :END:
 ** 4.3. Proxy-Authenticate
+:PROPERTIES:
+:ID:       7f949af1-00e3-4909-adc7-219da68f0457
+:END:
 ** 4.4. Proxy-Authorization
 :PROPERTIES:
 :ID:       89c3125a-e7ef-48ea-a2c1-ff4c57214389

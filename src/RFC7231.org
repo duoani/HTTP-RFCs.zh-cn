@@ -180,7 +180,7 @@ Representation header fields provide metadata about the representation. When a m
 The following header fields convey representation metadata:
 #+END_QUOTE
 
-以下头字段负责传达[[ruby:representation%20metadata][表示形式元数据]]：
+以下头字段负责运载[[ruby:representation%20metadata][表示形式元数据]]：
 
 | header Field Name | Defined in...   |
 |-------------------+-----------------|
@@ -679,7 +679,7 @@ Header fields that specifically describe the payload, rather than the associated
 When responses convey payload information, whether indicating a success or an error, the origin server often has different ways of representing that information; for example, in different formats, languages, or encodings. Likewise, different users or user agents might have differing capabilities, characteristics, or preferences that could influence which representation, among those available, would be best to deliver. For this reason, HTTP provides mechanisms for content negotiation.
 #+END_QUOTE
 
-响应在传达有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器。也就是说，在所有可用的[[ruby:representations][表示形式]]中，究竟响应哪一种[[ruby:representation][表示形式]]才是最合适的。出于上述原因，HTTP 提供了[[ruby:content%20negotiation][内容协商]]的机制。
+响应在运载有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器。也就是说，在所有可用的[[ruby:representations][表示形式]]中，究竟响应哪一种[[ruby:representation][表示形式]]才是最合适的。出于上述原因，HTTP 提供了[[ruby:content%20negotiation][内容协商]]的机制。
 
 #+BEGIN_QUOTE
 This specification defines two patterns of content negotiation that can be made visible within the protocol: "proactive", where the server selects the representation based upon the user agent's stated preferences, and "reactive" negotiation, where the server provides a list of representations for the user agent to choose from. Other patterns of content negotiation include "conditional content", where the representation consists of multiple parts that are selectively rendered based on user agent parameters, "active content", where the representation contains a script that makes additional (more specific) requests based on the user agent characteristics, and "Transparent Content Negotiation" ([[[https://tools.ietf.org/html/rfc2295][RFC2295]]]), where content selection is performed by an intermediary. These patterns are not mutually exclusive, and each has trade-offs in applicability and practicality.
@@ -2147,17 +2147,17 @@ Some intermediaries have been known to indiscriminately remove =Referer= header 
 The "User-Agent" header field contains information about the user agent originating the request, which is often used by servers to help identify the scope of reported interoperability problems, to work around or tailor responses to avoid particular user agent limitations, and for analytics regarding browser or operating system use. A user agent *SHOULD* send a =User-Agent= field in each request unless specifically configured not to do so.
 #+END_QUOTE
 
-=User-Agent= 头字段包含了[[ruby:originating%20the%20request][发起请求]]的用户代理的相关信息。=User-Agent= 常被服务器用来帮助识别报告出互操作性问题的范围，[[ruby:work%20around][变通]]或[[ruby:tailor][调整]]响应以避免个别用户代理的限制，以及分析浏览器或操作系统的使用情况等。用户代理 *应当* 在每个请求里包含一个 =User-Agent= 头字段，除非被明确配置为不要这样做。
+=User-Agent= 头字段包含了[[ruby:originating%20the%20request][发起请求]]的用户代理的相关信息。=User-Agent= 常被服务器用来帮助识别报告出互操作问题的范围，[[ruby:work%20around][变通]]或[[ruby:tailor][调整]]响应以避免个别用户代理的限制，以及分析浏览器或操作系统的使用情况等。用户代理 *应当* 在每个请求里包含一个 =User-Agent= 头字段，除非被明确配置为不要这样做。
 
 #+BEGIN_SRC text
   User-Agent = product *( RWS ( product / comment ) )
 #+END_SRC
 
 #+BEGIN_QUOTE
-The =User-Agent= field-value consists of one or more product identifiers, each followed by zero or more comments ([[id:a6c4dceb-8a19-4799-a39b-b7240755c672][Section 3.2]] of [RFC7230]), which together identify the user agent software and its significant subproducts. By convention, the product identifiers are listed in decreasing order of their significance for identifying the user agent software. Each product identifier consists of a name and optional version.
+The =User-Agent= field-value consists of one or more =product= identifiers, each followed by zero or more comments ([[id:a6c4dceb-8a19-4799-a39b-b7240755c672][Section 3.2]] of [RFC7230]), which together identify the user agent software and its significant subproducts. By convention, the =product= identifiers are listed in decreasing order of their significance for identifying the user agent software. Each =product= identifier consists of a name and optional version.
 #+END_QUOTE
 
-=User-Agent= 的字段值由一个或多个[[ruby:product%20identifiers][产品标识符]]组成，每个产品标识符后面跟随零个或多个注释（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][【RFC7230】章节 3.2]]），它们一起标识了该用户代理软件以及它的重要的[[ruby:subproducts][子产品]]。按照惯例，这些产品标识符是按其标识用户代理软件的重要性的降序顺序排列的。每个产品标识符由一个名称和一个可选的版本组成。
+=User-Agent= 的字段值由一个或多个 =product= 标识符构成，每个 =product= 后面跟随着零个或多个 =comment= 注释（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][【RFC7230】章节 3.2]]），它们一起标识了该用户代理软件以及它的重要的[[ruby:subproducts][子产品]]。按照惯例，这些 =product= 标识符是按其标识用户代理软件的重要性的降序顺序排列的。每个 =product= 标识符由一个名称和一个可选的版本构成。
 
 #+BEGIN_SRC text
   product         = token ["/" product-version]
@@ -2165,10 +2165,10 @@ The =User-Agent= field-value consists of one or more product identifiers, each f
 #+END_SRC
 
 #+BEGIN_QUOTE
-A sender *SHOULD* limit generated product identifiers to what is necessary to identify the product; a sender *MUST NOT* generate advertising or other nonessential information within the product identifier. A sender *SHOULD NOT* generate information in =product-version= that is not a version identifier (i.e., successive versions of the same product name ought to differ only in the =product-version= portion of the product identifier).
+A sender *SHOULD* limit generated =product= identifiers to what is necessary to identify the product; a sender *MUST NOT* generate advertising or other nonessential information within the product identifier. A sender *SHOULD NOT* generate information in =product-version= that is not a =version= identifier (i.e., successive versions of the same product name ought to differ only in the =product-version= portion of the =product= identifier).
 #+END_QUOTE
 
-发送端 *应当* 将所生成的产品标识符限制为必要于标识该产品的那些标识符。发送端 *禁止* 将广告或其他非本质信息生成到产品标识符内部。发送端 *不应当* 将非版本标识符的信息生成到 =product-version= 内部（也就是说，同一个产品名称的连续版本之间区别应该仅在于产品标识符的 =product-version= 部分）。
+发送端 *应当* 将所生成的 =product= 标识符限制为必要于标识该产品的那些标识符。发送端 *禁止* 将广告或其他非本质信息生成到 =product= 标识符内部。发送端 *不应当* 将不是一个 =version= 标识符的信息生成到 =product-version= 内部（也就是说，同一个产品名称的连续版本之间区别应该仅在于 =product= 标识符的 =product-version= 部分）。
 
 #+BEGIN_QUOTE
 Example:
@@ -2184,10 +2184,10 @@ Example:
 A user agent *SHOULD NOT* generate a =User-Agent= field containing needlessly fine-grained detail and *SHOULD* limit the addition of subproducts by third parties. Overly long and detailed =User-Agent= field values increase request latency and the risk of a user being identified against their wishes ("fingerprinting").
 #+END_QUOTE
 
-用户代理 *不应当* 生成一个包含不必要的[[ruby:fine-grained%20detail][细粒度详尽信息]] 的 =User-Agent= 头字段，同时，*应当* 限制被第三方添加子产品到该字段中。太过长或详尽的 =User-Agent= 字段值会加大请求的延迟以及违背用户意愿而被识别出（“[[ruby:fingerprinting][指纹识别]]”）的风险。
+用户代理 *不应当* 生成一个包含不必要的[[ruby:fine-grained%20detail][细粒度详尽信息]]的 =User-Agent= 头字段，同时，*应当* 限制被第三方添加子产品到该字段中。太过长或详尽的 =User-Agent= 字段值会加大请求的延迟，以及违背用户意愿而被识别出（“[[ruby:fingerprinting][指纹识别]]”）的风险。
 
 #+BEGIN_QUOTE
-Likewise, implementations are encouraged not to use the product tokens of other implementations in order to declare compatibility with them, as this circumvents the purpose of the field. If a user agent masquerades as a different user agent, recipients can assume that the user intentionally desires to see responses tailored for that identified user agent, even if they might not work as well for the actual user agent being used.
+Likewise, implementations are encouraged not to use the =product= tokens of other implementations in order to declare compatibility with them, as this circumvents the purpose of the field. If a user agent masquerades as a different user agent, recipients can assume that the user intentionally desires to see responses tailored for that identified user agent, even if they might not work as well for the actual user agent being used.
 #+END_QUOTE
 
 同样，不鼓励[[ruby:implementations][实现]]使用[[ruby:other%20implementations][其他实现]]的 =product= 标记来[[ruby:declare][断言]]（判断）与它们之间的[[ruby:compatibility][兼容性]]，因为这样[[ruby:circumvents][逃避]]了该字段的目的。如果一个用户代理伪装成另一个不同的用户代理，接收端可以假定这个用户代理故意想查看适用于被伪装的用户代理的响应，即使这些响应可能无法很好地适用于实际的用户代理。
@@ -3369,7 +3369,7 @@ A recipient with a clock that receives a response message without a =Date= heade
 A user agent *MAY* send a =Date= header field in a request, though generally will not do so unless it is believed to convey useful information to the server. For example, custom applications of HTTP might convey a =Date= if the server is expected to adjust its interpretation of the user's request based on differences between the user agent and server clocks.
 #+END_QUOTE
 
-用户代理 *可以* 在请求里带有一个 =Date= 头字段，虽然一般不会这么做，除非认为它传达了有用的信息给到服务器。例如，某些 HTTP 的客户应用程序可能会传达一个 =Date= 如果服务器期望用它基于用户代理与服务器时间上的不同来调整对用户请求的[[ruby:interpretation][解释]]。
+用户代理 *可以* 在请求里带有一个 =Date= 头字段，虽然一般不会这么做，除非认为它运载了有用的信息给到服务器。例如，某些 HTTP 的客户应用程序可能会传达一个 =Date= 如果服务器期望用它基于用户代理与服务器时间上的不同来调整对用户请求的[[ruby:interpretation][解释]]。
 
 *** 7.1.2. Location
 :PROPERTIES:
@@ -3511,36 +3511,51 @@ In the latter example, the delay is 2 minutes.
 The "Vary" header field in a response describes what parts of a request message, aside from the method, =Host= header field, and request target, might influence the origin server's process for selecting and representing this response. The value consists of either a single asterisk ("*") or a list of header field names (case-insensitive).
 #+END_QUOTE
 
+响应里的 =Vary= 头字描述了：在请求消息里，除了请求方法、=Host= 头字段、请求目标以外，还有什么部分可能会影响到源服务器对这个响应的[[ruby:selecting%20and%20representing][选择和表示]]的处理。它的值可以由单独一个星号（"*"）构成，也可由一个头字段名称（不区分大小写）的列表构成。
+
 #+BEGIN_SRC text
   Vary = "*" / 1#field-name
 #+END_SRC
 
 #+BEGIN_QUOTE
-A Vary field value consisting of a comma-separated list of names indicates that the named request header fields, known as the selecting header fields, might have a role in selecting the representation. The potential selecting header fields are not limited to those defined by this specification.
+A =Vary= field value consisting of a comma-separated list of names indicates that the named request header fields, known as the selecting header fields, might have a role in selecting the representation. The potential selecting header fields are not limited to those defined by this specification.
 #+END_QUOTE
+
+=Vary= 的字段值由以[[ruby:comma-separated][英文逗号分隔]]的名称构成时，表明：所[[ruby:named][指名]]的请求头字段，称为[[ruby:selecting%20header%20fields][选择头字段]]，可能在选择[[ruby:representation][表示形式]]过程中发挥了作用。可能作为选择头字段的字段不限于本规范所定义的那些。
 
 #+BEGIN_QUOTE
 For example, a response that contains
 #+END_QUOTE
+
+例如，一个响应包含了如下字段：
 
 #+BEGIN_EXAMPLE
   Vary: accept-encoding, accept-language
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-indicates that the origin server might have used the request's Accept-Encoding and Accept-Language fields (or lack thereof) as determining factors while choosing the content for this response.
+indicates that the origin server might have used the request's =Accept-Encoding= and =Accept-Language= fields (or lack thereof) as determining factors while choosing the content for this response.
 #+END_QUOTE
+
+表明：源服务器可能已经使用（或者说由于缺少）该请求的 =Accept-Encoding= 和 =Accept-Language= 字段作为决定因素来选择这个响应的内容。
 
 #+BEGIN_QUOTE
-An origin server might send Vary with a list of fields for two purposes:
+An origin server might send =Vary= with a list of fields for two purposes:
 
-1. To inform cache recipients that they MUST NOT use this response to satisfy a later request unless the later request has the same values for the listed fields as the original request (Section 4.1 of [RFC7234]). In other words, Vary expands the cache key required to match a new request to the stored cache entry.
-2. To inform user agent recipients that this response is subject to content negotiation (Section 5.3) and that a different representation might be sent in a subsequent request if additional parameters are provided in the listed header fields (proactive negotiation).
+1. To inform cache recipients that they *MUST NOT* use this response to satisfy a later request unless the later request has the same values for the listed fields as the original request ([[id:352eb301-a424-48e9-9027-3c6633da4b77][Section 4.1]] of [RFC7234]). In other words, =Vary= expands the cache key required to match a new request to the stored cache entry.
+2. To inform user agent recipients that this response is subject to content negotiation ([[id:99513880-9381-41eb-91ee-483b42d025e8][Section 5.3]]) and that a different representation might be sent in a subsequent request if additional parameters are provided in the listed header fields (proactive negotiation).
 #+END_QUOTE
+
+源服务器可能出于以下两种目的来发送带有一个字段列表的 =Vary=：
+
+1. 去告诉[[ruby:cache%20recipients][缓存接收端]]它们，*禁止* 使用这个响应来满足后续的请求，除非后续请求带有这个列表所罗列的字段，并且对应的值与原来的请求的字段值相同（[[id:352eb301-a424-48e9-9027-3c6633da4b77][【RFC7234】章节 4.1]]）。换句话说，=Vary= 扩展缓存服务器用来对新请求与所存储的缓存条目进行匹配所需要的[[ruby:key][键]]。
+2. 去告诉用户代理接收端它们，这个响应受到[[ruby:content%20negotiation][内容协商]]（[[id:99513880-9381-41eb-91ee-483b42d025e8][章节 5.3]]）的影响，并且，如果后续请求在这个列表所罗列的头字段里提供额外的参数的话，会发送一个不同的表示形式（[[ruby:proactive%20negotiation][主动型协商]]）。
 
 #+BEGIN_QUOTE
-An origin server SHOULD send a Vary header field when its algorithm for selecting a representation varies based on aspects of the request message other than the method and request target, unless the variance cannot be crossed or the origin server has been deliberately configured to prevent cache transparency. For example, there is no need to send the Authorization field name in Vary because reuse across users is constrained by the field definition (Section 4.2 of [RFC7235]). Likewise, an origin server might use Cache-Control directives (Section 5.2 of [RFC7234]) to supplant Vary if it considers the variance less significant than the performance cost of Vary's impact on caching.
+An origin server *SHOULD* send a =Vary= header field when its algorithm for selecting a representation varies based on aspects of the request message other than the method and request target, unless the variance cannot be crossed or the origin server has been deliberately configured to prevent cache transparency. For example, there is no need to send the =Authorization= field name in =Vary= because reuse across users is constrained by the field definition ([[id:14671c8e-e5a4-4f9d-ad1d-6460328ed7f5][Section 4.2]] of [RFC7235]). Likewise, an origin server might use =Cache-Control= directives ([[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][Section 5.2]] of [RFC7234]) to supplant =Vary= if it considers the variance less significant than the performance cost of Vary's impact on caching.
 #+END_QUOTE
+
+当源服务器对表示形式的选择算法改变为基于请求消息的多个方面，而不是只基于请求方法或者请求目标的时候，源服务器 *应当* 在其发送的响应里带有一个 =Vary= 头字段，除非这种改变不能被[[ruby:crossed][逾越]]或者源服务器是被刻意配置为阻止[[ruby:cache%20transparency][缓存服务器的透明性]]。例如，不需要在 =Vary= 里带有 =Authorization= 字段名，因为[[ruby:across%20users][用户间]]的复用受到这个字段的[[ruby:constrained][约束]]（[[id:14671c8e-e5a4-4f9d-ad1d-6460328ed7f5][【RFC7235】章节 4.2]]）。同样，如果源服务器认为这种改变对比 =Vary= 对缓存的[[ruby:performance%20cost][性能损耗]]的影响来说不是那么重要的话，它可能会使用 =Cache-Control= 指令（[[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][【RFC7234】章节 5.2]]）来取代 =Vary=。
 
 ** 7.2. 验证器头字段 / Validator Header Fields
 :PROPERTIES:
@@ -3548,21 +3563,27 @@ An origin server SHOULD send a Vary header field when its algorithm for selectin
 :END:
 
 #+BEGIN_QUOTE
-Validator header fields convey metadata about the selected representation (Section 3). In responses to safe requests, validator fields describe the selected representation chosen by the origin server while handling the response. Note that, depending on the status code semantics, the selected representation for a given response is not necessarily the same as the representation enclosed as response payload.
+Validator header fields convey metadata about the selected representation ([[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][Section 3]]). In responses to safe requests, validator fields describe the selected representation chosen by the origin server while handling the response. Note that, depending on the status code semantics, the selected representation for a given response is not necessarily the same as the representation enclosed as response payload.
 #+END_QUOTE
+
+[[ruby:validator%20header%20fields][验证器头字段]]负责运载关于[[ruby:selected%20representation][已选定的表示形式]]的元数据（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][章节 3]]）。回应给[[ruby:safe%20requests][安全请求]]的响应中，验证器头字段描述了由源服务器所选定的表示形式。需要注意的是，根据状态码的语义，对于一个给定的响应的已选定的表示形式，不必和封装为响应有效载荷的表示形式相同。
 
 #+BEGIN_QUOTE
 In a successful response to a state-changing request, validator fields describe the new representation that has replaced the prior selected representation as a result of processing the request.
 #+END_QUOTE
 
+在回应给[[ruby:state-changing][会改变状态]]的请求的成功响应里，验证器头字段描述了：作为处理这个请求的结果，这个新的表示形式已经替换了之前所选定的表示形式。
+
 #+BEGIN_QUOTE
-For example, an ETag header field in a 201 (Created) response communicates the entity-tag of the newly created resource's representation, so that it can be used in later conditional requests to prevent the "lost update" problem [RFC7232].
+For example, an =ETag= header field in a =201 (Created)= response communicates the =entity-tag= of the newly created resource's representation, so that it can be used in later conditional requests to prevent the "lost update" problem [[[file:RFC7232.org][RFC7232]]].
 #+END_QUOTE
+
+例如，在 =201 (Created)= 响应里的 =ETag= 头字段传达了新创建的响应的表示形式的 =entity-tag=，以便它能够用在接下来的[[ruby:contional%20requests][条件请求]]中来阻止“[[ruby:lost%20update][丢失更新]]”的问题【[[file:RFC7232.org][RFC7232]]】。
 
 | Header Field Name | Defined in...            |
 |-------------------+--------------------------|
-| ETag              | Section 2.3 of [RFC7232] |
-| Last-Modified     | Section 2.2 of [RFC7232] |
+| ETag              | [[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][Section 2.3]] of [RFC7232] |
+| Last-Modified     | [[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][Section 2.2]] of [RFC7232] |
 
 ** 7.3. 认证质询 / Authentication Challenges
 
@@ -3570,10 +3591,12 @@ For example, an ETag header field in a 201 (Created) response communicates the e
 Authentication challenges indicate what mechanisms are available for the client to provide authentication credentials in future requests.
 #+END_QUOTE
 
+[[ruby:authentication%20challenges][认证质询]]表明：在未来的请求当中，客户端有什么能用的机制来提供认证质询。
+
 | Header Field Name | Defined in...            |
 |-------------------+--------------------------|
-| WWW-Authenticate  | Section 4.1 of [RFC7235] |
-| Proxy-Authenticate | Section 4.3 of [RFC7235] |
+| WWW-Authenticate  | [[id:22f79cd1-20cc-4ac0-bd68-643e0d51fe7d][Section 4.1]] of [RFC7235] |
+| Proxy-Authenticate | [[id:7f949af1-00e3-4909-adc7-219da68f0457][Section 4.3]] of [RFC7235] |
 
 ** 7.4. 响应上下文 / Response Context
 
@@ -3581,11 +3604,13 @@ Authentication challenges indicate what mechanisms are available for the client 
 The remaining response header fields provide more information about the target resource for potential use in later requests.
 #+END_QUOTE
 
+剩下的响应头字段提供了接下来请求可能会用到的目标资源相关的更多信息。
+
 | Header Field Name | Defined in...            |
 |-------------------+--------------------------|
-| Accept-Ranges     | Section 2.3 of [RFC7233] |
-| Allow             | Section 7.4.1            |
-| Server            | Section 7.4.2            |
+| Accept-Ranges     | [[id:cf601084-e3af-41bc-9ff7-8f903ca59fa8][Section 2.3]] of [RFC7233] |
+| Allow             | [[id:f8577773-512f-4d68-8f5d-444368db7c29][Section 7.4.1]]            |
+| Server            | [[id:9fb6944e-e603-4494-908c-7610fc72220a][Section 7.4.2]]            |
 
 *** 7.4.1. Allow
 :PROPERTIES:
@@ -3596,6 +3621,8 @@ The remaining response header fields provide more information about the target r
 The "Allow" header field lists the set of methods advertised as supported by the target resource. The purpose of this field is strictly to inform the recipient of valid request methods associated with the resource.
 #+END_QUOTE
 
+=Allow= 头字段列出了声明目标资源所支持的一系列方法。这个字段的目的是确切通知给接收端这个资源有哪些有效的请求方法。
+
 #+BEGIN_SRC text
   Allow = #method
 #+END_SRC
@@ -3604,43 +3631,60 @@ The "Allow" header field lists the set of methods advertised as supported by the
 Example of use:
 #+END_QUOTE
 
+使用示例：
+
 #+BEGIN_EXAMPLE
   Allow: GET, HEAD, PUT
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-The actual set of allowed methods is defined by the origin server at the time of each request. An origin server MUST generate an Allow field in a 405 (Method Not Allowed) response and MAY do so in any other response. An empty Allow field value indicates that the resource allows no methods, which might occur in a 405 response if the resource has been temporarily disabled by configuration.
+The actual set of allowed methods is defined by the origin server at the time of each request. An origin server *MUST* generate an =Allow= field in a =405 (Method Not Allowed)= response and *MAY* do so in any other response. An empty =Allow= field value indicates that the resource allows no methods, which might occur in a =405= response if the resource has been temporarily disabled by configuration.
 #+END_QUOTE
 
+实际的可用方法集是由源服务器在每次处理请求的时候定义的。源服务器 *必须* 在 =405 (Method Not Allowed)= 响应里生成一个 =Allow= 字段，也 *可以* 在任何其他响应中这样做。=Allow= 的字段值为空表明：这个资源不允许任何方法，这可能发生在一个 =405= 响应里，如果这个资源已被配置为临时禁用的话。
+
 #+BEGIN_QUOTE
-A proxy *MUST NOT* modify the Allow header field — it does not need to understand all of the indicated methods in order to handle them according to the generic message handling rules.
+A proxy *MUST NOT* modify the =Allow= header field — it does not need to understand all of the indicated methods in order to handle them according to the generic message handling rules.
 #+END_QUOTE
+
+代理 *禁止* 修改 =Allow= 头字段，因为代理并不需要去了解所有这些方法，为了按照通用消息处理规则来处理它们。
 
 *** 7.4.2. Server
+:PROPERTIES:
+:ID:       9fb6944e-e603-4494-908c-7610fc72220a
+:END:
 
 #+BEGIN_QUOTE
-The "Server" header field contains information about the software used by the origin server to handle the request, which is often used by clients to help identify the scope of reported interoperability problems, to work around or tailor requests to avoid particular server limitations, and for analytics regarding server or operating system use. An origin server MAY generate a Server field in its responses.
+The "Server" header field contains information about the software used by the origin server to handle the request, which is often used by clients to help identify the scope of reported interoperability problems, to work around or tailor requests to avoid particular server limitations, and for analytics regarding server or operating system use. An origin server *MAY* generate a =Server= field in its responses.
 #+END_QUOTE
+
+=Server= 头字段包含了源服务器处理这个请求所使用的软件的相关信息。客户端常用它来协助识别所报告出互操作问题的范围，[[ruby:work%20around][变通]]或[[ruby:tailor][调整]]请求以避免个别服务器的限制，以及分析服务器或操作系统的使用情况等。源服务器 *可以* 在它的响应里生成一个 =Server= 字段。
 
 #+BEGIN_SRC text
   Server = product *( RWS ( product / comment ) )
 #+END_SRC
 
 #+BEGIN_QUOTE
-The Server field-value consists of one or more product identifiers, each followed by zero or more comments (Section 3.2 of [RFC7230]), which together identify the origin server software and its significant subproducts. By convention, the product identifiers are listed in decreasing order of their significance for identifying the origin server software. Each product identifier consists of a name and optional version, as defined in Section 5.5.3.
+The =Server= field-value consists of one or more =product= identifiers, each followed by zero or more comments ([[id:a6c4dceb-8a19-4799-a39b-b7240755c672][Section 3.2]] of [RFC7230]), which together identify the origin server software and its significant subproducts. By convention, the =product= identifiers are listed in decreasing order of their significance for identifying the origin server software. Each =product= identifier consists of a name and optional version, as defined in [[id:d3473599-e20b-4b5d-9600-cb05340e8687][Section 5.5.3]].
 #+END_QUOTE
+
+=Server= 的字段值由一个或多个 =product= 标识符构成，每个 =product= 后面跟随着零个或多个 =comment= 注释（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][【RFC7230】章节 3.2]]），它们一起标识了该源服务器软件以及它的重要的[[ruby:subproducts][子产品]]。按照惯例，这些 =product= 标识符是按其标识源服务器软件的重要性的降序顺序排列的。每个 =product= 标识符由一个名称和一个可选的版本构成，正如[[id:d3473599-e20b-4b5d-9600-cb05340e8687][章节 5.5.3]] 所述。
 
 #+BEGIN_QUOTE
 Example:
 #+END_QUOTE
+
+例如：
 
 #+BEGIN_EXAMPLE
   Server: CERN/3.0 libwww/2.17
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-An origin server *SHOULD NOT* generate a Server field containing needlessly fine-grained detail and *SHOULD* limit the addition of subproducts by third parties. Overly long and detailed Server field values increase response latency and potentially reveal internal implementation details that might make it (slightly) easier for attackers to find and exploit known security holes.
+An origin server *SHOULD NOT* generate a =Server= field containing needlessly fine-grained detail and *SHOULD* limit the addition of subproducts by third parties. Overly long and detailed =Server= field values increase response latency and potentially reveal internal implementation details that might make it (slightly) easier for attackers to find and exploit known security holes.
 #+END_QUOTE
+
+源服务器 *不应当* 生成一个包含不必要的[[ruby:fine-grained][细粒度详尽信息]]的 =Server= 字段，同时，*应当* 限制被第三方添加子产品到该字段中。太过长或详尽的 =Server= 字段值会加大响应的延迟，以及可能泄露内部信息细节使得它（稍微）更容易被攻击者找到和挖掘已知的安全漏洞。
 
 * 8. IANA 注意事项 / IANA Considerations
 ** 8.1. 方法注册表 / Method Registry

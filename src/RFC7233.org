@@ -46,6 +46,9 @@
 ** 2.1. Byte Ranges
 ** 2.2. Other Range Units
 ** 2.3. Accept-Ranges
+:PROPERTIES:
+:ID:       cf601084-e3af-41bc-9ff7-8f903ca59fa8
+:END:
 * 3. Range Requests
 ** 3.1. Range
 :PROPERTIES:

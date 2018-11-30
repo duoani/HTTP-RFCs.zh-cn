@@ -42,9 +42,15 @@
 * 2. Validators
 ** 2.1. Weak versus Strong
 ** 2.2. Last-Modified
+:PROPERTIES:
+:ID:       9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840
+:END:
 ** 2.2.1. Generation
 ** 2.2.2. Comparison
 ** 2.3. ETag
+:PROPERTIES:
+:ID:       0244a602-2c4a-46aa-96c4-3bd14c3eb244
+:END:
 *** 2.3.1. Generation
 *** 2.3.2. Comparison
 *** 2.3.3. Example: Entity-Tags Varying on Content-Negotiated Resources

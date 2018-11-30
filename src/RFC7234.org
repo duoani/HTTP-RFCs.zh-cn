@@ -50,6 +50,9 @@
 ** 3.3. Combining Partial Content
 * 4. Constructing Responses from Caches
 ** 4.1. Calculating Secondary Keys with Vary
+:PROPERTIES:
+:ID:       352eb301-a424-48e9-9027-3c6633da4b77
+:END:
 ** 4.2. Freshness
 *** 4.2.1. Calculating Freshness Lifetime
 *** 4.2.2. Calculating Heuristic Freshness
