@@ -220,7 +220,7 @@ The =type/subtype= *MAY* be followed by parameters in the form of =name=value= p
 The =type=, =subtype=, and =parameter name= tokens are case-insensitive. Parameter values might or might not be case-sensitive, depending on the semantics of the parameter name. The presence or absence of a parameter might be significant to the processing of a media-type, depending on its definition within the media type registry.
 #+END_QUOTE
 
-上面 ABNF 列出的规则里，=type=、=subtype= 以及 =parameter= 的 =name= 这三个 token（标记）是不区分大小写的。=parameter= 的 =value= 不一定区分大小写，取决于 =parameter= 的 =name= 的语义。一个 =parameter= 的出现与否可能会对一个媒体类型的处理有重要意义，取决于该 =parameter= 在[[ruby:media%20type%20registry][媒体类型注册表]]里的定义。
+上面 ABNF 列出的规则里，=type=、=subtype= 以及 =parameter= 的 =name= 这三个 token（标记）是不区分大小写的。=parameter= 的 =value= 不一定区分大小写，取决于 =parameter= 的 =name= 的语义。一个 =parameter= 的出现与否可能会对一个媒体类型的处理有重要意义，取决于该 =parameter= 在[[ruby:media%20type%20registry][媒体类型登记表]]里的定义。
 
 #+BEGIN_QUOTE
 A parameter value that matches the token production can be transmitted either as a token or within a quoted-string. The quoted and unquoted values are equivalent. For example, the following examples are all equivalent, but the first is preferred for consistency:
@@ -243,7 +243,7 @@ A parameter value that matches the token production can be transmitted either as
 Internet media types ought to be registered with IANA according to the procedures defined in [[[https://tools.ietf.org/html/rfc6838][BCP13]]].
 #+END_QUOTE
 
-应该按照[[https://tools.ietf.org/html/rfc6838][【BCP13】]]所定义的流程，将[[ruby:Internet%20media%20types][互联网媒体类型]]注册在 IANA 里。
+应该按照[[https://tools.ietf.org/html/rfc6838][【BCP13】]]所定义的手续，将[[ruby:Internet%20media%20types][互联网媒体类型]]登记在 IANA 里。
 
 #+BEGIN_QUOTE
 *Note:* Unlike some similar constructs in other header fields, media type parameters do not allow whitespace (even "bad" whitespace) around the "=" character.
@@ -269,14 +269,14 @@ HTTP 使用[[ruby:charset%20names][字符集名称]]来表明或协商一个文�
 Charset names ought to be registered in the IANA "Character Sets" registry (<http://www.iana.org/assignments/character-sets>) according to the procedures defined in [RFC2978].
 #+END_QUOTE
 
-应该按照定义在[[https://tools.ietf.org/html/rfc2978][【RFC2978】]]的流程，将[[ruby:charset%20names][字符集名称]]注册在 IANA 的 "Character Sets" 注册表里。
+应该按照定义在[[https://tools.ietf.org/html/rfc2978][【RFC2978】]]的手续，将[[ruby:charset%20names][字符集名称]]登记在 IANA 的 "Character Sets" 登记表里。
 
 **** 3.1.1.3. 规范化和文本缺省 / Canonicalization and Text Defaults
 #+BEGIN_QUOTE
 Internet media types are registered with a canonical form in order to be interoperable among systems with varying native encoding formats. Representations selected or transferred via HTTP ought to be in canonical form, for many of the same reasons described by the Multipurpose Internet Mail Extensions (MIME) [[[https://tools.ietf.org/html/rfc2045][RFC2045]]]. However, the performance characteristics of email deployments (i.e., store and forward messages to peers) are significantly different from those common to HTTP and the Web (server-based information services). Furthermore, MIME's constraints for the sake of compatibility with older mail transfer protocols do not apply to HTTP (see [[id:84208afd-e458-4f40-97cc-2e9535523797][Appendix A]]).
 #+END_QUOTE
 
-[[ruby:Internet%20media%20types][互联网媒体类型]]是使用一种[[ruby:canonical%20form][规范形式]]来注册的，以便于在具有不同本地编码格式的系统之间能够相互操作。经由 HTTP 来选择或传输的[[ruby:representations][资源表示形式]]应该使用规范形式，其原因已经在[[ruby:Multipurpose%20Internet%20Mail%20Extensions][多用途互联网邮件扩展]]（MIME）【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】里描述过了。然而，电子邮件调度（即存储和转发消息到其他对方）的性能特征跟在 HTTP 和 Web（其于服务器的信息服务）中通用的性能特征有明显的区别。此外，在 MIME 里为了兼容旧的邮件传输协议所设计的约束并不适用于 HTTP（见[[id:84208afd-e458-4f40-97cc-2e9535523797][附录 A]]）。
+[[ruby:Internet%20media%20types][互联网媒体类型]]是使用一种[[ruby:canonical%20form][规范形式]]来登记的，以便于在具有不同本地编码格式的系统之间能够相互操作。经由 HTTP 来选择或传输的[[ruby:representations][资源表示形式]]应该使用规范形式，其原因已经在[[ruby:Multipurpose%20Internet%20Mail%20Extensions][多用途互联网邮件扩展]]（MIME）【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】里描述过了。然而，电子邮件调度（即存储和转发消息到其他对方）的性能特征跟在 HTTP 和 Web（其于服务器的信息服务）中通用的性能特征有明显的区别。此外，在 MIME 里为了兼容旧的邮件传输协议所设计的约束并不适用于 HTTP（见[[id:84208afd-e458-4f40-97cc-2e9535523797][附录 A]]）。
 
 #+BEGIN_QUOTE
 译注：canonical form (or normal form, or standard form) 的解释见 [[https://en.wikipedia.org/wiki/Canonical_form][wikipedia: Canonical form]]。
@@ -374,7 +374,7 @@ content coding 的值指明了一种已经或能够应用到一个[[ruby:represe
 All content-coding values are case-insensitive and ought to be registered within the "HTTP Content Coding Registry", as defined in [[id:87f2ed30-a48b-4c31-a181-8e3a33ba1080][Section 8.4]]. They are used in the =Accept-Encoding= ([[id:a8fcc101-3782-4ed0-aec0-561b933e6a5f][Section 5.3.4]]) and =Content-Encoding= ([[id:a10adb00-e955-42a6-8d28-ed6f942db085][Section 3.1.2.2]]) header fields.
 #+END_QUOTE
 
-所有 =content-coding= 的值都是不区分大小写的，并且应该注册到 "HTTP Content Coding Registry" 注册表里，如[[id:87f2ed30-a48b-4c31-a181-8e3a33ba1080][章节 8.4]] 所述。它们用在 =Accept-Encoding= （[[id:a8fcc101-3782-4ed0-aec0-561b933e6a5f][章节 5.3.4]]）和 =Content-Encoding= （[[id:a10adb00-e955-42a6-8d28-ed6f942db085][章节 3.1.2.2]]）头字段里。
+所有 =content-coding= 的值都是不区分大小写的，并且应该登记到 "HTTP Content Coding Registry" 登记表里，如[[id:87f2ed30-a48b-4c31-a181-8e3a33ba1080][章节 8.4]] 所述。它们用在 =Accept-Encoding= （[[id:a8fcc101-3782-4ed0-aec0-561b933e6a5f][章节 5.3.4]]）和 =Content-Encoding= （[[id:a10adb00-e955-42a6-8d28-ed6f942db085][章节 3.1.2.2]]）头字段里。
 
 #+BEGIN_QUOTE
 The following content-coding values are defined by this specification:
@@ -831,7 +831,7 @@ All general-purpose servers *MUST* support the methods GET and HEAD. All other m
 Additional methods, outside the scope of this specification, have been standardized for use in HTTP. All such methods ought to be registered within the "Hypertext Transfer Protocol (HTTP) Method Registry" maintained by IANA, as defined in [[id:193d7ad5-9c6d-4bf7-98f1-6984a42af639][Section 8.1]].
 #+END_QUOTE
 
-超出本规范所定义的额外方法，它们在 HTTP 的使用方式已经被标准化。应该把所有这些方法注册在由 IANA 维护的 "Hypertext Transfer Protocol (HTTP) Method Registry" 注册表中，其定义见[[id:193d7ad5-9c6d-4bf7-98f1-6984a42af639][章节 8.1]]。
+超出本规范所定义的额外方法，它们在 HTTP 的使用方式已经被标准化。应该把所有这些方法登记在由 IANA 维护的 "Hypertext Transfer Protocol (HTTP) Method Registry" 登记表中，其定义见[[id:193d7ad5-9c6d-4bf7-98f1-6984a42af639][章节 8.1]]。
 
 #+BEGIN_QUOTE
 The set of methods allowed by a target resource can be listed in an =Allow= header field ([[id:f8577773-512f-4d68-8f5d-444368db7c29][Section 7.4.1]]). However, the set of allowed methods can change dynamically. When a request method is received that is unrecognized or not implemented by an origin server, the origin server *SHOULD* respond with the =501 (Not Implemented)= status code. When a request method is received that is known by an origin server but not allowed for the target resource, the origin server *SHOULD* respond with the =405 (Method Not Allowed)= status code.
@@ -885,6 +885,9 @@ When a resource is constructed such that parameters within the effective request
 #+END_QUOTE
 
 *** 4.2.2. 幂等方法 / Idempotent Methods
+:PROPERTIES:
+:ID:       6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f
+:END:
 #+BEGIN_QUOTE
 A request method is considered "idempotent" if the intended effect on the server of multiple identical requests with that method is the same as the effect for a single such request. Of the request methods defined by this specification, PUT, DELETE, and safe request methods are idempotent.
 #+END_QUOTE
@@ -908,6 +911,9 @@ Idempotent methods are distinguished because the request can be repeated automat
 之所以要区分请求方法的幂等与否，是因为如果在客户端能够读取服务器的响应之前发生了通信失败，请求可以被自动重复发送（见[[id:0ca97f51-efc7-43d2-ab52-d998a92423e5][【RFC7230】6.3.1]]）。例如，如果客户端发送一个 PUT 请求，同时，之前建立好的连接在客户端接收到任何响应之前就被关闭了，那么，客户端可以建立一个新的连接并重试该幂等请求。客户端知道重复该请求会有相同的预期效果，即使原来的请求已经成功了。
 
 *** 4.2.3. 可缓存方法 / Cacheable Methods
+:PROPERTIES:
+:ID:       47bc2f73-8c50-4ca2-a875-4f2cbd297e98
+:END:
 #+BEGIN_QUOTE
 Request methods can be defined as "cacheable" to indicate that responses to them are allowed to be stored for future reuse; for specific requirements see [[[https://tools.ietf.org/html/rfc7234][RFC7234]]]. In general, safe methods that do not depend on a current or authoritative response are defined as cacheable; this specification defines GET, HEAD, and POST as cacheable, although the overwhelming majority of cache implementations only support GET and HEAD.
 #+END_QUOTE
@@ -1716,7 +1722,7 @@ Each =media-range= might be followed by zero or more applicable media type param
 *Note:* Use of the "q" parameter name to separate media type parameters from =Accept= extension parameters is due to historical practice. Although this prevents any media type parameter named "q" from being used with a media range, such an event is believed to be unlikely given the lack of any "q" parameters in the IANA media type registry and the rare usage of any media type parameters in =Accept=. Future media types are discouraged from registering any parameter named "q".
 #+END_QUOTE
 
-*注意：* 之所以使用 "q" 参数名来分隔媒体参数与扩展参数是出于[[ruby:historical%20practice][历史实践]]的原因。虽然这样做导致了 "q" 这个名字不能用来作为一个媒体类型的范围——基于 IANA 媒体类型注册表里的没有注册任何 "q" 参数，以及在 =Accept= 里极少使用媒体类型参数这些事实，相信不太可能会发生这种情况。将来新增的媒体类型会被劝阻注册任何命名为 "q" 的参数。
+*注意：* 之所以使用 "q" 参数名来分隔媒体参数与扩展参数是出于[[ruby:historical%20practice][历史实践]]的原因。虽然这样做导致了 "q" 这个名字不能用来作为一个媒体类型的范围——基于 IANA 媒体类型登记表里的没有登记任何 "q" 参数，以及在 =Accept= 里极少使用媒体类型参数这些事实，相信不太可能会发生这种情况。将来新增的媒体类型会被劝阻登记任何命名为 "q" 的参数。
 
 #+BEGIN_QUOTE
 The example
@@ -2207,7 +2213,7 @@ The status-code element is a three-digit integer code giving the result of the a
 HTTP status codes are extensible. HTTP clients are not required to understand the meaning of all registered status codes, though such understanding is obviously desirable. However, a client *MUST* understand the class of any status code, as indicated by the first digit, and treat an unrecognized status code as being equivalent to the x00 status code of that class, with the exception that a recipient *MUST NOT* cache a response with an unrecognized status code.
 #+END_QUOTE
 
-HTTP 状态码是[[ruby:extensible][可扩展的]]。不要求 HTTP 客户端去理解所有已注册的状态码的意义，虽然这种理解明显是很值得的。但是，客户端 *必须* 理解所有状态码的种类，这些类型是由状态码的第一位数字来指明的。而且，客户端 *必须* 将它[[ruby:unrecoginized][无法识别的]]状态码当作等同于它的种类的 =x00= 状态码来对待，不过有一个区别是接收端 *禁止* 缓存带有它无法识别的状态码的响应。
+HTTP 状态码是[[ruby:extensible][可扩展的]]。不要求 HTTP 客户端去理解所有已登记的状态码的意义，虽然这种理解明显是很值得的。但是，客户端 *必须* 理解所有状态码的种类，这些类型是由状态码的第一位数字来指明的。而且，客户端 *必须* 将它[[ruby:unrecoginized][无法识别的]]状态码当作等同于它的种类的 =x00= 状态码来对待，不过有一个区别是接收端 *禁止* 缓存带有它无法识别的状态码的响应。
 
 #+BEGIN_QUOTE
 For example, if an unrecognized status code of =471= is received by a client, the client can assume that there was something wrong with its request and treat the response as if it had received a =400 (Bad Request)= status code. The response message will usually contain a representation that explains the status.
@@ -3114,7 +3120,7 @@ The response header fields allow the server to pass additional information about
 Although each response header field has a defined meaning, in general, the precise semantics might be further refined by the semantics of the request method and/or response status code.
 #+END_QUOTE
 
-虽然每种响应头字段都定义了含义，但通常情况下，更精确的语义可能经由[[ruby:request%20method][请求方法]]以及（或者）[[ruby:response%20status%20code][响应状态码]]来进一步精炼。
+虽然每种响应头字段都定义了含义，但通常情况下，更精确的语义可能经由[[ruby:request%20method][请求方法]]以及（或者）[[ruby:response%20status%20code][响应状态码]]来进一步优化。
 
 ** 7.1. 控制数据 / Control Data
 
@@ -3687,83 +3693,162 @@ An origin server *SHOULD NOT* generate a =Server= field containing needlessly fi
 源服务器 *不应当* 生成一个包含不必要的[[ruby:fine-grained][细粒度详尽信息]]的 =Server= 字段，同时，*应当* 限制被第三方添加子产品到该字段中。太过长或详尽的 =Server= 字段值会加大响应的延迟，以及可能泄露内部信息细节使得它（稍微）更容易被攻击者找到和挖掘已知的安全漏洞。
 
 * 8. IANA 注意事项 / IANA Considerations
-** 8.1. 方法注册表 / Method Registry
+** 8.1. 方法登记表 / Method Registry
 :PROPERTIES:
 :ID:       193d7ad5-9c6d-4bf7-98f1-6984a42af639
 :END:
 
-The "Hypertext Transfer Protocol (HTTP) Method Registry" defines the namespace for the request method token (Section 4). The method registry has been created and is now maintained at <http://www.iana.org/assignments/http-methods>.
+#+BEGIN_QUOTE
+The "Hypertext Transfer Protocol (HTTP) Method Registry" defines the namespace for the request method token ([[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][Section 4]]). The method registry has been created and is now maintained at <http://www.iana.org/assignments/http-methods>.
+#+END_QUOTE
 
-*** 8.1.1. Procedure
+《超文本传输协议（HTTP）方法登记表》定义了请求方法的标记（[[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][章节 4]]）的命名空间。这个方法登记表已被创建并维护在 <http://www.iana.org/assignments/http-methods>。
 
-HTTP method registrations MUST include the following fields:
+*** 8.1.1. 手续 / Procedure
 
-- Method Name (see Section 4)
-- Safe ("yes" or "no", see Section 4.2.1)
-- Idempotent ("yes" or "no", see Section 4.2.2)
+#+BEGIN_QUOTE
+HTTP method registrations *MUST* include the following fields:
+
+- Method Name (see [[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][Section 4]])
+- Safe ("yes" or "no", see [[id:2f967e3d-8694-430b-ad06-e748fd39b281][Section 4.2.1]])
+- Idempotent ("yes" or "no", see [[id:6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f][Section 4.2.2]])
 - Pointer to specification text
-- Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
+- Values to be added to this namespace require IETF Review (see [RFC5226], [[https://tools.ietf.org/html/rfc5226#section-4.1][Section 4.1]]).
+#+END_QUOTE
 
-*** 8.1.2. Considerations for New Methods
+HTTP 方法的登记 *必须* 包括以下几个字段：
 
+- 方法名称（见[[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][章节 4]]）
+- 安全（“是”或“否”，见[[id:2f967e3d-8694-430b-ad06-e748fd39b281][章节 4.2.1]]）
+- 幂等（“是”或“否”，见[[id:6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f][章节 4.2.2]]）
+- 指向规范文本的指针
+- 添加到这个命名空间的值要求由 IETF 复审（见[[https://tools.ietf.org/html/rfc5226#section-4.1][【RFC5226】章节 4.1]]）。
+
+*** 8.1.2. 新方法的注意事项 / Considerations for New Methods
+
+#+BEGIN_QUOTE
 Standardized methods are generic; that is, they are potentially applicable to any resource, not just one particular media type, kind of resource, or application. As such, it is preferred that new methods be registered in a document that isn't specific to a single application or data format, since orthogonal technologies deserve orthogonal specification.
+#+END_QUOTE
 
-Since message parsing (Section 3.3 of [RFC7230]) needs to be independent of method semantics (aside from responses to HEAD), definitions of new methods cannot change the parsing algorithm or prohibit the presence of a message body on either the request or the response message. Definitions of new methods can specify that only a zero-length message body is allowed by requiring a Content-Length header field with a value of "0".
+规范化的方法是通用的，也就是说，它们可能适用于任何资源，而不只是个别媒体类型、资源类型或者应用程序。这样，登记在文档里的新方法最好不要特定用于某一种应用程序或者数据格式，因为正交的技术值得使用正交的规范。
 
-A new method definition needs to indicate whether it is safe (Section 4.2.1), idempotent (Section 4.2.2), cacheable (Section 4.2.3), what semantics are to be associated with the payload body if any is present in the request and what refinements the method makes to header field or status code semantics. If the new method is cacheable, its definition ought to describe how, and under what conditions, a cache can store a response and use it to satisfy a subsequent request. The new method ought to describe whether it can be made conditional (Section 5.2) and, if so, how a server responds when the condition is false. Likewise, if the new method might have some use for partial response semantics ([RFC7233]), it ought to document this, too.
+#+BEGIN_QUOTE
+Since message parsing ([[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][Section 3.3]] of [RFC7230]) needs to be independent of method semantics (aside from responses to HEAD), definitions of new methods cannot change the parsing algorithm or prohibit the presence of a message body on either the request or the response message. Definitions of new methods can specify that only a zero-length message body is allowed by requiring a =Content-Length= header field with a value of "0".
+#+END_QUOTE
 
-*Note:* Avoid defining a method name that starts with "M-", since that prefix might be misinterpreted as having the semantics assigned to it by [RFC2774].
+因为消息解析（[[id:74ac5c85-d91e-43ab-bb2f-6c5957da5f5c][【RFC7230】章节 3.3]]）需要独立于方法的语义（除了响应给 HEAD 的消息以外），新方法的定义不能改变这个解析算法或者禁止消息体出现在请求或响应消息里。通过要求带有一个值为 "0" 的 =Content-Length= 头字段，新方法的定义能够指定只允许一个长度为零的消息体。
 
-*** 8.1.3. Registrations
+#+BEGIN_QUOTE
+A new method definition needs to indicate whether it is safe ([[id:2f967e3d-8694-430b-ad06-e748fd39b281][Section 4.2.1]]), idempotent ([[id:6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f][Section 4.2.2]]), cacheable ([[id:47bc2f73-8c50-4ca2-a875-4f2cbd297e98][Section 4.2.3]]), what semantics are to be associated with the payload body if any is present in the request and what refinements the method makes to header field or status code semantics. If the new method is cacheable, its definition ought to describe how, and under what conditions, a cache can store a response and use it to satisfy a subsequent request. The new method ought to describe whether it can be made conditional ([[id:b21923d5-a8f9-4560-8592-92fd9a098bf4][Section 5.2]]) and, if so, how a server responds when the condition is false. Likewise, if the new method might have some use for partial response semantics ([[[file:RFC7233.org][RFC7233]]]), it ought to document this, too.
+#+END_QUOTE
 
+新方法的定义需要表明：它是否是安全的（[[id:2f967e3d-8694-430b-ad06-e748fd39b281][章节 4.2.1]]）、幂等的（[[id:6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f][章节 4.2.2]]）、可缓存的（[[id:47bc2f73-8c50-4ca2-a875-4f2cbd297e98][章节 4.2.3]]）；如果有效载荷出现在请求里，它的语义是什么；以及这个方法对头字段或者状态码两者的语义有什么优化。如果新方法是可缓存的，它的定义应该描述如何以及在什么条件下，缓存服务器能够存储一个响应以及使用它来满足随后的一个请求。新方法应该描述它是否可以条件化（[[id:b21923d5-a8f9-4560-8592-92fd9a098bf4][章节 5.2]]），以及，如果可以的话，当条件为否的时候服务器要如何响应。同样，如果新方法可能在[[ruby:partial%20response][部分响应]]的语义（【[[file:RFC7233.org][RFC7233]]】）上有某些用法，它也应该要注明一下。
+
+#+BEGIN_QUOTE
+*Note:* Avoid defining a method name that starts with "M-", since that prefix might be misinterpreted as having the semantics assigned to it by [[[https://tools.ietf.org/html/rfc2774][RFC2774]]].
+#+END_QUOTE
+
+*注意：* 避免定义一个方法名称以 "M-" 开头，因为这个前缀可能被误解为它具有【[[https://tools.ietf.org/html/rfc2774][RFC2774]]】所赋予的语义。
+
+*** 8.1.3. 登记 / Registrations
+
+#+BEGIN_QUOTE
 The "Hypertext Transfer Protocol (HTTP) Method Registry" has been populated with the registrations below:
+#+END_QUOTE
+
+《超文本传输协议（HTTP）方法登记表》已填充以下条目：
 
 | Method  | Safe | Idempotent | Reference     |
 |---------+------+------------+---------------|
-| CONNECT | no   | no         | Section 4.3.6 |
-| DELETE  | no   | yes        | Section 4.3.5 |
-| GET     | yes  | yes        | Section 4.3.1 |
-| HEAD    | yes  | yes        | Section 4.3.2 |
-| OPTIONS | yes  | yes        | Section 4.3.7 |
-| POST    | no   | no         | Section 4.3.3 |
-| PUT     | no   | yes        | Section 4.3.4 |
-| TRACE   | yes  | yes        | Section 4.3.8 |
+| CONNECT | no   | no         | [[id:630ab908-5d8e-400b-bed4-f6973b8c1549][Section 4.3.6]] |
+| DELETE  | no   | yes        | [[id:9e649fa9-0f7f-40d0-adef-8af6a6f62e80][Section 4.3.5]] |
+| GET     | yes  | yes        | [[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]] |
+| HEAD    | yes  | yes        | [[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][Section 4.3.2]] |
+| OPTIONS | yes  | yes        | [[id:f659b35f-7510-4961-ad3a-3ab1b312a681][Section 4.3.7]] |
+| POST    | no   | no         | [[id:d672d01b-615b-416a-a750-0442a6901ed0][Section 4.3.3]] |
+| PUT     | no   | yes        | [[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][Section 4.3.4]] |
+| TRACE   | yes  | yes        | [[id:bdc9e3b4-bac3-46c5-9319-31f7f4d6469d][Section 4.3.8]] |
 
-** 8.2. 状态码注册表 / Status Code Registry
+** 8.2. 状态码登记表 / Status Code Registry
 :PROPERTIES:
 :ID:       c0f1fbbc-3471-430e-90be-1b120d9b449f
 :END:
 
+#+BEGIN_QUOTE
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" defines the namespace for the response status-code token (Section 6). The status code registry is maintained at <http://www.iana.org/assignments/http-status-codes>.
+#+END_QUOTE
 
-This section replaces the registration procedure for HTTP Status Codes previously defined in Section 7.1 of [RFC2817].
+《超文本传输协议（HTTP）状态码登记表》定义了响应状态码的标记（[[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][章节 4]]）的命名空间。这个状态码登记表已被创建并维护在 <http://www.iana.org/assignments/http-status-codes>。
 
-*** 8.2.1. Procedure
+#+BEGIN_QUOTE
+This section replaces the registration procedure for HTTP Status Codes previously defined in [[https://tools.ietf.org/html/rfc2817#section-7.1][Section 7.1]] of [RFC2817].
+#+END_QUOTE
 
-A registration MUST include the following fields:
+本章节替换了之前定义在[[https://tools.ietf.org/html/rfc2817#section-7.1][【RFC2817】章节 7.1]] 里的 HTTP 状态码登记手续。
+
+*** 8.2.1. 手续 / Procedure
+
+#+BEGIN_QUOTE
+A registration *MUST* include the following fields:
 
 - Status Code (3 digits)
 - Short Description
 - Pointer to specification text
-- Values to be added to the HTTP status code namespace require IETF Review (see [RFC5226], Section 4.1).
+- Values to be added to the HTTP status code namespace require IETF Review (see [RFC5226], [[https://tools.ietf.org/html/rfc5226#section-4.1][Section 4.1]]).
+#+END_QUOTE
 
-*** 8.2.2. Considerations for New Status Codes
+登记 *必须* 包括以下字段：
 
+- 状态码（3 位数字）
+- 简短描述
+- 指向规范文本的指针
+- 添加到 HTTP 状态码命名空间的值要求由 IETF 复审（见[[https://tools.ietf.org/html/rfc5226#section-4.1][【RFC5226】章节 4.1]]）。
+
+*** 8.2.2. 新状态码的注意事项 / Considerations for New Status Codes
+
+#+BEGIN_QUOTE
 When it is necessary to express semantics for a response that are not defined by current status codes, a new status code can be registered. Status codes are generic; they are potentially applicable to any resource, not just one particular media type, kind of resource, or application of HTTP. As such, it is preferred that new status codes be registered in a document that isn't specific to a single application.
+#+END_QUOTE
 
-New status codes are required to fall under one of the categories defined in Section 6. To allow existing parsers to process the response message, new status codes cannot disallow a payload, although they can mandate a zero-length payload body.
+当有必要对响应表达一种未被目前的状态码所定义的语义的时候，可以登记新的状态码。状态码是通用的，它们可能适用于任何资源，而不只是个别媒体类型、资源类型或者 HTTP 应用程序。这样，登记在文档里的新状态码最好不要特定用于某一种应用程序。
 
+#+BEGIN_QUOTE
+New status codes are required to fall under one of the categories defined in [[id:5a69d0cc-628c-4897-a089-45f906b94a92][Section 6]]. To allow existing parsers to process the response message, new status codes cannot disallow a payload, although they can mandate a zero-length payload body.
+#+END_QUOTE
+
+新的状态码被要求归入定义在[[id:5a69d0cc-628c-4897-a089-45f906b94a92][章节 6]] 中的种类里。为了让已有的[[ruby:parsers][解析器]]可以处理这个响应消息，新状态码不能禁用有效载荷，尽管它们能够要求一个长度为零的有效载荷。
+
+#+BEGIN_QUOTE
 Proposals for new status codes that are not yet widely deployed ought to avoid allocating a specific number for the code until there is clear consensus that it will be registered; instead, early drafts can use a notation such as "4NN", or "3N0" .. "3N9", to indicate the class of the proposed status code(s) without consuming a number prematurely.
+#+END_QUOTE
 
+对于未广泛布置的新状态码的提案，应该避免分配一个具体的编号数字，直到对它将会被登记达成统一的共识。而是，前期的草案可以使用一种标记法，比如 "4NN"、"3N0"……"3N9"，来表明提案状态码的类型，而不用过早地占用一个编号数字。
+
+#+BEGIN_QUOTE
 The definition of a new status code ought to explain the request conditions that would cause a response containing that status code (e.g., combinations of request header fields and/or method(s)) along with any dependencies on response header fields (e.g., what fields are required, what fields can modify the semantics, and what header field semantics are further refined when used with the new status code).
+#+END_QUOTE
 
+新状态码的定义应该[[ruby:explain][解释]]在什么请求条件下会导致回应这个状态码的响应（比如，各种请求头字段和（或者）请求方法的组合情况），以及这种响应所依赖的所有响应头字段（比如，什么字段是必要的，什么字段能够修改这种语义，以及当使用这个新状态码的时候，什么头字段的语义会被进一步优化）。
+
+#+BEGIN_QUOTE
 The definition of a new status code ought to specify whether or not it is cacheable. Note that all status codes can be cached if the response they occur in has explicit freshness information; however, status codes that are defined as being cacheable are allowed to be cached without explicit freshness information. Likewise, the definition of a status code can place constraints upon cache behavior. See [RFC7234] for more information.
+#+END_QUOTE
 
+新状态码的定义应该明确它是否是可缓存的。需要注意的是，所有状态码能够被缓存，仅当这个响应里带有明确的[[ruby:freshness%20information][新鲜度信息]]；但是，定义为可缓存的状态码是允许在没有明确的新鲜度信息的情况下被缓存的。同样，状态码的定义能够在缓存行为上施加约束。更多信息见【RFC7234】。
+
+新方法的定义需要表明：它是否是安全的（[[id:2f967e3d-8694-430b-ad06-e748fd39b281][章节 4.2.1]]）、幂等的（[[id:6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f][章节 4.2.2]]）、可缓存的（[[id:47bc2f73-8c50-4ca2-a875-4f2cbd297e98][章节 4.2.3]]）；如果有效载荷出现在请求里，它的语义是什么；以及这个方法对头字段或者状态码两者的语义有什么优化。如果新方法是可缓存的，它的定义应该描述如何以及在什么条件下，缓存服务器能够存储一个响应以及使用它来满足随后的一个请求。新方法应该描述它是否可以条件化（[[id:b21923d5-a8f9-4560-8592-92fd9a098bf4][章节 5.2]]），以及，如果可以的话，当条件为否的时候服务器要如何响应。同样，如果新方法可能在[[ruby:partial%20response][部分响应]]的语义（【[[file:RFC7233.org][RFC7233]]】）上有某些用法，它也应该要注明一下。
+
+#+BEGIN_QUOTE
 Finally, the definition of a new status code ought to indicate whether the payload has any implied association with an identified resource (Section 3.1.4.1).
+#+END_QUOTE
 
-*** 8.2.3. Registrations
+*** 8.2.3. 登记 / Registrations
 
+#+BEGIN_QUOTE
 The status code registry has been updated with the registrations below:
+#+END_QUOTE
+
+状态码登记表已更新为以下条目：
 
 | Value | Description                   | Reference      |
 |-------+-------------------------------+----------------|
@@ -3804,25 +3889,41 @@ The status code registry has been updated with the registrations below:
 |   504 | Gateway Timeout               | Section 6.6.5  |
 |   505 | HTTP Version Not Supported    | Section 6.6.6  |
 
-** 8.3. 头字段注册表 / Header Field Registry
+** 8.3. 头字段登记表 / Header Field Registry
 
+#+BEGIN_QUOTE
 HTTP header fields are registered within the "Message Headers" registry located at <http://www.iana.org/assignments/message-headers>, as defined by [BCP90].
+#+END_QUOTE
 
-*** 8.3.1. Considerations for New Header Fields
+*** 8.3.1. 新头字段的注意事项 / Considerations for New Header Fields
 
+#+BEGIN_QUOTE
 Header fields are key:value pairs that can be used to communicate data about the message, its payload, the target resource, or the connection (i.e., control data). See Section 3.2 of [RFC7230] for a general definition of header field syntax in HTTP messages.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The requirements for header field names are defined in [BCP90].
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Authors of specifications defining new fields are advised to keep the name as short as practical and not to prefix the name with "X-" unless the header field will never be used on the Internet. (The "X-" prefix idiom has been extensively misused in practice; it was intended to only be used as a mechanism for avoiding name collisions inside proprietary software or intranet processing, since the prefix would ensure that private names never collide with a newly registered Internet name; see [BCP178] for further information).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 New header field values typically have their syntax defined using ABNF ([RFC5234]), using the extension defined in Section 7 of [RFC7230] as necessary, and are usually constrained to the range of US-ASCII characters. Header fields needing a greater range of characters can use an encoding such as the one defined in [RFC5987].
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Leading and trailing whitespace in raw field values is removed upon field parsing (Section 3.2.4 of [RFC7230]). Field definitions where leading or trailing whitespace in values is significant will have to use a container syntax such as quoted-string (Section 3.2.6 of [RFC7230]).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Because commas (",") are used as a generic delimiter between field-values, they need to be treated with care if they are allowed in the field-value. Typically, components that might contain a comma are protected with double-quotes using the quoted-string ABNF production.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 For example, a textual date and a URI (either of which might contain a comma) could be safely carried in field-values like these:
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
   Example-URI-Field: "http://example.com/a.html,foo",
@@ -3830,10 +3931,15 @@ For example, a textual date and a URI (either of which might contain a comma) co
   Example-Date-Field: "Sat, 04 May 1996", "Wed, 14 Sep 2005"
 #+END_EXAMPLE
 
+#+BEGIN_QUOTE
 Note that double-quote delimiters almost always are used with the quoted-string production; using a different syntax inside double-quotes will likely cause unnecessary confusion.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Many header fields use a format including (case-insensitively) named parameters (for instance, Content-Type, defined in Section 3.1.1.5). Allowing both unquoted (token) and quoted (quoted-string) syntax for the parameter value enables recipients to use existing parser components. When allowing both forms, the meaning of a parameter value ought to be independent of the syntax used for it (for an example, see the notes on parameter handling for media types in Section 3.1.1.1).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Authors of specifications defining new header fields are advised to consider documenting:
 
 - Whether the field is a single value or whether it can be a list (delimited by commas; see Section 3.2 of [RFC7230]).
@@ -3859,10 +3965,13 @@ Authors of specifications defining new header fields are advised to consider doc
 - Whether the header field ought to be preserved across redirects.
 
 - Whether it introduces any additional security considerations, such as disclosure of privacy-related data.
+#+END_QUOTE
 
-*** 8.3.2. Registrations
+*** 8.3.2. 登记 / Registrations
 
+#+BEGIN_QUOTE
 The "Message Headers" registry has been updated with the following permanent registrations:
+#+END_QUOTE
 
 | Header Field Name | Protocol | Status   | Reference       |
 |-------------------+----------+----------+-----------------|
@@ -3887,29 +3996,42 @@ The "Message Headers" registry has been updated with the following permanent reg
 | UserAgent         | http     | standard | Section 5.5.3   |
 | Vary              | http     | standard | Section 7.1.4   |
 
+#+BEGIN_QUOTE
 The change controller for the above registrations is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
+#+END_QUOTE
 
-** 8.4. 内容编码值注册表 / Content Coding Registry
+** 8.4. 内容编码值登记表 / Content Coding Registry
 :PROPERTIES:
 :ID:       87f2ed30-a48b-4c31-a181-8e3a33ba1080
 :END:
 
+#+BEGIN_QUOTE
 The "HTTP Content Coding Registry" defines the namespace for content coding names (Section 4.2 of [RFC7230]). The content coding registry is maintained at <http://www.iana.org/assignments/http-parameters>.
+#+END_QUOTE
 
-*** 8.4.1. Procedure
+*** 8.4.1. 手续 / Procedure
 
+#+BEGIN_QUOTE
 Content coding registrations MUST include the following fields:
 
-Name
-Description
-Pointer to specification text
+- Name
+- Description
+- Pointer to specification text
+#+END_QUOTE
+
+#+BEGIN_QUOTE
 Names of content codings MUST NOT overlap with names of transfer codings (Section 4 of [RFC7230]), unless the encoding transformation is identical (as is the case for the compression codings defined in Section 4.2 of [RFC7230]).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Values to be added to this namespace require IETF Review (see Section 4.1 of [RFC5226]) and MUST conform to the purpose of content coding defined in this section.
+#+END_QUOTE
 
-*** 8.4.2. Registrations
+*** 8.4.2. 登记 / Registrations
 
+#+BEGIN_QUOTE
 The "HTTP Content Coding Registry" has been updated with the registrations below:
+#+END_QUOTE
 
 | Name     | Description                                             | Reference     |
 |----------+---------------------------------------------------------+---------------|
@@ -3917,74 +4039,118 @@ The "HTTP Content Coding Registry" has been updated with the registrations below
 
 * 9. 安全注意事项 / Security Considerations
 
+#+BEGIN_QUOTE
 This section is meant to inform developers, information providers, and users of known security concerns relevant to HTTP semantics and its use for transferring information over the Internet. Considerations related to message syntax, parsing, and routing are discussed in Section 9 of [RFC7230].
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The list of considerations below is not exhaustive. Most security concerns related to HTTP semantics are about securing server-side applications (code behind the HTTP interface), securing user agent processing of payloads received via HTTP, or secure use of the Internet in general, rather than security of the protocol. Various organizations maintain topical information and links to current research on Web application security (e.g., [OWASP]).
+#+END_QUOTE
 
 ** 9.1. 基于文件和路径名称的攻击 / Attacks Based on File and Path Names
 :PROPERTIES:
 :ID:       9195be98-bd4e-40ae-a5a0-6af920044f02
 :END:
 
+#+BEGIN_QUOTE
 Origin servers frequently make use of their local file system to manage the mapping from effective request URI to resource representations. Most file systems are not designed to protect against malicious file or path names. Therefore, an origin server needs to avoid accessing names that have a special significance to the system when mapping the request target to files, folders, or directories.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 For example, UNIX, Microsoft Windows, and other operating systems use ".." as a path component to indicate a directory level above the current one, and they use specially named paths or file names to send data to system devices. Similar naming conventions might exist within other types of storage systems. Likewise, local storage systems have an annoying tendency to prefer user-friendliness over security when handling invalid or unexpected characters, recomposition of decomposed characters, and case-normalization of case-insensitive names.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Attacks based on such special names tend to focus on either denial-of-service (e.g., telling the server to read from a COM port) or disclosure of configuration and source files that are not meant to be served.
+#+END_QUOTE
 
 ** 9.2. 基于命令、代码、查询注入 / Attacks Based on Command, Code, or Query Injection
 
+#+BEGIN_QUOTE
 Origin servers often use parameters within the URI as a means of identifying system services, selecting database entries, or choosing a data source. However, data received in a request cannot be trusted. An attacker could construct any of the request data elements (method, request-target, header fields, or body) to contain data that might be misinterpreted as a command, code, or query when passed through a command invocation, language interpreter, or database interface.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 For example, SQL injection is a common attack wherein additional query language is inserted within some part of the request-target or header fields (e.g., Host, Referer, etc.). If the received data is used directly within a SELECT statement, the query language might be interpreted as a database command instead of a simple string value. This type of implementation vulnerability is extremely common, in spite of being easy to prevent.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 In general, resource implementations ought to avoid use of request data in contexts that are processed or interpreted as instructions. Parameters ought to be compared to fixed strings and acted upon as a result of that comparison, rather than passed through an interface that is not prepared for untrusted data. Received data that isn't based on fixed parameters ought to be carefully filtered or encoded to avoid being misinterpreted.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Similar considerations apply to request data when it is stored and later processed, such as within log files, monitoring tools, or when included within a data format that allows embedded scripts.
+#+END_QUOTE
 
 ** 9.3. 个人信息的披露 / Disclosure of Personal Information
 
+#+BEGIN_QUOTE
 Clients are often privy to large amounts of personal information, including both information provided by the user to interact with resources (e.g., the user's name, location, mail address, passwords, encryption keys, etc.) and information about the user's browsing activity over time (e.g., history, bookmarks, etc.). Implementations need to prevent unintentional disclosure of personal information.
+#+END_QUOTE
 
 ** 9.4. URLs 敏感信息的披露 / Disclosure of Sensitive Information in URLs
 :PROPERTIES:
 :ID:       ed824807-db16-4f5b-ab13-2366f5cfc0f3
 :END:
 
+#+BEGIN_QUOTE
 URIs are intended to be shared, not secured, even when they identify secure resources. URIs are often shown on displays, added to templates when a page is printed, and stored in a variety of unprotected bookmark lists. It is therefore unwise to include information within a URI that is sensitive, personally identifiable, or a risk to disclose.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Authors of services ought to avoid GET-based forms for the submission of sensitive data because that data will be placed in the request-target. Many existing servers, proxies, and user agents log or display the request-target in places where it might be visible to third parties. Such services ought to use POST-based form submission instead.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Since the Referer header field tells a target site about the context that resulted in a request, it has the potential to reveal information about the user's immediate browsing history and any personal information that might be found in the referring resource's URI. Limitations on the Referer header field are described in Section 5.5.2 to address some of its security considerations.
+#+END_QUOTE
 
 ** 9.5. Disclosure of Fragment after Redirects
 
+#+BEGIN_QUOTE
 Although fragment identifiers used within URI references are not sent in requests, implementers ought to be aware that they will be visible to the user agent and any extensions or scripts running as a result of the response. In particular, when a redirect occurs and the original request's fragment identifier is inherited by the new reference in Location (Section 7.1.2), this might have the effect of disclosing one site's fragment to another site. If the first site uses personal information in fragments, it ought to ensure that redirects to other sites include a (possibly empty) fragment component in order to block that inheritance.
+#+END_QUOTE
 
 ** 9.6. Disclosure of Product Information
 
+#+BEGIN_QUOTE
 The User-Agent (Section 5.5.3), Via (Section 5.7.1 of [RFC7230]), and Server (Section 7.4.2) header fields often reveal information about the respective sender's software systems. In theory, this can make it easier for an attacker to exploit known security holes; in practice, attackers tend to try all potential holes regardless of the apparent software versions being used.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Proxies that serve as a portal through a network firewall ought to take special precautions regarding the transfer of header information that might identify hosts behind the firewall. The Via header field allows intermediaries to replace sensitive machine names with pseudonyms.
+#+END_QUOTE
 
 ** 9.7. 浏览器指纹识别 / Browser Fingerprinting
 :PROPERTIES:
 :ID:       58ca9032-65b1-47ff-b759-d1cedc245d4b
 :END:
 
+#+BEGIN_QUOTE
 Browser fingerprinting is a set of techniques for identifying a specific user agent over time through its unique set of characteristics. These characteristics might include information related to its TCP behavior, feature capabilities, and scripting environment, though of particular interest here is the set of unique characteristics that might be communicated via HTTP. Fingerprinting is considered a privacy concern because it enables tracking of a user agent's behavior over time without the corresponding controls that the user might have over other forms of data collection (e.g., cookies). Many general-purpose user agents (i.e., Web browsers) have taken steps to reduce their fingerprints.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 There are a number of request header fields that might reveal information to servers that is sufficiently unique to enable fingerprinting. The From header field is the most obvious, though it is expected that From will only be sent when self-identification is desired by the user. Likewise, Cookie header fields are deliberately designed to enable re-identification, so fingerprinting concerns only apply to situations where cookies are disabled or restricted by the user agent's configuration.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The User-Agent header field might contain enough information to uniquely identify a specific device, usually when combined with other characteristics, particularly if the user agent sends excessive details about the user's system or extensions. However, the source of unique information that is least expected by users is proactive negotiation (Section 5.3), including the Accept, Accept-Charset, Accept-Encoding, and Accept-Language header fields.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 In addition to the fingerprinting concern, detailed use of the Accept-Language header field can reveal information the user might consider to be of a private nature. For example, understanding a given language set might be strongly correlated to membership in a particular ethnic group. An approach that limits such loss of privacy would be for a user agent to omit the sending of Accept-Language except for sites that have been whitelisted, perhaps via interaction after detecting a Vary header field that indicates language negotiation might be useful.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 In environments where proxies are used to enhance privacy, user agents ought to be conservative in sending proactive negotiation header fields. General-purpose user agents that provide a high degree of header field configurability ought to inform users about the loss of privacy that might result if too much detail is provided. As an extreme privacy measure, proxies could filter the proactive negotiation header fields in relayed requests.
+#+END_QUOTE
 
 * 10. 鸣谢 / Acknowledgements
 
+#+BEGIN_QUOTE
 See Section 10 of [RFC7230].
+#+END_QUOTE
 
 * 11. 参考资料 / References
 ** 11.1. Normative References
@@ -4036,108 +4202,192 @@ See Section 10 of [RFC7230].
 :ID:       84208afd-e458-4f40-97cc-2e9535523797
 :END:
 
+#+BEGIN_QUOTE
 HTTP/1.1 uses many of the constructs defined for the Internet Message Format [RFC5322] and the Multipurpose Internet Mail Extensions (MIME) [RFC2045] to allow a message body to be transmitted in an open variety of representations and with extensible header fields. However, RFC 2045 is focused only on email; applications of HTTP have many characteristics that differ from email; hence, HTTP has features that differ from MIME. These differences were carefully chosen to optimize performance over binary connections, to allow greater freedom in the use of new media types, to make date comparisons easier, and to acknowledge the practice of some early HTTP servers and clients.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 This appendix describes specific areas where HTTP differs from MIME. Proxies and gateways to and from strict MIME environments need to be aware of these differences and provide the appropriate conversions where necessary.
+#+END_QUOTE
 
 ** A.1. MIME-VERSION
 
+#+BEGIN_QUOTE
 HTTP is not a MIME-compliant protocol. However, messages can include a single MIME-Version header field to indicate what version of the MIME protocol was used to construct the message. Use of the MIME-Version header field indicates that the message is in full conformance with the MIME protocol (as defined in [RFC2045]). Senders are responsible for ensuring full conformance (where possible) when exporting HTTP messages to strict MIME environments.
+#+END_QUOTE
 
 ** A.2. Conversion to Canonical Form
 
+#+BEGIN_QUOTE
 MIME requires that an Internet mail body part be converted to canonical form prior to being transferred, as described in Section 4 of [RFC2049]. Section 3.1.1.3 of this document describes the forms allowed for subtypes of the "text" media type when transmitted over HTTP. [RFC2046] requires that content with a type of "text" represent line breaks as CRLF and forbids the use of CR or LF outside of line break sequences. HTTP allows CRLF, bare CR, and bare LF to indicate a line break within text content.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A proxy or gateway from HTTP to a strict MIME environment ought to translate all line breaks within the text media types described in Section 3.1.1.3 of this document to the RFC 2049 canonical form of CRLF. Note, however, this might be complicated by the presence of a Content-Encoding and by the fact that HTTP allows the use of some charsets that do not use octets 13 and 10 to represent CR and LF, respectively.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Conversion will break any cryptographic checksums applied to the original content unless the original content is already in canonical form. Therefore, the canonical form is recommended for any content that uses such checksums in HTTP.
+#+END_QUOTE
 
 ** A.3. Conversion of Date Formats
 
+#+BEGIN_QUOTE
 HTTP/1.1 uses a restricted set of date formats (Section 7.1.1.1) to simplify the process of date comparison. Proxies and gateways from other protocols ought to ensure that any Date header field present in a message conforms to one of the HTTP/1.1 formats and rewrite the date if necessary.
+#+END_QUOTE
 
 ** A.4. Conversion of Content-Encoding
 
+#+BEGIN_QUOTE
 MIME does not include any concept equivalent to HTTP/1.1's Content-Encoding header field. Since this acts as a modifier on the media type, proxies and gateways from HTTP to MIME-compliant protocols ought to either change the value of the Content-Type header field or decode the representation before forwarding the message. (Some experimental applications of Content-Type for Internet mail have used a media-type parameter of ";conversions=<content-coding>" to perform a function equivalent to Content-Encoding. However, this parameter is not part of the MIME standards).
+#+END_QUOTE
 
 ** A.5. Conversion of Content-Transfer-Encoding
 
+#+BEGIN_QUOTE
 HTTP does not use the Content-Transfer-Encoding field of MIME. Proxies and gateways from MIME-compliant protocols to HTTP need to remove any Content-Transfer-Encoding prior to delivering the response message to an HTTP client.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Proxies and gateways from HTTP to MIME-compliant protocols are responsible for ensuring that the message is in the correct format and encoding for safe transport on that protocol, where "safe transport" is defined by the limitations of the protocol being used. Such a proxy or gateway ought to transform and label the data with an appropriate Content-Transfer-Encoding if doing so will improve the likelihood of safe transport over the destination protocol.
+#+END_QUOTE
 
 ** A.6. MHTML and Line Length Limitations
 
+#+BEGIN_QUOTE
 HTTP implementations that share code with MHTML [RFC2557] implementations need to be aware of MIME line length limitations. Since HTTP does not have this limitation, HTTP does not fold long lines. MHTML messages being transported by HTTP follow all conventions of MHTML, including line length limitations and folding, canonicalization, etc., since HTTP transfers message-bodies as payload and, aside from the "multipart/byteranges" type (Appendix A of [RFC7233]), does not interpret the content or any MIME header lines that might be contained therein.
+#+END_QUOTE
 
 * B. 相对 RFC 2616 的变化 / Changes from RFC 2616
 :PROPERTIES:
 :ID:       b9da2375-731c-4b8a-a7d5-b07352c045a9
 :END:
 
+#+BEGIN_QUOTE
 The primary changes in this revision have been editorial in nature: extracting the messaging syntax and partitioning HTTP semantics into separate documents for the core features, conditional requests, partial requests, caching, and authentication. The conformance language has been revised to clearly target requirements and the terminology has been improved to distinguish payload from representations and representations from resources.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A new requirement has been added that semantics embedded in a URI be disabled when those semantics are inconsistent with the request method, since this is a common cause of interoperability failure. (Section 2)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An algorithm has been added for determining if a payload is associated with a specific identifier. (Section 3.1.4.1)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The default charset of ISO-8859-1 for text media types has been removed; the default is now whatever the media type definition says. Likewise, special treatment of ISO-8859-1 has been removed from the Accept-Charset header field. (Section 3.1.1.3 and Section 5.3.3)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The definition of Content-Location has been changed to no longer affect the base URI for resolving relative URI references, due to poor implementation support and the undesirable effect of potentially breaking relative links in content-negotiated resources. (Section 3.1.4.2)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 To be consistent with the method-neutral parsing algorithm of [RFC7230], the definition of GET has been relaxed so that requests can have a body, even though a body has no meaning for GET. (Section 4.3.1)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Servers are no longer required to handle all Content-* header fields and use of Content-Range has been explicitly banned in PUT requests. (Section 4.3.4)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Definition of the CONNECT method has been moved from [RFC2817] to this specification. (Section 4.3.6)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The OPTIONS and TRACE request methods have been defined as being safe. (Section 4.3.7 and Section 4.3.8)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The Expect header field's extension mechanism has been removed due to widely-deployed broken implementations. (Section 5.1.1)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The Max-Forwards header field has been restricted to the OPTIONS and TRACE methods; previously, extension methods could have used it as well. (Section 5.1.2)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The "about:blank" URI has been suggested as a value for the Referer header field when no referring URI is applicable, which distinguishes that case from others where the Referer field is not sent or has been removed. (Section 5.5.2)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The following status codes are now cacheable (that is, they can be stored and reused by a cache without explicit freshness information present): 204, 404, 405, 414, 501. (Section 6)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The 201 (Created) status description has been changed to allow for the possibility that more than one resource has been created. (Section 6.3.2)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The definition of 203 (Non-Authoritative Information) has been broadened to include cases of payload transformations as well. (Section 6.3.4)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The set of request methods that are safe to automatically redirect is no longer closed; user agents are able to make that determination based upon the request method semantics. The redirect status codes 301, 302, and 307 no longer have normative requirements on response payloads and user interaction. (Section 6.4)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The status codes 301 and 302 have been changed to allow user agents to rewrite the method from POST to GET. (Sections 6.4.2 and 6.4.3)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The description of the 303 (See Other) status code has been changed to allow it to be cached if explicit freshness information is given, and a specific definition has been added for a 303 response to GET. (Section 6.4.4)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The 305 (Use Proxy) status code has been deprecated due to security concerns regarding in-band configuration of a proxy. (Section 6.4.5)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The 400 (Bad Request) status code has been relaxed so that it isn't limited to syntax errors. (Section 6.5.1)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The 426 (Upgrade Required) status code has been incorporated from [RFC2817]. (Section 6.5.15)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The target of requirements on HTTP-date and the Date header field have been reduced to those systems generating the date, rather than all systems sending a date. (Section 7.1.1)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The syntax of the Location header field has been changed to allow all URI references, including relative references and fragments, along with some clarifications as to when use of fragments would not be appropriate. (Section 7.1.2)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Allow has been reclassified as a response header field, removing the option to specify it in a PUT request. Requirements relating to the content of Allow have been relaxed; correspondingly, clients are not required to always trust its value. (Section 7.4.1)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A Method Registry has been defined. (Section 8.1)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The Status Code Registry has been redefined by this specification; previously, it was defined in Section 7.1 of [RFC2817]. (Section 8.2)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Registration of content codings has been changed to require IETF Review. (Section 8.4)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The Content-Disposition header field has been removed since it is now defined by [RFC6266].
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The Content-MD5 header field has been removed because it was inconsistently implemented with respect to partial responses.
+#+END_QUOTE
 
 * C. 引入的 ABNF 规则 / Imported ABNF
 
+#+BEGIN_QUOTE
 The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), HTAB (horizontal tab), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The rules below are defined in [RFC7230]:
+#+END_QUOTE
 
 #+BEGIN_SRC text
   BWS           = <BWS, see [RFC7230], Section 3.2.3>
@@ -4154,7 +4404,9 @@ The rules below are defined in [RFC7230]:
 
 * D. ABNF 规则集合 Collected ABNF
 
+#+BEGIN_QUOTE
 In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
+#+END_QUOTE
 
 #+BEGIN_SRC text
   Accept = [ ( "," / ( media-range [ accept-params ] ) ) *( OWS "," [
