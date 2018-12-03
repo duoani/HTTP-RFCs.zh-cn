@@ -527,6 +527,9 @@ However, just because multiple languages are present within a representation doe
 
 *** 3.1.4. 标识 / Identification
 **** 3.1.4.1. 标识一种表示形式 / Identifying a Representation
+:PROPERTIES:
+:ID:       258075ff-8d65-4de3-bf09-d8094f17eaf5
+:END:
 #+BEGIN_QUOTE
 When a complete or partial representation is transferred in a message payload, it is often desirable for the sender to supply, or the recipient to determine, an identifier for a resource corresponding to that representation.
 #+END_QUOTE
@@ -2722,6 +2725,9 @@ The =305 (Use Proxy)= status code was defined in a previous version of this spec
 =305 (Use Proxy)= 状态码是本规范之前的版本所定义的，现在已经弃用（[[id:b9da2375-731c-4b8a-a7d5-b07352c045a9][附录 B]]）。
 
 *** 6.4.6. 305 未使用 / 306 (Unused)
+:PROPERTIES:
+:ID:       6e9e880d-b871-4232-bc47-cfc142ba6dce
+:END:
 
 #+BEGIN_QUOTE
 The =306= status code was defined in a previous version of this specification, is no longer used, and the code is reserved.
@@ -3831,18 +3837,21 @@ The definition of a new status code ought to explain the request conditions that
 新状态码的定义应该[[ruby:explain][解释]]在什么请求条件下会导致回应这个状态码的响应（比如，各种请求头字段和（或者）请求方法的组合情况），以及这种响应所依赖的所有响应头字段（比如，什么字段是必要的，什么字段能够修改这种语义，以及当使用这个新状态码的时候，什么头字段的语义会被进一步优化）。
 
 #+BEGIN_QUOTE
-The definition of a new status code ought to specify whether or not it is cacheable. Note that all status codes can be cached if the response they occur in has explicit freshness information; however, status codes that are defined as being cacheable are allowed to be cached without explicit freshness information. Likewise, the definition of a status code can place constraints upon cache behavior. See [RFC7234] for more information.
+The definition of a new status code ought to specify whether or not it is cacheable. Note that all status codes can be cached if the response they occur in has explicit freshness information; however, status codes that are defined as being cacheable are allowed to be cached without explicit freshness information. Likewise, the definition of a status code can place constraints upon cache behavior. See [[[file:RFC7234.org][RFC7234]]] for more information.
 #+END_QUOTE
 
-新状态码的定义应该明确它是否是可缓存的。需要注意的是，所有状态码能够被缓存，仅当这个响应里带有明确的[[ruby:freshness%20information][新鲜度信息]]；但是，定义为可缓存的状态码是允许在没有明确的新鲜度信息的情况下被缓存的。同样，状态码的定义能够在缓存行为上施加约束。更多信息见【RFC7234】。
-
-新方法的定义需要表明：它是否是安全的（[[id:2f967e3d-8694-430b-ad06-e748fd39b281][章节 4.2.1]]）、幂等的（[[id:6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f][章节 4.2.2]]）、可缓存的（[[id:47bc2f73-8c50-4ca2-a875-4f2cbd297e98][章节 4.2.3]]）；如果有效载荷出现在请求里，它的语义是什么；以及这个方法对头字段或者状态码两者的语义有什么优化。如果新方法是可缓存的，它的定义应该描述如何以及在什么条件下，缓存服务器能够存储一个响应以及使用它来满足随后的一个请求。新方法应该描述它是否可以条件化（[[id:b21923d5-a8f9-4560-8592-92fd9a098bf4][章节 5.2]]），以及，如果可以的话，当条件为否的时候服务器要如何响应。同样，如果新方法可能在[[ruby:partial%20response][部分响应]]的语义（【[[file:RFC7233.org][RFC7233]]】）上有某些用法，它也应该要注明一下。
+新状态码的定义应该明确它是否是可缓存的。需要注意的是，所有状态码能够被缓存，仅当这个响应里带有明确的[[ruby:freshness%20information][新鲜度信息]]；但是，定义为可缓存的状态码是允许在没有明确的新鲜度信息的情况下被缓存的。同样，状态码的定义能够在缓存行为上施加约束。更多信息见【[[file:RFC7234.org][RFC7234]]】。
 
 #+BEGIN_QUOTE
-Finally, the definition of a new status code ought to indicate whether the payload has any implied association with an identified resource (Section 3.1.4.1).
+Finally, the definition of a new status code ought to indicate whether the payload has any implied association with an identified resource ([[id:258075ff-8d65-4de3-bf09-d8094f17eaf5][Section 3.1.4.1]]).
 #+END_QUOTE
 
+最后，新状态码的定义应该指明：有效载荷是否与一个[[ruby:identified%20resource][被标识的资源]]有某些相关联的含义（[[id:258075ff-8d65-4de3-bf09-d8094f17eaf5][章节 3.1.4.1]]）。
+
 *** 8.2.3. 登记 / Registrations
+:PROPERTIES:
+:ID:       84033531-28d7-44d7-977d-fe51a55f7c81
+:END:
 
 #+BEGIN_QUOTE
 The status code registry has been updated with the registrations below:
@@ -3852,78 +3861,97 @@ The status code registry has been updated with the registrations below:
 
 | Value | Description                   | Reference      |
 |-------+-------------------------------+----------------|
-|   100 | Continue                      | Section 6.2.1  |
-|   101 | Switching Protocols           | Section 6.2.2  |
-|   200 | OK                            | Section 6.3.1  |
-|   201 | Created                       | Section 6.3.2  |
-|   202 | Accepted                      | Section 6.3.3  |
-|   203 | Non-Authoritative Information | Section 6.3.4  |
-|   204 | No Content                    | Section 6.3.5  |
-|   205 | Reset Content                 | Section 6.3.6  |
-|   300 | Multiple Choices              | Section 6.4.1  |
-|   301 | Moved Permanently             | Section 6.4.2  |
-|   302 | Found                         | Section 6.4.3  |
-|   303 | See Other                     | Section 6.4.4  |
-|   305 | Use Proxy                     | Section 6.4.5  |
-|   306 | (Unused)                      | Section 6.4.6  |
-|   307 | Temporary Redirect            | Section 6.4.7  |
-|   400 | Bad Request                   | Section 6.5.1  |
-|   402 | Payment Required              | Section 6.5.2  |
-|   403 | Forbidden                     | Section 6.5.3  |
-|   404 | Not Found                     | Section 6.5.4  |
-|   405 | Method Not Allowed            | Section 6.5.5  |
-|   406 | Not Acceptable                | Section 6.5.6  |
-|   408 | Request Timeout               | Section 6.5.7  |
-|   409 | Conflict                      | Section 6.5.8  |
-|   410 | Gone                          | Section 6.5.0  |
-|   411 | Length Required               | Section 6.5.10 |
-|   413 | Payload Too Large             | Section 6.5.11 |
-|   414 | URI Too Long                  | Section 6.5.12 |
-|   415 | Unsupported Media Type        | Section 6.5.13 |
-|   417 | Expectation Failed            | Section 6.5.14 |
-|   426 | Upgrade Required              | Section 6.5.15 |
-|   500 | Internal Server Error         | Section 6.6.1  |
-|   501 | Not Implemented               | Section 6.6.2  |
-|   502 | Bad Gateway                   | Section 6.6.3  |
-|   503 | Service Unavailable           | Section 6.6.4  |
-|   504 | Gateway Timeout               | Section 6.6.5  |
-|   505 | HTTP Version Not Supported    | Section 6.6.6  |
+|   100 | Continue                      | [[id:91fffa22-c6f0-476c-b69f-f76828e861f3][Section 6.2.1]]  |
+|   101 | Switching Protocols           | [[id:c8200a68-3b0f-4f12-bf1f-ac895c5dcf9f][Section 6.2.2]]  |
+|   200 | OK                            | [[id:8b00dffb-977c-496a-be64-60d2f5f46e36][Section 6.3.1]]  |
+|   201 | Created                       | [[id:0f0de6df-c767-45b5-a6a9-1f45f20bba38][Section 6.3.2]]  |
+|   202 | Accepted                      | [[id:f333c72d-3351-4339-b41a-0832ed8884ac][Section 6.3.3]]  |
+|   203 | Non-Authoritative Information | [[id:5a18bb35-2626-4fe4-a36c-cae3a7655a60][Section 6.3.4]]  |
+|   204 | No Content                    | [[id:3a5fcefb-f004-4981-a616-0feba4c9e9e4][Section 6.3.5]]  |
+|   205 | Reset Content                 | [[id:545a7a5c-0589-40d5-bae4-726b8e71dd10][Section 6.3.6]]  |
+|   300 | Multiple Choices              | [[id:bb139936-2671-4ffc-9dd0-75af2bab7d9b][Section 6.4.1]]  |
+|   301 | Moved Permanently             | [[id:e883e3aa-aac3-46ca-83cc-2a085889f9d2][Section 6.4.2]]  |
+|   302 | Found                         | [[id:89acc9d5-366e-4a7c-820e-891fe25738be][Section 6.4.3]]  |
+|   303 | See Other                     | [[id:12c7ea0c-85ac-401f-8132-293e6ebcf52f][Section 6.4.4]]  |
+|   305 | Use Proxy                     | [[id:e69019b2-b071-4380-bcd7-d2fd80261d81][Section 6.4.5]]  |
+|   306 | (Unused)                      | [[id:6e9e880d-b871-4232-bc47-cfc142ba6dce][Section 6.4.6]]  |
+|   307 | Temporary Redirect            | [[id:549c5916-48a9-4e75-8c68-538635c00a2c][Section 6.4.7]]  |
+|   400 | Bad Request                   | [[id:323c581a-d558-421f-a0f1-8c28fe904264][Section 6.5.1]]  |
+|   402 | Payment Required              | [[id:d4484e6e-b1a9-4ae9-b8cd-5da28a80fce7][Section 6.5.2]]  |
+|   403 | Forbidden                     | [[id:addb601c-6b2f-45a7-97f7-9d24bdb8b585][Section 6.5.3]]  |
+|   404 | Not Found                     | [[id:aff1f620-f950-48fe-a479-0276d2aeac0e][Section 6.5.4]]  |
+|   405 | Method Not Allowed            | [[id:6c2a3e21-55e6-465c-b8dc-7d773d341e8f][Section 6.5.5]]  |
+|   406 | Not Acceptable                | [[id:c600bda4-d399-4870-894f-ea4293fc173f][Section 6.5.6]]  |
+|   408 | Request Timeout               | [[id:8523542a-3e33-4261-92b7-0bf706f14a57][Section 6.5.7]]  |
+|   409 | Conflict                      | [[id:63517bec-7c89-4655-a6df-e5e2c8de4a17][Section 6.5.8]]  |
+|   410 | Gone                          | [[id:9b6a1a09-f457-45b9-9b66-b05916f8d1a0][Section 6.5.9]]  |
+|   411 | Length Required               | [[id:57b9a13c-fa90-4ad0-a898-dbb7a80b007c][Section 6.5.10]] |
+|   413 | Payload Too Large             | [[id:620869b7-1f42-4bb9-a3ba-664e80d5161d][Section 6.5.11]] |
+|   414 | URI Too Long                  | [[id:77d1edbb-ceeb-450d-9b85-5f8c89db2f97][Section 6.5.12]] |
+|   415 | Unsupported Media Type        | [[id:7c879fad-0a52-4f22-8447-38b860f3e71d][Section 6.5.13]] |
+|   417 | Expectation Failed            | [[id:a4b990e6-b91e-422d-ad8e-cb77866ed170][Section 6.5.14]] |
+|   426 | Upgrade Required              | [[id:5d028105-552c-4079-bcfe-30809395f6c9][Section 6.5.15]] |
+|   500 | Internal Server Error         | [[id:84033531-28d7-44d7-977d-fe51a55f7c81][Section 6.6.1]]  |
+|   501 | Not Implemented               | [[id:776a0530-a654-43bc-879b-186e39dbff63][Section 6.6.2]]  |
+|   502 | Bad Gateway                   | [[id:dd36be96-0bfa-4dbc-8656-132fe9509b14][Section 6.6.3]]  |
+|   503 | Service Unavailable           | [[id:4e09afe4-30a3-4bbb-aa7e-23f621d42801][Section 6.6.4]]  |
+|   504 | Gateway Timeout               | [[id:4502f86d-74d1-4890-b235-3155ba125cb6][Section 6.6.5]]  |
+|   505 | HTTP Version Not Supported    | [[id:00dabed7-f9a1-471e-a9f6-77220446dbfa][Section 6.6.6]]  |
 
 ** 8.3. 头字段登记表 / Header Field Registry
 
 #+BEGIN_QUOTE
-HTTP header fields are registered within the "Message Headers" registry located at <http://www.iana.org/assignments/message-headers>, as defined by [BCP90].
+HTTP header fields are registered within the "Message Headers" registry located at <http://www.iana.org/assignments/message-headers>, as defined by [[[https://tools.ietf.org/html/rfc3864][BCP90]]].
 #+END_QUOTE
+
+HTTP 头字段被登记在 <http://www.iana.org/assignments/message-headers> 的《消息头》登记表里，见【[[https://tools.ietf.org/html/rfc3864][BCP90]]】的定义。
 
 *** 8.3.1. 新头字段的注意事项 / Considerations for New Header Fields
+:PROPERTIES:
+:ID:       c4f59bbd-db94-480a-8df0-b5451555347e
+:END:
 
 #+BEGIN_QUOTE
-Header fields are key:value pairs that can be used to communicate data about the message, its payload, the target resource, or the connection (i.e., control data). See Section 3.2 of [RFC7230] for a general definition of header field syntax in HTTP messages.
+Header fields are key:value pairs that can be used to communicate data about the message, its payload, the target resource, or the connection (i.e., control data). See [[id:a6c4dceb-8a19-4799-a39b-b7240755c672][Section 3.2]] of [RFC7230] for a general definition of header field syntax in HTTP messages.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The requirements for header field names are defined in [BCP90].
-#+END_QUOTE
+头字段是一种[[ruby:key:value%20pairs][“键:值”对]]，用于传达消息、有效载荷、目标资源、以及连接（也就是说是[[ruby:control%20data][控制数据]]）相关的数据。HTTP 消息头字段句法的一般定义，见[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][【RFC7230】章节 3.2]]。
 
 #+BEGIN_QUOTE
-Authors of specifications defining new fields are advised to keep the name as short as practical and not to prefix the name with "X-" unless the header field will never be used on the Internet. (The "X-" prefix idiom has been extensively misused in practice; it was intended to only be used as a mechanism for avoiding name collisions inside proprietary software or intranet processing, since the prefix would ensure that private names never collide with a newly registered Internet name; see [BCP178] for further information).
+The requirements for header field names are defined in [[[https://tools.ietf.org/html/rfc3864][BCP90]]].
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-New header field values typically have their syntax defined using ABNF ([RFC5234]), using the extension defined in Section 7 of [RFC7230] as necessary, and are usually constrained to the range of US-ASCII characters. Header fields needing a greater range of characters can use an encoding such as the one defined in [RFC5987].
-#+END_QUOTE
+对于头字段的名字上的要求，定义在【[[https://tools.ietf.org/html/rfc3864][BCP90]]】。
 
 #+BEGIN_QUOTE
-Leading and trailing whitespace in raw field values is removed upon field parsing (Section 3.2.4 of [RFC7230]). Field definitions where leading or trailing whitespace in values is significant will have to use a container syntax such as quoted-string (Section 3.2.6 of [RFC7230]).
+Authors of specifications defining new fields are advised to keep the name as short as practical and not to prefix the name with "X-" unless the header field will never be used on the Internet. (The "X-" prefix idiom has been extensively misused in practice; it was intended to only be used as a mechanism for avoiding name collisions inside proprietary software or intranet processing, since the prefix would ensure that private names never collide with a newly registered Internet name; see [[[https://tools.ietf.org/html/rfc6648][BCP178]]] for further information).
 #+END_QUOTE
 
+建议定义新字段规范的作者们尽可能保持名称简短，并且不要添加 "X-" 前缀除非这个头字段永远不会用在[[ruby:Internet][互联网]]上。实际上 "X-" 前缀已被广泛滥用了，它的意图是仅用在[[ruby:proprietary%20software][私人软件]]或者[[ruby:intranet][企业内部网络]]中作为避免名称冲突的一种机制，因为这个前缀可以确保[[ruby:private%20names][私有名称]]永远不会与新近登记的[[ruby:Internet%20name][互联网名称]]相冲突，更多信息见【[[https://tools.ietf.org/html/rfc6648][BCP178]]】。
+
 #+BEGIN_QUOTE
-Because commas (",") are used as a generic delimiter between field-values, they need to be treated with care if they are allowed in the field-value. Typically, components that might contain a comma are protected with double-quotes using the quoted-string ABNF production.
+New header field values typically have their syntax defined using ABNF ([[[https://tools.ietf.org/html/rfc5234][RFC5234]]]), using the extension defined in [[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][Section 7]] of [RFC7230] as necessary, and are usually constrained to the range of US-ASCII characters. Header fields needing a greater range of characters can use an encoding such as the one defined in [[[https://tools.ietf.org/html/rfc5987][RFC5987]]].
 #+END_QUOTE
+
+新头字段的值通常会有使用 ABNF（【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】）来定义的句法，如有必要可以使用[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][【RFC7230】章节 7]] 所定义的扩展规则，并且通常仅使用 US-ASCII 范围内的字符。如果头字段需要更大的范围的字符，可以使用编码，比如定义在【[[https://tools.ietf.org/html/rfc5987][RFC5987]]】内的一种编码形式。
+
+#+BEGIN_QUOTE
+Leading and trailing whitespace in raw field values is removed upon field parsing ([[id:1bd50237-cd26-4e74-8c0c-7af8d2d6b25f][Section 3.2.4]] of [RFC7230]). Field definitions where leading or trailing whitespace in values is significant will have to use a container syntax such as =quoted-string= ([[id:d0012483-93a3-44cf-b019-29e12725d94a][Section 3.2.6]] of [RFC7230]).
+#+END_QUOTE
+
+头字段的原始值里的所有[[ruby:leading][前置]]空格或[[ruby:trailing][后置]]空格将会在[[ruby:parsing][解析]]时被移除（[[id:1bd50237-cd26-4e74-8c0c-7af8d2d6b25f][【RFC7230】章节 3.2.4]]）。对于字段值里“哪里会有前置或后置空格”的定义是非常重要的，必须使用一种[[ruby:container%20syntax][容器句法]]包裹起来，比如 =quoted-string= （[[id:d0012483-93a3-44cf-b019-29e12725d94a][【RFC7230】章节 3.2.6]]）。
+
+#+BEGIN_QUOTE
+Because commas (",") are used as a generic delimiter between field-values, they need to be treated with care if they are allowed in the field-value. Typically, components that might contain a comma are protected with double-quotes using the =quoted-string= ABNF production.
+#+END_QUOTE
+
+因为英文逗号（","）是作为一种字段值之间的[[ruby:generic%20delimiter][通用定界符]]，如果允许在字段值里使用英文逗号的话，必须小心地对待。通常，如果组件定义为可以包含英文逗号，组件通常会使用双引号 =quoted-string= ABNF 规则来进行保护。
 
 #+BEGIN_QUOTE
 For example, a textual date and a URI (either of which might contain a comma) could be safely carried in field-values like these:
 #+END_QUOTE
+
+例如，下面演示了一个文本日期和一个 URI（它们都可以包含英文逗号）可以安全地在字段值里运载：
 
 #+BEGIN_EXAMPLE
   Example-URI-Field: "http://example.com/a.html,foo",
@@ -3932,17 +3960,21 @@ For example, a textual date and a URI (either of which might contain a comma) co
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-Note that double-quote delimiters almost always are used with the quoted-string production; using a different syntax inside double-quotes will likely cause unnecessary confusion.
+Note that double-quote delimiters almost always are used with the =quoted-string= production; using a different syntax inside double-quotes will likely cause unnecessary confusion.
 #+END_QUOTE
 
+需要注意的是，[[ruby:double-quote%20delimiters][双引号定界符]]几乎总是与 =quoted-string= 规则一起使用，如果在双引号里使用另一种不同的句法规则的话，很可能会引发不必要的[[ruby:confusion][混淆]]。
+
 #+BEGIN_QUOTE
-Many header fields use a format including (case-insensitively) named parameters (for instance, Content-Type, defined in Section 3.1.1.5). Allowing both unquoted (token) and quoted (quoted-string) syntax for the parameter value enables recipients to use existing parser components. When allowing both forms, the meaning of a parameter value ought to be independent of the syntax used for it (for an example, see the notes on parameter handling for media types in Section 3.1.1.1).
+Many header fields use a format including (case-insensitively) named parameters (for instance, =Content-Type=, defined in Section 3.1.1.5). Allowing both unquoted (token) and quoted (quoted-string) syntax for the parameter value enables recipients to use existing parser components. When allowing both forms, the meaning of a parameter value ought to be independent of the syntax used for it (for an example, see the notes on parameter handling for media types in [[id:bc05d462-378f-4743-a1ee-543e01064a09][Section 3.1.1.1]]).
 #+END_QUOTE
+
+某些头字段会使用一种格式——一种包含命名参数（不区分大小写）的格式，例如，定义在章节 3.1.1.5 的 =Content-Type=。参数值既允许使用[[ruby:unquoted%20syntax][无引号句法]]（用作[[ruby:token][标记]]），也允许使用[[ruby:quoted%20syntax][引号句法]]（用作[[ruby:quoted-string][括号字符串]]），使得接收端可以使用已有的解析组件。当允许使用上述两种形式的时候，参数值的含义应该不依赖于它所使用的句法（一个例子可以查看[[id:bc05d462-378f-4743-a1ee-543e01064a09][章节 3.1.1.1]] 关于处理媒体类型的参数中的注意点）。
 
 #+BEGIN_QUOTE
 Authors of specifications defining new header fields are advised to consider documenting:
 
-- Whether the field is a single value or whether it can be a list (delimited by commas; see Section 3.2 of [RFC7230]).
+- Whether the field is a single value or whether it can be a list (delimited by commas; see [[id:a6c4dceb-8a19-4799-a39b-b7240755c672][Section 3.2]] of [RFC7230]).
 
   If it does not use the list syntax, document how to treat messages where the field occurs multiple times (a sensible default would be to ignore the field, but this might not always be the right choice).
 
@@ -3954,51 +3986,83 @@ Authors of specifications defining new header fields are advised to consider doc
 
 - Whether the field semantics are further refined by the context, such as by existing request methods or status codes.
 
-- Whether it is appropriate to list the field-name in the Connection header field (i.e., if the header field is to be hop-by-hop; see Section 6.1 of [RFC7230]).
+- Whether it is appropriate to list the field-name in the =Connection= header field (i.e., if the header field is to be hop-by-hop; see [[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][Section 6.1]] of [RFC7230]).
 
 - Under what conditions intermediaries are allowed to insert, delete, or modify the field's value.
 
-- Whether it is appropriate to list the field-name in a Vary response header field (e.g., when the request header field is used by an origin server's content selection algorithm; see Section 7.1.4).
+- Whether it is appropriate to list the field-name in a =Vary= response header field (e.g., when the request header field is used by an origin server's content selection algorithm; see [[id:ca7f8781-b183-4563-a90a-b9b7ad4f1032][Section 7.1.4]]).
 
-- Whether the header field is useful or allowable in trailers (see Section 4.1 of [RFC7230]).
+- Whether the header field is useful or allowable in trailers (see [[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][Section 4.1]] of [RFC7230]).
 
 - Whether the header field ought to be preserved across redirects.
 
 - Whether it introduces any additional security considerations, such as disclosure of privacy-related data.
 #+END_QUOTE
 
+建议定义新字段规范的作者们考虑注明以下信息：
+
+- 字段的值是单一的，还是它能够作为一个列表（以逗号作为分界，见[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][【RFC7230】章节 3.2]]）。
+  
+  如果它没有使用列表句法，注明如何处置它在消息中出现多次的情况（合理的默认做法是忽略该字段，但这样做不一定总是最佳的选择）。
+  需要注意的是，中间人或者软件库可能会将多个相同的头字段合并为一，不管该字段的定义是否允许使用列表句法。一种健壮的格式使得接收端可以发现这咱情况（好例子："Content-Type"，英文逗号只能出现在引号字符串内部。不好的例子："Location"，英文逗号可以出现在一个 URI 里面）。
+  
+- 头字段能够在什么条件之下被使用，比如，仅用于响应或请求，可以用于所有消息，仅用于回应给特定请求方法的响应里，等等。
+
+- 通过 PUT 请求而了解到该字段的源服务器是否应该存储这个字段。
+
+- 该字段的语义是否会被上下文进一步[[ruby:refined][优化]]，比如通过已有的请求方法或者状态码等。
+
+- 该字段的名称是否适用于列举在 =Connection= 头字段里（也就是说，该头字段是否是用于“[[ruby:hop-by-hop][逐跳]]”的，见[[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][【RFC7230】章节 6.1]]）。
+
+- 中间人在什么条件之下可以插入、删除、或者修改这个字段的值。
+
+- 该字段是否适用于列举在 =Vary= 响应头字段里（比如，当请求头字段被用作源服务器的内容选择算法的时候，见[[id:ca7f8781-b183-4563-a90a-b9b7ad4f1032][章节 7.1.4]]）。
+
+- 该字段是否有用于或者允许用在[[ruby:trailer][尾部]]里（[[id:452E8F0E-0A13-40B4-B7A2-759A30E62D31][【RFC7230】章节 4.1]]）。
+
+- 重定向过程中，该字段是否应该被保留。
+
+- 该字段是否引入了任何额外的安全注意事项，比如泄漏了隐私相关的数据。
+
 *** 8.3.2. 登记 / Registrations
+:PROPERTIES:
+:ID:       26c0afab-3519-4a2f-8493-42485b00af37
+:END:
 
 #+BEGIN_QUOTE
 The "Message Headers" registry has been updated with the following permanent registrations:
 #+END_QUOTE
 
+《消息头》登记表已更新为以下永久条目：
+
 | Header Field Name | Protocol | Status   | Reference       |
 |-------------------+----------+----------+-----------------|
-| Accept            | http     | standard | Section 5.3.2   |
-| Accept-Charset    | http     | standard | Section 5.3.3   |
-| Accept-Encoding   | http     | standard | Section 5.3.4   |
-| Accept-Language   | http     | standard | Section 5.3.5   |
-| Allow             | http     | standard | Section 7.4.1   |
-| Content-Encoding  | http     | standard | Section 3.1.2.2 |
-| Content-Language  | http     | standard | Section 3.1.3.2 |
-| Content-Location  | http     | standard | Section 3.1.4.2 |
-| Content-Type      | http     | standard | Section 3.1.1.5 |
-| Date              | http     | standard | Section 7.1.1.2 |
-| Expect            | http     | standard | Section 5.1.1   |
-| From              | http     | standard | Section 5.5.1   |
-| Location          | http     | standard | Section 7.1.2   |
-| Max-Forwards      | http     | standard | Section 5.1.2   |
-| MIME-Version      | http     | standard | Appendix A.1    |
-| Referer           | http     | standard | Section 5.5.2   |
-| Retry-After       | http     | standard | Section 7.1.3   |
-| Server            | http     | standard | Section 7.4.2   |
-| UserAgent         | http     | standard | Section 5.5.3   |
-| Vary              | http     | standard | Section 7.1.4   |
+| Accept            | http     | standard | [[id:95575604-c3d4-48d6-a061-325bd7798970][Section 5.3.2]]   |
+| Accept-Charset    | http     | standard | [[id:4c8262b6-8e4c-4476-ba72-47a096dfbfa7][Section 5.3.3]]   |
+| Accept-Encoding   | http     | standard | [[id:a8fcc101-3782-4ed0-aec0-561b933e6a5f][Section 5.3.4]]   |
+| Accept-Language   | http     | standard | [[id:bdbc4965-a98b-451d-91c6-58e51d7c03c9][Section 5.3.5]]   |
+| Allow             | http     | standard | [[id:f8577773-512f-4d68-8f5d-444368db7c29][Section 7.4.1]]   |
+| Content-Encoding  | http     | standard | [[id:a10adb00-e955-42a6-8d28-ed6f942db085][Section 3.1.2.2]] |
+| Content-Language  | http     | standard | [[id:80f3e8e8-dabb-49b8-b7e6-45f83648a732][Section 3.1.3.2]] |
+| Content-Location  | http     | standard | [[id:91650144-4bfc-4362-b628-f96578a5c756][Section 3.1.4.2]] |
+| Content-Type      | http     | standard | [[id:fcfdf1e4-f733-4305-9ad4-761271a3dd69][Section 3.1.1.5]] |
+| Date              | http     | standard | [[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][Section 7.1.1.2]] |
+| Expect            | http     | standard | [[id:0b0cea12-0af7-47f1-8908-2afc48ce3fb2][Section 5.1.1]]   |
+| From              | http     | standard | [[id:197fca23-d64a-470b-9c12-31ff7d2ddf02][Section 5.5.1]]   |
+| Location          | http     | standard | [[id:bc2baf29-0bf6-4816-865c-3d33f5fe38e3][Section 7.1.2]]   |
+| Max-Forwards      | http     | standard | [[id:4c0e6435-a276-48fb-8cb8-32b8ef5a2780][Section 5.1.2]]   |
+| MIME-Version      | http     | standard | [[id:04195393-a823-4920-b0e6-56d39d8b9a0a][Appendix A.1]]    |
+| Referer           | http     | standard | [[id:5738c39d-f031-4866-b280-76cc7e2ff433][Section 5.5.2]]   |
+| Retry-After       | http     | standard | [[id:f7b225e0-95f5-4d59-81c2-afbf6abb1656][Section 7.1.3]]   |
+| Server            | http     | standard | [[id:9fb6944e-e603-4494-908c-7610fc72220a][Section 7.4.2]]   |
+| UserAgent         | http     | standard | [[id:d3473599-e20b-4b5d-9600-cb05340e8687][Section 5.5.3]]   |
+| Vary              | http     | standard | [[id:ca7f8781-b183-4563-a90a-b9b7ad4f1032][Section 7.1.4]]   |
 
 #+BEGIN_QUOTE
 The change controller for the above registrations is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 #+END_QUOTE
+
+主管以上条目的变更的是 "IETF (iesg@ietf.org) - Internet Engineering Task Force"。
 
 ** 8.4. 内容编码值登记表 / Content Coding Registry
 :PROPERTIES:
@@ -4211,6 +4275,9 @@ This appendix describes specific areas where HTTP differs from MIME. Proxies and
 #+END_QUOTE
 
 ** A.1. MIME-VERSION
+:PROPERTIES:
+:ID:       04195393-a823-4920-b0e6-56d39d8b9a0a
+:END:
 
 #+BEGIN_QUOTE
 HTTP is not a MIME-compliant protocol. However, messages can include a single MIME-Version header field to indicate what version of the MIME protocol was used to construct the message. Use of the MIME-Version header field indicates that the message is in full conformance with the MIME protocol (as defined in [RFC2045]). Senders are responsible for ensuring full conformance (where possible) when exporting HTTP messages to strict MIME environments.
