@@ -3389,6 +3389,9 @@ To minimize the risk of theft or accidental publication, log information ought t
 为了最小化的风险，对于日志信息里的可识别信息（indentifiable information），包含用户标识符（user identifiers）、IP 地址，以及用户提供的查询参数（query parameters），一旦不再需要运用这些信息来支持安全、审计，或者防欺诈（fraud control）需求的运作的时候，应当及时清除掉。
 
 * 10. 鸣谢（Acknowledgments）
+:PROPERTIES:
+:ID:       ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626
+:END:
 #+BEGIN_QUOTE
 This edition of HTTP/1.1 builds on the many contributions that went into RFC 1945, RFC 2068, RFC 2145, and RFC 2616, including substantial contributions made by the previous authors, editors, and Working Group Chairs: Tim Berners-Lee, Ari Luotonen, Roy T. Fielding, Henrik Frystyk Nielsen, Jim Gettys, Jeffrey C. Mogul, Larry Masinter, and Paul J. Leach. Mark Nottingham oversaw this effort as Working Group Chair.
 #+END_QUOTE

@@ -4158,23 +4158,33 @@ Attacks based on such special names tend to focus on either denial-of-service (e
 Origin servers often use parameters within the URI as a means of identifying system services, selecting database entries, or choosing a data source. However, data received in a request cannot be trusted. An attacker could construct any of the request data elements (method, request-target, header fields, or body) to contain data that might be misinterpreted as a command, code, or query when passed through a command invocation, language interpreter, or database interface.
 #+END_QUOTE
 
+源服务器常常在 URI 里使用参数来作为[[ruby:identifying%20system%20services][标识系统服务]]、选择数据库条目、或者选择数据源的一种方法。但是，不能相信接收自一个请求的数据。攻击者可以构建任何请求数据元素（方法、请求目标、头字段或者消息体）来包含恶意数据，当这些恶意数据经过一个[[ruby:command%20invocation][命令执行器]]、[[ruby:language%20interpreter][语言解释器]]、或者[[ruby:database%20interface][数据库接口]]的时候，恶意数据可能会被它们误解为一个命令、代码、或者查询条件。
+
 #+BEGIN_QUOTE
-For example, SQL injection is a common attack wherein additional query language is inserted within some part of the request-target or header fields (e.g., Host, Referer, etc.). If the received data is used directly within a SELECT statement, the query language might be interpreted as a database command instead of a simple string value. This type of implementation vulnerability is extremely common, in spite of being easy to prevent.
+For example, SQL injection is a common attack wherein additional query language is inserted within some part of the request-target or header fields (e.g., =Host=, =Referer=, etc.). If the received data is used directly within a SELECT statement, the query language might be interpreted as a database command instead of a simple string value. This type of implementation vulnerability is extremely common, in spite of being easy to prevent.
 #+END_QUOTE
+
+例如，如果额外的数据库[[ruby:query%20language][查询语言]]是由请求目标的某部分或者某些头字段（比如，=Host=、=Referer= 等）来插入的，那么，这里常常会发生 SQL 注入攻击。如果在一个 SELECT [[ruby:statement][语句]]中直接使用接收自请求的数据，查询语言可能会被解释为一个数据库命令，而不是一个简单的字符串。这种[[ruby:implementation%20vulnerability][实现缺陷]]是非常普遍的，尽管很容易预防。
 
 #+BEGIN_QUOTE
 In general, resource implementations ought to avoid use of request data in contexts that are processed or interpreted as instructions. Parameters ought to be compared to fixed strings and acted upon as a result of that comparison, rather than passed through an interface that is not prepared for untrusted data. Received data that isn't based on fixed parameters ought to be carefully filtered or encoded to avoid being misinterpreted.
 #+END_QUOTE
 
+通常，资源实现应该避免在上下文中使用会被处理或解释为[[ruby:instructions][指令]]的请求数据。参数应该与固定的字符串进行对比，并且按照这个对比结果来行事，而不是直接丢给不检测是否为可信数据的接口当中。接收到不是基于固定参数的数据的时候，应该小心地过滤掉或者对它们进行编码，以避免造成误解。
+
 #+BEGIN_QUOTE
 Similar considerations apply to request data when it is stored and later processed, such as within log files, monitoring tools, or when included within a data format that allows embedded scripts.
 #+END_QUOTE
+
+类似的注意事项同样适用于当请求数据被存储并延后处理的情况，比如在日志文件、监听工具内；也适用于当请求数据被包含在一种允许[[ruby:embedded%20scripts][内嵌脚本]]的数据格式中的情况。
 
 ** 9.3. 个人信息的披露 / Disclosure of Personal Information
 
 #+BEGIN_QUOTE
 Clients are often privy to large amounts of personal information, including both information provided by the user to interact with resources (e.g., the user's name, location, mail address, passwords, encryption keys, etc.) and information about the user's browsing activity over time (e.g., history, bookmarks, etc.). Implementations need to prevent unintentional disclosure of personal information.
 #+END_QUOTE
+
+客户端通常会知道大量的个人信息，包括用户所提供的用于与资源进行交互的信息（比如，用户的名称、位置、邮件地址、密码、加密密钥等）以及用户长期的浏览活动相关的信息（比如，历史记录、收藏夹等）。实现需要阻止个人信息的意外泄漏。
 
 ** 9.4. URLs 敏感信息的披露 / Disclosure of Sensitive Information in URLs
 :PROPERTIES:
@@ -4185,13 +4195,19 @@ Clients are often privy to large amounts of personal information, including both
 URIs are intended to be shared, not secured, even when they identify secure resources. URIs are often shown on displays, added to templates when a page is printed, and stored in a variety of unprotected bookmark lists. It is therefore unwise to include information within a URI that is sensitive, personally identifiable, or a risk to disclose.
 #+END_QUOTE
 
+URI 是打算用作共享的而非受保护的，即使它们标识了受保护的资源。URI 通常用作显示器展示、打印页面时填充进模板、保存进各种各样的未受保护的书签列表里，等等。在 URI 里包含敏感的、可识别个人的、或者有泄漏风险的信息是非常不明智的。
+
 #+BEGIN_QUOTE
 Authors of services ought to avoid GET-based forms for the submission of sensitive data because that data will be placed in the request-target. Many existing servers, proxies, and user agents log or display the request-target in places where it might be visible to third parties. Such services ought to use POST-based form submission instead.
 #+END_QUOTE
 
+服务的作者应该避免基于 GET 的表单来提交敏感数据，因为那些数据将会放置到[[ruby:request-target][请求目标]]里。很多已有的服务器、代理、以及用户代理，会在可能被第三方观察到的地方记录或者显示请求目标。这些服务应该改为使用基于 POST 的表单来提交。
+
 #+BEGIN_QUOTE
-Since the Referer header field tells a target site about the context that resulted in a request, it has the potential to reveal information about the user's immediate browsing history and any personal information that might be found in the referring resource's URI. Limitations on the Referer header field are described in Section 5.5.2 to address some of its security considerations.
+Since the =Referer= header field tells a target site about the context that resulted in a request, it has the potential to reveal information about the user's immediate browsing history and any personal information that might be found in the referring resource's URI. Limitations on the =Referer= header field are described in Section 5.5.2 to address some of its security considerations.
 #+END_QUOTE
+
+因为 =Referer= 头字段将导致请求的上下文告诉给了目标网站，因此，它可能会[[ruby:reveal][泄漏]]用户的即时浏览历史的相关信息，以及在其引用的资源 URI 中所能查找到的任何个人信息。关于 =Referer= 头字段的限制描述在章节 5.5.2 中，以指出它的一些安全注意事项。
 
 ** 9.5. Disclosure of Fragment after Redirects
 
@@ -4237,8 +4253,10 @@ In environments where proxies are used to enhance privacy, user agents ought to 
 * 10. 鸣谢 / Acknowledgements
 
 #+BEGIN_QUOTE
-See Section 10 of [RFC7230].
+See [[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][Section 10]] of [RFC7230].
 #+END_QUOTE
+
+见[[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][【RFC7230】章节 10]]。
 
 * 11. 参考资料 / References
 ** 11.1. Normative References
