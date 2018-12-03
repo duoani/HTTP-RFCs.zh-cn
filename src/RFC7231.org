@@ -4276,7 +4276,7 @@ See [[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][Section 10]] of [RFC7230].
 见[[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][【RFC7230】章节 10]]。
 
 * 11. 参考资料 / References
-** 11.1. Normative References
+** 11.1. 规范性参考资料 / Normative References
 
 - [RFC2045] :: Freed, N. and N. Borenstein, “Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies”, RFC 2045, November 1996.
 - [RFC2046] :: Freed, N. and N. Borenstein, “Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types”, RFC 2046, November 1996.
@@ -4292,7 +4292,7 @@ See [[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][Section 10]] of [RFC7230].
 - [RFC7234] :: Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Caching”, RFC 7234, June 2014.
 - [RFC7235] :: Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Authentication”, RFC 7235, June 2014.
 
-** 11.2. Informative References
+** 11.2. 信息性参考资料 / Informative References
 
 - [BCP13] :: Freed, N., Klensin, J., and T. Hansen, “Media Type Specifications and Registration Procedures”, BCP 13, RFC 6838, January 2013.
 - [BCP178] :: Saint-Andre, P., Crocker, D., and M. Nottingham, “Deprecating the "X-" Prefix and Similar Constructs in Application Protocols”, BCP 178, RFC 6648, June 2012.
@@ -4326,8 +4326,10 @@ See [[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][Section 10]] of [RFC7230].
 :END:
 
 #+BEGIN_QUOTE
-HTTP/1.1 uses many of the constructs defined for the Internet Message Format [RFC5322] and the Multipurpose Internet Mail Extensions (MIME) [RFC2045] to allow a message body to be transmitted in an open variety of representations and with extensible header fields. However, RFC 2045 is focused only on email; applications of HTTP have many characteristics that differ from email; hence, HTTP has features that differ from MIME. These differences were carefully chosen to optimize performance over binary connections, to allow greater freedom in the use of new media types, to make date comparisons easier, and to acknowledge the practice of some early HTTP servers and clients.
+HTTP/1.1 uses many of the constructs defined for the Internet Message Format [[[https://tools.ietf.org/html/rfc5322][RFC5322]]] and the Multipurpose Internet Mail Extensions (MIME) [[[https://tools.ietf.org/html/rfc2045][RFC2045]]] to allow a message body to be transmitted in an open variety of representations and with extensible header fields. However, RFC 2045 is focused only on email; applications of HTTP have many characteristics that differ from email; hence, HTTP has features that differ from MIME. These differences were carefully chosen to optimize performance over binary connections, to allow greater freedom in the use of new media types, to make date comparisons easier, and to acknowledge the practice of some early HTTP servers and clients.
 #+END_QUOTE
+
+HTTP/1.1 使用了许多由[[ruby:Internet%20Message%20Format][互联网消息格式]]【[[https://tools.ietf.org/html/rfc5322][RFC5322]]】以及[[ruby:Multipurpose%20Internet%20Mail%20Extensions][多用途互联网邮件扩展]]（MIME）【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】所定义的结构来让消息体可以以一种开放的多种多样的表示形式以及具有可扩展的头字段的方式来传输。然而，RFC 2045 只专注于电子邮件，而 HTTP 的应用程序有许多不同于电子邮件的特性，因此，HTTP 有不同于 MIME 的特性。这些不同都经过精心设计来优化二进制连接的性能。
 
 #+BEGIN_QUOTE
 This appendix describes specific areas where HTTP differs from MIME. Proxies and gateways to and from strict MIME environments need to be aware of these differences and provide the appropriate conversions where necessary.
