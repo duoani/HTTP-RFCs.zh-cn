@@ -1700,6 +1700,9 @@ A process for decoding the chunked transfer coding can be represented in pseudo-
 #+END_SRC
 
 ** 4.2. 压缩编码值 (Compression Codings)
+:PROPERTIES:
+:ID:       3a8bf61f-e04c-462f-862f-a0f47298dab2
+:END:
 #+BEGIN_QUOTE
 The codings defined below can be used to compress the payload of a message.
 #+END_QUOTE

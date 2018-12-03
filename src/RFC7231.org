@@ -4064,32 +4064,44 @@ The change controller for the above registrations is: "IETF (iesg@ietf.org) - In
 
 主管以上条目的变更的是 "IETF (iesg@ietf.org) - Internet Engineering Task Force"。
 
-** 8.4. 内容编码值登记表 / Content Coding Registry
+** 8.4. 内容编码登记表 / Content Coding Registry
 :PROPERTIES:
 :ID:       87f2ed30-a48b-4c31-a181-8e3a33ba1080
 :END:
 
 #+BEGIN_QUOTE
-The "HTTP Content Coding Registry" defines the namespace for content coding names (Section 4.2 of [RFC7230]). The content coding registry is maintained at <http://www.iana.org/assignments/http-parameters>.
+The "HTTP Content Coding Registry" defines the namespace for content coding names ([[id:3a8bf61f-e04c-462f-862f-a0f47298dab2][Section 4.2]] of [RFC7230]). The content coding registry is maintained at <http://www.iana.org/assignments/http-parameters>.
 #+END_QUOTE
+
+《HTTP 内容编码值登记表》定义了内容编码的名称（[[id:3a8bf61f-e04c-462f-862f-a0f47298dab2][【RFC7230】章节 4.2]]）的命名空间。内容编码登记表维护在 <http://www.iana.org/assignments/http-parameters>。
 
 *** 8.4.1. 手续 / Procedure
 
 #+BEGIN_QUOTE
-Content coding registrations MUST include the following fields:
+Content coding registrations *MUST* include the following fields:
 
 - Name
 - Description
 - Pointer to specification text
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Names of content codings MUST NOT overlap with names of transfer codings (Section 4 of [RFC7230]), unless the encoding transformation is identical (as is the case for the compression codings defined in Section 4.2 of [RFC7230]).
-#+END_QUOTE
+内容编码的登记 *必须* 包括以下字段：
+
+- 名称
+- 描述
+- 指向规范文本的指针
 
 #+BEGIN_QUOTE
-Values to be added to this namespace require IETF Review (see Section 4.1 of [RFC5226]) and MUST conform to the purpose of content coding defined in this section.
+Names of content codings *MUST NOT* overlap with names of transfer codings ([[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][Section 4]] of [RFC7230]), unless the encoding transformation is identical (as is the case for the compression codings defined in [[id:3a8bf61f-e04c-462f-862f-a0f47298dab2][Section 4.2]] of [RFC7230]).
 #+END_QUOTE
+
+内容编码的名称 *禁止* 与[[ruby:transfer%20codings][传输编码]]的名称重复（[[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][【RFC7230】章节 4]]），除非编码转换是相同的（正如定义在[[id:3a8bf61f-e04c-462f-862f-a0f47298dab2][【RFC7230】章节 4.2]] 里的[[ruby:compression%20codings][压缩编码]]一样）。
+
+#+BEGIN_QUOTE
+Values to be added to this namespace require IETF Review (see [[https://tools.ietf.org/html/rfc5226#section-4.1][Section 4.1]] of [RFC5226]) and *MUST* conform to the purpose of content coding defined in this section.
+#+END_QUOTE
+
+添加到本命名空间的值要求由 IETE 复审（见[[https://tools.ietf.org/html/rfc5226#section-4.1][【RFC5226】章节 4.1]]），并且 *必须* 与定义在本章节的[[ruby:content%20coding][内容编码]]的目的相一致。
 
 *** 8.4.2. 登记 / Registrations
 
@@ -4097,21 +4109,27 @@ Values to be added to this namespace require IETF Review (see Section 4.1 of [RF
 The "HTTP Content Coding Registry" has been updated with the registrations below:
 #+END_QUOTE
 
+《HTTP 内容编码登记表》已更新为以下条目：
+
 | Name     | Description                                             | Reference     |
 |----------+---------------------------------------------------------+---------------|
-| identity | Reserved (synonym for "no encoding" in Accept-Encoding) | Section 5.3.4 |
+| identity | Reserved (synonym for "no encoding" in Accept-Encoding) | [[id:a8fcc101-3782-4ed0-aec0-561b933e6a5f][Section 5.3.4]] |
 
 * 9. 安全注意事项 / Security Considerations
 
 #+BEGIN_QUOTE
-This section is meant to inform developers, information providers, and users of known security concerns relevant to HTTP semantics and its use for transferring information over the Internet. Considerations related to message syntax, parsing, and routing are discussed in Section 9 of [RFC7230].
+This section is meant to inform developers, information providers, and users of known security concerns relevant to HTTP semantics and its use for transferring information over the Internet. Considerations related to message syntax, parsing, and routing are discussed in [[id:aa52d5bd-e2f6-40db-826d-991544eeacb9][Section 9]] of [RFC7230].
 #+END_QUOTE
+
+本章节是为了告诉开发者、信息提供商、以及用户，已知的 HTTP [[ruby:semantics][语义]]及其使用在互联网上进行信息传输过程中相关的安全注意事项。与消息[[ruby:syntax][句法]]、[[ruby:parsing][解析]]、以及[[ruby:routing][路由]]相关的注意事项已在[[id:aa52d5bd-e2f6-40db-826d-991544eeacb9][【RFC7230】章节 9]] 中讨论过了。
 
 #+BEGIN_QUOTE
-The list of considerations below is not exhaustive. Most security concerns related to HTTP semantics are about securing server-side applications (code behind the HTTP interface), securing user agent processing of payloads received via HTTP, or secure use of the Internet in general, rather than security of the protocol. Various organizations maintain topical information and links to current research on Web application security (e.g., [OWASP]).
+The list of considerations below is not exhaustive. Most security concerns related to HTTP semantics are about securing server-side applications (code behind the HTTP interface), securing user agent processing of payloads received via HTTP, or secure use of the Internet in general, rather than security of the protocol. Various organizations maintain topical information and links to current research on Web application security (e.g., [[[https://www.owasp.org/index.php/Main_Page][OWASP]]]).
 #+END_QUOTE
 
-** 9.1. 基于文件和路径名称的攻击 / Attacks Based on File and Path Names
+以下列举的注意事项并不是十分详尽。与 HTTP 语义相关的大多数安全注意事项指的是保护[[ruby:server-side][服务端]]应用（HTTP 接口背后的代码）、保护用户代理处理经由 HTTP 接收到有效载荷、或者保护互联网的一般使用，而不是协议的安全性。各种组织共同维护了关于网络应用安全性方面的最新研究的专题信息和链接（比如，【[[https://www.owasp.org/index.php/Main_Page][OWASP]]】）。
+
+** 9.1. 基于文件名称和路径名称的攻击 / Attacks Based on File and Path Names
 :PROPERTIES:
 :ID:       9195be98-bd4e-40ae-a5a0-6af920044f02
 :END:
@@ -4120,13 +4138,19 @@ The list of considerations below is not exhaustive. Most security concerns relat
 Origin servers frequently make use of their local file system to manage the mapping from effective request URI to resource representations. Most file systems are not designed to protect against malicious file or path names. Therefore, an origin server needs to avoid accessing names that have a special significance to the system when mapping the request target to files, folders, or directories.
 #+END_QUOTE
 
+源服务器经常使用它们的本地文件系统来管理[[ruby:effective%20request%20URI][有效请求 URI]] 与[[ruby:resource%20representations][资源表示形式]]之间的[[ruby:mapping][映射]]。大多数[[ruby:file%20system][文件系统]]没有对防范恶意文件名称或路径名称方面的设计。因此，当源服务器映射请求目标到文件、文件夹、或者目录的时候，源服务器需要避免访问对于文件系统来说具有特殊意义的那些名称。
+
 #+BEGIN_QUOTE
 For example, UNIX, Microsoft Windows, and other operating systems use ".." as a path component to indicate a directory level above the current one, and they use specially named paths or file names to send data to system devices. Similar naming conventions might exist within other types of storage systems. Likewise, local storage systems have an annoying tendency to prefer user-friendliness over security when handling invalid or unexpected characters, recomposition of decomposed characters, and case-normalization of case-insensitive names.
 #+END_QUOTE
 
+例如，UNIX、Microsoft Windows、以及其他操作系统，使用 ".." 作为路径组件来表明当前路径的上一层级目录，而且它们使用[[ruby:specially%20named][特殊命名]]的路径或者文件名来发送数据到系统设备当中。类似的[[ruby:naming%20convertions][名称转换]]可能存在于其他类型的存储系统之间。同样，当对非法或意外字符进行处理、对已经分解的字符进行重排、以及对不区分大小写的名称进行大小写规范化的时候，本地存储系统有一个令人恼火的倾向是，相对于安全性，它更看重用户友好度。
+
 #+BEGIN_QUOTE
 Attacks based on such special names tend to focus on either denial-of-service (e.g., telling the server to read from a COM port) or disclosure of configuration and source files that are not meant to be served.
 #+END_QUOTE
+
+其于这种特殊名称的攻击倾向于侧重[[ruby:denial-of-service][拒绝服务攻击]]（比如，告诉服务器去读取 COM 端口的数据）或者[[ruby:disclosure][泄露]]服务器并不想提供的配置和源文件。
 
 ** 9.2. 基于命令、代码、查询注入 / Attacks Based on Command, Code, or Query Injection
 
