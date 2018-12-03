@@ -4178,7 +4178,7 @@ Similar considerations apply to request data when it is stored and later process
 
 类似的注意事项同样适用于当请求数据被存储并延后处理的情况，比如在日志文件、监听工具内；也适用于当请求数据被包含在一种允许[[ruby:embedded%20scripts][内嵌脚本]]的数据格式中的情况。
 
-** 9.3. 个人信息的披露 / Disclosure of Personal Information
+** 9.3. 个人信息的泄露 / Disclosure of Personal Information
 
 #+BEGIN_QUOTE
 Clients are often privy to large amounts of personal information, including both information provided by the user to interact with resources (e.g., the user's name, location, mail address, passwords, encryption keys, etc.) and information about the user's browsing activity over time (e.g., history, bookmarks, etc.). Implementations need to prevent unintentional disclosure of personal information.
@@ -4186,7 +4186,7 @@ Clients are often privy to large amounts of personal information, including both
 
 客户端通常会知道大量的个人信息，包括用户所提供的用于与资源进行交互的信息（比如，用户的名称、位置、邮件地址、密码、加密密钥等）以及用户长期的浏览活动相关的信息（比如，历史记录、收藏夹等）。实现需要阻止个人信息的意外泄漏。
 
-** 9.4. URLs 敏感信息的披露 / Disclosure of Sensitive Information in URLs
+** 9.4. URLs 敏感信息的泄露 / Disclosure of Sensitive Information in URLs
 :PROPERTIES:
 :ID:       ed824807-db16-4f5b-ab13-2366f5cfc0f3
 :END:
@@ -4209,21 +4209,27 @@ Since the =Referer= header field tells a target site about the context that resu
 
 因为 =Referer= 头字段将导致请求的上下文告诉给了目标网站，因此，它可能会[[ruby:reveal][泄漏]]用户的即时浏览历史的相关信息，以及在其引用的资源 URI 中所能查找到的任何个人信息。关于 =Referer= 头字段的限制描述在章节 5.5.2 中，以指出它的一些安全注意事项。
 
-** 9.5. Disclosure of Fragment after Redirects
+** 9.5. 重定向后段落的泄露 / Disclosure of Fragment after Redirects
 
 #+BEGIN_QUOTE
-Although fragment identifiers used within URI references are not sent in requests, implementers ought to be aware that they will be visible to the user agent and any extensions or scripts running as a result of the response. In particular, when a redirect occurs and the original request's fragment identifier is inherited by the new reference in Location (Section 7.1.2), this might have the effect of disclosing one site's fragment to another site. If the first site uses personal information in fragments, it ought to ensure that redirects to other sites include a (possibly empty) fragment component in order to block that inheritance.
+Although =fragment= identifiers used within URI references are not sent in requests, implementers ought to be aware that they will be visible to the user agent and any extensions or scripts running as a result of the response. In particular, when a redirect occurs and the original request's =fragment= identifier is inherited by the new reference in =Location= (Section 7.1.2), this might have the effect of disclosing one site's =fragment= to another site. If the first site uses personal information in =fragments=, it ought to ensure that redirects to other sites include a (possibly empty) =fragment= component in order to block that inheritance.
 #+END_QUOTE
 
-** 9.6. Disclosure of Product Information
+虽然在 URI 引用中所使用的 =fragment= 标识符不会在请求中被发送，但是，实现者应该要意识到，对于用户代理、以及响应所导致执行的扩展或脚本来说，它们是可见的。实践中，当发生一个重定向，并且原始请求的 =fragment= 标识符被 =Location= （章节 7.1.2）里的新引用所继承的时候，这样可能会导致一个网站的 =fragment= 泄漏到另一个网站当中。如果第一个网站的 =fragment= 使用了个人信息，它应该保证重定向到其他网站时包含一个（可能为空的） =fragment= 组件以阻止这种继承。
 
-#+BEGIN_QUOTE
-The User-Agent (Section 5.5.3), Via (Section 5.7.1 of [RFC7230]), and Server (Section 7.4.2) header fields often reveal information about the respective sender's software systems. In theory, this can make it easier for an attacker to exploit known security holes; in practice, attackers tend to try all potential holes regardless of the apparent software versions being used.
-#+END_QUOTE
+** 9.6. 产品信息的泄露 / Disclosure of Product Information
 
 #+BEGIN_QUOTE
-Proxies that serve as a portal through a network firewall ought to take special precautions regarding the transfer of header information that might identify hosts behind the firewall. The Via header field allows intermediaries to replace sensitive machine names with pseudonyms.
+The =User-Agent= (Section 5.5.3), =Via= (Section 5.7.1 of [RFC7230]), and =Server= (Section 7.4.2) header fields often reveal information about the respective sender's software systems. In theory, this can make it easier for an attacker to exploit known security holes; in practice, attackers tend to try all potential holes regardless of the apparent software versions being used.
 #+END_QUOTE
+
+=User-Agent= （章节 5.5.3）、=Via= （【RFC7230】章节 5.7.1）、以及 =Server= （章节 7.4.2）头字段常常会泄漏各自发送端的软件系统的相关信息。理论上，这样可以使攻击者更容易地挖掘已知的安全漏洞；实践上，不管使用了哪一个软件版本，攻击者都倾向于尝试所有可能的漏洞。
+
+#+BEGIN_QUOTE
+Proxies that serve as a portal through a network firewall ought to take special precautions regarding the transfer of header information that might identify hosts behind the firewall. The =Via= header field allows intermediaries to replace sensitive machine names with pseudonyms.
+#+END_QUOTE
+
+当代理充当[[ruby:network%20firewall][网络防火墙]]的一个门户的时候，应该采取特殊的措施来预防可能标识到防火墙内部主机的头部信息的传递。=Via= 头字段让中间人可以将敏感的[[ruby:machine%20names][机器名称]]替换为[[ruby:pseudonyms][化名]]。
 
 ** 9.7. 浏览器指纹识别 / Browser Fingerprinting
 :PROPERTIES:
@@ -4234,21 +4240,32 @@ Proxies that serve as a portal through a network firewall ought to take special 
 Browser fingerprinting is a set of techniques for identifying a specific user agent over time through its unique set of characteristics. These characteristics might include information related to its TCP behavior, feature capabilities, and scripting environment, though of particular interest here is the set of unique characteristics that might be communicated via HTTP. Fingerprinting is considered a privacy concern because it enables tracking of a user agent's behavior over time without the corresponding controls that the user might have over other forms of data collection (e.g., cookies). Many general-purpose user agents (i.e., Web browsers) have taken steps to reduce their fingerprints.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-There are a number of request header fields that might reveal information to servers that is sufficiently unique to enable fingerprinting. The From header field is the most obvious, though it is expected that From will only be sent when self-identification is desired by the user. Likewise, Cookie header fields are deliberately designed to enable re-identification, so fingerprinting concerns only apply to situations where cookies are disabled or restricted by the user agent's configuration.
-#+END_QUOTE
+浏览器指纹识别是一系列的技术以通过用户代理所特有的一组[[ruby:characteristics][特征]]，长时间内识别一个具体用户代理。这些特征可能包含它的 TCP 行为、[[ruby:feature%20capabilities][特色功能]]、以及[[ruby:scripting%20environment][脚本环境]]等相关信息，不过这里特别感兴趣的是这一组经由 HTTP 来传达的唯一特征。指纹识别被认为是一种隐私问题，因为它启用了对一个用户代理的行为长时间的跟踪，对比于其他用户能够控制的数据收集的方式（比如，cookies）来说，用户无法左右指纹识别。许多通用的用户代理（也就是说，网页浏览器）已采取措施来减少它们的指纹识别。
 
 #+BEGIN_QUOTE
-The User-Agent header field might contain enough information to uniquely identify a specific device, usually when combined with other characteristics, particularly if the user agent sends excessive details about the user's system or extensions. However, the source of unique information that is least expected by users is proactive negotiation (Section 5.3), including the Accept, Accept-Charset, Accept-Encoding, and Accept-Language header fields.
+There are a number of request header fields that might reveal information to servers that is sufficiently unique to enable fingerprinting. The =From= header field is the most obvious, though it is expected that =From= will only be sent when self-identification is desired by the user. Likewise, =Cookie= header fields are deliberately designed to enable re-identification, so fingerprinting concerns only apply to situations where cookies are disabled or restricted by the user agent's configuration.
 #+END_QUOTE
 
+有大量的请求头字段可能泄漏信息给服务器，这些信息足以服务器启用指纹识别以唯一标识一个用户代理。=From= 头字段是最明显的，虽然 =From= 预期只会在用户希望[[ruby:self-identification][自我识别]]的时候才会被发送。同样，=Cookie= 头字段是刻意设计为启用[[ruby:re-identification][重新识别]]的，所以，指纹识别仅适用于 cookies
+被用户代理的配置所禁用的情况。
+
 #+BEGIN_QUOTE
-In addition to the fingerprinting concern, detailed use of the Accept-Language header field can reveal information the user might consider to be of a private nature. For example, understanding a given language set might be strongly correlated to membership in a particular ethnic group. An approach that limits such loss of privacy would be for a user agent to omit the sending of Accept-Language except for sites that have been whitelisted, perhaps via interaction after detecting a Vary header field that indicates language negotiation might be useful.
+The =User-Agent= header field might contain enough information to uniquely identify a specific device, usually when combined with other characteristics, particularly if the user agent sends excessive details about the user's system or extensions. However, the source of unique information that is least expected by users is proactive negotiation ([[id:99513880-9381-41eb-91ee-483b42d025e8][Section 5.3]]), including the =Accept=, =Accept-Charset=, =Accept-Encoding=, and =Accept-Language= header fields.
 #+END_QUOTE
+
+=User-Agent= 头字段可能包含足够的信息，通常当结合其他特征，特别是当用户代理发送用户的系统或扩展的过多细节的时候，可以唯一标识一个具体的设备。然而，用户最没有预料到的唯一信息的来源是主动型协商（[[id:99513880-9381-41eb-91ee-483b42d025e8][章节 5.3]]），包括 =Accept=、=Accept-Charset=、=Accept-Encoding=、以及 =Accept-Language= 头字段。
+
+#+BEGIN_QUOTE
+In addition to the fingerprinting concern, detailed use of the =Accept-Language= header field can reveal information the user might consider to be of a private nature. For example, understanding a given language set might be strongly correlated to membership in a particular ethnic group. An approach that limits such loss of privacy would be for a user agent to omit the sending of =Accept-Language= except for sites that have been whitelisted, perhaps via interaction after detecting a =Vary= header field that indicates language negotiation might be useful.
+#+END_QUOTE
+
+除了指纹识别问题之外，=Accept-Language= 头字段的具体使用也会泄漏用户认为是隐私性质的信息。例如，了解给定语言集合的人可能与一个具体的种族群体密切相关。对于一个用户代理来说，限制这种[[ruby:loss%20of%20privacy][失去隐私]]的一种途径可以是省略 =Accept-Language= 头字段的发送，除了加入进白名单的网站列表以外，也许在删除表明语言可能有用于内容协商的 =Vary= 头字段之后经由用户代理和服务器两者之间的交互。
 
 #+BEGIN_QUOTE
 In environments where proxies are used to enhance privacy, user agents ought to be conservative in sending proactive negotiation header fields. General-purpose user agents that provide a high degree of header field configurability ought to inform users about the loss of privacy that might result if too much detail is provided. As an extreme privacy measure, proxies could filter the proactive negotiation header fields in relayed requests.
 #+END_QUOTE
+
+在代理用于加强隐私保护的环境中，用户代理应该[[ruby:conservative][保守地]]发送用于主动协商的头字段。提供对头字段高度配置功能的通用型用户代理应该告知用户：如果提供了过多的头字段细节的话，用户可能会关于[[ruby:loss%20of%20privacy][失去隐私]]。作为一种极端隐私的措施，代理可以在中转请求的时候，过滤掉所有主动协商的头字段。
 
 * 10. 鸣谢 / Acknowledgements
 
