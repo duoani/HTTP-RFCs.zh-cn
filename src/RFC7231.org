@@ -2772,17 +2772,7 @@ The =4xx (Client Error)= class of status code indicates that the client seems to
 
 =4xx (Client Error)= 状态码种类表明：客户端貌似有错误。除了响应给 HEAD 请求的这种情况以外，服务器 *应当* 在其发送的响应里包含一个表示形式来解释这种[[ruby:error%20situation][错误情况]]，以及这是暂时还是永久的[[ruby:condition][状况]]。这些状态码适用于任何请求方法。用户代理 *应当* 向用户展示其内的任何表示形式。
 
-*** 6.5.1. 400 无效请求 / 400 Bad Request
-:PROPERTIES:
-:ID:       323c581a-d558-421f-a0f1-8c28fe904264
-:END:
-
-#+BEGIN_QUOTE
-The =400 (Bad Request)= status code indicates that the server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
-#+END_QUOTE
-
-=400 (Bad Request)= 状态码表明：由于某些被认为是客户端的错误，导致服务器[[ruby:cannot][无法]]或者[[ruby:will%20not][不会]]处理这个请求（比如，错误的请求[[ruby:syntax][句法]]、无效的请求报文[[ruby:framing][分帧]]、欺骗性的请求[[ruby:routing][路由]]等）。
-
+*
 *** 6.5.2. 402 要求付费 / 402 Payment Required
 :PROPERTIES:
 :ID:       d4484e6e-b1a9-4ae9-b8cd-5da28a80fce7
@@ -3132,6 +3122,9 @@ Although each response header field has a defined meaning, in general, the preci
 虽然每种响应头字段都定义了含义，但通常情况下，更精确的语义可能经由[[ruby:request%20method][请求方法]]以及（或者）[[ruby:response%20status%20code][响应状态码]]来进一步优化。
 
 ** 7.1. 控制数据 / Control Data
+:PROPERTIES:
+:ID:       7e63ac99-1421-4f2d-8b6f-f7a1bda440ef
+:END:
 
 #+BEGIN_QUOTE
 Response header fields can supply control data that supplements the status code, directs caching, or instructs the client where to go next.
@@ -3905,6 +3898,9 @@ The status code registry has been updated with the registrations below:
 |   505 | HTTP Version Not Supported    | [[id:00dabed7-f9a1-471e-a9f6-77220446dbfa][Section 6.6.6]]  |
 
 ** 8.3. 头字段登记表 / Header Field Registry
+:PROPERTIES:
+:ID:       2a7badc9-653a-47f1-a373-aea21c2f2f84
+:END:
 
 #+BEGIN_QUOTE
 HTTP header fields are registered within the "Message Headers" registry located at <http://www.iana.org/assignments/message-headers>, as defined by [[[https://tools.ietf.org/html/rfc3864][BCP90]]].

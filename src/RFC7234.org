@@ -44,7 +44,13 @@
 ** 1.2. Syntax Notation
 *** 1.2.1. Delta Seconds
 * 2. Overview of Cache Operation
+:PROPERTIES:
+:ID:       a09dfe13-47b3-4258-a219-ba801a1f0467
+:END:
 * 3. Storing Responses in Caches
+:PROPERTIES:
+:ID:       e41d8ccc-5b69-40e3-a8ab-ca27327f15fa
+:END:
 ** 3.1. Storing Incomplete Responses
 ** 3.2. Storing Responses to Authenticated Requests
 ** 3.3. Combining Partial Content
@@ -110,6 +116,9 @@
 *** 7.2.2. Registrations
 ** 7.3. Header Field Registration
 * 8. Security Considerations
+:PROPERTIES:
+:ID:       258f834a-496c-4173-b6bd-dda94f1d74fe
+:END:
 * 9. Acknowledgments
 * 10. References
 ** 10.1. Normative References

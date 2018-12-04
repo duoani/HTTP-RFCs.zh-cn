@@ -69,19 +69,19 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level request/
 
 #+BEGIN_QUOTE
 - "Message Syntax and Routing" (this document)
-- "Semantics and Content" [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]
-- "Conditional Requests" [[[https://tools.ietf.org/html/rfc7232][RFC7232]]]
-- "Range Requests" [[[https://tools.ietf.org/html/rfc7233][RFC7233]]]
-- "Caching" [[[https://tools.ietf.org/html/rfc7234][RFC7234]]]
-- "Authentication" [[[https://tools.ietf.org/html/rfc7235][RFC7235]]]
+- "Semantics and Content" [[[file:RFC7231.org][RFC7231]]]
+- "Conditional Requests" [[[file:RFC7232.org][RFC7232]]]
+- "Range Requests" [[[file:RFC7233.org][RFC7233]]]
+- "Caching" [[[file:RFC7234.org][RFC7234]]]
+- "Authentication" [[[file:RFC7235.org][RFC7235]]]
 #+END_QUOTE
 
 - 《消息句法和路由》（本文档）
-- 《语义和内容》【[[https://tools.ietf.org/html/7231][RFC7231]]】
-- 《条件请求》【[[https://tools.ietf.org/html/rfc7232][RFC7232]]】
-- 《范围请求》【[[https://tools.ietf.org/html/rfc7233][RFC7233]]】
-- 《缓存》【[[https://tools.ietf.org/html/rfc7234][RFC7234]]】
-- 《认证》【[[https://tools.ietf.org/html/rfc7235][RFC7235]]】
+- 《语义和内容》【[[file:RFC7231.org][RFC7231]]】
+- 《条件请求》【[[file:RFC7232.org][RFC7232]]】
+- 《范围请求》【[[file:RFC7233.org][RFC7233]]】
+- 《缓存》【[[file:RFC7234.org][RFC7234]]】
+- 《认证》【[[file:RFC7235.org][RFC7235]]】
 
 #+BEGIN_QUOTE
 This HTTP/1.1 specification obsoletes [[https://tools.ietf.org/html/rfc2616][RFC 2616]] and [[https://tools.ietf.org/html/rfc2145][RFC 2145]] (on HTTP versioning). This specification also updates the use of CONNECT to establish a tunnel, previously defined in [[https://tools.ietf.org/html/rfc2817][RFC 2817]], and defines the "https" URI scheme that was described informally in [[https://tools.ietf.org/html/rfc2818][RFC 2818]].
@@ -180,10 +180,10 @@ The terms "client" and "server" refer only to the roles that these programs perf
 术语“客户端（client）”和“服务器（server）”特指在一个具体连接（connection）中的相关程序所充当的角色。同一个程序可能在某些连接中充当一个客户端，而在其他连接中充当的是一个服务器。术语“用户代理（user agent）”指的是任何发起请求的各种客户端程序，包括（但不限于）浏览器、爬虫（基于网络的机器人）、命令行工具、定制应用和移动应用。术语“源服务器（origin server）”指的是任何为一个给定目标资源产生权威响应（authoritative response，见[[id:901a19cc-8490-4c06-a515-26eb9b66c173][章节 9.1]]）的程序。术语“发送端（sender）”和“接收端（recipient）”分别指的是任何发送或者接收一个给定消息的实现（implementation）。
 
 #+BEGIN_QUOTE
-HTTP relies upon the Uniform Resource Identifier (URI) standard [[[https://tools.ietf.org/html/rfc3986][RFC3986]]] to indicate the target resource ([[id:9fd57271-c172-4fc0-8678-fa427df02d64][Section 5.1]]) and relationships between resources. Messages are passed in a format similar to that used by Internet mail [[[https://tools.ietf.org/html/rfc5233][RFC5322]]] and the Multipurpose Internet Mail Extensions (MIME) [[[https://tools.ietf.org/html/rfc2045][RFC2045]]] (see [[https://tools.ietf.org/html/rfc7231#appendix-A][Appendix-A]] of [RFC7231] for the differences between HTTP and MIME messages).
+HTTP relies upon the Uniform Resource Identifier (URI) standard [[[https://tools.ietf.org/html/rfc3986][RFC3986]]] to indicate the target resource ([[id:9fd57271-c172-4fc0-8678-fa427df02d64][Section 5.1]]) and relationships between resources. Messages are passed in a format similar to that used by Internet mail [[[https://tools.ietf.org/html/rfc5233][RFC5322]]] and the Multipurpose Internet Mail Extensions (MIME) [[[https://tools.ietf.org/html/rfc2045][RFC2045]]] (see [[id:84208afd-e458-4f40-97cc-2e9535523797][Appendix-A]] of [RFC7231] for the differences between HTTP and MIME messages).
 #+END_QUOTE
 
-HTTP 依靠“统一资源标识符（URI）标准[[https://tools.ietf.org/html/rfc3986][【RFC3986】]]”来标识目标资源（[[id:9fd57271-c172-4fc0-8678-fa427df02d64][章节 5.1]]）以及资源与资源之间的关系。消息通过类似于电子邮件【[[https://tools.ietf.org/html/rfc5233][RFC5233]]】和多用途互联网邮件扩展类型（MIME）【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】的格式来进行传输。对于 HTTP 与 MIME 之间的区别可以查看【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】的[[https://tools.ietf.org/html/rfc7231#appendix-A][附录 A]]。）
+HTTP 依靠“统一资源标识符（URI）标准[[https://tools.ietf.org/html/rfc3986][【RFC3986】]]”来标识目标资源（[[id:9fd57271-c172-4fc0-8678-fa427df02d64][章节 5.1]]）以及资源与资源之间的关系。消息通过类似于电子邮件【[[https://tools.ietf.org/html/rfc5233][RFC5233]]】和多用途互联网邮件扩展类型（MIME）【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】的格式来进行传输。对于 HTTP 与 MIME 之间的区别可以查看[[id:84208afd-e458-4f40-97cc-2e9535523797][【RFC7231】附录 A]]。）
 
 #+BEGIN_QUOTE
 Most HTTP communication consists of a retrieval request (GET) for a representation of some resource identified by a URI. In the simplest case, this might be accomplished via a single bidirectional connection (===) between the user agent (UA) and the origin server (O).
@@ -220,10 +220,10 @@ A connection might be used for multiple request/response exchanges, as defined i
 一个连接可能被用于多次请求/响应的消息交换，其定义见[[id:bc2ed56c-f0a1-4609-bdbd-1c649aeb3681][章节 6.3]]。
 
 #+BEGIN_QUOTE
-The following example illustrates a typical message exchange for a GET request (Section 4.3.1 of [RFC7231]) on the URI "http://www.example.com/hello.txt":
+The following example illustrates a typical message exchange for a GET request ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]] of [RFC7231]) on the URI "http://www.example.com/hello.txt":
 #+END_QUOTE
 
-下面举例说明对于 URI 为 "http://www.example.com/hello.txt" 的一个典型的 GET 请求（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.1][章节 4.3.1]]）的消息交换过程。
+下面举例说明对于 URI 为 "http://www.example.com/hello.txt" 的一个典型的 GET 请求（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][【RFC7231】章节 4.3.1]]）的消息交换过程。
 
 #+BEGIN_QUOTE
 Client request:
@@ -399,10 +399,10 @@ The effect of a cache is that the request/response chain is shortened if one of 
 #+END_SRC
 
 #+BEGIN_QUOTE
-A response is "cacheable" if a cache is allowed to store a copy of the response message for use in answering subsequent requests. Even when a response is cacheable, there might be additional constraints placed by the client or by the origin server on when that cached response can be used for a particular request. HTTP requirements for cache behavior and cacheable responses are defined in Section 2 of [RFC7234].
+A response is "cacheable" if a cache is allowed to store a copy of the response message for use in answering subsequent requests. Even when a response is cacheable, there might be additional constraints placed by the client or by the origin server on when that cached response can be used for a particular request. HTTP requirements for cache behavior and cacheable responses are defined in [[id:a09dfe13-47b3-4258-a219-ba801a1f0467][Section 2]] of [RFC7234].
 #+END_QUOTE
 
-如果一个缓存被允许去存储一个响应消息的副本用于应答随后的请求，那么这个响应消息是“可缓存的（cacheable）”。即使一个响应是可缓存的，也可能存在一些来自客户端或源服务器的额外约束来规定在什么情况下所缓存的响应消息能够用于具体的请求。HTTP 关于缓存的行为（cache behavior）以及可缓存的响应（cacheable reponses）的定义，见[[https://tools.ietf.org/html/rfc7234#section-2][【RFC7234】第二章]]。
+如果一个缓存被允许去存储一个响应消息的副本用于应答随后的请求，那么这个响应消息是“可缓存的（cacheable）”。即使一个响应是可缓存的，也可能存在一些来自客户端或源服务器的额外约束来规定在什么情况下所缓存的响应消息能够用于具体的请求。HTTP 关于缓存的行为（cache behavior）以及可缓存的响应（cacheable reponses）的定义，见[[id:a09dfe13-47b3-4258-a219-ba801a1f0467][【RFC7234】第二章]]。
 
 #+BEGIN_QUOTE
 There is a wide variety of architectures and configurations of caches deployed across the World Wide Web and inside large organizations.
@@ -601,10 +601,10 @@ When an HTTP message is received with a major version number that the recipient 
 :ID:       9c45ae18-46b0-4acb-a478-3d3e9a3748ab
 :END:
 #+BEGIN_QUOTE
-Uniform Resource Identifiers (URIs) [RFC3986] are used throughout HTTP as the means for identifying resources (Section 2 of [RFC7231]). URI references are used to target requests, indicate redirects, and define relationships.
+Uniform Resource Identifiers (URIs) [RFC3986] are used throughout HTTP as the means for identifying resources ([[id:304453f4-a250-4f73-b82c-2825a0bda464][Section 2]] of [RFC7231]). URI references are used to target requests, indicate redirects, and define relationships.
 #+END_QUOTE
 
-统一资源标识符（URIs）[[https://tools.ietf.org/html/rfc3986][【RFC3986】]] 作为标识资源（[[https://tools.ietf.org/html/rfc7231#section-2][【RFC7231】第二章]]）的手段，广泛使用于 HTTP 中。URI 引用（URI references）用于定位请求，标识重定向以及定义关联。
+统一资源标识符（URIs）[[https://tools.ietf.org/html/rfc3986][【RFC3986】]] 作为标识资源（[[id:304453f4-a250-4f73-b82c-2825a0bda464][【RFC7231】章节 2]]）的手段，广泛使用于 HTTP 中。URI 引用（URI references）用于定位请求，标识重定向以及定义关联。
 
 #+BEGIN_QUOTE
 The definitions of "URI-reference", "absolute-URI", "relative-part", "scheme", "authority", "port", "host", "path-abempty", "segment", "query", and "fragment" are adopted from the URI generic syntax. An "absolute-path" rule is defined for protocol elements that can contain a non-empty path component. (This rule differs slightly from the path-abempty rule of RFC 3986, which allows for an empty path to be used in references, and path-absolute rule, which does not allow paths that begin with "//".) A "partial-URI" rule is defined for protocol elements that can contain a relative URI but not a fragment component.
@@ -706,10 +706,10 @@ Note that the presence of a URI with a given authority component does not imply 
 需要注意的是，一个 URI 带有给定的 =authority= 组件并不意味着这个 URI 一定就是某个监听那个 =host= 以及对应 =port= 来等待连接的 HTTP 服务器。任何人都可以建造 URI。而 =authority= 决定的是谁有权力去响应这个定位目标资源的请求。注册域名和 IP 地址所代表的本质是，基于支配明确的 =host= 和 =port= 生成一个联合命名空间，无论最终呈现的是否是一个 HTTP 服务器。见[[id:901a19cc-8490-4c06-a515-26eb9b66c173][章节 9.1]]。
 
 #+BEGIN_QUOTE
-When an "http" URI is used within a context that calls for access to the indicated resource, a client *MAY* attempt access by resolving the host to an IP address, establishing a TCP connection to that address on the indicated port, and sending an HTTP request message (Section 3) containing the URI's identifying data (Section 5) to the server. If the server responds to that request with a non-interim HTTP response message, as described in Section 6 of [RFC7231], then that response is considered an authoritative answer to the client's request.
+When an "http" URI is used within a context that calls for access to the indicated resource, a client *MAY* attempt access by resolving the host to an IP address, establishing a TCP connection to that address on the indicated port, and sending an HTTP request message (Section 3) containing the URI's identifying data (Section 5) to the server. If the server responds to that request with a non-interim HTTP response message, as described in [[id:5a69d0cc-628c-4897-a089-45f906b94a92][Section 6]] of [RFC7231], then that response is considered an authoritative answer to the client's request.
 #+END_QUOTE
 
-当一个 "http" URI 用于一个请求访问目标资源的场合里，客户端 *可以* 尝试通过解释（resolve） =host= 获得 IP 地址，（通过对应的端口）建立一个 TCP 连接到这个地址，然后发送一个包含这个 URI 的识别数据（见[[id:f6881980-16db-4ca2-a3c8-39aa336c954f][章节 5]]）的 HTTP 请求，从而访问到这个目标资源。如果服务器对这个请求响应了一个非过渡（non-interim）的 HTTP 响应消息（见[[https://httpwg.org/specs/rfc7231.html#status.codes][【RFC7231】章节 6]]），那么这个响应可认为是一个对客户端请求的权威应答（authoritative answer）。
+当一个 "http" URI 用于一个请求访问目标资源的场合里，客户端 *可以* 尝试通过解释（resolve） =host= 获得 IP 地址，（通过对应的端口）建立一个 TCP 连接到这个地址，然后发送一个包含这个 URI 的识别数据（见[[id:f6881980-16db-4ca2-a3c8-39aa336c954f][章节 5]]）的 HTTP 请求消息（章节 3），从而访问到这个目标资源。如果服务器对这个请求响应了一个非过渡（non-interim）的 HTTP 响应消息（见[[id:5a69d0cc-628c-4897-a089-45f906b94a92][【RFC7231】章节 6]]），那么这个响应可认为是一个对客户端请求的权威应答（authoritative answer）。
 
 #+BEGIN_QUOTE
 Although HTTP is independent of the transport protocol, the "http" scheme is specific to TCP-based services because the name delegation process depends on TCP for establishing authority. An HTTP service based on some other underlying connection protocol would presumably be identified using a different URI scheme, just as the "https" scheme (below) is used for resources that require an end-to-end secured connection. Other protocols might also be used to provide access to "http" identified resources — it is only the authoritative interface that is specific to TCP.
@@ -884,10 +884,10 @@ method         = token
 #+END_SRC
 
 #+BEGIN_QUOTE
-The request methods defined by this specification can be found in Section 4 of [RFC7231], along with information regarding the HTTP method registry and considerations for defining new methods.
+The request methods defined by this specification can be found in [[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][Section 4]] of [RFC7231], along with information regarding the HTTP method registry and considerations for defining new methods.
 #+END_QUOTE
 
-本规范所定义的请求方法（request method）连同关于 HTTP 方法登记表（HTTP method registry）以及对于定义新方法的注意事项的相关信息，见[[https://tools.ietf.org/html/rfc7231#section-4][【RFC7231】章节 4]]。
+本规范所定义的请求方法（request method）连同关于 HTTP 方法登记表（HTTP method registry）以及对于定义新方法的注意事项的相关信息，见[[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][【RFC7231】章节 4]]。
 
 #+BEGIN_QUOTE
 The =request-target= identifies the target resource upon which to apply the request, as defined in [[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][Section 5.3]].
@@ -912,10 +912,10 @@ Recipients of an invalid =request-line= *SHOULD* respond with either a =400 (Bad
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-HTTP does not place a predefined limit on the length of a =request-line=, as described in [[id:A0441F72-9799-4667-9477-1E05885946A1][Section 2.5]]. A server that receives a method longer than any that it implements *SHOULD* respond with a =501 (Not Implemented)= status code. A server that receives a =request-target= longer than any URI it wishes to parse *MUST* respond with a =414 (URI Too Long)= status code (see [[https://tools.ietf.org/html/rfc7231#section-6.5.12][Section 6.5.12]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]).
+HTTP does not place a predefined limit on the length of a =request-line=, as described in [[id:A0441F72-9799-4667-9477-1E05885946A1][Section 2.5]]. A server that receives a method longer than any that it implements *SHOULD* respond with a =501 (Not Implemented)= status code. A server that receives a =request-target= longer than any URI it wishes to parse *MUST* respond with a =414 (URI Too Long)= status code (see [[id:77d1edbb-ceeb-450d-9b85-5f8c89db2f97][Section 6.5.12]] of [RFC7231]).
 #+END_QUOTE
 
-HTTP 并没有对请求行 =request-line= 的长度限制进行预定义，相关原因在[[id:A0441F72-9799-4667-9477-1E05885946A1][章节 2.5]] 已有描述。服务器接收到超出其长度要求的请求方法（method）时 *应当* 响应一个 =501 (Not Implemented)= 状态码。服务器接收到一个 URI 其长度超出服务器所期望的最大长度时，*必须* 响应一个 =414 (URI Too Long)= 状态码（见[[https://tools.ietf.org/html/rfc7231#section-6.5.12][【RFC7231】章节 6.5.12]]）。
+HTTP 并没有对请求行 =request-line= 的长度限制进行预定义，相关原因在[[id:A0441F72-9799-4667-9477-1E05885946A1][章节 2.5]] 已有描述。服务器接收到超出其长度要求的请求方法（method）时 *应当* 响应一个 =501 (Not Implemented)= 状态码。服务器接收到一个 URI 其长度超出服务器所期望的最大长度时，*必须* 响应一个 =414 (URI Too Long)= 状态码（见[[id:77d1edbb-ceeb-450d-9b85-5f8c89db2f97][【RFC7231】章节 6.5.12]]）。
 
 #+BEGIN_QUOTE
 Various [[https://en.wikipedia.org/wiki/Wireless_ad_hoc_network][ad hoc]] limitations on =request-line= length are found in practice. It is *RECOMMENDED* that all HTTP senders and recipients support, at a minimum, *request-line* lengths of 8000 octets.
@@ -938,10 +938,10 @@ status-line = HTTP-version SP status-code SP reason-phrase CRLF
 #+END_SRC
 
 #+BEGIN_QUOTE
-The =status-code= element is a 3-digit integer code describing the result of the server's attempt to understand and satisfy the client's corresponding request. The rest of the response message is to be interpreted in light of the semantics defined for that status code. See [[https://tools.ietf.org/html/rfc7231#section-6][Section 6]] of [RFC7231] for information about the semantics of status codes, including the classes of status code (indicated by the first digit), the status codes defined by this specification, considerations for the definition of new status codes, and the IANA registry.
+The =status-code= element is a 3-digit integer code describing the result of the server's attempt to understand and satisfy the client's corresponding request. The rest of the response message is to be interpreted in light of the semantics defined for that status code. See [[id:5a69d0cc-628c-4897-a089-45f906b94a92][Section 6]] of [RFC7231] for information about the semantics of status codes, including the classes of status code (indicated by the first digit), the status codes defined by this specification, considerations for the definition of new status codes, and the IANA registry.
 #+END_QUOTE
 
-状态码 =status-code= 是一个 3 位整数值，用于描述服务器尝试理解以及满足客户端相应请求的处理结果。接收端应该依据消息的状态码所定义的语义来解释（interprete）消息的剩余部分（即除了状态行以外的部分）。对于状态码的语义的相关信息，包括状态码的分类（由状态码的第一位数字来指定）、本规范所定义的状态码、定义新状态码的注意事项，以及 IANA 登记表，见[[https://tools.ietf.org/html/rfc7231#section-6][【RFC7231】章节 6]]。
+状态码 =status-code= 是一个 3 位整数值，用于描述服务器尝试理解以及满足客户端相应请求的处理结果。接收端应该依据消息的状态码所定义的语义来解释（interprete）消息的剩余部分（即除了状态行以外的部分）。对于状态码的语义的相关信息，包括状态码的分类（由状态码的第一位数字来指定）、本规范所定义的状态码、定义新状态码的注意事项，以及 IANA 登记表，见[[id:5a69d0cc-628c-4897-a089-45f906b94a92][【RFC7231】章节 6]]。
 
 #+BEGIN_SRC text
 status-code    = 3DIGIT
@@ -981,10 +981,10 @@ obs-fold       = CRLF 1*( SP / HTAB )
 #+END_SRC
 
 #+BEGIN_QUOTE
-The =field-name= token labels the corresponding =field-value= as having the semantics defined by that header field. For example, the =Date= header field is defined in [[https://tools.ietf.org/html/rfc7231#section-7.1.1.2][Section 7.1.1.2]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]] as containing the origination timestamp for the message in which it appears.
+The =field-name= token labels the corresponding =field-value= as having the semantics defined by that header field. For example, the =Date= header field is defined in Section [[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][7.1.1.2]] of [RFC7231] as containing the origination timestamp for the message in which it appears.
 #+END_QUOTE
 
-头字段名称 =field-name= 将其对应的头字段值 =field-value= 算作这个消息带有相应头字段的语义。例如，定义在【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-7.1.1.2][章节 7.1.1.2]] 的 =Date= 头字段的出现表明包含了这个消息的创始时间戳。
+头字段名称 =field-name= 将其对应的头字段值 =field-value= 算作这个消息带有相应头字段的语义。例如，定义在[[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][【RFC7231】章节 7.1.1.2]] 的 =Date= 头字段的出现表明包含了这个消息的创始时间戳。
 
 *** 3.2.1. 域的可扩展性 / Field Extensibility
 :PROPERTIES:
@@ -1013,10 +1013,10 @@ A proxy *MUST* forward unrecognized header fields unless the =field-name= is lis
 代理（proxy） *必须* 将无法识别的头字段转发出去，除非 =Connection= 头字段里列出了该头字段名称 =field-name= （见[[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][章节 6.1]]），或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 *应当* 忽略无法识别的头字段。这些要求使得在链路中的中间人还没有预先更新的情况下，HTTP 的功能仍能得到增强。
 
 #+BEGIN_QUOTE
-All defined header fields ought to be registered with [[https://www.iana.org/][IANA]] in the "Message Headers" registry, as described in [[https://tools.ietf.org/html/rfc7231#section-8.3][Section 8.3]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]].
+All defined header fields ought to be registered with [[https://www.iana.org/][IANA]] in the "Message Headers" registry, as described in [[id:2a7badc9-653a-47f1-a373-aea21c2f2f84][Section 8.3]] of [RFC7231].
 #+END_QUOTE
 
-所有已定义的头字段都应该被登记到 IANA 的 "Message Headers" 登记表中，详细描述见【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-8.3][章节 8.3]]。
+所有已定义的头字段都应该被登记到 IANA 的 "Message Headers" 登记表中，详细描述见[[id:2a7badc9-653a-47f1-a373-aea21c2f2f84][【RFC7231】章节 8.3]]。
 
 *** 3.2.2. 域的顺序 / Field Order
 :PROPERTIES:
@@ -1251,10 +1251,10 @@ The presence of a message body in a request is signaled by a =Content-Length= or
 在一个请求中是否会出现消息体，以消息头中是否带有 =Content-Length= 或者 =Transfer-Encoding= 头字段作为信号。请求消息的分帧是独立于请求方法（method）的语义之外的，即使请求方法并没有任何用于一个消息体的相关定义。
 
 #+BEGIN_QUOTE
-The presence of a message body in a response depends on both the request method to which it is responding and the response status code ([[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][Section 3.1.2]]). Responses to the HEAD request method ([[https://tools.ietf.org/html/rfc7231#section-4.3.2][Section 4.3.2]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]) never include a message body because the associated response header fields (e.g., =Transfer-Encoding=, =Content-Length=, etc.), if present, indicate only what their values would have been if the request method had been GET ([[https://tools.ietf.org/html/rfc7231#section-4.3.1][Section 4.3.1]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]). 2xx (Successful) responses to a CONNECT request method ([[https://tools.ietf.org/html/rfc7231#section-4.3.6][Section 4.3.6]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]) switch to tunnel mode instead of having a message body. All =1xx (Informational)=, =204 (No Content)=, and =304 (Not Modified)= responses do not include a message body. All other responses do include a message body, although the body might be of zero length.
+The presence of a message body in a response depends on both the request method to which it is responding and the response status code ([[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][Section 3.1.2]]). Responses to the HEAD request method ([[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][Section 4.3.2]] of [RFC7231]) never include a message body because the associated response header fields (e.g., =Transfer-Encoding=, =Content-Length=, etc.), if present, indicate only what their values would have been if the request method had been GET ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]] of [RFC7231]). 2xx (Successful) responses to a CONNECT request method ([[id:630ab908-5d8e-400b-bed4-f6973b8c1549][Section 4.3.6]] of [RFC7231]) switch to tunnel mode instead of having a message body. All =1xx (Informational)=, =204 (No Content)=, and =304 (Not Modified)= responses do not include a message body. All other responses do include a message body, although the body might be of zero length.
 #+END_QUOTE
 
-在一个响应中是否会出现消息体，取决于请求方法所对应的响应是什么，且响应状态码是什么（[[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][章节 3.1.2]]）。响应给请求方法 HEAD（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.2][章节 4.3.2]]）的消息永远不会包含一个消息体，这是因为如果出现上述相关的响应头字段（例如，=Transfer-Encoding=、=Content-Length= 等），表明仅当这个消息的请求方法被改变为 GET（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.1][章节 4.3.1]]）的时候，这些头字段才有效[fn:6]。=2xx (Successful)= 响应给一个请求方法 CONNECT（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.6][章节 4.3.6]]）。所有 =1xx (Informational)=、=204 (No Content)= 和 =304 (Not Modified)= 的响应消息并不会包含一个消息体。除上述情况以外，所有其他响应消息都会包含一个消息体，虽然消息体的长度可能为零。
+在一个响应中是否会出现消息体，取决于请求方法所对应的响应是什么，且响应状态码是什么（[[id:B0BBE465-2364-43E3-991F-B090EEF2D7BD][章节 3.1.2]]）。响应给请求方法 HEAD（[[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][【RFC7231】章节 4.3.2]]）的消息永远不会包含一个消息体，这是因为如果出现上述相关的响应头字段（例如，=Transfer-Encoding=、=Content-Length= 等），表明仅当这个消息的请求方法被改变为 GET（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][【RFC7231】章节 4.3.1]]）的时候，这些头字段才有效[fn:6]。=2xx (Successful)= 响应给一个请求方法 CONNECT（[[id:630ab908-5d8e-400b-bed4-f6973b8c1549][【RFC7231】章节 4.3.6]]）。所有 =1xx (Informational)=、=204 (No Content)= 和 =304 (Not Modified)= 的响应消息并不会包含一个消息体。除上述情况以外，所有其他响应消息都会包含一个消息体，虽然消息体的长度可能为零。
 
 *** 3.3.1. 传输编码 / Transfer-Encoding
 :PROPERTIES:
@@ -1299,22 +1299,22 @@ indicates that the payload body has been compressed using the =gzip= coding and 
 表示有效载荷（payload body）已经使用 =gzip= 编码压缩过，然后在消息体分帧的时候使用 =chunked= 编码。
 
 #+BEGIN_QUOTE
-Unlike =Content-Encoding= ([[https://tools.ietf.org/html/rfc7231#section-3.1.2.1][Section 3.1.2.1]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]), =Transfer-Encoding= is a property of the message, not of the representation, and any recipient along the request/response chain *MAY* decode the received transfer coding(s) or apply additional transfer coding(s) to the message body, assuming that corresponding changes are made to the =Transfer-Encoding= field-value. Additional information about the encoding parameters can be provided by other header fields not defined by this specification.
+Unlike =Content-Encoding= ([[id:a67acb58-7b0a-49c8-8de4-5dd8a4ab9e61][Section 3.1.2.1]] of [RFC7231]), =Transfer-Encoding= is a property of the message, not of the representation, and any recipient along the request/response chain *MAY* decode the received transfer coding(s) or apply additional transfer coding(s) to the message body, assuming that corresponding changes are made to the =Transfer-Encoding= field-value. Additional information about the encoding parameters can be provided by other header fields not defined by this specification.
 #+END_QUOTE
 
-与 =Content-Encoding= 头字段（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-3.1.2.1][章节 3.1.2.1]]）不同的是，=Transfer-Encoding= 头字段是消息（message）的一个属性，而不是[[ruby:representation][表示形式]]的一个属性，并且在请求/响应链路中的所有接收端都 *可以* 依据所接收到的传输代码值（一个或多个）对消息体进行解码，或者向消息体应用额外的传输代码值，假设 =Transfer-Encoding= 的 =field-value= 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的头字段提供。
+与 =Content-Encoding= 头字段（[[id:a67acb58-7b0a-49c8-8de4-5dd8a4ab9e61][【RFC7231】章节 3.1.2.1]]）不同的是，=Transfer-Encoding= 头字段是消息（message）的一个属性，而不是[[ruby:representation][表示形式]]的一个属性，并且在请求/响应链路中的所有接收端都 *可以* 依据所接收到的传输代码值（一个或多个）对消息体进行解码，或者向消息体应用额外的传输代码值，假设 =Transfer-Encoding= 的 =field-value= 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的头字段提供。
 
 #+BEGIN_QUOTE
-=Transfer-Encoding= *MAY* be sent in a response to a HEAD request or in a =304 (Not Modified)= response (Section 4.1 of [RFC7232]) to a GET request, neither of which includes a message body, to indicate that the origin server would have applied a transfer coding to the message body if the request had been an unconditional GET. This indication is not required, however, because any recipient on the response chain (including the origin server) can remove transfer codings when they are not needed.
+=Transfer-Encoding= *MAY* be sent in a response to a HEAD request or in a =304 (Not Modified)= response ([[id:6033b2bf-1408-4756-9929-15dd6510c7e3][Section 4.1]] of [RFC7232]) to a GET request, neither of which includes a message body, to indicate that the origin server would have applied a transfer coding to the message body if the request had been an unconditional GET. This indication is not required, however, because any recipient on the response chain (including the origin server) can remove transfer codings when they are not needed.
 #+END_QUOTE
 
-响应给 HEAD 请求的响应消息，或者响应给 GET 请求的 =304 (Not Modified)= 响应消息，上述两种消息都是没有包含消息体的，=Transfer-Encoding= *可以* 包含在上述两种响应消息中，来指明如果这个请求曾经是一个无条件 GET 请求[fn:7]的话，源服务器会使用一个传输编码对消息体进行编码。这种“指明”是非必要的，但是，因为在响应链路中的任何接收端（包括源服务器）都能够在移除传输编码值，如果传输编码值是不需要的话。
+响应给 HEAD 请求的响应消息，或者回应给 GET 请求的 =304 (Not Modified)= 响应（[[id:6033b2bf-1408-4756-9929-15dd6510c7e3][【RFC7232】章节 4.1]]），上述两种消息都是没有包含消息体的，=Transfer-Encoding= *可以* 包含在上述两种响应消息中，来指明如果这个请求曾经是一个无条件 GET 请求[fn:7]的话，源服务器会使用一个传输编码对消息体进行编码。这种“指明”是非必要的，但是，因为在响应链路中的任何接收端（包括源服务器）都能够在移除传输编码值，如果传输编码值是不需要的话。
 
 #+BEGIN_QUOTE
-A server *MUST NOT* send a =Transfer-Encoding= header field in any response with a status code of =1xx (Informational)= or =204 (No Content)=. A server *MUST NOT* send a =Transfer-Encoding= header field in any =2xx (Successful)= response to a CONNECT request ([[https://tools.ietf.org/html/rfc7231#section-4.3.6][Section 4.3.6]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]).
+A server *MUST NOT* send a =Transfer-Encoding= header field in any response with a status code of =1xx (Informational)= or =204 (No Content)=. A server *MUST NOT* send a =Transfer-Encoding= header field in any =2xx (Successful)= response to a CONNECT request ([[id:630ab908-5d8e-400b-bed4-f6973b8c1549][Section 4.3.6]] of [RFC7231]).
 #+END_QUOTE
 
-服务器 *禁止* 在任何带有 =1xx (Informational)= 或者 =204 (No Content)= 状态码的响应消息里包含一个 =Transfer-Encoding= 头字段。一个服务器 *禁止* 将任何带有 =2xx (Successful)= 状态码的，并且带有一个 =Transfer-Encoding= 头字段的响应消息响应给一个 CONNECT 请求（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.6][章节 4.3.6]]）。
+服务器 *禁止* 在任何带有 =1xx (Informational)= 或者 =204 (No Content)= 状态码的响应消息里包含一个 =Transfer-Encoding= 头字段。一个服务器 *禁止* 将任何带有 =2xx (Successful)= 状态码的，并且带有一个 =Transfer-Encoding= 头字段的响应消息响应给一个 CONNECT 请求（[[id:630ab908-5d8e-400b-bed4-f6973b8c1549][【RFC7231】章节 4.3.6]]）。
 
 #+BEGIN_QUOTE
 =Transfer-Encoding= was added in HTTP/1.1. It is generally assumed that implementations advertising only HTTP/1.0 support will not understand how to process a transfer-encoded payload. A client *MUST NOT* send a request containing =Transfer-Encoding= unless it knows the server will handle HTTP/1.1 (or later) requests; such knowledge might be in the form of specific user configuration or by remembering the version of a prior received response. A server *MUST NOT* send a response containing =Transfer-Encoding= unless the corresponding request indicates HTTP/1.1 (or later).
@@ -1333,11 +1333,11 @@ A server that receives a request message with a transfer coding it does not unde
 :ID:       7b3e90b9-3ae5-402b-922c-2342d361c79f
 :END:
 #+BEGIN_QUOTE
-When a message does not have a =Transfer-Encoding= header field, a =Content-Length= header field can provide the anticipated size, as a decimal number of octets, for a potential payload body. For messages that do include a payload body, the =Content-Length= field-value provides the framing information necessary for determining where the body (and message) ends. For messages that do not include a payload body, the =Content-Length= indicates the size of the selected representation ([[https://tools.ietf.org/html/rfc7231#section-3][Section 3]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]).
+When a message does not have a =Transfer-Encoding= header field, a =Content-Length= header field can provide the anticipated size, as a decimal number of octets, for a potential payload body. For messages that do include a payload body, the =Content-Length= field-value provides the framing information necessary for determining where the body (and message) ends. For messages that do not include a payload body, the =Content-Length= indicates the size of the selected representation ([[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][Section 3]] of [RFC7231]).
 #+END_QUOTE
 
 当一个消息不带有 =Transfer-Encoding= 头字段的时候，=Content-Length= 头字段能够提供对于一个潜在的有效载荷（payload body）的预期的大小。=Content-Length= 是一个十进制数字，以字节（octets）形式。对于包含一个有效载荷的消息，=Content-Length= 的 =field-value=
-提供了决定消息体在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的消息，=Content-Length= 指明了已选定的表示形式（selected representation【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-3][章节 3]]）的大小。
+提供了决定消息体在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的消息，=Content-Length= 指明了已选定的表示形式（selected representation[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][【RFC7231】章节 3]]）的大小。
 
 #+BEGIN_SRC text
 Content-Length = 1*DIGIT
@@ -1366,22 +1366,22 @@ A user agent *SHOULD* send a =Content-Length= in a request message when no =Tran
 当请求消息未带有 =Transfer-Encoding= 头字段，并且消息的请求方法意味着该消息需要带有有效载荷（payload body），那么，用户代理 *应当* 在请求消息里带有一个 =Content-Length= 头字段。例如，通常会在一个 POST 请求中带有一个 =Content-Length= 头字段，即使它的值是 0（指明一个空的有效载荷）。当请求消息没有包含一个有效载荷，并且请求方法的语义并不期望消息带有消息体的时候，用户代理 *不应当* 在请求消息中带有 =Content-Length= 头字段。
 
 #+BEGIN_QUOTE
-A server *MAY* send a =Content-Length= header field in a response to a HEAD request (Section 4.3.2 of [RFC7231]); a server *MUST NOT* send =Content-Length= in such a response unless its field-value equals the decimal number of octets that would have been sent in the payload body of a response if the same request had used the GET method.
+A server *MAY* send a =Content-Length= header field in a response to a HEAD request ([[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][Section 4.3.2]] of [RFC7231]); a server *MUST NOT* send =Content-Length= in such a response unless its field-value equals the decimal number of octets that would have been sent in the payload body of a response if the same request had used the GET method.
 #+END_QUOTE
 
-服务器 *可以* 在响应给一个 HEAD 请求（【RFC7231】章节 4.3.2）的响应中带有一个 =Content-Length= 头字段。服务器 *禁止* 在这种响应中带有 =Content-Length=，除非它的字段值等于这样一个以字节表示的十进制数字：如果同样的请求使用的是 GET 请求方法的话，它的响应的有效载荷里带有的长度值。
+服务器 *可以* 在响应给一个 HEAD 请求（[[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][【RFC7231】章节 4.3.2]]）的响应中带有一个 =Content-Length= 头字段。服务器 *禁止* 在这种响应中带有 =Content-Length=，除非它的字段值等于这样一个以字节表示的十进制数字：如果同样的请求使用的是 GET 请求方法的话，它的响应的有效载荷里带有的长度值。
 
 #+BEGIN_QUOTE
-A server *MAY* send a =Content-Length= header field in a =304 (Not Modified)= response to a conditional GET request ([[https://tools.ietf.org/html/rfc7232#section-4.1][Section 4.1]] of [[[https://tools.ietf.org/html/rfc7232][RFC7232]]]); a server *MUST NOT* send =Content-Length= in such a response unless its field-value equals the decimal number of octets that would have been sent in the payload body of a =200 (OK)= response to the same request.
+A server *MAY* send a =Content-Length= header field in a =304 (Not Modified)= response to a conditional GET request ([[id:6033b2bf-1408-4756-9929-15dd6510c7e3][Section 4.1]] of [RFC7232]); a server *MUST NOT* send =Content-Length= in such a response unless its field-value equals the decimal number of octets that would have been sent in the payload body of a =200 (OK)= response to the same request.
 #+END_QUOTE
 
-服务器 *可以* 在响应给一个带条件的 GET 请求（conditional GET request，【[[https://tools.ietf.org/html/rfc7232][RFC7232]]】[[https://tools.ietf.org/html/rfc7232#section-4.1][章节 4.1]]）的 =304 (Not Modified)= 响应消息里带有一个 =Content-Length= 头字段。服务器 *禁止* 在这种响应消息中带有 =Content-Length=，除非它的字段值等于这样一个以字节表示的十进制数字：如果响应是一个 =200 (OK)= 的话，它的有效载荷里带有的长度值。
+服务器 *可以* 在响应给一个带条件的 GET 请求（conditional GET request，[[id:6033b2bf-1408-4756-9929-15dd6510c7e3][【RFC7232】章节 4.1]]）的 =304 (Not Modified)= 响应消息里带有一个 =Content-Length= 头字段。服务器 *禁止* 在这种响应消息中带有 =Content-Length=，除非它的字段值等于这样一个以字节表示的十进制数字：如果响应是一个 =200 (OK)= 的话，它的有效载荷里带有的长度值。
 
 #+BEGIN_QUOTE
-A server *MUST NOT* send a =Content-Length= header field in any response with a status code of =1xx (Informational)= or =204 (No Content)=. A server *MUST NOT* send a =Content-Length= header field in any =2xx (Successful)= response to a CONNECT request ([[https://tools.ietf.org/html/rfc7231#section-4.3.6][Section 4.3.6]] of [[[https://tools.ietf.org/html/rfc7231][RFC7231]]]).
+A server *MUST NOT* send a =Content-Length= header field in any response with a status code of =1xx (Informational)= or =204 (No Content)=. A server *MUST NOT* send a =Content-Length= header field in any =2xx (Successful)= response to a CONNECT request ([[id:630ab908-5d8e-400b-bed4-f6973b8c1549][Section 4.3.6]] of [RFC7231]).
 #+END_QUOTE
 
-服务器 *禁止* 在任何带有 =1xx (Informational)=、=204 (No Content)= 状态码的消息中带有一个 =Content-Length= 头字段。服务器 *禁止* 在任何响应给一个 CONNECT 请求（【[[https://tools.ietf.org/html/rfc7231][RFC7231]]】[[https://tools.ietf.org/html/rfc7231#section-4.3.6][章节 4.3.6]]）的带有 =2xx (Successful)= 状态码的响应消息中带有一个 =Content-Length= 头字段。
+服务器 *禁止* 在任何带有 =1xx (Informational)=、=204 (No Content)= 状态码的消息中带有一个 =Content-Length= 头字段。服务器 *禁止* 在任何响应给一个 CONNECT 请求（[[id:630ab908-5d8e-400b-bed4-f6973b8c1549][【RFC7231】章节 4.3.6]]）的带有 =2xx (Successful)= 状态码的响应消息中带有一个 =Content-Length= 头字段。
 
 #+BEGIN_QUOTE
 Aside from the cases defined above, in the absence of =Transfer-Encoding=, an origin server *SHOULD* send a =Content-Length= header field when the payload body size is known prior to sending the complete header section. This will allow downstream recipients to measure transfer progress, know when a received message is complete, and potentially reuse the connection for additional requests.
@@ -1496,10 +1496,10 @@ A server that receives an incomplete request message, usually due to a canceled 
 服务器接收到一个不完整的请求消息，通常是因为这是一个已取消的请求，或者一个触发超时的异常，*可以* 在关闭连接前发送一个错误响应。
 
 #+BEGIN_QUOTE
-A client that receives an incomplete response message, which can occur when a connection is closed prematurely or when decoding a supposedly [[https://en.wikipedia.org/wiki/Chunked_transfer_encoding][chunked transfer coding]] fails, *MUST* record the message as incomplete. Cache requirements for incomplete responses are defined in [[https://tools.ietf.org/html/rfc7234#section-3][Section 3]] of [[[https://tools.ietf.org/html/rfc7234][RFC7234]]].
+A client that receives an incomplete response message, which can occur when a connection is closed prematurely or when decoding a supposedly [[https://en.wikipedia.org/wiki/Chunked_transfer_encoding][chunked transfer coding]] fails, *MUST* record the message as incomplete. Cache requirements for incomplete responses are defined in [[id:e41d8ccc-5b69-40e3-a8ab-ca27327f15fa][Section 3]] of [RFC7234].
 #+END_QUOTE
 
-当一个连接被过早地关闭或者当一个推想的分块传输代码（[[https://en.wikipedia.org/wiki/Chunked_transfer_encoding][chunked transfer coding]]）解码失败时会导致客户端接收到一个不完整的响应消息，这时候客户端 *必须* 记录下这个消息是不完整的。缓存（cache）对于不完整消息的要求定义在【[[https://tools.ietf.org/html/rfc7234][RFC7234]]】[[https://tools.ietf.org/html/rfc7234#section-3][章节 3]] 里。
+当一个连接被过早地关闭或者当一个推想的分块传输代码（[[https://en.wikipedia.org/wiki/Chunked_transfer_encoding][chunked transfer coding]]）解码失败时会导致客户端接收到一个不完整的响应消息，这时候客户端 *必须* 记录下这个消息是不完整的。缓存（cache）对于不完整消息的要求定义在[[id:e41d8ccc-5b69-40e3-a8ab-ca27327f15fa][【RFC7234】章节 3]] 里。
 
 #+BEGIN_QUOTE
 If a response terminates in the middle of the header section (before the empty line is received) and the status code might rely on header fields to convey the full meaning of the response, then the client cannot assume that meaning has been conveyed; the client might need to repeat the request in order to determine what action to take next.
@@ -1657,10 +1657,10 @@ A trailer allows the sender to include additional fields at the end of a chunked
 #+END_SRC
 
 #+BEGIN_QUOTE
-A sender *MUST NOT* generate a trailer that contains a field necessary for message framing (e.g., =Transfer-Encoding= and =Content-Length=), routing (e.g., =Host=), request modifiers (e.g., =controls= and =conditionals= in Section 5 of [RFC7231]), authentication (e.g., see [RFC7235] and [RFC6265]), response control data (e.g., see Section 7.1 of [RFC7231]), or determining how to process the payload (e.g., =Content-Encoding=, =Content-Type=, =Content-Range=, and =Trailer=).
+A sender *MUST NOT* generate a trailer that contains a field necessary for message framing (e.g., =Transfer-Encoding= and =Content-Length=), routing (e.g., =Host=), request modifiers (e.g., =controls= and =conditionals= in [[id:f8e7b063-496f-473e-95e8-88ec76f21582][Section 5]] of [RFC7231]), authentication (e.g., see [[[file:RFC7235.org][RFC7235]]] and [[[https://tools.ietf.org/html/rfc6265][RFC6265]]]), response control data (e.g., see [[id:7e63ac99-1421-4f2d-8b6f-f7a1bda440ef][Section 7.1]] of [RFC7231]), or determining how to process the payload (e.g., =Content-Encoding=, =Content-Type=, =Content-Range=, and =Trailer=).
 #+END_QUOTE
 
-发送端 *禁止* 生成一个包含某种用于以下用途的必要域的拖尾：消息分帧（例如，=Transfer-Encoding= 和 =Content-Length=）、路由选择（例如，=Host=）、请求修饰符（例如，【RFC7231】章节 5 里定义的 =controls= 和 =conditionals=）、认证（见【RFC7235】和【RFC6265】）、响应控制数据（见【RFC7231】章节 7.1），以及决定如何处理有效载荷的域（例如，=Content-Encoding=, =Content-Type=, =Content-Range=, and =Trailer=）。
+发送端 *禁止* 生成一个包含某种用于以下用途的必要域的拖尾：消息分帧（例如，=Transfer-Encoding= 和 =Content-Length=）、路由选择（例如，=Host=）、请求修饰符（例如，[[id:f8e7b063-496f-473e-95e8-88ec76f21582][【RFC7231】章节 5]] 里定义的 =controls= 和 =conditionals=）、认证（见【[[file:RFC7235.org][RFC7235]]】和【[[https://tools.ietf.org/html/rfc6265][RFC6265]]】）、响应控制数据（见[[id:7e63ac99-1421-4f2d-8b6f-f7a1bda440ef][【RFC7231】章节 7.1]]），以及决定如何处理有效载荷的域（例如，=Content-Encoding=, =Content-Type=, =Content-Range=, and =Trailer=）。
 
 #+BEGIN_QUOTE
 When a chunked message containing a non-empty trailer is received, the recipient *MAY* process the fields (aside from those forbidden above) as if they were appended to the message's header section. A recipient *MUST* ignore (or consider as an error) any fields that are forbidden to be sent in a trailer, since processing them as if they were present in the header section might bypass external security filters.
@@ -1791,10 +1791,10 @@ The presence of the keyword "trailers" indicates that the client is willing to a
 =TE= 头字段里出现关键词 =trailers= 指明该客户端自身及其所有下游客户端都愿意在一个分块传输编码值里接受拖尾域（trailer fields，见章节 4.1.2）。对于来自一个中间人的请求，意味着以下两种情况：（a）该中间人的所有下游客户端都愿意接受拖尾域，或者，（b）该中间人为了下游的接收端，将试图先缓冲整个响应消息。需要注意的是，HTTP/1.1 并没有对一个分块的响应消息（chunked response）的大小定义任何限制，因此，中间人并不能保证能够缓冲整个消息。
 
 #+BEGIN_QUOTE
-When multiple transfer codings are acceptable, the client *MAY* rank the codings by preference using a case-insensitive "q" parameter (similar to the qvalues used in content negotiation fields, Section 5.3.1 of [RFC7231]). The rank value is a real number in the range 0 through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means "not acceptable".
+When multiple transfer codings are acceptable, the client *MAY* rank the codings by preference using a case-insensitive "q" parameter (similar to the qvalues used in content negotiation fields, [[id:91059de1-4a9b-4d9f-8be2-eb4d2d6ddc37][Section 5.3.1]] of [RFC7231]). The rank value is a real number in the range 0 through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means "not acceptable".
 #+END_QUOTE
 
-当允许多个传输编码值时，客户端 *可以* 依据其偏好，通过使用一个不区分大小写的参数 =q= （类似于内容协商域里的 =qvalues=，见[[https://tools.ietf.org/html/rfc7231][【RFC7231】章节 5.3.1]]），来对这些编码值分配权重。权重值是一个 0 到 1 之间的实数，最小值是 0.001（优先级最低），最大值为 1（优先级最高），排序值为 0 代表“不接受这种传输编码”。 
+当允许多个传输编码值时，客户端 *可以* 依据其偏好，通过使用一个不区分大小写的参数 =q= （类似于内容协商域里的 =qvalues=，见[[id:91059de1-4a9b-4d9f-8be2-eb4d2d6ddc37][【RFC7231】章节 5.3.1]]），来对这些编码值分配权重。权重值是一个 0 到 1 之间的实数，最小值是 0.001（优先级最低），最大值为 1（优先级最高），排序值为 0 代表“不接受这种传输编码”。 
 
 #+BEGIN_QUOTE
 If the TE field-value is empty or if no TE field is present, the only acceptable transfer coding is chunked. A message with no transfer coding is always acceptable.
@@ -1843,10 +1843,10 @@ HTTP is used in a wide variety of applications, ranging from general-purpose com
 HTTP 使用于各种各样的应用中，从通用计算机到家庭应用都有 HTTP 的身影。在某些情况下，通信选项是硬编码在客户端的配置里的，但是，大多数 HTTP 客户端依靠相同的资源识别方法以及配置技术，就像通用网页浏览器一样。
 
 #+BEGIN_QUOTE
-HTTP communication is initiated by a user agent for some purpose. The purpose is a combination of request semantics, which are defined in [RFC7231], and a target resource upon which to apply those semantics. A URI reference (Section 2.7) is typically used as an identifier for the "target resource", which a user agent would resolve to its absolute form in order to obtain the "target URI". The target URI excludes the reference's fragment component, if any, since fragment identifiers are reserved for client-side processing ([RFC3986], Section 3.5).
+HTTP communication is initiated by a user agent for some purpose. The purpose is a combination of request semantics, which are defined in [[[file:RFC7231.org][RFC7231]]], and a target resource upon which to apply those semantics. A URI reference (Section 2.7) is typically used as an identifier for the "target resource", which a user agent would resolve to its absolute form in order to obtain the "target URI". The target URI excludes the reference's fragment component, if any, since fragment identifiers are reserved for client-side processing ([RFC3986], [[https://tools.ietf.org/html/rfc3986#section-3.5][Section 3.5]]).
 #+END_QUOTE
 
-用户代理出于某种目的来初始化 HTTP 通信。该目的是由请求语义（定义在【RFC7231】），以及一个应用这些语义的目标资源（target resource）两者结合而成的。一个 *URI 引用（URI reference，章节 2.7）* 通常用于作为一个目标资源的定位符，用户代理可以将其解析（resolve）为绝对形式（absolute form）来获得“*目标 URI（target URI）*”。如果 URI 引用里存在段落组件 =fragment= （fragment component）的话，目标 URI 会排除掉 =fragment=，这是因为 =fragment= 
+用户代理出于某种目的来初始化 HTTP 通信。该目的是由请求语义（定义在【[[file:RFC7231.org][RFC7231]]】），以及一个应用这些语义的目标资源（target resource）两者结合而成的。一个 *URI 引用（URI reference，章节 2.7）* 通常用于作为一个目标资源的定位符，用户代理可以将其解析（resolve）为绝对形式（absolute form）来获得“*目标 URI（target URI）*”。如果 URI 引用里存在段落组件 =fragment= （fragment component）的话，目标 URI 会排除掉 =fragment=，这是因为 =fragment= 
 标识是保留给客户端处理的（见[[https://tools.ietf.org/html/rfc3986#section-3.5][【RFC3986】章节 3.5]]）。
 
 ** 5.2. 连接入站 / Connecting Inbound
@@ -1860,10 +1860,10 @@ Once the target URI is determined, a client needs to decide whether a network re
 一旦确定了目标 URI，客户端需要决定要想实现目标 URI 所代表的语义是否需要使用网络请求，如果是的话，请求会被导向到哪里。
 
 #+BEGIN_QUOTE
-If the client has a cache [RFC7234] and the request can be satisfied by it, then the request is usually directed there first.
+If the client has a cache [[[file:RFC7234.org][RFC7234]]] and the request can be satisfied by it, then the request is usually directed there first.
 #+END_QUOTE
 
-如果客户端启用了缓存（cache，【RFC7234】）并且满足该请求，那么该请求一般会优先导向到缓存里。
+如果客户端启用了缓存（cache，【[[file:RFC7234.org][RFC7234]]】）并且满足该请求，那么该请求一般会优先导向到缓存里。
 
 #+BEGIN_QUOTE
 If the request is not satisfied by a cache, then a typical client will check its configuration to determine whether a proxy is to be used to satisfy the request. Proxy configuration is implementation-dependent, but is often based on URI prefix matching, selective authority matching, or both, and the proxy itself is usually identified by an "http" or "https" URI. If a proxy is applicable, the client connects inbound by establishing (or reusing) a connection to that proxy.
@@ -1986,10 +1986,10 @@ To allow for transition to the absolute-form for all requests in some future ver
 
 *** 5.3.3. 权威形式 / authority-form
 #+BEGIN_QUOTE
-The authority-form of request-target is only used for CONNECT requests (Section 4.3.6 of [RFC7231]).
+The authority-form of request-target is only used for CONNECT requests ([[id:630ab908-5d8e-400b-bed4-f6973b8c1549][Section 4.3.6]] of [RFC7231]).
 #+END_QUOTE
 
-请求目标的 =authority-form= 形式只用于 CONNECT 请求（[[https://tools.ietf.org/html/rfc7231#section-4.3.6][【RFC7231】章节 4.3.6]]）。
+请求目标的 =authority-form= 形式只用于 CONNECT 请求（[[id:630ab908-5d8e-400b-bed4-f6973b8c1549][【RFC7231】章节 4.3.6]]）。
 
 #+BEGIN_SRC text
   authority-form = authority
@@ -2010,10 +2010,10 @@ CONNECT www.example.com:80 HTTP/1.1
 :ID:       cc6e89fa-287d-4564-b6e3-8c2cfc26d08a
 :END:
 #+BEGIN_QUOTE
-The =asterisk-form= of =request-target= is only used for a server-wide OPTIONS request (Section 4.3.7 of [RFC7231]).
+The =asterisk-form= of =request-target= is only used for a server-wide OPTIONS request ([[id:f659b35f-7510-4961-ad3a-3ab1b312a681][Section 4.3.7]] of [RFC7231]).
 #+END_QUOTE
 
-请求目标的 =asterisk-form= 形式只用于服务器范围内的 OPTIONS 请求（[[https://tools.ietf.org/html/rfc7231#section-4.3.7][【RFC7231】章节 4.3.7]]）。
+请求目标的 =asterisk-form= 形式只用于服务器范围内的 OPTIONS 请求（[[id:f659b35f-7510-4961-ad3a-3ab1b312a681][【RFC7231】章节 4.3.7]]）。
 
 #+BEGIN_SRC text
   asterisk-form  = "*"
@@ -2221,10 +2221,10 @@ Once the effective request URI has been constructed, an origin server needs to d
 
 ** 5.6. 将响应关联到请求 / Associating a Response to a Request
 #+BEGIN_QUOTE
-HTTP does not include a request identifier for associating a given request message with its corresponding one or more response messages. Hence, it relies on the order of response arrival to correspond exactly to the order in which requests are made on the same connection. More than one response message per request only occurs when one or more informational responses (1xx, see Section 6.2 of [RFC7231]) precede a final response to the same request.
+HTTP does not include a request identifier for associating a given request message with its corresponding one or more response messages. Hence, it relies on the order of response arrival to correspond exactly to the order in which requests are made on the same connection. More than one response message per request only occurs when one or more informational responses (1xx, see [[id:2dd7a3d1-25c2-4192-9a19-6a3cf137036e][Section 6.2]] of [RFC7231]) precede a final response to the same request.
 #+END_QUOTE
 
-HTTP 并不包含一个请求标记，用于关联一个给定请求消息和与之对应的一个或多个响应消息。因此，HTTP 依靠响应消息到达的顺序来一一对应在同一个连接中生成请求的顺序。出现响应消息数与请求消息数的比值大于 1 的情况仅当对该请求发送最终响应（final response，任何非 1xx 状态码的响应消息）之前，对其发送了一个或多个消息性响应消息（informational responses，状态码为 1xx 的响应消息，见[[https://tools.ietf.org/html/rfc7231#section-6.2][【RFC7231】章节 6.2]]）。
+HTTP 并不包含一个请求标记，用于关联一个给定请求消息和与之对应的一个或多个响应消息。因此，HTTP 依靠响应消息到达的顺序来一一对应在同一个连接中生成请求的顺序。出现响应消息数与请求消息数的比值大于 1 的情况仅当对该请求发送最终响应（final response，任何非 1xx 状态码的响应消息）之前，对其发送了一个或多个消息性响应消息（informational responses，状态码为 1xx 的响应消息，见[[id:2dd7a3d1-25c2-4192-9a19-6a3cf137036e][【RFC7231】章节 6.2]]）。
 
 #+BEGIN_QUOTE
 A client that has more than one outstanding request on a connection *MUST* maintain a list of outstanding requests in the order sent and *MUST* associate each received response message on that connection to the highest ordered request that has not yet received a final (non-1xx) response.
@@ -2381,16 +2381,16 @@ A proxy *MAY* modify the message body through application or removal of a transf
 代理 *可以* 通过应用或移除一个传输编码值（transfer coding，[[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][章节 4]]）来修改消息体。
 
 #+BEGIN_QUOTE
-A proxy *MUST NOT* transform the payload (Section 3.3 of [RFC7231]) of a message that contains a no-transform cache-control directive (Section 5.2 of [RFC7234]).
+A proxy *MUST NOT* transform the payload ([[id:4c395bab-baa6-4895-b677-5daa1584da6e][Section 3.3]] of [RFC7231]) of a message that contains a no-transform cache-control directive ([[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][Section 5.2]] of [RFC7234]).
 #+END_QUOTE
 
-代理 *禁止* 对包含有 =no-transform= 缓存控制指令（Cache-Control directive，[[https://tools.ietf.org/html/rfc7234#section-5.2][【RFC7234】章节 5.2]]）的消息中的有效载荷（payload，[[https://tools.ietf.org/html/rfc7231#section-3.3][【RFC7231】章节 3.3]]）进行转换。
+代理 *禁止* 对包含有 =no-transform= 缓存控制指令（Cache-Control directive，[[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][【RFC7234】章节 5.2]]）的消息中的有效载荷（payload，[[id:4c395bab-baa6-4895-b677-5daa1584da6e][【RFC7231】章节 3.3]]）进行转换。
 
 #+BEGIN_QUOTE
-A proxy *MAY* transform the payload of a message that does not contain a =no-transform= cache-control directive. A proxy that transforms a payload *MUST* add a =Warning= header field with the warn-code of =214 ("Transformation Applied")= if one is not already in the message (see Section 5.5 of [RFC7234]). A proxy that transforms the payload of a =200 (OK)= response can further inform downstream recipients that a transformation has been applied by changing the response status code to =203 (Non-Authoritative Information)= (Section 6.3.4 of [RFC7231]).
+A proxy *MAY* transform the payload of a message that does not contain a =no-transform= cache-control directive. A proxy that transforms a payload *MUST* add a =Warning= header field with the warn-code of =214 ("Transformation Applied")= if one is not already in the message (see [[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][Section 5.5]] of [RFC7234]). A proxy that transforms the payload of a =200 (OK)= response can further inform downstream recipients that a transformation has been applied by changing the response status code to =203 (Non-Authoritative Information)= ([[id:5a18bb35-2626-4fe4-a36c-cae3a7655a60][Section 6.3.4]] of [RFC7231]).
 #+END_QUOTE
 
-代理 *可以* 对并不包含有 =no-transform= 缓存控制指令的消息中的有效载荷进行转换。代理对有效载荷进行转换的时候，如果该消息未包含一个警告码为 =214 ("Transformation Applied")= 的 =Warning= 头字段的话，代理 *必须* 添加上带有该警告码的 =Warning= 头字段（见[[https://tools.ietf.org/html/rfc7234#section-5.5][【RFC7234】章节 5.5]]）。代理在转换一个响应状态码为 =200 (OK)= 的消息中的有效载荷的时候，可以通过改变消息的响应状态码为 =203 (Non-Authoritative Information)= 来进一步通知下游接收端——这个消息已经被转换过（[[https://tools.ietf.org/html/rfc7231#section-6.3.4][【RFC7231】章节 6.3.4]]）。
+代理 *可以* 对并不包含有 =no-transform= 缓存控制指令的消息中的有效载荷进行转换。代理对有效载荷进行转换的时候，如果该消息未包含一个警告码为 =214 ("Transformation Applied")= 的 =Warning= 头字段的话，代理 *必须* 添加上带有该警告码的 =Warning= 头字段（见[[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][【RFC7234】章节 5.5]]）。代理在转换一个响应状态码为 =200 (OK)= 的消息中的有效载荷的时候，可以通过改变消息的响应状态码为 =203 (Non-Authoritative Information)= 来进一步通知下游接收端——这个消息已经被转换过（[[id:5a18bb35-2626-4fe4-a36c-cae3a7655a60][【RFC7231】章节 6.3.4]]）。
 
 #+BEGIN_QUOTE
 A proxy *SHOULD NOT* modify header fields that provide information about the endpoints of the communication chain, the resource state, or the selected representation (other than the payload) unless the field's definition specifically allows such modification or the modification is deemed necessary for privacy or security.
@@ -2477,10 +2477,10 @@ Connection options are case-insensitive.
 其中，连接选项 =connection-option= 是不区分大小写的。
 
 #+BEGIN_QUOTE
-A sender *MUST NOT* send a connection option corresponding to a header field that is intended for all recipients of the payload. For example, =Cache-Control= is never appropriate as a connection option (Section 5.2 of [RFC7234]).
+A sender *MUST NOT* send a connection option corresponding to a header field that is intended for all recipients of the payload. For example, =Cache-Control= is never appropriate as a connection option ([[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][Section 5.2]] of [RFC7234]).
 #+END_QUOTE
 
-发送端 *禁止* 发送一个与作用于所有接收端的有效载荷的头字段名称相一致的连接选项。例如，=Cache-Control= 是永远不能作为一个连接选项的（[[https://tools.ietf.org/html/rfc7234#section-5.2][【RFC7234】章节 5.2]]）。
+发送端 *禁止* 发送一个与作用于所有接收端的有效载荷的头字段名称相一致的连接选项。例如，=Cache-Control= 是永远不能作为一个连接选项的（[[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][【RFC7234】章节 5.2]]）。
 
 #+BEGIN_QUOTE
 The connection options do not always correspond to a header field present in the message, since a connection-specific header field might not be needed if there are no parameters associated with a connection option. In contrast, a connection-specific header field that is received without a corresponding connection option usually indicates that the field has been improperly forwarded by an intermediary and ought to be ignored by the recipient.
@@ -2601,10 +2601,10 @@ Connections can be closed at any time, with or without intention. Implementation
 连接能够在任何时候有意或无意地被关闭。HTTP 实现（implementations）应当预料到存在从异步关闭事件中恢复连接的需要。
 
 #+BEGIN_QUOTE
-When an inbound connection is closed prematurely, a client *MAY* open a new connection and automatically retransmit an aborted sequence of requests if all of those requests have idempotent methods (Section 4.2.2 of [RFC7231]). A proxy *MUST NOT* automatically retry non-idempotent requests.
+When an inbound connection is closed prematurely, a client *MAY* open a new connection and automatically retransmit an aborted sequence of requests if all of those requests have idempotent methods ([[id:6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f][Section 4.2.2]] of [RFC7231]). A proxy *MUST NOT* automatically retry non-idempotent requests.
 #+END_QUOTE
 
-当一个入站连接被过早地关闭，客户端 *可以* 开启一个新的连接并自动重传被中止的请求消息序列，如果所有这些请求消息的请求方法都是幂等（[[https://tools.ietf.org/html/rfc7231#section-4.2.2][【RFC7231】章节 4.2.2]]）的话。代理 *禁止* 自动重试非幂等的请求。
+当一个入站连接被过早地关闭，客户端 *可以* 开启一个新的连接并自动重传被中止的请求消息序列，如果所有这些请求消息的请求方法都是幂等（[[id:6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f][【RFC7231】章节 4.2.2]]）的话。代理 *禁止* 自动重试非幂等的请求。
 
 #+BEGIN_QUOTE
 A user agent *MUST NOT* automatically retry a request with a non-idempotent method unless it has some means to know that the request semantics are actually idempotent, regardless of the method, or some means to detect that the original request was never applied. For example, a user agent that knows (through design or configuration) that a POST request to a given resource is safe can repeat that request automatically. Likewise, a user agent designed specifically to operate on a version control repository might be able to recover from partial failure conditions by checking the target resource revision(s) after a failed connection, reverting or fixing any changes that were partially applied, and then automatically retrying the requests that failed.
@@ -2620,10 +2620,10 @@ A client *SHOULD NOT* automatically retry a failed automatic retry.
 
 *** 6.3.2. 流水线处理 / Pipelining
 #+BEGIN_QUOTE
-A client that supports persistent connections *MAY* "pipeline" its requests (i.e., send multiple requests without waiting for each response). A server *MAY* process a sequence of pipelined requests in parallel if they all have safe methods (Section 4.2.1 of [RFC7231]), but it *MUST* send the corresponding responses in the same order that the requests were received.
+A client that supports persistent connections *MAY* "pipeline" its requests (i.e., send multiple requests without waiting for each response). A server *MAY* process a sequence of pipelined requests in parallel if they all have safe methods ([[id:2f967e3d-8694-430b-ad06-e748fd39b281][Section 4.2.1]] of [RFC7231]), but it *MUST* send the corresponding responses in the same order that the requests were received.
 #+END_QUOTE
 
-支持持久连接的客户端 *可以* 流水线式处理它的请求（也就是说，在不需要等待响应完成的情况下发送多个请求）。服务器 *可以* 并行处理一系列的流水线化的请求，如果它们所有都带有安全的请求方法（[[https://tools.ietf.org/html/rfc7231#section-4.2.1][【RFC7231】章节 4.2.1]]）的话。但服务器 *必须* 以其接收到的请求消息的顺序发送对应的响应消息。
+支持持久连接的客户端 *可以* 流水线式处理它的请求（也就是说，在不需要等待响应完成的情况下发送多个请求）。服务器 *可以* 并行处理一系列的流水线化的请求，如果它们所有都带有安全的请求方法（[[id:2f967e3d-8694-430b-ad06-e748fd39b281][【RFC7231】章节 4.2.1]]）的话。但服务器 *必须* 以其接收到的请求消息的顺序发送对应的响应消息。
 
 #+BEGIN_QUOTE
 译注：
@@ -2643,13 +2643,13 @@ A client that pipelines requests *SHOULD* retry unanswered requests if the conne
 客户端流水线处理请求的时候，如果连接在客户端接收到所有对应的响应消息之前被关闭了，客户端 *应当* 重试未应答过的请求。当在连接失败（连接未被服务器发送完最后一个完整响应消息之后显式关闭）后重试流水线化的请求，客户端 *禁止* 在连接建立之后立即进行流水线，这是因为如果多个请求在一个被过早关闭的连接中被发送（见[[id:5051d9ad-6b2e-45b0-be58-42b9dce34b89][章节 6.6]] 所描述的 TCP 重启问题），在之前流水线的第一个剩余的响应消息可能导致一个错误的响应，可能会再一次被丢失。
 
 #+BEGIN_QUOTE
-Idempotent methods (Section 4.2.2 of [RFC7231]) are significant to pipelining because they can be automatically retried after a connection failure. A user agent *SHOULD NOT* pipeline requests after a non-idempotent method, until the final response status code for that method has been received, unless the user agent has a means to detect and recover from partial failure conditions involving the pipelined sequence.
+Idempotent methods ([[id:6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f][Section 4.2.2]] of [RFC7231]) are significant to pipelining because they can be automatically retried after a connection failure. A user agent *SHOULD NOT* pipeline requests after a non-idempotent method, until the final response status code for that method has been received, unless the user agent has a means to detect and recover from partial failure conditions involving the pipelined sequence.
 #+END_QUOTE
 
-幂等请求方法（[[https://tools.ietf.org/html/rfc7231#section-4.2.2][【RFC7231】章节 4.2.2]]）对于流水线处理是很有意义的，这是因为在连接失败后它们能够被自动重试。用户代理 *不应当* 对一个非幂等请求方法之后的请求消息进行流水线处理，直到接收到该非幂等请求方法所对应的最终响应状态码（final response status code），除非该用户代理有某种方法去检测和从部分涉及到流水线序列的失败条件中恢复连接。
+幂等请求方法（[[id:6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f][【RFC7231】章节 4.2.2]]）对于流水线处理是很有意义的，这是因为在连接失败后它们能够被自动重试。用户代理 *不应当* 对一个非幂等请求方法之后的请求消息进行流水线处理，直到接收到该非幂等请求方法所对应的最终响应状态码（final response status code），除非该用户代理有某种方法去检测和从部分涉及到流水线序列的失败条件中恢复连接。
 
 #+BEGIN_QUOTE
-译注：最终响应的状态码就是除了过渡性响应状态以外的状态码。过渡性状态码（interim response status code），即所有 1xx 的信息性状态码，见[[https://httpwg.org/specs/rfc7231.html#rfc.section.6.2][【RFC7231】章节 6.2]]。其对应的响应分别叫最终响应（final response）和过渡性响应（interim response）。
+译注：最终响应的状态码就是除了过渡性响应状态以外的状态码。过渡性状态码（interim response status code），即所有 1xx 的信息性状态码，见[[id:2dd7a3d1-25c2-4192-9a19-6a3cf137036e][【RFC7231】章节 6.2]]。其对应的响应分别叫最终响应（final response）和过渡性响应（interim response）。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -2858,16 +2858,16 @@ When =Upgrade= is sent, the sender *MUST* also send a =Connection= header field 
 当发送一个带有 =Upgrade= 头字段的消息时，发送端 *必须* 使该消息同时带上一个包含有一个 "upgrade" 连接选项的 =Connection= 头字段（[[id:40B2B721-F916-41EA-86FB-514FDED5B3A4][章节 6.1]]），以免 =Upgrade= 头字段被没有实现这些协议的中间人意外转发出去。服务端 *必须* 忽略接收自一个 HTTP/1.0 请求消息的 =Upgrade= 头字段。
 
 #+BEGIN_QUOTE
-A client cannot begin using an upgraded protocol on the connection until it has completely sent the request message (i.e., the client can't change the protocol it is sending in the middle of a message). If a server receives both an =Upgrade= and an =Expect= header field with the "100-continue" expectation (Section 5.1.1 of [RFC7231]), the server *MUST* send a =100 (Continue)= response before sending a =101 (Switching Protocols)= response.
+A client cannot begin using an upgraded protocol on the connection until it has completely sent the request message (i.e., the client can't change the protocol it is sending in the middle of a message). If a server receives both an =Upgrade= and an =Expect= header field with the "100-continue" expectation ([[id:0b0cea12-0af7-47f1-8908-2afc48ce3fb2][Section 5.1.1]] of [RFC7231]), the server *MUST* send a =100 (Continue)= response before sending a =101 (Switching Protocols)= response.
 #+END_QUOTE
 
-客户端不能在连接中使用新的协议，直到它将当前的请求消息的完整地发送出去（也就是说，客户端不能在发送一个消息的中途改变协议）。如果服务器接收到一个请求消息，既带有一个 =Upgrade= 头字段，也带有一个 "100-continue" 期望值（expectation）的 =Expect= 头字段（[[https://tools.ietf.org/html/rfc7231#section-5.1.1][【RFC7231】章节 5.1.1]]）的时候，服务器 *必须* 在发送一个 =101 (Switching Protocols)= 响应消息之前，发送一个 =100 (Continue)= 响应消息。
+客户端不能在连接中使用新的协议，直到它将当前的请求消息的完整地发送出去（也就是说，客户端不能在发送一个消息的中途改变协议）。如果服务器接收到一个请求消息，既带有一个 =Upgrade= 头字段，也带有一个 "100-continue" 期望值（expectation）的 =Expect= 头字段（[[id:0b0cea12-0af7-47f1-8908-2afc48ce3fb2][【RFC7231】章节 5.1.1]]）的时候，服务器 *必须* 在发送一个 =101 (Switching Protocols)= 响应消息之前，发送一个 =100 (Continue)= 响应消息。
 
 #+BEGIN_QUOTE
-The =Upgrade= header field only applies to switching protocols on top of the existing connection; it cannot be used to switch the underlying connection (transport) protocol, nor to switch the existing communication to a different connection. For those purposes, it is more appropriate to use a =3xx (Redirection)= response ([[https://tools.ietf.org/html/rfc7231#section-6.4][Section 6.4]] of [RFC7231]).
+The =Upgrade= header field only applies to switching protocols on top of the existing connection; it cannot be used to switch the underlying connection (transport) protocol, nor to switch the existing communication to a different connection. For those purposes, it is more appropriate to use a =3xx (Redirection)= response ([[id:455a69c1-4d80-440e-a98c-851a296d9ce2][Section 6.4]] of [RFC7231]).
 #+END_QUOTE
 
-=Upgrade= 头字段仅应用于切换现有最顶层的连接所使用的协议，它并不能用于切换底层的连接（传输）协议，也不能用于将目前的通信切换到其他不同的连接之上。要达到上述的其他目的，使用一个 =3xx (Redirection)= 响应会更加合适（[[https://tools.ietf.org/html/rfc7231#section-6.4][【RFC7231】章节 6.4]]）。
+=Upgrade= 头字段仅应用于切换现有最顶层的连接所使用的协议，它并不能用于切换底层的连接（传输）协议，也不能用于将目前的通信切换到其他不同的连接之上。要达到上述的其他目的，使用一个 =3xx (Redirection)= 响应会更加合适（[[id:455a69c1-4d80-440e-a98c-851a296d9ce2][【RFC7231】章节 6.4]]）。
 
 #+BEGIN_QUOTE
 译注：=Upgrade= 既不能切换底层协议，也不能切换当前的连接，它只能切换当前连接所使用的协议。
@@ -3116,7 +3116,7 @@ Registrations *MUST* include the following fields:
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-Names of transfer codings *MUST NOT* overlap with names of content codings (Section 3.1.2.1 of [RFC7231]) unless the encoding transformation is identical, as is the case for the compression codings defined in Section 4.2.
+Names of transfer codings *MUST NOT* overlap with names of content codings ([[id:a67acb58-7b0a-49c8-8de4-5dd8a4ab9e61][Section 3.1.2.1]] of [RFC7231]) unless the encoding transformation is identical, as is the case for the compression codings defined in Section 4.2.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -3204,10 +3204,10 @@ The responsible party is: "IETF (iesg@ietf.org) - Internet Engineering Task Forc
 :ID:       aa52d5bd-e2f6-40db-826d-991544eeacb9
 :END:
 #+BEGIN_QUOTE
-This section is meant to inform developers, information providers, and users of known security considerations relevant to HTTP message syntax, parsing, and routing. Security considerations about HTTP semantics and payloads are addressed in [[[https://tools.ietf.org/html/rfc7231][RFC7231]]].
+This section is meant to inform developers, information providers, and users of known security considerations relevant to HTTP message syntax, parsing, and routing. Security considerations about HTTP semantics and payloads are addressed in [[[file:RFC7231.org][RFC7231]]].
 #+END_QUOTE
 
-本章节是打算将已知的与 HTTP 消息句法、解析，以及路由相关的安全注意事项告知开发者、信息提供商，以及用户。关于 HTTP 的语义以及有效载荷的安全注意事项放在[[https://tools.ietf.org/html/rfc7231][【RFC7231】]]处理。
+本章节是打算将已知的与 HTTP 消息句法、解析，以及路由相关的安全注意事项告知开发者、信息提供商，以及用户。关于 HTTP 的语义以及有效载荷的安全注意事项放在【[[file:RFC7231.org][RFC7231]]】处理。
 
 ** 9.1. 确立权威 / Establishing Authority
 :PROPERTIES:
@@ -3257,10 +3257,10 @@ By their very nature, HTTP intermediaries are men-in-the-middle and, thus, repre
 就其本质而言，HTTP 中间人（intermediaries）就是一种“中间人（men-in-the-middle）”，由此，为中间人提供了攻击的机会。如果泄漏了运行于中间人上的系统，可能会导致严重的安全和隐私问题。中间人可能能够访问安全相关的信息、个人用户或组织的个人信息，以及属于用户或内容提供商的专有信息。一个已泄漏出去的中间人，或者一个没有实现或没有配置关于安全和隐私方面的注意事项的中间人，可能会被用于各种潜在攻击。
 
 #+BEGIN_QUOTE
-Intermediaries that contain a shared cache are especially vulnerable to cache poisoning attacks, as described in Section 8 of [RFC7234].
+Intermediaries that contain a shared cache are especially vulnerable to cache poisoning attacks, as described in [[id:258f834a-496c-4173-b6bd-dda94f1d74fe][Section 8]] of [RFC7234].
 #+END_QUOTE
 
-包含了一个共享缓存的中间人特别容易受到缓存中毒攻击（cache poisoning attacks），正如[[https://tools.ietf.org/html/rfc7234#section-8][【RFC7234】章节 8]] 所述那样。
+包含了一个共享缓存的中间人特别容易受到缓存中毒攻击（cache poisoning attacks），正如[[id:258f834a-496c-4173-b6bd-dda94f1d74fe][【RFC7234】章节 8]] 所述那样。
 
 #+BEGIN_QUOTE
 Implementers need to consider the privacy and security implications of their design and coding decisions, and of the configuration options they provide to operators (especially the default configuration).
@@ -3291,10 +3291,10 @@ To promote interoperability, specific recommendations are made for minimum size 
 为了提高互操作性，本规范提出了对于请求行（[[id:c6d80104-6f14-4888-b8bf-262bb389002c][章节 3.1.1]]）以及头字段（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）的最小值限制的具体建议。这些最小值建议，本规范选择的是即使资源受限的（implementations）也能够支持的，期望大多数的实现（implementations）会选择更大幅度的限制。
 
 #+BEGIN_QUOTE
-A server can reject a message that has a request-target that is too long (Section 6.5.12 of [RFC7231]) or a request payload that is too large (Section 6.5.11 of [RFC7231]). Additional status codes related to capacity limits have been defined by extensions to HTTP [RFC6585].
+A server can reject a message that has a request-target that is too long ([[id:77d1edbb-ceeb-450d-9b85-5f8c89db2f97][Section 6.5.12]] of [RFC7231]) or a request payload that is too large ([[id:620869b7-1f42-4bb9-a3ba-664e80d5161d][Section 6.5.11]] of [RFC7231]). Additional status codes related to capacity limits have been defined by extensions to HTTP [[[https://tools.ietf.org/html/rfc6585][RFC6585]]].
 #+END_QUOTE
 
-服务器能够拒绝一个带有过长的请求目标（[[https://tools.ietf.org/html/rfc7231#section-6.5.12][【RFC7231】章节 6.5.12]]），或者过大的请求有效载荷（[[https://tools.ietf.org/html/rfc7231#section-6.5.11][【RFC7231】章节 6.5.11]]）的消息。作为对 HTTP 的扩展，额外的关于容量限制的响应状态码已经定义在【[[https://tools.ietf.org/html/rfc6585][RFC6585]]】。
+服务器能够拒绝一个带有过长的请求目标（[[id:77d1edbb-ceeb-450d-9b85-5f8c89db2f97][【RFC7231】章节 6.5.12]]），或者过大的请求有效载荷（[[id:620869b7-1f42-4bb9-a3ba-664e80d5161d][【RFC7231】章节 6.5.11]]）的消息。作为对 HTTP 的扩展，额外的关于容量限制的响应状态码已经定义在【[[https://tools.ietf.org/html/rfc6585][RFC6585]]】。
 
 #+BEGIN_QUOTE
 Recipients ought to carefully limit the extent to which they process other protocol elements, including (but not limited to) request methods, response status phrases, header field-names, numeric values, and body chunks. Failure to limit such processing can result in buffer overflows, arithmetic overflows, or increased vulnerability to denial-of-service attacks.
@@ -4140,16 +4140,16 @@ SCHEDULED: <2018-10-26 Fri>
 A proxy that transforms the payload of a 200 (OK) response can further inform downstream recipients that a transformation has been applied by changing the response status code to 203 (Non-Authoritative Information).
 #+END_SRC
 
-客户端接收到来自源服务器的状态码为 200 (OK) 的响应消息时，其中消息的 payload 没有被中间代理转换或更改过，那么这次访问就叫“权威访问”，那个无经过转换或更改的消息就叫“权威信息”。而当 200 (OK)  响应消息经过中间代理修改过时，这个消息就叫“非权威信息”，通常中间代理会将源服务器返回的 200 (OK) 状态码改为 203 (Non-Authoritative Information)。
+客户端接收到来自源服务器的状态码为 =200 (OK)= 的响应消息时，其中消息的 payload 没有被中间代理转换或更改过，那么这次访问就叫“权威访问”，那个无经过转换或更改的消息就叫“权威信息”。而当 =200 (OK)=  响应消息经过中间代理修改过时，这个消息就叫“非权威信息”，通常中间代理会将源服务器返回的 =200 (OK)= 状态码改为 =203 (Non-Authoritative Information)=。
 
-- [[https://tools.ietf.org/html/rfc7230#section-5.7.2][Section 5.7.2 of {RFC7230}]]
-- [[https://tools.ietf.org/html/rfc7231#section-6.3.4][Section 6.3.4 of {RFC7231}]]
+- [[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Section 5.7.2]] of [RFC7230]
+- [[id:5a18bb35-2626-4fe4-a36c-cae3a7655a60][Section 6.3.4]] of [RFC7231]
 
 [fn:5] Percent-encoded，百分号编码，也叫作 URL 编码。
 
 [fn:6] HEAD 请求方法在什么情况下会被改变为 GET？
 
-[fn:7] 无条件请求（Unconditional Request），即请求头字段内不带有任何条件头字段的请求消息。详情见【[[https://tools.ietf.org/html/rfc7232][RFC7232]]】。
+[fn:7] 无条件请求（Unconditional Request），即请求头字段内不带有任何条件头字段的请求消息。详情见【[[file:RFC7232.org][RFC7232]]】。
 
 [fn:8] 入站请求（Inbound Request），即指向源服务器方向的请求。
 
