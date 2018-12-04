@@ -131,6 +131,9 @@ Conformance criteria and considerations regarding error handling are defined in 
 关于错误处理的一致性标准以及注意事项会在[[id:A0441F72-9799-4667-9477-1E05885946A1][章节 2.5]] 中定义。
 
 ** 1.2. 句法标记 (Syntax Notation)
+:PROPERTIES:
+:ID:       f8234cb5-154d-4daf-82fd-ed54ac75cf8b
+:END:
 #+BEGIN_QUOTE
 This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7, that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix B shows the collected grammar with all list operators expanded to standard ABNF notation.
 #+END_QUOTE
@@ -141,7 +144,7 @@ This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC52
 The following core rules are included by reference, as defined in [RFC5234], Appendix B.1: =ALPHA= (letters), =CR= (carriage return), =CRLF= (CR LF), =CTL= (controls), =DbbIGIT= (decimal 0-9), =DQUOTE= (double quote), =HEXDIG= (hexadecimal 0-9/A-F/a-f), =HTAB= (horizontal tab), =LF= (line feed), =OCTET= (any 8-bit sequence of data), =SP= (space), and =VCHAR= (any visible [USASCII] character).
 #+END_QUOTE
 
-本规范引用了以下定义在[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：字母 =ALPHA=、回车符 =CR=、回车换行符 =CRLF=、控制字符 =CTL=、十进制数字 0-9 =DbbIGIT=、双引号 =DQUOTE=、十六进制数字 0-9/A-F/a-f =HEXDIG=、水平制表符 =HTAB=、换行符 =LF=、八位组字节 =OCTET=、空格 =SP= 以及【USASCII】可见字符 =VCHAR=。
+本规范引用了以下定义在[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：=ALPHA= （字母）、=CR= （回车符）、=CRLF= （回车换行符）、=CTL= （控制字符）、=DIGIT= （十进制数字 0-9）、=DQUOTE= （双引号）、=HEXDIG= （十六进制数字 0-9/A-F/a-f）、=HTAB= （水平制表符）、=LF= （换行符）、=OCTET= （八位组字节）、=SP= （空格）以及 =VCHAR= （【USASCII】可见字符）。
 
 （译注：除非特别说明，本译文所述的“字节”皆为 Octet，而不是 Byte。）
 
@@ -4112,6 +4115,10 @@ Muenster, NW 48155
 Germany
 Email: julian.reschke@greenbytes.de
 URI: http://greenbytes.de/tech/webdav/
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+阿多（译者）
 #+END_EXAMPLE
 
 * Footnotes
