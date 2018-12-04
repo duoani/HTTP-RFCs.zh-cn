@@ -3151,6 +3151,9 @@ Response header fields can supply control data that supplements the status code,
 | Warning           | [[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][Section 5.5]] of [RFC7234] |
 
 *** 7.1.1. 创始日期 / Origination Date
+:PROPERTIES:
+:ID:       55ac9b0f-69ca-4634-9720-f681878f259f
+:END:
 
 **** 7.1.1.1. 日期时间格式 / Date/Time Formats
 :PROPERTIES:
@@ -4422,117 +4425,179 @@ HTTP implementations that share code with MHTML [[[https://tools.ietf.org/html/r
 The primary changes in this revision have been editorial in nature: extracting the messaging syntax and partitioning HTTP semantics into separate documents for the core features, conditional requests, partial requests, caching, and authentication. The conformance language has been revised to clearly target requirements and the terminology has been improved to distinguish payload from representations and representations from resources.
 #+END_QUOTE
 
+本次修订最大的变化是对文档进行实质上的编辑：提取了消息句法以及将 HTTP 语义划分为独立的文档——核心功能、条件请求、部分请求、缓存、以及认证。[[ruby:language%20conformance][语言的一致性]]已经修订为清晰的目标要求，而且[[ruby:terminology][术语]]已经改进为区分来自表示形式的有效载荷以及来自资源的表示形式。
+
 #+BEGIN_QUOTE
-A new requirement has been added that semantics embedded in a URI be disabled when those semantics are inconsistent with the request method, since this is a common cause of interoperability failure. (Section 2)
+A new requirement has been added that semantics embedded in a URI be disabled when those semantics are inconsistent with the request method, since this is a common cause of interoperability failure. ([[id:304453f4-a250-4f73-b82c-2825a0bda464][Section 2]])
+#+END_QUOTE
+
+新增了一个要求：禁止将语义内嵌进一个 URI 里，如果这些语义与请求方法不一致的话，因为这是[[ruby:interoperability%20failure][互操作错误]]的常见原因。（[[id:304453f4-a250-4f73-b82c-2825a0bda464][章节 2]]）
+
+#+BEGIN_QUOTE
+An algorithm has been added for determining if a payload is associated with a specific identifier. ([[id:258075ff-8d65-4de3-bf09-d8094f17eaf5][Section 3.1.4.1]])
+#+END_QUOTE
+
+新增了一种算法来确定一个有效载荷是否与一个特定的标识符相关联。（[[id:258075ff-8d65-4de3-bf09-d8094f17eaf5][章节 3.1.4.1]]）
+
+#+BEGIN_QUOTE
+The default charset of ISO-8859-1 for text media types has been removed; the default is now whatever the media type definition says. Likewise, special treatment of ISO-8859-1 has been removed from the =Accept-Charset= header field. ([[id:53225373-279e-407b-b1ed-39b881e8b6e5][Section 3.1.1.3]] and [[id:4c8262b6-8e4c-4476-ba72-47a096dfbfa7][Section 5.3.3]])
+#+END_QUOTE
+
+移除了 "text" 媒体类型默认的字符集是 ISO-8859-1 的要求；现在默认是对应的媒体类型的定义所说的那种。同样，从 =Accept-Charset= 头字段里移除了 ISO-8859-1 的特殊处理。（[[id:53225373-279e-407b-b1ed-39b881e8b6e5][章节 3.1.1.3]] 和[[id:4c8262b6-8e4c-4476-ba72-47a096dfbfa7][章节 5.3.3]]）
+
+#+BEGIN_QUOTE
+The definition of =Content-Location= has been changed to no longer affect the base URI for resolving relative URI references, due to poor implementation support and the undesirable effect of potentially breaking relative links in content-negotiated resources. ([[id:91650144-4bfc-4362-b628-f96578a5c756][Section 3.1.4.2]])
+#+END_QUOTE
+
+=Content-Location= 的定义已经改变为不再影响[[ruby:resolving][解释]]相对 URI 引用时的基 URI，这是因为只有很少实现支持以及具有可能破坏[[ruby:content-negotiated%20resources][内容协商的资源]]里的相对链接的不良影响。（[[id:91650144-4bfc-4362-b628-f96578a5c756][章节 3.1.4.2]]）
+
+#+BEGIN_QUOTE
+To be consistent with the method-neutral parsing algorithm of [RFC7230], the definition of GET has been relaxed so that requests can have a body, even though a body has no meaning for GET. ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]])
+#+END_QUOTE
+
+为了与方法符合【RFC7230】的[[ruby:method-neutral][方法中性]]的[[ruby:parsing%20algorithm][解析算法]]，已经放宽了 GET 的定义以便这种请求同样可以带有一个消息体，即使这种消息体对于 GET 没有任何意义。（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）
+
+#+BEGIN_QUOTE
+Servers are no longer required to handle all =Content-*= header fields and use of =Content-Range= has been explicitly banned in PUT requests. ([[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][Section 4.3.4]])
+#+END_QUOTE
+
+不再要求服务器去处理所有 =Content-*= 头字段，并且已经明确禁止在 PUT 请求里使用 =Content-Range= 头字段。（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）
+
+#+BEGIN_QUOTE
+Definition of the CONNECT method has been moved from [[[https://tools.ietf.org/html/rfc2817][RFC2817]]] to this specification. ([[id:630ab908-5d8e-400b-bed4-f6973b8c1549][Section 4.3.6]])
+#+END_QUOTE
+
+CONNECT 方法的定义已从【[[https://tools.ietf.org/html/rfc2817][RFC2817]]】移到本文档里。（[[id:630ab908-5d8e-400b-bed4-f6973b8c1549][章节 4.3.6]]）
+
+#+BEGIN_QUOTE
+The OPTIONS and TRACE request methods have been defined as being safe. ([[id:f659b35f-7510-4961-ad3a-3ab1b312a681][Section 4.3.7]] and [[id:bdc9e3b4-bac3-46c5-9319-31f7f4d6469d][Section 4.3.8]])
+#+END_QUOTE
+
+OPTIONS 和 TRACE 请求方法已经定义为是安全的。（[[id:f659b35f-7510-4961-ad3a-3ab1b312a681][章节 4.3.7]] 和[[id:bdc9e3b4-bac3-46c5-9319-31f7f4d6469d][章节 4.3.8]]）
+
+#+BEGIN_QUOTE
+The =Expect= header field's extension mechanism has been removed due to widely-deployed broken implementations. ([[id:0b0cea12-0af7-47f1-8908-2afc48ce3fb2][Section 5.1.1]])
+#+END_QUOTE
+
+移除了 =Expect= 头字段的扩展机制，因为已广泛部署的实现都不支持这种机制。（[[id:0b0cea12-0af7-47f1-8908-2afc48ce3fb2][章节 5.1.1]]）
+
+#+BEGIN_QUOTE
+The =Max-Forwards= header field has been restricted to the OPTIONS and TRACE methods; previously, extension methods could have used it as well. ([[id:4c0e6435-a276-48fb-8cb8-32b8ef5a2780][Section 5.1.2]])
+#+END_QUOTE
+
+限定了 =Max-Forwards= 头字段仅能使用在 OPTIONS 以及 TRACE 方法中，之前是扩展方法同样可以使用它。（[[id:4c0e6435-a276-48fb-8cb8-32b8ef5a2780][章节 5.1.2]]）
+
+#+BEGIN_QUOTE
+The "about:blank" URI has been suggested as a value for the =Referer= header field when no referring URI is applicable, which distinguishes that case from others where the =Referer= field is not sent or has been removed. ([[id:5738c39d-f031-4866-b280-76cc7e2ff433][Section 5.5.2]])
+#+END_QUOTE
+
+当没有引用任何适用的 URI 的时候，已经建议将 "about:blank" 这个 URI 作为 =Referer= 头字段的值，以区别没有发送或已经移除 =Referer= 头字段的情况。（[[id:5738c39d-f031-4866-b280-76cc7e2ff433][章节 5.5.2]]）
+
+#+BEGIN_QUOTE
+The following status codes are now cacheable (that is, they can be stored and reused by a cache without explicit freshness information present): =204=, =404=, =405=, =414=, =501=. ([[id:5a69d0cc-628c-4897-a089-45f906b94a92][Section 6]])
+#+END_QUOTE
+
+现在，以下状态码是可缓存的（也就是说，在不用显式出现[[ruby:freshness%20information][新鲜度信息]]的情况下，它们能够被缓存服务器所存储和复用）：=204=、=404=、=405=、=414=、=501=。（[[id:5a69d0cc-628c-4897-a089-45f906b94a92][章节 6]]）
+
+#+BEGIN_QUOTE
+The =201 (Created)= status description has been changed to allow for the possibility that more than one resource has been created. ([[id:0f0de6df-c767-45b5-a6a9-1f45f20bba38][Section 6.3.2]])
+#+END_QUOTE
+
+=201 (Created)= 状态码的描述已经改变为考虑到超过一个资源被创建的可能性。（[[id:0f0de6df-c767-45b5-a6a9-1f45f20bba38][章节 6.3.2]]）
+
+#+BEGIN_QUOTE
+The definition of =203 (Non-Authoritative Information)= has been broadened to include cases of payload transformations as well. ([[id:5a18bb35-2626-4fe4-a36c-cae3a7655a60][Section 6.3.4]])
+#+END_QUOTE
+
+=203 (Non-Authoritative Information)= 状态码的定义已经[[ruby:broadened][拓宽]]为也包括[[ruby:payload%20transformations][有效载荷转换]]的情况。（[[id:5a18bb35-2626-4fe4-a36c-cae3a7655a60][章节 6.3.4]]）
+
+#+BEGIN_QUOTE
+The set of request methods that are safe to automatically redirect is no longer closed; user agents are able to make that determination based upon the request method semantics. The redirect status codes =301=, =302=, and =307= no longer have normative requirements on response payloads and user interaction. ([[id:455a69c1-4d80-440e-a98c-851a296d9ce2][Section 6.4]])
+#+END_QUOTE
+
+不再封闭哪些请求方法才可以安全地用于自动重定向，用户代理有能力依据请求方法的语义去做决定。重定向状态 =301=、=302=、以及 =307= 不再对[[ruby:response%20payloads][响应有效载荷]]以及[[ruby:user%20interaction][用户交互]]有规范要求。（[[id:455a69c1-4d80-440e-a98c-851a296d9ce2][章节 6.4]]）
+
+#+BEGIN_QUOTE
+The status codes =301= and =302= have been changed to allow user agents to rewrite the method from POST to GET. ([[id:e883e3aa-aac3-46ca-83cc-2a085889f9d2][Sections 6.4.2]] and [[id:89acc9d5-366e-4a7c-820e-891fe25738be][6.4.3]])
+#+END_QUOTE
+
+状态码 =301= 以及 =302= 已经改变为允许用户代理将 POST 方法重写为 GET。（[[id:e883e3aa-aac3-46ca-83cc-2a085889f9d2][章节 6.4.2]] 和[[id:89acc9d5-366e-4a7c-820e-891fe25738be][章节 6.4.3]]）
+
+#+BEGIN_QUOTE
+The description of the =303 (See Other)= status code has been changed to allow it to be cached if explicit freshness information is given, and a specific definition has been added for a =303= response to GET. ([[id:12c7ea0c-85ac-401f-8132-293e6ebcf52f][Section 6.4.4]])
+#+END_QUOTE
+
+=303 (See Other)= 状态码的描述已经改变为允许它被缓存，如果给定了显式的新鲜度信息的话，并且对于回应给 GET 的 =303= 响应添加了一个具体的定义。（[[id:12c7ea0c-85ac-401f-8132-293e6ebcf52f][章节 6.4.4]]）
+
+#+BEGIN_QUOTE
+The =305 (Use Proxy)= status code has been deprecated due to security concerns regarding in-band configuration of a proxy. ([[id:e69019b2-b071-4380-bcd7-d2fd80261d81][Section 6.4.5]])
+#+END_QUOTE
+
+=305 (Use Proxy)= 状态码已经被废弃，这是由于代理的[[ruby:in-band][带内]]配置相关的安全问题。（[[id:e69019b2-b071-4380-bcd7-d2fd80261d81][章节 6.4.5]]）
+
+#+BEGIN_QUOTE
+The =400 (Bad Request)= status code has been relaxed so that it isn't limited to syntax errors. ([[id:323c581a-d558-421f-a0f1-8c28fe904264][Section 6.5.1]])
+#+END_QUOTE
+
+=400 (Bad Request)= 状态码已经放宽了定义以便它不用限制为[[ruby:syntax%20errors][句法错误]]。（[[id:323c581a-d558-421f-a0f1-8c28fe904264][章节 6.5.1]]）
+
+#+BEGIN_QUOTE
+The =426 (Upgrade Required)= status code has been incorporated from [[[https://tools.ietf.org/html/rfc2817][RFC2817]]]. ([[id:5d028105-552c-4079-bcfe-30809395f6c9][Section 6.5.15]])
+#+END_QUOTE
+
+=426 (Upgrade Required)= 状态码已从【[[https://tools.ietf.org/html/rfc2817][RFC2817]]】合并。（[[id:5d028105-552c-4079-bcfe-30809395f6c9][章节 6.5.15]]）
+
+#+BEGIN_QUOTE
+The target of requirements on =HTTP-date= and the =Date= header field have been reduced to those systems generating the date, rather than all systems sending a date. ([[id:55ac9b0f-69ca-4634-9720-f681878f259f][Section 7.1.1]])
+#+END_QUOTE
+
+对于 =HTTP-date= 以及头字段 =Date= 所要求的目标已经降低为那些系统所[[ruby:generating][生成]]的日期，而不是所有系统所[[ruby:sending][发送]]的日期。（[[id:55ac9b0f-69ca-4634-9720-f681878f259f][章节 7.1.1]]）
+
+#+BEGIN_QUOTE
+译注：对于 generate 与 sned 之间的区别，见[[id:A0441F72-9799-4667-9477-1E05885946A1][【RFC7230】章节 2.5]]。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-An algorithm has been added for determining if a payload is associated with a specific identifier. (Section 3.1.4.1)
+The syntax of the =Location= header field has been changed to allow all URI references, including relative references and fragments, along with some clarifications as to when use of fragments would not be appropriate. ([[id:bc2baf29-0bf6-4816-865c-3d33f5fe38e3][Section 7.1.2]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The default charset of ISO-8859-1 for text media types has been removed; the default is now whatever the media type definition says. Likewise, special treatment of ISO-8859-1 has been removed from the Accept-Charset header field. (Section 3.1.1.3 and Section 5.3.3)
-#+END_QUOTE
+=Location= 头字段的句法已经改变为允许所有 URI 引用，包括相对引用以及 =fragment=。还加上了一些澄清说明关于什么时候使用 =fragment= 是不合适的。（[[id:bc2baf29-0bf6-4816-865c-3d33f5fe38e3][章节 7.1.2]]）
 
 #+BEGIN_QUOTE
-The definition of Content-Location has been changed to no longer affect the base URI for resolving relative URI references, due to poor implementation support and the undesirable effect of potentially breaking relative links in content-negotiated resources. (Section 3.1.4.2)
+=Allow= has been reclassified as a response header field, removing the option to specify it in a PUT request. Requirements relating to the content of =Allow= have been relaxed; correspondingly, clients are not required to always trust its value. ([[id:f8577773-512f-4d68-8f5d-444368db7c29][Section 7.4.1]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-To be consistent with the method-neutral parsing algorithm of [RFC7230], the definition of GET has been relaxed so that requests can have a body, even though a body has no meaning for GET. (Section 4.3.1)
-#+END_QUOTE
+=Allow= 已经重组为一个响应头字段，在 PUT 请求中移除了指定 =Allow= 的选项。放宽了 =Allow= 的内容的相关要求，作为对应，不再要求客户端总是相信它的值。（[[id:f8577773-512f-4d68-8f5d-444368db7c29][章节 7.4.1]]）
 
 #+BEGIN_QUOTE
-Servers are no longer required to handle all Content-* header fields and use of Content-Range has been explicitly banned in PUT requests. (Section 4.3.4)
+A Method Registry has been defined. ([[id:193d7ad5-9c6d-4bf7-98f1-6984a42af639][Section 8.1]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Definition of the CONNECT method has been moved from [RFC2817] to this specification. (Section 4.3.6)
-#+END_QUOTE
+定义了一个方法登记表。（[[id:193d7ad5-9c6d-4bf7-98f1-6984a42af639][章节 8.1]]）
 
 #+BEGIN_QUOTE
-The OPTIONS and TRACE request methods have been defined as being safe. (Section 4.3.7 and Section 4.3.8)
+The Status Code Registry has been redefined by this specification; previously, it was defined in [[https://tools.ietf.org/html/rfc2817#section-7.1][Section 7.1]] of [RFC2817]. ([[id:c0f1fbbc-3471-430e-90be-1b120d9b449f][Section 8.2]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The Expect header field's extension mechanism has been removed due to widely-deployed broken implementations. (Section 5.1.1)
-#+END_QUOTE
+本规范重新定义了状态码登记表，之前的登记表是定义在[[https://tools.ietf.org/html/rfc2817#section-7.1][【RFC2817】章节 7.1]] 中。（[[id:c0f1fbbc-3471-430e-90be-1b120d9b449f][章节 8.2]]）
 
 #+BEGIN_QUOTE
-The Max-Forwards header field has been restricted to the OPTIONS and TRACE methods; previously, extension methods could have used it as well. (Section 5.1.2)
+Registration of content codings has been changed to require IETF Review. ([[id:87f2ed30-a48b-4c31-a181-8e3a33ba1080][Section 8.4]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The "about:blank" URI has been suggested as a value for the Referer header field when no referring URI is applicable, which distinguishes that case from others where the Referer field is not sent or has been removed. (Section 5.5.2)
-#+END_QUOTE
+内容编码的登记已经改变为要求 IETF 复审。（[[id:87f2ed30-a48b-4c31-a181-8e3a33ba1080][章节 8.4]]）
 
 #+BEGIN_QUOTE
-The following status codes are now cacheable (that is, they can be stored and reused by a cache without explicit freshness information present): 204, 404, 405, 414, 501. (Section 6)
+The =Content-Disposition= header field has been removed since it is now defined by [[[https://tools.ietf.org/html/rfc6266][RFC6266]]].
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The 201 (Created) status description has been changed to allow for the possibility that more than one resource has been created. (Section 6.3.2)
-#+END_QUOTE
+移除了 =Content-Disposition= 头字段，因为现在它由【[[https://tools.ietf.org/html/rfc6266][RFC6266]]】所定义。
 
 #+BEGIN_QUOTE
-The definition of 203 (Non-Authoritative Information) has been broadened to include cases of payload transformations as well. (Section 6.3.4)
+The =Content-MD5= header field has been removed because it was inconsistently implemented with respect to partial responses.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The set of request methods that are safe to automatically redirect is no longer closed; user agents are able to make that determination based upon the request method semantics. The redirect status codes 301, 302, and 307 no longer have normative requirements on response payloads and user interaction. (Section 6.4)
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-The status codes 301 and 302 have been changed to allow user agents to rewrite the method from POST to GET. (Sections 6.4.2 and 6.4.3)
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-The description of the 303 (See Other) status code has been changed to allow it to be cached if explicit freshness information is given, and a specific definition has been added for a 303 response to GET. (Section 6.4.4)
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-The 305 (Use Proxy) status code has been deprecated due to security concerns regarding in-band configuration of a proxy. (Section 6.4.5)
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-The 400 (Bad Request) status code has been relaxed so that it isn't limited to syntax errors. (Section 6.5.1)
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-The 426 (Upgrade Required) status code has been incorporated from [RFC2817]. (Section 6.5.15)
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-The target of requirements on HTTP-date and the Date header field have been reduced to those systems generating the date, rather than all systems sending a date. (Section 7.1.1)
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-The syntax of the Location header field has been changed to allow all URI references, including relative references and fragments, along with some clarifications as to when use of fragments would not be appropriate. (Section 7.1.2)
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-Allow has been reclassified as a response header field, removing the option to specify it in a PUT request. Requirements relating to the content of Allow have been relaxed; correspondingly, clients are not required to always trust its value. (Section 7.4.1)
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-A Method Registry has been defined. (Section 8.1)
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-The Status Code Registry has been redefined by this specification; previously, it was defined in Section 7.1 of [RFC2817]. (Section 8.2)
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-Registration of content codings has been changed to require IETF Review. (Section 8.4)
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-The Content-Disposition header field has been removed since it is now defined by [RFC6266].
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-The Content-MD5 header field has been removed because it was inconsistently implemented with respect to partial responses.
-#+END_QUOTE
+移除了 =Content-MD5= 头字段，因为它与[[ruby:partial%20responses][部分响应]]的实现不一致。
 
 * C. 引入的 ABNF 规则 / Imported ABNF
 
