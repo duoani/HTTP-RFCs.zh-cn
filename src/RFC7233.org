@@ -87,6 +87,9 @@
 ** 8.1. Normative References
 ** 8.2. Informative References
 * Appendix A. Internet Media Type multipart/byteranges
+:PROPERTIES:
+:ID:       d0f2a428-d1ab-49fd-9ac2-531946ecac25
+:END:
 * Appendix B. Changes from RFC 2616
 * Appendix C. Imported ABNF
 * Appendix D. Collected ABNF

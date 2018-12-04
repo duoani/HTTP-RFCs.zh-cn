@@ -272,6 +272,9 @@ Charset names ought to be registered in the IANA "Character Sets" registry (<htt
 应该按照定义在[[https://tools.ietf.org/html/rfc2978][【RFC2978】]]的手续，将[[ruby:charset%20names][字符集名称]]登记在 IANA 的 "Character Sets" 登记表里。
 
 **** 3.1.1.3. 规范化和文本缺省 / Canonicalization and Text Defaults
+:PROPERTIES:
+:ID:       53225373-279e-407b-b1ed-39b881e8b6e5
+:END:
 #+BEGIN_QUOTE
 Internet media types are registered with a canonical form in order to be interoperable among systems with varying native encoding formats. Representations selected or transferred via HTTP ought to be in canonical form, for many of the same reasons described by the Multipurpose Internet Mail Extensions (MIME) [[[https://tools.ietf.org/html/rfc2045][RFC2045]]]. However, the performance characteristics of email deployments (i.e., store and forward messages to peers) are significantly different from those common to HTTP and the Web (server-based information services). Furthermore, MIME's constraints for the sake of compatibility with older mail transfer protocols do not apply to HTTP (see [[id:84208afd-e458-4f40-97cc-2e9535523797][Appendix A]]).
 #+END_QUOTE
@@ -682,7 +685,7 @@ Header fields that specifically describe the payload, rather than the associated
 When responses convey payload information, whether indicating a success or an error, the origin server often has different ways of representing that information; for example, in different formats, languages, or encodings. Likewise, different users or user agents might have differing capabilities, characteristics, or preferences that could influence which representation, among those available, would be best to deliver. For this reason, HTTP provides mechanisms for content negotiation.
 #+END_QUOTE
 
-响应在运载有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器。也就是说，在所有可用的[[ruby:representations][表示形式]]中，究竟响应哪一种[[ruby:representation][表示形式]]才是最合适的。出于上述原因，HTTP 提供了[[ruby:content%20negotiation][内容协商]]的机制。
+响应在运载有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器。也就是说，在所有可用的[[ruby:representations][表示形式]]中，究竟响应哪一种[[ruby:representation][表示形式]]才是最合适交付的。出于上述原因，HTTP 提供了[[ruby:content%20negotiation][内容协商]]的机制。
 
 #+BEGIN_QUOTE
 This specification defines two patterns of content negotiation that can be made visible within the protocol: "proactive", where the server selects the representation based upon the user agent's stated preferences, and "reactive" negotiation, where the server provides a list of representations for the user agent to choose from. Other patterns of content negotiation include "conditional content", where the representation consists of multiple parts that are selectively rendered based on user agent parameters, "active content", where the representation contains a script that makes additional (more specific) requests based on the user agent characteristics, and "Transparent Content Negotiation" ([[[https://tools.ietf.org/html/rfc2295][RFC2295]]]), where content selection is performed by an intermediary. These patterns are not mutually exclusive, and each has trade-offs in applicability and practicality.
@@ -1268,7 +1271,7 @@ The recipient proxy can establish a tunnel either by directly connecting to the 
 A tunnel is closed when a tunnel intermediary detects that either side has closed its connection: the intermediary *MUST* attempt to send any outstanding data that came from the closed side to the other side, close both connections, and then discard any remaining data left undelivered.
 #+END_QUOTE
 
-当[[ruby:tunnel%20intermediary][隧道中间人]]检测到隧道两端都已关闭了连接的时候，隧道被关闭。中间人 *必须* 尝试发送所有[[ruby:outstanding%20data][未偿付的数据]]，从被关闭的一端发送到另一端，然后关闭两端的连接，最后丢弃掉任何还[[ruby:undelivered][未投递出去]]的数据。
+当[[ruby:tunnel%20intermediary][隧道中间人]]检测到隧道两端都已关闭了连接的时候，隧道被关闭。中间人 *必须* 尝试发送所有[[ruby:outstanding%20data][未偿付的数据]]，从被关闭的一端发送到另一端，然后关闭两端的连接，最后丢弃掉任何还[[ruby:undelivered][未交付的]]的数据。
 
 #+BEGIN_QUOTE
 Proxy authentication might be used to establish the authority to create a tunnel. For example,
@@ -4329,11 +4332,13 @@ See [[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][Section 10]] of [RFC7230].
 HTTP/1.1 uses many of the constructs defined for the Internet Message Format [[[https://tools.ietf.org/html/rfc5322][RFC5322]]] and the Multipurpose Internet Mail Extensions (MIME) [[[https://tools.ietf.org/html/rfc2045][RFC2045]]] to allow a message body to be transmitted in an open variety of representations and with extensible header fields. However, RFC 2045 is focused only on email; applications of HTTP have many characteristics that differ from email; hence, HTTP has features that differ from MIME. These differences were carefully chosen to optimize performance over binary connections, to allow greater freedom in the use of new media types, to make date comparisons easier, and to acknowledge the practice of some early HTTP servers and clients.
 #+END_QUOTE
 
-HTTP/1.1 使用了许多由[[ruby:Internet%20Message%20Format][互联网消息格式]]【[[https://tools.ietf.org/html/rfc5322][RFC5322]]】以及[[ruby:Multipurpose%20Internet%20Mail%20Extensions][多用途互联网邮件扩展]]（MIME）【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】所定义的结构来让消息体可以以一种开放的多种多样的表示形式以及具有可扩展的头字段的方式来传输。然而，RFC 2045 只专注于电子邮件，而 HTTP 的应用程序有许多不同于电子邮件的特性，因此，HTTP 有不同于 MIME 的特性。这些不同都经过精心设计来优化二进制连接的性能。
+HTTP/1.1 使用了许多由[[ruby:Internet%20Message%20Format][互联网消息格式]]【[[https://tools.ietf.org/html/rfc5322][RFC5322]]】以及[[ruby:Multipurpose%20Internet%20Mail%20Extensions][多用途互联网邮件扩展]]（MIME）【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】所定义的结构来让消息体可以以一种开放的多种多样的表示形式以及具有可扩展的头字段的方式来传输。然而，RFC 2045 只专注于电子邮件，而 HTTP 的应用程序有许多不同于电子邮件的特性，因此，HTTP 有不同于 MIME 的特性。这些不同都经过精心设计来优化二进制连接的性能，允许更加自由地使用新的媒体类型，使日期对比更加容易，以及承认早期某些 HTTP 服务器和客户端的实践成果。
 
 #+BEGIN_QUOTE
 This appendix describes specific areas where HTTP differs from MIME. Proxies and gateways to and from strict MIME environments need to be aware of these differences and provide the appropriate conversions where necessary.
 #+END_QUOTE
+
+本附录描述了与 HTTP 与 MIME 所不同的具体地方。来自或去向严格的 MIME 环境的代理和网关需要意识到这些不同点，以及在必要的地方提供合适的[[ruby:conversions][转换]]。
 
 ** A.1. MIME-VERSION
 :PROPERTIES:
@@ -4341,50 +4346,72 @@ This appendix describes specific areas where HTTP differs from MIME. Proxies and
 :END:
 
 #+BEGIN_QUOTE
-HTTP is not a MIME-compliant protocol. However, messages can include a single MIME-Version header field to indicate what version of the MIME protocol was used to construct the message. Use of the MIME-Version header field indicates that the message is in full conformance with the MIME protocol (as defined in [RFC2045]). Senders are responsible for ensuring full conformance (where possible) when exporting HTTP messages to strict MIME environments.
+HTTP is not a MIME-compliant protocol. However, messages can include a single =MIME-Version= header field to indicate what version of the MIME protocol was used to construct the message. Use of the =MIME-Version= header field indicates that the message is in full conformance with the MIME protocol (as defined in [[[https://tools.ietf.org/html/rfc2045][RFC2045]]]). Senders are responsible for ensuring full conformance (where possible) when exporting HTTP messages to strict MIME environments.
 #+END_QUOTE
 
-** A.2. Conversion to Canonical Form
+HTTP 并不是一种兼容 MIME 的协议。但是，消息可以包含一个 =MIME-Version= 头字段来表明：这个消息使用的是 MIME 协议的哪一个版本来构建的。=MIME-Version= 头字段的使用表明：这个消息是与 MIME 协议完全一致的（正如【[[https://tools.ietf.org/html/rfc2045][RFC2045]]】所描述的）。当将 HTTP 消息导出到严格的 MIME 环境中的时候，发送端有责任确保完全符合（在可能的地方）MIME 规范。
 
-#+BEGIN_QUOTE
-MIME requires that an Internet mail body part be converted to canonical form prior to being transferred, as described in Section 4 of [RFC2049]. Section 3.1.1.3 of this document describes the forms allowed for subtypes of the "text" media type when transmitted over HTTP. [RFC2046] requires that content with a type of "text" represent line breaks as CRLF and forbids the use of CR or LF outside of line break sequences. HTTP allows CRLF, bare CR, and bare LF to indicate a line break within text content.
-#+END_QUOTE
+** A.2. 转换为规范形式 / Conversion to Canonical Form
 
 #+BEGIN_QUOTE
-A proxy or gateway from HTTP to a strict MIME environment ought to translate all line breaks within the text media types described in Section 3.1.1.3 of this document to the RFC 2049 canonical form of CRLF. Note, however, this might be complicated by the presence of a Content-Encoding and by the fact that HTTP allows the use of some charsets that do not use octets 13 and 10 to represent CR and LF, respectively.
+MIME requires that an Internet mail body part be converted to canonical form prior to being transferred, as described in [[https://tools.ietf.org/html/rfc2049#section-4][Section 4]] of [RFC2049]. [[https://tools.ietf.org/html/rfc2049#section-4][Section 3.1.1.3]] of this document describes the forms allowed for subtypes of the "text" media type when transmitted over HTTP. [RFC2046] requires that content with a type of "text" represent line breaks as =CRLF= and forbids the use of =CR= or =LF= outside of line break sequences. HTTP allows =CRLF=, bare =CR=, and bare =LF= to indicate a line break within text content.
 #+END_QUOTE
+
+MIME 要求互联网邮件的[[ruby:body%20part][正文部分]]在传输之前转换为[[ruby:canonical%20form][规范的形式]]，如[[https://tools.ietf.org/html/rfc2049#section-4][【RFC2049】章节 4]] 所述。本文档的[[id:53225373-279e-407b-b1ed-39b881e8b6e5][章节 3.1.1.3]] 描述了 "text" 媒体类型的子类型在 HTTP 上传输时所允许的形式。【RFC2046】要求带有 "text" 类型的内容使用 =CRLF= 来表示[[ruby:line%20breaks][换行符]]并禁止在换行符字符序列以外的地方单独使用 =CR= 或者 =LF=。而 HTTP 则允许在文本内容里以 =CRLF=、单纯的 =CR= 以及单纯的 =LF= 来表示一个换行符。
+
+#+BEGIN_QUOTE
+A proxy or gateway from HTTP to a strict MIME environment ought to translate all line breaks within the text media types described in [[id:53225373-279e-407b-b1ed-39b881e8b6e5][Section 3.1.1.3]] of this document to the RFC 2049 canonical form of =CRLF=. Note, however, this might be complicated by the presence of a =Content-Encoding= and by the fact that HTTP allows the use of some charsets that do not use octets 13 and 10 to represent =CR= and =LF=, respectively.
+#+END_QUOTE
+
+从 HTTP 去到严格的 MIME 环境的代理和网关应该将本文档[[id:53225373-279e-407b-b1ed-39b881e8b6e5][章节 3.1.1.3]] 所描述的 "text" 媒体类型以内的所有换行符[[ruby:translate][翻译]]为 RFC 2049 的 =CRLF= 规范形式。要注意，=Content-Encoding= 的出现，以及 HTTP 允许使用某些不使用字节 13 和 10 来分别表示 =CR= 和 =LF= 字符集这个事实，可能会导致这种翻译工作非常复杂。
 
 #+BEGIN_QUOTE
 Conversion will break any cryptographic checksums applied to the original content unless the original content is already in canonical form. Therefore, the canonical form is recommended for any content that uses such checksums in HTTP.
 #+END_QUOTE
 
-** A.3. Conversion of Date Formats
+除非在转换前的原始内容已经是以[[ruby:canonical%20form][规范的形式]]存在，否则，这种转换会破坏所有应用到原始内容的[[ruby:cryptographic%20checksums][密码校验和]]。因此，推荐在 HTTP 中有使用这种[[ruby:checksums][校验和]]的所有内容都以规范的形式存在。
+
+** A.3. 日期格式的转换 / Conversion of Date Formats
 
 #+BEGIN_QUOTE
-HTTP/1.1 uses a restricted set of date formats (Section 7.1.1.1) to simplify the process of date comparison. Proxies and gateways from other protocols ought to ensure that any Date header field present in a message conforms to one of the HTTP/1.1 formats and rewrite the date if necessary.
+HTTP/1.1 uses a restricted set of date formats ([[id:2091e4af-684f-4511-aaa1-8094dc7dcb21][Section 7.1.1.1]]) to simplify the process of date comparison. Proxies and gateways from other protocols ought to ensure that any =Date= header field present in a message conforms to one of the HTTP/1.1 formats and rewrite the date if necessary.
 #+END_QUOTE
 
-** A.4. Conversion of Content-Encoding
+HTTP/1.1 使用受限的日期格式集（[[id:2091e4af-684f-4511-aaa1-8094dc7dcb21][章节 7.1.1.1]]）来简化[[ruby:date%20comparison][日期对比]]的处理。来自其他协议的代理以及网关应该确保任何 =Date= 头字段以符合 HTTP/1.1 格式的其中一种形式来出现，并且在必要的情况下重写这个日期。
 
 #+BEGIN_QUOTE
-MIME does not include any concept equivalent to HTTP/1.1's Content-Encoding header field. Since this acts as a modifier on the media type, proxies and gateways from HTTP to MIME-compliant protocols ought to either change the value of the Content-Type header field or decode the representation before forwarding the message. (Some experimental applications of Content-Type for Internet mail have used a media-type parameter of ";conversions=<content-coding>" to perform a function equivalent to Content-Encoding. However, this parameter is not part of the MIME standards).
+译注：HTTP/1.1 共兼容三种日期格式，其中两种已经淘汰，见[[id:2091e4af-684f-4511-aaa1-8094dc7dcb21][章节 7.1.1.1]]。
 #+END_QUOTE
 
-** A.5. Conversion of Content-Transfer-Encoding
+** A.4. Content-Encoding 的转换 / Conversion of Content-Encoding
 
 #+BEGIN_QUOTE
-HTTP does not use the Content-Transfer-Encoding field of MIME. Proxies and gateways from MIME-compliant protocols to HTTP need to remove any Content-Transfer-Encoding prior to delivering the response message to an HTTP client.
+MIME does not include any concept equivalent to HTTP/1.1's =Content-Encoding= header field. Since this acts as a modifier on the media type, proxies and gateways from HTTP to MIME-compliant protocols ought to either change the value of the =Content-Type= header field or decode the representation before forwarding the message. (Some experimental applications of =Content-Type= for Internet mail have used a =media-type= parameter of ";conversions=<content-coding>" to perform a function equivalent to =Content-Encoding=. However, this parameter is not part of the MIME standards).
 #+END_QUOTE
+
+MIME 并没有包含与 HTTP/1.1 的 =Content-Encoding= 头字段等价的任何概念。因为这样起到修改媒体类型的作用了，来自 HTTP 去向符合 MIME 规范的协议的代理以及网关应该在转发这个消息之前改变 =Content-Type= 头字段的值，或者[[ruby:decode][解码]]它的[[ruby:representation][表示形式]]（某些对互联网邮件增加 =Content-Type= 功能的实验性应用程序使用了一个值为 ";conversions=<content-coding>" 的 =media-type= 参数来提供与 =Content-Encoding= 等价的功能。但是，这个参数并不是 MIME 标准的一部分）。
+
+** A.5. Content-Transfer-Encoding 的转换 / Conversion of Content-Transfer-Encoding
 
 #+BEGIN_QUOTE
-Proxies and gateways from HTTP to MIME-compliant protocols are responsible for ensuring that the message is in the correct format and encoding for safe transport on that protocol, where "safe transport" is defined by the limitations of the protocol being used. Such a proxy or gateway ought to transform and label the data with an appropriate Content-Transfer-Encoding if doing so will improve the likelihood of safe transport over the destination protocol.
+HTTP does not use the =Content-Transfer-Encoding= field of MIME. Proxies and gateways from MIME-compliant protocols to HTTP need to remove any =Content-Transfer-Encoding= prior to delivering the response message to an HTTP client.
 #+END_QUOTE
 
-** A.6. MHTML and Line Length Limitations
+HTTP 并没有使用 MIME 的 =Content-Transfer-Encoding= 字段。来从符合 MIME 规范的协议去向 HTTP 的代理以及网关需要在交付这个响应消息到 HTTP 客户端之前，移除任何 =Content-Transfer-Encoding=。 
 
 #+BEGIN_QUOTE
-HTTP implementations that share code with MHTML [RFC2557] implementations need to be aware of MIME line length limitations. Since HTTP does not have this limitation, HTTP does not fold long lines. MHTML messages being transported by HTTP follow all conventions of MHTML, including line length limitations and folding, canonicalization, etc., since HTTP transfers message-bodies as payload and, aside from the "multipart/byteranges" type (Appendix A of [RFC7233]), does not interpret the content or any MIME header lines that might be contained therein.
+Proxies and gateways from HTTP to MIME-compliant protocols are responsible for ensuring that the message is in the correct format and encoding for safe transport on that protocol, where "safe transport" is defined by the limitations of the protocol being used. Such a proxy or gateway ought to transform and label the data with an appropriate =Content-Transfer-Encoding= if doing so will improve the likelihood of safe transport over the destination protocol.
 #+END_QUOTE
+
+来自 HTTP 去向符合 MIME 规范的协议的代理以及网关有责任确保这个消息是以[[ruby:safe%20transport][安全传输]]在那种协议上所需的正确的[[ruby:format%20and%20encoding][格式和编码]]。其中“安全传输”是由所使用的协议的限制来定义的。这种代理和网关应该使用一个适合的 =Content-Transfer-Encoding= 来转换以及标识这份数据，如果这样做会提高在[[ruby:destination%20protocol][目的地协议]]上的安全传输的可能性的话。
+
+** A.6. MHTML 以及行长度限制 / MHTML and Line Length Limitations
+
+#+BEGIN_QUOTE
+HTTP implementations that share code with MHTML [[[https://tools.ietf.org/html/rfc2557][RFC2557]]] implementations need to be aware of MIME line length limitations. Since HTTP does not have this limitation, HTTP does not fold long lines. MHTML messages being transported by HTTP follow all conventions of MHTML, including line length limitations and folding, canonicalization, etc., since HTTP transfers message-bodies as payload and, aside from the "multipart/byteranges" type ([[id:d0f2a428-d1ab-49fd-9ac2-531946ecac25][Appendix A]] of [RFC7233]), does not interpret the content or any MIME header lines that might be contained therein.
+#+END_QUOTE
+
+与 MHTML【[[https://tools.ietf.org/html/rfc2557][RFC2557]]】[[ruby:implementations][实现]]共享代码的 HTTP 的实现，需要意识到 MIME 的对[[ruby:line%20length%20limitations][行长度的限制]]。因为 HTTP 并没有这种限制，因此 HTTP 并不会将很长的行进行[[ruby:fold][折叠]]。由 HTTP 所传输的 MHTML 消息依照 MHTML 的所有约定，包括：行长度限制和行折叠、规范化等，因为 HTTP 将[[ruby:message-bodies][消息体]]作为[[ruby:payload][有效载荷]]来传输，而且除了 "multipart/byteranges" 类型（[[id:d0f2a428-d1ab-49fd-9ac2-531946ecac25][【RFC7233】附录 A]]）以外，并不会解释它里边的内容或者任何 MIME 的头部行。
 
 * B. 相对 RFC 2616 的变化 / Changes from RFC 2616
 :PROPERTIES:
