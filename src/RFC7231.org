@@ -58,7 +58,7 @@ This document may contain material from IETF Documents or IETF Contributions pub
 Each Hypertext Transfer Protocol (HTTP) message is either a request or a response. A server listens on a connection for a request, parses each message received, interprets the message semantics in relation to the identified request target, and responds to that request with one or more response messages. A client constructs request messages to communicate specific intentions, examines received responses to see if the intentions were carried out, and determines how to interpret the results. This document defines HTTP/1.1 request and response semantics in terms of the architecture defined in [RFC7230].
 #+END_QUOTE
 
-每一个超文本传输协议（HTTP）消息不是一个请求就是一个响应。服务器监听某个连接的请求，[[ruby:parse][解析]]其接收到的每个消息，[[ruby:interpret][解释]]消息内关于请求目标的语义，最后使用一个或多个响应消息来回应该请求。客户端构建请求消息来传达特定的意图，检查接收到的响应来观察其意图是否得到贯彻执行，并确定如何去[[ruby:interpret][解释]]该结果。本文档依据[[file:RFC7230.org][【RFC7230】]]所定义的架构，定义了 HTTP/1.1 请求和响应的语义。
+每一个超文本传输协议（HTTP）消息不是一个请求就是一个响应。服务器监听某个连接的请求，[[ruby:parse][解析]]其接收到的每个消息，[[ruby:interpret][解释]]消息内关于请求目标的语义，最后使用一个或多个响应消息来回应该请求。客户端构建请求消息来传达特定的意图，检查接收到的响应来观察其意图是否得到贯彻执行，并确定如何去[[ruby:interpret][解释]]该结果。本文档依据[[file:RFC7230.org][【RFC7230】]]所定义的架构，来定义 HTTP/1.1 请求和响应的语义。
 
 #+BEGIN_QUOTE
 HTTP provides a uniform interface for interacting with a resource ([[id:304453f4-a250-4f73-b82c-2825a0bda464][Section 2]]), regardless of its type, nature, or implementation, via the manipulation and transfer of representations ([[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][Section 3]]).
@@ -697,7 +697,7 @@ This specification defines two patterns of content negotiation that can be made 
 Note that, in all cases, HTTP is not aware of the resource semantics. The consistency with which an origin server responds to requests, over time and over the varying dimensions of content negotiation, and thus the "sameness" of a resource's observed representations over time, is determined entirely by whatever entity or algorithm selects or generates those responses. HTTP pays no attention to the man behind the curtain.
 #+END_QUOTE
 
-需要注意的是，不管什么情况下，HTTP 都不知道资源的语义。源服务器响应给请求所遵循的一致性，随着时间和内容协商的不同维度的变化，因然一个资源所观察到的各个[[ruby:representations][表示形式]]随着时间所表现出的“相同性”，是完全取决于实体还是算法，选择还是生成了什么响应。HTTP 并不在意幕后的人物。
+需要注意的是，不管什么情况下，HTTP 都不知道资源的语义。源服务器响应给请求所遵循的一致性，随着时间和内容协商的不同维度的变化，因而一个资源所观察到的各个[[ruby:representations][表示形式]]随着时间所表现出的“相同性”，是完全取决于实体还是算法，选择还是生成了什么响应。HTTP 并不在意幕后的人物。
 
 *** 3.4.1. 主动型协商 / Proactive Negotiation
 :PROPERTIES:
@@ -4196,7 +4196,7 @@ Similar considerations apply to request data when it is stored and later process
 Clients are often privy to large amounts of personal information, including both information provided by the user to interact with resources (e.g., the user's name, location, mail address, passwords, encryption keys, etc.) and information about the user's browsing activity over time (e.g., history, bookmarks, etc.). Implementations need to prevent unintentional disclosure of personal information.
 #+END_QUOTE
 
-客户端通常会知道大量的个人信息，包括用户所提供的用于与资源进行交互的信息（比如，用户的名称、位置、邮件地址、密码、加密密钥等）以及用户长期的浏览活动相关的信息（比如，历史记录、收藏夹等）。实现需要阻止个人信息的意外泄漏。
+客户端通常会知道大量的个人信息，包括用户所提供的用于与资源进行交互的信息（比如，用户的名称、位置、邮件地址、密码、加密密钥等）以及用户长久以来的浏览活动相关的信息（比如，历史记录、收藏夹等）。实现需要阻止个人信息的意外泄漏。
 
 ** 9.4. URLs 敏感信息的泄露 / Disclosure of Sensitive Information in URLs
 :PROPERTIES:
@@ -4252,7 +4252,7 @@ Proxies that serve as a portal through a network firewall ought to take special 
 Browser fingerprinting is a set of techniques for identifying a specific user agent over time through its unique set of characteristics. These characteristics might include information related to its TCP behavior, feature capabilities, and scripting environment, though of particular interest here is the set of unique characteristics that might be communicated via HTTP. Fingerprinting is considered a privacy concern because it enables tracking of a user agent's behavior over time without the corresponding controls that the user might have over other forms of data collection (e.g., cookies). Many general-purpose user agents (i.e., Web browsers) have taken steps to reduce their fingerprints.
 #+END_QUOTE
 
-浏览器指纹识别是一系列的技术以通过用户代理所特有的一组[[ruby:characteristics][特征]]，长时间内识别一个具体用户代理。这些特征可能包含它的 TCP 行为、[[ruby:feature%20capabilities][特色功能]]、以及[[ruby:scripting%20environment][脚本环境]]等相关信息，不过这里特别感兴趣的是这一组经由 HTTP 来传达的唯一特征。指纹识别被认为是一种隐私问题，因为它启用了对一个用户代理的行为长时间的跟踪，对比于其他用户能够控制的数据收集的方式（比如，cookies）来说，用户无法左右指纹识别。许多通用的用户代理（也就是说，网页浏览器）已采取措施来减少它们的指纹识别。
+浏览器指纹识别是一系列的技术以通过用户代理所特有的一组[[ruby:characteristics][特征]]，长久地具体的用户代理进行识别。这些特征可能包含它的 TCP 行为、[[ruby:feature%20capabilities][特色功能]]、以及[[ruby:scripting%20environment][脚本环境]]等相关信息，不过这里特别感兴趣的是这一组经由 HTTP 来传达的唯一特征。指纹识别被认为是一种隐私问题，因为它启用了对一个用户代理的行为长时间的跟踪，对比于其他用户能够控制的数据收集的方式（比如，cookies）来说，用户无法左右指纹识别。许多通用的用户代理（也就是说，网页浏览器）已采取措施来减少它们的指纹识别。
 
 #+BEGIN_QUOTE
 There are a number of request header fields that might reveal information to servers that is sufficiently unique to enable fingerprinting. The =From= header field is the most obvious, though it is expected that =From= will only be sent when self-identification is desired by the user. Likewise, =Cookie= header fields are deliberately designed to enable re-identification, so fingerprinting concerns only apply to situations where cookies are disabled or restricted by the user agent's configuration.

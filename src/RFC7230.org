@@ -97,7 +97,7 @@ This HTTP/1.1 specification obsoletes [[https://tools.ietf.org/html/rfc2616][RFC
 HTTP is a generic interface protocol for information systems. It is designed to hide the details of how a service is implemented by presenting a uniform interface to clients that is independent of the types of resources provided. Likewise, servers do not need to be aware of each client's purpose: an HTTP request can be considered in isolation rather than being associated with a specific type of client or a predetermined sequence of application steps. The result is a protocol that can be used effectively in many different contexts and for which implementations can evolve independently over time.
 #+END_QUOTE
 
-HTTP 是一种用于信息系统的通用接口协议。它的设计思想是通过向客户端呈现一种独立于[[ruby:service][服务]]自身所提供的资源类型的统一接口，来隐藏这个服务的实现细节。同样，服务器并不需要知道每一个客户端的目的，这是因为可以认为所有 HTTP 请求都是孤立的，而不是与一种特定的客户端类型、或者一连串预先定义好的应用步骤相关联。这样的设计造就了一个能够被有效用于多种不同场景，以及各种[[ruby:implementations][实现]]能够相互独立发展的协议。
+HTTP 是一种用于信息系统的通用接口协议。它的设计思想是通过向客户端呈现一种独立于[[ruby:service][服务]]自身所提供的资源类型的统一接口，来隐藏这个服务的实现细节。同样，服务器并不需要知道每一个客户端的目的，这是因为可以认为所有 HTTP 请求都是孤立的，而不是与一种特定的客户端类型、或者一连串预先定义好的应用步骤相关联。这样的设计造就了一个能够被有效用于多种不同场景，以及各种[[ruby:implementations][实现]]能够独立而长久地获得发展的协议。
 
 #+BEGIN_QUOTE
 HTTP is also designed for use as an intermediation protocol for translating communication to and from non-HTTP information systems. HTTP proxies and gateways can provide access to alternative information services by translating their diverse protocols into a hypertext format that can be viewed and manipulated by clients in the same way as HTTP services.
@@ -160,7 +160,7 @@ HTTP was created for the World Wide Web (WWW) architecture and has evolved over 
 used to define HTTP.
 #+END_QUOTE
 
-HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支持世界范围内的超文系统的可扩展性。用于定义 HTTP 的术语和句法反映了这一体系结构的方方面面。
+HTTP 是为万维网（WWW）而创立的，并且长久以来的发展支撑起世界范围内超文系统对可扩展性的需要。用于定义 HTTP 的术语和句法反映了这一体系结构的方方面面。
 
 ** 2.1. 客户端/服务器消息传递 (Client/Server Messaging)
 #+BEGIN_QUOTE
@@ -3393,7 +3393,7 @@ The "https" scheme can be used to identify resources that require a confidential
 A server is in the position to save personal data about a user's requests over time, which might identify their reading patterns or subjects of interest. In particular, log information gathered at an intermediary often contains a history of user agent interaction, across a multitude of sites, that can be traced to individual users.
 #+END_QUOTE
 
-服务器应该将用户的请求的某些个人信息一直处在保护的状态中，这是由于借由这些信息可以鉴定他们的读取模式或者兴趣订阅。实际上，聚集在中间人里的日志信息通常会包含用户代理与众多网站之间的交互历史，同样可能会被追踪到个人用户。
+服务器应该将用户的请求的某些个人信息随时处在保护的状态中，这是由于借由这些信息可以鉴定他们的读取模式或者兴趣订阅。实际上，聚集在中间人里的日志信息通常会包含用户代理与众多网站之间的交互历史，同样可能会被追踪到个人用户。
 
 #+BEGIN_QUOTE
 HTTP log information is confidential in nature; its handling is often constrained by laws and regulations. Log information needs to be securely stored and appropriate guidelines followed for its analysis. Anonymization of personal information within individual entries helps, but it is generally not sufficient to prevent real log traces from being re-identified based on correlation with other access characteristics. As such, access traces that are keyed to a specific client are unsafe to publish even if the key is pseudonymous.
