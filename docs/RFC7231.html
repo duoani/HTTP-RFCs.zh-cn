@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-03 Mon 19:18 -->
+<!-- 2018-12-05 Wed 09:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -636,17 +636,17 @@ for the JavaScript code in this tag.
 <li><a href="#orgc9f7ec8">A. HTTP 与 MIME 的区别 / Defferences between HTTP and MIME</a>
 <ul>
 <li><a href="#org5e69c70">A.1. MIME-VERSION</a></li>
-<li><a href="#org6beafbd">A.2. Conversion to Canonical Form</a></li>
-<li><a href="#org372beac">A.3. Conversion of Date Formats</a></li>
-<li><a href="#org6064441">A.4. Conversion of Content-Encoding</a></li>
-<li><a href="#org6eb57d2">A.5. Conversion of Content-Transfer-Encoding</a></li>
-<li><a href="#orgbad58ce">A.6. MHTML and Line Length Limitations</a></li>
+<li><a href="#orgfcbe71e">A.2. 转换为规范形式 / Conversion to Canonical Form</a></li>
+<li><a href="#org3a72312">A.3. 日期格式的转换 / Conversion of Date Formats</a></li>
+<li><a href="#org684498e">A.4. Content-Encoding 的转换 / Conversion of Content-Encoding</a></li>
+<li><a href="#org8ed6424">A.5. Content-Transfer-Encoding 的转换 / Conversion of Content-Transfer-Encoding</a></li>
+<li><a href="#orgb0aa9ff">A.6. MHTML 以及行长度限制 / MHTML and Line Length Limitations</a></li>
 </ul>
 </li>
 <li><a href="#org9b37d9f">B. 相对 RFC 2616 的变化 / Changes from RFC 2616</a></li>
 <li><a href="#orgc3125d2">C. 引入的 ABNF 规则 / Imported ABNF</a></li>
 <li><a href="#org19b465a">D. ABNF 规则集合 Collected ABNF</a></li>
-<li><a href="#org91aa32b">Index</a></li>
+<li><a href="#orgdb373cf">索引 / Index</a></li>
 <li><a href="#org40e7e5d">Author' Addresses</a></li>
 </ul>
 </div>
@@ -1106,7 +1106,7 @@ Charset names ought to be registered in the IANA "Character Sets" registry (<a h
 </div>
 
 <div id="outline-container-orgff3c076" class="outline-5">
-<h5 id="orgff3c076">3.1.1.3. 规范化和文本缺省 / Canonicalization and Text Defaults</h5>
+<h5 id="orgff3c076"><a id="ID-53225373-279e-407b-b1ed-39b881e8b6e5"></a>3.1.1.3. 规范化和文本缺省 / Canonicalization and Text Defaults</h5>
 <div class="outline-text-5" id="text-orgff3c076">
 <blockquote>
 <p>
@@ -1794,7 +1794,7 @@ When responses convey payload information, whether indicating a success or an er
 </blockquote>
 
 <p>
-响应在运载有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器。也就是说，在所有可用的<ruby>表示形式<rt>representations</rt></ruby>中，究竟响应哪一种<ruby>表示形式<rt>representation</rt></ruby>才是最合适的。出于上述原因，HTTP 提供了<ruby>内容协商<rt>content negotiation</rt></ruby>的机制。
+响应在运载有效载荷信息的时候，无论是表达成功还是失败，源服务器通常会有多种不同的方式来表示该信息，例如，以不同的格式、语言或编码来表示。同样，不同的用户或用户代理可能有不同的能力、特性或者偏好，会影响到源服务器。也就是说，在所有可用的<ruby>表示形式<rt>representations</rt></ruby>中，究竟响应哪一种<ruby>表示形式<rt>representation</rt></ruby>才是最合适交付的。出于上述原因，HTTP 提供了<ruby>内容协商<rt>content negotiation</rt></ruby>的机制。
 </p>
 
 <blockquote>
@@ -2785,7 +2785,7 @@ A tunnel is closed when a tunnel intermediary detects that either side has close
 </blockquote>
 
 <p>
-当<ruby>隧道中间人<rt>tunnel intermediary</rt></ruby>检测到隧道两端都已关闭了连接的时候，隧道被关闭。中间人 <b>必须</b> 尝试发送所有<ruby>未偿付的数据<rt>outstanding data</rt></ruby>，从被关闭的一端发送到另一端，然后关闭两端的连接，最后丢弃掉任何还<ruby>未投递出去<rt>undelivered</rt></ruby>的数据。
+当<ruby>隧道中间人<rt>tunnel intermediary</rt></ruby>检测到隧道两端都已关闭了连接的时候，隧道被关闭。中间人 <b>必须</b> 尝试发送所有<ruby>未偿付的数据<rt>outstanding data</rt></ruby>，从被关闭的一端发送到另一端，然后关闭两端的连接，最后丢弃掉任何还<ruby>未交付的<rt>undelivered</rt></ruby>的数据。
 </p>
 
 <blockquote>
@@ -5946,7 +5946,7 @@ Although each response header field has a defined meaning, in general, the preci
 </div>
 
 <div id="outline-container-org4701af2" class="outline-3">
-<h3 id="org4701af2">7.1. 控制数据 / Control Data</h3>
+<h3 id="org4701af2"><a id="ID-7e63ac99-1421-4f2d-8b6f-f7a1bda440ef"></a>7.1. 控制数据 / Control Data</h3>
 <div class="outline-text-3" id="text-org4701af2">
 <blockquote>
 <p>
@@ -6017,9 +6017,10 @@ Response header fields can supply control data that supplements the status code,
 </div>
 
 <div id="outline-container-org17ba3e1" class="outline-4">
-<h4 id="org17ba3e1">7.1.1. 创始日期 / Origination Date</h4>
+<h4 id="org17ba3e1"><a id="ID-55ac9b0f-69ca-4634-9720-f681878f259f"></a>7.1.1. 创始日期 / Origination Date</h4>
 <div class="outline-text-4" id="text-org17ba3e1">
 </div>
+
 <div id="outline-container-orga646986" class="outline-5">
 <h5 id="orga646986"><a id="ID-2091e4af-684f-4511-aaa1-8094dc7dcb21"></a>7.1.1.1. 日期时间格式 / Date/Time Formats</h5>
 <div class="outline-text-5" id="text-orga646986">
@@ -7573,7 +7574,7 @@ The status code registry has been updated with the registrations below:
 </div>
 
 <div id="outline-container-org3d9574e" class="outline-3">
-<h3 id="org3d9574e">8.3. 头字段登记表 / Header Field Registry</h3>
+<h3 id="org3d9574e"><a id="ID-2a7badc9-653a-47f1-a373-aea21c2f2f84"></a>8.3. 头字段登记表 / Header Field Registry</h3>
 <div class="outline-text-3" id="text-org3d9574e">
 <blockquote>
 <p>
@@ -8386,7 +8387,7 @@ HTTP/1.1 uses many of the constructs defined for the Internet Message Format [<a
 </blockquote>
 
 <p>
-HTTP/1.1 使用了许多由<ruby>互联网消息格式<rt>Internet Message Format</rt></ruby>【<a href="https://tools.ietf.org/html/rfc5322">RFC5322</a>】以及<ruby>多用途互联网邮件扩展<rt>Multipurpose Internet Mail Extensions</rt></ruby>（MIME）【<a href="https://tools.ietf.org/html/rfc2045">RFC2045</a>】所定义的结构来让消息体可以以一种开放的多种多样的表示形式以及具有可扩展的头字段的方式来传输。然而，RFC 2045 只专注于电子邮件，而 HTTP 的应用程序有许多不同于电子邮件的特性，因此，HTTP 有不同于 MIME 的特性。这些不同都经过精心设计来优化二进制连接的性能。
+HTTP/1.1 使用了许多由<ruby>互联网消息格式<rt>Internet Message Format</rt></ruby>【<a href="https://tools.ietf.org/html/rfc5322">RFC5322</a>】以及<ruby>多用途互联网邮件扩展<rt>Multipurpose Internet Mail Extensions</rt></ruby>（MIME）【<a href="https://tools.ietf.org/html/rfc2045">RFC2045</a>】所定义的结构来让消息体可以以一种开放的多种多样的表示形式以及具有可扩展的头字段的方式来传输。然而，RFC 2045 只专注于电子邮件，而 HTTP 的应用程序有许多不同于电子邮件的特性，因此，HTTP 有不同于 MIME 的特性。这些不同都经过精心设计来优化二进制连接的性能，允许更加自由地使用新的媒体类型，使日期对比更加容易，以及承认早期某些 HTTP 服务器和客户端的实践成果。
 </p>
 
 <blockquote>
@@ -8394,6 +8395,10 @@ HTTP/1.1 使用了许多由<ruby>互联网消息格式<rt>Internet Message Forma
 This appendix describes specific areas where HTTP differs from MIME. Proxies and gateways to and from strict MIME environments need to be aware of these differences and provide the appropriate conversions where necessary.
 </p>
 </blockquote>
+
+<p>
+本附录描述了与 HTTP 与 MIME 所不同的具体地方。来自或去向严格的 MIME 环境的代理和网关需要意识到这些不同点，以及在必要的地方提供合适的<ruby>转换<rt>conversions</rt></ruby>。
+</p>
 </div>
 
 <div id="outline-container-org5e69c70" class="outline-3">
@@ -8401,82 +8406,124 @@ This appendix describes specific areas where HTTP differs from MIME. Proxies and
 <div class="outline-text-3" id="text-org5e69c70">
 <blockquote>
 <p>
-HTTP is not a MIME-compliant protocol. However, messages can include a single MIME-Version header field to indicate what version of the MIME protocol was used to construct the message. Use of the MIME-Version header field indicates that the message is in full conformance with the MIME protocol (as defined in [RFC2045]). Senders are responsible for ensuring full conformance (where possible) when exporting HTTP messages to strict MIME environments.
-</p>
-</blockquote>
-</div>
-</div>
-
-<div id="outline-container-org6beafbd" class="outline-3">
-<h3 id="org6beafbd">A.2. Conversion to Canonical Form</h3>
-<div class="outline-text-3" id="text-org6beafbd">
-<blockquote>
-<p>
-MIME requires that an Internet mail body part be converted to canonical form prior to being transferred, as described in Section 4 of [RFC2049]. Section 3.1.1.3 of this document describes the forms allowed for subtypes of the "text" media type when transmitted over HTTP. [RFC2046] requires that content with a type of "text" represent line breaks as CRLF and forbids the use of CR or LF outside of line break sequences. HTTP allows CRLF, bare CR, and bare LF to indicate a line break within text content.
+HTTP is not a MIME-compliant protocol. However, messages can include a single <code>MIME-Version</code> header field to indicate what version of the MIME protocol was used to construct the message. Use of the <code>MIME-Version</code> header field indicates that the message is in full conformance with the MIME protocol (as defined in [<a href="https://tools.ietf.org/html/rfc2045">RFC2045</a>]). Senders are responsible for ensuring full conformance (where possible) when exporting HTTP messages to strict MIME environments.
 </p>
 </blockquote>
 
+<p>
+HTTP 并不是一种兼容 MIME 的协议。但是，消息可以包含一个 <code>MIME-Version</code> 头字段来表明：这个消息使用的是 MIME 协议的哪一个版本来构建的。<code>MIME-Version</code> 头字段的使用表明：这个消息是与 MIME 协议完全一致的（正如【<a href="https://tools.ietf.org/html/rfc2045">RFC2045</a>】所描述的）。当将 HTTP 消息导出到严格的 MIME 环境中的时候，发送端有责任确保完全符合（在可能的地方）MIME 规范。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfcbe71e" class="outline-3">
+<h3 id="orgfcbe71e">A.2. 转换为规范形式 / Conversion to Canonical Form</h3>
+<div class="outline-text-3" id="text-orgfcbe71e">
 <blockquote>
 <p>
-A proxy or gateway from HTTP to a strict MIME environment ought to translate all line breaks within the text media types described in Section 3.1.1.3 of this document to the RFC 2049 canonical form of CRLF. Note, however, this might be complicated by the presence of a Content-Encoding and by the fact that HTTP allows the use of some charsets that do not use octets 13 and 10 to represent CR and LF, respectively.
+MIME requires that an Internet mail body part be converted to canonical form prior to being transferred, as described in <a href="https://tools.ietf.org/html/rfc2049#section-4">Section 4</a> of [RFC2049]. <a href="https://tools.ietf.org/html/rfc2049#section-4">Section 3.1.1.3</a> of this document describes the forms allowed for subtypes of the "text" media type when transmitted over HTTP. [RFC2046] requires that content with a type of "text" represent line breaks as <code>CRLF</code> and forbids the use of <code>CR</code> or <code>LF</code> outside of line break sequences. HTTP allows <code>CRLF</code>, bare <code>CR</code>, and bare <code>LF</code> to indicate a line break within text content.
 </p>
 </blockquote>
+
+<p>
+MIME 要求互联网邮件的<ruby>正文部分<rt>body part</rt></ruby>在传输之前转换为<ruby>规范的形式<rt>canonical form</rt></ruby>，如<a href="https://tools.ietf.org/html/rfc2049#section-4">【RFC2049】章节 4</a> 所述。本文档的<a href="#orgff3c076">章节 3.1.1.3</a> 描述了 "text" 媒体类型的子类型在 HTTP 上传输时所允许的形式。【RFC2046】要求带有 "text" 类型的内容使用 <code>CRLF</code> 来表示<ruby>换行符<rt>line breaks</rt></ruby>并禁止在换行符字符序列以外的地方单独使用 <code>CR</code> 或者 <code>LF</code>。而 HTTP 则允许在文本内容里以 <code>CRLF</code>、单纯的 <code>CR</code> 以及单纯的 <code>LF</code> 来表示一个换行符。
+</p>
+
+<blockquote>
+<p>
+A proxy or gateway from HTTP to a strict MIME environment ought to translate all line breaks within the text media types described in <a href="#orgff3c076">Section 3.1.1.3</a> of this document to the RFC 2049 canonical form of <code>CRLF</code>. Note, however, this might be complicated by the presence of a <code>Content-Encoding</code> and by the fact that HTTP allows the use of some charsets that do not use octets 13 and 10 to represent <code>CR</code> and <code>LF</code>, respectively.
+</p>
+</blockquote>
+
+<p>
+从 HTTP 去到严格的 MIME 环境的代理和网关应该将本文档<a href="#orgff3c076">章节 3.1.1.3</a> 所描述的 "text" 媒体类型以内的所有换行符<ruby>翻译<rt>translate</rt></ruby>为 RFC 2049 的 <code>CRLF</code> 规范形式。要注意，<code>Content-Encoding</code> 的出现，以及 HTTP 允许使用某些不使用字节 13 和 10 来分别表示 <code>CR</code> 和 <code>LF</code> 字符集这个事实，可能会导致这种翻译工作非常复杂。
+</p>
 
 <blockquote>
 <p>
 Conversion will break any cryptographic checksums applied to the original content unless the original content is already in canonical form. Therefore, the canonical form is recommended for any content that uses such checksums in HTTP.
 </p>
 </blockquote>
+
+<p>
+除非在转换前的原始内容已经是以<ruby>规范的形式<rt>canonical form</rt></ruby>存在，否则，这种转换会破坏所有应用到原始内容的<ruby>密码校验和<rt>cryptographic checksums</rt></ruby>。因此，推荐在 HTTP 中有使用这种<ruby>校验和<rt>checksums</rt></ruby>的所有内容都以规范的形式存在。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org372beac" class="outline-3">
-<h3 id="org372beac">A.3. Conversion of Date Formats</h3>
-<div class="outline-text-3" id="text-org372beac">
+<div id="outline-container-org3a72312" class="outline-3">
+<h3 id="org3a72312">A.3. 日期格式的转换 / Conversion of Date Formats</h3>
+<div class="outline-text-3" id="text-org3a72312">
 <blockquote>
 <p>
-HTTP/1.1 uses a restricted set of date formats (Section 7.1.1.1) to simplify the process of date comparison. Proxies and gateways from other protocols ought to ensure that any Date header field present in a message conforms to one of the HTTP/1.1 formats and rewrite the date if necessary.
+HTTP/1.1 uses a restricted set of date formats (<a href="#orga646986">Section 7.1.1.1</a>) to simplify the process of date comparison. Proxies and gateways from other protocols ought to ensure that any <code>Date</code> header field present in a message conforms to one of the HTTP/1.1 formats and rewrite the date if necessary.
+</p>
+</blockquote>
+
+<p>
+HTTP/1.1 使用受限的日期格式集（<a href="#orga646986">章节 7.1.1.1</a>）来简化<ruby>日期对比<rt>date comparison</rt></ruby>的处理。来自其他协议的代理以及网关应该确保任何 <code>Date</code> 头字段以符合 HTTP/1.1 格式的其中一种形式来出现，并且在必要的情况下重写这个日期。
+</p>
+
+<blockquote>
+<p>
+译注：HTTP/1.1 共兼容三种日期格式，其中两种已经淘汰，见<a href="#orga646986">章节 7.1.1.1</a>。
 </p>
 </blockquote>
 </div>
 </div>
 
-<div id="outline-container-org6064441" class="outline-3">
-<h3 id="org6064441">A.4. Conversion of Content-Encoding</h3>
-<div class="outline-text-3" id="text-org6064441">
+<div id="outline-container-org684498e" class="outline-3">
+<h3 id="org684498e">A.4. Content-Encoding 的转换 / Conversion of Content-Encoding</h3>
+<div class="outline-text-3" id="text-org684498e">
 <blockquote>
 <p>
-MIME does not include any concept equivalent to HTTP/1.1's Content-Encoding header field. Since this acts as a modifier on the media type, proxies and gateways from HTTP to MIME-compliant protocols ought to either change the value of the Content-Type header field or decode the representation before forwarding the message. (Some experimental applications of Content-Type for Internet mail have used a media-type parameter of ";conversions=&lt;content-coding&gt;" to perform a function equivalent to Content-Encoding. However, this parameter is not part of the MIME standards).
-</p>
-</blockquote>
-</div>
-</div>
-
-<div id="outline-container-org6eb57d2" class="outline-3">
-<h3 id="org6eb57d2">A.5. Conversion of Content-Transfer-Encoding</h3>
-<div class="outline-text-3" id="text-org6eb57d2">
-<blockquote>
-<p>
-HTTP does not use the Content-Transfer-Encoding field of MIME. Proxies and gateways from MIME-compliant protocols to HTTP need to remove any Content-Transfer-Encoding prior to delivering the response message to an HTTP client.
+MIME does not include any concept equivalent to HTTP/1.1's <code>Content-Encoding</code> header field. Since this acts as a modifier on the media type, proxies and gateways from HTTP to MIME-compliant protocols ought to either change the value of the <code>Content-Type</code> header field or decode the representation before forwarding the message. (Some experimental applications of <code>Content-Type</code> for Internet mail have used a <code>media-type</code> parameter of ";conversions=&lt;content-coding&gt;" to perform a function equivalent to <code>Content-Encoding</code>. However, this parameter is not part of the MIME standards).
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-Proxies and gateways from HTTP to MIME-compliant protocols are responsible for ensuring that the message is in the correct format and encoding for safe transport on that protocol, where "safe transport" is defined by the limitations of the protocol being used. Such a proxy or gateway ought to transform and label the data with an appropriate Content-Transfer-Encoding if doing so will improve the likelihood of safe transport over the destination protocol.
+MIME 并没有包含与 HTTP/1.1 的 <code>Content-Encoding</code> 头字段等价的任何概念。因为这样起到修改媒体类型的作用了，来自 HTTP 去向符合 MIME 规范的协议的代理以及网关应该在转发这个消息之前改变 <code>Content-Type</code> 头字段的值，或者<ruby>解码<rt>decode</rt></ruby>它的<ruby>表示形式<rt>representation</rt></ruby>（某些对互联网邮件增加 <code>Content-Type</code> 功能的实验性应用程序使用了一个值为 ";conversions=&lt;content-coding&gt;" 的 <code>media-type</code> 参数来提供与 <code>Content-Encoding</code> 等价的功能。但是，这个参数并不是 MIME 标准的一部分）。
 </p>
-</blockquote>
 </div>
 </div>
 
-<div id="outline-container-orgbad58ce" class="outline-3">
-<h3 id="orgbad58ce">A.6. MHTML and Line Length Limitations</h3>
-<div class="outline-text-3" id="text-orgbad58ce">
+<div id="outline-container-org8ed6424" class="outline-3">
+<h3 id="org8ed6424">A.5. Content-Transfer-Encoding 的转换 / Conversion of Content-Transfer-Encoding</h3>
+<div class="outline-text-3" id="text-org8ed6424">
 <blockquote>
 <p>
-HTTP implementations that share code with MHTML [RFC2557] implementations need to be aware of MIME line length limitations. Since HTTP does not have this limitation, HTTP does not fold long lines. MHTML messages being transported by HTTP follow all conventions of MHTML, including line length limitations and folding, canonicalization, etc., since HTTP transfers message-bodies as payload and, aside from the "multipart/byteranges" type (Appendix A of [RFC7233]), does not interpret the content or any MIME header lines that might be contained therein.
+HTTP does not use the <code>Content-Transfer-Encoding</code> field of MIME. Proxies and gateways from MIME-compliant protocols to HTTP need to remove any <code>Content-Transfer-Encoding</code> prior to delivering the response message to an HTTP client.
 </p>
 </blockquote>
+
+<p>
+HTTP 并没有使用 MIME 的 <code>Content-Transfer-Encoding</code> 字段。来从符合 MIME 规范的协议去向 HTTP 的代理以及网关需要在交付这个响应消息到 HTTP 客户端之前，移除任何 <code>Content-Transfer-Encoding</code>。 
+</p>
+
+<blockquote>
+<p>
+Proxies and gateways from HTTP to MIME-compliant protocols are responsible for ensuring that the message is in the correct format and encoding for safe transport on that protocol, where "safe transport" is defined by the limitations of the protocol being used. Such a proxy or gateway ought to transform and label the data with an appropriate <code>Content-Transfer-Encoding</code> if doing so will improve the likelihood of safe transport over the destination protocol.
+</p>
+</blockquote>
+
+<p>
+来自 HTTP 去向符合 MIME 规范的协议的代理以及网关有责任确保这个消息是以<ruby>安全传输<rt>safe transport</rt></ruby>在那种协议上所需的正确的<ruby>格式和编码<rt>format and encoding</rt></ruby>。其中“安全传输”是由所使用的协议的限制来定义的。这种代理和网关应该使用一个适合的 <code>Content-Transfer-Encoding</code> 来转换以及标识这份数据，如果这样做会提高在<ruby>目的地协议<rt>destination protocol</rt></ruby>上的安全传输的可能性的话。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb0aa9ff" class="outline-3">
+<h3 id="orgb0aa9ff">A.6. MHTML 以及行长度限制 / MHTML and Line Length Limitations</h3>
+<div class="outline-text-3" id="text-orgb0aa9ff">
+<blockquote>
+<p>
+HTTP implementations that share code with MHTML [<a href="https://tools.ietf.org/html/rfc2557">RFC2557</a>] implementations need to be aware of MIME line length limitations. Since HTTP does not have this limitation, HTTP does not fold long lines. MHTML messages being transported by HTTP follow all conventions of MHTML, including line length limitations and folding, canonicalization, etc., since HTTP transfers message-bodies as payload and, aside from the "multipart/byteranges" type (<a href="RFC7233.html#ID-d0f2a428-d1ab-49fd-9ac2-531946ecac25">Appendix A</a> of [RFC7233]), does not interpret the content or any MIME header lines that might be contained therein.
+</p>
+</blockquote>
+
+<p>
+与 MHTML【<a href="https://tools.ietf.org/html/rfc2557">RFC2557</a>】<ruby>实现<rt>implementations</rt></ruby>共享代码的 HTTP 的实现，需要意识到 MIME 的对<ruby>行长度的限制<rt>line length limitations</rt></ruby>。因为 HTTP 并没有这种限制，因此 HTTP 并不会将很长的行进行<ruby>折叠<rt>fold</rt></ruby>。由 HTTP 所传输的 MHTML 消息依照 MHTML 的所有约定，包括：行长度限制和行折叠、规范化等，因为 HTTP 将<ruby>消息体<rt>message-bodies</rt></ruby>作为<ruby>有效载荷<rt>payload</rt></ruby>来传输，而且除了 "multipart/byteranges" 类型（<a href="RFC7233.html#ID-d0f2a428-d1ab-49fd-9ac2-531946ecac25">【RFC7233】附录 A</a>）以外，并不会解释它里边的内容或者任何 MIME 的头部行。
+</p>
 </div>
 </div>
 </div>
@@ -8490,173 +8537,295 @@ The primary changes in this revision have been editorial in nature: extracting t
 </p>
 </blockquote>
 
+<p>
+本次修订最大的变化是对文档进行实质上的编辑：提取了消息句法以及将 HTTP 语义划分为独立的文档——核心功能、条件请求、部分请求、缓存、以及认证。<ruby>语言的一致性<rt>language conformance</rt></ruby>已经修订为清晰的目标要求，而且<ruby>术语<rt>terminology</rt></ruby>已经改进为区分来自表示形式的有效载荷以及来自资源的表示形式。
+</p>
+
 <blockquote>
 <p>
-A new requirement has been added that semantics embedded in a URI be disabled when those semantics are inconsistent with the request method, since this is a common cause of interoperability failure. (Section 2)
+A new requirement has been added that semantics embedded in a URI be disabled when those semantics are inconsistent with the request method, since this is a common cause of interoperability failure. (<a href="#orgec9ef27">Section 2</a>)
+</p>
+</blockquote>
+
+<p>
+新增了一个要求：禁止将语义内嵌进一个 URI 里，如果这些语义与请求方法不一致的话，因为这是<ruby>互操作错误<rt>interoperability failure</rt></ruby>的常见原因。（<a href="#orgec9ef27">章节 2</a>）
+</p>
+
+<blockquote>
+<p>
+An algorithm has been added for determining if a payload is associated with a specific identifier. (<a href="#orge266174">Section 3.1.4.1</a>)
+</p>
+</blockquote>
+
+<p>
+新增了一种算法来确定一个有效载荷是否与一个特定的标识符相关联。（<a href="#orge266174">章节 3.1.4.1</a>）
+</p>
+
+<blockquote>
+<p>
+The default charset of ISO-8859-1 for text media types has been removed; the default is now whatever the media type definition says. Likewise, special treatment of ISO-8859-1 has been removed from the <code>Accept-Charset</code> header field. (<a href="#orgff3c076">Section 3.1.1.3</a> and <a href="#org5919b30">Section 5.3.3</a>)
+</p>
+</blockquote>
+
+<p>
+移除了 "text" 媒体类型默认的字符集是 ISO-8859-1 的要求；现在默认是对应的媒体类型的定义所说的那种。同样，从 <code>Accept-Charset</code> 头字段里移除了 ISO-8859-1 的特殊处理。（<a href="#orgff3c076">章节 3.1.1.3</a> 和<a href="#org5919b30">章节 5.3.3</a>）
+</p>
+
+<blockquote>
+<p>
+The definition of <code>Content-Location</code> has been changed to no longer affect the base URI for resolving relative URI references, due to poor implementation support and the undesirable effect of potentially breaking relative links in content-negotiated resources. (<a href="#org6190703">Section 3.1.4.2</a>)
+</p>
+</blockquote>
+
+<p>
+<code>Content-Location</code> 的定义已经改变为不再影响<ruby>解释<rt>resolving</rt></ruby>相对 URI 引用时的基 URI，这是因为只有很少实现支持以及具有可能破坏<ruby>内容协商的资源<rt>content-negotiated resources</rt></ruby>里的相对链接的不良影响。（<a href="#org6190703">章节 3.1.4.2</a>）
+</p>
+
+<blockquote>
+<p>
+To be consistent with the method-neutral parsing algorithm of [RFC7230], the definition of GET has been relaxed so that requests can have a body, even though a body has no meaning for GET. (<a href="#org479e86d">Section 4.3.1</a>)
+</p>
+</blockquote>
+
+<p>
+为了与方法符合【RFC7230】的<ruby>方法中性<rt>method-neutral</rt></ruby>的<ruby>解析算法<rt>parsing algorithm</rt></ruby>，已经放宽了 GET 的定义以便这种请求同样可以带有一个消息体，即使这种消息体对于 GET 没有任何意义。（<a href="#org479e86d">章节 4.3.1</a>）
+</p>
+
+<blockquote>
+<p>
+Servers are no longer required to handle all <code>Content-*</code> header fields and use of <code>Content-Range</code> has been explicitly banned in PUT requests. (<a href="#org2e14fb1">Section 4.3.4</a>)
+</p>
+</blockquote>
+
+<p>
+不再要求服务器去处理所有 <code>Content-*</code> 头字段，并且已经明确禁止在 PUT 请求里使用 <code>Content-Range</code> 头字段。（<a href="#org2e14fb1">章节 4.3.4</a>）
+</p>
+
+<blockquote>
+<p>
+Definition of the CONNECT method has been moved from [<a href="https://tools.ietf.org/html/rfc2817">RFC2817</a>] to this specification. (<a href="#org3103350">Section 4.3.6</a>)
+</p>
+</blockquote>
+
+<p>
+CONNECT 方法的定义已从【<a href="https://tools.ietf.org/html/rfc2817">RFC2817</a>】移到本文档里。（<a href="#org3103350">章节 4.3.6</a>）
+</p>
+
+<blockquote>
+<p>
+The OPTIONS and TRACE request methods have been defined as being safe. (<a href="#org85c174f">Section 4.3.7</a> and <a href="#orgda48f54">Section 4.3.8</a>)
+</p>
+</blockquote>
+
+<p>
+OPTIONS 和 TRACE 请求方法已经定义为是安全的。（<a href="#org85c174f">章节 4.3.7</a> 和<a href="#orgda48f54">章节 4.3.8</a>）
+</p>
+
+<blockquote>
+<p>
+The <code>Expect</code> header field's extension mechanism has been removed due to widely-deployed broken implementations. (<a href="#org83b8384">Section 5.1.1</a>)
+</p>
+</blockquote>
+
+<p>
+移除了 <code>Expect</code> 头字段的扩展机制，因为已广泛部署的实现都不支持这种机制。（<a href="#org83b8384">章节 5.1.1</a>）
+</p>
+
+<blockquote>
+<p>
+The <code>Max-Forwards</code> header field has been restricted to the OPTIONS and TRACE methods; previously, extension methods could have used it as well. (<a href="#org57067e1">Section 5.1.2</a>)
+</p>
+</blockquote>
+
+<p>
+限定了 <code>Max-Forwards</code> 头字段仅能使用在 OPTIONS 以及 TRACE 方法中，之前是扩展方法同样可以使用它。（<a href="#org57067e1">章节 5.1.2</a>）
+</p>
+
+<blockquote>
+<p>
+The "about:blank" URI has been suggested as a value for the <code>Referer</code> header field when no referring URI is applicable, which distinguishes that case from others where the <code>Referer</code> field is not sent or has been removed. (<a href="#orga439d85">Section 5.5.2</a>)
+</p>
+</blockquote>
+
+<p>
+当没有引用任何适用的 URI 的时候，已经建议将 "about:blank" 这个 URI 作为 <code>Referer</code> 头字段的值，以区别没有发送或已经移除 <code>Referer</code> 头字段的情况。（<a href="#orga439d85">章节 5.5.2</a>）
+</p>
+
+<blockquote>
+<p>
+The following status codes are now cacheable (that is, they can be stored and reused by a cache without explicit freshness information present): <code>204</code>, <code>404</code>, <code>405</code>, <code>414</code>, <code>501</code>. (<a href="#org1463c22">Section 6</a>)
+</p>
+</blockquote>
+
+<p>
+现在，以下状态码是可缓存的（也就是说，在不用显式出现<ruby>新鲜度信息<rt>freshness information</rt></ruby>的情况下，它们能够被缓存服务器所存储和复用）：<code>204</code>、<code>404</code>、<code>405</code>、<code>414</code>、<code>501</code>。（<a href="#org1463c22">章节 6</a>）
+</p>
+
+<blockquote>
+<p>
+The <code>201 (Created)</code> status description has been changed to allow for the possibility that more than one resource has been created. (<a href="#org71047ad">Section 6.3.2</a>)
+</p>
+</blockquote>
+
+<p>
+<code>201 (Created)</code> 状态码的描述已经改变为考虑到超过一个资源被创建的可能性。（<a href="#org71047ad">章节 6.3.2</a>）
+</p>
+
+<blockquote>
+<p>
+The definition of <code>203 (Non-Authoritative Information)</code> has been broadened to include cases of payload transformations as well. (<a href="#org4562efd">Section 6.3.4</a>)
+</p>
+</blockquote>
+
+<p>
+<code>203 (Non-Authoritative Information)</code> 状态码的定义已经<ruby>拓宽<rt>broadened</rt></ruby>为也包括<ruby>有效载荷转换<rt>payload transformations</rt></ruby>的情况。（<a href="#org4562efd">章节 6.3.4</a>）
+</p>
+
+<blockquote>
+<p>
+The set of request methods that are safe to automatically redirect is no longer closed; user agents are able to make that determination based upon the request method semantics. The redirect status codes <code>301</code>, <code>302</code>, and <code>307</code> no longer have normative requirements on response payloads and user interaction. (<a href="#orgdf0960e">Section 6.4</a>)
+</p>
+</blockquote>
+
+<p>
+不再封闭哪些请求方法才可以安全地用于自动重定向，用户代理有能力依据请求方法的语义去做决定。重定向状态 <code>301</code>、<code>302</code>、以及 <code>307</code> 不再对<ruby>响应有效载荷<rt>response payloads</rt></ruby>以及<ruby>用户交互<rt>user interaction</rt></ruby>有规范要求。（<a href="#orgdf0960e">章节 6.4</a>）
+</p>
+
+<blockquote>
+<p>
+The status codes <code>301</code> and <code>302</code> have been changed to allow user agents to rewrite the method from POST to GET. (<a href="#org5db647a">Sections 6.4.2</a> and <a href="#orge4daa3b">6.4.3</a>)
+</p>
+</blockquote>
+
+<p>
+状态码 <code>301</code> 以及 <code>302</code> 已经改变为允许用户代理将 POST 方法重写为 GET。（<a href="#org5db647a">章节 6.4.2</a> 和<a href="#orge4daa3b">章节 6.4.3</a>）
+</p>
+
+<blockquote>
+<p>
+The description of the <code>303 (See Other)</code> status code has been changed to allow it to be cached if explicit freshness information is given, and a specific definition has been added for a <code>303</code> response to GET. (<a href="#org07eea47">Section 6.4.4</a>)
+</p>
+</blockquote>
+
+<p>
+<code>303 (See Other)</code> 状态码的描述已经改变为允许它被缓存，如果给定了显式的新鲜度信息的话，并且对于回应给 GET 的 <code>303</code> 响应添加了一个具体的定义。（<a href="#org07eea47">章节 6.4.4</a>）
+</p>
+
+<blockquote>
+<p>
+The <code>305 (Use Proxy)</code> status code has been deprecated due to security concerns regarding in-band configuration of a proxy. (<a href="#orgf42d58d">Section 6.4.5</a>)
+</p>
+</blockquote>
+
+<p>
+<code>305 (Use Proxy)</code> 状态码已经被废弃，这是由于代理的<ruby>带内<rt>in-band</rt></ruby>配置相关的安全问题。（<a href="#orgf42d58d">章节 6.4.5</a>）
+</p>
+
+<blockquote>
+<p>
+The <code>400 (Bad Request)</code> status code has been relaxed so that it isn't limited to syntax errors. (<a href="#orgdfa5d2b">Section 6.5.1</a>)
+</p>
+</blockquote>
+
+<p>
+<code>400 (Bad Request)</code> 状态码已经放宽了定义以便它不用限制为<ruby>句法错误<rt>syntax errors</rt></ruby>。（<a href="#orgdfa5d2b">章节 6.5.1</a>）
+</p>
+
+<blockquote>
+<p>
+The <code>426 (Upgrade Required)</code> status code has been incorporated from [<a href="https://tools.ietf.org/html/rfc2817">RFC2817</a>]. (<a href="#orgb0c8615">Section 6.5.15</a>)
+</p>
+</blockquote>
+
+<p>
+<code>426 (Upgrade Required)</code> 状态码已从【<a href="https://tools.ietf.org/html/rfc2817">RFC2817</a>】合并。（<a href="#orgb0c8615">章节 6.5.15</a>）
+</p>
+
+<blockquote>
+<p>
+The target of requirements on <code>HTTP-date</code> and the <code>Date</code> header field have been reduced to those systems generating the date, rather than all systems sending a date. (<a href="#org17ba3e1">Section 7.1.1</a>)
+</p>
+</blockquote>
+
+<p>
+对于 <code>HTTP-date</code> 以及头字段 <code>Date</code> 所要求的目标已经降低为那些系统所<ruby>生成<rt>generating</rt></ruby>的日期，而不是所有系统所<ruby>发送<rt>sending</rt></ruby>的日期。（<a href="#org17ba3e1">章节 7.1.1</a>）
+</p>
+
+<blockquote>
+<p>
+译注：对于 generate 与 sned 之间的区别，见<a href="RFC7230.html#ID-A0441F72-9799-4667-9477-1E05885946A1">【RFC7230】章节 2.5</a>。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-An algorithm has been added for determining if a payload is associated with a specific identifier. (Section 3.1.4.1)
+The syntax of the <code>Location</code> header field has been changed to allow all URI references, including relative references and fragments, along with some clarifications as to when use of fragments would not be appropriate. (<a href="#orgad9277e">Section 7.1.2</a>)
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The default charset of ISO-8859-1 for text media types has been removed; the default is now whatever the media type definition says. Likewise, special treatment of ISO-8859-1 has been removed from the Accept-Charset header field. (Section 3.1.1.3 and Section 5.3.3)
+<code>Location</code> 头字段的句法已经改变为允许所有 URI 引用，包括相对引用以及 <code>fragment</code>。还加上了一些澄清说明关于什么时候使用 <code>fragment</code> 是不合适的。（<a href="#orgad9277e">章节 7.1.2</a>）
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The definition of Content-Location has been changed to no longer affect the base URI for resolving relative URI references, due to poor implementation support and the undesirable effect of potentially breaking relative links in content-negotiated resources. (Section 3.1.4.2)
+<code>Allow</code> has been reclassified as a response header field, removing the option to specify it in a PUT request. Requirements relating to the content of <code>Allow</code> have been relaxed; correspondingly, clients are not required to always trust its value. (<a href="#orgbfaeb5b">Section 7.4.1</a>)
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-To be consistent with the method-neutral parsing algorithm of [RFC7230], the definition of GET has been relaxed so that requests can have a body, even though a body has no meaning for GET. (Section 4.3.1)
+<code>Allow</code> 已经重组为一个响应头字段，在 PUT 请求中移除了指定 <code>Allow</code> 的选项。放宽了 <code>Allow</code> 的内容的相关要求，作为对应，不再要求客户端总是相信它的值。（<a href="#orgbfaeb5b">章节 7.4.1</a>）
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-Servers are no longer required to handle all Content-* header fields and use of Content-Range has been explicitly banned in PUT requests. (Section 4.3.4)
+A Method Registry has been defined. (<a href="#orgc54a2b7">Section 8.1</a>)
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-Definition of the CONNECT method has been moved from [RFC2817] to this specification. (Section 4.3.6)
+定义了一个方法登记表。（<a href="#orgc54a2b7">章节 8.1</a>）
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The OPTIONS and TRACE request methods have been defined as being safe. (Section 4.3.7 and Section 4.3.8)
+The Status Code Registry has been redefined by this specification; previously, it was defined in <a href="https://tools.ietf.org/html/rfc2817#section-7.1">Section 7.1</a> of [RFC2817]. (<a href="#org71363a7">Section 8.2</a>)
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The Expect header field's extension mechanism has been removed due to widely-deployed broken implementations. (Section 5.1.1)
+本规范重新定义了状态码登记表，之前的登记表是定义在<a href="https://tools.ietf.org/html/rfc2817#section-7.1">【RFC2817】章节 7.1</a> 中。（<a href="#org71363a7">章节 8.2</a>）
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The Max-Forwards header field has been restricted to the OPTIONS and TRACE methods; previously, extension methods could have used it as well. (Section 5.1.2)
+Registration of content codings has been changed to require IETF Review. (<a href="#orgfba0346">Section 8.4</a>)
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The "about:blank" URI has been suggested as a value for the Referer header field when no referring URI is applicable, which distinguishes that case from others where the Referer field is not sent or has been removed. (Section 5.5.2)
+内容编码的登记已经改变为要求 IETF 复审。（<a href="#orgfba0346">章节 8.4</a>）
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The following status codes are now cacheable (that is, they can be stored and reused by a cache without explicit freshness information present): 204, 404, 405, 414, 501. (Section 6)
+The <code>Content-Disposition</code> header field has been removed since it is now defined by [<a href="https://tools.ietf.org/html/rfc6266">RFC6266</a>].
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The 201 (Created) status description has been changed to allow for the possibility that more than one resource has been created. (Section 6.3.2)
+移除了 <code>Content-Disposition</code> 头字段，因为现在它由【<a href="https://tools.ietf.org/html/rfc6266">RFC6266</a>】所定义。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The definition of 203 (Non-Authoritative Information) has been broadened to include cases of payload transformations as well. (Section 6.3.4)
+The <code>Content-MD5</code> header field has been removed because it was inconsistently implemented with respect to partial responses.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The set of request methods that are safe to automatically redirect is no longer closed; user agents are able to make that determination based upon the request method semantics. The redirect status codes 301, 302, and 307 no longer have normative requirements on response payloads and user interaction. (Section 6.4)
+移除了 <code>Content-MD5</code> 头字段，因为它与<ruby>部分响应<rt>partial responses</rt></ruby>的实现不一致。
 </p>
-</blockquote>
-
-<blockquote>
-<p>
-The status codes 301 and 302 have been changed to allow user agents to rewrite the method from POST to GET. (Sections 6.4.2 and 6.4.3)
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-The description of the 303 (See Other) status code has been changed to allow it to be cached if explicit freshness information is given, and a specific definition has been added for a 303 response to GET. (Section 6.4.4)
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-The 305 (Use Proxy) status code has been deprecated due to security concerns regarding in-band configuration of a proxy. (Section 6.4.5)
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-The 400 (Bad Request) status code has been relaxed so that it isn't limited to syntax errors. (Section 6.5.1)
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-The 426 (Upgrade Required) status code has been incorporated from [RFC2817]. (Section 6.5.15)
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-The target of requirements on HTTP-date and the Date header field have been reduced to those systems generating the date, rather than all systems sending a date. (Section 7.1.1)
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-The syntax of the Location header field has been changed to allow all URI references, including relative references and fragments, along with some clarifications as to when use of fragments would not be appropriate. (Section 7.1.2)
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-Allow has been reclassified as a response header field, removing the option to specify it in a PUT request. Requirements relating to the content of Allow have been relaxed; correspondingly, clients are not required to always trust its value. (Section 7.4.1)
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-A Method Registry has been defined. (Section 8.1)
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-The Status Code Registry has been redefined by this specification; previously, it was defined in Section 7.1 of [RFC2817]. (Section 8.2)
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-Registration of content codings has been changed to require IETF Review. (Section 8.4)
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-The Content-Disposition header field has been removed since it is now defined by [RFC6266].
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-The Content-MD5 header field has been removed because it was inconsistently implemented with respect to partial responses.
-</p>
-</blockquote>
 </div>
 </div>
 
@@ -8669,11 +8838,23 @@ The following core rules are included by reference, as defined in Appendix B.1 o
 </p>
 </blockquote>
 
+<p>
+本规范引用了以下定义在<a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">【RFC5234】附录 B.1</a> 中的核心规则：<code>ALPHA</code> （字母）、<code>CR</code> （回车符）、<code>CRLF</code> （回车换行符）、<code>CTL</code> （控制字符）、<code>DIGIT</code> （十进制数字 0-9）、<code>DQUOTE</code> （双引号）、<code>HEXDIG</code> （十六进制数字 0-9/A-F/a-f）、<code>HTAB</code> （水平制表符）、<code>LF</code> （换行符）、<code>OCTET</code> （八位组字节）、<code>SP</code> （空格）以及 <code>VCHAR</code> （【USASCII】可见字符）。
+</p>
+
+<p>
+（译注：除非特别说明，本译文所述的“字节”皆为 Octet，而不是 Byte。）
+</p>
+
 <blockquote>
 <p>
-The rules below are defined in [RFC7230]:
+The rules below are defined in [<a href="RFC7230.html">RFC7230</a>]:
 </p>
 </blockquote>
+
+<p>
+以下规则定义在【<a href="RFC7230.html">RFC7230</a>】：
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">BWS           = &lt;BWS, see [RFC7230], Section 3.2.3&gt;
@@ -8696,9 +8877,13 @@ token         = &lt;token, see [RFC7230], Section 3.2.6&gt;
 <div class="outline-text-2" id="text-org19b465a">
 <blockquote>
 <p>
-In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
+In the collected ABNF below, list rules are expanded as per <a href="RFC7230.html#ID-f8234cb5-154d-4daf-82fd-ed54ac75cf8b">Section 1.2</a> of [RFC7230].
 </p>
 </blockquote>
+
+<p>
+下列 ABNF 规则集合中，列表规则是在<a href="RFC7230.html#ID-f8234cb5-154d-4daf-82fd-ed54ac75cf8b">【RFC7230】章节 1.2</a> 所扩充的。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Accept = [ ( "," / ( media-range [ accept-params ] ) ) *( OWS "," [
@@ -8833,9 +9018,9 @@ year = 4DIGIT
 </div>
 </div>
 
-<div id="outline-container-org91aa32b" class="outline-2">
-<h2 id="org91aa32b">Index</h2>
-<div class="outline-text-2" id="text-org91aa32b">
+<div id="outline-container-orgdb373cf" class="outline-2">
+<h2 id="orgdb373cf">索引 / Index</h2>
+<div class="outline-text-2" id="text-orgdb373cf">
 <ul class="org-ul">
 <li>1
 <ul class="org-ul">
@@ -9242,6 +9427,10 @@ Muenster, NW 48155
 Germany
 Email: julian.reschke@greenbytes.de
 URI: http://greenbytes.de/tech/webdav/
+</pre>
+
+<pre class="example">
+阿多（译者）
 </pre>
 </div>
 </div>

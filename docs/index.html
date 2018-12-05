@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-21 Wed 19:12 -->
+<!-- 2018-12-05 Wed 09:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -131,24 +131,58 @@ h1.title {
   width: 100%;
 }
 
+.org-ul,
+.org-ol,
+.org-dl,
+.org-dl > dt,
+.org-dl > dd,
 .outline-2 p,
 .outline-2 blockquote,
-.outline-2 ul,
-.outline-2 ol,
-.outline-2 dl,
 .outline-2 table,
 .outline-2 pre {
   margin-top: 0;
   margin-bottom: 16px;
 }
 
-.outline-2 ul,
-.outline-2 ol {
+.org-ul,
+.org-ol,
+.org-dl {
   padding-left: 2em;
+}
+
+.org-dl > dt {
+  float: left;
+  max-width: 40%;
+  margin-bottom: 3px;
+  margin-right: 2em;
+  font-size: 110%;
+  font-family: Courier New;
+  font-weight: bolder;
+  color: #1c3030;
+  clear: left;
+}
+
+.org-dl > dd {
+  text-align: justify;
+  margin-bottom: 14pt;
+  overflow: hidden;
+  clear: right;
 }
 
 table tbody tr:nth-child(odd){
   background-color: #efefef;
+}
+
+.org-center {
+  text-align: center;
+}
+
+.org-left {
+  text-align: left;
+}
+
+.org-right {
+  text-align: right;
 }
 
 pre,
@@ -189,19 +223,6 @@ blockquote {
 .timestamp {
   font-family: Courier New;
   color: #888888;
-}
-
-dd {
-  text-align: justify;
-  margin-bottom: 14pt;
-}
-
-dt {
-  font-size: 110%;
-  font-family: Courier New;
-  color: #1c3030;
-  padding: 3px;
-  margin-bottom: 3px;
 }
 
 #table-of-contents {
@@ -269,8 +290,11 @@ dt {
   #table-of-contents {
     float: right;
     border: 1px solid #CCC;
-    max-width: 50%;
+    max-width: 75%;
     overflow: auto;
+  }
+  .org-dl > dt {
+    float: none;
   }
 }
 
@@ -370,6 +394,7 @@ for the JavaScript code in this tag.
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><a href="RFC7230.html">RFC7230: HTTP/1.1: Message Syntax and Routing</a></li>
+<li><a href="RFC7231.html">RFC7231: HTTP/1.1: Semantics and Content</a></li>
 </ul>
 </div>
 </div>
@@ -378,7 +403,7 @@ for the JavaScript code in this tag.
 <h2 id="org1a96095"><span class="section-number-2">2</span> 正在翻译的 RFC：</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
-<li><a href="RFC7231.html">RFC7231: HTTP/1.1: Semantics and Content</a></li>
+<li><a href="RFC7232.html">RFC7232: HTTP/1.1: Conditional Requests</a></li>
 </ul>
 </div>
 </div>
@@ -387,7 +412,6 @@ for the JavaScript code in this tag.
 <h2 id="orgb9032c2"><span class="section-number-2">3</span> 计划翻译的 RFC</h2>
 <div class="outline-text-2" id="text-3">
 <ul class="org-ul">
-<li><a href="RFC7232.html">RFC7232: HTTP/1.1: Conditional Requests</a></li>
 <li><a href="RFC7233.html">RFC7233: HTTP/1.1: Range Requests</a></li>
 <li><a href="RFC7234.html">RFC7234: HTTP/1.1: Caching</a></li>
 <li><a href="RFC7235.html">RFC7235: HTTP/1.1: Authentication</a></li>
