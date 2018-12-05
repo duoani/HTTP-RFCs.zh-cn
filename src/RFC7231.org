@@ -83,7 +83,7 @@ This document also defines representation metadata that describe how a payload i
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [[[https://tools.ietf.org/html/rfc2119][RFC2119]]].
 #+END_QUOTE
 
-关键词 *[[ruby:MUST][必须]]*、*[[ruby:MUST%20NOT][禁止]]*、*[[ruby:REQUIRED][要求]]*、*[[ruby:SHALL][必须]]*、*[[ruby:SHALL%20NOT][禁止]]*、*[[ruby:SHOULD][应该]]*、*[[ruby:SHOULD%20NOT][不应当]]*、*[[ruby:RECOMMENDED][推荐]]*、*[[ruby:MAY][可以]]* 和 *[[ruby:OPTIONAL][可选]]* 的意义与【[[https://tools.ietf.org/html/rfc2119][RFC2119]]】一致。
+本文档中的关键词 *[[ruby:MUST][必须]]*、*[[ruby:MUST%20NOT][禁止]]*、*[[ruby:REQUIRED][要求]]*、*[[ruby:SHALL][必须]]*、*[[ruby:SHALL%20NOT][禁止]]*、*[[ruby:SHOULD][应该]]*、*[[ruby:SHOULD%20NOT][不应当]]*、*[[ruby:RECOMMENDED][推荐]]*、*[[ruby:MAY][可以]]* 和 *[[ruby:OPTIONAL][可选]]* 的意义与【[[https://tools.ietf.org/html/rfc2119][RFC2119]]】一致。
 
 #+BEGIN_QUOTE
 Conformance criteria and considerations regarding error handling are defined in Section 2.5 of [RFC7230].
@@ -4605,7 +4605,7 @@ The =Content-MD5= header field has been removed because it was inconsistently im
 
 移除了 =Content-MD5= 头字段，因为它与[[ruby:partial%20responses][部分响应]]的实现不一致。
 
-* C. 引入的 ABNF 规则 / Imported ABNF
+* C. 引进的 ABNF / Imported ABNF
 
 #+BEGIN_QUOTE
 The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), HTAB (horizontal tab), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
@@ -4634,7 +4634,7 @@ The rules below are defined in [[[file:RFC7230.org][RFC7230]]]:
   token         = <token, see [RFC7230], Section 3.2.6>
 #+END_SRC
 
-* D. ABNF 规则集合 Collected ABNF
+* D. ABNF 集合 Collected ABNF
 
 #+BEGIN_QUOTE
 In the collected ABNF below, list rules are expanded as per [[id:f8234cb5-154d-4daf-82fd-ed54ac75cf8b][Section 1.2]] of [RFC7230].

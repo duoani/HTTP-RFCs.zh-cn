@@ -3428,7 +3428,7 @@ See Section 16 of [RFC2616] for additional acknowledgements from prior revisions
 #+END_QUOTE
 
 * 11. 参考资料 / References
-** 11.1. 规范性参考文档 / Normative References
+** 11.1. 规范性参考资料 / Normative References
 - [RFC0793] :: Postel, J., “Transmission Control Protocol”, STD 7, RFC 793, September 1981.
 - [RFC1950] :: Deutsch, L. and J-L. Gailly, “ZLIB Compressed Data Format Specification version 3.3”, RFC 1950, May 1996.
 - [RFC1951] :: Deutsch, P., “DEFLATE Compressed Data Format Specification version 1.3”, RFC 1951, May 1996.
@@ -3443,7 +3443,7 @@ See Section 16 of [RFC2616] for additional acknowledgements from prior revisions
 - [RFC7235] :: Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Authentication”, RFC 7235, June 2014.
 - [USASCII] :: American National Standards Institute, “Coded Character Set -- 7-bit American Standard Code for Information Interchange”, ANSI X3.4, 1986.
 - [Welch] :: Welch, T., “A Technique for High-Performance Data Compression”, IEEE Computer 17(6), June 1984.
-** 11.2. 信息性参考文档 / Informative References
+** 11.2. 信息性参考资料 / Informative References
 - [BCP115] :: Hansen, T., Hardie, T., and L. Masinter, “Guidelines and Registration Procedures for New URI Schemes”, BCP 115, RFC 4395, February 2006.
 - [BCP13] :: Freed, N., Klensin, J., and T. Hansen, “Media Type Specifications and Registration Procedures”, BCP 13, RFC 6838, January 2013.
 - [BCP90] :: Klyne, G., Nottingham, M., and J. Mogul, “Registration Procedures for Message Header Fields”, BCP 90, RFC 3864, September 2004.
@@ -3726,7 +3726,7 @@ Issues with the =Keep-Alive= and =Proxy-Connection= header fields in requests ar
 
 指出了与请求里的 =Keep-Alive= 和 =Proxy-Connection= 头字段相关的问题，以及对于后者的使用完全失去信心。（[[id:C9981FAB-36DD-4AD3-848E-6394465D0BDA][附录 A.1.2]]）
 
-* 附录 B：ABNF 规则集合 / Appendx B. Collected ABNF
+* 附录 B：ABNF 集合 / Appendx B. Collected ABNF
 :PROPERTIES:
 :ID:       8a089adc-ec59-476e-92ed-a59470f939d4
 :END:

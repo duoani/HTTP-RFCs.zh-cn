@@ -31,7 +31,7 @@
   ISSN: 2070-1721                                                June 2014
 #+END_SRC
 
-* Abstract
+* 摘要 / Abstract
 
 #+BEGIN_QUOTE
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document defines HTTP/1.1 conditional requests, including metadata header fields for indicating state changes, request header fields for making preconditions on such state, and rules for constructing the responses to a conditional request when one or more preconditions evaluate to false.
@@ -39,7 +39,7 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol
 
 超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 条件请求，包括：[[ruby:metadata%20header%20fields][元数据头字段]]——用于表明状态的改变、[[ruby:request%20header%20fields][请求头字段]]——用于对这些状态设置前置条件、以及[[ruby:rules][规则]]——用于当一个或多个前置条件取值为否的时候构造响应给条件请求。
 
-* Status of This Memo
+* 备忘状态 / Status of This Memo
 
 #+BEGIN_QUOTE
 This is an Internet Standards Track document.
@@ -67,7 +67,7 @@ This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relatin
 This document may contain material from IETF Documents or IETF Contributions published or made publicly available before November 10, 2008. The person(s) controlling the copyright in some of this material may not have granted the IETF Trust the right to allow modifications of such material outside the IETF Standards Process. Without obtaining an adequate license from the person(s) controlling the copyright in such materials, this document may not be modified outside the IETF Standards Process, and derivative works of it may not be created outside the IETF Standards Process, except to format it for publication as an RFC or to translate it into languages other than English.
 #+END_QUOTE
 
-* 1. Introduction
+* 1. 引言 / Introduction
 
 #+BEGIN_QUOTE
 Conditional requests are HTTP requests [[[file:RFC7231.org][RFC7231]]] that include one or more header fields indicating a precondition to be tested before applying the method semantics to the target resource. This document defines the HTTP/1.1 conditional request mechanisms in terms of the architecture, syntax notation, and conformance criteria defined in [[[file:RFC7230.org][RFC7230]]].
@@ -93,36 +93,46 @@ The conditional request preconditions defined by this specification ([[id:5d8271
 
 由本规范所定义的条件请求的前置条件（[[id:5d82712b-331b-4303-85fc-19b1488af561][章节 3]]）会在应用到接收端的时候进行求值（[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]]），依据它们的优先级顺序（[[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][章节 6]]）。
 
-** 1.1. Conformance and Error Handling
+** 1.1. 一致性和错误处理 / Conformance and Error Handling
 
 #+BEGIN_QUOTE
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [[[https://tools.ietf.org/html/rfc2119][RFC2119]]].
 #+END_QUOTE
+
+本文档中的关键词 *[[ruby:MUST][必须]]*、*[[ruby:MUST%20NOT][禁止]]*、*[[ruby:REQUIRED][要求]]*、*[[ruby:SHALL][必须]]*、*[[ruby:SHALL%20NOT][禁止]]*、*[[ruby:SHOULD][应该]]*、*[[ruby:SHOULD%20NOT][不应当]]*、*[[ruby:RECOMMENDED][推荐]]*、*[[ruby:MAY][可以]]* 和 *[[ruby:OPTIONAL][可选]]* 的意义与【[[https://tools.ietf.org/html/rfc2119][RFC2119]]】一致。
 
 #+BEGIN_QUOTE
-Conformance criteria and considerations regarding error handling are defined in Section 2.5 of [RFC7230].
+Conformance criteria and considerations regarding error handling are defined in [[id:A0441F72-9799-4667-9477-1E05885946A1][Section 2.5]] of [RFC7230].
 #+END_QUOTE
 
-** 1.2. Syntax Notation
+关于错误处理的一致性标准以及注意事项已在[[id:A0441F72-9799-4667-9477-1E05885946A1][【RFC7230】章节 2.5]] 中定义了。
+
+** 1.2. 句法标记 / Syntax Notation
 
 #+BEGIN_QUOTE
-This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7 of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix B describes rules imported from other documents. Appendix C shows the collected grammar with all list operators expanded to standard ABNF notation.
+This specification uses the Augmented Backus-Naur Form (ABNF) notation of [[[https://tools.ietf.org/html/rfc5234][RFC5234]]] with a list extension, defined in [[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][Section 7]] of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). [[id:6076a436-545c-46ed-ab6b-a6a7c31ab308][Appendix B]] describes rules imported from other documents. [[id:263a84c3-9879-4599-b429-05cfdb9bf039][Appendix C]] shows the collected grammar with all list operators expanded to standard ABNF notation.
 #+END_QUOTE
 
-* 2. Validators
+本规范使用了扩展巴科斯范式（ABNF）标记法【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][【RFC7230】章节 7]]），允许使用一个 =#= 操作符（类似于 =*= 操作符，指代“重复”）来定义一种以逗号分隔的列表。[[id:6076a436-545c-46ed-ab6b-a6a7c31ab308][附录 B]] 描述了引进自其他文档的规则。[[id:263a84c3-9879-4599-b429-05cfdb9bf039][附录 C]] 展示了所有已收集的包含列表扩展规则以及标准 ABNF 标记的语法。
+
+* 2. 验证器 / Validators
 
 #+BEGIN_QUOTE
-This specification defines two forms of metadata that are commonly used to observe resource state and test for preconditions: modification dates (Section 2.2) and opaque entity tags (Section 2.3). Additional metadata that reflects resource state has been defined by various extensions of HTTP, such as Web Distributed Authoring and Versioning (WebDAV, [RFC4918]), that are beyond the scope of this specification. A resource metadata value is referred to as a "validator" when it is used within a precondition.
+This specification defines two forms of metadata that are commonly used to observe resource state and test for preconditions: modification dates ([[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][Section 2.2]]) and opaque entity tags ([[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][Section 2.3]]). Additional metadata that reflects resource state has been defined by various extensions of HTTP, such as Web Distributed Authoring and Versioning (WebDAV, [[[https://tools.ietf.org/html/rfc4918][RFC4918]]]), that are beyond the scope of this specification. A resource metadata value is referred to as a "validator" when it is used within a precondition.
 #+END_QUOTE
 
-** 2.1. Weak versus Strong
+本规范定义了元数据的两种形式：[[ruby:modification%20dates][日期修改]]（[[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][章节 2.2]]）和[[ruby:opaque%20entity%20tags][不透明实体标签]]（[[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][章节 2.3]]），它们常用于观察资源状态以及对前置条件进行测试。其他额外的反映资源状态的元数据被定义在各种 HTTP 扩展当中，比如 [[ruby:Web%20Distributed%20Authoring%20and%20Versioning][Web 分布式创作和版本管理]]（WebDAV，【[[https://tools.ietf.org/html/rfc4918][RFC4918]]】），超出了本规范的范畴。[[ruby:resource%20metadata][资源元数据]]的值使用在一个[[ruby:precondition][前置条件]]中的时候，它被称为“[[ruby:validator][验证器]]”。
+
+** 2.1. 弱与强 / Weak versus Strong
 
 #+BEGIN_QUOTE
 Validators come in two flavors: strong or weak. Weak validators are easy to generate but are far less useful for comparisons. Strong validators are ideal for comparisons but can be very difficult (and occasionally impossible) to generate efficiently. Rather than impose that all forms of resource adhere to the same strength of validator, HTTP exposes the type of validator in use and imposes restrictions on when weak validators can be used as preconditions.
 #+END_QUOTE
 
+[[ruby:validator][验证器]]分成两类：强验证和弱验证。[[ruby:weak%20validators][弱验证器]]容易生成，但对于比较来说几乎没有什么用处。[[ruby:strong%20validators][强验证器]]是理想的比较方式，但它很难（有时甚至不可能）高效地生成。与其强制资源的所有形式都附带相同的验证器类型，HTTP 显露出使用中的验证器的类型并对“什么时候弱验证器可以用作前置条件”施加限制。
+
 #+BEGIN_QUOTE
-A "strong validator" is representation metadata that changes value whenever a change occurs to the representation data that would be observable in the payload body of a 200 (OK) response to GET.
+A "strong validator" is representation metadata that changes value whenever a change occurs to the representation data that would be observable in the payload body of a =200 (OK)= response to GET.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -383,7 +393,7 @@ A client:
 - SHOULD send both validators in cache validation requests if both an entity-tag and a Last-Modified value have been provided by the origin server. This allows both HTTP/1.0 and HTTP/1.1 caches to respond appropriately.
 #+END_QUOTE
 
-* 3. Precondition Header Fields
+* 3. 前置条件头字段 / Precondition Header Fields
 :PROPERTIES:
 :ID:       5d82712b-331b-4303-85fc-19b1488af561
 :END:
@@ -591,7 +601,7 @@ The If-Unmodified-Since header field can be ignored by caches and intermediaries
 The "If-Range" header field provides a special conditional request mechanism that is similar to the If-Match and If-Unmodified-Since header fields but that instructs the recipient to ignore the Range header field if the validator doesn't match, resulting in transfer of the new selected representation instead of a 412 (Precondition Failed) response. If-Range is defined in Section 3.2 of [RFC7233].
 #+END_QUOTE
 
-* 4. Status Code Definitions
+* 4. 状态码定义 / Status Code Definitions
   :PROPERTIES:
   :ID:       c983830d-bf6f-4e61-a905-285f070f9d20
   :END:
@@ -629,7 +639,7 @@ A 304 response cannot contain a message-body; it is always terminated by the fir
 The 412 (Precondition Failed) status code indicates that one or more conditions given in the request header fields evaluated to false when tested on the server. This response code allows the client to place preconditions on the current resource state (its current representations and metadata) and, thus, prevent the request method from being applied if the target resource is in an unexpected state.
 #+END_QUOTE
 
-* 5. Evaluation
+* 5. 求值 / Evaluation
 :PROPERTIES:
 :ID:       fce45320-6c1c-4486-a32b-2c553780d785
 :END:
@@ -650,7 +660,7 @@ Conditional request header fields that are defined by extensions to HTTP might p
 Although conditional request header fields are defined as being usable with the HEAD method (to keep HEAD's semantics consistent with those of GET), there is no point in sending a conditional HEAD because a successful response is around the same size as a 304 (Not Modified) response and more useful than a 412 (Precondition Failed) response.
 #+END_QUOTE
 
-* 6. Precedence
+* 6. 优先级 / Precedence
 :PROPERTIES:
 :ID:       a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2
 :END:
@@ -696,8 +706,8 @@ A recipient cache or origin server MUST evaluate the request preconditions defin
 Any extension to HTTP/1.1 that defines additional conditional request header fields ought to define its own expectations regarding the order for evaluating such fields in relation to those defined in this document and other conditionals that might be found in practice.
 #+END_QUOTE
 
-* 7. IANA Considerations
-** 7.1. Status Code Registration
+* 7. IANA 注意事项 / IANA Considerations
+** 7.1. 状态码登记 / Status Code Registration
 
 #+BEGIN_QUOTE
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <http://www.iana.org/assignments/http-status-codes> has been updated with the registrations below:
@@ -708,7 +718,7 @@ The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <http:/
 |   304 | Not Modified        | Section 4.1 |
 |   312 | Precondition Failed | Section 4.2 |
 
-** 7.2. Header Field Registration
+** 7.2. 头字段登记 / Header Field Registration
 
 #+BEGIN_QUOTE
 HTTP header fields are registered within the "Message Headers" registry maintained at <http://www.iana.org/assignments/message-headers/>.
@@ -731,7 +741,7 @@ This document defines the following HTTP header fields, so their associated regi
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 #+END_QUOTE
 
-* 8. Security Considerations
+* 8. 安全注意事项 / Security Considerations
 
 #+BEGIN_QUOTE
 This section is meant to inform developers, information providers, and users of known security concerns specific to the HTTP conditional request mechanisms. More general security considerations are addressed in HTTP "Message Syntax and Routing" [RFC7230] and "Semantics and Content" [RFC7231].
@@ -745,14 +755,14 @@ The validators defined by this specification are not intended to ensure the vali
 An entity-tag can be abused in ways that create privacy risks. For example, a site might deliberately construct a semantically invalid entity-tag that is unique to the user or user agent, send it in a cacheable response with a long freshness time, and then read that entity-tag in later conditional requests as a means of re-identifying that user or user agent. Such an identifying tag would become a persistent identifier for as long as the user agent retained the original cache entry. User agents that cache representations ought to ensure that the cache is cleared or replaced whenever the user performs privacy-maintaining actions, such as clearing stored cookies or changing to a private browsing mode.
 #+END_QUOTE
 
-* 9. Acknowledgments
+* 9. 鸣谢 / Acknowledgments
 
 #+BEGIN_QUOTE
 See Section 10 of [RFC7230].
 #+END_QUOTE
 
-* 10. References
-** 10.1. Normative References
+* 10. 参考资料 / References
+** 10.1. 规范性参考资料 / Normative References
 
 - [RFC2119] :: Bradner, S., “Key words for use in RFCs to Indicate Requirement Levels”, BCP 14, RFC 2119, March 1997.
 - [RFC5234] :: Crocker, D., Ed. and P. Overell, “Augmented BNF for Syntax Specifications: ABNF”, STD 68, RFC 5234, January 2008.
@@ -761,13 +771,13 @@ See Section 10 of [RFC7230].
 - [RFC7233] :: Fielding, R., Ed., Lafon, Y., Ed., and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Range Requests”, RFC 7233, June 2014.
 - [RFC7234] :: Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Caching”, RFC 7234, June 2014.
 
-** 10.2. Informative References
+** 10.2. 信息性参考资料 / Informative References
 
 - [BCP90] :: Klyne, G., Nottingham, M., and J. Mogul, “Registration Procedures for Message Header Fields”, BCP 90, RFC 3864, September 2004.
 - [RFC2616] :: Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, “Hypertext Transfer Protocol -- HTTP/1.1”, RFC 2616, June 1999.
 - [RFC4918] :: Dusseault, L., Ed., “HTTP Extensions for Web Distributed Authoring and Versioning (WebDAV)”, RFC 4918, June 2007.
 
-* Appendix A. Changes from RFC 2616
+* 附录 A：相对 RFC 2616 的变化 / Appendix A. Changes from RFC 2616
 
 #+BEGIN_QUOTE
 The definition of validator weakness has been expanded and clarified. (Section 2.1)
@@ -789,7 +799,10 @@ ETag is defined to provide an entity tag for the selected representation, thereb
 The precedence for evaluation of conditional requests has been defined. (Section 6)
 #+END_QUOTE
 
-* Appendix B. Imported ABNF
+* 附录 B：引进的 ABNF / Appendix B. Imported ABNF
+:PROPERTIES:
+:ID:       6076a436-545c-46ed-ab6b-a6a7c31ab308
+:END:
 
 #+BEGIN_QUOTE
 The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
@@ -812,7 +825,10 @@ The rules below are defined in other parts:
   HTTP-date     = <HTTP-date, see [RFC7231], Section 7.1.1.1>
 #+END_SRC
 
-* Appendix C. Collected ABNF
+* 附录 C：ABNF 集合 / Appendix C. Collected ABNF
+:PROPERTIES:
+:ID:       263a84c3-9879-4599-b429-05cfdb9bf039
+:END:
 
 #+BEGIN_QUOTE
 In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
