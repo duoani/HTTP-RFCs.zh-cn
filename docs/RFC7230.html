@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-05 Wed 15:43 -->
+<!-- 2018-12-05 Wed 18:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -548,8 +548,8 @@ for the JavaScript code in this tag.
 <li><a href="#org49e6e92">10. 鸣谢 / Acknowledgments</a></li>
 <li><a href="#org43a4e9d">11. 参考资料 / References</a>
 <ul>
-<li><a href="#orgf36d151">11.1. 规范性参考文档 / Normative References</a></li>
-<li><a href="#org1ecddc5">11.2. 信息性参考文档 / Informative References</a></li>
+<li><a href="#org57ecc66">11.1. 规范性参考资料 / Normative References</a></li>
+<li><a href="#orgf6d567d">11.2. 信息性参考资料 / Informative References</a></li>
 </ul>
 </li>
 <li><a href="#orge7b6a81">附录 A：HTTP 版本历史 / Appendix A. HTTP Version History</a>
@@ -564,7 +564,7 @@ for the JavaScript code in this tag.
 <li><a href="#org843ff19">A.2. 相对 RFC 2616 的变化 / Changes from RFC 2616</a></li>
 </ul>
 </li>
-<li><a href="#orga2ed479">附录 B：ABNF 规则集合 / Appendx B. Collected ABNF</a></li>
+<li><a href="#org1421e28">附录 B：ABNF 集合 / Appendx B. Collected ABNF</a></li>
 <li><a href="#org5a61982">索引 / Index</a></li>
 <li><a href="#org02ac742">Authors' Addresses</a></li>
 </ul>
@@ -688,7 +688,7 @@ HTTP is a generic interface protocol for information systems. It is designed to 
 </blockquote>
 
 <p>
-HTTP 是一种用于信息系统的通用接口协议。它的设计思想是通过向客户端呈现一种独立于<ruby>服务<rt>service</rt></ruby>自身所提供的资源类型的统一接口，来隐藏这个服务的实现细节。同样，服务器并不需要知道每一个客户端的目的，这是因为可以认为所有 HTTP 请求都是孤立的，而不是与一种特定的客户端类型、或者一连串预先定义好的应用步骤相关联。这样的设计造就了一个能够被有效用于多种不同场景，以及各种<ruby>实现<rt>implementations</rt></ruby>能够相互独立发展的协议。
+HTTP 是一种用于信息系统的通用接口协议。它的设计思想是通过向客户端呈现一种独立于<ruby>服务<rt>service</rt></ruby>自身所提供的资源类型的统一接口，来隐藏这个服务的实现细节。同样，服务器并不需要知道每一个客户端的目的，这是因为可以认为所有 HTTP 请求都是孤立的，而不是与一种特定的客户端类型、或者一连串预先定义好的应用步骤相关联。这样的设计造就了一个能够被有效用于多种不同场景，以及各种<ruby>实现<rt>implementations</rt></ruby>能够独立而长久地获得发展的协议。
 </p>
 
 <blockquote>
@@ -798,7 +798,7 @@ used to define HTTP.
 </blockquote>
 
 <p>
-HTTP 是为万维网（WWW）而设计的，并且也在不断地发展，来支持世界范围内的超文系统的可扩展性。用于定义 HTTP 的术语和句法反映了这一体系结构的方方面面。
+HTTP 是为万维网（WWW）而创立的，并且长久以来的发展支撑起世界范围内超文系统对可扩展性的需要。用于定义 HTTP 的术语和句法反映了这一体系结构的方方面面。
 </p>
 </div>
 
@@ -5185,12 +5185,12 @@ In contrast, the following values would be invalid, since at least one non-empty
 
 <blockquote>
 <p>
-<a href="#orga2ed479">Appendix B</a> shows the collected ABNF for recipients after the list constructs have been expanded.
+<a href="#org1421e28">Appendix B</a> shows the collected ABNF for recipients after the list constructs have been expanded.
 </p>
 </blockquote>
 
 <p>
-<a href="#orga2ed479">附录 B</a> 展示了在加入列表结构以后，接收端的 ABNF 规则集合。 
+<a href="#org1421e28">附录 B</a> 展示了在加入列表结构以后，接收端的 ABNF 规则集合。 
 </p>
 </div>
 </div>
@@ -6043,7 +6043,7 @@ A server is in the position to save personal data about a user's requests over t
 </blockquote>
 
 <p>
-服务器应该将用户的请求的某些个人信息一直处在保护的状态中，这是由于借由这些信息可以鉴定他们的读取模式或者兴趣订阅。实际上，聚集在中间人里的日志信息通常会包含用户代理与众多网站之间的交互历史，同样可能会被追踪到个人用户。
+服务器应该将用户的请求的某些个人信息随时处在保护的状态中，这是由于借由这些信息可以鉴定他们的读取模式或者兴趣订阅。实际上，聚集在中间人里的日志信息通常会包含用户代理与众多网站之间的交互历史，同样可能会被追踪到个人用户。
 </p>
 
 <blockquote>
@@ -6102,9 +6102,9 @@ See Section 16 of [RFC2616] for additional acknowledgements from prior revisions
 <h2 id="org43a4e9d">11. 参考资料 / References</h2>
 <div class="outline-text-2" id="text-org43a4e9d">
 </div>
-<div id="outline-container-orgf36d151" class="outline-3">
-<h3 id="orgf36d151">11.1. 规范性参考文档 / Normative References</h3>
-<div class="outline-text-3" id="text-orgf36d151">
+<div id="outline-container-org57ecc66" class="outline-3">
+<h3 id="org57ecc66">11.1. 规范性参考资料 / Normative References</h3>
+<div class="outline-text-3" id="text-org57ecc66">
 <dl class="org-dl">
 <dt>[RFC0793]</dt><dd>Postel, J., “Transmission Control Protocol”, STD 7, RFC 793, September 1981.</dd>
 <dt>[RFC1950]</dt><dd>Deutsch, L. and J-L. Gailly, “ZLIB Compressed Data Format Specification version 3.3”, RFC 1950, May 1996.</dd>
@@ -6123,9 +6123,9 @@ See Section 16 of [RFC2616] for additional acknowledgements from prior revisions
 </dl>
 </div>
 </div>
-<div id="outline-container-org1ecddc5" class="outline-3">
-<h3 id="org1ecddc5">11.2. 信息性参考文档 / Informative References</h3>
-<div class="outline-text-3" id="text-org1ecddc5">
+<div id="outline-container-orgf6d567d" class="outline-3">
+<h3 id="orgf6d567d">11.2. 信息性参考资料 / Informative References</h3>
+<div class="outline-text-3" id="text-orgf6d567d">
 <dl class="org-dl">
 <dt>[BCP115]</dt><dd>Hansen, T., Hardie, T., and L. Masinter, “Guidelines and Registration Procedures for New URI Schemes”, BCP 115, RFC 4395, February 2006.</dd>
 <dt>[BCP13]</dt><dd>Freed, N., Klensin, J., and T. Hansen, “Media Type Specifications and Registration Procedures”, BCP 13, RFC 6838, January 2013.</dd>
@@ -6586,9 +6586,9 @@ Issues with the <code>Keep-Alive</code> and <code>Proxy-Connection</code> header
 </div>
 </div>
 
-<div id="outline-container-orga2ed479" class="outline-2">
-<h2 id="orga2ed479"><a id="ID-8a089adc-ec59-476e-92ed-a59470f939d4"></a>附录 B：ABNF 规则集合 / Appendx B. Collected ABNF</h2>
-<div class="outline-text-2" id="text-orga2ed479">
+<div id="outline-container-org1421e28" class="outline-2">
+<h2 id="org1421e28"><a id="ID-8a089adc-ec59-476e-92ed-a59470f939d4"></a>附录 B：ABNF 集合 / Appendx B. Collected ABNF</h2>
+<div class="outline-text-2" id="text-org1421e28">
 <div class="org-src-container">
 <pre class="src src-text">BWS = OWS
 

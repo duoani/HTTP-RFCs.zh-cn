@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-05 Wed 15:43 -->
+<!-- 2018-12-05 Wed 18:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -644,8 +644,8 @@ for the JavaScript code in this tag.
 </ul>
 </li>
 <li><a href="#org9b37d9f">B. 相对 RFC 2616 的变化 / Changes from RFC 2616</a></li>
-<li><a href="#orgc3125d2">C. 引入的 ABNF 规则 / Imported ABNF</a></li>
-<li><a href="#org19b465a">D. ABNF 规则集合 Collected ABNF</a></li>
+<li><a href="#orgdbefc57">C. 引进的 ABNF / Imported ABNF</a></li>
+<li><a href="#org06f1f55">D. ABNF 集合 Collected ABNF</a></li>
 <li><a href="#orgdb373cf">索引 / Index</a></li>
 <li><a href="#org40e7e5d">Author' Addresses</a></li>
 </ul>
@@ -734,7 +734,7 @@ Each Hypertext Transfer Protocol (HTTP) message is either a request or a respons
 </blockquote>
 
 <p>
-每一个超文本传输协议（HTTP）消息不是一个请求就是一个响应。服务器监听某个连接的请求，<ruby>解析<rt>parse</rt></ruby>其接收到的每个消息，<ruby>解释<rt>interpret</rt></ruby>消息内关于请求目标的语义，最后使用一个或多个响应消息来回应该请求。客户端构建请求消息来传达特定的意图，检查接收到的响应来观察其意图是否得到贯彻执行，并确定如何去<ruby>解释<rt>interpret</rt></ruby>该结果。本文档依据<a href="RFC7230.html">【RFC7230】</a>所定义的架构，定义了 HTTP/1.1 请求和响应的语义。
+每一个超文本传输协议（HTTP）消息不是一个请求就是一个响应。服务器监听某个连接的请求，<ruby>解析<rt>parse</rt></ruby>其接收到的每个消息，<ruby>解释<rt>interpret</rt></ruby>消息内关于请求目标的语义，最后使用一个或多个响应消息来回应该请求。客户端构建请求消息来传达特定的意图，检查接收到的响应来观察其意图是否得到贯彻执行，并确定如何去<ruby>解释<rt>interpret</rt></ruby>该结果。本文档依据<a href="RFC7230.html">【RFC7230】</a>所定义的架构，来定义 HTTP/1.1 请求和响应的语义。
 </p>
 
 <blockquote>
@@ -778,7 +778,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 </blockquote>
 
 <p>
-关键词 <b><ruby>必须<rt>MUST</rt></ruby></b>、<b><ruby>禁止<rt>MUST NOT</rt></ruby></b>、<b><ruby>要求<rt>REQUIRED</rt></ruby></b>、<b><ruby>必须<rt>SHALL</rt></ruby></b>、<b><ruby>禁止<rt>SHALL NOT</rt></ruby></b>、<b><ruby>应该<rt>SHOULD</rt></ruby></b>、<b><ruby>不应当<rt>SHOULD NOT</rt></ruby></b>、<b><ruby>推荐<rt>RECOMMENDED</rt></ruby></b>、<b><ruby>可以<rt>MAY</rt></ruby></b> 和 <b><ruby>可选<rt>OPTIONAL</rt></ruby></b> 的意义与【<a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>】一致。
+本文档中的关键词 <b><ruby>必须<rt>MUST</rt></ruby></b>、<b><ruby>禁止<rt>MUST NOT</rt></ruby></b>、<b><ruby>要求<rt>REQUIRED</rt></ruby></b>、<b><ruby>必须<rt>SHALL</rt></ruby></b>、<b><ruby>禁止<rt>SHALL NOT</rt></ruby></b>、<b><ruby>应该<rt>SHOULD</rt></ruby></b>、<b><ruby>不应当<rt>SHOULD NOT</rt></ruby></b>、<b><ruby>推荐<rt>RECOMMENDED</rt></ruby></b>、<b><ruby>可以<rt>MAY</rt></ruby></b> 和 <b><ruby>可选<rt>OPTIONAL</rt></ruby></b> 的意义与【<a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>】一致。
 </p>
 
 <blockquote>
@@ -1814,7 +1814,7 @@ Note that, in all cases, HTTP is not aware of the resource semantics. The consis
 </blockquote>
 
 <p>
-需要注意的是，不管什么情况下，HTTP 都不知道资源的语义。源服务器响应给请求所遵循的一致性，随着时间和内容协商的不同维度的变化，因然一个资源所观察到的各个<ruby>表示形式<rt>representations</rt></ruby>随着时间所表现出的“相同性”，是完全取决于实体还是算法，选择还是生成了什么响应。HTTP 并不在意幕后的人物。
+需要注意的是，不管什么情况下，HTTP 都不知道资源的语义。源服务器响应给请求所遵循的一致性，随着时间和内容协商的不同维度的变化，因而一个资源所观察到的各个<ruby>表示形式<rt>representations</rt></ruby>随着时间所表现出的“相同性”，是完全取决于实体还是算法，选择还是生成了什么响应。HTTP 并不在意幕后的人物。
 </p>
 </div>
 
@@ -8166,7 +8166,7 @@ Clients are often privy to large amounts of personal information, including both
 </blockquote>
 
 <p>
-客户端通常会知道大量的个人信息，包括用户所提供的用于与资源进行交互的信息（比如，用户的名称、位置、邮件地址、密码、加密密钥等）以及用户长期的浏览活动相关的信息（比如，历史记录、收藏夹等）。实现需要阻止个人信息的意外泄漏。
+客户端通常会知道大量的个人信息，包括用户所提供的用于与资源进行交互的信息（比如，用户的名称、位置、邮件地址、密码、加密密钥等）以及用户长久以来的浏览活动相关的信息（比如，历史记录、收藏夹等）。实现需要阻止个人信息的意外泄漏。
 </p>
 </div>
 </div>
@@ -8256,7 +8256,7 @@ Browser fingerprinting is a set of techniques for identifying a specific user ag
 </blockquote>
 
 <p>
-浏览器指纹识别是一系列的技术以通过用户代理所特有的一组<ruby>特征<rt>characteristics</rt></ruby>，长时间内识别一个具体用户代理。这些特征可能包含它的 TCP 行为、<ruby>特色功能<rt>feature capabilities</rt></ruby>、以及<ruby>脚本环境<rt>scripting environment</rt></ruby>等相关信息，不过这里特别感兴趣的是这一组经由 HTTP 来传达的唯一特征。指纹识别被认为是一种隐私问题，因为它启用了对一个用户代理的行为长时间的跟踪，对比于其他用户能够控制的数据收集的方式（比如，cookies）来说，用户无法左右指纹识别。许多通用的用户代理（也就是说，网页浏览器）已采取措施来减少它们的指纹识别。
+浏览器指纹识别是一系列的技术以通过用户代理所特有的一组<ruby>特征<rt>characteristics</rt></ruby>，长久地具体的用户代理进行识别。这些特征可能包含它的 TCP 行为、<ruby>特色功能<rt>feature capabilities</rt></ruby>、以及<ruby>脚本环境<rt>scripting environment</rt></ruby>等相关信息，不过这里特别感兴趣的是这一组经由 HTTP 来传达的唯一特征。指纹识别被认为是一种隐私问题，因为它启用了对一个用户代理的行为长时间的跟踪，对比于其他用户能够控制的数据收集的方式（比如，cookies）来说，用户无法左右指纹识别。许多通用的用户代理（也就是说，网页浏览器）已采取措施来减少它们的指纹识别。
 </p>
 
 <blockquote>
@@ -8829,9 +8829,9 @@ The <code>Content-MD5</code> header field has been removed because it was incons
 </div>
 </div>
 
-<div id="outline-container-orgc3125d2" class="outline-2">
-<h2 id="orgc3125d2">C. 引入的 ABNF 规则 / Imported ABNF</h2>
-<div class="outline-text-2" id="text-orgc3125d2">
+<div id="outline-container-orgdbefc57" class="outline-2">
+<h2 id="orgdbefc57">C. 引进的 ABNF / Imported ABNF</h2>
+<div class="outline-text-2" id="text-orgdbefc57">
 <blockquote>
 <p>
 The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), HTAB (horizontal tab), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
@@ -8872,9 +8872,9 @@ token         = &lt;token, see [RFC7230], Section 3.2.6&gt;
 </div>
 </div>
 
-<div id="outline-container-org19b465a" class="outline-2">
-<h2 id="org19b465a">D. ABNF 规则集合 Collected ABNF</h2>
-<div class="outline-text-2" id="text-org19b465a">
+<div id="outline-container-org06f1f55" class="outline-2">
+<h2 id="org06f1f55">D. ABNF 集合 Collected ABNF</h2>
+<div class="outline-text-2" id="text-org06f1f55">
 <blockquote>
 <p>
 In the collected ABNF below, list rules are expanded as per <a href="RFC7230.html#ID-f8234cb5-154d-4daf-82fd-ed54ac75cf8b">Section 1.2</a> of [RFC7230].
