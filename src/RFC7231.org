@@ -114,7 +114,7 @@ HTTP 请求的目标，被称为“[[ruby:resource][资源]]”。HTTP 并不限
 
 When a client constructs an HTTP/1.1 request message, it sends the target URI in one of various forms, as defined in ([[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][Section 5.3]] of [RFC7230]). When a request is received, the server reconstructs an effective request URI for the target resource ([[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]).
 
-当客户端[[ruby:construct][构建]]一个 HTTP/1.1 请求消息的时候，它将某种形式的[[ruby:target%20URI][目标 URI]] 包含在消息中，见[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][【RFC7230】章节 5.3]]。当服务器接收到一个请求的时候，它将[[ruby:reconstruct][重新构建]]出一个[[ruby:effective%20request%20URI][有效请求 URI]]（见[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）来定位[[ruby:target%20resource][目标资源]]。
+当客户端[[ruby:construct][构建]]一个 HTTP/1.1 请求消息的时候，它将某种形式的[[ruby:target%20URI][目标 URI]] 包含在消息中，见[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][【RFC7230】章节 5.3]]。当服务器接收到一个请求的时候，它将[[ruby:reconstruct][重新构建]]出一个[[ruby:effective%20request%20URI][实际请求 URI]]（见[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）来定位[[ruby:target%20resource][目标资源]]。
 
 #+BEGIN_QUOTE
 译注：目标 URI 有四种形式：[[ruby:origin-form][原始形式]]、[[ruby:absolute-form][绝对形式]]、[[ruby:authority-form][权威形式]]、[[ruby:asterisk-form][星号形式]]，详情见[[id:16a8fba9-40f8-4b2c-ba5f-2f6522362c3a][【RFC7230】章节 5.3]]。
@@ -559,10 +559,10 @@ For a response message, the following rules are applied in order until a match i
 #+END_QUOTE
 
 对于一个响应消息来说，以下规则会被按顺序应用，直到匹配其中之一：
-1. *如果* 请求方法是 GET 或者 HEAD，且响应状态码是 =200 (OK)=、=204 (No Content)=、=206 (Partial Content)= 或者 =304 (Not Modified)=，那么，响应消息的有效载荷是某个资源的 representation，而该资源是由[[ruby:effective%20request%20URI][有效请求 URI]] 所标识的（[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）。
+1. *如果* 请求方法是 GET 或者 HEAD，且响应状态码是 =200 (OK)=、=204 (No Content)=、=206 (Partial Content)= 或者 =304 (Not Modified)=，那么，响应消息的有效载荷是某个资源的 representation，而该资源是由[[ruby:effective%20request%20URI][实际请求 URI]] 所标识的（[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）。
 2. *如果* 请求方法是 GET 或者 HEAD，且响应状态码是 =203 (Non-Authoritative Information)=，那么，响应消息的有效载荷是某个资源的 可能已被修改过或增强过的 representation，该 representation 由某个中间人提供。
-3. *如果* 响应带有一个 =Content-Location= 头字段并且它的字段值是一个跟[[ruby:effective%20request%20URI][有效请求 URI]] 相同的 URI 引用，那么，响应消息的有效载荷是某个资源的 representation，而该资源是由有效请求 URI 所标识的。
-4. *如果* 响应带有一个 =Content-Location= 头字段并且它的字段值是一个跟[[ruby:effective%20request%20URI][有效请求 URI]] 不相同的 URI 引用，那么，发送端断言该有效载荷是某个资源的 representation，而该资源是由 =Content-Location= 的字段值所标识的。但是，除非这种[[ruby:assertion][断言]]能够通过其他途径（本规则并没有定义有什么途径）来验证，否则不能相信该断言。
+3. *如果* 响应带有一个 =Content-Location= 头字段并且它的字段值是一个跟[[ruby:effective%20request%20URI][实际请求 URI]] 相同的 URI 引用，那么，响应消息的有效载荷是某个资源的 representation，而该资源是由实际请求 URI 所标识的。
+4. *如果* 响应带有一个 =Content-Location= 头字段并且它的字段值是一个跟[[ruby:effective%20request%20URI][实际请求 URI]] 不相同的 URI 引用，那么，发送端断言该有效载荷是某个资源的 representation，而该资源是由 =Content-Location= 的字段值所标识的。但是，除非这种[[ruby:assertion][断言]]能够通过其他途径（本规则并没有定义有什么途径）来验证，否则不能相信该断言。
 5. *否则*，该响应消息的有效载荷是未标识的。
 
 **** 3.1.4.2. Content-Location
@@ -583,13 +583,13 @@ The "Content-Location" header field references a URI that can be used as an iden
 The =Content-Location= value is not a replacement for the effective Request URI ([[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]). It is representation metadata. It has the same syntax and semantics as the header field of the same name defined for MIME body parts in [[https://tools.ietf.org/html/rfc2557#section-4][Section 4]] of [RFC2557]. However, its appearance in an HTTP message has some special implications for HTTP recipients.
 #+END_QUOTE
 
-=Content-Location= 的值并不是用来替换[[ruby:effective%20request%20URI][有效请求 URI]]（[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）的。它是一种[[ruby:representation%20metadata][表示形式元数据]]。它具有与定义在 MIME 的同名头字段（[[https://tools.ietf.org/html/rfc2557#section-4][【RFC2557】章节 4]]）相同的句法和语义。但是，这个头字段出现在一个 HTTP 消息里是具有特殊含义的。
+=Content-Location= 的值并不是用来替换[[ruby:effective%20request%20URI][实际请求 URI]]（[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）的。它是一种[[ruby:representation%20metadata][表示形式元数据]]。它具有与定义在 MIME 的同名头字段（[[https://tools.ietf.org/html/rfc2557#section-4][【RFC2557】章节 4]]）相同的句法和语义。但是，这个头字段出现在一个 HTTP 消息里是具有特殊含义的。
 
 #+BEGIN_QUOTE
 If =Content-Location= is included in a =2xx (Successful)= response message and its value refers (after conversion to absolute form) to a URI that is the same as the effective request URI, then the recipient *MAY* consider the payload to be a current representation of that resource at the time indicated by the message origination date. For a GET ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]]) or HEAD ([[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][Section 4.3.2]]) request, this is the same as the default semantics when no =Content-Location= is provided by the server. For a state-changing request like PUT ([[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][Section 4.3.4]]) or POST ([[id:d672d01b-615b-416a-a750-0442a6901ed0][Section 4.3.3]]), it implies that the server's response contains the new representation of that resource, thereby distinguishing it from representations that might only report about the action (e.g., "It worked!"). This allows authoring applications to update their local copies without the need for a subsequent GET request.
 #+END_QUOTE
 
-如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应消息里，且它的值指向于（在转换为[[ruby:absolute%20form][绝对形式]]之后）一个与有效请求 URI 相同的 URI，那么，接收端 *可以* 将该有效载荷认为是对应资源在特定时间里的[[ruby:current%20representation][当前表示形式]]，所述“特定时间”是指由[[ruby:message%20origination%20date][消息创始日期]]所指定的时间。对于 GET（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）或者 HEAD（[[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][章节 4.3.2]]）请求来说，这与在服务器没有提供 =Content-Location= 头字段的情况下的默认语义相一致。对于类似 PUT（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）或者 POST（[[id:d672d01b-615b-416a-a750-0442a6901ed0][章节 4.3.3]]）这些会[[ruby:state-changing][改变资源状态]]的请求来说，这意味着服务器的响应包含了这个资源的新的[[ruby:representation][表示形式]]，由此与那些只报告动作方面的信息（例如，“[[ruby:It%20worked!][它生效了！]]”）的[[ruby:representations][表示形式]]作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
+如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应消息里，且它的值指向于（在转换为[[ruby:absolute%20form][绝对形式]]之后）一个与实际请求 URI 相同的 URI，那么，接收端 *可以* 将该有效载荷认为是对应资源在特定时间里的[[ruby:current%20representation][当前表示形式]]，所述“特定时间”是指由[[ruby:message%20origination%20date][消息创始日期]]所指定的时间。对于 GET（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][章节 4.3.1]]）或者 HEAD（[[id:d00f1692-2d40-4b09-a634-9c87fce07bc4][章节 4.3.2]]）请求来说，这与在服务器没有提供 =Content-Location= 头字段的情况下的默认语义相一致。对于类似 PUT（[[id:28f69be8-26e9-4dd7-930e-7c683d7bcf8a][章节 4.3.4]]）或者 POST（[[id:d672d01b-615b-416a-a750-0442a6901ed0][章节 4.3.3]]）这些会[[ruby:state-changing][改变资源状态]]的请求来说，这意味着服务器的响应包含了这个资源的新的[[ruby:representation][表示形式]]，由此与那些只报告动作方面的信息（例如，“[[ruby:It%20worked!][它生效了！]]”）的[[ruby:representations][表示形式]]作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
 
 #+BEGIN_QUOTE
 If =Content-Location= is included in a =2xx (Successful)= response message and its field-value refers to a URI that differs from the effective request URI, then the origin server claims that the URI is an identifier for a different resource corresponding to the enclosed representation. Such a claim can only be trusted if both identifiers share the same resource owner, which cannot be programmatically determined via HTTP.
@@ -598,8 +598,8 @@ If =Content-Location= is included in a =2xx (Successful)= response message and i
 - Otherwise, such a =Content-Location= indicates that this payload is a representation reporting on the requested action's status and that the same report is available (for future access with GET) at the given URI. For example, a purchase transaction made via a POST request might include a receipt document as the payload of the =200 (OK)= response; the =Content-Location= field-value provides an identifier for retrieving a copy of that same receipt in the future.
 #+END_QUOTE
 
-如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应消息里，且它的字段值指向于一个与有效请求 URI 不相同的 URI，那么，源服务器[[ruby:claim][声称]]该 URI 是一个与封装在该有效载荷内的[[ruby:representation][表示形式]]相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
-- 对于回应给 GET 或 HEAD 请求的一个响应，它表明：[[ruby:effective%20request%20URI][有效请求 URI]] 指向到一个服从[[ruby:content%20negotiation][内容协商]]的资源，并且针对[[ruby:selected%20representation][已选定的表示形式]]来说，=Content-Location= 的字段值是一个更加具体的标识符。
+如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应消息里，且它的字段值指向于一个与实际请求 URI 不相同的 URI，那么，源服务器[[ruby:claim][声称]]该 URI 是一个与封装在该有效载荷内的[[ruby:representation][表示形式]]相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
+- 对于回应给 GET 或 HEAD 请求的一个响应，它表明：[[ruby:effective%20request%20URI][实际请求 URI]] 指向到一个服从[[ruby:content%20negotiation][内容协商]]的资源，并且针对[[ruby:selected%20representation][已选定的表示形式]]来说，=Content-Location= 的字段值是一个更加具体的标识符。
 - 对于回应给[[ruby:state-changing%20method][会改变资源状态的请求方法]]的一个 =201 (Created)= 响应，如果 =Content-Location= 的字段值与 =Location= 的字段值相同，表明：这个有效载荷是新近被创建的资源的[[ruby:current%20representation][当前表示形式]]。
 - 否则，这个 =Content-Location= 表明：这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对[[ruby:representation][表示形式]]进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 =200 (OK)= 响应的有效载荷，=Content-Location= 的字段值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。
 
@@ -626,7 +626,7 @@ For example, if a client makes a PUT request on a negotiated resource and the or
 The representation data associated with an HTTP message is either provided as the payload body of the message or referred to by the message semantics and the effective request URI. The representation data is in a format and encoding defined by the representation metadata header fields.
 #+END_QUOTE
 
-与 HTTP 消息相关联的[[ruby:representation%20data][表示形式数据]]是被提供作为消息的有效载荷，或者被消息的语义和有效请求 URI 所引用。[[ruby:representation%20data][表示形式数据]]是处于某种由[[ruby:representation%20metadata][表示形式元数据]]相关的头字段所定义的格式和编码之中的。
+与 HTTP 消息相关联的[[ruby:representation%20data][表示形式数据]]是被提供作为消息的有效载荷，或者被消息的语义和实际请求 URI 所引用。[[ruby:representation%20data][表示形式数据]]是处于某种由[[ruby:representation%20metadata][表示形式元数据]]相关的头字段所定义的格式和编码之中的。
 
 #+BEGIN_QUOTE
 The data type of the representation data is determined via the header fields =Content-Type= and =Content-Encoding=. These define a two-layer, ordered encoding model:
@@ -884,7 +884,7 @@ A user agent *SHOULD* distinguish between safe and unsafe methods when presentin
 When a resource is constructed such that parameters within the effective request URI have the effect of selecting an action, it is the resource owner's responsibility to ensure that the action is consistent with the request method semantics. For example, it is common for Web-based content editing software to use actions within query parameters, such as "page?do=delete". If the purpose of such a resource is to perform an unsafe action, then the resource owner *MUST* disable or disallow that action when it is accessed using a safe request method. Failure to do so will result in unfortunate side effects when automated processes perform a GET on every URI reference for the sake of link maintenance, pre-fetching, building a search index, etc.
 #+END_QUOTE
 
-构建一个资源，使在[[ruby:effective%20request%20URI][有效请求 URI]] 里的参数会影响到的请求动作选择，那么，确保该动作是否符合请求方法的语义是资源所有者的责任。例如，[[ruby:Web-based%20content%20editing%20software][基于网站的内容编辑软件]]常常会在[[ruby:query%20parameters][查询参数]]里使用某些动作，如 "page?do=delete"。如果这种资源的目的是为执行一个[[ruby:unsafe%20action][非安全的动作]]，那么，当使用一个[[ruby:safe%20request%20method][安全的请求方法]]来访问该资源的时候，资源所有者 *必须* 禁用或者拒绝该动作。否则的话，当[[ruby:automated%20processes][自动程序]]出于某种目的（为了链接维护，预取，生成搜索索引等）来对每个 URI 执行一个 GET 的时候，会导致不好的副作用。
+构建一个资源，使在[[ruby:effective%20request%20URI][实际请求 URI]] 里的参数会影响到的请求动作选择，那么，确保该动作是否符合请求方法的语义是资源所有者的责任。例如，[[ruby:Web-based%20content%20editing%20software][基于网站的内容编辑软件]]常常会在[[ruby:query%20parameters][查询参数]]里使用某些动作，如 "page?do=delete"。如果这种资源的目的是为执行一个[[ruby:unsafe%20action][非安全的动作]]，那么，当使用一个[[ruby:safe%20request%20method][安全的请求方法]]来访问该资源的时候，资源所有者 *必须* 禁用或者拒绝该动作。否则的话，当[[ruby:automated%20processes][自动程序]]出于某种目的（为了链接维护，预取，生成搜索索引等）来对每个 URI 执行一个 GET 的时候，会导致不好的副作用。
 
 #+BEGIN_QUOTE
 译注：请求方法是否是安全的，其关注点在于该方法是否有改变资源的状态，而不是平常我们认为的安全性或保密性的概念。只要执行该请求方法后，资源的状态没有被改变，那么这个请求方法就是安全的（哪怕可能会导致数据泄漏、黑客入侵、硬件爆炸等），否则就是不安全的。换句话说，安全的请求方法都是“只读”的，并不会对资源造成任何“写入”，类似于编程语言中 Getter 的概念。
@@ -1035,7 +1035,7 @@ If one or more resources has been created on the origin server as a result of su
 Responses to POST requests are only cacheable when they include explicit freshness information (see [[https://tools.ietf.org/html/rfc7234#section-4.2.1][Section 4.2.1]] of [RFC7234]). However, POST caching is not widely implemented. For cases where an origin server wishes the client to be able to cache the result of a POST in a way that can be reused by a later GET, the origin server *MAY* send a =200 (OK)= response containing the result and a =Content-Location= header field that has the same value as the POST's effective request URI ([[id:91650144-4bfc-4362-b628-f96578a5c756][Section 3.1.4.2]]).
 #+END_QUOTE
 
-回应给 POST 请求的响应，仅当它们包含明确的[[ruby:freshness%20information][新鲜信息]]时，才是[[ruby:cacheable][可缓存的]]（见[[https://tools.ietf.org/html/rfc7234#section-4.2.1][【RFC7234】章节 4.2.1]]）。然而，对 POST 响应的缓存并没有被广泛实现。如果源服务器希望客户端以一种之后的 GET 能够复用的方式使客户端能够缓存 POST 的结果，面对这种情况，源服务器 *可以* 发送一个 =200 (OK)= 响应来包含该结果，并且，该响应还需带有与该 POST 的有效请求 URI 相同的值的一个 =Content-Location= 头字段（[[id:91650144-4bfc-4362-b628-f96578a5c756][章节 3.1.4.2]]）。
+回应给 POST 请求的响应，仅当它们包含明确的[[ruby:freshness%20information][新鲜信息]]时，才是[[ruby:cacheable][可缓存的]]（见[[https://tools.ietf.org/html/rfc7234#section-4.2.1][【RFC7234】章节 4.2.1]]）。然而，对 POST 响应的缓存并没有被广泛实现。如果源服务器希望客户端以一种之后的 GET 能够复用的方式使客户端能够缓存 POST 的结果，面对这种情况，源服务器 *可以* 发送一个 =200 (OK)= 响应来包含该结果，并且，该响应还需带有与该 POST 的实际请求 URI 相同的值的一个 =Content-Location= 头字段（[[id:91650144-4bfc-4362-b628-f96578a5c756][章节 3.1.4.2]]）。
 
 #+BEGIN_QUOTE
 If the result of processing a POST would be equivalent to a representation of an existing resource, an origin server *MAY* redirect the user agent to that resource by sending a =303 (See Other)= response with the existing resource's identifier in the =Location= field. This has the benefits of providing the user agent a resource identifier and transferring the representation via a method more amenable to shared caching, though at the cost of an extra request if the user agent does not already have the representation cached.
@@ -1147,7 +1147,7 @@ An origin server that allows PUT on a given target resource *MUST* send a =400 (
 Responses to the PUT method are not cacheable. If a successful PUT request passes through a cache that has one or more stored responses for the effective request URI, those stored responses will be invalidated (see Section 4.4 of [RFC7234]).
 #+END_QUOTE
 
-回应给 PUT 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。如果一个[[ruby:successful%20PUT%20request][成功的 PUT 请求]]穿过一个[[ruby:cache][缓存]]，而该缓存已经存储（缓存）了该 PUT 请求的有效请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 PUT 请求），那么这些已存储的（已缓存的）响应将会[[ruby:be%20invalidated][被失效]]（见【RFC7234】章节 4.4）。
+回应给 PUT 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。如果一个[[ruby:successful%20PUT%20request][成功的 PUT 请求]]穿过一个[[ruby:cache][缓存]]，而该缓存已经存储（缓存）了该 PUT 请求的实际请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 PUT 请求），那么这些已存储的（已缓存的）响应将会[[ruby:be%20invalidated][被失效]]（见【RFC7234】章节 4.4）。
 
 #+BEGIN_QUOTE
 译注：来自 [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT][MDN]] 的总结：
@@ -1206,7 +1206,7 @@ A payload within a DELETE request message has no defined semantics; sending a pa
 Responses to the DELETE method are not cacheable. If a DELETE request passes through a cache that has one or more stored responses for the effective request URI, those stored responses will be invalidated (see [[https://tools.ietf.org/html/rfc7234#section-4.4][Section 4.4]] of [RFC7234]).
 #+END_QUOTE
 
-回应给 DELETE 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。如果一个 DELETE 请求穿过一个[[ruby:cache][缓存]]，而该缓存已经存储（缓存）了该 DELETE 请求的有效请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 DELETE 请求），那么这些已存储的（已缓存的）响应将会[[ruby:be%20invalidated][被失效]]（见[[https://tools.ietf.org/html/rfc7234#section-4.4][【RFC7234】章节 4.4]]）。
+回应给 DELETE 方法的响应是[[ruby:not%20cacheable][不可缓存的]]。如果一个 DELETE 请求穿过一个[[ruby:cache][缓存]]，而该缓存已经存储（缓存）了该 DELETE 请求的实际请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 DELETE 请求），那么这些已存储的（已缓存的）响应将会[[ruby:be%20invalidated][被失效]]（见[[https://tools.ietf.org/html/rfc7234#section-4.4][【RFC7234】章节 4.4]]）。
 
 #+BEGIN_QUOTE
 译注：来自 [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE][MDN]] 的总结：
@@ -2430,7 +2430,7 @@ A =200= response is cacheable by default; i.e., unless otherwise indicated by th
 The =201 (Created)= status code indicates that the request has been fulfilled and has resulted in one or more new resources being created. The primary resource created by the request is identified by either a =Location= header field in the response or, if no =Location= field is received, by the effective request URI.
 #+END_QUOTE
 
-=201 (Created)= 状态码表明：请求已被[[ruby:fulfilled][实现]]并且引起了一个或多个[[ruby:new%20resources][新资源]]被创建。上述因请求而创建的[[ruby:primary%20resource][主要资源]]会被一个在响应里的 =Location= 头字段所标识，或者，如果没有接收到 =Location= 头字段的话，则通过[[ruby:effective%20request%20URI][有效请求 URI]] 来识别。
+=201 (Created)= 状态码表明：请求已被[[ruby:fulfilled][实现]]并且引起了一个或多个[[ruby:new%20resources][新资源]]被创建。上述因请求而创建的[[ruby:primary%20resource][主要资源]]会被一个在响应里的 =Location= 头字段所标识，或者，如果没有接收到 =Location= 头字段的话，则通过[[ruby:effective%20request%20URI][实际请求 URI]] 来识别。
 
 #+BEGIN_QUOTE
 The =201= response payload typically describes and links to the resource(s) created. See [[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][Section 7.2]] for a discussion of the meaning and purpose of validator header fields, such as =ETag= and =Last-Modified=, in a =201= response.
@@ -2639,7 +2639,7 @@ Note: The original proposal for the =300= status code defined the =URI= header f
 The =301 (Moved Permanently)= status code indicates that the target resource has been assigned a new permanent URI and any future references to this resource ought to use one of the enclosed URIs. Clients with link-editing capabilities ought to automatically re-link references to the effective request URI to one or more of the new references sent by the server, where possible.
 #+END_QUOTE
 
-=301 (Move Permanently)= 状态码表明：目标资源已被[[ruby:assign][分配]]到一个新的永久 URI 上，将来对本资源的任何引用都应该使用本次响应所提供的新 URIs 之一。对于具有[[ruby:link-editing][链接编辑]]能力的客户端应该自动将链接到有效请求 URI 的引用重新链接到由服务器传过来的新的引用上。
+=301 (Move Permanently)= 状态码表明：目标资源已被[[ruby:assign][分配]]到一个新的永久 URI 上，将来对本资源的任何引用都应该使用本次响应所提供的新 URIs 之一。对于具有[[ruby:link-editing][链接编辑]]能力的客户端应该自动将链接到实际请求 URI 的引用重新链接到由服务器传过来的新的引用上。
 
 #+BEGIN_QUOTE
 The server *SHOULD* generate a =Location= header field in the response containing a preferred URI reference for the new permanent URI. The user agent *MAY* use the =Location= field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the new URI(s).
@@ -2669,7 +2669,7 @@ A =301= response is cacheable by default; i.e., unless otherwise indicated by th
 The =302 (Found)= status code indicates that the target resource resides temporarily under a different URI. Since the redirection might be altered on occasion, the client ought to continue to use the effective request URI for future requests.
 #+END_QUOTE
 
-=302 (Found)= 状态码表明：目标资源临时处在一个不同的 URI 之下。因为重定向可以会再次改变，客户端应该在将来的请求中继续使用原来的[[ruby:effective%20request%20URI][有效请求 URI]]（而不是使用本次响应中 =Location= 字段所指的那个 URI）。
+=302 (Found)= 状态码表明：目标资源临时处在一个不同的 URI 之下。因为重定向可以会再次改变，客户端应该在将来的请求中继续使用原来的[[ruby:effective%20request%20URI][实际请求 URI]]（而不是使用本次响应中 =Location= 字段所指的那个 URI）。
 
 #+BEGIN_QUOTE
 The server *SHOULD* generate a =Location= header field in the response containing a URI reference for the different URI. The user agent *MAY* use the =Location= field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the different URI(s).
@@ -2692,10 +2692,10 @@ The server *SHOULD* generate a =Location= header field in the response containin
 The =303 (See Other)= status code indicates that the server is redirecting the user agent to a different resource, as indicated by a URI in the =Location= header field, which is intended to provide an indirect response to the original request. A user agent can perform a retrieval request targeting that URI (a GET or HEAD request if using HTTP), which might also be redirected, and present the eventual result as an answer to the original request. Note that the new URI in the =Location= header field is not considered equivalent to the effective request URI.
 #+END_QUOTE
 
-=303 (See Other)= 状态码表明：服务器让用户代理重新定向到一个不同的资源上，正如在 =Location= 的字段值里所示的 URI 上，其意图是提供一个[[ruby:indirect][间接]]的响应到原始请求。用户代理可以执行一个[[ruby:retrieval%20request][检索请求]]（如果使用 HTTP 的话就是一个 GET 或者 HEAD）来定位这个 URI，这样同样可以重定向，并呈现最终结果来作为这个[[ruby:original%20request][原始请求]]的应答。需要注意的是在 =Location= 头字段里的新 URI 不被视为等同于[[ruby:effective%20request%20URI][有效请求 URI]]。 
+=303 (See Other)= 状态码表明：服务器让用户代理重新定向到一个不同的资源上，正如在 =Location= 的字段值里所示的 URI 上，其意图是提供一个[[ruby:indirect][间接]]的响应到原始请求。用户代理可以执行一个[[ruby:retrieval%20request][检索请求]]（如果使用 HTTP 的话就是一个 GET 或者 HEAD）来定位这个 URI，这样同样可以重定向，并呈现最终结果来作为这个[[ruby:original%20request][原始请求]]的应答。需要注意的是在 =Location= 头字段里的新 URI 不被视为等同于[[ruby:effective%20request%20URI][实际请求 URI]]。 
 
 #+BEGIN_QUOTE
-译注：=300= 的 =Location= 字段值所指的 URI 表示资源有多个表示形式，=301= 和 =302= 中 =Location= 的 URI 表示资源在不同的位置上，这些 URI 所代表是同一个资源。与上述状态码不同的是，=303= 中 =Location= 的 URI 所指的是另一个不同的资源，所以有“间接”的意义。同时，正因为 =303= 的有效请求 URI 所代表的资源与 =Location= 的 URI 不是同一个，因为才有上述的“不视为等同”。
+译注：=300= 的 =Location= 字段值所指的 URI 表示资源有多个表示形式，=301= 和 =302= 中 =Location= 的 URI 表示资源在不同的位置上，这些 URI 所代表是同一个资源。与上述状态码不同的是，=303= 中 =Location= 的 URI 所指的是另一个不同的资源，所以有“间接”的意义。同时，正因为 =303= 的实际请求 URI 所代表的资源与 =Location= 的 URI 不是同一个，因为才有上述的“不视为等同”。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -2747,7 +2747,7 @@ The =306= status code was defined in a previous version of this specification, i
 The =307 (Temporary Redirect)= status code indicates that the target resource resides temporarily under a different URI and the user agent *MUST NOT* change the request method if it performs an automatic redirection to that URI. Since the redirection can change over time, the client ought to continue using the original effective request URI for future requests.
 #+END_QUOTE
 
-=307 (Temporary Redirect)= 状态码表明：目标资源临时处在一个不同的 URI 之下，并且如果用户代理执行自动重定向到该 URI 的话，*禁止* 改变请求方法。因为重定向可能随时会改变，客户端应该在将来的请求中继续使用原来的[[ruby:effective%20request%20URI][有效请求 URI]]（而不是使用本次响应中 =Location= 字段所指的那个 URI）。
+=307 (Temporary Redirect)= 状态码表明：目标资源临时处在一个不同的 URI 之下，并且如果用户代理执行自动重定向到该 URI 的话，*禁止* 改变请求方法。因为重定向可能随时会改变，客户端应该在将来的请求中继续使用原来的[[ruby:effective%20request%20URI][实际请求 URI]]（而不是使用本次响应中 =Location= 字段所指的那个 URI）。
 
 #+BEGIN_QUOTE
 The server *SHOULD* generate a =Location= header field in the response containing a URI reference for the different URI. The user agent *MAY* use the =Location= field value for automatic redirection. The server's response payload usually contains a short hypertext note with a hyperlink to the different URI(s).
@@ -3411,7 +3411,7 @@ The "Location" header field is used in some responses to refer to a specific res
 The field value consists of a single =URI-reference=. When it has the form of a relative reference ([RFC3986], [[https://tools.ietf.org/html/rfc3986#section-4.2][Section 4.2]]), the final value is computed by resolving it against the effective request URI ([RFC3986], [[https://tools.ietf.org/html/rfc3986#section-5][Section 5]]).
 #+END_QUOTE
 
-字段值由单个 =URI-reference= 组成。如果这个 =URI-reference= 是[[ruby:relative%20reference][相对引用]]的形式（[[https://tools.ietf.org/html/rfc3986#section-4.2][【RFC3986】章节 4.2]]），那么，字段的最终值通过将它相对于[[ruby:effective%20request%20URI][有效请求 URI]]进行[[ruby:resolving][引用解释]]来计算得出（[[https://tools.ietf.org/html/rfc3986#section-5][【RFC3986】章节 5]]）。
+字段值由单个 =URI-reference= 组成。如果这个 =URI-reference= 是[[ruby:relative%20reference][相对引用]]的形式（[[https://tools.ietf.org/html/rfc3986#section-4.2][【RFC3986】章节 4.2]]），那么，字段的最终值通过将它相对于[[ruby:effective%20request%20URI][实际请求 URI]]进行[[ruby:resolving][引用解释]]来计算得出（[[https://tools.ietf.org/html/rfc3986#section-5][【RFC3986】章节 5]]）。
 
 #+BEGIN_QUOTE
 For =201 (Created)= responses, the =Location= value refers to the primary resource created by the request. For =3xx (Redirection)= responses, the =Location= value refers to the preferred target resource for automatically redirecting the request.
@@ -4150,7 +4150,7 @@ The list of considerations below is not exhaustive. Most security concerns relat
 Origin servers frequently make use of their local file system to manage the mapping from effective request URI to resource representations. Most file systems are not designed to protect against malicious file or path names. Therefore, an origin server needs to avoid accessing names that have a special significance to the system when mapping the request target to files, folders, or directories.
 #+END_QUOTE
 
-源服务器经常使用它们的本地文件系统来管理[[ruby:effective%20request%20URI][有效请求 URI]] 与[[ruby:resource%20representations][资源表示形式]]之间的[[ruby:mapping][映射]]。大多数[[ruby:file%20system][文件系统]]没有对防范恶意文件名称或路径名称方面的设计。因此，当源服务器映射请求目标到文件、文件夹、或者目录的时候，源服务器需要避免访问对于文件系统来说具有特殊意义的那些名称。
+源服务器经常使用它们的本地文件系统来管理[[ruby:effective%20request%20URI][实际请求 URI]] 与[[ruby:resource%20representations][资源表示形式]]之间的[[ruby:mapping][映射]]。大多数[[ruby:file%20system][文件系统]]没有对防范恶意文件名称或路径名称方面的设计。因此，当源服务器映射请求目标到文件、文件夹、或者目录的时候，源服务器需要避免访问对于文件系统来说具有特殊意义的那些名称。
 
 #+BEGIN_QUOTE
 For example, UNIX, Microsoft Windows, and other operating systems use ".." as a path component to indicate a directory level above the current one, and they use specially named paths or file names to send data to system devices. Similar naming conventions might exist within other types of storage systems. Likewise, local storage systems have an annoying tendency to prefer user-friendliness over security when handling invalid or unexpected characters, recomposition of decomposed characters, and case-normalization of case-insensitive names.

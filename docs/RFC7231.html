@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-05 Wed 09:54 -->
+<!-- 2018-12-05 Wed 15:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -835,7 +835,7 @@ When a client constructs an HTTP/1.1 request message, it sends the target URI in
 </p>
 
 <p>
-当客户端<ruby>构建<rt>construct</rt></ruby>一个 HTTP/1.1 请求消息的时候，它将某种形式的<ruby>目标 URI<rt>target URI</rt></ruby> 包含在消息中，见<a href="RFC7230.html#ID-16a8fba9-40f8-4b2c-ba5f-2f6522362c3a">【RFC7230】章节 5.3</a>。当服务器接收到一个请求的时候，它将<ruby>重新构建<rt>reconstruct</rt></ruby>出一个<ruby>有效请求 URI<rt>effective request URI</rt></ruby>（见<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）来定位<ruby>目标资源<rt>target resource</rt></ruby>。
+当客户端<ruby>构建<rt>construct</rt></ruby>一个 HTTP/1.1 请求消息的时候，它将某种形式的<ruby>目标 URI<rt>target URI</rt></ruby> 包含在消息中，见<a href="RFC7230.html#ID-16a8fba9-40f8-4b2c-ba5f-2f6522362c3a">【RFC7230】章节 5.3</a>。当服务器接收到一个请求的时候，它将<ruby>重新构建<rt>reconstruct</rt></ruby>出一个<ruby>实际请求 URI<rt>effective request URI</rt></ruby>（见<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）来定位<ruby>目标资源<rt>target resource</rt></ruby>。
 </p>
 
 <blockquote>
@@ -1565,10 +1565,10 @@ For a response message, the following rules are applied in order until a match i
 对于一个响应消息来说，以下规则会被按顺序应用，直到匹配其中之一：
 </p>
 <ol class="org-ol">
-<li><b>如果</b> 请求方法是 GET 或者 HEAD，且响应状态码是 <code>200 (OK)</code>、<code>204 (No Content)</code>、<code>206 (Partial Content)</code> 或者 <code>304 (Not Modified)</code>，那么，响应消息的有效载荷是某个资源的 representation，而该资源是由<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 所标识的（<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）。</li>
+<li><b>如果</b> 请求方法是 GET 或者 HEAD，且响应状态码是 <code>200 (OK)</code>、<code>204 (No Content)</code>、<code>206 (Partial Content)</code> 或者 <code>304 (Not Modified)</code>，那么，响应消息的有效载荷是某个资源的 representation，而该资源是由<ruby>实际请求 URI<rt>effective request URI</rt></ruby> 所标识的（<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）。</li>
 <li><b>如果</b> 请求方法是 GET 或者 HEAD，且响应状态码是 <code>203 (Non-Authoritative Information)</code>，那么，响应消息的有效载荷是某个资源的 可能已被修改过或增强过的 representation，该 representation 由某个中间人提供。</li>
-<li><b>如果</b> 响应带有一个 <code>Content-Location</code> 头字段并且它的字段值是一个跟<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 相同的 URI 引用，那么，响应消息的有效载荷是某个资源的 representation，而该资源是由有效请求 URI 所标识的。</li>
-<li><b>如果</b> 响应带有一个 <code>Content-Location</code> 头字段并且它的字段值是一个跟<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 不相同的 URI 引用，那么，发送端断言该有效载荷是某个资源的 representation，而该资源是由 <code>Content-Location</code> 的字段值所标识的。但是，除非这种<ruby>断言<rt>assertion</rt></ruby>能够通过其他途径（本规则并没有定义有什么途径）来验证，否则不能相信该断言。</li>
+<li><b>如果</b> 响应带有一个 <code>Content-Location</code> 头字段并且它的字段值是一个跟<ruby>实际请求 URI<rt>effective request URI</rt></ruby> 相同的 URI 引用，那么，响应消息的有效载荷是某个资源的 representation，而该资源是由实际请求 URI 所标识的。</li>
+<li><b>如果</b> 响应带有一个 <code>Content-Location</code> 头字段并且它的字段值是一个跟<ruby>实际请求 URI<rt>effective request URI</rt></ruby> 不相同的 URI 引用，那么，发送端断言该有效载荷是某个资源的 representation，而该资源是由 <code>Content-Location</code> 的字段值所标识的。但是，除非这种<ruby>断言<rt>assertion</rt></ruby>能够通过其他途径（本规则并没有定义有什么途径）来验证，否则不能相信该断言。</li>
 <li><b>否则</b>，该响应消息的有效载荷是未标识的。</li>
 </ol>
 </div>
@@ -1599,7 +1599,7 @@ The <code>Content-Location</code> value is not a replacement for the effective R
 </blockquote>
 
 <p>
-<code>Content-Location</code> 的值并不是用来替换<ruby>有效请求 URI<rt>effective request URI</rt></ruby>（<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）的。它是一种<ruby>表示形式元数据<rt>representation metadata</rt></ruby>。它具有与定义在 MIME 的同名头字段（<a href="https://tools.ietf.org/html/rfc2557#section-4">【RFC2557】章节 4</a>）相同的句法和语义。但是，这个头字段出现在一个 HTTP 消息里是具有特殊含义的。
+<code>Content-Location</code> 的值并不是用来替换<ruby>实际请求 URI<rt>effective request URI</rt></ruby>（<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）的。它是一种<ruby>表示形式元数据<rt>representation metadata</rt></ruby>。它具有与定义在 MIME 的同名头字段（<a href="https://tools.ietf.org/html/rfc2557#section-4">【RFC2557】章节 4</a>）相同的句法和语义。但是，这个头字段出现在一个 HTTP 消息里是具有特殊含义的。
 </p>
 
 <blockquote>
@@ -1609,7 +1609,7 @@ If <code>Content-Location</code> is included in a <code>2xx (Successful)</code> 
 </blockquote>
 
 <p>
-如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应消息里，且它的值指向于（在转换为<ruby>绝对形式<rt>absolute form</rt></ruby>之后）一个与有效请求 URI 相同的 URI，那么，接收端 <b>可以</b> 将该有效载荷认为是对应资源在特定时间里的<ruby>当前表示形式<rt>current representation</rt></ruby>，所述“特定时间”是指由<ruby>消息创始日期<rt>message origination date</rt></ruby>所指定的时间。对于 GET（<a href="#org479e86d">章节 4.3.1</a>）或者 HEAD（<a href="#org607980d">章节 4.3.2</a>）请求来说，这与在服务器没有提供 <code>Content-Location</code> 头字段的情况下的默认语义相一致。对于类似 PUT（<a href="#org2e14fb1">章节 4.3.4</a>）或者 POST（<a href="#org24c5a01">章节 4.3.3</a>）这些会<ruby>改变资源状态<rt>state-changing</rt></ruby>的请求来说，这意味着服务器的响应包含了这个资源的新的<ruby>表示形式<rt>representation</rt></ruby>，由此与那些只报告动作方面的信息（例如，“<ruby>它生效了！<rt>It worked!</rt></ruby>”）的<ruby>表示形式<rt>representations</rt></ruby>作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
+如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应消息里，且它的值指向于（在转换为<ruby>绝对形式<rt>absolute form</rt></ruby>之后）一个与实际请求 URI 相同的 URI，那么，接收端 <b>可以</b> 将该有效载荷认为是对应资源在特定时间里的<ruby>当前表示形式<rt>current representation</rt></ruby>，所述“特定时间”是指由<ruby>消息创始日期<rt>message origination date</rt></ruby>所指定的时间。对于 GET（<a href="#org479e86d">章节 4.3.1</a>）或者 HEAD（<a href="#org607980d">章节 4.3.2</a>）请求来说，这与在服务器没有提供 <code>Content-Location</code> 头字段的情况下的默认语义相一致。对于类似 PUT（<a href="#org2e14fb1">章节 4.3.4</a>）或者 POST（<a href="#org24c5a01">章节 4.3.3</a>）这些会<ruby>改变资源状态<rt>state-changing</rt></ruby>的请求来说，这意味着服务器的响应包含了这个资源的新的<ruby>表示形式<rt>representation</rt></ruby>，由此与那些只报告动作方面的信息（例如，“<ruby>它生效了！<rt>It worked!</rt></ruby>”）的<ruby>表示形式<rt>representations</rt></ruby>作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
 </p>
 
 <blockquote>
@@ -1624,10 +1624,10 @@ If <code>Content-Location</code> is included in a <code>2xx (Successful)</code> 
 </blockquote>
 
 <p>
-如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应消息里，且它的字段值指向于一个与有效请求 URI 不相同的 URI，那么，源服务器<ruby>声称<rt>claim</rt></ruby>该 URI 是一个与封装在该有效载荷内的<ruby>表示形式<rt>representation</rt></ruby>相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
+如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应消息里，且它的字段值指向于一个与实际请求 URI 不相同的 URI，那么，源服务器<ruby>声称<rt>claim</rt></ruby>该 URI 是一个与封装在该有效载荷内的<ruby>表示形式<rt>representation</rt></ruby>相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
 </p>
 <ul class="org-ul">
-<li>对于回应给 GET 或 HEAD 请求的一个响应，它表明：<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 指向到一个服从<ruby>内容协商<rt>content negotiation</rt></ruby>的资源，并且针对<ruby>已选定的表示形式<rt>selected representation</rt></ruby>来说，<code>Content-Location</code> 的字段值是一个更加具体的标识符。</li>
+<li>对于回应给 GET 或 HEAD 请求的一个响应，它表明：<ruby>实际请求 URI<rt>effective request URI</rt></ruby> 指向到一个服从<ruby>内容协商<rt>content negotiation</rt></ruby>的资源，并且针对<ruby>已选定的表示形式<rt>selected representation</rt></ruby>来说，<code>Content-Location</code> 的字段值是一个更加具体的标识符。</li>
 <li>对于回应给<ruby>会改变资源状态的请求方法<rt>state-changing method</rt></ruby>的一个 <code>201 (Created)</code> 响应，如果 <code>Content-Location</code> 的字段值与 <code>Location</code> 的字段值相同，表明：这个有效载荷是新近被创建的资源的<ruby>当前表示形式<rt>current representation</rt></ruby>。</li>
 <li>否则，这个 <code>Content-Location</code> 表明：这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对<ruby>表示形式<rt>representation</rt></ruby>进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 <code>200 (OK)</code> 响应的有效载荷，<code>Content-Location</code> 的字段值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。</li>
 </ul>
@@ -1676,7 +1676,7 @@ The representation data associated with an HTTP message is either provided as th
 </blockquote>
 
 <p>
-与 HTTP 消息相关联的<ruby>表示形式数据<rt>representation data</rt></ruby>是被提供作为消息的有效载荷，或者被消息的语义和有效请求 URI 所引用。<ruby>表示形式数据<rt>representation data</rt></ruby>是处于某种由<ruby>表示形式元数据<rt>representation metadata</rt></ruby>相关的头字段所定义的格式和编码之中的。
+与 HTTP 消息相关联的<ruby>表示形式数据<rt>representation data</rt></ruby>是被提供作为消息的有效载荷，或者被消息的语义和实际请求 URI 所引用。<ruby>表示形式数据<rt>representation data</rt></ruby>是处于某种由<ruby>表示形式元数据<rt>representation metadata</rt></ruby>相关的头字段所定义的格式和编码之中的。
 </p>
 
 <blockquote>
@@ -2175,7 +2175,7 @@ When a resource is constructed such that parameters within the effective request
 </blockquote>
 
 <p>
-构建一个资源，使在<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 里的参数会影响到的请求动作选择，那么，确保该动作是否符合请求方法的语义是资源所有者的责任。例如，<ruby>基于网站的内容编辑软件<rt>Web-based content editing software</rt></ruby>常常会在<ruby>查询参数<rt>query parameters</rt></ruby>里使用某些动作，如 "page?do=delete"。如果这种资源的目的是为执行一个<ruby>非安全的动作<rt>unsafe action</rt></ruby>，那么，当使用一个<ruby>安全的请求方法<rt>safe request method</rt></ruby>来访问该资源的时候，资源所有者 <b>必须</b> 禁用或者拒绝该动作。否则的话，当<ruby>自动程序<rt>automated processes</rt></ruby>出于某种目的（为了链接维护，预取，生成搜索索引等）来对每个 URI 执行一个 GET 的时候，会导致不好的副作用。
+构建一个资源，使在<ruby>实际请求 URI<rt>effective request URI</rt></ruby> 里的参数会影响到的请求动作选择，那么，确保该动作是否符合请求方法的语义是资源所有者的责任。例如，<ruby>基于网站的内容编辑软件<rt>Web-based content editing software</rt></ruby>常常会在<ruby>查询参数<rt>query parameters</rt></ruby>里使用某些动作，如 "page?do=delete"。如果这种资源的目的是为执行一个<ruby>非安全的动作<rt>unsafe action</rt></ruby>，那么，当使用一个<ruby>安全的请求方法<rt>safe request method</rt></ruby>来访问该资源的时候，资源所有者 <b>必须</b> 禁用或者拒绝该动作。否则的话，当<ruby>自动程序<rt>automated processes</rt></ruby>出于某种目的（为了链接维护，预取，生成搜索索引等）来对每个 URI 执行一个 GET 的时候，会导致不好的副作用。
 </p>
 
 <blockquote>
@@ -2415,7 +2415,7 @@ Responses to POST requests are only cacheable when they include explicit freshne
 </blockquote>
 
 <p>
-回应给 POST 请求的响应，仅当它们包含明确的<ruby>新鲜信息<rt>freshness information</rt></ruby>时，才是<ruby>可缓存的<rt>cacheable</rt></ruby>（见<a href="https://tools.ietf.org/html/rfc7234#section-4.2.1">【RFC7234】章节 4.2.1</a>）。然而，对 POST 响应的缓存并没有被广泛实现。如果源服务器希望客户端以一种之后的 GET 能够复用的方式使客户端能够缓存 POST 的结果，面对这种情况，源服务器 <b>可以</b> 发送一个 <code>200 (OK)</code> 响应来包含该结果，并且，该响应还需带有与该 POST 的有效请求 URI 相同的值的一个 <code>Content-Location</code> 头字段（<a href="#org6190703">章节 3.1.4.2</a>）。
+回应给 POST 请求的响应，仅当它们包含明确的<ruby>新鲜信息<rt>freshness information</rt></ruby>时，才是<ruby>可缓存的<rt>cacheable</rt></ruby>（见<a href="https://tools.ietf.org/html/rfc7234#section-4.2.1">【RFC7234】章节 4.2.1</a>）。然而，对 POST 响应的缓存并没有被广泛实现。如果源服务器希望客户端以一种之后的 GET 能够复用的方式使客户端能够缓存 POST 的结果，面对这种情况，源服务器 <b>可以</b> 发送一个 <code>200 (OK)</code> 响应来包含该结果，并且，该响应还需带有与该 POST 的实际请求 URI 相同的值的一个 <code>Content-Location</code> 头字段（<a href="#org6190703">章节 3.1.4.2</a>）。
 </p>
 
 <blockquote>
@@ -2593,7 +2593,7 @@ Responses to the PUT method are not cacheable. If a successful PUT request passe
 </blockquote>
 
 <p>
-回应给 PUT 方法的响应是<ruby>不可缓存的<rt>not cacheable</rt></ruby>。如果一个<ruby>成功的 PUT 请求<rt>successful PUT request</rt></ruby>穿过一个<ruby>缓存<rt>cache</rt></ruby>，而该缓存已经存储（缓存）了该 PUT 请求的有效请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 PUT 请求），那么这些已存储的（已缓存的）响应将会<ruby>被失效<rt>be invalidated</rt></ruby>（见【RFC7234】章节 4.4）。
+回应给 PUT 方法的响应是<ruby>不可缓存的<rt>not cacheable</rt></ruby>。如果一个<ruby>成功的 PUT 请求<rt>successful PUT request</rt></ruby>穿过一个<ruby>缓存<rt>cache</rt></ruby>，而该缓存已经存储（缓存）了该 PUT 请求的实际请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 PUT 请求），那么这些已存储的（已缓存的）响应将会<ruby>被失效<rt>be invalidated</rt></ruby>（见【RFC7234】章节 4.4）。
 </p>
 
 <blockquote>
@@ -2687,7 +2687,7 @@ Responses to the DELETE method are not cacheable. If a DELETE request passes thr
 </blockquote>
 
 <p>
-回应给 DELETE 方法的响应是<ruby>不可缓存的<rt>not cacheable</rt></ruby>。如果一个 DELETE 请求穿过一个<ruby>缓存<rt>cache</rt></ruby>，而该缓存已经存储（缓存）了该 DELETE 请求的有效请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 DELETE 请求），那么这些已存储的（已缓存的）响应将会<ruby>被失效<rt>be invalidated</rt></ruby>（见<a href="https://tools.ietf.org/html/rfc7234#section-4.4">【RFC7234】章节 4.4</a>）。
+回应给 DELETE 方法的响应是<ruby>不可缓存的<rt>not cacheable</rt></ruby>。如果一个 DELETE 请求穿过一个<ruby>缓存<rt>cache</rt></ruby>，而该缓存已经存储（缓存）了该 DELETE 请求的实际请求 URI 所对应的一个或多个响应（也就是说，缓存命中了这个 DELETE 请求），那么这些已存储的（已缓存的）响应将会<ruby>被失效<rt>be invalidated</rt></ruby>（见<a href="https://tools.ietf.org/html/rfc7234#section-4.4">【RFC7234】章节 4.4</a>）。
 </p>
 
 <blockquote>
@@ -4910,7 +4910,7 @@ The <code>201 (Created)</code> status code indicates that the request has been f
 </blockquote>
 
 <p>
-<code>201 (Created)</code> 状态码表明：请求已被<ruby>实现<rt>fulfilled</rt></ruby>并且引起了一个或多个<ruby>新资源<rt>new resources</rt></ruby>被创建。上述因请求而创建的<ruby>主要资源<rt>primary resource</rt></ruby>会被一个在响应里的 <code>Location</code> 头字段所标识，或者，如果没有接收到 <code>Location</code> 头字段的话，则通过<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 来识别。
+<code>201 (Created)</code> 状态码表明：请求已被<ruby>实现<rt>fulfilled</rt></ruby>并且引起了一个或多个<ruby>新资源<rt>new resources</rt></ruby>被创建。上述因请求而创建的<ruby>主要资源<rt>primary resource</rt></ruby>会被一个在响应里的 <code>Location</code> 头字段所标识，或者，如果没有接收到 <code>Location</code> 头字段的话，则通过<ruby>实际请求 URI<rt>effective request URI</rt></ruby> 来识别。
 </p>
 
 <blockquote>
@@ -5229,7 +5229,7 @@ The <code>301 (Moved Permanently)</code> status code indicates that the target r
 </blockquote>
 
 <p>
-<code>301 (Move Permanently)</code> 状态码表明：目标资源已被<ruby>分配<rt>assign</rt></ruby>到一个新的永久 URI 上，将来对本资源的任何引用都应该使用本次响应所提供的新 URIs 之一。对于具有<ruby>链接编辑<rt>link-editing</rt></ruby>能力的客户端应该自动将链接到有效请求 URI 的引用重新链接到由服务器传过来的新的引用上。
+<code>301 (Move Permanently)</code> 状态码表明：目标资源已被<ruby>分配<rt>assign</rt></ruby>到一个新的永久 URI 上，将来对本资源的任何引用都应该使用本次响应所提供的新 URIs 之一。对于具有<ruby>链接编辑<rt>link-editing</rt></ruby>能力的客户端应该自动将链接到实际请求 URI 的引用重新链接到由服务器传过来的新的引用上。
 </p>
 
 <blockquote>
@@ -5275,7 +5275,7 @@ The <code>302 (Found)</code> status code indicates that the target resource resi
 </blockquote>
 
 <p>
-<code>302 (Found)</code> 状态码表明：目标资源临时处在一个不同的 URI 之下。因为重定向可以会再次改变，客户端应该在将来的请求中继续使用原来的<ruby>有效请求 URI<rt>effective request URI</rt></ruby>（而不是使用本次响应中 <code>Location</code> 字段所指的那个 URI）。
+<code>302 (Found)</code> 状态码表明：目标资源临时处在一个不同的 URI 之下。因为重定向可以会再次改变，客户端应该在将来的请求中继续使用原来的<ruby>实际请求 URI<rt>effective request URI</rt></ruby>（而不是使用本次响应中 <code>Location</code> 字段所指的那个 URI）。
 </p>
 
 <blockquote>
@@ -5310,12 +5310,12 @@ The <code>303 (See Other)</code> status code indicates that the server is redire
 </blockquote>
 
 <p>
-<code>303 (See Other)</code> 状态码表明：服务器让用户代理重新定向到一个不同的资源上，正如在 <code>Location</code> 的字段值里所示的 URI 上，其意图是提供一个<ruby>间接<rt>indirect</rt></ruby>的响应到原始请求。用户代理可以执行一个<ruby>检索请求<rt>retrieval request</rt></ruby>（如果使用 HTTP 的话就是一个 GET 或者 HEAD）来定位这个 URI，这样同样可以重定向，并呈现最终结果来作为这个<ruby>原始请求<rt>original request</rt></ruby>的应答。需要注意的是在 <code>Location</code> 头字段里的新 URI 不被视为等同于<ruby>有效请求 URI<rt>effective request URI</rt></ruby>。 
+<code>303 (See Other)</code> 状态码表明：服务器让用户代理重新定向到一个不同的资源上，正如在 <code>Location</code> 的字段值里所示的 URI 上，其意图是提供一个<ruby>间接<rt>indirect</rt></ruby>的响应到原始请求。用户代理可以执行一个<ruby>检索请求<rt>retrieval request</rt></ruby>（如果使用 HTTP 的话就是一个 GET 或者 HEAD）来定位这个 URI，这样同样可以重定向，并呈现最终结果来作为这个<ruby>原始请求<rt>original request</rt></ruby>的应答。需要注意的是在 <code>Location</code> 头字段里的新 URI 不被视为等同于<ruby>实际请求 URI<rt>effective request URI</rt></ruby>。 
 </p>
 
 <blockquote>
 <p>
-译注：<code>300</code> 的 <code>Location</code> 字段值所指的 URI 表示资源有多个表示形式，<code>301</code> 和 <code>302</code> 中 <code>Location</code> 的 URI 表示资源在不同的位置上，这些 URI 所代表是同一个资源。与上述状态码不同的是，<code>303</code> 中 <code>Location</code> 的 URI 所指的是另一个不同的资源，所以有“间接”的意义。同时，正因为 <code>303</code> 的有效请求 URI 所代表的资源与 <code>Location</code> 的 URI 不是同一个，因为才有上述的“不视为等同”。
+译注：<code>300</code> 的 <code>Location</code> 字段值所指的 URI 表示资源有多个表示形式，<code>301</code> 和 <code>302</code> 中 <code>Location</code> 的 URI 表示资源在不同的位置上，这些 URI 所代表是同一个资源。与上述状态码不同的是，<code>303</code> 中 <code>Location</code> 的 URI 所指的是另一个不同的资源，所以有“间接”的意义。同时，正因为 <code>303</code> 的实际请求 URI 所代表的资源与 <code>Location</code> 的 URI 不是同一个，因为才有上述的“不视为等同”。
 </p>
 </blockquote>
 
@@ -5391,7 +5391,7 @@ The <code>307 (Temporary Redirect)</code> status code indicates that the target 
 </blockquote>
 
 <p>
-<code>307 (Temporary Redirect)</code> 状态码表明：目标资源临时处在一个不同的 URI 之下，并且如果用户代理执行自动重定向到该 URI 的话，<b>禁止</b> 改变请求方法。因为重定向可能随时会改变，客户端应该在将来的请求中继续使用原来的<ruby>有效请求 URI<rt>effective request URI</rt></ruby>（而不是使用本次响应中 <code>Location</code> 字段所指的那个 URI）。
+<code>307 (Temporary Redirect)</code> 状态码表明：目标资源临时处在一个不同的 URI 之下，并且如果用户代理执行自动重定向到该 URI 的话，<b>禁止</b> 改变请求方法。因为重定向可能随时会改变，客户端应该在将来的请求中继续使用原来的<ruby>实际请求 URI<rt>effective request URI</rt></ruby>（而不是使用本次响应中 <code>Location</code> 字段所指的那个 URI）。
 </p>
 
 <blockquote>
@@ -6496,7 +6496,7 @@ The field value consists of a single <code>URI-reference</code>. When it has the
 </blockquote>
 
 <p>
-字段值由单个 <code>URI-reference</code> 组成。如果这个 <code>URI-reference</code> 是<ruby>相对引用<rt>relative reference</rt></ruby>的形式（<a href="https://tools.ietf.org/html/rfc3986#section-4.2">【RFC3986】章节 4.2</a>），那么，字段的最终值通过将它相对于<ruby>有效请求 URI<rt>effective request URI</rt></ruby>进行<ruby>引用解释<rt>resolving</rt></ruby>来计算得出（<a href="https://tools.ietf.org/html/rfc3986#section-5">【RFC3986】章节 5</a>）。
+字段值由单个 <code>URI-reference</code> 组成。如果这个 <code>URI-reference</code> 是<ruby>相对引用<rt>relative reference</rt></ruby>的形式（<a href="https://tools.ietf.org/html/rfc3986#section-4.2">【RFC3986】章节 4.2</a>），那么，字段的最终值通过将它相对于<ruby>实际请求 URI<rt>effective request URI</rt></ruby>进行<ruby>引用解释<rt>resolving</rt></ruby>来计算得出（<a href="https://tools.ietf.org/html/rfc3986#section-5">【RFC3986】章节 5</a>）。
 </p>
 
 <blockquote>
@@ -8086,7 +8086,7 @@ Origin servers frequently make use of their local file system to manage the mapp
 </blockquote>
 
 <p>
-源服务器经常使用它们的本地文件系统来管理<ruby>有效请求 URI<rt>effective request URI</rt></ruby> 与<ruby>资源表示形式<rt>resource representations</rt></ruby>之间的<ruby>映射<rt>mapping</rt></ruby>。大多数<ruby>文件系统<rt>file system</rt></ruby>没有对防范恶意文件名称或路径名称方面的设计。因此，当源服务器映射请求目标到文件、文件夹、或者目录的时候，源服务器需要避免访问对于文件系统来说具有特殊意义的那些名称。
+源服务器经常使用它们的本地文件系统来管理<ruby>实际请求 URI<rt>effective request URI</rt></ruby> 与<ruby>资源表示形式<rt>resource representations</rt></ruby>之间的<ruby>映射<rt>mapping</rt></ruby>。大多数<ruby>文件系统<rt>file system</rt></ruby>没有对防范恶意文件名称或路径名称方面的设计。因此，当源服务器映射请求目标到文件、文件夹、或者目录的时候，源服务器需要避免访问对于文件系统来说具有特殊意义的那些名称。
 </p>
 
 <blockquote>

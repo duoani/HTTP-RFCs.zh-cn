@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-05 Wed 09:54 -->
+<!-- 2018-12-05 Wed 15:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -429,11 +429,11 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#org95ce2ff">3.2. 头字段 / Header Fields</a>
 <ul>
-<li><a href="#org5e48ec8">3.2.1. 域的可扩展性 / Field Extensibility</a></li>
-<li><a href="#orgee0910a">3.2.2. 域的顺序 / Field Order</a></li>
+<li><a href="#orgcb1dfcc">3.2.1. 字段的可扩展性 / Field Extensibility</a></li>
+<li><a href="#orgb0e9fd2">3.2.2. 字段的顺序 / Field Order</a></li>
 <li><a href="#org854c2ff">3.2.3. 空格 / Whitespace</a></li>
-<li><a href="#orgf6d6d76">3.2.4. 域解析 / Field Parsing</a></li>
-<li><a href="#orgc1f254c">3.2.5. 域限制 / Field Limits</a></li>
+<li><a href="#org6dc2928">3.2.4. 字段解析 / Field Parsing</a></li>
+<li><a href="#orgfc817b8">3.2.5. 字段限制 / Field Limits</a></li>
 <li><a href="#org0342654">3.2.6. 字段值的组成 / Field Value Components</a></li>
 </ul>
 </li>
@@ -453,7 +453,7 @@ for the JavaScript code in this tag.
 <li><a href="#org9375fa9">4.1. 分块传输编码值 / Chunked Transfer Coding</a>
 <ul>
 <li><a href="#orgf15db16">4.1.1. 分块扩展 / Chunk Extensions</a></li>
-<li><a href="#orge6d1a99">4.1.2. 分块拖尾部分 / Chunked Trailer Part</a></li>
+<li><a href="#org0bcd060">4.1.2. 分块尾部 / Chunked Trailer Part</a></li>
 <li><a href="#org6712bae">4.1.3. 解码分块 / Decoding Chunked</a></li>
 </ul>
 </li>
@@ -481,7 +481,7 @@ for the JavaScript code in this tag.
 </ul>
 </li>
 <li><a href="#org5f0675f">5.4. 主机 / Host</a></li>
-<li><a href="#org0d26544">5.5. 有效请求 URI / Effective Request URI</a></li>
+<li><a href="#orgabb4b7d">5.5. 实际请求 URI / Effective Request URI</a></li>
 <li><a href="#orgd30c15e">5.6. 将响应关联到请求 / Associating a Response to a Request</a></li>
 <li><a href="#org73ad1cc">5.7. 消息转发 / Message Forwarding</a>
 <ul>
@@ -604,7 +604,7 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol
 </blockquote>
 
 <p>
-超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI 方案（URI schemes），定义了 HTTP/1.1 消息句法和解析要求，以及描述了对实现（implementations）的安全性相关的注意事项。
+超文本传输协议（HTTP）是一种无状态的应用层协议，适用于分布式、协作式的超文本信息系统。本文档提供 HTTP 架构以及其相关术语的概述，定义了 "http" 和 "https" 两种 URI <ruby>方案<rt>schemes</rt></ruby>，定义了 HTTP/1.1 消息句法和解析要求，以及描述了对<ruby>实现<rt>implementations</rt></ruby>的安全性相关的注意事项。
 </p>
 
 <blockquote>
@@ -642,7 +642,7 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level request/
 </blockquote>
 
 <p>
-超文本传输协议（HTTP）是一种基于请求/响应模式的、无状态的应用层协议，使用可扩展的语义和自我描述的消息有效载荷，与基于网络的超文本信息系统进行灵活的交互。本文档是 HTTP/1.1 规范系列文档里的第一份。
+超文本传输协议（HTTP）是一种基于请求/响应模式的、<ruby>无状态<rt>stateless</rt></ruby>的应用层协议，使用<ruby>可扩展的语义<rt>extensible semantics</rt></ruby>和<ruby>自我描述<rt>self-descriptive</rt></ruby>的消息有效载荷来与<ruby>基于网络<rt>network-based</rt></ruby>的超文本信息系统进行灵活的交互。本文档是 HTTP/1.1 规范系列文档里的第一份。
 </p>
 
 <blockquote>
@@ -672,7 +672,7 @@ This HTTP/1.1 specification obsoletes <a href="https://tools.ietf.org/html/rfc26
 </blockquote>
 
 <p>
-本 HTTP/1.1 规范废弃了 <a href="https://tools.ietf.org/html/rfc2616">RFC2616</a> 以及 <a href="https://tools.ietf.org/html/rfc2145">RFC2145</a>（关于 HTTP 版本管理）。本规范也更新了之前定义在 <a href="https://tools.ietf.org/html/rfc2817">RFC2817</a> 里的关于 CONNECT 在建立隧道时的使用方式，以及定义了原来在 <a href="https://tools.ietf.org/html/rfc2818">RFC2818</a> 有过非正式描述的 "https" URI 方案（URI scheme）。
+本 HTTP/1.1 规范废弃了 <a href="https://tools.ietf.org/html/rfc2616">RFC2616</a> 以及 <a href="https://tools.ietf.org/html/rfc2145">RFC2145</a>（关于 HTTP 版本管理方而的内容）。本规范也更新了之前定义在 <a href="https://tools.ietf.org/html/rfc2817">RFC2817</a> 里的关于 CONNECT 在建立隧道时的使用方式，以及定义了原来在 <a href="https://tools.ietf.org/html/rfc2818">RFC2818</a> 有过非正式描述的 "https" URI <ruby>方案<rt>scheme</rt></ruby>。
 </p>
 
 <blockquote>
@@ -688,7 +688,7 @@ HTTP is a generic interface protocol for information systems. It is designed to 
 </blockquote>
 
 <p>
-HTTP 是一种用于信息系统的通用接口协议。它的设计思想是通过向客户端呈现一种独立于服务（service）自身所提供的资源类型的统一接口，来隐藏该服务（service）的实现细节。同样，服务器并不需要知道每一个客户端的目的，这是因为可以认为所有 HTTP 请求都是孤立的，而不是与一种特定的客户端类型、或者一连串预先定义好的应用步骤相关联。这样的设计造就了一个能够被有效用于多种不同场景，以及各种实现（Implementations）能够相互独立发展的协议。
+HTTP 是一种用于信息系统的通用接口协议。它的设计思想是通过向客户端呈现一种独立于<ruby>服务<rt>service</rt></ruby>自身所提供的资源类型的统一接口，来隐藏这个服务的实现细节。同样，服务器并不需要知道每一个客户端的目的，这是因为可以认为所有 HTTP 请求都是孤立的，而不是与一种特定的客户端类型、或者一连串预先定义好的应用步骤相关联。这样的设计造就了一个能够被有效用于多种不同场景，以及各种<ruby>实现<rt>implementations</rt></ruby>能够相互独立发展的协议。
 </p>
 
 <blockquote>
@@ -698,7 +698,7 @@ HTTP is also designed for use as an intermediation protocol for translating comm
 </blockquote>
 
 <p>
-HTTP 也可以作为一种中间人协议来使用，对非 HTTP（non-HTTP）信息系统的相互通信进行翻译（translate）。HTTP 代理（proxy）和网关（gateway）能够提供对可替代的信息服务的访问，具体是通过将它们的驱动协议翻译为一种能够被客户端查看和操作的超文本格式，使之能像访问 HTTP 服务一样的方式来访问。
+HTTP 也可以作为一种中间人协议来使用，对<ruby>非 HTTP<rt>non-HTTP</rt></ruby>信息系统的相互通信进行<ruby>翻译<rt>translate</rt></ruby>。HTTP <ruby>代理<rt>proxy</rt></ruby>和<ruby>网关<rt>gateway</rt></ruby>能够提供对可替代的信息服务的访问，具体是通过将它们的驱动协议翻译为一种能够被客户端查看和操作的超文本格式，使之能像访问 HTTP 服务一样的方式来访问。
 </p>
 
 <blockquote>
@@ -718,7 +718,7 @@ This document describes the architectural elements that are used or referred to 
 </blockquote>
 
 <p>
-本文档描述了用于或涉及 HTTP 的架构元素（architectural elements），定义了 "http" 和 "https" 两种 URI 方案，总体上描述了网络操作和连接管理，并且定义了 HTTP 消息在分帧（framing）和转发（forwarding）方面的要求。我们的目标是为处理 HTTP 消息定义所有独立于消息语义的必要方法，从而为消息解析器（message parsers）和消息转发中间人(message-forwarding intermediaries)定义完整的要求集（complete set of requirements）。
+本文档描述了用于或涉及 HTTP 的<ruby>架构元素<rt>architectural elements</rt></ruby>，定义了 "http" 和 "https" 两种 URI 方案，总体上描述了网络操作和连接管理，并且定义了 HTTP 消息在<ruby>分帧<rt>framing</rt></ruby>和<ruby>转发<rt>forwarding</rt></ruby>方面的要求。我们的目标是为处理 HTTP 消息定义所有独立于消息语义的必要方法，从而为<ruby>消息解析器<rt>message parsers</rt></ruby>和<ruby>消息转发中间人<rt>message-forwarding intermediaries</rt></ruby>定义完整的要求集。
 </p>
 </div>
 
@@ -732,7 +732,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 </blockquote>
 
 <p>
-关键词 <b>必须（MUST）</b>、<b>禁止（MUST NOT）</b>、<b>要求（REQUIRED）</b>、<b>必须（SHALL）</b>、<b>禁止（SHALL NOT）</b>、<b>应当（SHOULD）</b>、<b>不应当（SHOULD NOT）</b>、<b>推荐（RECOMMENDED）</b>、<b>可以（MAY）</b> 和 <b>可选（OPTIONAL）</b> 的意义与【<a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>】一致。
+关键词 <b><ruby>必须<rt>MUST</rt></ruby></b>、<b><ruby>禁止<rt>MUST NOT</rt></ruby></b>、<b><ruby>要求<rt>REQUIRED</rt></ruby></b>、<b><ruby>必须<rt>SHALL</rt></ruby></b>、<b><ruby>禁止<rt>SHALL NOT</rt></ruby></b>、<b><ruby>应该<rt>SHOULD</rt></ruby></b>、<b><ruby>不应当<rt>SHOULD NOT</rt></ruby></b>、<b><ruby>推荐<rt>RECOMMENDED</rt></ruby></b>、<b><ruby>可以<rt>MAY</rt></ruby></b> 和 <b><ruby>可选<rt>OPTIONAL</rt></ruby></b> 的意义与【<a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>】一致。
 </p>
 
 <blockquote>
@@ -757,7 +757,7 @@ This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC52
 </blockquote>
 
 <p>
-本规范使用了扩展巴科斯范式（ABNF）标记法【<a href="https://tools.ietf.org/html/rfc5234">RFC5234</a>】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见<a href="#orgbe29b5b">章节 7</a>），允许使用一个 <code>#</code> 操作符（类似于 <code>*</code> 操作符，指代“重复”）来定义一种以逗号分隔的列表。
+本规范使用了<ruby>扩展巴科斯范式<rt>Augmented Backus-Naur Form</rt></ruby>（ABNF）标记法【<a href="https://tools.ietf.org/html/rfc5234">RFC5234</a>】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见<a href="#orgbe29b5b">章节 7</a>），允许使用一个 <code>#</code> 操作符（类似于 <code>*</code> 操作符，指代“重复”）来定义一种以逗号分隔的列表。
 </p>
 
 <blockquote>
@@ -781,7 +781,7 @@ As a convention, ABNF rule names prefixed with "<code>obs-</code>" denote "obsol
 </blockquote>
 
 <p>
-按照惯例，名称以 "obs-" 开头的 ABNF 规则代表这是已经废弃（obsolete）了的语法，之所以这种规则会出现是为了描述历史遗留的问题。 
+按照惯例，名称以 "obs-" 开头的 ABNF 规则代表这是已经<ruby>废弃<rt>obsolete</rt></ruby>了的语法，之所以这种规则会出现是为了描述历史遗留的问题。 
 </p>
 </div>
 </div>
@@ -812,7 +812,7 @@ HTTP is a stateless request/response protocol that operates by exchanging messag
 </blockquote>
 
 <p>
-HTTP 是一种无状态的请求/响应协议，通过一个可靠的传输层或会话层“连接”来交换消息（message，见<a href="#orge9f1350">章节 3</a>）。HTTP 客户端（client）是一种用于与服务器建立连接（connection，见<a href="#org36e1991">章节 6</a>），向其发送一个或多个 HTTP 请求的应用程序。HTTP 服务器（server）是一个接受客户端连接，接收 HTTP 请求，发送 HTTP 响应的应用程序。
+HTTP 是一种无状态的请求/响应协议，通过一个可靠的传输层或会话层“连接”来<ruby>交换消息<rt>exchanging messages</rt></ruby>（<a href="#orge9f1350">章节 3</a>）。HTTP <ruby>客户端<rt>client</rt></ruby>是一种用于与服务器建立<ruby>连接<rt>connection</rt></ruby>（<a href="#org36e1991">章节 6</a>），向其发送一种或多个 HTTP 请求的应用程序。HTTP <ruby>服务器<rt>server</rt></ruby>是一种接受客户端连接，接收 HTTP 请求，发送 HTTP 响应的应用程序。
 </p>
 
 <blockquote>
@@ -828,7 +828,7 @@ The terms "client" and "server" refer only to the roles that these programs perf
 </blockquote>
 
 <p>
-术语“客户端（client）”和“服务器（server）”特指在一个具体连接（connection）中的相关程序所充当的角色。同一个程序可能在某些连接中充当一个客户端，而在其他连接中充当的是一个服务器。术语“用户代理（user agent）”指的是任何发起请求的各种客户端程序，包括（但不限于）浏览器、爬虫（基于网络的机器人）、命令行工具、定制应用和移动应用。术语“源服务器（origin server）”指的是任何为一个给定目标资源产生权威响应（authoritative response，见<a href="#org626caed">章节 9.1</a>）的程序。术语“发送端（sender）”和“接收端（recipient）”分别指的是任何发送或者接收一个给定消息的实现（implementation）。
+术语“<ruby>客户端<rt></rt></ruby>”和“<ruby>服务器<rt></rt></ruby>”特指在一个具体<ruby>连接<rt>connection</rt></ruby>中的相关程序所充当的角色。同一个程序可能在某些连接中充当一个客户端，而在其他连接中充当的是一个服务器。术语“<ruby>用户代理<rt>user agent</rt></ruby>”指的是任何发起请求的各种客户端程序，包括（但不限于）浏览器、爬虫（基于网络的机器人）、命令行工具、定制应用和移动应用。术语“<ruby>源服务器<rt>origin server</rt></ruby>”指的是任何为一个给定目标资源产生<ruby>权威响应<rt>authoritative response</rt></ruby>（<a href="#org626caed">章节 9.1</a>）的程序。术语“<ruby>发送端<rt>sender</rt></ruby>”和“<ruby>接收端<rt>recipient</rt></ruby>”分别指的是任何发送或者接收一个给定消息的<ruby>实现<rt>implementation</rt></ruby>。
 </p>
 
 <blockquote>
@@ -838,17 +838,17 @@ HTTP relies upon the Uniform Resource Identifier (URI) standard [<a href="https:
 </blockquote>
 
 <p>
-HTTP 依靠“统一资源标识符（URI）标准<a href="https://tools.ietf.org/html/rfc3986">【RFC3986】</a>”来标识目标资源（<a href="#org2f2c27f">章节 5.1</a>）以及资源与资源之间的关系。消息通过类似于电子邮件【<a href="https://tools.ietf.org/html/rfc5233">RFC5233</a>】和多用途互联网邮件扩展类型（MIME）【<a href="https://tools.ietf.org/html/rfc2045">RFC2045</a>】的格式来进行传输。对于 HTTP 与 MIME 之间的区别可以查看<a href="RFC7231.html#ID-84208afd-e458-4f40-97cc-2e9535523797">【RFC7231】附录 A</a>。）
+HTTP 依靠“<ruby>统一资源标识符<rt>Uniform Resource Identifier</rt></ruby>（URI）标准<a href="https://tools.ietf.org/html/rfc3986">【RFC3986】</a>”来标识目标资源（<a href="#org2f2c27f">章节 5.1</a>）以及资源与资源之间的关系。消息通过类似于互联网邮件【<a href="https://tools.ietf.org/html/rfc5233">RFC5233</a>】和<ruby>多用途互联网邮件扩展<rt>Multipurpose Internet Mail Extensions</rt></ruby>（MIME）【<a href="https://tools.ietf.org/html/rfc2045">RFC2045</a>】的格式来进行传输。对于 HTTP 与 MIME 之间的区别可以查看<a href="RFC7231.html#ID-84208afd-e458-4f40-97cc-2e9535523797">【RFC7231】附录 A</a>。）
 </p>
 
 <blockquote>
 <p>
-Most HTTP communication consists of a retrieval request (GET) for a representation of some resource identified by a URI. In the simplest case, this might be accomplished via a single bidirectional connection (<code>=</code>) between the user agent (UA) and the origin server (O).
+Most HTTP communication consists of a retrieval request (GET) for a representation of some resource identified by a URI. In the simplest case, this might be accomplished via a single bidirectional connection (=) between the user agent (UA) and the origin server (O).
 </p>
 </blockquote>
 
 <p>
-大多数 HTTP 的通讯是由 GET 请求组成的，通过向一个 URI 发起 GET 请求来获得该 URI 所标识的资源一种<ruby>表示方式<rt>representation</rt></ruby>。在最简单的情况下，可以经由一个在用户代理（UA）和源服务器（O）之间的双向连接就能完成。
+大多数 HTTP 的通讯是由 GET 请求组成的，通过向一个 URI 发起<ruby>检索请求<rt>retrieval request</rt></ruby>（GET）来获得该 URI 所标识的资源一种<ruby>表示方式<rt>representation</rt></ruby>。在最简单的情况下，可以经由一个在用户代理（UA）和源服务器（O）之间的<ruby>双向连接<rt>bidirectional connection</rt></ruby>（=）就能完成。
 </p>
 
 <div class="org-src-container">
@@ -860,12 +860,12 @@ UA ======================================= O
 
 <blockquote>
 <p>
-A client sends an HTTP request to a server in the form of a request message, beginning with a request-line that includes a method, URI, and protocol version (Section 3.1.1), followed by header fields containing request modifiers, client information, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
+A client sends an HTTP request to a server in the form of a request message, beginning with a request-line that includes a method, URI, and protocol version (<a href="#org5430999">Section 3.1.1</a>), followed by header fields containing request modifiers, client information, and representation metadata (<a href="#org95ce2ff">Section 3.2</a>), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, <a href="#orgf7a981f">Section 3.3</a>).
 </p>
 </blockquote>
 
 <p>
-客户端以请求消息（request message）的形式向服务器发送一个 HTTP 请求。请求消息以一个包含了方法（method）、URI 和协议版本（protocol version）的请求行（request line，见<a href="#org5430999">章节 3.1.1</a>）作为开始；随后是包含了请求修饰符，客户端信息以及表示形式元数据（representation metadata，见<a href="#org95ce2ff">章节 3.2</a>）的头字段（header fields）；接着是一个空行，来表示消息头部（header section）结束；最后是一个包含了有效载荷（如果有的话，见<a href="#orgf7a981f">章节 3.3</a>）的消息体（message body）。
+客户端以<ruby>请求消息<rt>request message</rt></ruby>的形式向服务器发送一个 HTTP 请求。请求消息以一个包含了<ruby>方法<rt>method</rt></ruby>、URI 和<ruby>协议版本<rt>protocol version</rt></ruby>的<ruby>请求行<rt>request line</rt></ruby>（<a href="#org5430999">章节 3.1.1</a>）作为开始；随后是包含了<ruby>请求修饰符<rt>request modifiers</rt></ruby>、客户端信息以及<ruby>表示形式元数据<rt>representation metadata</rt></ruby>的<ruby>头字段<rt>header fields</rt></ruby>（<a href="#org95ce2ff">章节 3.2</a>）；接着是一个空行，来表示<ruby>消息头部<rt>header section</rt></ruby>结束；最后是一个包含<ruby>有效载荷<rt>payload body</rt></ruby>（如果有的话）的<ruby>消息体<rt>message body</rt></ruby>（<a href="#orgf7a981f">章节 3.3</a>）。
 </p>
 
 <blockquote>
@@ -876,12 +876,12 @@ A client sends an HTTP request to a server in the form of a request message, beg
 
 <blockquote>
 <p>
-A server responds to a client's request by sending one or more HTTP response messages, each beginning with a status line that includes the protocol version, a success or error code, and textual reason phrase (Section 3.1.2), possibly followed by header fields containing server information, resource metadata, and representation metadata (Section 3.2), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, Section 3.3).
+A server responds to a client's request by sending one or more HTTP response messages, each beginning with a status line that includes the protocol version, a success or error code, and textual reason phrase (<a href="#orgfb3216c">Section 3.1.2</a>), possibly followed by header fields containing server information, resource metadata, and representation metadata (<a href="#org95ce2ff">Section 3.2</a>), an empty line to indicate the end of the header section, and finally a message body containing the payload body (if any, <a href="#orgf7a981f">Section 3.3</a>).
 </p>
 </blockquote>
 
 <p>
-服务器通过发送一个或多个 HTTP 响应消息（response message）来响应客户端的请求。每个响应消息以一个包含协议版本（protocol version）、一个成功或失败的状态码（status code）以及一个描述状态码的文本短语（reason phrase）的状态行（status line，<a href="#orgfb3216c">章节 3.1.2</a>）作为开始；随后可能是包含服务器信息、资源元数据以及表示形式元数据（representation metadata，见章节 3.2）的头字段（header fields）；接着是一个空行，来表示消息头部（header section）结束；最后是一个包含有效载荷（如果有的话，见<a href="#orgf7a981f">章节 3.3</a>）的消息体（message body）。
+服务器通过发送一个或多个 HTTP <ruby>响应消息<rt>response message</rt></ruby>来响应客户端的请求。每个响应消息以一个包含<ruby>协议版本<rt>protocol version</rt></ruby>、一个成功或失败的<ruby>状态码<rt>status code</rt></ruby>以及一个描述状态码的<ruby>文本短语<rt>reason phrase</rt></ruby>来构成的<ruby>状态行<rt>status line</rt></ruby>（<a href="#orgfb3216c">章节 3.1.2</a>）作为开始；随后可能是包含服务器信息、资源元数据以及<ruby>表示形式元数据<rt>representation metadata</rt></ruby>的<ruby>头字段<rt>header fields</rt></ruby>（<a href="#org95ce2ff">章节 3.2</a>）；接着是一个空行，来表示<ruby>消息头部<rt>header section</rt></ruby>结束；最后是一个包含<ruby>有效载荷<rt>payload body</rt></ruby>（如果有的话）的<ruby>消息体<rt>message body</rt></ruby>（<a href="#orgf7a981f">章节 3.3</a>）。
 </p>
 
 <blockquote>
@@ -970,7 +970,7 @@ The term "user agent" does not imply that there is a human user directly interac
 </blockquote>
 
 <p>
-术语“用户代理（user agent）”并不是意味着在请求的时候有一个人类用户与软件代理进行直接交互。在许多情况下，用户代理是被安装或配置用于后台运行，并保存其运行结果用于后续检验（或者只保存那些感兴趣的，或者错误的那部分）。例如，爬虫，其典型应用是给定一个起始 URI，然后配置其抓取网页文本的后续行为。
+术语“<ruby>用户代理<rt>user agent</rt></ruby>”并不是意味着在请求的时候有一个人类用户与软件代理进行直接交互。在许多情况下，用户代理是被安装或配置用于后台运行，并保存其运行结果用于后续检验（或者只保存那些感兴趣的，或者错误的那部分）。例如，爬虫，其典型应用是给定一个起始 URI，然后配置其抓取网页文本的后续行为。
 </p>
 
 <blockquote>
@@ -980,7 +980,7 @@ The implementation diversity of HTTP means that not all user agents can make int
 </blockquote>
 
 <p>
-HTTP 实现（implementations）上的差异性，表现为不是所有的用户代理都能为用户提供交互性的建议或者对其关注的安全或隐私提供足够的警示。例如，本规范规定了在某些情况下要求向用户报告错误，但在某些实现（implementations）上，这些报告信息可能只输出到错误控制台或者日志文件里，这也是允许的。同样，用户可以在用户代理里（例如在高级选项、运行时选项或者不安全操作中）预先配置接下来的默认行为，规范要求当遇到这些默认行为时需要用户确认，而这个确认并不意味着出现一个特定的用户界面或者正常流程被打断，如果用户已经预先做出了选择的话。
+HTTP <ruby>实现<rt>implementations</rt></ruby>上的差异性，表现为不是所有的用户代理都能为用户提供交互性的建议或者对其关注的安全或隐私提供足够的警示。例如，本规范规定了在某些情况下要求向用户报告错误，但在某些<ruby>实现<rt>implementations</rt></ruby>上，这些报告信息可能只输出到错误控制台或者日志文件里，这也是允许的。同样，用户可以在用户代理里（例如在高级选项、运行时选项或者不安全操作中）预先配置接下来的默认行为，规范要求当遇到这些默认行为时需要用户确认，而这个确认并不意味着出现一个特定的用户界面或者正常流程被打断，如果用户已经预先做出了选择的话。
 </p>
 </div>
 </div>
@@ -995,7 +995,7 @@ HTTP enables the use of intermediaries to satisfy requests through a chain of co
 </blockquote>
 
 <p>
-HTTP 能使用中间人（intermediaries）来满足在通信链路里中转请求的需要。HTTP 有三种中间人：代理（proxy），网关（gateway）和隧道（tunnel）。在某些情况下，一个中间人可以依据当前接收到的请求来决定是以源服务器、代理、网关还是隧道的方式来处理这个请求。
+HTTP 能使用<ruby>中间人<rt>intermediaries</rt></ruby>来满足在通信链路里中转请求的需要。HTTP 有三种中间人：<ruby>代理<rt>proxy</rt></ruby>、<ruby>网关<rt>gateway</rt></ruby>和<ruby>隧道<rt>tunnel</rt></ruby>。在某些情况下，一个中间人可以依据当前接收到的请求来决定是以源服务器、代理、网关还是隧道的方式来处理这个请求。
 </p>
 
 <div class="org-src-container">
@@ -1033,7 +1033,7 @@ The terms "upstream" and "downstream" are used to describe directional requireme
 </blockquote>
 
 <p>
-术语“上游（upstream）”和“下游（downstream）”用于描述消息流的方向：所有的消息都从上游流到下游。术语“入站（inbound）”和“出站（outbound）”用于描述请求经过路由的方向：“入站”意为经过路由器的数据流向源服务器流动，而“出站”意为经过路由器的数据流向用户代理流动。 
+术语“<ruby>上游<rt>upstream</rt></ruby>”和“<ruby>下游<rt>downstream</rt></ruby>”用于描述消息流的方向：所有的消息都从上游流到下游。术语“<ruby>入站<rt>inbound</rt></ruby>”和“<ruby>出站<rt>outbound</rt></ruby>”用于描述请求经过路由的方向：“入站”意为经过路由器的数据流向源服务器流动，而“出站”意为经过路由器的数据流向用户代理流动。 
 </p>
 
 <blockquote>
@@ -1055,7 +1055,7 @@ A "proxy" is a message-forwarding agent that is selected by the client, usually 
 </blockquote>
 
 <p>
-代理（proxy），是一种由客户端选定的负责消息转发的中介，一般通过本地设置的规则来接收绝对 URI（absolute URI）类型的请求并试图经由 HTTP 接口的翻译（translation）来满足这些请求。某些翻译（translation）是以最低限度来进行的，例如对 "http" URI 进行请求代理；与之相反的是，某些请求可能要求翻译为或翻译自（translation to and from）完全不同的应用层协议。为了安全性、服务标识或者共享缓存，某些代理一般通过一个共同的中间人，对同一组织的 HTTP 请求进行分组。某些代理被设计为对选定的消息或有效载荷在其被转发时进行转换（见 <a href="#org54dfdcc">5.7.2</a>）。
+<ruby>代理<rt>proxy</rt></ruby>，是一种由客户端选定的负责消息转发的中介，一般通过本地设置的规则来接收<ruby>绝对 URI<rt>absolute URI</rt></ruby>类型的请求并试图经由 HTTP 接口的<ruby>翻译<rt>translation</rt></ruby>来满足这些请求。某些翻译是以最低限度来进行的，例如对 "http" URI 进行请求代理；与之相反的是，某些请求可能要求<ruby>翻译为或翻译自<rt>translation to and from</rt></ruby>完全不同的应用层协议。为了安全性、服务标识或者共享缓存，某些代理一般通过一个共同的中间人，对同一组织的 HTTP 请求进行分组。某些代理被设计为对选定的消息或有效载荷在其被转发时进行转换（见 <a href="#org54dfdcc">5.7.2</a>）。
 </p>
 
 <blockquote>
@@ -1071,7 +1071,7 @@ A "gateway" (a.k.a. "reverse proxy") is an intermediary that acts as an origin s
 </blockquote>
 
 <p>
-网关（gateway，又称为“反向代理”），对于出站通信（outbound connection）来说网关充当一个源服务器，它会将接收到的请求进行翻译（translate），然后转发到站内（inbound）的一个或多个服务器上。网关通常用于封装遗留或者不受信任的信息服务，通过“加速器”缓存，以及在多机中开启分片或负载均衡来提升 HTTP 服务器的性能。
+<ruby>网关<rt>gateway</rt></ruby>（又称为“<ruby>反向代理<rt>reverse proxy</rt></ruby>”），对于<ruby>出站通信<rt>outbound connection</rt></ruby>来说网关充当一个源服务器，它会将接收到的请求进行<ruby>翻译<rt>translate</rt></ruby>，然后转发到<ruby>站内<rt>inbound</rt></ruby>的一个或多个服务器上。网关通常用于封装遗留或者不受信任的信息服务，通过“加速器”缓存，以及在多机中开启分片或负载均衡来提升 HTTP 服务器的性能。
 </p>
 
 <blockquote>
@@ -1081,7 +1081,7 @@ All HTTP requirements applicable to an origin server also apply to the outbound 
 </blockquote>
 
 <p>
-HTTP 中所有对于源服务器的要求都适用于网关的出站通信（outbound communication）。一个网关可以使用其喜欢的协议与入站网关通信，包括对 HTTP 的私有扩展（已经超出了本标准的范畴）。但是，如果一个 HTTP-to-HTTP 的网关在入站（inbound）时想跟第三方 HTTP 服务器交互的话应该遵循本标准对于用户代理的要求。
+HTTP 中所有对于源服务器的要求都适用于网关的<ruby>出站通信<rt>outbound communication</rt></ruby>。一个网关可以使用其喜欢的协议与入站网关通信，包括对 HTTP 的私有扩展（已经超出了本标准的范畴）。但是，如果一个 HTTP-to-HTTP 的网关在<ruby>入站<rt>inbound</rt></ruby>时想跟第三方 HTTP 服务器交互的话应该遵循本标准对于用户代理的要求。
 </p>
 
 <blockquote>
@@ -1091,7 +1091,7 @@ A "tunnel" acts as a blind relay between two connections without changing the me
 </blockquote>
 
 <p>
-隧道（tunnel）在两个连接之间充当一个盲中继（blind relay），即隧道并不会对消息进行更改。隧道在激活后，由 HTTP 请求来进行初始化，但隧道并不作为 HTTP 通信的一部分。在隧道两端的连接都关闭后，隧道将不复存在。经由一个中间人的中转，隧道能够用来扩展一种<a href="https://en.wikipedia.org/wiki/Virtual_circuit">虚连接（virtual connection）</a>，例如传输层安全协议（TLS，[<a href="https://tools.ietf.org/html/rfc5246">RFC5246</a>]）可以经由一个共享的防火墙代理来建立保密通信。
+<ruby>隧道<rt>tunnel</rt></ruby>在两个连接之间充当一个<ruby>盲中继<rt>blind relay</rt></ruby>，即隧道并不会对消息进行更改。隧道在激活后，由 HTTP 请求来进行初始化，但隧道并不作为 HTTP 通信的一部分。在隧道两端的连接都关闭后，隧道将不复存在。经由一个中间人的中转，隧道能够用来扩展一种<a href="https://en.wikipedia.org/wiki/Virtual_circuit">虚连接（virtual connection）</a>，例如传输层安全协议（TLS，[<a href="https://tools.ietf.org/html/rfc5246">RFC5246</a>]）可以经由一个共享的防火墙代理来建立<ruby>保密通信<rt>confidential communication</rt></ruby>。
 </p>
 
 <blockquote>
@@ -1107,17 +1107,17 @@ The above categories for intermediary only consider those acting as participants
 </blockquote>
 
 <p>
-上述这些类型的中间人仅认为是在 HTTP 通信中作为参与者。这些中间人同样能工作在网络协议栈的底层，过滤或重定向 HTTP 流而不必了解消息发送者的权限或逻辑。网络中间人并不能（在协议层面上）识别出消息是否来自于<a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">中间人攻击（man-in-the-middle attack）</a>，因此，有时会因为中间人的实现（implementations）有误没有遵循 HTTP 语义从而引入了安全隐患或者互操作性问题。
+上述这些类型的中间人仅认为是在 HTTP 通信中作为参与者。这些中间人同样能工作在网络协议栈的底层，过滤或重定向 HTTP 流而不必了解消息发送者的权限或逻辑。网络中间人并不能（在协议层面上）识别出消息是否来自于<a href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">中间人攻击（man-in-the-middle attack）</a>，因此，有时会因为中间人的<ruby>实现<rt>implementations</rt></ruby>有误没有遵循 HTTP 语义从而引入了安全隐患或者互操作性问题。
 </p>
 
 <blockquote>
 <p>
-For example, an "interception proxy" [RFC3040] (also commonly known as a "transparent proxy" [RFC1919] or "captive portal") differs from an HTTP proxy because it is not selected by the client. Instead, an interception proxy filters or redirects outgoing TCP port 80 packets (and occasionally other common port traffic). Interception proxies are commonly found on public network access points, as a means of enforcing account subscription prior to allowing use of non-local Internet services, and within corporate firewalls to enforce network usage policies.
+For example, an "interception proxy" [RFC3040] (also commonly known as a "transparent proxy" [<a href="https://tools.ietf.org/html/rfc1919">RFC1919</a>] or "captive portal") differs from an HTTP proxy because it is not selected by the client. Instead, an interception proxy filters or redirects outgoing TCP port 80 packets (and occasionally other common port traffic). Interception proxies are commonly found on public network access points, as a means of enforcing account subscription prior to allowing use of non-local Internet services, and within corporate firewalls to enforce network usage policies.
 </p>
 </blockquote>
 
 <p>
-例如，一个拦截代理（interception proxy，一般又叫作透明代理 transparent proxy，<a href="https://tools.ietf.org/html/rfc1919">【RFC1919】</a>或者强制网络门户、捕获门户 captive portal）与一个 HTTP 代理的区别在于它不是由客户端选择的，但是，拦截代理会过滤或者重定向 TCP 80  出口端口的数据包（有时还包括其他一般端口的流量）。拦截代理在公有网络访问点<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>里很常见，作为一种在允许使用非本地互联网服务之前的强制认证手段；同样也常见于企业防火墙里，用于强制执行网络使用上的策略。
+例如，一个<ruby>拦截代理<rt>interception proxy</rt></ruby>（一般又叫作<ruby>透明代理<rt>transparent proxy</rt></ruby>，<a href="https://tools.ietf.org/html/rfc1919">【RFC1919】</a>或者<ruby>捕获门户（强制网络门户）<rt>captive portal</rt></ruby>）与一个 HTTP 代理的区别在于它不是由客户端选择的，但是，拦截代理会过滤或者重定向 TCP 80  出口端口的数据包（有时还包括其他一般端口的流量）。拦截代理在公有网络访问点<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>里很常见，作为一种在允许使用非本地互联网服务之前的强制认证手段；同样也常见于企业防火墙里，用于强制执行网络使用上的策略。
 </p>
 
 <blockquote>
@@ -1128,12 +1128,12 @@ For example, an "interception proxy" [RFC3040] (also commonly known as a "transp
 
 <blockquote>
 <p>
-HTTP is defined as a stateless protocol, meaning that each request message can be understood in isolation. Many implementations depend on HTTP's stateless design in order to reuse proxied connections or dynamically load balance requests across multiple servers. Hence, a server <b>MUST NOT</b> assume that two requests on the same connection are from the same user agent unless the connection is secured and specific to that agent. Some non-standard HTTP extensions (e.g., [RFC4559]) have been known to violate this requirement, resulting in security and interoperability problems.
+HTTP is defined as a stateless protocol, meaning that each request message can be understood in isolation. Many implementations depend on HTTP's stateless design in order to reuse proxied connections or dynamically load balance requests across multiple servers. Hence, a server <b>MUST NOT</b> assume that two requests on the same connection are from the same user agent unless the connection is secured and specific to that agent. Some non-standard HTTP extensions (e.g., [<a href="https://tools.ietf.org/html/rfc4559">RFC4559</a>]) have been known to violate this requirement, resulting in security and interoperability problems.
 </p>
 </blockquote>
 
 <p>
-HTTP 被定义为一种无状态的协议，意味着每一个请求消息都能够（在不需要依赖其他消息的情况下）被单独理解。许多实现（implementations）依托于 HTTP 无状态性来复用代理过的连接或者通过多台服务器实施对请求的动态负载均衡。因此，一个服务器 <b>禁止</b> 假设同一个连接里的两个请求是来自于同一个用户代理，除非是连接是安全的或者这些请求是该用户代理特有的。目前已发现某些非标准的 HTTP 扩展（例如<a href="https://tools.ietf.org/html/4559">【RFC4559】</a>）违反了这一要求，结果就是引发安全性和互操作性的问题。
+HTTP 被定义为一种无状态的协议，意味着每一个请求消息都能够（在不需要依赖其他消息的情况下）被单独理解。许多<ruby>实现<rt>implementations</rt></ruby>依托于 HTTP 无状态性来复用代理过的连接或者通过多台服务器实施对请求的动态负载均衡。因此，一个服务器 <b>禁止</b> 假设同一个连接里的两个请求是来自于同一个用户代理，除非是连接是安全的或者这些请求是该用户代理特有的。目前已发现某些非标准的 HTTP 扩展（例如<a href="https://tools.ietf.org/html/4559">【RFC4559】</a>）违反了这一要求，结果就是引发安全性和互操作性的问题。
 </p>
 
 <blockquote>
@@ -1154,7 +1154,7 @@ A "cache" is a local store of previous response messages and the subsystem that 
 </blockquote>
 
 <p>
-缓存（cache），是一种保存之前的响应消息的本地存储，以及控制其消息的存储、获取和删除的子系统。缓存（cache）存储了可缓存（cacheable）的响应是为了减少将来的响应时间和网络带宽消耗。任何客户端或者服务器 <b>可以</b> 使用缓存，但是，当服务器作为隧道（tunnel）而使用时，不能使用缓存。
+<ruby>缓存<rt>cache</rt></ruby>，是一种保存之前的响应消息的本地存储，以及控制其消息的存储、获取和删除的子系统。缓存存储了<ruby>可缓存的<rt>cacheable</rt></ruby>响应是为了减少将来的响应时间和网络带宽消耗。任何客户端或者服务器 <b>可以</b> 使用缓存，但是，当服务器作为<ruby>隧道<rt>tunnel</rt></ruby>而使用时，不能使用缓存。
 </p>
 
 <blockquote>
@@ -1164,7 +1164,7 @@ The effect of a cache is that the request/response chain is shortened if one of 
 </blockquote>
 
 <p>
-缓存（cache）的作用是缩短请求/响应链，体现为在一个有缓存参与的请求/响应链中，如果链路中的某个缓存（cache）保存并返回了与该请求相匹配的响应消息。下图的请求响应链的意思是，如果 B 保存了之前从源服务器 O （经过 C）返回的响应消息的副本，而这个响应没有缓存于用户代理 UA 或者 A 中，那么 B 就可以直接返回缓存的响应，而不用再转发至 C。
+<ruby>缓存<rt>cache</rt></ruby>的作用是缩短请求/响应链，体现为在一个有缓存参与的请求/响应链中，如果链路中的某个<ruby>缓存<rt>cache</rt></ruby>保存并返回了与该请求相匹配的响应消息。下图的请求响应链的意思是，如果 B 保存了之前从源服务器 O （经过 C）返回的响应消息的副本，而这个响应没有缓存于用户代理 UA 或者 A 中，那么 B 就可以直接返回缓存的响应，而不用再转发至 C。
 </p>
 
 <div class="org-src-container">
@@ -1181,7 +1181,7 @@ A response is "cacheable" if a cache is allowed to store a copy of the response 
 </blockquote>
 
 <p>
-如果一个缓存被允许去存储一个响应消息的副本用于应答随后的请求，那么这个响应消息是“可缓存的（cacheable）”。即使一个响应是可缓存的，也可能存在一些来自客户端或源服务器的额外约束来规定在什么情况下所缓存的响应消息能够用于具体的请求。HTTP 关于缓存的行为（cache behavior）以及可缓存的响应（cacheable reponses）的定义，见<a href="RFC7234.html#ID-a09dfe13-47b3-4258-a219-ba801a1f0467">【RFC7234】第二章</a>。
+如果一个缓存被允许去存储一个响应消息的副本用于应答随后的请求，那么这个响应消息是“<ruby>可缓存的<rt>cacheable</rt></ruby>”。即使一个响应是可缓存的，也可能存在一些来自客户端或源服务器的额外约束来规定在什么情况下所缓存的响应消息能够用于具体的请求。HTTP 关于<ruby>缓存的行为<rt>cache behavior</rt></ruby>以及<ruby>可缓存的响应<rt>cacheable reponses</rt></ruby>的定义，见<a href="RFC7234.html#ID-a09dfe13-47b3-4258-a219-ba801a1f0467">【RFC7234】第二章</a>。
 </p>
 
 <blockquote>
@@ -1192,7 +1192,7 @@ These include national hierarchies of proxy caches to save transoceanic bandwidt
 </blockquote>
 
 <p>
-缓存（cache）的各种各样的架构和配置广泛存在于万维网和大型组织中，包括用于节省越洋带宽的国际级的代理缓存，广播或组播缓存项的协作系统，用于离线或高延迟环境的预取的缓存档案等等。
+<ruby>缓存<rt>cache</rt></ruby>的各种各样的架构和配置广泛存在于万维网和大型组织中，包括用于节省越洋带宽的国际级的代理缓存，广播或组播缓存项的协作系统，用于离线或高延迟环境的预取的缓存档案等等。
 </p>
 </div>
 </div>
@@ -1207,7 +1207,7 @@ This specification targets conformance criteria according to the role of a parti
 </blockquote>
 
 <p>
-本规范旨在为参与 HTTP 通信的角色制定一致性准则。因此，HTTP 对一致性的要求着眼于发送端、接收端、客户端、服务端、用户代理、中间人、源服务器、代理、网关和缓存，取决于哪些行为被要求所约束。附加的要求着眼于实现（implementations）、资源所有者以及应用于超出单一通信时的协议元素登记条目（protocol element registrations）。
+本规范旨在为参与 HTTP 通信的角色制定一致性准则。因此，HTTP 对一致性的要求着眼于发送端、接收端、客户端、服务端、用户代理、中间人、源服务器、代理、网关和缓存，取决于哪些行为被要求所约束。附加的要求着眼于<ruby>实现<rt>implementations</rt></ruby>、资源所有者以及应用于超出单一通信时的<ruby>协议元素登记条目<rt>protocol element registrations</rt></ruby>。
 </p>
 
 <blockquote>
@@ -1223,7 +1223,7 @@ The verb "generate" is used instead of "send" where a requirement differentiates
 </blockquote>
 
 <p>
-动词“生成”（generate）和“发送”（send），用于区分“创建一个协议元素”和“仅仅将其接收到的元素转发到下游”。
+动词“<ruby>生成<rt>generate</rt></ruby>”和“<ruby>发送<rt>send</rt></ruby>”，用于区分“创建一个协议元素”和“仅仅将其接收到的元素转发到下游”。
 </p>
 
 <blockquote>
@@ -1233,7 +1233,7 @@ An implementation is considered conformant if it complies with all of the requir
 </blockquote>
 
 <p>
-判断一个实现（implementation）是否符合本规范，需要判断它是否遵循了本规范中涉及到对参与 HTTP 通信的所有角色的所有要求。
+判断一个<ruby>实现<rt>implementation</rt></ruby>是否符合本规范，需要判断它是否遵循了本规范中涉及到对参与 HTTP 通信的所有角色的所有要求。
 </p>
 
 <blockquote>
@@ -1243,7 +1243,7 @@ Conformance includes both the syntax and semantics of protocol elements. A sende
 </blockquote>
 
 <p>
-一致性包含协议元素（protocol elements）的句法（syntax）及语义（semantics）。发送端 <b>禁止</b> 生成其明知是不正确的协议元素。发送端 <b>禁止</b> 生成与相关 ABNF 规则所定义的语法（grammar）不相匹配的协议元素。在给定的消息中，发送端 <b>禁止</b> 生成只允许在其他角色参与者（也就是说，一种发送端所不具备的角色）中生成的协议元素或相关句法替代品。
+一致性包含<ruby>协议元素<rt>protocol elements</rt></ruby>的<ruby>句法<rt>syntax</rt></ruby>及<ruby>语义<rt>semantics</rt></ruby>。发送端 <b>禁止</b> 生成其明知是不正确的协议元素。发送端 <b>禁止</b> 生成与相关 ABNF 规则所定义的<ruby>语法<rt>grammar</rt></ruby>不相匹配的协议元素。在给定的消息中，发送端 <b>禁止</b> 生成只允许在其他角色参与者（也就是说，一种发送端所不具备的角色）中生成的协议元素或相关句法替代品。
 </p>
 
 <blockquote>
@@ -1265,7 +1265,7 @@ When a received protocol element is parsed, the recipient <b>MUST</b> be able to
 </blockquote>
 
 <p>
-当一个接收到的协议元素被解析（parse）时，接收端必须能够解释任何适用于接收端这一角色以及与相关 ABNF 规则所定义的语法相匹配的、合理长度的值。需要注意的是，某些接收到的协议元素可能不被解析（parse）。例如，一个中间人在转发消息时可能会将一个头字段（header-field）解析（parse）为头字段名（field-name）和字段值（field-value），但转发头字段时并没有再对字段值进一步解析（parse）。
+当一个接收到的协议元素被<ruby>解析<rt>parse</rt></ruby>时，接收端必须能够解释任何适用于接收端这一角色以及与相关 ABNF 规则所定义的语法相匹配的、合理长度的值。需要注意的是，某些接收到的协议元素可能不被<ruby>解析<rt>parse</rt></ruby>。例如，一个中间人在转发消息时可能会将一个<ruby>头字段<rt>header-field</rt></ruby>解析为头<ruby>字段名<rt>field-name</rt></ruby>和<ruby>字段值<rt>field-value</rt></ruby>，但转发头字段时并没有再对字段值进一步<ruby>解析<rt>parse</rt></ruby>。
 </p>
 
 <blockquote>
@@ -1281,7 +1281,7 @@ HTTP does not have specific length limitations for many of its protocol elements
 </blockquote>
 
 <p>
-HTTP 并没有对其协议元素作具体长度限制，因为“多少的长度才算合适”这个问题过于宽泛，需要依据实现（implementations）具体的部署场景和目的来决定。因此，发送端和接收端之间的互操作性（interoperability）取决于它们“对于每一个协议元素，如何才算是合理长度”的共同期望。此外，对于某些协议元素来说，多少才算是一个通俗合理的长度这个问题的答案已经在过去二十多年来完全变更了，而且在将来仍会继续变更。
+HTTP 并没有对其协议元素作具体长度限制，因为“多少的长度才算合适”这个问题过于宽泛，需要依据<ruby>实现<rt>implementations</rt></ruby>具体的<ruby>部署场景<rt>deployment context</rt></ruby>和目的来决定。因此，发送端和接收端之间的<ruby>互操作性<rt>interoperability</rt></ruby>取决于它们“对于每一个协议元素，如何才算是合理长度”的共同期望。此外，对于某些协议元素来说，多少才算是一个通俗合理的长度这个问题的答案已经在过去二十多年来完全变更了，而且在将来仍会继续变更。
 </p>
 
 <blockquote>
@@ -1291,7 +1291,7 @@ At a minimum, a recipient <b>MUST</b> be able to parse and process protocol elem
 </blockquote>
 
 <p>
-接收端必须能够最低限度地解析（parse）和处理（process）协议元素的长度，至少和它在其他消息中生成的同样一个协议元素的长度一致。例如，一个源服务器公布了一个非常长的 URI 来引用其自身资源，当它接收到以这个 URI 作为目标资源的请求时， 源服务器必须能够正确地解析（parse）和处理（process）这个 URI。
+接收端必须能够最低限度地<ruby>解析<rt>parse</rt></ruby>和<ruby>处理<rt>process</rt></ruby>协议元素的长度，至少和它在其他消息中生成的同样一个协议元素的长度一致。例如，一个源服务器公布了一个非常长的 URI 来引用其自身资源，当它接收到以这个 URI 作为目标资源的请求时， 源服务器必须能够正确地解析和处理这个 URI。
 </p>
 
 <blockquote>
@@ -1301,7 +1301,7 @@ A recipient <b>MUST</b> interpret a received protocol element according to the s
 </blockquote>
 
 <p>
-接收端 <b>必须</b> 依据本规范（及其后续扩展）所定义的语义来解释（interpret）其接收到的协议元素，除非接收端已经（通过经验或者配置）确定发送端并没有正确实现那些语义。例如，源服务器接到一个请求消息，这个请求的 <code>Accept-Encoding</code> 消息头字段表明发送端支持某些编码类型，源服务器通过检查这个请求的 <code>User-Agent</code> 头字段来获得这个用户代理的实现版本，（从过往的经验上）得知实际上这个用户代理并不能正确处理其声明的编码类型，于是源服务器可以忽略接收到的 <code>Accept-Encoding</code> 消息头字段的内容。
+接收端 <b>必须</b> 依据本规范（及其后续扩展）所定义的语义来<ruby>解释<rt>interpret</rt></ruby>其接收到的协议元素，除非接收端已经（通过经验或者配置）确定发送端并没有正确实现那些语义。例如，源服务器接到一个请求消息，这个请求的 <code>Accept-Encoding</code> 消息头字段表明发送端支持某些编码类型，源服务器通过检查这个请求的 <code>User-Agent</code> 头字段来获得这个用户代理的实现版本，（从过往的经验上）得知实际上这个用户代理并不能正确处理其声明的编码类型，于是源服务器可以忽略接收到的 <code>Accept-Encoding</code> 消息头字段的内容。
 </p>
 
 <blockquote>
@@ -1311,7 +1311,7 @@ Unless noted otherwise, a recipient <b>MAY</b> attempt to <a href="https://en.wi
 </blockquote>
 
 <p>
-除非另有说明，接收端 <b>可以</b> 尝试从一个不合法的消息结构中恢复（recover）出一个可用的协议元素。HTTP 协议在不用的应用场景上会有不同的错误处理策略的要求，因此，协议本身并没有定义具体的错误处理机制，除非这种错误直接影响到安全性。例如，一个网页浏览器接收到一个响应消息，响应消息的 <code>Location</code> 头字段依据 ABNF 规则并不能合法解析（parse）到，于是浏览器可能希望进行<a href="https://en.wikipedia.org/wiki/Failure_transparency">透明恢复（transparently recover）</a>；但是对于一个系统控制客户端，可能认为任何方式的错误恢复都是危险的。
+除非另有说明，接收端 <b>可以</b> 尝试从一个不合法的消息结构中<ruby>恢复<rt>recover</rt></ruby>出一个可用的协议元素。HTTP 协议在不用的应用场景上会有不同的错误处理策略的要求，因此，协议本身并没有定义具体的错误处理机制，除非这种错误直接影响到安全性。例如，一个网页浏览器接收到一个响应消息，响应消息的 <code>Location</code> 头字段依据 ABNF 规则并不能合法<ruby>解析<rt>parse</rt></ruby>到，于是浏览器可能希望进行<a href="https://en.wikipedia.org/wiki/Failure_transparency">透明恢复（transparently recover）</a>；但是对于一个系统控制客户端，可能认为任何方式的错误恢复都是危险的。
 </p>
 
 <blockquote>
@@ -1332,7 +1332,7 @@ HTTP uses a "&lt;major&gt;.&lt;minor&gt;" numbering scheme to indicate versions 
 </blockquote>
 
 <p>
-HTTP 使用“&lt;主版本&gt;.&lt;次版本&gt;”这种编号方案（numbering scheme）来表明协议的版本。本规范定义了版本号“1.1”。整体来说，协议版本表明了发送端遵循了哪一个版本的 HTTP 规范。
+HTTP 使用“&lt;主版本&gt;.&lt;次版本&gt;”这种<ruby>编号方案<rt>numbering scheme</rt></ruby>来表明协议的版本。本规范定义了版本号“1.1”。整体来说，协议版本表明了发送端遵循了哪一个版本的 HTTP 规范。
 </p>
 
 <blockquote>
@@ -1343,12 +1343,12 @@ HTTP 使用“&lt;主版本&gt;.&lt;次版本&gt;”这种编号方案（numberi
 
 <blockquote>
 <p>
-The version of an HTTP message is indicated by an HTTP-version field in the first line of the message. HTTP-version is case-sensitive.
+The version of an HTTP message is indicated by an <code>HTTP-version</code> field in the first line of the message. <code>HTTP-version</code> is case-sensitive.
 </p>
 </blockquote>
 
 <p>
-HTTP 协议的版本通过在消息的第一行的 <code>HTTP-version</code> 域来指定。需要注意的是，<code>HTTP-version</code> 是区分大小写的，以下是 HTTP-version 的 ABNF 规则。
+HTTP 协议的版本通过在消息的第一行的 <code>HTTP-version</code> 字段来指定。需要注意的是，<code>HTTP-version</code> 是区分大小写的，以下是 <code>HTTP-version</code> 的 ABNF 规则。
 </p>
 
 <div class="org-src-container">
@@ -1364,7 +1364,7 @@ The HTTP version number consists of two decimal digits separated by a "." (perio
 </blockquote>
 
 <p>
-HTTP 的版本号由 2 个十进制数组成，中间以英文句号 "." 分隔。第一个数字（主版本号）表示 HTTP 消息的句法，第二个数字（次版本号）表示发送端在接下来的通信中将会遵循以及能够理解的最高次版本。次要版本号声明了发送端的通信能力，即使发送端仅仅使用协议的向后兼容的子集，因此让接收端了解更多高级功能能够被用于响应（作为服务器）或者用于接下来的请求（作为客户端）。
+HTTP 的版本号由 2 个十进制数组成，中间以英文句号 "." 分隔。第一个数字（<ruby>主版本号<rt>major version</rt></ruby>）表示 HTTP 消息的句法，第二个数字（<ruby>次版本号<rt>minor version</rt></ruby>）表示发送端在接下来的通信中将会遵循以及能够理解的最高次版本。次要版本号声明了发送端的通信能力，即使发送端仅仅使用协议的<ruby>向后兼容<rt>backwards-compatible</rt></ruby>的子集，因此让接收端了解更多高级功能能够被用于响应（作为服务器）或者用于接下来的请求（作为客户端）。
 </p>
 
 <blockquote>
@@ -1374,7 +1374,7 @@ When an HTTP/1.1 message is sent to an HTTP/1.0 recipient [<a href="https://tool
 </blockquote>
 
 <p>
-当一个 HTTP/1.1 消息被发送到一个 HTTP/1.0 接收端<a href="https://tools.ietf.org/html/rfc1945">【RFC1945】</a>或者一个接收端的版本号未知，HTTP/1.1 消息会被构建成一个能够被解释（interprete）为一个合法的 HTTP/1.0 消息，如果忽略掉所有在 HTTP/1.1 新增的功能的话。本规范明确了接收端使用新功能的版本要求，以便于发送端可以仅仅使用兼容性功能与接收端通信，直到发送端（通过配置，或者接收到的消息）已经明确接收端支持 HTTP/1.1。
+当一个 HTTP/1.1 消息被发送到一个 HTTP/1.0 接收端<a href="https://tools.ietf.org/html/rfc1945">【RFC1945】</a>或者一个接收端的版本号未知，HTTP/1.1 消息会被构建成一个能够被<ruby>解释<rt>interprete</rt></ruby>为一个合法的 HTTP/1.0 消息，如果忽略掉所有在 HTTP/1.1 新增的功能的话。本规范明确了接收端使用新功能的版本要求，以便于发送端可以仅仅使用兼容性功能与接收端通信，直到发送端（通过配置，或者接收到的消息）已经明确接收端支持 HTTP/1.1。
 </p>
 
 <blockquote>
@@ -1396,7 +1396,7 @@ The interpretation of a header field does not change between minor versions of t
 </blockquote>
 
 <p>
-在规范中，在主版本（major version）一致的情况下，不同次版本（minor version）并不会对消息头字段有不同的解释（interpretation），虽然接收者在缺少这些域时的默认行为会有所不同。除非具体说明，定义在 HTTP/1.1 版本的头字段同样适用于所有 HTTP/1.x 版本。特别是，<code>Host</code> 和 <code>Connection</code> 头字段应该为所有版本（all HTTP/1.x）所实现，无论它们声明是否与 HTTP/1.1 版本一致。
+在规范中，在<ruby>主版本<rt>major version</rt></ruby>一致的情况下，不同<ruby>次版本<rt>minor version</rt></ruby>并不会对消息头字段有不同的<ruby>解释<rt>interpretation</rt></ruby>，虽然接收者在缺少这些字段时的默认行为会有所不同。除非具体说明，定义在 HTTP/1.1 版本的头字段同样适用于所有 HTTP/1.x 版本。特别是，<code>Host</code> 和 <code>Connection</code> 头字段应该为所有 HTTP/1.x 版本所实现，无论它们声明是否与 HTTP/1.1 版本一致。
 </p>
 
 <blockquote>
@@ -1406,7 +1406,7 @@ New header fields can be introduced without changing the protocol version if the
 </blockquote>
 
 <p>
-将来新的头字段能够在不改变当前协议版本的情况下被引入，如果定义这些新头字段的语义允许它们能够在接收者无法识别的情况下被其安全忽略（safely ignored）。头字段的扩展性（extensibility）会在 <a href="#org5e48ec8">章节 3.2.1</a> 中讨论。
+将来新的头字段能够在不改变当前协议版本的情况下被引入，如果定义这些新头字段的语义允许它们能够在接收者无法识别的情况下被其<ruby>安全忽略<rt>safely ignored</rt></ruby>。头字段的<ruby>扩展性<rt>extensibility</rt></ruby>会在 <a href="#orgcb1dfcc">章节 3.2.1</a> 中讨论。
 </p>
 
 <blockquote>
@@ -1416,7 +1416,7 @@ Intermediaries that process HTTP messages (i.e., all intermediaries other than t
 </blockquote>
 
 <p>
-处理 HTTP 消息的中间人（除了作为隧道的中间人） <b>必须</b> 在其转发消息中包含它们自身的 <code>HTTP-version</code>。换句话说，在以上中间人接收和发送消息的时候，它们并不允许在没有确保消息的版本与自身所使用的 HTTP 版本是否一致的情况下盲转发（blindly forward）HTTP 消息的首行。当下游（downstream）接收端使用消息的发送端版本来决定“对于接下来与之通信，什么功能能够安全使用”时，在没有重写 <code>HTTP-version</code> 的情况下直接转发一个 HTTP 消息可能会导致通信错误。
+处理 HTTP 消息的中间人（除了作为<ruby>隧道<rt>tunnel</rt></ruby>的中间人） <b>必须</b> 在其转发消息中包含它们自身的 <code>HTTP-version</code>。换句话说，在以上中间人接收和发送消息的时候，它们并不允许在没有确保消息的版本与自身所使用的 HTTP 版本是否一致的情况下<ruby>盲转发<rt>blindly forward</rt></ruby> HTTP 消息的首行。当<ruby>下游<rt>downstream</rt></ruby>接收端使用消息的发送端版本来决定“对于接下来与之通信，什么功能能够安全使用”时，在没有重写 <code>HTTP-version</code> 的情况下直接转发一个 HTTP 消息可能会导致通信错误。
 </p>
 
 <blockquote>
@@ -1432,12 +1432,12 @@ A client <b>SHOULD</b> send a request version equal to the highest version to wh
 </blockquote>
 
 <p>
-客户端所发送的请求消息版本 <b>应当</b> 等于其支持的最高版本，同时，客户端的主版本（major version）不能高于服务器支持的最高主版本号（如果客户端知道服务器的主版本号的话）。客户端 <b>禁止</b> 发送自身不支持的协议版本。
+客户端所发送的请求消息版本 <b>应当</b> 等于其支持的最高版本，同时，客户端的<ruby>主版本<rt>major version</rt></ruby>不能高于服务器支持的最高主版本号（如果客户端知道服务器的主版本号的话）。客户端 <b>禁止</b> 发送自身不支持的协议版本。
 </p>
 
 <blockquote>
 <p>
-译注：不能打肿脸充胖子。例如，当客户端最高仅支持 HTTP/1.0 时，请求行的 <code>HTTP-version</code> 域不能是 HTTP/1.1。
+译注：不能打肿脸充胖子。例如，当客户端最高仅支持 HTTP/1.0 时，请求行的 <code>HTTP-version</code> 字段不能是 HTTP/1.1。
 </p>
 </blockquote>
 
@@ -1458,17 +1458,17 @@ A server <b>SHOULD</b> send a response version equal to the highest version to w
 </blockquote>
 
 <p>
-服务器所发送的响应消息版本 <b>应当</b> 低于或等于其接收到的请求消息的主版本（major version）。服务器 <b>不能</b> 发送自身不支持的协议版本。如有必要，当服务器不支持客户端所声明的 HTTP 协议主版本时，服务器可以发送一个 <code>505 (HTTP Version Not Supported)</code> 响应来拒绝来自客户端的请求服务。
+服务器所发送的响应消息版本 <b>应当</b> 低于或等于其接收到的请求消息的<ruby>主版本<rt>major version</rt></ruby>。服务器 <b>不能</b> 发送自身不支持的协议版本。如有必要，当服务器不支持客户端所声明的 HTTP 协议主版本时，服务器可以发送一个 <code>505 (HTTP Version Not Supported)</code> 响应来拒绝来自客户端的请求服务。
 </p>
 
 <blockquote>
 <p>
-A server <b>MAY</b> send an HTTP/1.0 response to a request if it is known or suspected that the client incorrectly implements the HTTP specification and is incapable of correctly processing later version responses, such as when a client fails to parse the version number correctly or when an intermediary is known to blindly forward the <code>HTTP-version</code> even when it doesn't conform to the given minor version of the protocol. Such protocol downgrades <b>SHOULD NOT</b> be performed unless triggered by specific client attributes, such as when one or more of the request header fields (e.g., <a href="https://httpwg.org/specs/rfc7231.html#header.user-agent">User-Agent</a>) uniquely match the values sent by a client known to be in error.
+A server <b>MAY</b> send an HTTP/1.0 response to a request if it is known or suspected that the client incorrectly implements the HTTP specification and is incapable of correctly processing later version responses, such as when a client fails to parse the version number correctly or when an intermediary is known to blindly forward the <code>HTTP-version</code> even when it doesn't conform to the given minor version of the protocol. Such protocol downgrades <b>SHOULD NOT</b> be performed unless triggered by specific client attributes, such as when one or more of the request header fields (e.g., <code>User-Agent</code>) uniquely match the values sent by a client known to be in error.
 </p>
 </blockquote>
 
 <p>
-如果服务器知道或者怀疑客户端没有正确实现 HTTP 规范而且不能够正确处理更高版本的响应的时候，服务器 <b>可以</b> 发送 HTTP/1.0 响应。例如，当客户端没有正确解析（parse）协议版本号，或者已知一个中间人即使自身没有实现给定的 <code>HTTP-version</code> 的次版本的规范（即不支持给定版本的 HTTP 协议）仍然盲转发该 <code>HTTP-version</code> 等。<b>不应该</b> 执行上述这种协议版本的降级行为，除非服务器（或其他中间人）被特定客户端的特性所触发，例如当唯一匹配到客户端所发送的一个或多个请求头字段（例如 <a href="https://httpwg.org/specs/rfc7231.html#header.user-agent">User-Agent</a>）是已知会导致错误。
+如果服务器知道或者怀疑客户端没有正确实现 HTTP 规范而且不能够正确处理更高版本的响应的时候，服务器 <b>可以</b> 发送 HTTP/1.0 响应。例如，当客户端没有正确<ruby>解析<rt>parse</rt></ruby>协议版本号，或者已知一个中间人即使自身没有实现给定的 <code>HTTP-version</code> 的次版本的规范（即不支持给定版本的 HTTP 协议）仍然盲转发该 <code>HTTP-version</code> 等。<b>不应该</b> 执行上述这种协议版本的降级行为，除非服务器（或其他中间人）被特定客户端的特性所触发，例如当唯一匹配到客户端所发送的一个或多个请求头字段（例如 <code>User-Agent</code>）是已知会导致错误。
 </p>
 
 <blockquote>
@@ -1478,7 +1478,7 @@ The intention of HTTP's versioning design is that the major number will only be 
 </blockquote>
 
 <p>
-HTTP 版本编号的设计意图是：主版本号（major number）只会在引入不兼容的消息句法的情况下才会增加；次版本号（minor number）只会在对协议的改动会引起语义的添加，或者赋予发送端新的能力时才会增加。但是，从<a href="https://tools.ietf.org/html/rfc2068">【RFC2068】</a>到<a href="https://tools.ietf.org/html/rfc2616">【RFC2616】</a>的修订过程中，次版本号并没有增加（仍然是 HTTP/1.1），同时，本次修订已经明确避免对协议（版本号）的变动。
+HTTP 版本编号的设计意图是：<ruby>主版本号<rt>major number</rt></ruby>只会在引入不兼容的消息句法的情况下才会增加；<ruby>次版本号<rt>minor number</rt></ruby>只会在对协议的改动会引起语义的添加，或者赋予发送端新的能力时才会增加。但是，从<a href="https://tools.ietf.org/html/rfc2068">【RFC2068】</a>到<a href="https://tools.ietf.org/html/rfc2616">【RFC2616】</a>的修订过程中，次版本号并没有增加（仍然是 HTTP/1.1），同时，本次修订已经明确避免对协议（版本号）的变动。
 </p>
 
 <blockquote>
@@ -1488,7 +1488,7 @@ When an HTTP message is received with a major version number that the recipient 
 </blockquote>
 
 <p>
-接收端接收到一个 HTTP 消息，如果接收端兼容该消息的主版本号，但不兼容其次版本号（接收端所支持的次版本号低于该消息所标识的次版本号），那么，接收端 <b>应当</b> 以其所能支持的最高次版本（前题是相同主版本）的方式来处理这个消息。当接收端接收到一个消息，如果该消息的次要版本号高于接收端所实现的，接收端可以假设这个消息能够向后兼容所有具有相同主版本号的实现（implementation），让其被安全处理。 
+接收端接收到一个 HTTP 消息，如果接收端兼容该消息的主版本号，但不兼容其次版本号（接收端所支持的次版本号低于该消息所标识的次版本号），那么，接收端 <b>应当</b> 以其所能支持的最高次版本（前题是相同主版本）的方式来处理这个消息。当接收端接收到一个消息，如果该消息的次要版本号高于接收端所实现的，接收端可以假设这个消息能够向后兼容所有具有相同主版本号的<ruby>实现<rt>implementation</rt></ruby>，让其被安全处理。 
 </p>
 </div>
 </div>
@@ -1498,12 +1498,12 @@ When an HTTP message is received with a major version number that the recipient 
 <div class="outline-text-3" id="text-orgdd6e688">
 <blockquote>
 <p>
-Uniform Resource Identifiers (URIs) [RFC3986] are used throughout HTTP as the means for identifying resources (<a href="RFC7231.html#ID-304453f4-a250-4f73-b82c-2825a0bda464">Section 2</a> of [RFC7231]). URI references are used to target requests, indicate redirects, and define relationships.
+Uniform Resource Identifiers (URIs) [<a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>] are used throughout HTTP as the means for identifying resources (<a href="RFC7231.html#ID-304453f4-a250-4f73-b82c-2825a0bda464">Section 2</a> of [RFC7231]). URI references are used to target requests, indicate redirects, and define relationships.
 </p>
 </blockquote>
 
 <p>
-统一资源标识符（URIs）<a href="https://tools.ietf.org/html/rfc3986">【RFC3986】</a> 作为标识资源（<a href="RFC7231.html#ID-304453f4-a250-4f73-b82c-2825a0bda464">【RFC7231】章节 2</a>）的手段，广泛使用于 HTTP 中。URI 引用（URI references）用于定位请求，标识重定向以及定义关联。
+统一资源标识符（URIs）<a href="https://tools.ietf.org/html/rfc3986">【RFC3986】</a> 作为标识资源（<a href="RFC7231.html#ID-304453f4-a250-4f73-b82c-2825a0bda464">【RFC7231】章节 2</a>）的手段，广泛使用于 HTTP 中。<ruby>URI 引用<rt>URI references</rt></ruby>用于定位请求，标识重定向以及定义关联。
 </p>
 
 <blockquote>
@@ -1553,7 +1553,7 @@ scheme     authority       path        query   fragment
 
 <blockquote>
 <p>
-Each protocol element in HTTP that allows a URI reference will indicate in its ABNF production whether the element allows any form of reference (URI-reference), only a URI in absolute form (absolute-URI), only the path and optional query components, or some combination of the above. Unless otherwise indicated, URI references are parsed relative to the effective request URI (Section 5.5).
+Each protocol element in HTTP that allows a URI reference will indicate in its ABNF production whether the element allows any form of reference (<code>URI-reference</code>), only a URI in absolute form (<code>absolute-URI</code>), only the <code>path</code> and optional <code>query</code> components, or some combination of the above. Unless otherwise indicated, URI references are parsed relative to the effective request URI (<a href="#orgabb4b7d">Section 5.5</a>).
 </p>
 </blockquote>
 
@@ -1561,14 +1561,14 @@ Each protocol element in HTTP that allows a URI reference will indicate in its A
 HTTP 中的每一个允许 URI 引用的协议元素都会在它的 ABNF 产生中提及到这个元素允许哪种形式的引用：
 </p>
 <ol class="org-ol">
-<li>任何形式的引用（URI-reference）</li>
-<li>只能是绝对形式的引用（absolute-URI）</li>
-<li>只能是路径（path）和可选的查询（query）组成部分</li>
+<li>任何形式的引用（<code>URI-reference</code>）</li>
+<li>只能是绝对形式的引用（<code>absolute-URI</code>）</li>
+<li>只能是路径（<code>path</code>）和可选的查询（<code>query</code>）组成部分</li>
 <li>以上一个或多个组合</li>
 </ol>
 
 <p>
-除非另有说明，URI 引用会解析（parse）为相关的“实际请求 URI”（<a href="#org0d26544">章节 5.5</a>）。
+除非另有说明，URI 引用会解析（parse）为相关的“<ruby>实际请求 URI<rt>effective request URI</rt></ruby>”（<a href="#orgabb4b7d">章节 5.5</a>）。
 </p>
 </div>
 
@@ -1598,12 +1598,12 @@ The "http" URI scheme is hereby defined for the purpose of minting identifiers a
 
 <blockquote>
 <p>
-The origin server for an "http" URI is identified by the authority component, which includes a host identifier and optional TCP port ([RFC3986], Section 3.2.2). The hierarchical path component and optional query component serve as an identifier for a potential target resource within that origin server's name space. The optional fragment component allows for indirect identification of a secondary resource, independent of the URI scheme, as defined in Section 3.5 of [RFC3986].
+The origin server for an "http" URI is identified by the <code>authority</code> component, which includes a <code>host</code> identifier and optional TCP <code>port</code> ([RFC3986], <a href="https://tools.ietf.org/html/rfc3986#section-3.2.2">Section 3.2.2</a>). The hierarchical <code>path</code> component and optional <code>query</code> component serve as an identifier for a potential target resource within that origin server's name space. The optional <code>fragment</code> component allows for indirect identification of a secondary resource, independent of the URI scheme, as defined in <a href="https://tools.ietf.org/html/rfc3986#section-3.5">Section 3.5</a> of [RFC3986].
 </p>
 </blockquote>
 
 <p>
-如上所示，对于一个 "http" URI，源服务器被标记到 <code>authority</code> 组件里，<code>authority</code> 包含一个主机（host）标识和一个可选的 TCP 端口（<a href="https://tools.ietf.org/html/rfc3986#section-3.2.2">【RFC3986】，章节 3.2.2</a>）。<code>path</code> 组件和可选的 <code>query</code> 组件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 <code>fragment</code> 组件允许间接标识一个次要资源（secondary resource）而不依赖于哪一种 URI 方案（"http" 或者 "https"），见<a href="https://tools.ietf.org/html/rfc3986#section-3.5">【RFC3986】章节 3.5</a> 。
+如上所示，对于一个 "http" URI，源服务器被标记到 <code>authority</code> 组件里，<code>authority</code> 包含一个<ruby>主机<rt>host</rt></ruby>标识符和一个可选的 TCP <ruby>端口<rt>port</rt></ruby>（<a href="https://tools.ietf.org/html/rfc3986#section-3.2.2">【RFC3986】，章节 3.2.2</a>）。<code>path</code> 组件和可选的 <code>query</code> 组件组成一个标识符，对位于源服务器命名空间里的某个潜在目标资源进行标记。可选的 <code>fragment</code> 组件允许间接标识一个<ruby>次要资源<rt>secondary resource</rt></ruby>而不依赖于哪一种 URI 方案（"http" 或者 "https"），见<a href="https://tools.ietf.org/html/rfc3986#section-3.5">【RFC3986】章节 3.5</a> 。
 </p>
 
 <blockquote>
@@ -1635,7 +1635,7 @@ If the host identifier is provided as an IP address, the origin server is the li
 </blockquote>
 
 <p>
-如果 <code>host</code> 标识符以 IP 地址的形式来提供，表示源服务器就是在那个 IP 地址对应的 TCP 端口的监听器；如果 <code>host</code> 是一个已登记的名称（registered name，可以理解为域名），所谓“已登记的名称”，是一个用于名称解释服务（name resolution service）的间接标识，例如域名系统（DNS）用于查找源服务器的地址；如果 <code>port</code> 子组件为空或未提供，那么 TCP 默认使用 80（WWW 服务的保留端口）端口。
+如果 <code>host</code> 标识符以 IP 地址的形式来提供，表示源服务器就是在那个 IP 地址对应的 TCP 端口的监听器；如果 <code>host</code> 是一个已登记的名称（registered name，可以理解为域名），所谓“已登记的名称”，是一个用于<ruby>名称解释服务<rt>name resolution service</rt></ruby>的间接标识，例如域名系统（DNS）用于查找源服务器的地址；如果 <code>port</code> 子组件为空或未提供，那么 TCP 默认使用 80（WWW 服务的保留端口）端口。
 </p>
 
 <blockquote>
@@ -1655,7 +1655,7 @@ When an "http" URI is used within a context that calls for access to the indicat
 </blockquote>
 
 <p>
-当一个 "http" URI 用于一个请求访问目标资源的场合里，客户端 <b>可以</b> 尝试通过解释（resolve） <code>host</code> 获得 IP 地址，（通过对应的端口）建立一个 TCP 连接到这个地址，然后发送一个包含这个 URI 的识别数据（见<a href="#org863780f">章节 5</a>）的 HTTP 请求消息（章节 3），从而访问到这个目标资源。如果服务器对这个请求响应了一个非过渡（non-interim）的 HTTP 响应消息（见<a href="RFC7231.html#ID-5a69d0cc-628c-4897-a089-45f906b94a92">【RFC7231】章节 6</a>），那么这个响应可认为是一个对客户端请求的权威应答（authoritative answer）。
+当一个 "http" URI 用于一个请求访问目标资源的场合里，客户端 <b>可以</b> 尝试通过<ruby>解释<rt>resolve</rt></ruby> <code>host</code> 获得 IP 地址，（通过对应的端口）建立一个 TCP 连接到这个地址，然后发送一个包含这个 URI 的识别数据（见<a href="#org863780f">章节 5</a>）的 HTTP 请求消息（章节 3），从而访问到这个目标资源。如果服务器对这个请求响应了一个<ruby>非过渡<rt>non-interim</rt></ruby>的 HTTP 响应消息（见<a href="RFC7231.html#ID-5a69d0cc-628c-4897-a089-45f906b94a92">【RFC7231】章节 6</a>），那么这个响应可认为是一个对客户端请求的<ruby>权威应答<rt>authoritative answer</rt></ruby>。
 </p>
 
 <blockquote>
@@ -1665,17 +1665,17 @@ Although HTTP is independent of the transport protocol, the "http" scheme is spe
 </blockquote>
 
 <p>
-虽然 HTTP 并不依赖其他传输协议，但 "http" 方案是特指基于 TCP 的服务的，这是因为名称委派处理（name delegation process?）需要依赖 TCP 来确立权威（establishing authority，见章节 9.1）。一个基于其他多个底层通信协议的 HTTP 服务可能会被标识为使用一个不同的 URI 方案，就像 "https" 方案是用于要求端到端安全的资源访问一样。其他协议可能也用于提供访问以 "http" 标识的资源，但这是唯一特定于 TCP 的权威接口（官方接口，authoritative interface）。
+虽然 HTTP 并不依赖其他传输协议，但 "http" 方案是特指基于 TCP 的服务的，这是因为<ruby>名称委派处理<rt>name delegation process</rt></ruby>需要依赖 TCP 来<ruby>确立权威<rt>establishing authority</rt></ruby>（<a href="#org626caed">章节 9.1</a>）。一个基于其他多个底层通信协议的 HTTP 服务可能会被标识为使用一个不同的 URI 方案，就像 "https" 方案是用于要求端到端安全的资源访问一样。其他协议可能也用于提供访问以 "http" 标识的资源，但这是唯一特定于 TCP 的<ruby>权威接口（官方接口）<rt>authoritative interface</rt></ruby>。
 </p>
 
 <blockquote>
 <p>
-The URI generic syntax for authority also includes a deprecated <code>userinfo</code> subcomponent ([RFC3986], Section 3.2.1) for including user authentication information in the URI. Some implementations make use of the <code>userinfo</code> component for internal configuration of authentication information, such as within command invocation options, configuration files, or bookmark lists, even though such usage might expose a user identifier or password. A sender <b>MUST NOT</b> generate the <code>userinfo</code> subcomponent (and its "@" delimiter) when an "http" URI reference is generated within a message as a request target or header field value. Before making use of an "http" URI reference received from an untrusted source, a recipient <b>SHOULD</b> parse for <code>userinfo</code> and treat its presence as an error; it is likely being used to obscure the authority for the sake of phishing attacks.
+The URI generic syntax for authority also includes a deprecated <code>userinfo</code> subcomponent ([RFC3986], <a href="https://tools.ietf.org/html/rfc3986#section-3.2.1">Section 3.2.1</a>) for including user authentication information in the URI. Some implementations make use of the <code>userinfo</code> component for internal configuration of authentication information, such as within command invocation options, configuration files, or bookmark lists, even though such usage might expose a user identifier or password. A sender <b>MUST NOT</b> generate the <code>userinfo</code> subcomponent (and its "@" delimiter) when an "http" URI reference is generated within a message as a request target or header field value. Before making use of an "http" URI reference received from an untrusted source, a recipient <b>SHOULD</b> parse for <code>userinfo</code> and treat its presence as an error; it is likely being used to obscure the authority for the sake of phishing attacks.
 </p>
 </blockquote>
 
 <p>
-在 URI 的通用句法中有关授权（authority）方面还包含了一个已废弃的 <code>userinfo</code> 子组件（见<a href="https://tools.ietf.org/html/rfc3986#section-3.2.1">【RFC3986】章节 3.2.1</a>），用于包含用户信息到 URI 里。某些实现（implementations）将 <code>userinfo</code> 组件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 消息，包含以 <code>http</code> URI 引用作为一个请求目标或者消息头字段里的值（例如头字段 <code>Location</code>）时，发送端 <b>禁止</b> 生成 <code>userinfo</code> 子组件（以及其 "@" 分隔符）。在使用一个接收自一个非受信的源的 <code>http</code> URI 引用时，接收者 <b>应当</b> 对 <code>userinfo</code> 进行解析（parse）并且对待它的出现当作一个错误，它的出现很可能带来网络钓鱼（phishing attach）的威胁。
+在 URI 的通用句法中有关 <code>authority</code> 方面还包含了一个已废弃的 <code>userinfo</code> 子组件（见<a href="https://tools.ietf.org/html/rfc3986#section-3.2.1">【RFC3986】章节 3.2.1</a>），用于包含用户信息到 URI 里。某些<ruby>实现<rt>implementations</rt></ruby>将 <code>userinfo</code> 组件用于携带供内部使用的认证信息，例如命令调用的选项、配置文件或者书签列表，尽管这些用途可能会暴露用户名或密码。当发送端生成一个 HTTP 消息，包含以 <code>http</code> URI 引用作为一个请求目标或者消息头字段里的值（例如头字段 <code>Location</code>）时，发送端 <b>禁止</b> 生成 <code>userinfo</code> 子组件（以及其 "@" 分隔符）。在使用一个接收自一个非受信的源的 <code>http</code> URI 引用时，接收者 <b>应当</b> 对 <code>userinfo</code> 进行<ruby>解析<rt>parse</rt></ruby>并且对待它的出现当作一个错误，它的出现很可能带来<ruby>网络钓鱼<rt>phishing attach</rt></ruby>的威胁。
 </p>
 </div>
 </div>
@@ -1685,7 +1685,7 @@ The URI generic syntax for authority also includes a deprecated <code>userinfo</
 <div class="outline-text-4" id="text-orgeb24afa">
 <blockquote>
 <p>
-The "https" URI scheme is hereby defined for the purpose of minting identifiers according to their association with the hierarchical namespace governed by a potential HTTP origin server listening to a given TCP port for TLS-secured connections ([RFC5246]).
+The "https" URI scheme is hereby defined for the purpose of minting identifiers according to their association with the hierarchical namespace governed by a potential HTTP origin server listening to a given TCP port for TLS-secured connections ([<a href="https://tools.ietf.org/html/rfc5246">RFC5246</a>]).
 </p>
 </blockquote>
 
@@ -1710,12 +1710,12 @@ All of the requirements listed above for the "http" scheme are also requirements
 
 <blockquote>
 <p>
-Note that the "https" URI scheme depends on both TLS and TCP for establishing authority. Resources made available via the "https" scheme have no shared identity with the "http" scheme even if their resource identifiers indicate the same authority (the same host listening to the same TCP port). They are distinct namespaces and are considered to be distinct origin servers. However, an extension to HTTP that is defined to apply to entire host domains, such as the Cookie protocol [RFC6265], can allow information set by one service to impact communication with other services within a matching group of host domains.
+Note that the "https" URI scheme depends on both TLS and TCP for establishing authority. Resources made available via the "https" scheme have no shared identity with the "http" scheme even if their resource identifiers indicate the same authority (the same host listening to the same TCP port). They are distinct namespaces and are considered to be distinct origin servers. However, an extension to HTTP that is defined to apply to entire host domains, such as the Cookie protocol [<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>], can allow information set by one service to impact communication with other services within a matching group of host domains.
 </p>
 </blockquote>
 
 <p>
-需要注意的是，"https" URI 方案依赖于 TLS 以及 TCP 来确立权威（establishing authority，见<a href="#org626caed">章节 9.1</a>）。通过 "https" 方案标识的资源与通过 "https" 方案标识的资源两者间并没有任何关系，即使它们的 <code>authority</code> 组件一样（有相同的 <code>host</code> 和相同的 TCP <code>port</code>）。它们的命名空间是有区别的，因此指向的是两个不同的源服务器。然而，后来的规范对 HTTP 进行了扩展来（使某些特性）适用于所有主机域名，例如 Cookie 协议<a href="https://tools.ietf.org/html/rfc6265">【RFC6265】</a>，能够允许一个服务设置某些信息，通过一个关于主机域名的匹配规则集合来影响与其他服务的通信。
+需要注意的是，"https" URI 方案依赖于 TLS 以及 TCP 来<ruby>确立权威<rt>establishing authority</rt></ruby>（<a href="#org626caed">章节 9.1</a>）。通过 "https" 方案标识的资源与通过 "https" 方案标识的资源两者间并没有任何关系，即使它们的 <code>authority</code> 组件一样（有相同的 <code>host</code> 和相同的 TCP <code>port</code>）。它们的命名空间是有区别的，因此指向的是两个不同的源服务器。然而，后来的规范对 HTTP 进行了扩展来（使某些特性）适用于所有主机域名，例如 Cookie 协议<a href="https://tools.ietf.org/html/rfc6265">【RFC6265】</a>，能够允许一个服务设置某些信息，通过一个关于主机域名的匹配规则集合来影响与其他服务的通信。
 </p>
 
 <blockquote>
@@ -1756,7 +1756,7 @@ If the port is equal to the default port for a scheme, the normal form is to omi
 </blockquote>
 
 <p>
-如果一个 URI <code>port</code> 等于其对应方案的默认端口（"http" 方案的默认端口是 80，"https" 方案的默认端口是 443），那么其通常的形式是省略掉 <code>port</code> 子组件。当一个 OPTIONS 请求没有使用绝对形式（absolute form）作为请求目标（request target）时，一个空的 <code>path</code> 等价于绝对路径 "/"，所以通常的形式是使用路径 "/" 来代表空路径。<code>scheme</code> 和 <code>host</code> 是不区分大小写的，通常使用小写。除了 <code>scheme</code> 和 <code>host</code> 以外的所有其他组件都是区分大小写的。除了“保留”字符集以外的所有字符都等价于它的 URL 编码（<a href="https://en.wikipedia.org/wiki/Percent-encoding">Precent-encoded</a>，又叫百分号编码）形式的字节（Octets）：一般形式是（如非必要）不要对它们进行编码（见<a href="https://tools.ietf.org/html/rfc3986#section-2.1">【RFC3986】章节 2.1 和 2.2</a>）。
+如果一个 URI <code>port</code> 等于其对应方案的默认端口（"http" 方案的默认端口是 80，"https" 方案的默认端口是 443），那么其通常的形式是省略掉 <code>port</code> 子组件。当一个 OPTIONS 请求没有使用<ruby>绝对形式<rt>absolute form</rt></ruby>作为<ruby>请求目标<rt>request target</rt></ruby>时，一个空的 <code>path</code> 等价于绝对路径 "/"，所以通常的形式是使用路径 "/" 来代表空路径。<code>scheme</code> 和 <code>host</code> 是不区分大小写的，通常使用小写。除了 <code>scheme</code> 和 <code>host</code> 以外的所有其他组件都是区分大小写的。除了“保留”字符集以外的所有字符都等价于它的 URL 编码（<a href="https://en.wikipedia.org/wiki/Percent-encoding">Precent-encoded</a>，又叫百分号编码）形式的<ruby>字节<rt>Octets</rt></ruby>：一般形式是（如非必要）不要对它们进行编码（见<a href="https://tools.ietf.org/html/rfc3986#section-2.1">【RFC3986】章节 2.1 和 2.2</a>）。
 </p>
 
 <blockquote>
@@ -1796,7 +1796,7 @@ All HTTP/1.1 messages consist of a start-line followed by a sequence of octets i
 </blockquote>
 
 <p>
-所有 HTTP/1.1 消息皆由一个“起始行（start-line）”以及随后的消息头（header），然后空一行（表明消息头结束），最后是一个可选的消息体（message body）组合而成。其中消息头由 0 个或多个头字段（header fields）组成，头字段的格式类似于<a href="https://tools.ietf.org/html/rfc5322">互联网消息格式【RFC5322】</a>。
+所有 HTTP/1.1 消息皆由一个“<ruby>起始行<rt>start-line</rt></ruby>”以及随后的<ruby>消息头<rt>message header</rt></ruby>，然后空一行（表明消息头结束），最后是一个可选的<ruby>消息体<rt>message body</rt></ruby>组合而成。其中消息头由 0 个或多个<ruby>头字段<rt>header fields</rt></ruby>组成，头字段的格式类似于<ruby>互联网消息格式<rt>Internet Message Format</rt></ruby><a href="https://tools.ietf.org/html/rfc5322">【RFC5322】</a>。
 </p>
 
 <blockquote>
@@ -1821,7 +1821,7 @@ The normal procedure for parsing an HTTP message is to read the start-line into 
 </blockquote>
 
 <p>
-解析（parse）HTTP 消息的一般流程是先将起始行（start line）读入到一个<a href="https://baike.baidu.com/item/%E7%BB%93%E6%9E%84%E4%BD%93/3709485">构造体</a>中，将所有头字段（header fields）读入到一个<a href="https://baike.baidu.com/item/%E5%93%88%E5%B8%8C%E8%A1%A8">哈希表</a>中（以域的名称作为键）直到遇到空行（empty line），然后使用以上解释得到的信息来决定是否需要解释消息体（message body）。如果消息头表明该消息带有消息体，那么将消息体以<a href="https://baike.baidu.com/item/IO%E6%B5%81">流</a>的方式读入，直到已读字节数（octets）等于消息体的长度或者连接已被关闭为止。
+解析 HTTP 消息的一般流程是先将<ruby>起始行<rt>start line</rt></ruby>读入到一个<a href="https://baike.baidu.com/item/%E7%BB%93%E6%9E%84%E4%BD%93/3709485">构造体</a>中，将所有<ruby>头字段<rt>header fields</rt></ruby>读入到一个<a href="https://baike.baidu.com/item/%E5%93%88%E5%B8%8C%E8%A1%A8">哈希表</a>中（以字段的名称作为键）直到遇到<ruby>空行<rt>empty line</rt></ruby>，然后使用以上解析得到的信息来决定是否需要<ruby>消息体<rt>message body</rt></ruby>。如果消息头表明消息带有消息体，那么将消息体以<a href="https://baike.baidu.com/item/IO%E6%B5%81">流</a>的方式读入，直到已读<ruby>字节数<rt>amount of octets</rt></ruby>等于消息体的长度或者连接已被关闭为止。
 </p>
 
 <blockquote>
@@ -1831,7 +1831,7 @@ A recipient <b>MUST</b> parse an HTTP message as a sequence of octets in an enco
 </blockquote>
 
 <p>
-接收端 <b>必须</b> 将 HTTP 消息解析（parse）为以 <a href="https://baike.baidu.com/item/ASCII/309296?fr=aladdin">US-ASCII</a> 的超集来编码的字节（octet）序列。没有考虑具体的编码（encoding）就将消息解释为 Unicode 字符会引发<a href="https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats">安全漏洞</a>，这是由于字符串处理库（string processing libraries）处理包含 <code>LF</code> (%x0A) 非法多字节字符序列的方式有很多种而导致的。基于字符串的解析器（string-based parsers）只能工作在消息提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出消息里所有头字段（header fields）后，对消息头中的一个字段值（field-value）使用基于字符串的解释器是可以保证安全的。
+接收端 <b>必须</b> 将 HTTP 消息解析为以 <a href="https://baike.baidu.com/item/ASCII/309296?fr=aladdin">US-ASCII</a> 的超集来编码的<ruby>字节<rt>octet</rt></ruby>序列。没有考虑具体的<ruby>编码<rt>encoding</rt></ruby>就将消息解析为 Unicode 字符会引发<a href="https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats">安全漏洞</a>，这是由于<ruby>字符串处理库<rt>string processing libraries</rt></ruby>处理包含 <code>LF</code> (%x0A) 非法多字节字符序列的方式有很多种而导致的。<ruby>基于字符串的解析器<rt>string-based parsers</rt></ruby>只能工作在消息提取出协议元素之后且对单个元素进行解释才能保证有效，例如在定位出消息里所有<ruby>头字段<rt>header fields</rt></ruby>后，对消息头中的一个<ruby>字段值<rt>field-value</rt></ruby>使用基于字符串的解释器是可以保证安全的。
 </p>
 
 <blockquote>
@@ -1841,7 +1841,7 @@ An HTTP message can be parsed as a stream for incremental processing or forwardi
 </blockquote>
 
 <p>
-HTTP 消息能够解析（parse）为用于增量处理（incremental processing）或转发到下游（forwarding downstream）的流。但是，接收端不能依赖局部消息的增量投递，因为某些实现（implementations）会因为网络性能、安全校验或者有效载荷转换（payload transformations，<a href="#org54dfdcc">章节 5.7.2</a>）而对这些不完整的消息进行缓冲或延迟转发。
+HTTP 消息能够<ruby>解析<rt>parse</rt></ruby>为用于<ruby>增量处理<rt>incremental processing</rt></ruby>或<ruby>转发到下游<rt>forwarding downstream</rt></ruby>的流。但是，接收端不能依赖局部消息的增量投递，因为某些<ruby>实现<rt>implementations</rt></ruby>会因为网络性能、安全校验或者<ruby>有效载荷转换<rt>payload transformations</rt></ruby>（<a href="#org54dfdcc">章节 5.7.2</a>）而对这些不完整的消息进行<ruby>缓冲或延迟<rt>buffer or delay</rt></ruby>转发。
 </p>
 
 <blockquote>
@@ -1851,7 +1851,7 @@ A sender <b>MUST NOT</b> send whitespace between the start-line and the first he
 </blockquote>
 
 <p>
-发送端所发送的消息里，起始行（start line）和第一个头字段（header field）之间 <b>禁止</b> 带有空格。当接收端发现它所接收到的消息起始行与第一个头字段之间带有空格时，<b>必须</b> 拒绝处理整个不合法的消息，或者仅忽略这种以空格开头的行（例如，忽略整行，连同后续所有以空格开头的行，直到遇到一个格式正确的头字段或者到达消息头部的结尾为止）。
+发送端所发送的消息里，<ruby>起始行<rt>start line</rt></ruby>和第一个<ruby>头字段<rt>header field</rt></ruby>之间 <b>禁止</b> 带有空格。当接收端发现它所接收到的消息起始行与第一个头字段之间带有空格时，<b>必须</b> 拒绝处理整个不合法的消息，或者仅忽略这种以空格开头的行（例如，忽略整行，连同后续所有以空格开头的行，直到遇到一个格式正确的头字段或者到达消息头部的结尾为止）。
 </p>
 
 <blockquote>
@@ -1861,7 +1861,7 @@ The presence of such whitespace in a request might be an attempt to trick a serv
 </blockquote>
 
 <p>
-在一个请求消息中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些头字段或忽略处理某些行，欺骗服务器使其认为这个请求是一个新请求（new request）。如果在请求链路中其他实现（implementation）对这种带有非法空格的消息的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应消息中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端终止解析（parse）。
+在一个请求消息中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些头字段或忽略处理某些行，欺骗服务器使其认为这个请求是一个<ruby>新请求<rt>new request</rt></ruby>。如果在请求链路中其他<ruby>实现<rt>implementation</rt></ruby>对这种带有非法空格的消息的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应消息中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端<ruby>终止解析<rt>cease parsing</rt></ruby>。
 </p>
 </div>
 
@@ -1870,7 +1870,7 @@ The presence of such whitespace in a request might be an attempt to trick a serv
 <div class="outline-text-3" id="text-org7c4f49c">
 <blockquote>
 <p>
-An HTTP message can be either a request from client to server or a response from server to client. Syntactically, the two types of message differ only in the start-line, which is either a <b>request-line</b> (for requests) or a <b>status-line</b> (for responses), and in the algorithm for determining the length of the message body (Section 3.3).
+An HTTP message can be either a request from client to server or a response from server to client. Syntactically, the two types of message differ only in the start-line, which is either a <b>request-line</b> (for requests) or a <b>status-line</b> (for responses), and in the algorithm for determining the length of the message body (<a href="#orgf7a981f">Section 3.3</a>).
 </p>
 </blockquote>
 
@@ -1878,7 +1878,7 @@ An HTTP message can be either a request from client to server or a response from
 一个 HTTP 消息要么是一个从客户端到服务器的请求消息，要么是一个从服务器到客户端的响应消息。从句法上看，这两种类型的消息的区别有两点：
 </p>
 <ol class="org-ol">
-<li>起始行（start line）：请求消息的起始行称为请求行（status line），响应消息的起始行称为状态行（status line）</li>
+<li><ruby>起始行<rt>start line</rt></ruby>：请求消息的起始行称为<ruby>请求行<rt>request line</rt></ruby>，响应消息的起始行称为<ruby>状态行<rt>status line</rt></ruby></li>
 <li>测算消息体的长度的算法（<a href="#orgf7a981f">章节 3.3</a>）</li>
 </ol>
 
@@ -1889,7 +1889,7 @@ In theory, a client could receive requests and a server could receive responses,
 </blockquote>
 
 <p>
-理论上，客户端同样能够接收请求消息，服务器同样能够接收响应消息，只需要让它们区别好消息起始行的不同格式就可以了。但实际上，一般将服务端实现为仅预期接收请求（而接收到响应的话，服务器会将其解释（Interpret）为一个未知或非法的请求方法），将客户端实现为仅预期接收响应。
+理论上，客户端同样能够接收请求消息，服务器同样能够接收响应消息，只需要让它们区别好消息起始行的不同格式就可以了。但实际上，一般将服务端实现为仅预期接收请求（而接收到响应的话，服务器会将其<ruby>解释<rt>interpret</rt></ruby>为一个未知或非法的请求方法），将客户端实现为仅预期接收响应。
 </p>
 
 <div class="org-src-container">
@@ -1923,7 +1923,7 @@ The method token indicates the request method to be performed on the target reso
 </blockquote>
 
 <p>
-方法 <code>method</code> 标识了使用哪一种请求方法（request method）去获取目标资源（target resource），请求方法是 <b>区分大小写</b> 的。
+方法 <code>method</code> 标识了使用哪一种<ruby>请求方法<rt>request method</rt></ruby>去获取<ruby>目标资源<rt>target resource</rt></ruby>，请求方法是 <b>区分大小写</b> 的。
 </p>
 
 <div class="org-src-container">
@@ -1938,7 +1938,7 @@ The request methods defined by this specification can be found in <a href="RFC72
 </blockquote>
 
 <p>
-本规范所定义的请求方法（request method）连同关于 HTTP 方法登记表（HTTP method registry）以及对于定义新方法的注意事项的相关信息，见<a href="RFC7231.html#ID-e6ec0aa0-3e4d-4367-bffd-423e028210b0">【RFC7231】章节 4</a>。
+本规范所定义的<ruby>请求方法<rt>request method</rt></ruby>连同关于 <ruby>HTTP 方法登记表<rt>HTTP method registry</rt></ruby>以及对于定义新方法的注意事项的相关信息，见<a href="RFC7231.html#ID-e6ec0aa0-3e4d-4367-bffd-423e028210b0">【RFC7231】章节 4</a>。
 </p>
 
 <blockquote>
@@ -1958,7 +1958,7 @@ Recipients typically parse the <code>request-line</code> into its component part
 </blockquote>
 
 <p>
-接收端在解析（parse）请求行 <code>request-line</code> 的过程中，通过以空格分割出请求行的各个组件（共有三个组件，分别为方法标识、请求目标以及协议版本），因此，以上三个组件的内容不能带有空格（见<a href="#orgf665892">章节 3.5</a>）。不幸的是，某些用户代理不能对超文本引用（<a href="https://en.wikipedia.org/wiki/Hyperlink">hypertext references</a>，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求消息中的请求目标 <code>request-target</code> 包含了那些不被允许出现的字符（character）。
+接收端在解析<ruby>请求行<rt>request-line</rt></ruby>的过程中，通过以空格分割出请求行的各个组件（共有三个组件，分别为方法标识、请求目标以及协议版本），因此，以上三个组件的内容不能带有空格（<a href="#orgf665892">章节 3.5</a>）。不幸的是，某些用户代理不能对超文本引用（<a href="https://en.wikipedia.org/wiki/Hyperlink">hypertext references</a>，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求消息中的<ruby>请求目标<rt>request-target</rt></ruby>包含了那些不被允许出现的<ruby>字符<rt>character</rt></ruby>。
 </p>
 
 <blockquote>
@@ -1968,7 +1968,7 @@ Recipients of an invalid <code>request-line</code> <b>SHOULD</b> respond with ei
 </blockquote>
 
 <p>
-接收端接收到一个不合法的请求行 <code>request-line</code> 时，<b>应当</b> 响应一个 <code>400 (Bad Request)</code> 错误或者 <code>301 (Move Permanently)</code> 重定向，编码方式依据 <code>request-line</code> 的相应要求。接收端 <b>不应当</b> 试图在不重定向的情况下自动修正然后处理这种请求消息，这是因为这种非法的请求行 <code>request-line</code> 可能是刻意制造出来用于越过请求链路中的安全过滤机制。
+接收端接收到一个不合法的<ruby>请求行<rt>request-line</rt></ruby>时，<b>应当</b> 响应一个 <code>400 (Bad Request)</code> 错误或者 <code>301 (Move Permanently)</code> 重定向，编码方式依据请求行的相应要求。接收端 <b>不应当</b> 试图在不重定向的情况下自动修正然后处理这种请求消息，这是因为这种非法的请求行可能是刻意制造出来用于越过请求链路中的安全过滤机制。
 </p>
 
 <blockquote>
@@ -1984,7 +1984,7 @@ HTTP does not place a predefined limit on the length of a <code>request-line</co
 </blockquote>
 
 <p>
-HTTP 并没有对请求行 <code>request-line</code> 的长度限制进行预定义，相关原因在<a href="#orge19e9b3">章节 2.5</a> 已有描述。服务器接收到超出其长度要求的请求方法（method）时 <b>应当</b> 响应一个 <code>501 (Not Implemented)</code> 状态码。服务器接收到一个 URI 其长度超出服务器所期望的最大长度时，<b>必须</b> 响应一个 <code>414 (URI Too Long)</code> 状态码（见<a href="RFC7231.html#ID-77d1edbb-ceeb-450d-9b85-5f8c89db2f97">【RFC7231】章节 6.5.12</a>）。
+HTTP 并没有对<ruby>请求行<rt>request-line</rt></ruby>的长度限制进行预定义，相关原因在<a href="#orge19e9b3">章节 2.5</a> 已有描述。服务器接收到超出其长度要求的<ruby>请求方法<rt>request method</rt></ruby>时 <b>应当</b> 响应一个 <code>501 (Not Implemented)</code> 状态码。服务器接收到一个 URI 其长度超出服务器所期望的最大长度时，<b>必须</b> 响应一个 <code>414 (URI Too Long)</code> 状态码（见<a href="RFC7231.html#ID-77d1edbb-ceeb-450d-9b85-5f8c89db2f97">【RFC7231】章节 6.5.12</a>）。
 </p>
 
 <blockquote>
@@ -1994,7 +1994,7 @@ Various <a href="https://en.wikipedia.org/wiki/Wireless_ad_hoc_network">ad hoc</
 </blockquote>
 
 <p>
-在实践中发现，ad hoc 网络对于请求行 <code>request-line</code> 的长度限制多种多样。本规范 <b>推荐</b> 所有 HTTP 发送端和接收端对于请求行 <code>request-line</code> 的长度限制不低于 8000 字节（octets）。
+在实践中发现，ad hoc 网络对于<ruby>请求行<rt>request-line</rt></ruby>的长度限制多种多样。本规范 <b>推荐</b> 所有 HTTP 发送端和接收端对于请求行的长度限制不低于 8000 <ruby>字节<rt>octets</rt></ruby>。
 </p>
 </div>
 </div>
@@ -2009,7 +2009,7 @@ The first line of a response message is the <code>status-line</code>, consisting
 </blockquote>
 
 <p>
-响应消息的第一行称为状态行 <code>status-line</code>，包含协议版本 <code>HTTP-version</code>，一个空格 <code>SP</code>，状态码 <code>status-code</code>，另一个空格 <code>SP</code>，一个可能为空的文本短语 <code>reason-phrase</code> 来描述该状态码，最后是回车换行符 <code>CRLF</code>。
+响应消息的第一行称为<ruby>状态行<rt>status-line</rt></ruby>，包含协议版本 <code>HTTP-version</code>，一个空格 <code>SP</code>，状态码 <code>status-code</code>，另一个空格 <code>SP</code>，一个可能为空的文本短语 <code>reason-phrase</code> 来描述该状态码，最后是回车换行符 <code>CRLF</code>。
 </p>
 
 <div class="org-src-container">
@@ -2024,7 +2024,7 @@ The <code>status-code</code> element is a 3-digit integer code describing the re
 </blockquote>
 
 <p>
-状态码 <code>status-code</code> 是一个 3 位整数值，用于描述服务器尝试理解以及满足客户端相应请求的处理结果。接收端应该依据消息的状态码所定义的语义来解释（interprete）消息的剩余部分（即除了状态行以外的部分）。对于状态码的语义的相关信息，包括状态码的分类（由状态码的第一位数字来指定）、本规范所定义的状态码、定义新状态码的注意事项，以及 IANA 登记表，见<a href="RFC7231.html#ID-5a69d0cc-628c-4897-a089-45f906b94a92">【RFC7231】章节 6</a>。
+状态码 <code>status-code</code> 是一个 3 位整数值，用于描述服务器尝试理解以及满足客户端相应请求的处理结果。接收端应该依据消息的状态码所定义的语义来<ruby>解释<rt>interprete</rt></ruby>消息的剩余部分（即除了状态行以外的部分）。对于状态码的语义的相关信息，包括状态码的分类（由状态码的第一位数字来指定）、本规范所定义的状态码、定义新状态码的注意事项，以及 IANA 登记表，见<a href="RFC7231.html#ID-5a69d0cc-628c-4897-a089-45f906b94a92">【RFC7231】章节 6</a>。
 </p>
 
 <div class="org-src-container">
@@ -2060,7 +2060,7 @@ Each header field consists of a case-insensitive field name followed by a colon 
 </blockquote>
 
 <p>
-每一个头字段（header field）都由一个字段名（field name）及随后的一个分号（":"）、可选的前置空格、一个字段值（field value）、一个可选的结尾空格组成。
+每一个<ruby>头字段<rt>header field</rt></ruby>都由一个<ruby>字段名<rt>field name</rt></ruby>及随后的一个分号（":"）、可选的前置空格、一个<ruby>字段值<rt>field value</rt></ruby>、一个可选的结尾空格组成。
 </p>
 
 <div class="org-src-container">
@@ -2088,9 +2088,9 @@ The <code>field-name</code> token labels the corresponding <code>field-value</co
 </p>
 </div>
 
-<div id="outline-container-org5e48ec8" class="outline-4">
-<h4 id="org5e48ec8"><a id="ID-8f9892d5-b8b1-44ee-bcbe-313354cb2e2a"></a>3.2.1. 域的可扩展性 / Field Extensibility</h4>
-<div class="outline-text-4" id="text-org5e48ec8">
+<div id="outline-container-orgcb1dfcc" class="outline-4">
+<h4 id="orgcb1dfcc"><a id="ID-8f9892d5-b8b1-44ee-bcbe-313354cb2e2a"></a>3.2.1. 字段的可扩展性 / Field Extensibility</h4>
+<div class="outline-text-4" id="text-orgcb1dfcc">
 <blockquote>
 <p>
 Header fields are fully extensible: there is no limit on the introduction of new field names, each presumably defining new semantics, nor on the number of header fields used in a given message. Existing fields are defined in each part of this specification and in many other specifications outside this document set.
@@ -2108,7 +2108,7 @@ New header fields can be defined such that, when they are understood by a recipi
 </blockquote>
 
 <p>
-新头字段能够定义为这样：当新头字段能够被接收端所理解时，它们可以覆盖或增强之前所定义的头字段的解释（interpretation），定义对解释请求（request evaluation）的前置条件（preconditions），或者提炼响应消息的意思。
+新头字段能够定义为这样：当新头字段能够被接收端所理解时，它们可以覆盖或增强之前所定义的头字段的<ruby>解释<rt>interpretation</rt></ruby>，定义对<ruby>评估请求<rt>request evaluation</rt></ruby>的<ruby>前置条件<rt>preconditions</rt></ruby>，或者<ruby>优化<rt>refine</rt></ruby>响应消息的含义。
 </p>
 
 <blockquote>
@@ -2124,7 +2124,7 @@ A proxy <b>MUST</b> forward unrecognized header fields unless the <code>field-na
 </blockquote>
 
 <p>
-代理（proxy） <b>必须</b> 将无法识别的头字段转发出去，除非 <code>Connection</code> 头字段里列出了该头字段名称 <code>field-name</code> （见<a href="#org6e6aa41">章节 6.1</a>），或者该代理被具体配置为对这些域进行阻塞、转换。其他接收端 <b>应当</b> 忽略无法识别的头字段。这些要求使得在链路中的中间人还没有预先更新的情况下，HTTP 的功能仍能得到增强。
+<ruby>代理<rt>proxy</rt></ruby> <b>必须</b> 将无法识别的头字段转发出去，除非 <code>Connection</code> 头字段里列出了该头字段名称 <code>field-name</code> （见<a href="#org6e6aa41">章节 6.1</a>），或者该代理被具体配置为对这些字段进行阻塞、转换。其他接收端 <b>应当</b> 忽略无法识别的头字段。这些要求使得在链路中的中间人还没有预先更新的情况下，HTTP 的功能仍能得到增强。
 </p>
 
 <blockquote>
@@ -2139,9 +2139,9 @@ All defined header fields ought to be registered with <a href="https://www.iana.
 </div>
 </div>
 
-<div id="outline-container-orgee0910a" class="outline-4">
-<h4 id="orgee0910a"><a id="ID-f5f69e77-1403-4663-852e-b507dcd14a85"></a>3.2.2. 域的顺序 / Field Order</h4>
-<div class="outline-text-4" id="text-orgee0910a">
+<div id="outline-container-orgb0e9fd2" class="outline-4">
+<h4 id="orgb0e9fd2"><a id="ID-f5f69e77-1403-4663-852e-b507dcd14a85"></a>3.2.2. 字段的顺序 / Field Order</h4>
+<div class="outline-text-4" id="text-orgb0e9fd2">
 <blockquote>
 <p>
 The order in which header fields with differing field names are received is not significant. However, it is good practice to send header fields that contain control data first, such as <code>Host</code> on requests and <code>Date</code> on responses, so that implementations can decide when not to handle a message as early as possible. A server <b>MUST NOT</b> apply a request to the target resource until the entire request header section is received, since later header fields might include conditionals, authentication credentials, or deliberately misleading duplicate header fields that would impact request processing.
@@ -2149,7 +2149,7 @@ The order in which header fields with differing field names are received is not 
 </blockquote>
 
 <p>
-不同的头字段名的接收顺序是无关要紧的。但是，最佳的实践是优先发送包含控制的信息（control data），例如请求消息中的 <code>Host</code> 和 响应消息中的 <code>Date</code>，以便于相应的实现（implementations）能够尽可能简单地决定在什么时候不去处理这个消息。服务端 <b>禁止</b> 在整个请求消息头部接收完毕之前去申请目标资源，这是因为接后来的请求头字段可能包含影响请求处理流程的条件、认证信息或者故意误导性的重复头字段。
+不同的头字段名的接收顺序是无关要紧的。但是，最佳的实践是优先发送包含<ruby>控制信息<rt>control data</rt></ruby>，例如请求消息中的 <code>Host</code> 和 响应消息中的 <code>Date</code>，以便于相应的<ruby>实现<rt>implementations</rt></ruby>能够尽可能简单地决定在什么时候不去处理这个消息。服务端 <b>禁止</b> 在整个请求消息头部接收完毕之前去申请目标资源，这是因为接后来的请求头字段可能包含影响请求处理流程的条件、认证信息或者故意误导性的重复头字段。
 </p>
 
 <blockquote>
@@ -2159,7 +2159,7 @@ A sender <b>MUST NOT</b> generate multiple header fields with the same field nam
 </blockquote>
 
 <p>
-发送端 <b>禁止</b> 在一个消息中生成多个相同名称的的头字段（header fields），除非所有这些头字段的头字段值是定义为以英文“逗号”分隔（comma-separated）的列表（例如，#(values)）或者头字段是公认的例外（如之前所列举的）。
+发送端 <b>禁止</b> 在一个消息中生成多个相同名称的的<ruby>头字段<rt>header fields</rt></ruby>，除非所有这些头字段的头字段值是定义为以<ruby>英文逗号分隔<rt>comma-separated</rt></ruby>的列表（例如，<code>#(values)</code>）或者头字段是公认的例外（如之前所列举的）。
 </p>
 
 <blockquote>
@@ -2169,17 +2169,17 @@ A recipient <b>MAY</b> combine multiple header fields with the same field name i
 </blockquote>
 
 <p>
-在没有改变消息语义的情况下，接收端 <b>可以</b> 将多个相同名称的头字段合并成一个头字段键-值对（"field-name: field-value" pair），具体实现方式是通过按顺序向要合并的那个字段值末尾附加其他子序列的头字段值，并以英文“逗号”分隔。因此，该同名消息头字段在消息中的接收顺序对所合并而成的字段值的解释（interpretation）有重要意义。代理 <b>禁止</b> 在转发消息的时候改变这些字段值的顺序。
+在没有改变消息语义的情况下，接收端 <b>可以</b> 将多个相同名称的头字段合并成一个头字段键-值对（"field-name: field-value" pair），具体实现方式是通过按顺序向要合并的那个字段值末尾附加其他子序列的头字段值，并以英文“逗号”分隔。因此，该同名消息头字段在消息中的接收顺序对所合并而成的字段值的<ruby>解释<rt>interpretation</rt></ruby>有重要意义。代理 <b>禁止</b> 在转发消息的时候改变这些字段值的顺序。
 </p>
 
 <blockquote>
 <p>
-<b>Note:</b> In practice, the "Set-Cookie" header field ([RFC6265]) often appears multiple times in a response message and does not use the list syntax, violating the above requirements on multiple header fields with the same name. Since it cannot be combined into a single field-value, recipients ought to handle "Set-Cookie" as a special case while processing header fields. (See Appendix A.2.3 of [Kri2001] for details.)
+<b>Note:</b> In practice, the "Set-Cookie" header field ([<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>]) often appears multiple times in a response message and does not use the list syntax, violating the above requirements on multiple header fields with the same name. Since it cannot be combined into a single field-value, recipients ought to handle "Set-Cookie" as a special case while processing header fields. (See Appendix A.2.3 of [Kri2001] for details.)
 </p>
 </blockquote>
 
 <p>
-<b>注意：</b> 在实践中，头字段 <code>Set-Cookie</code> （见【<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>】）在一个响应消息中通常会出现多次，并且不是以列表的句法形式，违背了以上关于多个相同名称的头字段的要求。这是因为它不能组合成一个单一的字段值（field value），因此，当处理头字段的时候，接收端应该将 <code>Set-cookie</code> 作为特殊情况。（详情见【Kri2001】的附件 A.2.3。）
+<b>注意：</b> 在实践中，头字段 <code>Set-Cookie</code> （见【<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>】）在一个响应消息中通常会出现多次，并且不是以列表的句法形式，违背了以上关于多个相同名称的头字段的要求。这是因为它不能组合成一个单一的字段值，因此，当处理头字段的时候，接收端应该将 <code>Set-cookie</code> 作为特殊情况。（详情见【Kri2001】的附件 A.2.3。）
 </p>
 </div>
 </div>
@@ -2209,7 +2209,7 @@ The <code>OWS</code> rule is used where zero or more linear whitespace octets mi
 </blockquote>
 
 <p>
-<code>OWS</code> 规则是用在可能出现零个或多个连续空格（octets）的位置上。对于协议元素来说，可选空格的使用有助于提交可读性。发送端 <b>应当</b> 将可选空格生成为一个单一的 <code>SP</code>；接收端除了在消息就地过滤（in-place message filtering）期间因为修正非法或多余的协议元素的需要而生成可选空格以外，接收端 <b>不应当</b> 生成可选空格。
+<code>OWS</code> 规则是用在可能出现零个或多个<ruby>连续空格字节<rt>linear whitespace octets</rt></ruby>的位置上的。对于协议元素来说，可选空格的使用有助于提交可读性。发送端 <b>应当</b> 将可选空格生成为一个单一的 <code>SP</code>；接收端除了在<ruby>消息就地过滤<rt>in-place message filtering</rt></ruby>期间因为修正非法或多余的协议元素的需要而生成可选空格以外，接收端 <b>不应当</b> 生成可选空格。
 </p>
 
 <blockquote>
@@ -2219,7 +2219,7 @@ The <code>RWS</code> rule is used when at least one linear whitespace octet is r
 </blockquote>
 
 <p>
-<code>RWS</code> 规则是用于当要求有至少一个连续空格（linear whitespace octet）来分隔域标记（field tokens）的时候。发送端 <b>应当</b> 将 <code>RWS</code> 生成为一个单一的 <code>SP</code>。
+<code>RWS</code> 规则是用于当要求有至少一个<ruby>连续空格<rt>linear whitespace octet</rt></ruby>来分隔<ruby>字段标记<rt>field tokens</rt></ruby>的时候。发送端 <b>应当</b> 将 <code>RWS</code> 生成为一个单一的 <code>SP</code>。
 </p>
 
 <blockquote>
@@ -2229,7 +2229,7 @@ The <code>BWS</code> rule is used where the grammar allows optional whitespace o
 </blockquote>
 
 <p>
-<code>BWS</code> 规则是用在由于历史遗留因素才在语法上允许可选空格的位置上。发送端 <b>禁止</b> 在消息中生成 <code>BWS</code>。接收端 <b>必须</b> 在解释（interpret）协议元素之前对这些不可取的空格进行解释（parse）并且移除它们。
+<code>BWS</code> 规则是用在由于历史遗留因素才在语法上允许可选空格的位置上。发送端 <b>禁止</b> 在消息中生成 <code>BWS</code>。接收端 <b>必须</b> 在<ruby>解释<rt>interpret</rt></ruby>协议元素之前对这些不可取的空格进行<ruby>解析<rt>parse</rt></ruby>并且移除它们。
 </p>
 
 <div class="org-src-container">
@@ -2244,9 +2244,9 @@ BWS            = OWS
 </div>
 </div>
 
-<div id="outline-container-orgf6d6d76" class="outline-4">
-<h4 id="orgf6d6d76"><a id="ID-1bd50237-cd26-4e74-8c0c-7af8d2d6b25f"></a>3.2.4. 域解析 / Field Parsing</h4>
-<div class="outline-text-4" id="text-orgf6d6d76">
+<div id="outline-container-org6dc2928" class="outline-4">
+<h4 id="org6dc2928"><a id="ID-1bd50237-cd26-4e74-8c0c-7af8d2d6b25f"></a>3.2.4. 字段解析 / Field Parsing</h4>
+<div class="outline-text-4" id="text-org6dc2928">
 <blockquote>
 <p>
 Messages are parsed using a generic algorithm, independent of the individual header field names. The contents within a given field value are not parsed until a later stage of message interpretation (usually after the message's entire header section has been processed). Consequently, this specification does not use ABNF rules to define each "Field-Name: Field Value" pair, as was done in previous editions. Instead, this specification uses ABNF rules that are named according to each registered field name, wherein the rule defines the valid grammar for that field's corresponding field values (i.e., after the field-value has been extracted from the header section by a generic field parser).
@@ -2254,7 +2254,7 @@ Messages are parsed using a generic algorithm, independent of the individual hea
 </blockquote>
 
 <p>
-消息使用通用的算法进行解析（parse），不依赖个别的头字段名。对一个给定的头字段值里的内容进行解析（parse）会在消息解释（interpretation）的偏后阶段进行，通常在消息的整个头字段块（header section）都已经被处理（process）好之后。因此，本规范不再使用 ABNF 规则去定义每一个头字段“键-值”对（"Field-Name: Field Value" pair），正如上个版本的做法。取而代之的是，本规范使用以每一个已登记的头字段的名称来命名的 ABNF 规则，每个规则里定义了相应的头字段所对应的字段值（也就是说，通过一个通用头字段解析器从消息头部中抽取出 <code>field-value</code> 以后的内容）的合法语法。
+消息使用通用的算法进行<ruby>解析<rt>parse</rt></ruby>，不依赖个别的头字段名。对一个给定的头字段值里的内容的<ruby>解析<rt>parse</rt></ruby>会在消息<ruby>解释<rt>interpretation</rt></ruby>的偏后阶段进行，通常在消息的整个<ruby>消息头部<rt>header section</rt></ruby>都已经被处理好之后。因此，本规范不再使用 ABNF 规则去定义每一个头字段“键-值”对（"Field-Name: Field Value" pair），正如上个版本的做法。取而代之的是，本规范使用以每一个已登记的头字段的名称来命名的 ABNF 规则，每个规则里定义了相应的头字段所对应的字段值（也就是说，通过一个通用头字段解析器从消息头部中抽取出 <code>field-value</code> 以后的内容）的合法语法。
 </p>
 
 <blockquote>
@@ -2264,7 +2264,7 @@ No whitespace is allowed between the header <code>field-name</code> and colon. I
 </blockquote>
 
 <p>
-头字段名（field name）和冒号之间不允许带有空格。在过去，对于这些空格的各不相同的处理方式已经导致请求路由和响应处理方面的安全隐患。服务器 <b>必须</b> 拒绝这种在头字段名和冒号之间包含空格请求消息，并响应一个 <code>400 (Bad Request)</code> 的状态码。代理（proxy） <b>必须</b> 在转发到下游之前从响应消息中移除所有上述空格。
+头字段的名字和冒号之间不允许带有空格。在过去，对于这些空格的各不相同的处理方式已经导致请求路由和响应处理方面的安全隐患。服务器 <b>必须</b> 拒绝这种在头字段名和冒号之间包含空格请求消息，并响应一个 <code>400 (Bad Request)</code> 的状态码。代理 <b>必须</b> 在转发到下游之前从响应消息中移除所有上述空格。
 </p>
 
 <blockquote>
@@ -2284,7 +2284,7 @@ Historically, HTTP header field values could be extended over multiple lines by 
 </blockquote>
 
 <p>
-历史上，HTTP 头字段值能被扩展为多行，通过在每个额外行之前添加至少一个空格或水平制表符（<code>obs-fold</code>）来实现。本规范废弃了这些分行（line folding）除了在媒体类型（media type）"message/http"（见<a href="#orgd8838e8">章节 8.3.1</a>）之内的。发送端 <b>禁止</b> 生成一个包含分行（也就是说，带有任何包含能够匹配 <code>obs-fold</code> 规则的头字段值 <code>field-value</code>）的消息，除非消息是用于封装媒体类型 "message/http" 的内容。
+历史上，HTTP 头字段值能被扩展为多行，通过在每个额外行之前添加至少一个空格或水平制表符（<code>obs-fold</code>）来实现。本规范废弃了这种<ruby>折叠行<rt>line folding</rt></ruby>，除了在<ruby>媒体类型<rt>media type</rt></ruby> "message/http"（见<a href="#orgd8838e8">章节 8.3.1</a>）之内的。发送端 <b>禁止</b> 生成一个包含行折叠（也就是说，带有任何包含能够匹配 <code>obs-fold</code> 规则的头字段值 <code>field-value</code>）的消息，除非消息是用于封装媒体类型 "message/http" 的内容。
 </p>
 
 <blockquote>
@@ -2294,8 +2294,13 @@ A server that receives an <code>obs-fold</code> in a request message that is not
 </blockquote>
 
 <p>
-如果服务端接收到一个在请求消息里的分行 <code>obs-fold</code>，但这个分行不在媒体类型 "message/http" 的容器内，服务端 <b>必须</b> 要不拒绝这种消息并响应一个 <code>400 (Bad Request)</code> 状态码，更好的方式是在响应消息中带有一种<ruby>表示形式<rt>representation</rt></ruby>来解释那种已经废弃的分行是不再允许出现在消息中的；要不在解释（interpret）头字段值（或转发消息到下游）之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
+如果服务端在请求消息里接收到一个 <code>obs-fold</code>，但它并不在媒体类型 "message/http" 的容器内，服务端 <b>必须</b> 选择以下的处理方式之一：
 </p>
+
+<ul class="org-ul">
+<li>拒绝这种消息并响应一个 <code>400 (Bad Request)</code> 状态码，更好的方式是在响应消息中带有一种<ruby>表示形式<rt>representation</rt></ruby>来解释这种已经废弃的<ruby>折叠行<rt>line folding</rt></ruby>是不再允许出现在消息中的；</li>
+<li>在<ruby>解释<rt>interpret</rt></ruby>头字段值（或转发消息到下游）之前，使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的 <code>obs-fold</code>。</li>
+</ul>
 
 <blockquote>
 <p>
@@ -2304,8 +2309,13 @@ A proxy or gateway that receives an <code>obs-fold</code> in a response message 
 </blockquote>
 
 <p>
-如果代理（proxy）或网关（gateway）接收到一个响应消息里的分行 <code>obs-fold</code>，但这个分行不在媒体类型 "message/http" 的容器内，这些中间人 <b>必须</b> 要不丢弃这个消息改由响应一个 <code>502 (Bad Gateway)</code> 状态码，更好的方式是在响应消息中带有一种<ruby>表示形式<rt>representation</rt></ruby>来解释之所以出现这种状况是因为接收到那种不被允许的分行；要不在解释（interpret）头字段值（或转发消息到下游）之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
+如果<ruby>代理<rt>proxy</rt></ruby>或<ruby>网关<rt>gateway</rt></ruby>在一个响应消息里接收到 <code>obs-fold</code>，但它并不在媒体类型 "message/http" 的容器内，这些中间人 <b>必须</b> 选择以下的处理方式这一：
 </p>
+
+<ul class="org-ul">
+<li>丢弃这个消息改由响应一个 <code>502 (Bad Gateway)</code> 状态码，更好的方式是在响应消息中带有一种<ruby>表示形式<rt>representation</rt></ruby>来解释之所以出现这种状况是因为接收到那种不被允许的<ruby>折叠行<rt>line folding</rt></ruby>；</li>
+<li>在<ruby>解释<rt>interpret</rt></ruby>头字段值（或转发消息到下游）之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的 <code>obs-fold</code>。</li>
+</ul>
 
 <blockquote>
 <p>
@@ -2314,7 +2324,7 @@ A user agent that receives an <code>obs-fold</code> in a response message that i
 </blockquote>
 
 <p>
-如果用户代理（User Agent）接收到一个响应消息里的分行 <code>obs-fold</code>，但这个分行不要媒体类型 "message/http" 的容器内，用户代理 <b>必须</b> 在解释（interpret）头字段值之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
+如果<ruby>用户代理<rt>user agent</rt></ruby>接收到一个响应消息里的 <code>obs-fold</code>，但它并不在媒体类型 "message/http" 的容器内，用户代理 <b>必须</b> 在解释头字段值之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
 </p>
 
 <blockquote>
@@ -2324,7 +2334,7 @@ Historically, HTTP has allowed field content with text in the ISO‑8859‑1 cha
 </blockquote>
 
 <p>
-历史上，HTTP 已允许头字段的内容带有 ISO-8859-1 字符集【ISO-8859-1】的字符，要支持其他字符集，仅能通过使用【<a href="https://tools.ietf.org/html/rfc2047">RFC2047</a>】编码。实际上，大多 HTTP 头字段值仅仅使用 US-ASCII 字符集【USASCII】的子集。新近定义的头字段 <b>应该</b> 将它们的字段值的内容限制为 US-ASCII 字节（Octets）。接收端 <b>应该</b> 将在头字段里的其他字节文本（<code>obs-text</code>）作为不透明数据（<a href="https://en.wikipedia.org/wiki/Opaque_data_type">Opaque Data</a>）对待。
+历史上，HTTP 已允许头字段的内容带有 ISO-8859-1 字符集【ISO-8859-1】的字符，要支持其他字符集，仅能通过使用【<a href="https://tools.ietf.org/html/rfc2047">RFC2047</a>】编码。实际上，大多 HTTP 头字段值仅仅使用 US-ASCII 字符集【USASCII】的子集。新近定义的头字段 <b>应该</b> 将它们的字段值的内容限制为 US-ASCII <ruby>字节<rt>Octets</rt></ruby>。接收端 <b>应该</b> 将在头字段里的其他字节文本（<code>obs-text</code>）作为不透明数据（<a href="https://en.wikipedia.org/wiki/Opaque_data_type">Opaque Data</a>）对待。
 </p>
 
 <blockquote>
@@ -2342,9 +2352,9 @@ opaque（不透明的）和 transparent（透明的）都有“隐藏”的意�
 </div>
 </div>
 
-<div id="outline-container-orgc1f254c" class="outline-4">
-<h4 id="orgc1f254c">3.2.5. 域限制 / Field Limits</h4>
-<div class="outline-text-4" id="text-orgc1f254c">
+<div id="outline-container-orgfc817b8" class="outline-4">
+<h4 id="orgfc817b8">3.2.5. 字段限制 / Field Limits</h4>
+<div class="outline-text-4" id="text-orgfc817b8">
 <blockquote>
 <p>
 HTTP does not place a predefined limit on the length of each header field or on the length of the header section as a whole, as described in <a href="#orge19e9b3">Section 2.5</a>. Various <a href="https://en.wikipedia.org/wiki/Wireless_ad_hoc_network">ad hoc</a> limitations on individual header field length are found in practice, often depending on the specific field semantics.
@@ -2352,7 +2362,7 @@ HTTP does not place a predefined limit on the length of each header field or on 
 </blockquote>
 
 <p>
-HTTP 并没有预先限制每一个头字段（header field）的长度或者整个消息头部（header section）的长度，详情见<a href="#orge19e9b3">章节 2.5</a>。实践中已发现各家 ad hoc 网络对于个别头字段的长度有不同的限制，这咱长度限制通常依据具体的头字段的语义。
+HTTP 并没有预先限制每一个<ruby>头字段<rt>header field</rt></ruby>的长度或者整个<ruby>消息头部<rt>header section</rt></ruby>的长度，详情见<a href="#orge19e9b3">章节 2.5</a>。实践中已发现各家 ad hoc 网络对于个别头字段的长度有不同的限制，这咱长度限制通常依据具体的头字段的语义。
 </p>
 
 <blockquote>
@@ -2362,7 +2372,7 @@ A server that receives a request header field, or set of fields, larger than it 
 </blockquote>
 
 <p>
-服务端接收到一个请求头字段或头字段集合，其长度超出服务器所能处理的最大长度时，服务器 <b>必须</b> 响应一个恰当的 <code>4xx (Client Error)</code> 状态码。而忽略这些头字段会增加服务器被“Request Smuggling 攻击”（<a href="#org335da74">章节 9.5</a>）的隐患。
+服务端接收到一个请求头字段或头字段集合，其长度超出服务器所能处理的最大长度时，服务器 <b>必须</b> 响应一个恰当的 <code>4xx (Client Error)</code> 状态码。而忽略这些头字段会增加服务器被“<ruby>请求走私攻击<rt>request smuggling attacks</rt></ruby>”（<a href="#org335da74">章节 9.5</a>）的隐患。
 </p>
 
 <blockquote>
@@ -2372,7 +2382,7 @@ A client <b>MAY</b> discard or truncate received header fields that are larger t
 </blockquote>
 
 <p>
-客户端 <b>可以</b> 丢弃或拼接所接收到的超出客户端所能处理的最大长度的头字段，如果那个域的语义是那种摘除掉的值能够在没有改变消息的分帧或响应语义的情况下被安全地被忽略。
+客户端 <b>可以</b> 丢弃或拼接所接收到的超出客户端所能处理的最大长度的头字段，如果那个字段的语义是那种摘除掉的值能够在没有改变消息的分帧或响应语义的情况下被安全地被忽略。
 </p>
 </div>
 </div>
@@ -2387,7 +2397,7 @@ Most HTTP header field values are defined using common syntax components (token,
 </blockquote>
 
 <p>
-大多数 HTTP 头字段值使用通用句法组件（common syntax components，包括标记 <code>token</code>、字符串 <code>quoted-string</code>、注释 <code>comment</code> ）来进行定义。这些通用句法组件以空格或者特定的定界符（delimiting characters）来分隔。定界符选取自 US-ASCII 字符集中的可见字符（visual characters），并且这些可见字符是不允许出现在标记（token）上的（包括 <code>DQUOTE</code> 和 "<code>(),/:;&lt;=&gt;?@[\]{}</code>"）。
+大多数 HTTP 头字段值使用<ruby>通用句法组件<rt>common syntax components</rt></ruby>（包括标记 <code>token</code>、字符串 <code>quoted-string</code>、注释 <code>comment</code> ）来进行定义。这些通用句法组件以空格或者特定的<ruby>定界符<rt>delimiting characters</rt></ruby>来分隔。定界符选取自 US-ASCII 字符集中的<ruby>可见字符<rt>visual characters</rt></ruby>，并且这些可见字符是不允许出现在<ruby>标记<rt>token</rt></ruby>上的（包括 <code>DQUOTE</code> 和 "<code>(),/:;&lt;=&gt;?@[\]{}</code>"）。
 </p>
 
 <div class="org-src-container">
@@ -2407,7 +2417,7 @@ A string of text is parsed as a single value if it is quoted using double-quote 
 </blockquote>
 
 <p>
-一个文本字符串 <code>quoted-string</code> 会作为一个单一的值来进行解析（parse），如果这一文本字符串使用双引号所包裹的话。
+一个文本字符串 <code>quoted-string</code> 会作为一个单一的值来进行<ruby>解析<rt>parse</rt></ruby>，如果这一文本字符串使用双引号所包裹的话。
 </p>
 
 <div class="org-src-container">
@@ -2440,7 +2450,7 @@ The backslash octet ("\") can be used as a single-octet quoting mechanism within
 </blockquote>
 
 <p>
-反斜杠 "\" 能够在字符串 <code>quoted-string</code> 和注释 <code>comment</code> 中作为转义字符。接收端处理字符串 <code>quoted-string</code> 的值时 <b>必须</b> 处理引号对 <code>quoted-pair</code>，就像它被替换为反斜杠后面的字节（octet）一样。
+反斜杠 "\" 能够在字符串 <code>quoted-string</code> 和注释 <code>comment</code> 中作为转义字符。接收端处理字符串 <code>quoted-string</code> 的值时 <b>必须</b> 处理引号对 <code>quoted-pair</code>，就像它被替换为反斜杠后面的<ruby>字节<rt>octet</rt></ruby>一样。
 </p>
 
 <div class="org-src-container">
@@ -2455,7 +2465,7 @@ A sender <b>SHOULD NOT</b> generate a <code>quoted-pair</code> in a <code>quoted
 </blockquote>
 
 <p>
-发送端 <b>不应当</b> 在一个 <code>quoted-string</code> 里生成一个 <code>quoted-pair</code>，除非在那个字符串中对所有出现的 <code>DQUOTE</code> 以及反斜字符杠八位组（octet）进行转义。发送端 <b>不应当</b> 在注释中生成一个 <code>quoted-pair</code>，除非在那个注释中对所有出现的小括号（"(" 和 ")"）以及反斜杠字节（octet）进行转义。
+发送端 <b>不应当</b> 在一个 <code>quoted-string</code> 里生成一个 <code>quoted-pair</code>，除非在那个字符串中对所有出现的 <code>DQUOTE</code> 以及反斜字符杠<ruby>字节<rt>octet</rt></ruby>进行转义。发送端 <b>不应当</b> 在注释中生成一个 <code>quoted-pair</code>，除非在那个注释中对所有出现的小括号（"(" 和 ")"）以及反斜杠字节进行转义。
 </p>
 </div>
 </div>
@@ -2471,7 +2481,7 @@ The message body (if any) of an HTTP message is used to carry the payload body o
 </blockquote>
 
 <p>
-HTTP 消息的消息体（如果存在的话）是用来运载请求或响应的有效载荷（payload body）的。除非应用了传输编码，消息体（message body）等价于有效载荷（payload body），详情见<a href="#orgac6c5c4">章节 3.3.1</a>。
+HTTP 消息的消息体（如果存在的话）是用来运载请求或响应的<ruby>有效载荷<rt>payload body</rt></ruby>的。除非应用了传输编码，<ruby>消息体<rt>message body</rt></ruby>等价于<ruby>有效载荷<rt>payload body</rt></ruby>，详情见<a href="#orgac6c5c4">章节 3.3.1</a>。
 </p>
 
 <div class="org-src-container">
@@ -2496,7 +2506,7 @@ The presence of a message body in a request is signaled by a <code>Content-Lengt
 </blockquote>
 
 <p>
-在一个请求中是否会出现消息体，以消息头中是否带有 <code>Content-Length</code> 或者 <code>Transfer-Encoding</code> 头字段作为信号。请求消息的分帧是独立于请求方法（method）的语义之外的，即使请求方法并没有任何用于一个消息体的相关定义。
+在一个请求中是否会出现消息体，以消息头中是否带有 <code>Content-Length</code> 或者 <code>Transfer-Encoding</code> 头字段作为信号。请求消息的分帧是独立于<ruby>请求方法<rt>request method</rt></ruby>的语义之外的，即使请求方法并没有任何用于一个消息体的相关定义。
 </p>
 
 <blockquote>
@@ -2520,7 +2530,7 @@ The <code>Transfer-Encoding</code> header field lists the transfer coding names 
 </blockquote>
 
 <p>
-头字段 <code>Transfer-Encoding</code> 罗列了所有与已经（或即将）被应用到有效载荷（payload body）的传输编码值（transfer coding）相对应的名称。有效载荷编码后形成消息体（message body）。传输编码值（transfer coding）定义在<a href="#org4f2cf2a">章节 4</a>。
+头字段 <code>Transfer-Encoding</code> 罗列了所有与已经（或即将）被应用到<ruby>有效载荷<rt>payload body</rt></ruby>的<ruby>传输编码值<rt>transfer coding</rt></ruby>相对应的名称。有效载荷编码后形成<ruby>消息体<rt>message body</rt></ruby>。传输编码值定义在<a href="#org4f2cf2a">章节 4</a>。
 </p>
 
 <div class="org-src-container">
@@ -2530,7 +2540,7 @@ The <code>Transfer-Encoding</code> header field lists the transfer coding names 
 
 <blockquote>
 <p>
-<code>Transfer-Encoding</code> is analogous to the <code>Content-Transfer-Encoding</code> field of MIME, which was designed to enable safe transport of binary data over a 7-bit transport service ([RFC2045], Section 6). However, safe transport has a different focus for an 8bit-clean transfer protocol. In HTTP's case, <code>Transfer-Encoding</code> is primarily intended to accurately delimit a dynamically generated payload and to distinguish payload encodings that are only applied for transport efficiency or security from those that are characteristics of the selected resource.
+<code>Transfer-Encoding</code> is analogous to the <code>Content-Transfer-Encoding</code> field of MIME, which was designed to enable safe transport of binary data over a 7-bit transport service ([RFC2045], <a href="https://tools.ietf.org/html/rfc2045#section-6">Section 6</a>). However, safe transport has a different focus for an 8bit-clean transfer protocol. In HTTP's case, <code>Transfer-Encoding</code> is primarily intended to accurately delimit a dynamically generated payload and to distinguish payload encodings that are only applied for transport efficiency or security from those that are characteristics of the selected resource.
 </p>
 </blockquote>
 
@@ -2545,7 +2555,7 @@ A recipient <b>MUST</b> be able to parse the chunked transfer coding (<a href="#
 </blockquote>
 
 <p>
-一个接收端 <b>必须</b> 能够解析（parse）分块传输编码值（chunked transfer coding，见<a href="#org9375fa9">章节 4.1</a>），这是因为它在预先并不知道有效载荷（payload body）的大小的情况下对消息进行分帧的过程中扮演了重要的角色。一个发送端 <b>禁止</b> 对一个消息体进行超过一次的分块（也就是说，不允许对一个已经分好块的消息进行再次分块）。如果任何除 <code>chunked</code> 以外的传输编码值被应用到一个请求消息的有效载荷（request payload body）里，发送端 <b>必须</b> 将 <code>chunked</code> 作为最后的传输编码值来确保那个消息被正确的分帧。如果任何除 <code>chunked</code> 以外的传输编码值被应用到一个响应消息的有效载荷（response payload body）里，发送端 <b>必须</b> 要不将 <code>chunked</code> 作为最后的传输编码值，要不关闭连接来终止这个消息的发送。
+一个接收端 <b>必须</b> 能够解析<ruby>分块传输编码值<rt>chunked transfer coding</rt></ruby>（<a href="#org9375fa9">章节 4.1</a>），这是因为它在预先并不知道<ruby>有效载荷<rt>payload body</rt></ruby>的大小的情况下对消息进行分帧的过程中扮演了重要的角色。一个发送端 <b>禁止</b> 对一个消息体进行超过一次的分块（也就是说，不允许对一个已经分好块的消息进行再次分块）。如果任何除 <code>chunked</code> 以外的传输编码值被应用到一个<ruby>请求消息的有效载荷<rt>request payload body</rt></ruby>里，发送端 <b>必须</b> 将 <code>chunked</code> 作为最后的传输编码值来确保那个消息被正确的分帧。如果任何除 <code>chunked</code> 以外的传输编码值被应用到一个<ruby>响应消息的有效载荷<rt>response payload body</rt></ruby>里，发送端 <b>必须</b> 要不将 <code>chunked</code> 作为最后的传输编码值，要不关闭连接来终止这个消息的发送。
 </p>
 
 <blockquote>
@@ -2569,7 +2579,7 @@ indicates that the payload body has been compressed using the <code>gzip</code> 
 </blockquote>
 
 <p>
-表示有效载荷（payload body）已经使用 <code>gzip</code> 编码压缩过，然后在消息体分帧的时候使用 <code>chunked</code> 编码。
+表示<ruby>有效载荷<rt>payload body</rt></ruby>已经使用 <code>gzip</code> 编码压缩过，然后在消息体分帧的时候使用 <code>chunked</code> 编码。
 </p>
 
 <blockquote>
@@ -2579,7 +2589,7 @@ Unlike <code>Content-Encoding</code> (<a href="RFC7231.html#ID-a67acb58-7b0a-49c
 </blockquote>
 
 <p>
-与 <code>Content-Encoding</code> 头字段（<a href="RFC7231.html#ID-a67acb58-7b0a-49c8-8de4-5dd8a4ab9e61">【RFC7231】章节 3.1.2.1</a>）不同的是，<code>Transfer-Encoding</code> 头字段是消息（message）的一个属性，而不是<ruby>表示形式<rt>representation</rt></ruby>的一个属性，并且在请求/响应链路中的所有接收端都 <b>可以</b> 依据所接收到的传输代码值（一个或多个）对消息体进行解码，或者向消息体应用额外的传输代码值，假设 <code>Transfer-Encoding</code> 的 <code>field-value</code> 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的头字段提供。
+与 <code>Content-Encoding</code> 头字段（<a href="RFC7231.html#ID-a67acb58-7b0a-49c8-8de4-5dd8a4ab9e61">【RFC7231】章节 3.1.2.1</a>）不同的是，<code>Transfer-Encoding</code> 头字段是<ruby>消息<rt>message</rt></ruby>的一个属性，而不是<ruby>表示形式<rt>representation</rt></ruby>的一个属性，并且在请求/响应链路中的所有接收端都 <b>可以</b> 依据所接收到的传输代码值（一个或多个）对消息体进行解码，或者向消息体应用额外的传输代码值，假设 <code>Transfer-Encoding</code> 的 <code>field-value</code> 有进行对应的改动的话。额外的编码参数相关的信息能够通过其他不在本规范中定义的头字段提供。
 </p>
 
 <blockquote>
@@ -2609,7 +2619,7 @@ A server <b>MUST NOT</b> send a <code>Transfer-Encoding</code> header field in a
 </blockquote>
 
 <p>
-<code>Transfer-Encoding</code> 头字段自 HTTP/1.1 起新增，一般会作如下假定：声明仅支持到 HTTP/1.0 的实现（implementations）并不会理解如何去处理一个经过传输编码过的有效载荷（transfer-encoded payload）。客户端 <b>禁止</b> 发送一个包含 <code>Transfer-Encoding</code> 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住一个之前接收到的响应消息的版本号的方式知道服务器是否可以处理这种请求。服务器 <b>禁止</b> 发送一个包含 <code>Transfer-Encoding</code> 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
+<code>Transfer-Encoding</code> 头字段自 HTTP/1.1 起新增，一般会作如下假定：声明仅支持到 HTTP/1.0 的<ruby>实现<rt>implementations</rt></ruby>并不会理解如何去处理一个经过<ruby>传输编码过的有效载荷<rt>transfer-encoded payload</rt></ruby>。客户端 <b>禁止</b> 发送一个包含 <code>Transfer-Encoding</code> 的请求，除非它知道服务器能够处理 HTTP/1.1（或以上）版本的请求；客户端可以使用具体的配置，或者通过记住一个之前接收到的响应消息的版本号的方式知道服务器是否可以处理这种请求。服务器 <b>禁止</b> 发送一个包含 <code>Transfer-Encoding</code> 的响应，除非对应的请求指明了 HTTP/1.1（或以上）版本。
 </p>
 
 <blockquote>
@@ -2634,8 +2644,8 @@ When a message does not have a <code>Transfer-Encoding</code> header field, a <c
 </blockquote>
 
 <p>
-当一个消息不带有 <code>Transfer-Encoding</code> 头字段的时候，<code>Content-Length</code> 头字段能够提供对于一个潜在的有效载荷（payload body）的预期的大小。<code>Content-Length</code> 是一个十进制数字，以字节（octets）形式。对于包含一个有效载荷的消息，<code>Content-Length</code> 的 <code>field-value</code>
-提供了决定消息体在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的消息，<code>Content-Length</code> 指明了已选定的表示形式（selected representation<a href="RFC7231.html#ID-7dd837af-fd6a-4918-9c62-cf12a4c31522">【RFC7231】章节 3</a>）的大小。
+当一个消息不带有 <code>Transfer-Encoding</code> 头字段的时候，<code>Content-Length</code> 头字段能够提供对于一个潜在的<ruby>有效载荷<rt>payload body</rt></ruby>的预期的大小。<code>Content-Length</code> 是一个十进制数字，以<ruby>字节<rt>octets</rt></ruby>形式。对于包含一个有效载荷的消息，<code>Content-Length</code> 的 <code>field-value</code>
+提供了决定消息体在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的消息，<code>Content-Length</code> 指明了<ruby>已选定的表示形式<rt>selected representation</rt></ruby>（<a href="RFC7231.html#ID-7dd837af-fd6a-4918-9c62-cf12a4c31522">【RFC7231】章节 3</a>）的大小。
 </p>
 
 <div class="org-src-container">
@@ -2675,7 +2685,7 @@ A user agent <b>SHOULD</b> send a <code>Content-Length</code> in a request messa
 </blockquote>
 
 <p>
-当请求消息未带有 <code>Transfer-Encoding</code> 头字段，并且消息的请求方法意味着该消息需要带有有效载荷（payload body），那么，用户代理 <b>应当</b> 在请求消息里带有一个 <code>Content-Length</code> 头字段。例如，通常会在一个 POST 请求中带有一个 <code>Content-Length</code> 头字段，即使它的值是 0（指明一个空的有效载荷）。当请求消息没有包含一个有效载荷，并且请求方法的语义并不期望消息带有消息体的时候，用户代理 <b>不应当</b> 在请求消息中带有 <code>Content-Length</code> 头字段。
+当请求消息未带有 <code>Transfer-Encoding</code> 头字段，并且消息的请求方法意味着该消息需要带有<ruby>有效载荷<rt>payload body</rt></ruby>，那么，用户代理 <b>应当</b> 在请求消息里带有一个 <code>Content-Length</code> 头字段。例如，通常会在一个 POST 请求中带有一个 <code>Content-Length</code> 头字段，即使它的值是 0（指明一个空的有效载荷）。当请求消息没有包含一个有效载荷，并且请求方法的语义并不期望消息带有消息体的时候，用户代理 <b>不应当</b> 在请求消息中带有 <code>Content-Length</code> 头字段。
 </p>
 
 <blockquote>
@@ -2695,7 +2705,7 @@ A server <b>MAY</b> send a <code>Content-Length</code> header field in a <code>3
 </blockquote>
 
 <p>
-服务器 <b>可以</b> 在响应给一个带条件的 GET 请求（conditional GET request，<a href="RFC7232.html#ID-6033b2bf-1408-4756-9929-15dd6510c7e3">【RFC7232】章节 4.1</a>）的 <code>304 (Not Modified)</code> 响应消息里带有一个 <code>Content-Length</code> 头字段。服务器 <b>禁止</b> 在这种响应消息中带有 <code>Content-Length</code>，除非它的字段值等于这样一个以字节表示的十进制数字：如果响应是一个 <code>200 (OK)</code> 的话，它的有效载荷里带有的长度值。
+服务器 <b>可以</b> 在响应给一个<ruby>带条件的 GET 请求<rt>conditional GET request</rt></ruby>（<a href="RFC7232.html#ID-6033b2bf-1408-4756-9929-15dd6510c7e3">【RFC7232】章节 4.1</a>）的 <code>304 (Not Modified)</code> 响应消息里带有一个 <code>Content-Length</code> 头字段。服务器 <b>禁止</b> 在这种响应消息中带有 <code>Content-Length</code>，除非它的字段值等于这样一个以字节表示的十进制数字：如果响应是一个 <code>200 (OK)</code> 的话，它的有效载荷里带有的长度值。
 </p>
 
 <blockquote>
@@ -2715,7 +2725,7 @@ Aside from the cases defined above, in the absence of <code>Transfer-Encoding</c
 </blockquote>
 
 <p>
-除了上述情况以外，在缺少 <code>Transfer-Encoding</code> 头字段的情况下，在即将发送完整个消息头部之前就知道了有效载荷（payload body）的大小，一个源服务器 <b>应该</b> 带有一个 <code>Content-Length</code> 头字段。这样能够允许下游（downstream）的接收端去计量传输的进度，了解什么时候一个消息是完整的，而且可以对额外的请求进行复用连接（如果条件允许的话）。
+除了上述情况以外，在缺少 <code>Transfer-Encoding</code> 头字段的情况下，在即将发送完整个消息头部之前就知道了<ruby>有效载荷<rt>payload body</rt></ruby>的大小，一个源服务器 <b>应该</b> 带有一个 <code>Content-Length</code> 头字段。这样能够允许<ruby>下游<rt>downstream</rt></ruby>的接收端去计量传输的进度，了解什么时候一个消息是完整的，而且可以对额外的请求进行复用连接（如果条件允许的话）。
 </p>
 
 <blockquote>
@@ -2725,7 +2735,7 @@ Any <code>Content-Length</code> field value greater than or equal to zero is val
 </blockquote>
 
 <p>
-任何大于或等于 0 的 <code>Content-Length</code> 的字段值都是合法的。因为没有预先定义有效载荷的长度限制，接收端 <b>必须</b> 能预料到特大数值（big decimal）的可能性，并且避免由于整型类型转换溢出所引起的解析错误（<a href="#orga446fa3">章节 9.3</a>）。
+任何大于或等于 0 的 <code>Content-Length</code> 的字段值都是合法的。因为没有预先定义有效载荷的长度限制，接收端 <b>必须</b> 能预料到<ruby>特大数值<rt>big decimal</rt></ruby>的可能性，并且避免由于整型类型转换溢出所引起的解析错误（<a href="#orga446fa3">章节 9.3</a>）。
 </p>
 
 <blockquote>
@@ -2735,7 +2745,7 @@ If a message is received that has multiple <code>Content-Length</code> header fi
 </blockquote>
 
 <p>
-如果接收到一个消息带有多个 <code>Content-Length</code> 头字段，并且它们的 <code>field-value</code> 由相同的十进制数组成；或者一个 <code>Content-Length</code> 头字段带有一个包含一系列十进制数值的字段值（例如 "Content-Length: 42 42"），表明透过上游某个消息处理程序生成（Generated）或合成（Combined）了重复的 <code>Content-Length</code> 头字段，那么，接收端 <b>必须</b> 要不将这种消息当作不合法的消息而拒绝接收；要不使用一个单一的合法的包含了决定消息体长度的十进制值的 <code>Content-Length</code> 域来替换掉重复的 <code>field-value</code>；要不转发这个消息。
+如果接收到一个消息带有多个 <code>Content-Length</code> 头字段，并且它们的 <code>field-value</code> 由相同的十进制数组成；或者一个 <code>Content-Length</code> 头字段带有一个包含一系列十进制数值的字段值（例如 "Content-Length: 42 42"），表明透过上游某个消息处理程序<ruby>生成<rt>generated</rt></ruby>或<ruby>合成<rt>combined</rt></ruby>了重复的 <code>Content-Length</code> 头字段，那么，接收端 <b>必须</b> 要不将这种消息当作不合法的消息而拒绝接收；要不使用一个单一的合法的包含了决定消息体长度的十进制值的 <code>Content-Length</code> 字段来替换掉重复的 <code>field-value</code>；要不转发这个消息。
 </p>
 
 <blockquote>
@@ -2745,7 +2755,7 @@ If a message is received that has multiple <code>Content-Length</code> header fi
 </blockquote>
 
 <p>
-<b>注意：</b> <code>Content-Length</code> 在 HTTP 上关于消息分帧的应用，明显不同于该同名域在 MIME 上的应用，MIME 上的 <code>Content-Length</code> 是一个可选域，仅用于“message/external-body”媒体类型中。
+<b>注意：</b> <code>Content-Length</code> 在 HTTP 上关于消息分帧的应用，明显不同于该同名字段在 MIME 上的应用，MIME 上的 <code>Content-Length</code> 是一个可选字段，仅用于“message/external-body”媒体类型中。
 </p>
 </div>
 </div>
@@ -2797,7 +2807,7 @@ If a message is received with both a <code>Transfer-Encoding</code> and a <code>
 <li>任何响应给一个 CONNECT 请求的带有 <code>2xx (Successful)</code> 状态码的响应消息，意味着在空行结束头字段之后，这个连接将会变成一个隧道中间人。客户端 <b>必须</b> 忽略接收自这种消息里的任何 <code>Content-Length</code> 或者 <code>Transfer-Encoding</code> 头字段。</li>
 
 <li><p>
-如果出现了一个 <code>Transfer-Encoding</code> 头字段并且分块传输编码值（chunked transfer coding，<a href="#org9375fa9">章节 4.1</a>）是其最后一个编码值，消息体的长度通过读取和解码分块数据直到传输编码指明数据已经完整来确定。
+如果出现了一个 <code>Transfer-Encoding</code> 头字段并且<ruby>分块传输编码值<rt>chunked transfer coding</rt></ruby>（<a href="#org9375fa9">章节 4.1</a>）是其最后一个编码值，消息体的长度通过读取和解码分块数据直到传输编码指明数据已经完整来确定。
 </p>
 
 <p>
@@ -2805,10 +2815,10 @@ If a message is received with both a <code>Transfer-Encoding</code> and a <code>
 </p>
 
 <p>
-如果接收到一个消息既带有一个 <code>Transfer-Encoding</code> 又带有一个 <code>Content-Length</code> 头字段，那么 <code>Transfer-Encoding</code> 将覆盖 <code>Content-Length</code>。这种消息可能意味着一个执行请求走私（request smuggling，<a href="#org335da74">章节 9.5</a>）或者响应分割（response splitting，<a href="#org65b1f6d">章节 9.4</a>）的意图，应该被当作一个错误来处理。发送端 <b>必须</b> 在转发这种消息到下游之前移除所接收到的 <code>Content-Length</code> 域。
+如果接收到一个消息既带有一个 <code>Transfer-Encoding</code> 又带有一个 <code>Content-Length</code> 头字段，那么 <code>Transfer-Encoding</code> 将覆盖 <code>Content-Length</code>。这种消息可能意味着一个执行<ruby>请求走私<rt>request smuggling</rt></ruby>（<a href="#org335da74">章节 9.5</a>）或者<ruby>响应分割<rt>response splitting</rt></ruby>（<a href="#org65b1f6d">章节 9.4</a>）的意图，应该被当作一个错误来处理。发送端 <b>必须</b> 在转发这种消息到下游之前移除所接收到的 <code>Content-Length</code> 字段。
 </p></li>
 
-<li>如果一个消息没有 <code>Transfer-Encoding</code> 头字段，但带有或者多个不同值的 <code>Content-Length</code> 头字段，或者一个字段值不合法的 <code>Content-Length</code>，那么这个消息的分帧是不合法的，并且接收端 <b>必须</b> 将其当作一个不可恢复的错误来对待。如果这是一个请求消息，服务器 <b>必须</b> 响应一个带有 <code>400 (Bad Request)</code> 状态码的响应消息然后关闭连接。如果这是一个代理（proxy）接收到的响应消息，那么这个代理 <b>必须</b> 关闭与服务器的连接，丢弃掉这个消息并且发送一个 <code>502 (Bad Gateway)</code> 状态码的响应消息到客户端。如果这是一个用户代理（user agent）接收到的响应消息，那么这个用户代理 <b>必须</b> 关闭与服务器的连接，并且丢弃掉这个消息。</li>
+<li>如果一个消息没有 <code>Transfer-Encoding</code> 头字段，但带有或者多个不同值的 <code>Content-Length</code> 头字段，或者一个字段值不合法的 <code>Content-Length</code>，那么这个消息的分帧是不合法的，并且接收端 <b>必须</b> 将其当作一个不可恢复的错误来对待。如果这是一个请求消息，服务器 <b>必须</b> 响应一个带有 <code>400 (Bad Request)</code> 状态码的响应消息然后关闭连接。如果这是一个代理接收到的响应消息，那么这个代理 <b>必须</b> 关闭与服务器的连接，丢弃掉这个消息并且发送一个 <code>502 (Bad Gateway)</code> 状态码的响应消息到客户端。如果这是一个用户代理接收到的响应消息，那么这个用户代理 <b>必须</b> 关闭与服务器的连接，并且丢弃掉这个消息。</li>
 
 <li>如果消息在没有 <code>Transfer-Encoding</code> 的情况下带有一个合法的 <code>Content-Length</code> 头字段，这个 <code>Content-Length</code> 的数值（以字节形式）定义了消息体的预计长度。如果接收端在接收到 <code>Content-Length</code> 的 <code>field-value</code> 之前，发送端关闭了连接或者接收端超时，那么接收端 <b>必须</b> 认为该消息是不完整的，并且关闭该连接。</li>
 
@@ -2824,7 +2834,7 @@ Since there is no way to distinguish a successfully completed, close-delimited m
 </blockquote>
 
 <p>
-因为没有途径从一个被网络故障打断而只接收到一部分的消息中去辨别出一个完整、带结束定界（close-delimited）的消息，因此，服务器 <b>应当</b> 尽可能生成编码值（coding）或者长度限定（length-delimited）的消息。结束定界（close-delimited）这一功能存在的主要目的是为了向后兼容 HTTP/1.0。
+因为没有途径从一个被网络故障打断而只接收到一部分的消息中去辨别出一个完整、<ruby>带结束定界<rt>close-delimited</rt></ruby>的消息，因此，服务器 <b>应当</b> 尽可能生成<ruby>编码值<rt>coding</rt></ruby>或者<ruby>长度限定<rt>length-delimited</rt></ruby>的消息。<ruby>结束定界<rt>close-delimited</rt></ruby>这一功能存在的主要目的是为了向后兼容 HTTP/1.0。
 </p>
 
 <blockquote>
@@ -2890,7 +2900,7 @@ A client that receives an incomplete response message, which can occur when a co
 </blockquote>
 
 <p>
-当一个连接被过早地关闭或者当一个推想的分块传输代码（<a href="https://en.wikipedia.org/wiki/Chunked_transfer_encoding">chunked transfer coding</a>）解码失败时会导致客户端接收到一个不完整的响应消息，这时候客户端 <b>必须</b> 记录下这个消息是不完整的。缓存（cache）对于不完整消息的要求定义在<a href="RFC7234.html#ID-e41d8ccc-5b69-40e3-a8ab-ca27327f15fa">【RFC7234】章节 3</a> 里。
+当一个连接被过早地关闭或者当一个推想的分块传输代码（<a href="https://en.wikipedia.org/wiki/Chunked_transfer_encoding">chunked transfer coding</a>）解码失败时会导致客户端接收到一个不完整的响应消息，这时候客户端 <b>必须</b> 记录下这个消息是不完整的。<ruby>缓存<rt>cache</rt></ruby>对于不完整消息的要求定义在<a href="RFC7234.html#ID-e41d8ccc-5b69-40e3-a8ab-ca27327f15fa">【RFC7234】章节 3</a> 里。
 </p>
 
 <blockquote>
@@ -2900,7 +2910,7 @@ If a response terminates in the middle of the header section (before the empty l
 </blockquote>
 
 <p>
-假如一个响应终止在消息头部（header section）之间（在接收到空行之前），并且状态码可能需要依赖头字段才能传达响应消息的完整意义，那么客户端不能够假设这个“意义”已经传达了；客户端可能需要重复这一次请求，以便于决定下一步将如何行动。
+假如一个响应终止在<ruby>消息头部<rt>header section</rt></ruby>之间（在接收到空行之前），并且状态码可能需要依赖头字段才能传达响应消息的完整意义，那么客户端不能够假设这个“意义”已经传达了；客户端可能需要重复这一次请求，以便于决定下一步将如何行动。
 </p>
 
 <blockquote>
@@ -2935,27 +2945,27 @@ In the interest of robustness, a server that is expecting to receive and parse a
 </blockquote>
 
 <p>
-出于健壮性的考虑，服务器在等待接收和解析（parse）一个请求行 <code>request-line</code> 的时候，<b>应当</b> 忽略至少一个空行（CRLF）。
+出于健壮性的考虑，服务器在等待接收和<ruby>解析<rt>parse</rt></ruby>一个请求行 <code>request-line</code> 的时候，<b>应当</b> 忽略至少一个空行（CRLF）。
 </p>
 
 <blockquote>
 <p>
-Although the line terminator for the <code>start-line</code> and header fields is the sequence CRLF, a recipient <b>MAY</b> recognize a single LF as a line terminator and ignore any preceding CR.
+Although the line terminator for the <code>start-line</code> and header fields is the sequence <code>CRLF</code>, a recipient <b>MAY</b> recognize a single <code>LF</code> as a line terminator and ignore any preceding <code>CR</code>.
 </p>
 </blockquote>
 
 <p>
-虽然对于起始行 <code>start-line</code> 和消息头字段（header fields）的行终结符（line terminator）是 CRLF 字符序列，但接收端 <b>可以</b> 单独将一个 LF 作为一行的终结，同时忽略 LF 之前的所有 CR。
+虽然对于起始行 <code>start-line</code> 和消息<ruby>头字段<rt>header fields</rt></ruby>的<ruby>行终结符<rt>line terminator</rt></ruby>是 <code>CRLF</code> 字符序列，但接收端 <b>可以</b> 单独将一个 <code>LF</code> 作为一行的终结，同时忽略 <code>LF</code> 之前的所有 CR。
 </p>
 
 <blockquote>
 <p>
-Although the <code>request-line</code> and <code>status-line</code> grammar rules require that each of the component elements be separated by a single SP octet, recipients <b>MAY</b> instead parse on whitespace-delimited word boundaries and, aside from the CRLF terminator, treat any form of whitespace as the SP separator while ignoring preceding or trailing whitespace; such whitespace includes one or more of the following octets: SP, HTAB, VT (%x0B), FF (%x0C), or bare CR. However, lenient parsing can result in security vulnerabilities if there are multiple recipients of the message and each has its own unique interpretation of robustness (see <a href="#org335da74">Section 9.5</a>).
+Although the <code>request-line</code> and <code>status-line</code> grammar rules require that each of the component elements be separated by a single <code>SP</code> octet, recipients <b>MAY</b> instead parse on whitespace-delimited word boundaries and, aside from the <code>CRLF</code> terminator, treat any form of whitespace as the <code>SP</code> separator while ignoring preceding or trailing whitespace; such whitespace includes one or more of the following octets: <code>SP</code>, <code>HTAB</code>, <code>VT</code> (%x0B), <code>FF</code> (%x0C), or bare <code>CR</code>. However, lenient parsing can result in security vulnerabilities if there are multiple recipients of the message and each has its own unique interpretation of robustness (see <a href="#org335da74">Section 9.5</a>).
 </p>
 </blockquote>
 
 <p>
-虽然请求行（request line）和状态行（status line）的语法规则要求每一个组件元素需要以一个空格（8位字节） <code>SP</code> 分隔，但是接收端 <b>可以</b> 改由使用更宽泛的空格限定符（whitespace-delimited word）替代 <code>SP</code> 来进行解析（parse），空格限定符由包含一个或多个 <code>SP</code>、<code>HTAB</code>、<code>VT</code> (%x0B)、<code>FF</code> (&amp;x0C) 或者单独由 <code>CR</code> 组成。但是，如果消息有多个接收端，而且这些接收端都有自己独特的健壮性的解释（interpretation），那么，这种宽泛解析（lenient parsing）的方式会引起安全隐患（见<a href="#org335da74">章节 9.5</a>）。
+虽然<ruby>请求行<rt>request line</rt></ruby>和<ruby>状态行<rt>status line</rt></ruby>的语法规则要求每一个组件元素需要以一个空格（8位字节） <code>SP</code> 分隔，但是接收端 <b>可以</b> 改由使用除 <code>CRLF</code> 结束符以外的更宽泛的<ruby>空格限定符<rt>whitespace-delimited word</rt></ruby>替代 <code>SP</code> 来进行解析，从而将任何形式的空格作为 <code>SP</code> 分隔符来对待，在忽略前置或后置空格的时候。空格限定符由包括一个或多个以下的字节：<code>SP</code>、<code>HTAB</code>、<code>VT</code> (%x0B)、<code>FF</code> (&amp;x0C) 或者单独由 <code>CR</code>。但是，如果消息有多个接收端，而且这些接收端都有自己独特的健壮性的解释，那么，这种<ruby>宽泛解析<rt>lenient parsing</rt></ruby>的方式会引起安全隐患（见<a href="#org335da74">章节 9.5</a>）。
 </p>
 
 <blockquote>
@@ -2965,7 +2975,7 @@ When a server listening only for HTTP request messages, or processing what appea
 </blockquote>
 
 <p>
-当一个服务端只针对 HTTP 请求进行监听，或者正在处理 HTTP 请求消息的起始行 <code>start-line</code> 具体有什么内容的时候，接到到一个与 HTTP 消息语法不匹配的字符（octets）序列，除以上列出的非健壮异常以外，服务端 <b>应该</b> 响应一个 <code>400 (Bad Request)</code> 的响应消息。
+当一个服务端只针对 HTTP 请求进行监听，或者正在处理 HTTP 请求消息的<ruby>起始行<rt>start-line</rt></ruby>具体有什么内容的时候，接到到一个与 HTTP 消息语法不匹配的<ruby>字节<rt>octets</rt></ruby>序列，除以上列出的非健壮异常以外，服务端 <b>应该</b> 响应一个 <code>400 (Bad Request)</code> 的响应消息。
 </p>
 </div>
 </div>
@@ -2981,7 +2991,7 @@ Transfer coding names are used to indicate an encoding transformation that has b
 </blockquote>
 
 <p>
-传输编码值（transfer coding）是用于表示已经、能够或者可能需要应用到一个有效载荷（payload body）中以确保网络传输安全的一种编码转换（encoding transformation）。与内容编码值（content coding）不同的是，传输编码值是一个消息的特性，而不是一个<ruby>表示形式<rt>representation</rt></ruby>的特性。
+<ruby>传输编码值<rt>transfer coding</rt></ruby>是用于表示已经、能够或者可能需要应用到一个<ruby>有效载荷<rt>payload body</rt></ruby>中以确保网络传输安全的一种<ruby>编码转换<rt>encoding transformation</rt></ruby>。与<ruby>内容编码值<rt>content coding</rt></ruby>不同的是，传输编码值是一个消息的特性，而不是一个<ruby>表示形式<rt>representation</rt></ruby>的特性。
 </p>
 
 <div class="org-src-container">
@@ -2996,7 +3006,7 @@ transfer-extension = token *( OWS ";" OWS transfer-parameter )
 
 <blockquote>
 <p>
-Parameters are in the form of a name or name=value pair.
+Parameters are in the form of a <code>name</code> or <code>name=value</code> pair.
 </p>
 </blockquote>
 
@@ -3011,12 +3021,12 @@ Parameters are in the form of a name or name=value pair.
 
 <blockquote>
 <p>
-All transfer-coding names are case-insensitive and ought to be registered within the HTTP Transfer Coding registry, as defined in Section 8.4. They are used in the <code>TE</code> (Section 4.3) and <code>Transfer-Encoding</code> (Section 3.3.1) header fields.
+All transfer-coding names are case-insensitive and ought to be registered within the HTTP Transfer Coding registry, as defined in <a href="#orgc3bb3a7">Section 8.4</a>. They are used in the <code>TE</code> (<a href="#org93513ff">Section 4.3</a>) and <code>Transfer-Encoding</code> (<a href="#orgac6c5c4">Section 3.3.1</a>) header fields.
 </p>
 </blockquote>
 
 <p>
-所有 <code>transfer-coding</code> 的名称都是不区分大小写的，并且应该被登记在 "HTTP Transfer Coding" 登记表中，定义在<a href="#orgc3bb3a7">章节 8.4</a> 中。它们用在消息域 <code>TE</code> （<a href="#org93513ff">章节 4.3</a>）和 <code>Transfer-Encoding</code> （<a href="#orgac6c5c4">章节 3.3.1</a>）里。
+所有 <code>transfer-coding</code> 的名称都是不区分大小写的，并且应该被登记在 "HTTP Transfer Coding" 登记表中，定义在<a href="#orgc3bb3a7">章节 8.4</a> 中。它们用在消息字段 <code>TE</code> （<a href="#org93513ff">章节 4.3</a>）和 <code>Transfer-Encoding</code> （<a href="#orgac6c5c4">章节 3.3.1</a>）里。
 </p>
 </div>
 
@@ -3030,7 +3040,7 @@ The <code>chunked</code> transfer coding wraps the payload body in order to tran
 </blockquote>
 
 <p>
-使用 <code>chunked</code> 传输编码值将有效载荷（payload body）包裹为一系列的分块来传输。每个分块都带有单独的大小指标，跟随于一个 <b>可选的</b> 包含头字段的结尾之后。<code>chunked</code> 允许以一系列长度限定的（length-delimited）缓冲（buffers）的方式来传输大小未知的内容流。这种缓冲允许发送端去保持连接不关闭，以及使接收端得知在什么时候接收完整个消息。
+使用 <code>chunked</code> 传输编码值将<ruby>有效载荷<rt>payload body</rt></ruby>包裹为一系列的分块来传输。每个分块都带有单独的大小指标，跟随于一个 <b>可选的</b> 包含头字段的结尾之后。<code>chunked</code> 允许以一系列<ruby>长度限定<rt>length-delimited</rt></ruby>的<ruby>缓冲<rt>buffers</rt></ruby>的方式来传输大小未知的内容流。这种缓冲允许发送端去保持连接不关闭，以及使接收端得知在什么时候接收完整个消息。
 </p>
 
 <div class="org-src-container">
@@ -3055,7 +3065,7 @@ The chunk-size field is a string of hex digits indicating the size of the chunk-
 </blockquote>
 
 <p>
-其中，<code>chunk-size</code> 域是一个十六进制数字的字符串，代表 <code>chunk-data</code> 的字节大小。当接收到一个带有 <code>chunk-size</code> 的值为零的分块（可以位于一个 trailer 之后并以一个空行作为结束），即代表 <code>chunked</code> 传输编码值是完整的。
+其中，<code>chunk-size</code> 字段是一个十六进制数字的字符串，代表 <code>chunk-data</code> 的字节大小。当接收到一个带有 <code>chunk-size</code> 的值为零的分块（可以位于一个 trailer 之后并以一个空行作为结束），即代表 <code>chunked</code> 传输编码值是完整的。
 </p>
 
 <blockquote>
@@ -3065,7 +3075,7 @@ A recipient <b>MUST</b> be able to parse and decode the chunked transfer coding.
 </blockquote>
 
 <p>
-一个接收端 <b>必须</b> 能够解析（parse）和解码（decode） <code>chunked</code> 传输编码值。
+一个接收端 <b>必须</b> 能够<ruby>解析<rt>parse</rt></ruby>和<ruby>解码<rt>decode</rt></ruby> <code>chunked</code> 传输编码值。
 </p>
 </div>
 
@@ -3079,7 +3089,7 @@ The <code>chunked</code> encoding allows each chunk to include zero or more chun
 </blockquote>
 
 <p>
-<code>chunked</code> 编码允许每一个分块包含零个或以上分块扩展（chunk extensions） <code>chunk-ext</code>，紧跟在 <code>chunk-size</code> 之后，用于支持 per-chunk 元数据（例如一个签名或哈希值）、mid-message 控制信息，或者随机消息体大小。
+<code>chunked</code> 编码允许每一个分块包含零个或以上<ruby>分块扩展<rt>chunk extensions</rt></ruby> <code>chunk-ext</code>，紧跟在 <code>chunk-size</code> 之后，用于支持 per-chunk 元数据（例如一个签名或哈希值）、mid-message 控制信息，或者随机消息体大小。
 </p>
 
 <div class="org-src-container">
@@ -3097,7 +3107,7 @@ The <code>chunked</code> encoding is specific to each connection and is likely t
 </blockquote>
 
 <p>
-<code>chunked</code> 编码是会对每一个连接而言的，而且它可能会在任何高层应用有机会检测到分块的扩展信息之前就被接收端（包括中间人）所移除或者重新编码。因此，分块扩展的使用通常限定于特定的 HTTP 服务中，例如“长轮询（long polling）”（一个客户端和服务端能够对分块扩展的使用达成共同的期望的地方）或者在一个端到端（end-to-end）安全连接之间的填充。
+<code>chunked</code> 编码是会对每一个连接而言的，而且它可能会在任何高层应用有机会检测到分块的扩展信息之前就被接收端（包括中间人）所移除或者重新编码。因此，分块扩展的使用通常限定于特定的 HTTP 服务中，例如“<ruby>长轮询<rt>long polling</rt></ruby>”（一个客户端和服务端能够对分块扩展的使用达成共同的期望的地方）或者在一个<ruby>端到端<rt>end-to-end</rt></ruby>安全连接之间的填充。
 </p>
 
 <blockquote>
@@ -3112,9 +3122,9 @@ A recipient <b>MUST</b> ignore unrecognized chunk extensions. A server ought to 
 </div>
 </div>
 
-<div id="outline-container-orge6d1a99" class="outline-4">
-<h4 id="orge6d1a99">4.1.2. 分块拖尾部分 / Chunked Trailer Part</h4>
-<div class="outline-text-4" id="text-orge6d1a99">
+<div id="outline-container-org0bcd060" class="outline-4">
+<h4 id="org0bcd060"><a id="ID-5f864e64-8b19-4315-aa4b-462701c14043"></a>4.1.2. 分块尾部 / Chunked Trailer Part</h4>
+<div class="outline-text-4" id="text-org0bcd060">
 <blockquote>
 <p>
 A trailer allows the sender to include additional fields at the end of a chunked message in order to supply metadata that might be dynamically generated while the message body is sent, such as a message integrity check, digital signature, or post-processing status. The trailer fields are identical to header fields, except they are sent in a chunked trailer instead of the message's header section.
@@ -3122,7 +3132,7 @@ A trailer allows the sender to include additional fields at the end of a chunked
 </blockquote>
 
 <p>
-一个拖尾（trailer）允许发送端在一个分块的消息的末尾处包含额外的头字段，为了提供可以在消息体被发送的时候动态生成的元数据，例如一个消息完整性检查（message integrity check, MIC）、数字签名（digital signature）或者后处理状态（post-processing status）等。拖尾域（trailer fields）等价于头字段（header fields），除了它们是发送在一个分块拖尾里，而不是在一个消息的消息头部里。
+一个<ruby>分块尾部<rt>trailer</rt></ruby>允许发送端在一个分块的消息的末尾处包含额外的头字段，为了提供可以在消息体被发送的时候动态生成的元数据，例如一个<ruby>消息完整性检查<rt>message integrity check</rt></ruby>（MIC）、<ruby>数字签名<rt>digital signature</rt></ruby>或者<ruby>后处理状态<rt>post-processing status</rt></ruby>等。<ruby>分块尾字段<rt>trailer fields</rt></ruby>等价于<ruby>消息头字段<rt>header fields</rt></ruby>，除了它们是发送在一个分块尾部里，而不是在一个消息的消息头部里。
 </p>
 
 <div class="org-src-container">
@@ -3137,7 +3147,7 @@ A sender <b>MUST NOT</b> generate a trailer that contains a field necessary for 
 </blockquote>
 
 <p>
-发送端 <b>禁止</b> 生成一个包含某种用于以下用途的必要域的拖尾：消息分帧（例如，<code>Transfer-Encoding</code> 和 <code>Content-Length</code>）、路由选择（例如，<code>Host</code>）、请求修饰符（例如，<a href="RFC7231.html#ID-f8e7b063-496f-473e-95e8-88ec76f21582">【RFC7231】章节 5</a> 里定义的 <code>controls</code> 和 <code>conditionals</code>）、认证（见【<a href="RFC7235.html">RFC7235</a>】和【<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>】）、响应控制数据（见<a href="RFC7231.html#ID-7e63ac99-1421-4f2d-8b6f-f7a1bda440ef">【RFC7231】章节 7.1</a>），以及决定如何处理有效载荷的域（例如，<code>Content-Encoding</code>, <code>Content-Type</code>, <code>Content-Range</code>, and <code>Trailer</code>）。
+发送端 <b>禁止</b> 生成一个包含某种用于以下用途的必要字段的分块尾部：消息分帧（例如，<code>Transfer-Encoding</code> 和 <code>Content-Length</code>）、路由选择（例如，<code>Host</code>）、请求修饰符（例如，<a href="RFC7231.html#ID-f8e7b063-496f-473e-95e8-88ec76f21582">【RFC7231】章节 5</a> 里定义的 <code>controls</code> 和 <code>conditionals</code>）、认证（见【<a href="RFC7235.html">RFC7235</a>】和【<a href="https://tools.ietf.org/html/rfc6265">RFC6265</a>】）、响应控制数据（见<a href="RFC7231.html#ID-7e63ac99-1421-4f2d-8b6f-f7a1bda440ef">【RFC7231】章节 7.1</a>），以及决定如何处理有效载荷的字段（例如，<code>Content-Encoding</code>, <code>Content-Type</code>, <code>Content-Range</code>, and <code>Trailer</code>）。
 </p>
 
 <blockquote>
@@ -3147,7 +3157,7 @@ When a chunked message containing a non-empty trailer is received, the recipient
 </blockquote>
 
 <p>
-当接收到一个包含一个非空拖尾（non-empty trailer）的分块消息时，接收端 <b>可以</b> 像处理头字段一样的方式来处理这些拖尾里的域（除了上述禁止的域以外）。接收端 <b>必须</b> 忽略（或者认为是一个错误）任何禁止存放于拖尾里的域，这是因为如果像处理头字段一样处理它们的话可能会越过外部安全过滤机制。
+当接收到一个包含一个<ruby>非空尾部<rt>non-empty trailer</rt></ruby>的分块消息时，接收端 <b>可以</b> 像处理头字段一样的方式来处理这些分块尾部里的字段（除了上述禁止的字段以外）。接收端 <b>必须</b> 忽略（或者认为是一个错误）任何禁止存放于分块尾部里的字段，这是因为如果像处理头字段一样处理它们的话可能会越过外部安全过滤机制。
 </p>
 
 <blockquote>
@@ -3157,7 +3167,7 @@ Unless the request includes a <code>TE</code> header field indicating "trailers"
 </blockquote>
 
 <p>
-除非请求消息里包含一个 <code>TE</code> 头字段指明允许 "trailers"（详情见章节 4.3），服务器 <b>不应该</b> 生成它相信用户代理必然会接收到的拖尾域（trailer fields）。没有包含 "trailers" 的 <code>TE</code> 头字段时，服务端应该假设拖尾域可能会在发送到用户代理的链路过程中被隐式地丢弃掉。这样的要求使得中间人能够在不用缓冲（buffering）整个响应消息的情况下去转发一个 de-chunked 的消息到一个 HTTP/1.0 接收端中去。
+除非请求消息里包含一个 <code>TE</code> 头字段指明允许 "trailers"（详情见章节 4.3），服务器 <b>不应该</b> 生成它相信用户代理必然会接收到的<ruby>分块尾字段<rt>trailer fields</rt></ruby>。没有包含 "trailers" 的 <code>TE</code> 头字段时，服务端应该假设分块尾字段可能会在发送到用户代理的链路过程中被隐式地丢弃掉。这样的要求使得中间人能够在不用<ruby>缓冲<rt>buffering</rt></ruby>整个响应消息的情况下去转发一个 de-chunked 的消息到一个 HTTP/1.0 接收端中去。
 </p>
 </div>
 </div>
@@ -3210,7 +3220,7 @@ The codings defined below can be used to compress the payload of a message.
 </blockquote>
 
 <p>
-下列编码值能够用于对一个消息里的有效载荷（payload）进行压缩。
+下列编码值能够用于对一个消息里的<ruby>有效载荷<rt>payload</rt></ruby>进行压缩。
 </p>
 </div>
 
@@ -3249,7 +3259,7 @@ The "deflate" coding is a "zlib" data format [RFC1950] containing a "deflate" co
 </blockquote>
 
 <p>
-<b>注意：</b> 某些不兼容 HTTP 规范的实现（implementations）在发送 "deflate" 压缩数据时并不会包含在 zlib 中。
+<b>注意：</b> 某些不兼容 HTTP 规范的<ruby>实现<rt>implementations</rt></ruby>在发送 "deflate" 压缩数据时并不会包含在 zlib 中。
 </p>
 </div>
 </div>
@@ -3280,7 +3290,7 @@ The "TE" header field in a request indicates what transfer codings, besides chun
 </blockquote>
 
 <p>
-在一个请求消息中的头字段 <code>TE</code> 指明了客户端除了愿意接受 <code>chunked</code> 以外还愿意接受哪些传输编码的响应消息，以及客户端是否愿意在分块传输编码值中接受拖尾域（trailer fields）。
+在一个请求消息中的头字段 <code>TE</code> 指明了客户端除了愿意接受 <code>chunked</code> 以外还愿意接受哪些传输编码的响应消息，以及客户端是否愿意在分块传输编码值中接受分块尾字段（trailer fields）。
 </p>
 
 <blockquote>
@@ -3321,12 +3331,12 @@ TE: trailers, deflate;q=0.5
 
 <blockquote>
 <p>
-The presence of the keyword "trailers" indicates that the client is willing to accept trailer fields in a chunked transfer coding, as defined in Section 4.1.2, on behalf of itself and any downstream clients. For requests from an intermediary, this implies that either: (a) all downstream clients are willing to accept trailer fields in the forwarded response; or, (b) the intermediary will attempt to buffer the response on behalf of downstream recipients. Note that HTTP/1.1 does not define any means to limit the size of a chunked response such that an intermediary can be assured of buffering the entire response.
+The presence of the keyword "trailers" indicates that the client is willing to accept trailer fields in a chunked transfer coding, as defined in <a href="#org0bcd060">Section 4.1.2</a>, on behalf of itself and any downstream clients. For requests from an intermediary, this implies that either: (a) all downstream clients are willing to accept trailer fields in the forwarded response; or, (b) the intermediary will attempt to buffer the response on behalf of downstream recipients. Note that HTTP/1.1 does not define any means to limit the size of a chunked response such that an intermediary can be assured of buffering the entire response.
 </p>
 </blockquote>
 
 <p>
-<code>TE</code> 头字段里出现关键词 <code>trailers</code> 指明该客户端自身及其所有下游客户端都愿意在一个分块传输编码值里接受拖尾域（trailer fields，见章节 4.1.2）。对于来自一个中间人的请求，意味着以下两种情况：（a）该中间人的所有下游客户端都愿意接受拖尾域，或者，（b）该中间人为了下游的接收端，将试图先缓冲整个响应消息。需要注意的是，HTTP/1.1 并没有对一个分块的响应消息（chunked response）的大小定义任何限制，因此，中间人并不能保证能够缓冲整个消息。
+<code>TE</code> 头字段里出现关键词 <code>trailers</code> 指明该客户端自身及其所有下游客户端都愿意在一个分块传输编码值里接受<ruby>分块尾字段<rt>trailer fields</rt></ruby>（见<a href="#org0bcd060">章节 4.1.2</a>）。对于来自一个中间人的请求，意味着以下两种情况：（a）该中间人的所有下游客户端都愿意接受分块尾字段，或者，（b）该中间人为了下游的接收端，将试图先缓冲整个响应消息。需要注意的是，HTTP/1.1 并没有对一个<ruby>分块的响应消息<rt>chunked response</rt></ruby>的大小定义任何限制，因此，中间人并不能保证能够缓冲整个消息。
 </p>
 
 <blockquote>
@@ -3336,7 +3346,7 @@ When multiple transfer codings are acceptable, the client <b>MAY</b> rank the co
 </blockquote>
 
 <p>
-当允许多个传输编码值时，客户端 <b>可以</b> 依据其偏好，通过使用一个不区分大小写的参数 <code>q</code> （类似于内容协商域里的 <code>qvalues</code>，见<a href="RFC7231.html#ID-91059de1-4a9b-4d9f-8be2-eb4d2d6ddc37">【RFC7231】章节 5.3.1</a>），来对这些编码值分配权重。权重值是一个 0 到 1 之间的实数，最小值是 0.001（优先级最低），最大值为 1（优先级最高），排序值为 0 代表“不接受这种传输编码”。 
+当允许多个传输编码值时，客户端 <b>可以</b> 依据其偏好，通过使用一个不区分大小写的参数 <code>q</code> （类似于内容协商字段里的 <code>qvalues</code>，见<a href="RFC7231.html#ID-91059de1-4a9b-4d9f-8be2-eb4d2d6ddc37">【RFC7231】章节 5.3.1</a>），来对这些编码值分配权重。权重值是一个 0 到 1 之间的实数，最小值是 0.001（优先级最低），最大值为 1（优先级最高），排序值为 0 代表“不接受这种传输编码”。 
 </p>
 
 <blockquote>
@@ -3356,7 +3366,7 @@ Since the TE header field only applies to the immediate connection, a sender of 
 </blockquote>
 
 <p>
-因为头字段 <code>TE</code> 仅应用于直接连接（immediate connection），因此，为了避免头字段 <code>TE</code> 被中间人转发出去（不符合 TE 的语义），<code>TE</code> 的发送端 <b>必须</b> 还要在 <code>Connection</code> 头字段（见<a href="https://tools.ietf.org/html/rfc7230#section-6.1">章节 6.1</a>）里发送一个 "TE" 连接选项（connection option）。
+因为头字段 <code>TE</code> 仅应用于<ruby>直接连接<rt>immediate connection</rt></ruby>，因此，为了避免头字段 <code>TE</code> 被中间人转发出去（不符合 TE 的语义），<code>TE</code> 的发送端 <b>必须</b> 还要在 <code>Connection</code> 头字段（见<a href="https://tools.ietf.org/html/rfc7230#section-6.1">章节 6.1</a>）里发送一个 "TE" <ruby>连接选项<rt>connection option</rt></ruby>。
 </p>
 </div>
 </div>
@@ -3371,7 +3381,7 @@ When a message includes a message body encoded with the chunked transfer coding 
 </blockquote>
 
 <p>
-当一个消息包含了一个使用 <code>chunked</code> 编码的消息体，并且发送端希望通过在消息末尾附加拖尾域（trailer fields）的方式来发送元数据（metadata），那么发送端 <b>应该</b> 在消息体之前生成一个头字段 <code>Trailer</code> 来指定有哪些域将会被出现在拖尾中。这样使得接收端在处理消息体之前可以做好接收那些元数据的准备，如果这种消息将被流式发送，并且接收端希望在接收消息的同时对其进行完整性检验，那么这种设计将非常有用。
+当一个消息包含了一个使用 <code>chunked</code> 编码的消息体，并且发送端希望通过在消息末尾附加<ruby>分块尾字段<rt>trailer fields</rt></ruby>的方式来发送<ruby>元数据<rt>metadata</rt></ruby>，那么发送端 <b>应该</b> 在消息体之前生成一个头字段 <code>Trailer</code> 来指定有哪些字段将会被出现在分块尾部中。这样使得接收端在处理消息体之前可以做好接收那些元数据的准备，如果这种消息将被流式发送，并且接收端希望在接收消息的同时对其进行完整性检验，那么这种设计将非常有用。
 </p>
 
 <div class="org-src-container">
@@ -3392,7 +3402,7 @@ HTTP request message routing is determined by each client based on the target re
 </blockquote>
 
 <p>
-HTTP 请求消息路由是取决于每个客户端，基于目标资源、客户端的代理配置，以及入站连接（inbound connection）的创建或者复用。与之对应的响应路由跟随同样一条链路反向回到客户端。
+HTTP 请求消息路由是取决于每个客户端，基于目标资源、客户端的代理配置，以及<ruby>入站连接<rt>inbound connection</rt></ruby>的创建或者复用。与之对应的响应路由跟随同样一条链路反向回到客户端。
 </p>
 </div>
 
@@ -3416,7 +3426,7 @@ HTTP communication is initiated by a user agent for some purpose. The purpose is
 </blockquote>
 
 <p>
-用户代理出于某种目的来初始化 HTTP 通信。该目的是由请求语义（定义在【<a href="RFC7231.html">RFC7231</a>】），以及一个应用这些语义的目标资源（target resource）两者结合而成的。一个 <b>URI 引用（URI reference，章节 2.7）</b> 通常用于作为一个目标资源的定位符，用户代理可以将其解析（resolve）为绝对形式（absolute form）来获得“<b>目标 URI（target URI）</b>”。如果 URI 引用里存在段落组件 <code>fragment</code> （fragment component）的话，目标 URI 会排除掉 <code>fragment</code>，这是因为 <code>fragment</code> 
+用户代理出于某种目的来初始化 HTTP 通信。该目的是由请求语义（定义在【<a href="RFC7231.html">RFC7231</a>】），以及一个应用这些语义的<ruby>目标资源<rt>target resource</rt></ruby>两者结合而成的。一个 <b>URI 引用（URI reference，章节 2.7）</b> 通常用于作为一个目标资源的定位符，用户代理可以将其<ruby>解析<rt>resolve</rt></ruby>为<ruby>绝对形式<rt>absolute form</rt></ruby>来获得“<b>目标 URI（target URI）</b>”。如果 URI 引用里存在段落组件 <code>fragment</code> 的话，目标 URI 会排除掉 <code>fragment</code>，这是因为 <code>fragment</code> 
 标识是保留给客户端处理的（见<a href="https://tools.ietf.org/html/rfc3986#section-3.5">【RFC3986】章节 3.5</a>）。
 </p>
 </div>
@@ -3442,7 +3452,7 @@ If the client has a cache [<a href="RFC7234.html">RFC7234</a>] and the request c
 </blockquote>
 
 <p>
-如果客户端启用了缓存（cache，【<a href="RFC7234.html">RFC7234</a>】）并且满足该请求，那么该请求一般会优先导向到缓存里。
+如果客户端启用了<ruby>缓存<rt>cache</rt></ruby>（【<a href="RFC7234.html">RFC7234</a>】）并且满足该请求，那么该请求一般会优先导向到缓存里。
 </p>
 
 <blockquote>
@@ -3452,31 +3462,33 @@ If the request is not satisfied by a cache, then a typical client will check its
 </blockquote>
 
 <p>
-如果缓存没有满足该请求，那么一个典型的客户端将会检验自身的配置来决定是否需要使用代理（proxy）来满足该请求。代理配置是依赖于实现的（mmplementation-dependent），但是通常基于 URI 前缀匹配（URI prefix matching）、选择的权威机构匹配（selective authority matching），或者两者皆有。另外，代理自身通常是通过一个 "http" 或者 "https" URI 来标识的。如果代理是适用的，那么客户端通过建立（或复用）与该代理的连接来进行入站连接（connect inbound）。
+如果缓存没有满足该请求，那么一个典型的客户端将会检验自身的配置来决定是否需要使用<ruby>代理<rt>proxy</rt></ruby>来满足该请求。代理配置是<ruby>依赖于实现<rt>implementation-dependent</rt></ruby>的，但是通常基于 <ruby>URI 前缀匹配<rt>URI prefix matching</rt></ruby>、<ruby>可选择的权威机构匹配<rt>selective authority matching</rt></ruby>，或者两者皆有。另外，代理自身通常是通过一个 "http" 或者 "https" URI 来标识的。如果代理是适用的，那么客户端通过建立（或复用）与该代理的连接来进行<ruby>入站连接<rt>connect inbound</rt></ruby>。
 </p>
 
 <blockquote>
 <p>
-If no proxy is applicable, a typical client will invoke a handler routine, usually specific to the target URI's scheme, to connect directly to an <code>authority</code> for the target resource. How that is accomplished is dependent on the target URI scheme and defined by its associated specification, similar to how this specification defines origin server access for resolution of the "http" (Section 2.7.1) and "https" (Section 2.7.2) schemes.
+If no proxy is applicable, a typical client will invoke a handler routine, usually specific to the target URI's scheme, to connect directly to an <code>authority</code> for the target resource. How that is accomplished is dependent on the target URI scheme and defined by its associated specification, similar to how this specification defines origin server access for resolution of the "http" (<a href="#orgc784014">Section 2.7.1</a>) and "https" (<a href="#orgeb24afa">Section 2.7.2</a>) schemes.
 </p>
 </blockquote>
 
 <p>
-如果没有适用的代理，那么客户端通常会执行一个处理程序例程，这个例程通常是特定于该目标 URI 的 <code>scheme</code> 的，来连接到一个指向到目标资源的 <code>authority</code>。这个程序例程如何才算是完成取决于目标 URI 的 <code>scheme</code> 以及定义该 <code>scheme</code> 的相关规范，类似于本规范如何定义对 "http" 和 "https" 这两种方案的解析来访问源服务器。
-</p>
-
-<p>
-（译注：<code>authority</code> 是一个 URI 的组成部分，表现为一个服务的 DNS 主机名称或者是 IP 地址。如果该服务不是使用默认端口的话，<code>authority</code> 还会包含具体的端口号，其中 "http" 方案的默认端口是 80，"https" 方案的默认端口是 443。而 <code>host</code> 就是一个服务的 DNS 主机名称或者 IP 地址，<code>host</code> 并不包含端口号。也就是说：当使用默认端口时，<code>authority = host</code>；当不使用默认端口时，<code>authority = host + port</code>，两者并不等同。因此，这里将 "authority" 翻译为“主机”不合适，索性就不翻译了。）
+如果没有适用的代理，那么客户端通常会执行一个处理程序例程，这个例程通常是特定于该目标 URI 的 <code>scheme</code> 的，来连接到一个指向到目标资源的 <code>authority</code>。这个程序例程如何才算是完成取决于目标 URI 的 <code>scheme</code> 以及定义该 <code>scheme</code> 的相关规范，类似于本规范如何定义对 "http"（<a href="#orgc784014">章节 2.7.1</a>）和 "https"（<a href="#orgeb24afa">章节 2.7.2</a>）这两种方案的解析来访问源服务器。
 </p>
 
 <blockquote>
 <p>
-HTTP requirements regarding connection management are defined in Section 6.
+译注：<code>authority</code> 是一个 URI 的组成部分，表现为一个服务的 DNS 主机名称或者是 IP 地址。如果该服务不是使用默认端口的话，<code>authority</code> 还会包含具体的端口号，其中 "http" 方案的默认端口是 80，"https" 方案的默认端口是 443。而 <code>host</code> 就是一个服务的 DNS 主机名称或者 IP 地址，<code>host</code> 并不包含端口号。也就是说：当使用默认端口时，<code>authority = host</code>；当不使用默认端口时，<code>authority = host + port</code>，两者并不等同。因此，这里将 "authority" 翻译为“主机”不合适，索性就不翻译了。
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+HTTP requirements regarding connection management are defined in <a href="#org36e1991">Section 6</a>.
 </p>
 </blockquote>
 
 <p>
-关于连接管理的相关 HTTP 规范要求定义在<a href="#org30e2a86">章节 6</a>。
+关于连接管理的相关 HTTP 规范要求定义在<a href="#org36e1991">章节 6</a>。
 </p>
 </div>
 </div>
@@ -3491,7 +3503,7 @@ Once an inbound connection is obtained, the client sends an HTTP request message
 </blockquote>
 
 <p>
-一旦获得了一个入站连接（inbound connection），客户端会发送一个带有一个请求目标（<code>request-target</code>）的 HTTP 请求消息（<a href="#orge9f1350">章节 3</a>）。请求目标从目标 URI 里推导得出。依据请求方法（request method）以及该请求是否是一个发送到代理（proxy）的请求来分，请求目标一共有四种不同的格式。
+一旦获得了一个<ruby>入站连接<rt>inbound connection</rt></ruby>，客户端会发送一个带有一个请求目标（<code>request-target</code>）的 HTTP 请求消息（<a href="#orge9f1350">章节 3</a>）。请求目标从目标 URI 里推导得出。依据<ruby>请求方法<rt>request method</rt></ruby>以及该请求是否是一个发送到<ruby>代理<rt>proxy</rt></ruby>的请求来分，请求目标一共有四种不同的格式。
 </p>
 
 <div class="org-src-container">
@@ -3531,9 +3543,11 @@ When making a request directly to an origin server, other than a CONNECT or serv
 当生成一个直接导向到源服务器的请求时，除了一个 CONNECT 或者服务器范围内的 OPTIONS 请求（见下文）以外，客户端 <b>必须</b> 仅使用目标 URI 的绝对路径 <code>absolute-path</code> 组件以及查询字符串 <code>query</code> 组件作为请求目标。如果目标 URI 的 <code>path</code> 组件为空，客户端 <b>必须</b> 发送 "/" 作为请求目标的原始形式的 <code>path</code>。一个 <code>Host</code> 头字段同样会被发送，其定义见<a href="#org5f0675f">章节 5.4</a>。
 </p>
 
+<blockquote>
 <p>
-（译注：请求目标的原始形式由目标 URI 的绝对路径 <code>absolute-path</code> 组件以及查询字符串 <code>query</code> 组件组成。）
+译注：请求目标的原始形式由目标 URI 的绝对路径 <code>absolute-path</code> 组件以及查询字符串 <code>query</code> 组件组成。
 </p>
+</blockquote>
 
 <blockquote>
 <p>
@@ -3611,7 +3625,7 @@ An example absolute-form of request-line would be:
 </blockquote>
 
 <p>
-一个在请求行（request line）里使用绝对形式作为请求目标的例子如下：
+一个在<ruby>请求行<rt>request line</rt></ruby>里使用绝对形式作为请求目标的例子如下：
 </p>
 
 <pre class="example">
@@ -3625,7 +3639,7 @@ To allow for transition to the absolute-form for all requests in some future ver
 </blockquote>
 
 <p>
-为了允许在将来某个 HTTP 版本里将所有请求的请求目标转换为绝对形式，服务器 <b>必须</b> 接受请求目标是绝对形式的请求，即使 HTTP/1.1 客户端将仅向代理（proxy）发送这种请求。
+为了允许在将来某个 HTTP 版本里将所有请求的请求目标转换为绝对形式，服务器 <b>必须</b> 接受请求目标是绝对形式的请求，即使 HTTP/1.1 客户端将仅向<ruby>代理<rt>proxy</rt></ruby>发送这种请求。
 </p>
 </div>
 </div>
@@ -3703,7 +3717,7 @@ If a proxy receives an OPTIONS request with an absolute-form of request-target i
 </blockquote>
 
 <p>
-如果一个代理（proxy）接收到一个 OPTIONS 请求，该请求的请求目标为绝对形式，URI 的路径 <code>path</code> 为空并且没有 <code>query</code> 组件，那么，请求链路中的最后一个代理 <b>必须</b> 发送一个 "*" 作为请求目标，当它将请求转发到指定的源服务器的时候。 
+如果一个<ruby>代理<rt>proxy</rt></ruby>接收到一个 OPTIONS 请求，该请求的请求目标为绝对形式，URI 的路径 <code>path</code> 为空并且没有 <code>query</code> 组件，那么，请求链路中的最后一个代理 <b>必须</b> 发送一个 "*" 作为请求目标，当它将请求转发到指定的源服务器的时候。 
 </p>
 
 <blockquote>
@@ -3758,7 +3772,7 @@ The "Host" header field in a request provides the host and port information from
 </blockquote>
 
 <p>
-在一个请求消息中的 <code>Host</code> 头字段提供了来自目标 URI 的主机（host）以及端口（port）信息，当源服务器对同一个 IP 地址使用多个不同主机名称来处理众多请求时，<code>Host</code> 能够让源服务器可以区分该请求所对应的资源。
+在一个请求消息中的 <code>Host</code> 头字段提供了来自目标 URI 的<ruby>主机<rt>host</rt></ruby>以及<ruby>端口<rt>port</rt></ruby>信息，当源服务器对同一个 IP 地址使用多个不同主机名称来处理众多请求时，<code>Host</code> 能够让源服务器可以区分该请求所对应的资源。
 </p>
 
 <div class="org-src-container">
@@ -3783,7 +3797,7 @@ Since the <code>Host</code> field-value is critical information for handling a r
 </blockquote>
 
 <p>
-因为对于如何处理一个请求消息来说，<code>Host</code> 头字段的内容是一个关键信息，所以用户代理 <b>应该</b> 将 <code>Host</code> 作为头部的第一个字段，紧随于请求行（request line）之后。
+因为对于如何处理一个请求消息来说，<code>Host</code> 头字段的内容是一个关键信息，所以用户代理 <b>应该</b> 将 <code>Host</code> 作为头部的第一个字段，紧随于<ruby>请求行<rt>request line</rt></ruby>之后。
 </p>
 
 <blockquote>
@@ -3834,7 +3848,7 @@ Since the <code>Host</code> header field acts as an application-level routing me
 </blockquote>
 
 <p>
-因为 <code>Host</code> 头字段充当一个应用层的路由机制，对于恶意软件来说它是寻求攻击的一个热点目标，例如，<a href="https://httpwg.org/specs/rfc7234.html#security.considerations">毒害共享缓存</a>，或者将请求重定向其他非预期的服务器当中等。在没有先验证这个被拦截过的连接（intercepted connection）是否指向该主机的一个合法的 IP 地址的情况下，如果一个拦截代理（interception proxy）依赖 <code>Host</code> 的字段值来将请求重定向到内部服务器（internal server），或者将 <code>Host</code> 的字段值用于作为一个共享缓存的键（key）来使用，那么它会特别容易受到攻击。
+因为 <code>Host</code> 头字段充当一个应用层的路由机制，对于恶意软件来说它是寻求攻击的一个热点目标，例如，<a href="https://httpwg.org/specs/rfc7234.html#security.considerations">毒害共享缓存</a>，或者将请求重定向其他非预期的服务器当中等。在没有先验证这个<ruby>被拦截的连接<rt>intercepted connection</rt></ruby>是否指向该主机的一个合法的 IP 地址的情况下，如果一个<ruby>拦截代理<rt>interception proxy</rt></ruby>依赖 <code>Host</code> 的字段值来将请求重定向到<ruby>内部服务器<rt>internal server</rt></ruby>，或者将 <code>Host</code> 的字段值用于作为一个共享缓存的<ruby>键<rt>key</rt></ruby>来使用，那么它会特别容易受到攻击。
 </p>
 
 <blockquote>
@@ -3849,9 +3863,9 @@ A server <b>MUST</b> respond with a <code>400 (Bad Request)</code> status code t
 </div>
 </div>
 
-<div id="outline-container-org0d26544" class="outline-3">
-<h3 id="org0d26544"><a id="ID-3265c21d-0d3b-4776-8e28-38278d168779"></a>5.5. 有效请求 URI / Effective Request URI</h3>
-<div class="outline-text-3" id="text-org0d26544">
+<div id="outline-container-orgabb4b7d" class="outline-3">
+<h3 id="orgabb4b7d"><a id="ID-3265c21d-0d3b-4776-8e28-38278d168779"></a>5.5. 实际请求 URI / Effective Request URI</h3>
+<div class="outline-text-3" id="text-orgabb4b7d">
 <blockquote>
 <p>
 Since the request-target often contains only part of the user agent's target URI, a server reconstructs the intended target as an "effective request URI" to properly service the request. This reconstruction involves both the server's local configuration and information communicated in the request-target, Host header field, and connection context.
@@ -3859,7 +3873,7 @@ Since the request-target often contains only part of the user agent's target URI
 </blockquote>
 
 <p>
-因为请求目标（request target）通常仅包含用户代理的目标 URI（target URI）的一部分（见<a href="#orgcda710f">章节 5.3</a>），服务器需要重建（reconstruct）该 URI 的预定目标来正确处理请求，这种经重建的 URI 称之为 <b>有效请求 URI（effective request URI）</b>。重建的过程涉及到服务器的本地配置信息，以及相关联的请求目标、<code>Host</code> 头字段和连接的上下文（connection context）。
+因为<ruby>请求目标<rt>request target</rt></ruby>通常仅包含用户代理的目标 URI 的一部分（见<a href="#orgcda710f">章节 5.3</a>），服务器需要<ruby>重建<rt>reconstruct</rt></ruby>该 URI 的预定目标来正确处理请求，这种经重建的 URI 称之为 <b>实际请求 URI（effective request URI）</b>。重建的过程涉及到服务器的本地配置信息，以及相关联的请求目标、<code>Host</code> 头字段和<ruby>连接的上下文<rt>connection context</rt></ruby>。
 </p>
 
 <blockquote>
@@ -3869,7 +3883,7 @@ For a user agent, the effective request URI is the target URI.
 </blockquote>
 
 <p>
-对于用户代理来说，有效请求 URI 就是<a href="#org2f2c27f">目标 URI（target URI）</a>。
+对于用户代理来说，实际请求 URI 就是<a href="#org2f2c27f">目标 URI（target URI）</a>。
 </p>
 
 <blockquote>
@@ -3889,17 +3903,17 @@ If the request-target is in <code>absolute-form</code>, the effective request UR
 </blockquote>
 
 <p>
-如果请求目标是绝对形式（<code>absolute-form</code>），那么有效请求 URI 与<a href="#orgcda710f">请求目标（request target）</a>相同。否则，有效请求 URI 会使用以下方式来重建：
+如果请求目标是绝对形式（<code>absolute-form</code>），那么实际请求 URI 与<a href="#orgcda710f">请求目标（request target）</a>相同。否则，实际请求 URI 会使用以下方式来重建：
 </p>
 
 <ul class="org-ul">
-<li>如果服务器的配置信息（或者出站网关）提供了一个固定的 URI <code>scheme</code>，那么，这个 URI <code>scheme</code> 会用于参与重建有效请求 URI。没有提供固定的 URI <code>scheme</code>，如果该请求是在一个 TLS 安全的（TLS-secured）的 TCP 连接，那么有效请求 URI 的 <code>scheme</code> 为 "https"，否则，scheme 为 "http"。</li>
+<li>如果服务器的配置信息（或者出站网关）提供了一个固定的 URI <code>scheme</code>，那么，这个 URI <code>scheme</code> 会用于参与重建实际请求 URI。没有提供固定的 URI <code>scheme</code>，如果该请求是在一个 TLS 安全的（TLS-secured）的 TCP 连接，那么实际请求 URI 的 <code>scheme</code> 为 "https"，否则，scheme 为 "http"。</li>
 
-<li>如果服务器的配置信息（或者出站网关）提供了一个固定的 URI <code>authority</code> 组件，那么，这个 <code>authority</code> 会用于参与重建有效请求 URI。如果没有固定的 URI <code>authority</code>，并且如果请求目标是 <code>authority-form</code> 形式，那么有效请求 URI 的 <code>authority</code> 组件与请求目标相同，如果请求目标不是 <code>authority-form</code> 形式，并且如果 <code>Host</code> 头字段提供了一个非空的字段值，那么有效请求 URI 的 <code>authority</code> 组件与 <code>Host</code> 的字段值相同。否则，有效请求 URI 的 <code>authority</code> 组件会被赋值为服务器所配置的默认名称，并且如果连接的 TCP 输入端口号不是有效请求 URI 的 <code>scheme</code> 所对应的默认端口号，那么需要在有效请求 URI 的 <code>authority</code> 组件后附加一个冒号（":"）以及输入端口号（十进制形式）。</li>
+<li>如果服务器的配置信息（或者出站网关）提供了一个固定的 URI <code>authority</code> 组件，那么，这个 <code>authority</code> 会用于参与重建实际请求 URI。如果没有固定的 URI <code>authority</code>，并且如果请求目标是 <code>authority-form</code> 形式，那么实际请求 URI 的 <code>authority</code> 组件与请求目标相同，如果请求目标不是 <code>authority-form</code> 形式，并且如果 <code>Host</code> 头字段提供了一个非空的字段值，那么实际请求 URI 的 <code>authority</code> 组件与 <code>Host</code> 的字段值相同。否则，实际请求 URI 的 <code>authority</code> 组件会被赋值为服务器所配置的默认名称，并且如果连接的 TCP 输入端口号不是实际请求 URI 的 <code>scheme</code> 所对应的默认端口号，那么需要在实际请求 URI 的 <code>authority</code> 组件后附加一个冒号（":"）以及输入端口号（十进制形式）。</li>
 
-<li>如果请求目标是 <code>authority-form</code> 或者 <code>asterisk-form</code>，那么有效请求 URI 的 <code>path</code> 和 <code>query</code> 组件为空。否则，<code>path</code> 和 <code>query</code> 组件与请求目标所对应的 <code>path</code> 和 <code>query</code> 相同。</li>
+<li>如果请求目标是 <code>authority-form</code> 或者 <code>asterisk-form</code>，那么实际请求 URI 的 <code>path</code> 和 <code>query</code> 组件为空。否则，<code>path</code> 和 <code>query</code> 组件与请求目标所对应的 <code>path</code> 和 <code>query</code> 相同。</li>
 
-<li>有效请求 URI 的各个组件一旦在上述步骤中确定了，就能够通过依次连结 <code>scheme</code>、"://"、<code>authority</code>、以及 <code>path</code> 和 <code>query</code>，组合为绝对 URI（<code>absolute-form</code>）形式。</li>
+<li>实际请求 URI 的各个组件一旦在上述步骤中确定了，就能够通过依次连结 <code>scheme</code>、"://"、<code>authority</code>、以及 <code>path</code> 和 <code>query</code>，组合为绝对 URI（<code>absolute-form</code>）形式。</li>
 </ul>
 
 <blockquote>
@@ -3924,7 +3938,7 @@ has an effective request URI of
 </blockquote>
 
 <p>
-它的有效请求 URI 是：
+它的实际请求 URI 是：
 </p>
 
 <pre class="example">
@@ -3953,7 +3967,7 @@ has an effective request URI of
 </blockquote>
 
 <p>
-它的有效请求 URI 是：
+它的实际请求 URI 是：
 </p>
 
 <pre class="example">
@@ -3967,7 +3981,7 @@ Recipients of an HTTP/1.0 request that lacks a <code>Host</code> header field mi
 </blockquote>
 
 <p>
-一个 HTTP/1.0 接收端，可能需要使用启发式（heuristics，例如，测试 URI 的路径是否专属于某个具体主机）来猜测有效请求 URI 的 <code>authority</code> 组件。
+一个 HTTP/1.0 接收端，可能需要使用<ruby>启发式<rt>heuristics</rt></ruby>（例如，测试 URI 的路径是否专属于某个具体主机）来猜测实际请求 URI 的 <code>authority</code> 组件。
 </p>
 
 <blockquote>
@@ -3977,7 +3991,7 @@ Once the effective request URI has been constructed, an origin server needs to d
 </blockquote>
 
 <p>
-一旦重建好了有效请求 URI，源服务器需要确定是否对这个 URI 提供服务，通过接收到该请求的连接。例如，该请求可能被误导，刻意或者意外发送到当前服务器中，以致该请求消息的请求目标或者 <code>Host</code> 头字段内的信息与该请求消息所对应的发送端所发起的连接（connection）的信息（主机与端口）不一致。如果该连接是来自一个可信任的网关，那么这种不一致性可能还可以接受，否则，这可能代表一个企图越过安全过滤机制，欺骗服务去分发不公开的内容，或者毒害缓存。关于消息路由的安全注意事项见<a href="#org80cf271">章节 9</a>。
+一旦重建好了实际请求 URI，源服务器需要确定是否对这个 URI 提供服务，通过接收到该请求的连接。例如，该请求可能被误导，刻意或者意外发送到当前服务器中，以致该请求消息的请求目标或者 <code>Host</code> 头字段内的信息与该请求消息所对应的发送端所发起的连接的信息（主机与端口）不一致。如果该连接是来自一个可信任的网关，那么这种不一致性可能还可以接受，否则，这可能代表一个企图越过安全过滤机制，欺骗服务去分发不公开的内容，或者毒害缓存。关于消息路由的安全注意事项见<a href="#org80cf271">章节 9</a>。
 </p>
 </div>
 </div>
@@ -3992,7 +4006,7 @@ HTTP does not include a request identifier for associating a given request messa
 </blockquote>
 
 <p>
-HTTP 并不包含一个请求标记，用于关联一个给定请求消息和与之对应的一个或多个响应消息。因此，HTTP 依靠响应消息到达的顺序来一一对应在同一个连接中生成请求的顺序。出现响应消息数与请求消息数的比值大于 1 的情况仅当对该请求发送最终响应（final response，任何非 1xx 状态码的响应消息）之前，对其发送了一个或多个消息性响应消息（informational responses，状态码为 1xx 的响应消息，见<a href="RFC7231.html#ID-2dd7a3d1-25c2-4192-9a19-6a3cf137036e">【RFC7231】章节 6.2</a>）。
+HTTP 并不包含一个请求标记，用于关联一个给定请求消息和与之对应的一个或多个响应消息。因此，HTTP 依靠响应消息到达的顺序来一一对应在同一个连接中生成请求的顺序。出现响应消息数与请求消息数的比值大于 1 的情况仅当对该请求发送<ruby>最终响应<rt>final response</rt></ruby>（任何非 <code>1xx</code> 状态码的响应消息）之前，对其发送了一个或多个<ruby>信息性响应消息<rt>informational responses</rt></ruby>（状态码为 <code>1xx</code> 的响应消息，见<a href="RFC7231.html#ID-2dd7a3d1-25c2-4192-9a19-6a3cf137036e">【RFC7231】章节 6.2</a>）。
 </p>
 
 <blockquote>
@@ -4002,7 +4016,7 @@ A client that has more than one outstanding request on a connection <b>MUST</b> 
 </blockquote>
 
 <p>
-在一个连接中，如果客户端有超过一个未偿付的请求（outstanding request）的话，客户端 <b>必须</b> 以发送的顺序维护一个未完成请求的列表，并且 <b>必须</b> 关联每一个在该连接中接收到的响应消息到列表最高位的还未接收到最终响应（非 1xx 状态码）的请求。
+在一个连接中，如果客户端有超过一个<ruby>未偿付的请求<rt>outstanding request</rt></ruby>的话，客户端 <b>必须</b> 以发送的顺序维护一个未完成请求的列表，并且 <b>必须</b> 关联每一个在该连接中接收到的响应消息到列表最高位的还未接收到最终响应（非 <code>1xx</code> 状态码）的请求。
 </p>
 </div>
 </div>
@@ -4017,7 +4031,7 @@ As described in Section 2.3, intermediaries can serve a variety of roles in the 
 </blockquote>
 
 <p>
-正如<a href="#orgc4594ba">章节 2.3</a> 所述，中间人能够在处理 HTTP 请求和响应中饰演多种角色。某些中间人是用于提升性能或可用性，另外一些用于访问控制（access control）或者内容过滤（filter content）。因为一个 HTTP 流具有类似于一个<a href="https://en.wikipedia.org/wiki/Pipeline_(software)">管道架构（pipe-and-filter architecture）</a>的性质，因此，中间人对流的任何方向的提升或抑制的程度没有任何固定限制。
+正如<a href="#orgc4594ba">章节 2.3</a> 所述，中间人能够在处理 HTTP 请求和响应中饰演多种角色。某些中间人是用于提升性能或可用性，另外一些用于<ruby>访问控制<rt>access control</rt></ruby>或者<ruby>内容过滤<rt>filter content</rt></ruby>。因为一个 HTTP 流具有类似于一个<a href="https://en.wikipedia.org/wiki/Pipeline_(software)">管道架构（pipe-and-filter architecture）</a>的性质，因此，中间人对流的任何方向的提升或抑制的程度没有任何固定限制。
 。
 </p>
 
@@ -4028,7 +4042,7 @@ An intermediary not acting as a tunnel <b>MUST</b> implement the <code>Connectio
 </blockquote>
 
 <p>
-不充当隧道（tunnel）的中间人 <b>必须</b> 实现<a href="#org6e6aa41">章节 6.1</a> 中所指定的 <code>Connection</code> 头字段，并且在转发消息时排除所有仅作用于传入连接（incoming connection）的域。
+不充当<ruby>隧道<rt>tunnel</rt></ruby>的中间人 <b>必须</b> 实现<a href="#org6e6aa41">章节 6.1</a> 中所指定的 <code>Connection</code> 头字段，并且在转发消息时排除所有仅作用于<ruby>传入连接<rt>incoming connection</rt></ruby>的字段。
 </p>
 
 <blockquote>
@@ -4052,7 +4066,7 @@ The "Via" header field indicates the presence of intermediate protocols and reci
 </blockquote>
 
 <p>
-<code>Via</code> 头字段表示在用户代理和服务器的链路之间（关于请求消息）或者源服务器和客户端链路之间（关于响应消息），出现了中间人协议和接收端，类似于电子邮件中的 <code>Received</code> 头字段（<a href="https://tools.ietf.org/html/rfc5322#section-3.6.7">【RFC5322】章节 3.6.7</a>）。<code>Via</code> 能够用于跟踪消息的转发，避免请求循环（request loops）以及标识在请求/响应链路中的各个发送端的协议功能（protocol capabilities）。
+<code>Via</code> 头字段表示在用户代理和服务器的链路之间（关于请求消息）或者源服务器和客户端链路之间（关于响应消息），出现了中间人协议和接收端，类似于电子邮件中的 <code>Received</code> 头字段（<a href="https://tools.ietf.org/html/rfc5322#section-3.6.7">【RFC5322】章节 3.6.7</a>）。<code>Via</code> 能够用于跟踪消息的转发，避免<ruby>请求循环<rt>request loops</rt></ruby>以及标识在请求/响应链路中的各个发送端的<ruby>协议功能<rt>protocol capabilities</rt></ruby>。
 </p>
 
 <div class="org-src-container">
@@ -4082,7 +4096,7 @@ A proxy <b>MUST</b> send an appropriate <code>Via</code> header field, as descri
 </blockquote>
 
 <p>
-代理 <b>必须</b> 在其转发的所有消息里带有一个恰当的 <code>Via</code> 头字段，正如下面所描述的一样。一个 HTTP-to-HTTP 的网关 <b>必须</b> 在其发送的所有入站请求（inbound request）<sup><a id="fnr.8" class="footref" href="#fn.8">8</a></sup>消息里带有一个恰当的 <code>Via</code> 头字段，并且 <b>可以</b> 在其转发的所有响应消息里带有一个 <code>Via</code> 头字段。
+代理 <b>必须</b> 在其转发的所有消息里带有一个恰当的 <code>Via</code> 头字段，正如下面所描述的一样。一个 HTTP-to-HTTP 的网关 <b>必须</b> 在其发送的所有<ruby>入站请求<rt>inbound request</rt></ruby><sup><a id="fnr.8" class="footref" href="#fn.8">8</a></sup>消息里带有一个恰当的 <code>Via</code> 头字段，并且 <b>可以</b> 在其转发的所有响应消息里带有一个 <code>Via</code> 头字段。
 </p>
 
 <blockquote>
@@ -4102,7 +4116,7 @@ The <code>received-by</code> portion of the field value is normally the host and
 </blockquote>
 
 <p>
-<code>Via</code> 字段值里的 <code>receive-by</code> 部分通常是接收端（服务器或者客户端）接下来转发消息所使用的主机名称和一个可选的端口号。但是，如果服务器认为该主机的真实名称是一个敏感信息的话，服务器 <b>可以</b> 将其替换为一个化名（pseudonym）。如果端口号未提供，接收端 <b>可以</b> 解释为它在默认的 TCP 端口接收到该消息。如果有提供端口号的话，TODO for the receive-protocol?
+<code>Via</code> 字段值里的 <code>receive-by</code> 部分通常是接收端（服务器或者客户端）接下来转发消息所使用的主机名称和一个可选的端口号。但是，如果服务器认为该主机的真实名称是一个敏感信息的话，发送端 <b>可以</b> 将其替换为一个<ruby>化名<rt>pseudonym</rt></ruby>。如果端口号未提供，接收端 <b>可以</b> 将其解释为就像它是在默认的 TCP 端口接收到该消息一样，if any，for the received-protocol。
 </p>
 
 <blockquote>
@@ -4189,7 +4203,7 @@ Some intermediaries include features for transforming messages and their payload
 </blockquote>
 
 <p>
-某些中间人包含转换消息及其有效载荷（payload）的功能。代理可能出于节省缓存的存储空间或者在慢速连接中减少流量的总量的目的对消息进行转换，例如，图片格式的转换。但是，当这些转换被应用到提供给关键应用程序（例如医学图像或者科学数据分析）使用的有效载荷上的时候，特别是当使用完整性检验或者数字签名来保证所接收到的有效载荷与原始无异的时候，可能会引发业务上的问题。
+某些中间人具有转换消息及其<ruby>有效载荷<rt>payload</rt></ruby>的功能。代理可能出于节省缓存的存储空间或者在慢速连接中减少流量的总量的目的对消息进行转换，例如，图片格式的转换。但是，当这些转换被应用到提供给关键应用程序（例如医学图像或者科学数据分析）使用的有效载荷上的时候，特别是当使用完整性检验或者数字签名来保证所接收到的有效载荷与原始无异的时候，可能会引发业务上的问题。
 </p>
 
 <blockquote>
@@ -4199,7 +4213,7 @@ An HTTP-to-HTTP proxy is called a "transforming proxy" if it is designed or conf
 </blockquote>
 
 <p>
-被设计或配置用来通过一种语义上有意义的方式来修改消息（也就是说，超出正常 HTTP 的处理要求的额外更改，以一种可能对于原始发送端有意义或者对于下游接收端有潜在意义的方式改变了消息）的一种 HTTP-to-HTTP 代理，称之为“转换代理（transforming proxy）”。例如，转换代理可以充当一个<a href="https://en.wikipedia.org/wiki/Web_annotation">共享注释服务器</a>（通过修改响应消息，让其包含一个本地注释数据库的引用）、一个恶意软件过滤器、一个格式转码器，或者一个隐私过滤器。无论客户端选择哪一种代理，这种转换都被认为是该代理所期望的。
+被设计或配置用来通过一种语义上有意义的方式来修改消息（也就是说，超出正常 HTTP 的处理要求的额外更改，以一种可能对于原始发送端有意义或者对于下游接收端有潜在意义的方式改变了消息）的一种 HTTP-to-HTTP 代理，称之为“<ruby>转换代理<rt>transforming proxy</rt></ruby>”。例如，转换代理可以充当一个<a href="https://en.wikipedia.org/wiki/Web_annotation">共享注释服务器</a>（通过修改响应消息，让其包含一个本地注释数据库的引用）、一个恶意软件过滤器、一个格式转码器，或者一个隐私过滤器。无论客户端选择哪一种代理，这种转换都被认为是该代理所期望的。
 </p>
 
 <blockquote>
@@ -4219,17 +4233,17 @@ A proxy <b>MUST NOT</b> modify the "absolute-path" and "query" parts of the rece
 </blockquote>
 
 <p>
-当代理把接收到的 <code>request-target</code> 转发到其后的入站服务器（inbound server）的时候，除了上述提及到的使用 "/" 或者 "*" 来替换掉一个空的 <code>path</code> 以外（见<a href="#orgecb6a1e">章节 5.3.1</a> 以及<a href="#org7b732dd">章节 5.3.4</a>），代理 <b>禁止</b> 修改该 <code>request-target</code> 中的 <code>absolute-path</code> 以及 <code>query</code> 部分。
+当代理把接收到的 <code>request-target</code> 转发到其后的<ruby>入站服务器<rt>inbound server</rt></ruby>的时候，除了上述提及到的使用 "/" 或者 "*" 来替换掉一个空的 <code>path</code> 以外（见<a href="#orgecb6a1e">章节 5.3.1</a> 以及<a href="#org7b732dd">章节 5.3.4</a>），代理 <b>禁止</b> 修改该 <code>request-target</code> 中的 <code>absolute-path</code> 以及 <code>query</code> 部分。
 </p>
 
 <blockquote>
 <p>
-A proxy <b>MAY</b> modify the message body through application or removal of a transfer coding (Section 4).
+A proxy <b>MAY</b> modify the message body through application or removal of a transfer coding (<a href="#org4f2cf2a">Section 4</a>).
 </p>
 </blockquote>
 
 <p>
-代理 <b>可以</b> 通过应用或移除一个传输编码值（transfer coding，<a href="#org4f2cf2a">章节 4</a>）来修改消息体。
+代理 <b>可以</b> 通过应用或移除一个<ruby>传输编码值<rt>transfer coding</rt></ruby>（<a href="#org4f2cf2a">章节 4</a>）来修改消息体。
 </p>
 
 <blockquote>
@@ -4239,7 +4253,7 @@ A proxy <b>MUST NOT</b> transform the payload (<a href="RFC7231.html#ID-4c395bab
 </blockquote>
 
 <p>
-代理 <b>禁止</b> 对包含有 <code>no-transform</code> 缓存控制指令（Cache-Control directive，<a href="RFC7234.html#ID-03c2dad4-a6d2-4d3c-b087-d08717bf09ec">【RFC7234】章节 5.2</a>）的消息中的有效载荷（payload，<a href="RFC7231.html#ID-4c395bab-baa6-4895-b677-5daa1584da6e">【RFC7231】章节 3.3</a>）进行转换。
+代理 <b>禁止</b> 对包含有 <code>no-transform</code> 的 <code>Cache-Control</code> <ruby>指令<rt>directive</rt></ruby>（<a href="RFC7234.html#ID-03c2dad4-a6d2-4d3c-b087-d08717bf09ec">【RFC7234】章节 5.2</a>）的消息中的<ruby>有效载荷<rt>payload</rt></ruby>（<a href="RFC7231.html#ID-4c395bab-baa6-4895-b677-5daa1584da6e">【RFC7231】章节 3.3</a>）进行转换。
 </p>
 
 <blockquote>
@@ -4259,7 +4273,7 @@ A proxy <b>SHOULD NOT</b> modify header fields that provide information about th
 </blockquote>
 
 <p>
-代理 <b>不应当</b> 修改提供有关通信链路端点、资源状态，或者<ruby>已选定的表示形式<rt>selected representation</rt></ruby>（除了有效载荷）的信息的头字段，除非该域的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
+代理 <b>不应当</b> 修改提供有关通信链路端点、资源状态，或者<ruby>已选定的表示形式<rt>selected representation</rt></ruby>（除了有效载荷）的信息的头字段，除非该字段的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
 </p>
 </div>
 </div>
@@ -4282,12 +4296,12 @@ HTTP 的消息交换是独立于底层传输层和会话层相关的连接协议
 
 <blockquote>
 <p>
-As described in Section 5.2, the specific connection protocols to be used for an HTTP interaction are determined by client configuration and the target URI. For example, the "http" URI scheme (Section 2.7.1) indicates a default connection of TCP over IP, with a default TCP port of 80, but the client might be configured to use a proxy via some other connection, port, or protocol.
+As described in <a href="#orgcbe8397">Section 5.2</a>, the specific connection protocols to be used for an HTTP interaction are determined by client configuration and the target URI. For example, the "http" URI scheme (<a href="#orgc784014">Section 2.7.1</a>) indicates a default connection of TCP over IP, with a default TCP port of 80, but the client might be configured to use a proxy via some other connection, port, or protocol.
 </p>
 </blockquote>
 
 <p>
-正如<a href="#orgcbe8397">章节 5.2</a> 描述的那样，具体使用哪一种连接协议与 HTTP 交互是取决于客户端的配置以及目标 URI 的。例如，"http" URI 方案表示一个在 IP 协议之上的 TCP 默认连接，使用默认的 80 TCP 端口，但是，客户端可能被配置为使用代理来途经其他连接、端口以及协议。
+正如<a href="#orgcbe8397">章节 5.2</a> 描述的那样，具体使用哪一种连接协议与 HTTP 交互是取决于客户端的配置以及目标 URI 的。例如，"http" URI 方案（<a href="#orgc784014">章节 2.7.1</a>）表示一个在 IP 协议之上的 TCP 默认连接，使用默认的 80 TCP 端口，但是，客户端可能被配置为使用代理来途经其他连接、端口以及协议。
 </p>
 
 <blockquote>
@@ -4307,13 +4321,13 @@ The "Connection" header field allows the sender to indicate desired control opti
 </blockquote>
 
 <p>
-<code>Connection</code> 头字段允许发送端去指定希望如何控制当前连接的选项。为了避免下游接收端的困惑，代理或者网关 <b>必须</b> 在转发消息的时候移除或替换出现在该消息中的任何连接选项（connection options）。
+<code>Connection</code> 头字段允许发送端去指定希望如何控制当前连接的选项。为了避免下游接收端的困惑，代理或者网关 <b>必须</b> 在转发消息的时候移除或替换出现在该消息中的任何<ruby>连接选项<rt>connection options</rt></ruby>。
 </p>
 
 <blockquote>
 <p>
 译注：
-连接选项（connection options）是一个专有名词，是特指 <code>Connection</code> 头字段的字段值里的内容。
+<ruby>连接选项<rt>connection options</rt></ruby>是一个专有名词，是特指 <code>Connection</code> 头字段的字段值里的内容。
 </p>
 </blockquote>
 
@@ -4324,7 +4338,7 @@ When a header field aside from <code>Connection</code> is used to supply control
 </blockquote>
 
 <p>
-除了 <code>Connection</code> 头字段以外，当存在某个头字段，用于提供应用在（或者仅说明）当前连接的控制信息，发送端 <b>必须</b> 在 <code>Connection</code> 头字段里列出该头字段的名称。代理或者网关在转发消息之前，<b>必须</b> 解析（parse）消息里的 <code>Connection</code> 头字段，并且对于 <code>Connection</code> 头字段内的每一个连接选项 <code>connection-option</code>，从消息中移除与之同名的头字段，然后再移除 <code>Connection</code> 头字段自身（或者将其替换为中间人自己的连接选项，用于转发消息）。
+除了 <code>Connection</code> 头字段以外，当存在某个头字段，用于提供应用在（或者仅说明）当前连接的控制信息，发送端 <b>必须</b> 在 <code>Connection</code> 头字段里列出该头字段的名称。代理或者网关在转发消息之前，<b>必须</b> 解析消息里的 <code>Connection</code> 头字段，并且对于 <code>Connection</code> 头字段内的每一个连接选项 <code>connection-option</code>，从消息中移除与之同名的头字段，然后再移除 <code>Connection</code> 头字段自身（或者将其替换为中间人自己的连接选项，用于转发消息）。
 </p>
 
 <blockquote>
@@ -4349,7 +4363,7 @@ Hence, the <code>Connection</code> header field provides a declarative way of di
 </blockquote>
 
 <p>
-因此，<code>Connection</code> 头字段提供了一种声明式的方式来区分哪些头字段是打算只作用于当前发送端的直接接收端的（"hop-by-hop"，逐跳，即直接与之相连的接收端），哪些头字段是打算作用于链路中的所有接收端（"end-to-end"，端到端）。这样，使消息能够自描述，同时，避免将来新增的连接专用的扩展（connection-specific extensions）被旧的（即不支持该扩展的）中间人盲转发（blindly forward）。
+因此，<code>Connection</code> 头字段提供了一种声明式的方式来区分哪些头字段是打算只作用于当前发送端的直接接收端的（“<ruby>逐跳<rt>hop-by-hop</rt></ruby>”），哪些头字段是打算作用于链路中的所有接收端（“<ruby>端到端<rt>end-to-end</rt></ruby>”）。这样，使消息能够自描述，同时，避免将来新增的<ruby>连接专用的扩展<rt>connection-specific extensions</rt></ruby>被旧的（即不支持该扩展的）中间人<ruby>盲转发<rt>blindly forward</rt></ruby>。
 </p>
 
 <blockquote>
@@ -4485,7 +4499,7 @@ HTTP/1.1 defaults to the use of "<a href="https://en.wikipedia.org/wiki/HTTP_per
 </blockquote>
 
 <p>
-HTTP/1.1 对<a href="https://zh.wikipedia.org/wiki/HTTP%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5">持久连接（Persistent Connections）</a>的使用进行了定义，允许在单个连接中搭载多个请求和响应。"close" 连接选项用于作为连接将会在当前请求/响应后不再维持的信号。HTTP 的实现（implementations） <b>应当</b> 支持持久连接。
+HTTP/1.1 对<a href="https://zh.wikipedia.org/wiki/HTTP%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5">持久连接（Persistent Connections）</a>的使用进行了定义，允许在单个连接中搭载多个请求和响应。"close" 连接选项用于作为连接将会在当前请求/响应后不再维持的信号。HTTP 的<ruby>实现<rt>implementations</rt></ruby> <b>应当</b> 支持持久连接。
 </p>
 
 <blockquote>
@@ -4541,27 +4555,27 @@ In order to remain persistent, all messages on a connection need to have a self-
 </blockquote>
 
 <p>
-为了保持持久，在一个连接中的所有消息都需要带有一个由自身所定义的（self-defined）消息长度（也就是说，并不是由连接的关闭而定义的那个长度），如<a href="#orgf7a981f">章节 3.3</a> 所述。服务器 <b>必须</b> 在发送响应消息后，读取整个请求消息体或者关闭该连接，这是因为如果不这样做的话，存在于持久连接中的剩余的数据会被误解为是下一个请求消息的内容。同样，如果客户端打算在接下来的请求中复用同一个连接，那么，客户端 <b>必须</b> 读取整个响应消息体。
+为了保持持久，在一个连接中的所有消息都需要带有一个由<ruby>自身所定义<rt>self-defined</rt></ruby>的消息长度（也就是说，并不是由连接的关闭而定义的那个长度），如<a href="#orgf7a981f">章节 3.3</a> 所述。服务器 <b>必须</b> 在发送响应消息后，读取整个请求消息体或者关闭该连接，这是因为如果不这样做的话，存在于持久连接中的剩余的数据会被误解为是下一个请求消息的内容。同样，如果客户端打算在接下来的请求中复用同一个连接，那么，客户端 <b>必须</b> 读取整个响应消息体。
 </p>
 
 <blockquote>
 <p>
-A proxy server <b>MUST NOT</b> maintain a persistent connection with an HTTP/1.0 client (see Section 19.7.1 of [RFC2068] for information and discussion of the problems with the <code>Keep-Alive</code> header field implemented by many HTTP/1.0 clients).
+A proxy server <b>MUST NOT</b> maintain a persistent connection with an HTTP/1.0 client (see <a href="#orgcbe8397">Section 19.7.1</a> of [RFC2068] for information and discussion of the problems with the <code>Keep-Alive</code> header field implemented by many HTTP/1.0 clients).
 </p>
 </blockquote>
 
 <p>
-代理服务器 <b>禁止</b> 与一个 HTTP/1.0 客户端维持一个持久连接（见【RFC2068】章节 19.7.1 关于某些 HTTP/1.0 客户端所实现的 <code>Keep-Alive</code> 头字段的问题的信息和讨论）。
+代理服务器 <b>禁止</b> 与一个 HTTP/1.0 客户端维持一个持久连接（见<a href="#orgcbe8397">【RFC2068】章节 19.7.1</a> 关于某些 HTTP/1.0 客户端所实现的 <code>Keep-Alive</code> 头字段的问题的信息和讨论）。
 </p>
 
 <blockquote>
 <p>
-See Appendix A.1.2 for more information on backwards compatibility with HTTP/1.0 clients.
+See <a href="#org0161242">Appendix A.1.2</a> for more information on backwards compatibility with HTTP/1.0 clients.
 </p>
 </blockquote>
 
 <p>
-关于向后兼容 HTTP/1.0 客户端的更多信息，见附录 A.1.2。
+关于向后兼容 HTTP/1.0 客户端的更多信息，见<a href="#org0161242">附录 A.1.2</a>。
 </p>
 </div>
 
@@ -4575,7 +4589,7 @@ Connections can be closed at any time, with or without intention. Implementation
 </blockquote>
 
 <p>
-连接能够在任何时候有意或无意地被关闭。HTTP 实现（implementations）应当预料到存在从异步关闭事件中恢复连接的需要。
+连接能够在任何时候有意或无意地被关闭。HTTP <ruby>实现<rt>implementations</rt></ruby>应当预料到存在从异步关闭事件中恢复连接的需要。
 </p>
 
 <blockquote>
@@ -4595,7 +4609,7 @@ A user agent <b>MUST NOT</b> automatically retry a request with a non-idempotent
 </blockquote>
 
 <p>
-用户代理 <b>禁止</b> 自动重试一个带有非幂等请求方法（non-idempotent method）的请求，除非用户代理通过某些方式了解到不管请求方法是否幂等，该请求的语义实际上都是幂等的，或者通过某些方式检测到原来的请求未被接收端处理。例如，某个用户代理（通过设计或配置）了解到某个获取给定资源的 POST 请求是能够自动安全地重复请求的。同样，某个用户代理特别设计为对一个版本控制仓库进行操作，可能能够在一次连接失败后，通过测试目标资源的修订版本，撤回或修复部分应用过的更改，然后自动重试失败过的请求，使连接从部分失败条件中恢复过来。
+用户代理 <b>禁止</b> 自动重试一个带有<ruby>非幂等请求方法<rt>non-idempotent method</rt></ruby>的请求，除非用户代理通过某些方式了解到不管请求方法是否幂等，该请求的语义实际上都是幂等的，或者通过某些方式检测到原来的请求未被接收端处理。例如，某个用户代理（通过设计或配置）了解到某个获取给定资源的 POST 请求是能够自动安全地重复请求的。同样，某个用户代理特别设计为对一个版本控制仓库进行操作，可能能够在一次连接失败后，通过测试目标资源的修订版本，撤回或修复部分应用过的更改，然后自动重试失败过的请求，使连接从部分失败条件中恢复过来。
 </p>
 
 <blockquote>
@@ -4659,12 +4673,12 @@ Idempotent methods (<a href="RFC7231.html#ID-6f2b6a60-5e9f-49cc-94f8-a7ee8f07862
 </blockquote>
 
 <p>
-幂等请求方法（<a href="RFC7231.html#ID-6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f">【RFC7231】章节 4.2.2</a>）对于流水线处理是很有意义的，这是因为在连接失败后它们能够被自动重试。用户代理 <b>不应当</b> 对一个非幂等请求方法之后的请求消息进行流水线处理，直到接收到该非幂等请求方法所对应的最终响应状态码（final response status code），除非该用户代理有某种方法去检测和从部分涉及到流水线序列的失败条件中恢复连接。
+幂等请求方法（<a href="RFC7231.html#ID-6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f">【RFC7231】章节 4.2.2</a>）对于流水线处理是很有意义的，这是因为在连接失败后它们能够被自动重试。用户代理 <b>不应当</b> 对一个非幂等请求方法之后的请求消息进行流水线处理，直到接收到该非幂等请求方法所对应的<ruby>最终响应状态码<rt>final response status code</rt></ruby>，除非该用户代理有某种方法去检测和从部分涉及到流水线序列的失败条件中恢复连接。
 </p>
 
 <blockquote>
 <p>
-译注：最终响应的状态码就是除了过渡性响应状态以外的状态码。过渡性状态码（interim response status code），即所有 1xx 的信息性状态码，见<a href="RFC7231.html#ID-2dd7a3d1-25c2-4192-9a19-6a3cf137036e">【RFC7231】章节 6.2</a>。其对应的响应分别叫最终响应（final response）和过渡性响应（interim response）。
+译注：最终响应的状态码就是除了过渡性响应状态以外的状态码。过渡性状态码（interim response status code），即所有 <code>1xx</code> 的信息性状态码，见<a href="RFC7231.html#ID-2dd7a3d1-25c2-4192-9a19-6a3cf137036e">【RFC7231】章节 6.2</a>。其对应的响应分别叫最终响应（final response）和过渡性响应（interim response）。
 </p>
 </blockquote>
 
@@ -4675,7 +4689,7 @@ An intermediary that receives pipelined requests <b>MAY</b> pipeline those reque
 </blockquote>
 
 <p>
-接收流水线化的请求消息的中间人，当转发这些请求到站内（inbound）的时候 <b>可以</b> 流水线处理它们，这是因为中间人能够依靠站外的（outbound）用户代理来确定哪些请求消息能够被放心地使用流水线处理。如果在接收某个响应之前，入站连接失败，正在进行流水线处理的中间人 <b>可以</b> 试图去重试一系列有待接收响应的请求，如果这些请求都带有幂等请求方法的话；否则，该正在进行流水线处理的中间人 <b>应当</b> 转发任何接收到的响应，然后关闭对应的出站连接以便那些站外用户代理能够相应地恢复。
+接收流水线化的请求消息的中间人，当转发这些请求到<ruby>站内<rt>inbound</rt></ruby>的时候 <b>可以</b> 流水线处理它们，这是因为中间人能够依靠<ruby>站外<rt>outbound</rt></ruby>的用户代理来确定哪些请求消息能够被放心地使用流水线处理。如果在接收某个响应之前，入站连接失败，正在进行流水线处理的中间人 <b>可以</b> 试图去重试一系列有待接收响应的请求，如果这些请求都带有幂等请求方法的话；否则，该正在进行流水线处理的中间人 <b>应当</b> 转发任何接收到的响应，然后关闭对应的出站连接以便那些站外用户代理能够相应地恢复。
 </p>
 </div>
 </div>
@@ -4721,7 +4735,7 @@ Note that a server might reject traffic that it deems abusive or characteristic 
 </blockquote>
 
 <p>
-需要注意的是，在服务器认为滥用多连接或具有拒绝服务攻击的特征的时候，服务器可能会拒绝该流量，例如，由单独一个客户端对服务器发送了过量的开启连接的请求。
+需要注意的是，在服务器认为滥用多连接或具有<ruby>拒绝服务攻击<rt>denial-of-service attack</rt></ruby>的特征的时候，服务器可能会拒绝该流量，例如，由单独一个客户端对服务器发送了过量的开启连接的请求。
 </p>
 </div>
 </div>
@@ -4746,7 +4760,7 @@ A client or server that wishes to time out <b>SHOULD</b> issue a graceful close 
 </blockquote>
 
 <p>
-希望超时的客户端或服务器 <b>应当</b> 在连接中发出一个优雅的关闭信号。所有 HTTP 实现（Implementations） <b>应当</b> 在已打开的连接中不断监听关闭信号，并且正确地响应该信号，这是因为连接两端的关闭确认可以使系统分配的资源得到回收。
+希望超时的客户端或服务器 <b>应当</b> 在连接中发出一个优雅的关闭信号。所有 HTTP <ruby>实现<rt>implementations</rt></ruby> <b>应当</b> 在已打开的连接中不断监听关闭信号，并且正确地响应该信号，这是因为连接两端的关闭确认可以使系统分配的资源得到回收。
 </p>
 
 <blockquote>
@@ -4776,7 +4790,7 @@ A client sending a message body <b>SHOULD</b> monitor the network connection for
 </blockquote>
 
 <p>
-客户端正在发送一个请求消息体，对应的连接正在传输客户端的请求，这时候，客户端 <b>应当</b> 监听网络连接中的错误响应（error response）。如果该客户端观察到一个响应消息，该响应消息表明服务器并不希望接收该消息体并且打算关闭这个连接，那么，客户端 <b>应当</b> 立即停止传输该消息体，并关闭客户端这一端的连接。
+客户端正在发送一个请求消息体，对应的连接正在传输客户端的请求，这时候，客户端 <b>应当</b> 监听网络连接中的<ruby>错误响应<rt>error response</rt></ruby>。如果该客户端观察到一个响应消息，该响应消息表明服务器并不希望接收该消息体并且打算关闭这个连接，那么，客户端 <b>应当</b> 立即停止传输该消息体，并关闭客户端这一端的连接。
 </p>
 </div>
 </div>
@@ -4786,7 +4800,7 @@ A client sending a message body <b>SHOULD</b> monitor the network connection for
 <div class="outline-text-3" id="text-org3182dcd">
 <blockquote>
 <p>
-The <code>Connection</code> header field (Section 6.1) provides a "close" connection option that a sender <b>SHOULD</b> send when it wishes to close the connection after the current request/response pair.
+The <code>Connection</code> header field (<a href="#org6e6aa41">Section 6.1</a>) provides a "close" connection option that a sender <b>SHOULD</b> send when it wishes to close the connection after the current request/response pair.
 </p>
 </blockquote>
 
@@ -4841,7 +4855,7 @@ If a server performs an immediate close of a TCP connection, there is a signific
 </blockquote>
 
 <p>
-如果服务器立即关闭 TCP 连接，会出现客户端将不再能够读取到最后一个 HTTP 响应的重大风险。如果服务器在一个完全关闭掉的连接中接收到来自客户端所发送的额外数据，例如客户端在接收到服务器的响应之前发送了其他请求，那么，服务器的 TCP 栈（TCP stack）将会发送一个<a href="https://zh.wikipedia.org/wiki/%E8%BF%9E%E6%8E%A5%E9%87%8D%E7%BD%AE">重置消息数据包（Reset Packet）</a>到该客户端；不幸的是，在客户端的未确认输入缓冲区（unacknowledged input buffers）能够被客户端的 HTTP 解析器读取并解释（interpret）之前，该缓冲区的数据可能会被这个重置数据包所抹去。
+如果服务器立即关闭 TCP 连接，会出现客户端将不再能够读取到最后一个 HTTP 响应的重大风险。如果服务器在一个完全关闭掉的连接中接收到来自客户端所发送的额外数据，例如客户端在接收到服务器的响应之前发送了其他请求，那么，服务器的 TCP 栈（TCP stack）将会发送一个<a href="https://zh.wikipedia.org/wiki/%E8%BF%9E%E6%8E%A5%E9%87%8D%E7%BD%AE">重置消息数据包（Reset Packet）</a>到该客户端；不幸的是，在客户端的<ruby>未确认输入缓冲区<rt>unacknowledged input buffers</rt></ruby>能够被客户端的 HTTP 解析器读取并<ruby>解释<rt>interpret</rt></ruby>之前，该缓冲区的数据可能会被这个重置数据包所抹去。
 </p>
 
 <blockquote>
@@ -4851,7 +4865,7 @@ To avoid the TCP reset problem, servers typically close a connection in stages. 
 </blockquote>
 
 <p>
-为了避免 TCP 连接重置的问题，服务器一般会分阶段关闭一个连接。首先，服务器通过仅仅关闭该连接的写入端（一个连接有读/写两端）来实现连接的“半关闭（half-close）”。然后，服务器继续读取连接里的数据，直到服务器接收到一个来自客户端的关闭信号，或者直到服务器有理由确认它自身的 TCP 栈已经接收到来自客户端的确认数据包。最后，服务器完全关闭这个连接。
+为了避免 TCP 连接重置的问题，服务器一般会分阶段关闭一个连接。首先，服务器通过仅仅关闭该连接的写入端（一个连接有读/写两端）来实现连接的“<ruby>半关闭<rt>half-close</rt></ruby>”。然后，服务器继续读取连接里的数据，直到服务器接收到一个来自客户端的关闭信号，或者直到服务器有理由确认它自身的 TCP 栈已经接收到来自客户端的确认数据包。最后，服务器完全关闭这个连接。
 </p>
 
 <blockquote>
@@ -4876,7 +4890,7 @@ The "Upgrade" header field is intended to provide a simple mechanism for transit
 </blockquote>
 
 <p>
-<code>Upgrade</code> 头字段是打算提供一个简单的方式来将同一个连接中的 HTTP/1.1 消息过渡到其他协议消息。客户端 <b>可以</b> 在其发送的请求消息中带有一个包含一系列协议的 <code>Upgrade</code> 头字段，来邀请（Invite）服务器在发送最终响应之前，将响应消息切换到一个或多个上述的协议，按优先级从高到低排序（Descending Preference）。服务器 <b>可以</b> 忽略其接收到的 <code>Upgrade</code> 头字段，如果它希望继续在该连接中使用当前协议的话。<code>Upgrade</code> 不能用于督促（Insist On）服务器改变协议。
+<code>Upgrade</code> 头字段是打算提供一个简单的方式来将同一个连接中的 HTTP/1.1 消息过渡到其他协议消息。客户端 <b>可以</b> 在其发送的请求消息中带有一个包含一系列协议的 <code>Upgrade</code> 头字段，来<ruby>邀请<rt>invite</rt></ruby>服务器在发送最终响应之前，将响应消息切换到一个或多个上述的协议，按<ruby>优先级从高到低排序<rt>descending preference</rt></ruby>。服务器 <b>可以</b> 忽略其接收到的 <code>Upgrade</code> 头字段，如果它希望继续在该连接中使用当前协议的话。<code>Upgrade</code> 不能用于<ruby>督促<rt>insist on</rt></ruby>服务器改变协议。
 </p>
 
 <blockquote>
@@ -4901,7 +4915,7 @@ A server that sends a <code>101 (Switching Protocols)</code> response <b>MUST</b
 </blockquote>
 
 <p>
-服务器发送一个带有 <code>101 (Switching Protocols)</code> 状态码的响应消息时，<b>必须</b> 带有一个 <code>Upgrade</code> 头字段用于指定连接将会被切换到哪一种（或多种）新的协议上。如果将会切换多个协议层，发送端 <b>必须</b> 按协议层从低到高的顺序（Layer-ascending）列出这些协议。服务器 <b>禁止</b> 切换到一个未被客户端（在对应的请求消息中的 <code>Upgrade</code> 头字段）所指定的协议。服务器 <b>可以</b> 选择忽略掉客户端所指定优先级顺序，依据其他因素来选择需要切换到哪一种的协议上，例如依据请求的性质或者当前服务器的负荷来选择。
+服务器发送一个带有 <code>101 (Switching Protocols)</code> 状态码的响应消息时，<b>必须</b> 带有一个 <code>Upgrade</code> 头字段用于指定连接将会被切换到哪一种（或多种）新的协议上。如果将会切换多个协议层，发送端 <b>必须</b> <ruby>按协议层从低到高的顺序<rt>Layer-ascending</rt></ruby>列出这些协议。服务器 <b>禁止</b> 切换到一个未被客户端（在对应的请求消息中的 <code>Upgrade</code> 头字段）所指定的协议。服务器 <b>可以</b> 选择忽略掉客户端所指定优先级顺序，依据其他因素来选择需要切换到哪一种的协议上，例如依据请求的性质或者当前服务器的负荷来选择。
 </p>
 
 <blockquote>
@@ -4949,7 +4963,7 @@ The capabilities and nature of the application-level communication after the pro
 </blockquote>
 
 <p>
-在协议变更以后，应用层通信的能力和性质取决于所选择的（一个或多个）新协议上。但是，在服务器直接发送了一个带有 <code>101 (Switching Protocols)</code> 状态码的过渡性响应消息（interim response）之后，服务器需要继续发送一个最终响应消息（final response）给到原先的请求，就像服务器已经在新协议连接中接收到请求消息一样（也就是说，在协议已经变更以后，服务器仍然存在一个未偿付的请求在等待满足，服务器打算以新的协议形式来满足这个请求，而不需要让客户端以新的协议形式来再一次发送该请求）
+在协议变更以后，应用层通信的能力和性质取决于所选择的（一个或多个）新协议上。但是，在服务器直接发送了一个带有 <code>101 (Switching Protocols)</code> 状态码的<ruby>过渡性响应<rt>interim response</rt></ruby>之后，服务器需要继续发送一个<ruby>最终响应<rt>final response</rt></ruby>给到原先的请求，就像服务器已经在新协议连接中接收到请求消息一样（也就是说，在协议已经变更以后，服务器仍然存在一个未偿付的请求在等待满足，服务器打算以新的协议形式来满足这个请求，而不需要让客户端以新的协议形式来再一次发送该请求）
 </p>
 
 <blockquote>
@@ -4989,7 +5003,7 @@ Upgrade: HTTP/2.0
 
 <blockquote>
 <p>
-When <code>Upgrade</code> is sent, the sender <b>MUST</b> also send a <code>Connection</code> header field (Section 6.1) that contains an "upgrade" connection option, in order to prevent <code>Upgrade</code> from being accidentally forwarded by intermediaries that might not implement the listed protocols. A server <b>MUST</b> ignore an <code>Upgrade</code> header field that is received in an HTTP/1.0 request.
+When <code>Upgrade</code> is sent, the sender <b>MUST</b> also send a <code>Connection</code> header field (<a href="#org6e6aa41">Section 6.1</a>) that contains an "upgrade" connection option, in order to prevent <code>Upgrade</code> from being accidentally forwarded by intermediaries that might not implement the listed protocols. A server <b>MUST</b> ignore an <code>Upgrade</code> header field that is received in an HTTP/1.0 request.
 </p>
 </blockquote>
 
@@ -5004,7 +5018,7 @@ A client cannot begin using an upgraded protocol on the connection until it has 
 </blockquote>
 
 <p>
-客户端不能在连接中使用新的协议，直到它将当前的请求消息的完整地发送出去（也就是说，客户端不能在发送一个消息的中途改变协议）。如果服务器接收到一个请求消息，既带有一个 <code>Upgrade</code> 头字段，也带有一个 "100-continue" 期望值（expectation）的 <code>Expect</code> 头字段（<a href="RFC7231.html#ID-0b0cea12-0af7-47f1-8908-2afc48ce3fb2">【RFC7231】章节 5.1.1</a>）的时候，服务器 <b>必须</b> 在发送一个 <code>101 (Switching Protocols)</code> 响应消息之前，发送一个 <code>100 (Continue)</code> 响应消息。
+客户端不能在连接中使用新的协议，直到它将当前的请求消息的完整地发送出去（也就是说，客户端不能在发送一个消息的中途改变协议）。如果服务器接收到一个请求消息，既带有一个 <code>Upgrade</code> 头字段，也带有一个 "100-continue" <ruby>期望值<rt>expectation</rt></ruby>的 <code>Expect</code> 头字段（<a href="RFC7231.html#ID-0b0cea12-0af7-47f1-8908-2afc48ce3fb2">【RFC7231】章节 5.1.1</a>）的时候，服务器 <b>必须</b> 在发送一个 <code>101 (Switching Protocols)</code> 响应消息之前，发送一个 <code>100 (Continue)</code> 响应消息。
 </p>
 
 <blockquote>
@@ -5756,7 +5770,7 @@ HTTP relies on the notion of an authoritative response: a response that has been
 </blockquote>
 
 <p>
-HTTP 提出了一个“权威响应（authoritative response）”的概念——由目标 URI 所表明的 <code>authority</code> （权威机构、官方机构）所决定（或指导）的最合适于这个请求的一种响应。它给出了创建响应消息那时候的目标资源状态。提供自一个非权威来源（non-authoritative source）——例如一个共享缓存——的响应，一般对于提升性能和可用性有很大作用，但是仅在该来源是受信任的或者该不受信任的响应可以被安全地使用的情况。
+HTTP 提出了一个“<ruby>权威响应<rt>authoritative response</rt></ruby>”的概念——由目标 URI 所表明的 <code>authority</code> （权威机构、官方机构）所决定（或指导）的最合适于这个请求的一种响应。它给出了创建响应消息那时候的目标资源状态。提供自一个<ruby>非权威来源<rt>non-authoritative source</rt></ruby>——例如一个共享缓存——的响应，一般对于提升性能和可用性有很大作用，但是仅在该来源是受信任的或者该不受信任的响应可以被安全地使用的情况。
 </p>
 
 <blockquote>
@@ -5774,7 +5788,7 @@ Unfortunately, establishing authority can be difficult. For example, phishing is
 </blockquote>
 
 <p>
-不幸的是，确立 authority 不是一个容易的事。例如，钓鱼（phishing）是一种针对用户对于 authority 的认知（perception）的攻击，这种认知可能会因为在超文本里出现了相似的品牌（branding），可能还会辅以 <code>userinfo</code> 来对 <code>authority</code> 组件进行混淆（见<a href="#orgc784014">章节 2.7.1</a>），从而造成误导。用户代理能够通过提供一种途径，让用户在执行操作之前可以轻易检测某个目标 URI 的真伪，来降低钓鱼攻击的影响。例如，明显区分（或拒绝） <code>userinfo</code> 组件的出现，并且当所指向的文档是来自某个未知或不受信任的来源的时候，不对其发送存储在客户端的授权证书和 cookies。
+不幸的是，确立 authority 不是一个容易的事。例如，<ruby>钓鱼<rt>phishing</rt></ruby>是一种针对用户对于 authority 的<ruby>认知<rt>perception</rt></ruby>的攻击，这种认知可能会因为在超文本里出现了相似的<ruby>品牌<rt>branding</rt></ruby>，可能还会辅以 <code>userinfo</code> 来对 <code>authority</code> 组件进行混淆（见<a href="#orgc784014">章节 2.7.1</a>），从而造成误导。用户代理能够通过提供一种途径，让用户在执行操作之前可以轻易检测某个目标 URI 的真伪，来降低钓鱼攻击的影响。例如，明显区分（或拒绝） <code>userinfo</code> 组件的出现，并且当所指向的文档是来自某个未知或不受信任的来源的时候，不对其发送存储在客户端的授权证书和 cookies。
 </p>
 
 <blockquote>
@@ -5784,7 +5798,7 @@ When a registered name is used in the <code>authority</code> component, the "htt
 </blockquote>
 
 <p>
-当某个已登记的名称用在 <code>authority</code> 组件中的时候，"http" URI 方案（<a href="#orgc784014">章节 2.7.1</a>）依靠用户的本地名称解析服务来确定哪里能够找到权威响应（authoritative responses）。这意味着任何对于用户的网络主机映射表（network host table）、缓存名称，或者名称解析库的攻击都会成为一个攻击确立权威的隐患。同样，用户选择哪一个服务器用于域名解析服务（domain name service, DNS），以及其获取域名解析结果的服务器所在层级，都有可能影响到地址映射的可靠性。DNS 安全性扩展（DNSSEC，DNS Security Extensions，【<a href="https://tools.ietf.org/html/rfc4033">RFC4033</a>】）是一种提高可靠性的方式。
+当某个已登记的名称用在 <code>authority</code> 组件中的时候，"http" URI 方案（<a href="#orgc784014">章节 2.7.1</a>）依靠用户的本地名称解析服务来确定哪里能够找到<ruby>权威响应<rt>authoritative responses</rt></ruby>。这意味着任何对于用户的<ruby>网络主机映射表<rt>network host table</rt></ruby>、缓存名称，或者名称解析库的攻击都会成为一个攻击确立权威的隐患。同样，用户选择哪一个服务器用于<ruby>域名解析服务<rt>domain name service</rt></ruby>（DNS），以及其获取域名解析结果的服务器所在层级，都有可能影响到地址映射的可靠性。<ruby>DNS 安全性扩展<rt>DNS Security Extensions</rt></ruby>（DNSSEC，【<a href="https://tools.ietf.org/html/rfc4033">RFC4033</a>】）是一种提高可靠性的方式。
 </p>
 
 <blockquote>
@@ -5794,12 +5808,12 @@ Furthermore, after an IP address is obtained, establishing authority for an "htt
 </blockquote>
 
 <p>
-另外，在获得一个 IP 地址之后，确立一个 "http" URI 的 authority 在 IP 协议（Internet Protocol）路由方面也存在被攻击的风险。
+另外，在获得一个 IP 地址之后，确立一个 "http" URI 的 authority 在 <ruby>IP 协议<rt>Internet Protocol</rt></ruby>路由方面也存在被攻击的风险。
 </p>
 
 <blockquote>
 <p>
-The "https" scheme (Section 2.7.2) is intended to prevent (or at least reveal) many of these potential attacks on establishing authority, provided that the negotiated TLS connection is secured and the client properly verifies that the communicating server's identity matches the target URI's <code>authority</code> component (see [RFC2818]). Correctly implementing such verification can be difficult (see [Georgiev]).
+The "https" scheme (<a href="#orgeb24afa">Section 2.7.2</a>) is intended to prevent (or at least reveal) many of these potential attacks on establishing authority, provided that the negotiated TLS connection is secured and the client properly verifies that the communicating server's identity matches the target URI's <code>authority</code> component (see [<a href="https://tools.ietf.org/html/rfc2818">RFC2818</a>]). Correctly implementing such verification can be difficult (see [Georgiev]).
 </p>
 </blockquote>
 
@@ -5819,7 +5833,7 @@ By their very nature, HTTP intermediaries are men-in-the-middle and, thus, repre
 </blockquote>
 
 <p>
-就其本质而言，HTTP 中间人（intermediaries）就是一种“中间人（men-in-the-middle）”，由此，为中间人提供了攻击的机会。如果泄漏了运行于中间人上的系统，可能会导致严重的安全和隐私问题。中间人可能能够访问安全相关的信息、个人用户或组织的个人信息，以及属于用户或内容提供商的专有信息。一个已泄漏出去的中间人，或者一个没有实现或没有配置关于安全和隐私方面的注意事项的中间人，可能会被用于各种潜在攻击。
+就其本质而言，HTTP <ruby>中间人<rt>intermediaries</rt></ruby>就是一种“<ruby>中间人<rt>men-in-the-middle</rt></ruby>”，由此，为中间人提供了攻击的机会。如果泄漏了运行于中间人上的系统，可能会导致严重的安全和隐私问题。中间人可能能够访问安全相关的信息、个人用户或组织的个人信息，以及属于用户或内容提供商的专有信息。一个已泄漏出去的中间人，或者一个没有实现或没有配置关于安全和隐私方面的注意事项的中间人，可能会被用于各种潜在攻击。
 </p>
 
 <blockquote>
@@ -5829,7 +5843,7 @@ Intermediaries that contain a shared cache are especially vulnerable to cache po
 </blockquote>
 
 <p>
-包含了一个共享缓存的中间人特别容易受到缓存中毒攻击（cache poisoning attacks），正如<a href="RFC7234.html#ID-258f834a-496c-4173-b6bd-dda94f1d74fe">【RFC7234】章节 8</a> 所述那样。
+包含了一个共享缓存的中间人特别容易受到<ruby>缓存中毒攻击<rt>cache poisoning attacks</rt></ruby>，正如<a href="RFC7234.html#ID-258f834a-496c-4173-b6bd-dda94f1d74fe">【RFC7234】章节 8</a> 所述那样。
 </p>
 
 <blockquote>
@@ -5839,7 +5853,7 @@ Implementers need to consider the privacy and security implications of their des
 </blockquote>
 
 <p>
-实现者（implementers）需要去思考他们的设计以及编码决策，以及提供给使用者（operators）的配置选项（特别是默认配置）所蕴含的隐私性和安全性。
+<ruby>实现者<rt>implementers</rt></ruby>需要去思考他们的设计以及编码决策，以及提供给<ruby>使用者<rt>operators</rt></ruby>的配置选项（特别是默认配置）所蕴含的隐私性和安全性。
 </p>
 
 <blockquote>
@@ -5864,7 +5878,7 @@ Because HTTP uses mostly textual, character-delimited fields, parsers are often 
 </blockquote>
 
 <p>
-因为 HTTP 使用的主要是文本性的、以字符分隔的域，因此，解析器（parser）常常受到基于发送非常长（或非常慢）的数据流的方式的攻击，特别是在一个中间人期望某个没有预定义长度的协议元素身上。
+因为 HTTP 使用的主要是文本性的、以字符分隔的字段，因此，<ruby>解析器<rt>parser</rt></ruby>常常受到基于发送非常长（或非常慢）的数据流的方式的攻击，特别是在一个中间人期望某个没有预定义长度的协议元素身上。
 </p>
 
 <blockquote>
@@ -5874,7 +5888,7 @@ To promote interoperability, specific recommendations are made for minimum size 
 </blockquote>
 
 <p>
-为了提高互操作性，本规范提出了对于请求行（<a href="#org5430999">章节 3.1.1</a>）以及头字段（<a href="#org95ce2ff">章节 3.2</a>）的最小值限制的具体建议。这些最小值建议，本规范选择的是即使资源受限的（implementations）也能够支持的，期望大多数的实现（implementations）会选择更大幅度的限制。
+为了提高互操作性，本规范提出了对于请求行（<a href="#org5430999">章节 3.1.1</a>）以及头字段（<a href="#org95ce2ff">章节 3.2</a>）的最小值限制的具体建议。这些最小值建议，本规范选择的是即使资源受限的<ruby>实现<rt>implementations</rt></ruby>也能够支持的，期望大多数的实现会选择更大幅度的限制。
 </p>
 
 <blockquote>
@@ -5909,7 +5923,7 @@ Recipients ought to carefully limit the extent to which they process other proto
 </blockquote>
 
 <p>
-响应分割（<a href="https://en.wikipedia.org/wiki/HTTP_response_splitting">Response Splitting</a>，也称为“CRLF 注入”）是一种针对网页用途（Web Usage）而进行各种攻击的常见的技术，它利用了 HTTP 基于行(line-based)来进行消息分帧，以及在持久连接中请求与响应的顺序关联的性质【<a href="http://packetstormsecurity.com/papers/general/whitepaper_httpresponse.pdf">Klein</a>】。当请求穿过一个共享缓存的时候，这种技术特别具有破坏性。
+响应分割（<a href="https://en.wikipedia.org/wiki/HTTP_response_splitting">Response Splitting</a>，也称为“CRLF 注入”）是一种针对<ruby>网页用途<rt>Web usage</rt></ruby>而进行各种攻击的常见的技术，它利用了 HTTP <ruby>基于行<rt>line-based</rt></ruby>来进行消息分帧，以及在持久连接中请求与响应的顺序关联的性质【<a href="http://packetstormsecurity.com/papers/general/whitepaper_httpresponse.pdf">Klein</a>】。当请求穿过一个共享缓存的时候，这种技术特别具有破坏性。
 </p>
 
 <blockquote>
@@ -5919,7 +5933,7 @@ Response splitting exploits a vulnerability in servers (usually within an applic
 </blockquote>
 
 <p>
-响应分割利用了服务器（通常在一个应用服务器内）的一个弱点，攻击者能够在某些请求参数里带有经过编码的数据，而这些参数并不会在服务器立即解码，而是回显（echo）至对应的响应消息的头字段里。如果解码数据被精心设计得看起来像是该响应消息的结束以及后续消息的开始，那么该响应消息就被“分割”为前后两个响应消息，并且后一个“响应消息”（表面上看像是一个响应消息，但实际是原响应消息的后半部分）受控于攻击者。然后攻击者就能够在同一个持久连接中做任何请求并欺骗接收端（包括中间人）让它们相信分割过的后半部分是第二个请求的权威应答（authoritative answer）。
+响应分割利用了服务器（通常在一个应用服务器内）的一个弱点，攻击者能够在某些请求参数里带有经过编码的数据，而这些参数并不会在服务器立即解码，而是<ruby>回显<rt>echo</rt></ruby>至对应的响应消息的头字段里。如果解码数据被精心设计得看起来像是该响应消息的结束以及后续消息的开始，那么该响应消息就被“分割”为前后两个响应消息，并且后一个“响应消息”（表面上看像是一个响应消息，但实际是原响应消息的后半部分）受控于攻击者。然后攻击者就能够在同一个持久连接中做任何请求并欺骗接收端（包括中间人）让它们相信分割过的后半部分是第二个请求的<ruby>权威应答<rt>authoritative answer</rt></ruby>。
 </p>
 
 <blockquote>
@@ -5939,7 +5953,7 @@ A common defense against response splitting is to filter requests for data that 
 </blockquote>
 
 <p>
-预防响应分割的一个常见方式是去过滤掉请求消息中看起来像是经过编码的 CR 以及 LF 的数据（例如，"%0D" 和 "%0A"）。但是，假设应用服务器仅执行 URI 解码（URI decoding），而不是更加模糊的数据转换，例如，字符集转码（charset transcoding），XML 实体翻译（XML entity translation），base64 解码，<code>sprintf</code> 字符串格式转换（sprintf reformatting）等等，一个更有效的缓解方式是阻止任何除了服务器自身的核心协议库以外的程序在消息头部中发送一个 <code>CR</code> 或者 <code>LF</code>，这样做意味着将对头字段的输出限制为只能使用 API 的方式，通过这些 API 来过滤掉不好的字节，同时不允许应用服务器越过 API 将数据直接写入到协议流。
+预防响应分割的一个常见方式是去过滤掉请求消息中看起来像是经过编码的 CR 以及 LF 的数据（例如，"%0D" 和 "%0A"）。但是，假设应用服务器仅执行 URI <ruby>解码<rt>decoding</rt></ruby>，而不是更加模糊的数据转换，例如，<ruby>字符集转码<rt>charset transcoding</rt></ruby>，<ruby>XML 实体翻译<rt>XML entity translation</rt></ruby>，base64 解码，<code>sprintf</code> <ruby>字符串格式转换<rt>reformatting</rt></ruby>等等，一个更有效的缓解方式是阻止任何除了服务器自身的核心协议库以外的程序在消息头部中发送一个 <code>CR</code> 或者 <code>LF</code>，这样做意味着将对头字段的输出限制为只能使用 API 的方式，通过这些 API 来过滤掉不好的字节，同时不允许应用服务器越过 API 将数据直接写入到协议流。
 </p>
 </div>
 </div>
@@ -5954,7 +5968,7 @@ Request smuggling ([Linhart]) is a technique that exploits differences in protoc
 </blockquote>
 
 <p>
-请求走私（<a href="https://www.cgisecurity.com/lib/HTTP-Request-Smuggling.pdf">Request Smuggling</a>）是一种利用多个接收端对 HTTP 消息解析的不一致性，来达到在一个表面无害的请求里隐藏（按正常规则来说应该被阻止或者禁止的）额外请求的技术。像响应分割（response splitting）一样，请求走私能够引发针对 HTTP 用途的各种攻击。
+请求走私（<a href="https://www.cgisecurity.com/lib/HTTP-Request-Smuggling.pdf">Request Smuggling</a>）是一种利用多个接收端对 HTTP 消息解析的不一致性，来达到在一个表面无害的请求里隐藏（按正常规则来说应该被阻止或者禁止的）额外请求的技术。像<ruby>响应分割<rt>response splitting</rt></ruby>一样，请求走私能够引发针对 HTTP 用途的各种攻击。
 </p>
 
 <blockquote>
@@ -5964,7 +5978,7 @@ This specification has introduced new requirements on request parsing, particula
 </blockquote>
 
 <p>
-本规范对请求解析（request parsing）引入了新的要求，特别是在消息分帧方面（<a href="#orgde6d901">章节 3.3.3</a>），以降低请求走私的影响。
+本规范对<ruby>请求解析<rt>request parsing</rt></ruby>引入了新的要求，特别是在<ruby>消息分帧<rt>message framing</rt></ruby>方面（<a href="#orgde6d901">章节 3.3.3</a>），以降低请求走私的影响。
 </p>
 </div>
 </div>
@@ -5979,7 +5993,7 @@ HTTP does not define a specific mechanism for ensuring message integrity, instea
 </blockquote>
 
 <p>
-HTTP 并没有定义一个具体方法来保证消息的完整性，而是依靠底层传输协议的错误检测能力（error-detection ability）以及使用长度或块限定的分帧（chunk-delimited Framing）来检测完整。如果想添加额外的完整性机制，例如对内容应用哈希函数（hash functions）或者数字签名（digital sinatures），可以通过使用扩展的元数据头字段（extensible metadata header fields）来选择性地将这些额外的完整性机制应用到消息。
+HTTP 并没有定义一个具体方法来保证消息的完整性，而是依靠底层传输协议的<ruby>错误检测能力<rt>error-detection ability</rt></ruby>以及使用长度或<ruby>块限定的分帧<rt>chunk-delimited framing</rt></ruby>来检测完整。如果想添加额外的完整性机制，例如对内容应用哈希函数或者<ruby>数字签名<rt>digital sinatures</rt></ruby>，可以通过使用<ruby>可扩展的元数据头字段<rt>extensible metadata header fields</rt></ruby>来选择性地将这些额外的完整性机制应用到消息。
 </p>
 
 <blockquote>
@@ -6039,7 +6053,7 @@ HTTP log information is confidential in nature; its handling is often constraine
 </blockquote>
 
 <p>
-HTTP 日志信息如个涉及机密信息，日志信息需要被安全地存储，对它们的分析需要遵循正确的指导方针。对个人信息进行匿名化是有效的，但这样做还不足以阻止通过关联其他访问特征来重新识别出真实的日志痕迹的行为。因此，公布具有唯一定位一个具体客户端的访问痕迹（access traces）是危险的，即使这个唯一码只是一个化名。
+HTTP 日志信息如个涉及机密信息，日志信息需要被安全地存储，对它们的分析需要遵循正确的指导方针。对个人信息进行匿名化是有效的，但这样做还不足以阻止通过关联其他访问特征来重新识别出真实的日志痕迹的行为。因此，公布具有唯一定位一个具体客户端的<ruby>访问痕迹<rt>access traces</rt></ruby>是危险的，即使这个唯一码只是一个化名。
 </p>
 
 <blockquote>
@@ -6049,7 +6063,7 @@ To minimize the risk of theft or accidental publication, log information ought t
 </blockquote>
 
 <p>
-为了最小化的风险，对于日志信息里的可识别信息（indentifiable information），包含用户标识符（user identifiers）、IP 地址，以及用户提供的查询参数（query parameters），一旦不再需要运用这些信息来支持安全、审计，或者防欺诈（fraud control）需求的运作的时候，应当及时清除掉。
+为了最小化的风险，对于日志信息里的<ruby>可识别信息<rt>indentifiable information</rt></ruby>，包含<ruby>用户标识符<rt>user identifiers</rt></ruby>、IP 地址，以及用户提供的<ruby>查询参数<rt>query parameters</rt></ruby>，一旦不再需要运用这些信息来支持安全、审计，或者<ruby>防欺诈<rt>fraud control</rt></ruby>需求的运作的时候，应当及时清除掉。
 </p>
 </div>
 </div>
@@ -6148,12 +6162,12 @@ See Section 16 of [RFC2616] for additional acknowledgements from prior revisions
 <div class="outline-text-2" id="text-orge7b6a81">
 <blockquote>
 <p>
-HTTP has been in use since 1990. The first version, later referred to as HTTP/0.9, was a simple protocol for hypertext data transfer across the Internet, using only a single request method (GET) and no metadata. HTTP/1.0, as defined by [RFC1945], added a range of request methods and MIME-like messaging, allowing for metadata to be transferred and modifiers placed on the request/response semantics. However, HTTP/1.0 did not sufficiently take into consideration the effects of hierarchical proxies, caching, the need for persistent connections, or name-based virtual hosts. The proliferation of incompletely implemented applications calling themselves "HTTP/1.0" further necessitated a protocol version change in order for two communicating applications to determine each other's true capabilities.
+HTTP has been in use since 1990. The first version, later referred to as HTTP/0.9, was a simple protocol for hypertext data transfer across the Internet, using only a single request method (GET) and no metadata. HTTP/1.0, as defined by [<a href="https://tools.ietf.org/html/rfc1945">RFC1945</a>], added a range of request methods and MIME-like messaging, allowing for metadata to be transferred and modifiers placed on the request/response semantics. However, HTTP/1.0 did not sufficiently take into consideration the effects of hierarchical proxies, caching, the need for persistent connections, or name-based virtual hosts. The proliferation of incompletely implemented applications calling themselves "HTTP/1.0" further necessitated a protocol version change in order for two communicating applications to determine each other's true capabilities.
 </p>
 </blockquote>
 
 <p>
-HTTP 自 1990 年开始被使用。第一个版本，也就是后来被称为 HTTP/0.9，是一个用于在互联网中对超文本数据进行转输的简单协议，只能使用单一的请求方法 (GET)，而且还不能带有元数据。HTTP/1.0，由【<a href="https://tools.ietf.org/html/rfc1945">RFC1945</a>】所定义，新增了一系列的请求方法以及与 MIME 相类似的消息通信机制，允许传输元数据，以及请求/响应语言的修饰符。但是，HTTP/1.0 并没有充分考虑代理的层级结构的影响、缓存、持久连接的需要，以及基于名称（name-based）的虚拟主机。这些不完全实现 HTTP 的应用都声称自身版本为 "HTTP/1.0"，并逐渐在网络中扩散，进一步迫使一个协议版本的变更来为两个正在通信的应用来确定彼此的真实的能力。
+HTTP 自 1990 年开始被使用。第一个版本，也就是后来被称为 HTTP/0.9，是一个用于在互联网中对超文本数据进行转输的简单协议，只能使用单一的请求方法 (GET)，而且还不能带有元数据。HTTP/1.0，由【<a href="https://tools.ietf.org/html/rfc1945">RFC1945</a>】所定义，新增了一系列的请求方法以及与 MIME 相类似的消息通信机制，允许传输元数据，以及请求/响应语言的修饰符。但是，HTTP/1.0 并没有充分考虑代理的层级结构的影响、缓存、持久连接的需要，以及<ruby>基于名称的虚拟主机<rt>name-based virtual hosts</rt></ruby>。这些不完全实现 HTTP 的应用都声称自身版本为 "HTTP/1.0"，并逐渐在网络中扩散，进一步迫使一个协议版本的变更来为两个正在通信的应用来确定彼此的真实的能力。
 </p>
 
 <blockquote>
@@ -6163,7 +6177,7 @@ HTTP/1.1 remains compatible with HTTP/1.0 by including more stringent requiremen
 </blockquote>
 
 <p>
-HTTP/1.1 仍保留了对 HTTP/1.0 的兼容：通过包含更多严格的要求来让实现（implementations）更加可靠，仅添加那些能够被 HTTP/1.0 接收端安全忽略的，或者只能在通信双方都声明其遵循 HTTP/1.1 语义的时候才会使用的功能。
+HTTP/1.1 仍保留了对 HTTP/1.0 的兼容：通过包含更多严格的要求来让<ruby>实现<rt>implementations</rt></ruby>更加可靠，仅添加那些能够被 HTTP/1.0 接收端安全忽略的，或者只能在通信双方都声明其遵循 HTTP/1.1 语义的时候才会使用的功能。
 </p>
 
 <blockquote>
@@ -6183,7 +6197,7 @@ Since HTTP/0.9 did not support header fields in a request, there is no mechanism
 </blockquote>
 
 <p>
-因为 HTTP/0.9 并不支持在请求消息中带有头字段，因此，没有任何方法来让其支持基于名称的虚拟主机（name-based virtual hosts，通过检查 <code>Host</code> 头字段来对资源进行选择）。任何实现基于名称的虚拟主机的服务器应该禁止支持 HTTP/0.9。大多数看起来像是 HTTP/0.9 的请求消息，实际上是因为客户端没有正确对 <code>request-target</code> 进行编码导致没有很好的构建出 HTTP/1.x 请求消息。
+因为 HTTP/0.9 并不支持在请求消息中带有头字段，因此，没有任何方法来让其支持<ruby>基于名称的虚拟主机<rt>name-based virtual hosts</rt></ruby>（通过检查 <code>Host</code> 头字段来对资源进行选择）。任何实现基于名称的虚拟主机的服务器应该禁止支持 HTTP/0.9。大多数看起来像是 HTTP/0.9 的请求消息，实际上是因为客户端没有正确对 <code>request-target</code> 进行编码导致没有很好的构建出 HTTP/1.x 请求消息。
 </p>
 </div>
 
@@ -6242,7 +6256,7 @@ In HTTP/1.0, each connection is established by the client prior to the request a
 </blockquote>
 
 <p>
-在 HTTP/1.0 里，每个连接会被客户端在发送请求之前建立，被服务器在发送响应之后关闭。但是，某些实现（implementations）实现了明确的持久连接的协商版本（"Keep-Alive"），见<a href="https://tools.ietf.org/html/rfc2068#section-19.7.1">【RFC2068】章节 19.7.1</a>。
+在 HTTP/1.0 里，每个连接会被客户端在发送请求之前建立，被服务器在发送响应之后关闭。但是，某些<ruby>实现<rt>implementations</rt></ruby>实现了明确的持久连接的协商版本（"Keep-Alive"），见<a href="https://tools.ietf.org/html/rfc2068#section-19.7.1">【RFC2068】章节 19.7.1</a>。
 </p>
 
 <blockquote>
@@ -6252,7 +6266,7 @@ Some clients and servers might wish to be compatible with these previous approac
 </blockquote>
 
 <p>
-某些客户端和服务器可能希望兼容上述这种持久连接的实现方式，通过带有一个 "<code>Connection: keep-alive</code>" 请求头字段明确地与通信双方协商。但是，HTTP/1.0 持久连接的某些带实验性质的实现（experimental implementations）是有缺陷的，例如，如果一个 HTTP/1.0 代理服务器并不理解 <code>Connection</code> 头字段而将其错误地转发到下一个入站服务器中，这样会导致连接挂起。
+某些客户端和服务器可能希望兼容上述这种持久连接的实现方式，通过带有一个 "<code>Connection: keep-alive</code>" 请求头字段明确地与通信双方协商。但是，HTTP/1.0 持久连接的某些<ruby>带实验性质的实现<rt>experimental implementations</rt></ruby>是有缺陷的，例如，如果一个 HTTP/1.0 代理服务器并不理解 <code>Connection</code> 头字段而将其错误地转发到下一个入站服务器中，这样会导致连接挂起。
 </p>
 
 <blockquote>
@@ -6282,7 +6296,7 @@ Clients are also encouraged to consider the use of <code>Connection: keep-alive<
 </blockquote>
 
 <p>
-同样，鼓励客户端在请求消息中小心谨慎地使用 <code>Connection: keep-alive</code> 头字段，这是因为该头字段会启用与 HTTP/1.0 服务器的持久连接。客户端使用它的时候需要监听连接是否存在被挂起（hung）的请求（也就是说客户端应该停止发送头字段），并且客户端不应该在有使用代理的场合下使用这种方法。
+同样，鼓励客户端在请求消息中小心谨慎地使用 <code>Connection: keep-alive</code> 头字段，这是因为该头字段会启用与 HTTP/1.0 服务器的持久连接。客户端使用它的时候需要监听连接是否存在<ruby>被挂起<rt>hung</rt></ruby>的请求（也就是说客户端应该停止发送头字段），并且客户端不应该在有使用代理的场合下使用这种方法。
 </p>
 </div>
 </div>
@@ -6324,7 +6338,7 @@ version</code> ABNF production has been clarified to be case-sensitive. Addition
 </blockquote>
 
 <p>
-明确了 <code>HTTP-version</code> ABNF 规则为区分大小写。另外，限制了版本号的数值为一位数字（single digits），这是基于已知实现（implementations）不能正确处理版本号为多位数字的事实来做的改动。
+明确了 <code>HTTP-version</code> ABNF 规则为区分大小写。另外，限制了版本号的数值为<ruby>一位数字<rt>single digits</rt></ruby>，这是基于已知<ruby>实现<rt>implementations</rt></ruby>不能正确处理版本号为多位数字的事实来做的改动。
 </p>
 
 <blockquote>
@@ -6354,7 +6368,7 @@ HTTP messages can be (and often are) buffered by implementations; despite it som
 </blockquote>
 
 <p>
-HTTP 消息能够（而且通常会）被缓冲（buffer），尽管它有时候作为流的形式来提供，HTTP 本质上来说是一种面向消息的协议（Message-oriented Protocol）。为了提高互操作性，本规则建议了各种协议元素的最小可支持的大小。（<a href="#orge9f1350">章节 3</a>）
+HTTP 消息能够（而且通常会）被<ruby>缓冲<rt>buffer</rt></ruby>，尽管它有时候作为流的形式来提供，HTTP 本质上来说是一种<ruby>面向消息的协议<rt>message-oriented protocol</rt></ruby>。为了提高互操作性，本规则建议了各种协议元素的最小可支持的大小。（<a href="#orge9f1350">章节 3</a>）
 </p>
 
 <blockquote>
@@ -6364,12 +6378,12 @@ Invalid whitespace around field-names is now required to be rejected, because ac
 </blockquote>
 
 <p>
-现在，在域的名称（field-names）两端不能出现非法的空格字符，这是因为允许它们就意味着安全隐患。现在，定义头字段的 ABNF 规则 <code>header-field</code> 只列出了 <code>field-value</code>。（<a href="#org95ce2ff">章节 3.2</a>）
+现在，<ruby>字段名称<rt>field-names</rt></ruby>两端不能出现非法的空格字符，这是因为允许它们就意味着安全隐患。现在，定义头字段的 ABNF 规则 <code>header-field</code> 只列出了 <code>field-value</code>。（<a href="#org95ce2ff">章节 3.2</a>）
 </p>
 
 <blockquote>
 <p>
-译注：【RFC2616】对消息域的 ABNF <a href="https://tools.ietf.org/html/rfc2616#section-4.2">定义在这里（message-header）</a>；【RFC7231】对头字段的 ABNF <a href="#org95ce2ff">定义在这里（header-field）</a>。
+译注：【RFC2616】对消息字段的 ABNF <a href="https://tools.ietf.org/html/rfc2616#section-4.2">定义在这里（message-header）</a>；【RFC7231】对头字段的 ABNF <a href="#org95ce2ff">定义在这里（header-field）</a>。
 </p>
 </blockquote>
 
@@ -6385,12 +6399,12 @@ Rules about implicit linear whitespace between certain grammar productions have 
 
 <blockquote>
 <p>
-Header fields that span multiple lines ("line folding") are deprecated. (<a href="#orgf6d6d76">Section 3.2.4</a>)
+Header fields that span multiple lines ("line folding") are deprecated. (<a href="#org6dc2928">Section 3.2.4</a>)
 </p>
 </blockquote>
 
 <p>
-废弃了能够横跨多行（"line folding"）的头字段。（<a href="#orgf6d6d76">章节 3.2.4</a>）
+废弃了能够横跨多行（<ruby>折叠行<rt>line folding</rt></ruby>）的头字段。（<a href="#org6dc2928">章节 3.2.4</a>）
 </p>
 
 <blockquote>
@@ -6405,7 +6419,7 @@ The NUL octet is no longer allowed in comment and quoted-string text, and handli
 
 <blockquote>
 <p>
-译注：关于不透明数据的解释见<a href="#orgf6d6d76">章节 3.2.4</a>。
+译注：关于不透明数据的解释见<a href="#org6dc2928">章节 3.2.4</a>。
 </p>
 </blockquote>
 
@@ -6446,7 +6460,7 @@ Chunk length does not include the count of the octets in the chunk header and tr
 </blockquote>
 
 <p>
-块头（chunk header）和拖尾（trailer）内的字节不计入分块（chunk）的长度。块扩展（chunk extensions）不允许分行（line folding）。（<a href="#org9375fa9">章节 4.1</a>）
+<ruby>分块头部<rt>chunk header</rt></ruby>和<ruby>分块尾部<rt>trailer</rt></ruby>内的字节不计入<ruby>分块<rt>chunk</rt></ruby>的长度。<ruby>块扩展<rt>chunk extensions</rt></ruby>不允许<ruby>折叠行<rt>line folding</rt></ruby>。（<a href="#org9375fa9">章节 4.1</a>）
 </p>
 
 <blockquote>
@@ -6471,12 +6485,12 @@ The <code>segment</code> + <code>query</code> components of <a href="#org397d719
 
 <blockquote>
 <p>
-The term "Effective Request URI" has been introduced. (<a href="#org0d26544">Section 5.5</a>)
+The term "Effective Request URI" has been introduced. (<a href="#orgabb4b7d">Section 5.5</a>)
 </p>
 </blockquote>
 
 <p>
-引入了术语 <b>有效请求 URI（effective request URI）</b>。（<a href="#org0d26544">章节 5.5</a>）
+引入了术语 <b>实际请求 URI（effective request URI）</b>。（<a href="#orgabb4b7d">章节 5.5</a>）
 </p>
 
 <blockquote>
@@ -6496,7 +6510,7 @@ Exactly when "close" connection options have to be sent has been clarified. Also
 </blockquote>
 
 <p>
-明确了何时需要发送 "close" 连接选项（connection options）的时机。同时，要求逐跳（"hop-by-hop"）类型的头字段出现在 <code>Connection</code> 头字段内，被本规范定义为逐跳（"hop-by-hop"）类型的头字段，同样不能豁免这个要求。（<a href="#org6e6aa41">章节 6.1</a>）
+明确了何时需要发送 "close" <ruby>连接选项<rt>connection options</rt></ruby>的时机。同时，要求“<ruby>逐跳<rt>hop-by-hop</rt></ruby>”类型的头字段出现在 <code>Connection</code> 头字段内，被本规范定义为“逐跳”类型的头字段，同样不能豁免这个要求。（<a href="#org6e6aa41">章节 6.1</a>）
 </p>
 
 <blockquote>
@@ -6536,12 +6550,12 @@ Registration of Transfer Codings now requires IETF Review (<a href="#orgc3bb3a7"
 </blockquote>
 
 <p>
-登记传输编码值（transfer codings）现在需要经过 IETF 的复审。（<a href="#orgc3bb3a7">章节 8.4</a>）
+登记<ruby>传输编码值<rt>transfer codings</rt></ruby>现在需要经过 IETF 的复审。（<a href="#orgc3bb3a7">章节 8.4</a>）
 </p>
 
 <blockquote>
 <p>
-This specification now defines the Upgrade Token Registry, previously defined in Section 7.2 of [RFC2817]. (<a href="#org74ce8e7">Section 8.6</a>)
+This specification now defines the Upgrade Token Registry, previously defined in <a href="https://tools.ietf.org/html/rfc2817#section-7.2">Section 7.2</a> of [RFC2817]. (<a href="#org74ce8e7">Section 8.6</a>)
 </p>
 </blockquote>
 
