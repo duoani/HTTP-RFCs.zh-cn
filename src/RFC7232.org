@@ -33,80 +33,142 @@
 
 * Abstract
 
+#+BEGIN_QUOTE
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document defines HTTP/1.1 conditional requests, including metadata header fields for indicating state changes, request header fields for making preconditions on such state, and rules for constructing the responses to a conditional request when one or more preconditions evaluate to false.
+#+END_QUOTE
+
+超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 条件请求，包括：[[ruby:metadata%20header%20fields][元数据头字段]]——用于表明状态的改变、[[ruby:request%20header%20fields][请求头字段]]——用于对这些状态设置前置条件、以及[[ruby:rules][规则]]——用于当一个或多个前置条件取值为否的时候构造响应给条件请求。
 
 * Status of This Memo
 
+#+BEGIN_QUOTE
 This is an Internet Standards Track document.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in Section 2 of RFC 5741.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at http://www.rfc-editor.org/info/rfc7232.
+#+END_QUOTE
 
 * Copyright Notice
 
+#+BEGIN_QUOTE
 Copyright © 2014 IETF Trust and the persons identified as the document authors. All rights reserved.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document. Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 This document may contain material from IETF Documents or IETF Contributions published or made publicly available before November 10, 2008. The person(s) controlling the copyright in some of this material may not have granted the IETF Trust the right to allow modifications of such material outside the IETF Standards Process. Without obtaining an adequate license from the person(s) controlling the copyright in such materials, this document may not be modified outside the IETF Standards Process, and derivative works of it may not be created outside the IETF Standards Process, except to format it for publication as an RFC or to translate it into languages other than English.
+#+END_QUOTE
 
 * 1. Introduction
 
-Conditional requests are HTTP requests [RFC7231] that include one or more header fields indicating a precondition to be tested before applying the method semantics to the target resource. This document defines the HTTP/1.1 conditional request mechanisms in terms of the architecture, syntax notation, and conformance criteria defined in [RFC7230].
+#+BEGIN_QUOTE
+Conditional requests are HTTP requests [[[file:RFC7231.org][RFC7231]]] that include one or more header fields indicating a precondition to be tested before applying the method semantics to the target resource. This document defines the HTTP/1.1 conditional request mechanisms in terms of the architecture, syntax notation, and conformance criteria defined in [[[file:RFC7230.org][RFC7230]]].
+#+END_QUOTE
 
-Conditional GET requests are the most efficient mechanism for HTTP cache updates [RFC7234]. Conditionals can also be applied to state-changing methods, such as PUT and DELETE, to prevent the "lost update" problem: one client accidentally overwriting the work of another client that has been acting in parallel.
+[[ruby:conditional%20requests][条件请求]]是这样一种 HTTP 请求【[[file:RFC7231.org][RFC7231]]】，它包含了一个或多个头字段来表明一种[[ruby:precondition][前置条件]]，这种前置条件需要在将方法语义应用到目标资源之前进行测试。本文档依据【[[file:RFC7230.org][RFC7230]]】所定义的架构、句法标记、以及一致性准则，来定义 HTTP/1.1 条件请求的机制。
 
-Conditional request preconditions are based on the state of the target resource as a whole (its current value set) or the state as observed in a previously obtained representation (one value in that set). A resource might have multiple current representations, each with its own observable state. The conditional request mechanisms assume that the mapping of requests to a "selected representation" (Section 3 of [RFC7231]) will be consistent over time if the server intends to take advantage of conditionals. Regardless, if the mapping is inconsistent and the server is unable to select the appropriate representation, then no harm will result when the precondition evaluates to false.
+#+BEGIN_QUOTE
+Conditional GET requests are the most efficient mechanism for HTTP cache updates [[[file:RFC7234.org][RFC7234]]]. Conditionals can also be applied to state-changing methods, such as PUT and DELETE, to prevent the "lost update" problem: one client accidentally overwriting the work of another client that has been acting in parallel.
+#+END_QUOTE
 
-The conditional request preconditions defined by this specification (Section 3) are evaluated when applicable to the recipient (Section 5) according to their order of precedence (Section 6).
+对于 HTTP 缓存更新【[[file:RFC7234.org][RFC7234]]】来说，条件 GET 请求是最有效的。条件请求也可以被应用到[[ruby:state-changing%20methods][状态改变的方法]]中，比如 PUT 和 DELETE，来预防“[[ruby:lost%20update][丢失更新]]”问题——在并行处理的环境中，一个客户端意外地[[ruby:overwriting][覆盖]]了另一个客户端的处理结果。
+
+#+BEGIN_QUOTE
+Conditional request preconditions are based on the state of the target resource as a whole (its current value set) or the state as observed in a previously obtained representation (one value in that set). A resource might have multiple current representations, each with its own observable state. The conditional request mechanisms assume that the mapping of requests to a "selected representation" ([[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][Section 3]] of [RFC7231]) will be consistent over time if the server intends to take advantage of conditionals. Regardless, if the mapping is inconsistent and the server is unable to select the appropriate representation, then no harm will result when the precondition evaluates to false.
+#+END_QUOTE
+
+总的来说，条件请求的前置条件是基于目标资源的状态（目标资源的[[ruby:current%20value][当前值]]的集合），或者在一种之前获得的表示形式所观察到的状态（在这个当前值集合中的其中一个）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假设请求与一种“[[ruby:selected%20representation][已选定的表示形式]]”（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][【RFC7231】章节 3]]）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前置条件的求值结果为否的时候，最终结果应该要是无害的。
+
+#+BEGIN_QUOTE
+The conditional request preconditions defined by this specification ([[id:5d82712b-331b-4303-85fc-19b1488af561][Section 3]]) are evaluated when applicable to the recipient ([[id:fce45320-6c1c-4486-a32b-2c553780d785][Section 5]]) according to their order of precedence ([[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][Section 6]]).
+#+END_QUOTE
+
+由本规范所定义的条件请求的前置条件（[[id:5d82712b-331b-4303-85fc-19b1488af561][章节 3]]）会在应用到接收端的时候进行求值（[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]]），依据它们的优先级顺序（[[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][章节 6]]）。
 
 ** 1.1. Conformance and Error Handling
 
+#+BEGIN_QUOTE
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Conformance criteria and considerations regarding error handling are defined in Section 2.5 of [RFC7230].
+#+END_QUOTE
 
 ** 1.2. Syntax Notation
 
+#+BEGIN_QUOTE
 This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7 of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix B describes rules imported from other documents. Appendix C shows the collected grammar with all list operators expanded to standard ABNF notation.
+#+END_QUOTE
 
 * 2. Validators
 
+#+BEGIN_QUOTE
 This specification defines two forms of metadata that are commonly used to observe resource state and test for preconditions: modification dates (Section 2.2) and opaque entity tags (Section 2.3). Additional metadata that reflects resource state has been defined by various extensions of HTTP, such as Web Distributed Authoring and Versioning (WebDAV, [RFC4918]), that are beyond the scope of this specification. A resource metadata value is referred to as a "validator" when it is used within a precondition.
+#+END_QUOTE
 
 ** 2.1. Weak versus Strong
 
+#+BEGIN_QUOTE
 Validators come in two flavors: strong or weak. Weak validators are easy to generate but are far less useful for comparisons. Strong validators are ideal for comparisons but can be very difficult (and occasionally impossible) to generate efficiently. Rather than impose that all forms of resource adhere to the same strength of validator, HTTP exposes the type of validator in use and imposes restrictions on when weak validators can be used as preconditions.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A "strong validator" is representation metadata that changes value whenever a change occurs to the representation data that would be observable in the payload body of a 200 (OK) response to GET.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A strong validator might change for reasons other than a change to the representation data, such as when a semantically significant part of the representation metadata is changed (e.g., Content-Type), but it is in the best interests of the origin server to only change the value when it is necessary to invalidate the stored responses held by remote caches and authoring tools.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Cache entries might persist for arbitrarily long periods, regardless of expiration times. Thus, a cache might attempt to validate an entry using a validator that it obtained in the distant past. A strong validator is unique across all versions of all representations associated with a particular resource over time. However, there is no implication of uniqueness across representations of different resources (i.e., the same strong validator might be in use for representations of multiple resources at the same time and does not imply that those representations are equivalent).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 There are a variety of strong validators used in practice. The best are based on strict revision control, wherein each change to a representation always results in a unique node name and revision identifier being assigned before the representation is made accessible to GET. A collision-resistant hash function applied to the representation data is also sufficient if the data is available prior to the response header fields being sent and the digest does not need to be recalculated every time a validation request is received. However, if a resource has distinct representations that differ only in their metadata, such as might occur with content negotiation over media types that happen to share the same data format, then the origin server needs to incorporate additional information in the validator to distinguish those representations.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 In contrast, a "weak validator" is representation metadata that might not change for every change to the representation data. This weakness might be due to limitations in how the value is calculated, such as clock resolution, an inability to ensure uniqueness for all possible representations of the resource, or a desire of the resource owner to group representations by some self-determined set of equivalency rather than unique sequences of data. An origin server SHOULD change a weak entity-tag whenever it considers prior representations to be unacceptable as a substitute for the current representation. In other words, a weak entity-tag ought to change whenever the origin server wants caches to invalidate old responses.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 For example, the representation of a weather report that changes in content every second, based on dynamic measurements, might be grouped into sets of equivalent representations (from the origin server's perspective) with the same weak validator in order to allow cached representations to be valid for a reasonable period of time (perhaps adjusted dynamically based on server load or weather quality). Likewise, a representation's modification time, if defined with only one-second resolution, might be a weak validator if it is possible for the representation to be modified twice during a single second and retrieved between those modifications.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Likewise, a validator is weak if it is shared by two or more representations of a given resource at the same time, unless those representations have identical representation data. For example, if the origin server sends the same validator for a representation with a gzip content coding applied as it does for a representation with no content coding, then that validator is weak. However, two simultaneous representations might share the same strong validator if they differ only in the representation metadata, such as when two different media types are available for the same representation data.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Strong validators are usable for all conditional requests, including cache validation, partial content ranges, and "lost update" avoidance. Weak validators are only usable when the client does not require exact equality with previously obtained representation data, such as when validating a cache entry or limiting a web traversal to recent changes.
+#+END_QUOTE
 
 ** 2.2. Last-Modified
 :PROPERTIES:
 :ID:       9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840
 :END:
 
+#+BEGIN_QUOTE
 The "Last-Modified" header field in a response provides a timestamp indicating the date and time at which the origin server believes the selected representation was last modified, as determined at the conclusion of handling the request.
+#+END_QUOTE
 
 #+BEGIN_SRC text
   Last-Modified = HTTP-date
 #+END_SRC
 
+#+BEGIN_QUOTE
 An example of its use is
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
   Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT
@@ -114,18 +176,29 @@ An example of its use is
 
 ** 2.2.1. Generation
 
+#+BEGIN_QUOTE
 An origin server SHOULD send Last-Modified for any selected representation for which a last modification date can be reasonably and consistently determined, since its use in conditional requests and evaluating cache freshness ([RFC7234]) results in a substantial reduction of HTTP traffic on the Internet and can be a significant factor in improving service scalability and reliability.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A representation is typically the sum of many parts behind the resource interface. The last-modified time would usually be the most recent time that any of those parts were changed. How that value is determined for any given resource is an implementation detail beyond the scope of this specification. What matters to HTTP is how recipients of the Last-Modified header field can use its value to make conditional requests and test the validity of locally cached responses.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An origin server SHOULD obtain the Last-Modified value of the representation as close as possible to the time that it generates the Date field value for its response. This allows a recipient to make an accurate assessment of the representation's modification time, especially if the representation changes near the time that the response is generated.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An origin server with a clock MUST NOT send a Last-Modified date that is later than the server's time of message origination (Date). If the last modification time is derived from implementation-specific metadata that evaluates to some time in the future, according to the origin server's clock, then the origin server MUST replace that value with the message origination date. This prevents a future modification date from having an adverse impact on cache validation.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An origin server without a clock MUST NOT assign Last-Modified values to a response unless these values were associated with the resource by some other system or user with a reliable clock.
+#+END_QUOTE
 
 ** 2.2.2. Comparison
 
+#+BEGIN_QUOTE
 A Last-Modified time, when used as a validator in a request, is implicitly weak unless it is possible to deduce that it is strong, using the following rules:
 
 - The validator is being compared by an origin server to the actual current validator for the representation and,
@@ -142,15 +215,20 @@ or
 - The validator is being compared by an intermediate cache to the validator stored in its cache entry for the representation, and
 - That cache entry includes a Date value, which gives the time when the origin server sent the original response, and
 - The presented Last-Modified time is at least 60 seconds before the Date value.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 This method relies on the fact that if two different responses were sent by the origin server during the same second, but both had the same Last-Modified time, then at least one of those responses would have a Date value equal to its Last-Modified time. The arbitrary 60-second limit guards against the possibility that the Date and Last-Modified values are generated from different clocks or at somewhat different times during the preparation of the response. An implementation MAY use a value larger than 60 seconds, if it is believed that 60 seconds is too short.
+#+END_QUOTE
 
 ** 2.3. ETag
 :PROPERTIES:
 :ID:       0244a602-2c4a-46aa-96c4-3bd14c3eb244
 :END:
 
+#+BEGIN_QUOTE
 The "ETag" header field in a response provides the current entity-tag for the selected representation, as determined at the conclusion of handling the request. An entity-tag is an opaque validator for differentiating between multiple representations of the same resource, regardless of whether those multiple representations are due to resource state changes over time, content negotiation resulting in multiple representations being valid at the same time, or both. An entity-tag consists of an opaque quoted string, possibly prefixed by a weakness indicator.
+#+END_QUOTE
 
 #+BEGIN_SRC text
   ETag       = entity-tag
@@ -162,11 +240,17 @@ The "ETag" header field in a response provides the current entity-tag for the se
              ; VCHAR except double quotes, plus obs-text
 #+END_SRC
 
+#+BEGIN_QUOTE
 *Note:* Previously, opaque-tag was defined to be a quoted-string ([RFC2616], Section 3.11); thus, some recipients might perform backslash unescaping. Servers therefore ought to avoid backslash characters in entity tags.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An entity-tag can be more reliable for validation than a modification date in situations where it is inconvenient to store modification dates, where the one-second resolution of HTTP date values is not sufficient, or where modification dates are not consistently maintained.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Examples:
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
   ETag: "xyzzy"
@@ -174,24 +258,36 @@ Examples:
   ETag: ""
 #+END_EXAMPLE
 
+#+BEGIN_QUOTE
 An entity-tag can be either a weak or strong validator, with strong being the default. If an origin server provides an entity-tag for a representation and the generation of that entity-tag does not satisfy all of the characteristics of a strong validator (Section 2.1), then the origin server MUST mark the entity-tag as weak by prefixing its opaque value with "W/" (case-sensitive).
+#+END_QUOTE
 
 *** 2.3.1. Generation
 
+#+BEGIN_QUOTE
 The principle behind entity-tags is that only the service author knows the implementation of a resource well enough to select the most accurate and efficient validation mechanism for that resource, and that any such mechanism can be mapped to a simple sequence of octets for easy comparison. Since the value is opaque, there is no need for the client to be aware of how each entity-tag is constructed.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 For example, a resource that has implementation-specific versioning applied to all changes might use an internal revision number, perhaps combined with a variance identifier for content negotiation, to accurately differentiate between representations. Other implementations might use a collision-resistant hash of representation content, a combination of various file attributes, or a modification timestamp that has sub-second resolution.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An origin server SHOULD send an ETag for any selected representation for which detection of changes can be reasonably and consistently determined, since the entity-tag's use in conditional requests and evaluating cache freshness ([RFC7234]) can result in a substantial reduction of HTTP network traffic and can be a significant factor in improving service scalability and reliability.
+#+END_QUOTE
 
 *** 2.3.2. Comparison
 
+#+BEGIN_QUOTE
 There are two entity-tag comparison functions, depending on whether or not the comparison context allows the use of weak validators:
 
 - Strong comparison: two entity-tags are equivalent if both are not weak and their opaque-tags match character-by-character.
 - Weak comparison: two entity-tags are equivalent if their opaque-tags match character-by-character, regardless of either or both being tagged as "weak".
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The example below shows the results for a set of entity-tag pairs and both the weak and strong comparison function results:
+#+END_QUOTE
 
 | ETag 1 | ETag 2 | Strong Comparison | Weak Comparison |
 |--------+--------+-------------------+-----------------|
@@ -202,9 +298,13 @@ The example below shows the results for a set of entity-tag pairs and both the w
 
 *** 2.3.3. Example: Entity-Tags Varying on Content-Negotiated Resources
 
+#+BEGIN_QUOTE
 Consider a resource that is subject to content negotiation (Section 3.4 of [RFC7231]), and where the representations sent in response to a GET request vary based on the Accept-Encoding request header field (Section 5.3.4 of [RFC7231]):
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 >> Request:
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
   GET /index HTTP/1.1
@@ -213,9 +313,13 @@ Consider a resource that is subject to content negotiation (Section 3.4 of [RFC7
 
 #+END_EXAMPLE
 
+#+BEGIN_QUOTE
 In this case, the response might or might not use the gzip content coding. If it does not, the response might look like:
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 >> Response:
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
   HTTP/1.1 200 OK
@@ -232,9 +336,13 @@ In this case, the response might or might not use the gzip content coding. If it
   Hello World!
 #+END_EXAMPLE
 
+#+BEGIN_QUOTE
 An alternative representation that does use gzip content coding would be:
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 >> Response:
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
   HTTP/1.1 200 OK
@@ -248,43 +356,62 @@ An alternative representation that does use gzip content coding would be:
   ...binary data...
 #+END_EXAMPLE
 
+#+BEGIN_QUOTE
 Note: Content codings are a property of the representation data, so a strong entity-tag for a content-encoded representation has to be distinct from the entity tag of an unencoded representation to prevent potential conflicts during cache updates and range requests. In contrast, transfer codings (Section 4 of [RFC7230]) apply only during message transfer and do not result in distinct entity-tags.
+#+END_QUOTE
 
 ** 2.4. When to Use Entity-Tags and Last-Modified Dates
 
+#+BEGIN_QUOTE
 In 200 (OK) responses to GET or HEAD, an origin server:
 
 - SHOULD send an entity-tag validator unless it is not feasible to generate one.
 - MAY send a weak entity-tag instead of a strong entity-tag, if performance considerations support the use of weak entity-tags, or if it is unfeasible to send a strong entity-tag.
 - SHOULD send a Last-Modified value if it is feasible to send one.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 In other words, the preferred behavior for an origin server is to send both a strong entity-tag and a Last-Modified value in successful responses to a retrieval request.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A client:
 
 - MUST send that entity-tag in any cache validation request (using If-Match or If-None-Match) if an entity-tag has been provided by the origin server.
 - SHOULD send the Last-Modified value in non-subrange cache validation requests (using If-Modified-Since) if only a Last-Modified value has been provided by the origin server.
 - MAY send the Last-Modified value in subrange cache validation requests (using If-Unmodified-Since) if only a Last-Modified value has been provided by an HTTP/1.0 origin server. The user agent SHOULD provide a way to disable this, in case of difficulty.
 - SHOULD send both validators in cache validation requests if both an entity-tag and a Last-Modified value have been provided by the origin server. This allows both HTTP/1.0 and HTTP/1.1 caches to respond appropriately.
+#+END_QUOTE
 
 * 3. Precondition Header Fields
+:PROPERTIES:
+:ID:       5d82712b-331b-4303-85fc-19b1488af561
+:END:
 
+#+BEGIN_QUOTE
 This section defines the syntax and semantics of HTTP/1.1 header fields for applying preconditions on requests. Section 5 defines when the preconditions are applied. Section 6 defines the order of evaluation when more than one precondition is present.
+#+END_QUOTE
 
 ** 3.1. If-Match
 :PROPERTIES:
 :ID:       2c4da24a-b694-472c-8ac3-f09c20a84216
 :END:
 
+#+BEGIN_QUOTE
 The "If-Match" header field makes the request method conditional on the recipient origin server either having at least one current representation of the target resource, when the field-value is "*", or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An origin server MUST use the strong comparison function when comparing entity-tags for If-Match (Section 2.3.2), since the client intends this precondition to prevent the method from being applied if there have been any changes to the representation data.
+#+END_QUOTE
 
 #+BEGIN_SRC text
   If-Match = "*" / 1#entity-tag
 #+END_SRC
 
+#+BEGIN_QUOTE
 Examples:
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
   If-Match: "xyzzy"
@@ -292,28 +419,42 @@ Examples:
   If-Match: *
 #+END_EXAMPLE
 
+#+BEGIN_QUOTE
 If-Match is most often used with state-changing methods (e.g., POST, PUT, DELETE) to prevent accidental overwrites when multiple user agents might be acting in parallel on the same resource (i.e., to prevent the "lost update" problem). It can also be used with safe methods to abort a request if the selected representation does not match one already stored (or partially stored) from a prior request.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An origin server that receives an If-Match header field MUST evaluate the condition prior to performing the method (Section 5). If the field-value is "*", the condition is false if the origin server does not have a current representation for the target resource. If the field-value is a list of entity-tags, the condition is false if none of the listed tags match the entity-tag of the selected representation.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An origin server MUST NOT perform the requested method if a received If-Match condition evaluates to false; instead, the origin server MUST respond with either a) the 412 (Precondition Failed) status code or b) one of the 2xx (Successful) status codes if the origin server has verified that a state change is being requested and the final state is already reflected in the current state of the target resource (i.e., the change requested by the user agent has already succeeded, but the user agent might not be aware of it, perhaps because the prior response was lost or a compatible change was made by some other user agent). In the latter case, the origin server MUST NOT send a validator header field in the response unless it can verify that the request is a duplicate of an immediately prior change made by the same user agent.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The If-Match header field can be ignored by caches and intermediaries because it is not applicable to a stored response.
+#+END_QUOTE
 
 ** 3.2. If-None-Match
 :PROPERTIES:
 :ID:       30878863-9a64-4efe-bc9b-07386eae0ed7
 :END:
 
+#+BEGIN_QUOTE
 The "If-None-Match" header field makes the request method conditional on a recipient cache or origin server either not having any current representation of the target resource, when the field-value is "*", or having a selected representation with an entity-tag that does not match any of those listed in the field-value.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A recipient MUST use the weak comparison function when comparing entity-tags for If-None-Match (Section 2.3.2), since weak entity-tags can be used for cache validation even if there have been changes to the representation data.
+#+END_QUOTE
 
 #+BEGIN_SRC text
   If-None-Match = "*" / 1#entity-tag
 #+END_SRC
 
+#+BEGIN_QUOTE
 Examples:
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
   If-None-Match: "xyzzy"
@@ -323,84 +464,132 @@ Examples:
   If-None-Match: *
 #+END_EXAMPLE
 
+#+BEGIN_QUOTE
 If-None-Match is primarily used in conditional GET requests to enable efficient updates of cached information with a minimum amount of transaction overhead. When a client desires to update one or more stored responses that have entity-tags, the client SHOULD generate an If-None-Match header field containing a list of those entity-tags when making a GET request; this allows recipient servers to send a 304 (Not Modified) response to indicate when one of those stored responses matches the selected representation.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 If-None-Match can also be used with a value of "*" to prevent an unsafe request method (e.g., PUT) from inadvertently modifying an existing representation of the target resource when the client believes that the resource does not have a current representation (Section 4.2.1 of [RFC7231]). This is a variation on the "lost update" problem that might arise if more than one client attempts to create an initial representation for the target resource.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An origin server that receives an If-None-Match header field MUST evaluate the condition prior to performing the method (Section 5). If the field-value is "*", the condition is false if the origin server has a current representation for the target resource. If the field-value is a list of entity-tags, the condition is false if one of the listed tags match the entity-tag of the selected representation.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An origin server MUST NOT perform the requested method if the condition evaluates to false; instead, the origin server MUST respond with either a) the 304 (Not Modified) status code if the request method is GET or HEAD or b) the 412 (Precondition Failed) status code for all other request methods.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Requirements on cache handling of a received If-None-Match header field are defined in Section 4.3.2 of [RFC7234].
+#+END_QUOTE
 
 ** 3.3. If-Modified-Since
 :PROPERTIES:
 :ID:       e71fa098-728a-46bf-b792-2388946ea0ee
 :END:
 
+#+BEGIN_QUOTE
 The "If-Modified-Since" header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value. Transfer of the selected representation's data is avoided if that data has not changed.
+#+END_QUOTE
 
 #+BEGIN_SRC text
   If-Modified-Since = HTTP-date
 #+END_SRC
 
+#+BEGIN_QUOTE
 An example of the field is:
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
   If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMT
 #+END_EXAMPLE
 
+#+BEGIN_QUOTE
 A recipient MUST ignore If-Modified-Since if the request contains an If-None-Match header field; the condition in If-None-Match is considered to be a more accurate replacement for the condition in If-Modified-Since, and the two are only combined for the sake of interoperating with older intermediaries that might not implement If-None-Match.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A recipient MUST ignore the If-Modified-Since header field if the received field-value is not a valid HTTP-date, or if the request method is neither GET nor HEAD.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A recipient MUST interpret an If-Modified-Since field-value's timestamp in terms of the origin server's clock.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 If-Modified-Since is typically used for two distinct purposes: 1) to allow efficient updates of a cached representation that does not have an entity-tag and 2) to limit the scope of a web traversal to resources that have recently changed.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 When used for cache updates, a cache will typically use the value of the cached message's Last-Modified field to generate the field value of If-Modified-Since. This behavior is most interoperable for cases where clocks are poorly synchronized or when the server has chosen to only honor exact timestamp matches (due to a problem with Last-Modified dates that appear to go "back in time" when the origin server's clock is corrected or a representation is restored from an archived backup). However, caches occasionally generate the field value based on other data, such as the Date header field of the cached message or the local clock time that the message was received, particularly when the cached message does not contain a Last-Modified field.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 When used for limiting the scope of retrieval to a recent time window, a user agent will generate an If-Modified-Since field value based on either its own local clock or a Date header field received from the server in a prior response. Origin servers that choose an exact timestamp match based on the selected representation's Last-Modified field will not be able to help the user agent limit its data transfers to only those changed during the specified window.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An origin server that receives an If-Modified-Since header field SHOULD evaluate the condition prior to performing the method (Section 5). The origin server SHOULD NOT perform the requested method if the selected representation's last modification date is earlier than or equal to the date provided in the field-value; instead, the origin server SHOULD generate a 304 (Not Modified) response, including only those metadata that are useful for identifying or updating a previously cached response.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Requirements on cache handling of a received If-Modified-Since header field are defined in Section 4.3.2 of [RFC7234].
+#+END_QUOTE
 
 ** 3.4. If-Unmodified-Since
 :PROPERTIES:
 :ID:       7365caf4-85ba-4e10-90a2-1abc298dc569
 :END:
 
+#+BEGIN_QUOTE
 The "If-Unmodified-Since" header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value. This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.
+#+END_QUOTE
 
 #+BEGIN_SRC text
   If-Unmodified-Since = HTTP-date
 #+END_SRC
 
+#+BEGIN_QUOTE
 An example of the field is:
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
   If-Unmodified-Since: Sat, 29 Oct 1994 19:43:31 GMT
 #+END_EXAMPLE
 
+#+BEGIN_QUOTE
 A recipient MUST ignore If-Unmodified-Since if the request contains an If-Match header field; the condition in If-Match is considered to be a more accurate replacement for the condition in If-Unmodified-Since, and the two are only combined for the sake of interoperating with older intermediaries that might not implement If-Match.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A recipient MUST ignore the If-Unmodified-Since header field if the received field-value is not a valid HTTP-date.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A recipient MUST interpret an If-Unmodified-Since field-value's timestamp in terms of the origin server's clock.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 If-Unmodified-Since is most often used with state-changing methods (e.g., POST, PUT, DELETE) to prevent accidental overwrites when multiple user agents might be acting in parallel on a resource that does not supply entity-tags with its representations (i.e., to prevent the "lost update" problem). It can also be used with safe methods to abort a request if the selected representation does not match one already stored (or partially stored) from a prior request.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An origin server that receives an If-Unmodified-Since header field MUST evaluate the condition prior to performing the method (Section 5). The origin server MUST NOT perform the requested method if the selected representation's last modification date is more recent than the date provided in the field-value; instead the origin server MUST respond with either a) the 412 (Precondition Failed) status code or b) one of the 2xx (Successful) status codes if the origin server has verified that a state change is being requested and the final state is already reflected in the current state of the target resource (i.e., the change requested by the user agent has already succeeded, but the user agent might not be aware of that because the prior response message was lost or a compatible change was made by some other user agent). In the latter case, the origin server MUST NOT send a validator header field in the response unless it can verify that the request is a duplicate of an immediately prior change made by the same user agent.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The If-Unmodified-Since header field can be ignored by caches and intermediaries because it is not applicable to a stored response.
+#+END_QUOTE
 
 ** 3.5. If-Range
 :PROPERTIES:
 :ID:       1b40ccc8-f559-49c3-ae13-9642f9e7e9d5
 :END:
 
+#+BEGIN_QUOTE
 The "If-Range" header field provides a special conditional request mechanism that is similar to the If-Match and If-Unmodified-Since header fields but that instructs the recipient to ignore the Range header field if the validator doesn't match, resulting in transfer of the new selected representation instead of a 412 (Precondition Failed) response. If-Range is defined in Section 3.2 of [RFC7233].
+#+END_QUOTE
 
 * 4. Status Code Definitions
   :PROPERTIES:
@@ -411,40 +600,66 @@ The "If-Range" header field provides a special conditional request mechanism tha
 :ID:       6033b2bf-1408-4756-9929-15dd6510c7e3
 :END:
    
+#+BEGIN_QUOTE
 The 304 (Not Modified) status code indicates that a conditional GET or HEAD request has been received and would have resulted in a 200 (OK) response if it were not for the fact that the condition evaluated to false. In other words, there is no need for the server to transfer a representation of the target resource because the request indicates that the client, which made the request conditional, already has a valid representation; the server is therefore redirecting the client to make use of that stored representation as if it were the payload of a 200 (OK) response.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The server generating a 304 response MUST generate any of the following header fields that would have been sent in a 200 (OK) response to the same request: Cache-Control, Content-Location, Date, ETag, Expires, and Vary.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Since the goal of a 304 response is to minimize information transfer when the recipient already has one or more cached representations, a sender SHOULD NOT generate representation metadata other than the above listed fields unless said metadata exists for the purpose of guiding cache updates (e.g., Last-Modified might be useful if the response does not have an ETag field).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Requirements on a cache that receives a 304 response are defined in Section 4.3.4 of [RFC7234]. If the conditional request originated with an outbound client, such as a user agent with its own cache sending a conditional GET to a shared proxy, then the proxy SHOULD forward the 304 response to that client.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A 304 response cannot contain a message-body; it is always terminated by the first empty line after the header fields.
+#+END_QUOTE
 
 ** 4.2. 412 Precondition Failed
 :PROPERTIES:
 :ID:       02e5a084-aac8-4f06-840f-507ef2489bb1
 :END:
 
+#+BEGIN_QUOTE
 The 412 (Precondition Failed) status code indicates that one or more conditions given in the request header fields evaluated to false when tested on the server. This response code allows the client to place preconditions on the current resource state (its current representations and metadata) and, thus, prevent the request method from being applied if the target resource is in an unexpected state.
+#+END_QUOTE
 
 * 5. Evaluation
 :PROPERTIES:
 :ID:       fce45320-6c1c-4486-a32b-2c553780d785
 :END:
 
+#+BEGIN_QUOTE
 Except when excluded below, a recipient cache or origin server MUST evaluate received request preconditions after it has successfully performed its normal request checks and just before it would perform the action associated with the request method. A server MUST ignore all received preconditions if its response to the same request without those conditions would have been a status code other than a 2xx (Successful) or 412 (Precondition Failed). In other words, redirects and failures take precedence over the evaluation of preconditions in conditional requests.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A server that is not the origin server for the target resource and cannot act as a cache for requests on the target resource MUST NOT evaluate the conditional request header fields defined by this specification, and it MUST forward them if the request is forwarded, since the generating client intends that they be evaluated by a server that can provide a current representation. Likewise, a server MUST ignore the conditional request header fields defined by this specification when received with a request method that does not involve the selection or modification of a selected representation, such as CONNECT, OPTIONS, or TRACE.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Conditional request header fields that are defined by extensions to HTTP might place conditions on all recipients, on the state of the target resource in general, or on a group of resources. For instance, the "If" header field in WebDAV can make a request conditional on various aspects of multiple resources, such as locks, if the recipient understands and implements that field ([RFC4918], Section 10.4).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Although conditional request header fields are defined as being usable with the HEAD method (to keep HEAD's semantics consistent with those of GET), there is no point in sending a conditional HEAD because a successful response is around the same size as a 304 (Not Modified) response and more useful than a 412 (Precondition Failed) response.
+#+END_QUOTE
 
 * 6. Precedence
+:PROPERTIES:
+:ID:       a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2
+:END:
 
+#+BEGIN_QUOTE
 When more than one conditional request header field is present in a request, the order in which the fields are evaluated becomes important. In practice, the fields defined in this document are consistently implemented in a single, logical order, since "lost update" preconditions have more strict requirements than cache validation, a validated cache is more efficient than a partial response, and entity tags are presumed to be more accurate than date validators.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A recipient cache or origin server MUST evaluate the request preconditions defined by this specification in the following order:
 
 1. When recipient is the origin server and If-Match is present, evaluate the If-Match precondition:
@@ -475,13 +690,18 @@ A recipient cache or origin server MUST evaluate the request preconditions defin
 6. Otherwise,
 
    - all conditions are met, so perform the requested action and respond according to its success or failure.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Any extension to HTTP/1.1 that defines additional conditional request header fields ought to define its own expectations regarding the order for evaluating such fields in relation to those defined in this document and other conditionals that might be found in practice.
+#+END_QUOTE
 
 * 7. IANA Considerations
 ** 7.1. Status Code Registration
 
+#+BEGIN_QUOTE
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <http://www.iana.org/assignments/http-status-codes> has been updated with the registrations below:
+#+END_QUOTE
 
 | Value | Description         | Reference   |
 |-------+---------------------+-------------|
@@ -490,9 +710,13 @@ The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <http:/
 
 ** 7.2. Header Field Registration
 
+#+BEGIN_QUOTE
 HTTP header fields are registered within the "Message Headers" registry maintained at <http://www.iana.org/assignments/message-headers/>.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 This document defines the following HTTP header fields, so their associated registry entries have been updated according to the permanent registrations below (see [BCP90]):
+#+END_QUOTE
 
 | Header Field Name   | Protocol | Status   | Reference   |
 |---------------------+----------+----------+-------------|
@@ -503,19 +727,29 @@ This document defines the following HTTP header fields, so their associated regi
 | If-Unmodified-Since | http     | standard | Section 3.4 |
 | Last-Modified       | http     | standard | Section 2.2 |
 
+#+BEGIN_QUOTE
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
+#+END_QUOTE
 
 * 8. Security Considerations
 
+#+BEGIN_QUOTE
 This section is meant to inform developers, information providers, and users of known security concerns specific to the HTTP conditional request mechanisms. More general security considerations are addressed in HTTP "Message Syntax and Routing" [RFC7230] and "Semantics and Content" [RFC7231].
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The validators defined by this specification are not intended to ensure the validity of a representation, guard against malicious changes, or detect man-in-the-middle attacks. At best, they enable more efficient cache updates and optimistic concurrent writes when all participants are behaving nicely. At worst, the conditions will fail and the client will receive a response that is no more harmful than an HTTP exchange without conditional requests.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 An entity-tag can be abused in ways that create privacy risks. For example, a site might deliberately construct a semantically invalid entity-tag that is unique to the user or user agent, send it in a cacheable response with a long freshness time, and then read that entity-tag in later conditional requests as a means of re-identifying that user or user agent. Such an identifying tag would become a persistent identifier for as long as the user agent retained the original cache entry. User agents that cache representations ought to ensure that the cache is cleared or replaced whenever the user performs privacy-maintaining actions, such as clearing stored cookies or changing to a private browsing mode.
+#+END_QUOTE
 
 * 9. Acknowledgments
 
+#+BEGIN_QUOTE
 See Section 10 of [RFC7230].
+#+END_QUOTE
 
 * 10. References
 ** 10.1. Normative References
@@ -535,28 +769,44 @@ See Section 10 of [RFC7230].
 
 * Appendix A. Changes from RFC 2616
 
+#+BEGIN_QUOTE
 The definition of validator weakness has been expanded and clarified. (Section 2.1)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Weak entity-tags are now allowed in all requests except range requests. (Sections 2.1 and 3.2)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The ETag header field ABNF has been changed to not use quoted-string, thus avoiding escaping issues. (Section 2.3)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 ETag is defined to provide an entity tag for the selected representation, thereby clarifying what it applies to in various situations (such as a PUT response). (Section 2.3)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The precedence for evaluation of conditional requests has been defined. (Section 6)
+#+END_QUOTE
 
 * Appendix B. Imported ABNF
 
+#+BEGIN_QUOTE
 The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The rules below are defined in [RFC7230]:
+#+END_QUOTE
 
 #+BEGIN_SRC text
   OWS           = <OWS, see [RFC7230], Section 3.2.3>
   obs-text      = <obs-text, see [RFC7230], Section 3.2.6>
 #+END_SRC
 
+#+BEGIN_QUOTE
 The rules below are defined in other parts:
+#+END_QUOTE
 
 #+BEGIN_SRC text
   HTTP-date     = <HTTP-date, see [RFC7231], Section 7.1.1.1>
@@ -564,7 +814,9 @@ The rules below are defined in other parts:
 
 * Appendix C. Collected ABNF
 
+#+BEGIN_QUOTE
 In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
+#+END_QUOTE
 
 #+BEGIN_SRC text
   ETag = entity-tag
