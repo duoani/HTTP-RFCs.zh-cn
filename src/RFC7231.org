@@ -3978,10 +3978,10 @@ Note that double-quote delimiters almost always are used with the =quoted-string
 需要注意的是，[[ruby:double-quote%20delimiters][双引号定界符]]几乎总是与 =quoted-string= 规则一起使用，如果在双引号里使用另一种不同的句法规则的话，很可能会引发不必要的[[ruby:confusion][混淆]]。
 
 #+BEGIN_QUOTE
-Many header fields use a format including (case-insensitively) named parameters (for instance, =Content-Type=, defined in Section 3.1.1.5). Allowing both unquoted (token) and quoted (quoted-string) syntax for the parameter value enables recipients to use existing parser components. When allowing both forms, the meaning of a parameter value ought to be independent of the syntax used for it (for an example, see the notes on parameter handling for media types in [[id:bc05d462-378f-4743-a1ee-543e01064a09][Section 3.1.1.1]]).
+Many header fields use a format including (case-insensitively) named parameters (for instance, =Content-Type=, defined in [[id:fcfdf1e4-f733-4305-9ad4-761271a3dd69][Section 3.1.1.5]]). Allowing both unquoted (token) and quoted (quoted-string) syntax for the parameter value enables recipients to use existing parser components. When allowing both forms, the meaning of a parameter value ought to be independent of the syntax used for it (for an example, see the notes on parameter handling for media types in [[id:bc05d462-378f-4743-a1ee-543e01064a09][Section 3.1.1.1]]).
 #+END_QUOTE
 
-某些头字段会使用一种格式——一种包含命名参数（不区分大小写）的格式，例如，定义在章节 3.1.1.5 的 =Content-Type=。参数值既允许使用[[ruby:unquoted%20syntax][无引号句法]]（用作[[ruby:token][标记]]），也允许使用[[ruby:quoted%20syntax][引号句法]]（用作[[ruby:quoted-string][括号字符串]]），使得接收端可以使用已有的解析组件。当允许使用上述两种形式的时候，参数值的含义应该不依赖于它所使用的句法（一个例子可以查看[[id:bc05d462-378f-4743-a1ee-543e01064a09][章节 3.1.1.1]] 关于处理媒体类型的参数中的注意点）。
+某些头字段会使用一种格式——一种包含命名参数（不区分大小写）的格式，例如，定义在[[id:fcfdf1e4-f733-4305-9ad4-761271a3dd69][章节 3.1.1.5]] 的 =Content-Type=。参数值既允许使用[[ruby:unquoted%20syntax][无引号句法]]（用作[[ruby:token][标记]]），也允许使用[[ruby:quoted%20syntax][引号句法]]（用作[[ruby:quoted-string][括号字符串]]），使得接收端可以使用已有的解析组件。当允许使用上述两种形式的时候，参数值的含义应该不依赖于它所使用的句法（一个例子可以查看[[id:bc05d462-378f-4743-a1ee-543e01064a09][章节 3.1.1.1]] 关于处理媒体类型的参数中的注意点）。
 
 #+BEGIN_QUOTE
 Authors of specifications defining new header fields are advised to consider documenting:
@@ -4162,7 +4162,7 @@ For example, UNIX, Microsoft Windows, and other operating systems use ".." as a 
 Attacks based on such special names tend to focus on either denial-of-service (e.g., telling the server to read from a COM port) or disclosure of configuration and source files that are not meant to be served.
 #+END_QUOTE
 
-其于这种特殊名称的攻击倾向于侧重[[ruby:denial-of-service][拒绝服务攻击]]（比如，告诉服务器去读取 COM 端口的数据）或者[[ruby:disclosure][泄露]]服务器并不想提供的配置和源文件。
+基于这种特殊名称的攻击倾向于侧重[[ruby:denial-of-service][拒绝服务攻击]]（比如，告诉服务器去读取 COM 端口的数据）或者[[ruby:disclosure][泄露]]服务器并不想提供的配置和源文件。
 
 ** 9.2. 基于命令、代码、查询注入 / Attacks Based on Command, Code, or Query Injection
 
@@ -4277,7 +4277,7 @@ In addition to the fingerprinting concern, detailed use of the =Accept-Language=
 In environments where proxies are used to enhance privacy, user agents ought to be conservative in sending proactive negotiation header fields. General-purpose user agents that provide a high degree of header field configurability ought to inform users about the loss of privacy that might result if too much detail is provided. As an extreme privacy measure, proxies could filter the proactive negotiation header fields in relayed requests.
 #+END_QUOTE
 
-在代理用于加强隐私保护的环境中，用户代理应该[[ruby:conservative][保守地]]发送用于主动协商的头字段。提供对头字段高度配置功能的通用型用户代理应该告知用户：如果提供了过多的头字段细节的话，用户可能会关于[[ruby:loss%20of%20privacy][失去隐私]]。作为一种极端隐私的措施，代理可以在中转请求的时候，过滤掉所有主动协商的头字段。
+在代理用于加强隐私保护的环境中，用户代理应该[[ruby:conservative][保守地]]发送用于主动协商的头字段。提供对头字段高度配置功能的通用型用户代理应该告知用户：如果提供了过多的头字段细节的话，用户可能会[[ruby:loss%20of%20privacy][失去隐私]]。作为一种极端隐私的措施，代理可以在中转请求的时候，过滤掉所有主动协商的头字段。
 
 * 10. 鸣谢 / Acknowledgements
 

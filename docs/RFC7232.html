@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-05 Wed 18:56 -->
+<!-- 2018-12-06 Thu 19:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7232: Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests</title>
@@ -572,7 +572,7 @@ Conditional request preconditions are based on the state of the target resource 
 </blockquote>
 
 <p>
-总的来说，条件请求的前置条件是基于目标资源的状态（目标资源的<ruby>当前值<rt>current value</rt></ruby>的集合），或者在一种之前获得的表示形式所观察到的状态（在这个当前值集合中的其中一个）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假设请求与一种“<ruby>已选定的表示形式<rt>selected representation</rt></ruby>”（<a href="RFC7231.html#ID-7dd837af-fd6a-4918-9c62-cf12a4c31522">【RFC7231】章节 3</a>）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前置条件的求值结果为否的时候，最终结果应该要是无害的。
+总的来说，条件请求的前置条件是基于目标资源的状态（目标资源的<ruby>当前值<rt>current value</rt></ruby>的集合），或者在之前获得的一种表示形式所观察到的状态（这个当前值集合中的其中之一）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假定请求与一种“<ruby>已选定的表示形式<rt>selected representation</rt></ruby>”（<a href="RFC7231.html#ID-7dd837af-fd6a-4918-9c62-cf12a4c31522">【RFC7231】章节 3</a>）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前置条件的求值结果为否的时候，最终结果应该要是无害的。
 </p>
 
 <blockquote>
@@ -637,12 +637,18 @@ This specification defines two forms of metadata that are commonly used to obser
 </blockquote>
 
 <p>
-本规范定义了元数据的两种形式：<ruby>日期修改<rt>modification dates</rt></ruby>（<a href="#org3974cdd">章节 2.2</a>）和<ruby>不透明实体标签<rt>opaque entity tags</rt></ruby>（<a href="#orgf0f9907">章节 2.3</a>），它们常用于观察资源状态以及对前置条件进行测试。其他额外的反映资源状态的元数据被定义在各种 HTTP 扩展当中，比如 <ruby>Web 分布式创作和版本管理<rt>Web Distributed Authoring and Versioning</rt></ruby>（WebDAV，【<a href="https://tools.ietf.org/html/rfc4918">RFC4918</a>】），超出了本规范的范畴。<ruby>资源元数据<rt>resource metadata</rt></ruby>的值使用在一个<ruby>前置条件<rt>precondition</rt></ruby>中的时候，它被称为“<ruby>验证器<rt>validator</rt></ruby>”。
+本规范定义了两类元数据：<ruby>日期修改<rt>modification dates</rt></ruby>（<a href="#org3974cdd">章节 2.2</a>）和<ruby>不透明实体标签<rt>opaque entity tags</rt></ruby>（<a href="#orgf0f9907">章节 2.3</a>），它们常用于观察资源的状态以及对前置条件进行测试。其他额外的反映资源状态的元数据定义在各种 HTTP 扩展当中，比如 <ruby>Web 分布式创作和版本管理<rt>Web Distributed Authoring and Versioning</rt></ruby>（WebDAV，【<a href="https://tools.ietf.org/html/rfc4918">RFC4918</a>】），超出了本规范的范畴。<ruby>资源元数据<rt>resource metadata</rt></ruby>的值使用在一个<ruby>前置条件<rt>precondition</rt></ruby>中的时候，它被称为“<ruby>验证器<rt>validator</rt></ruby>”。
 </p>
+
+<blockquote>
+<p>
+译注：可以先将验证器理解为是一种头字段，以方便理解下文。
+</p>
+</blockquote>
 </div>
 
 <div id="outline-container-org265ee00" class="outline-3">
-<h3 id="org265ee00">2.1. 弱与强 / Weak versus Strong</h3>
+<h3 id="org265ee00"><a id="ID-d232decc-3720-4edf-bbfa-df942f60aa50"></a>2.1. 弱与强 / Weak versus Strong</h3>
 <div class="outline-text-3" id="text-org265ee00">
 <blockquote>
 <p>
@@ -651,7 +657,7 @@ Validators come in two flavors: strong or weak. Weak validators are easy to gene
 </blockquote>
 
 <p>
-<ruby>验证器<rt>validator</rt></ruby>分成两类：强验证和弱验证。<ruby>弱验证器<rt>weak validators</rt></ruby>容易生成，但对于比较来说几乎没有什么用处。<ruby>强验证器<rt>strong validators</rt></ruby>是理想的比较方式，但它很难（有时甚至不可能）高效地生成。与其强制资源的所有形式都附带相同的验证器类型，HTTP 显露出使用中的验证器的类型并对“什么时候弱验证器可以用作前置条件”施加限制。
+<ruby>验证器<rt>validator</rt></ruby>分成两类：强验证和弱验证。<ruby>弱验证器<rt>weak validators</rt></ruby>容易生成，但对于比较来说几乎没有什么用处。<ruby>强验证器<rt>strong validators</rt></ruby>是理想的比较方式，但它很难有效地生成（有时甚至不可能生成）。与其强制资源的所有形式都附带相同的验证器类型，HTTP 显露出使用中的验证器的类型并对“什么时候弱验证器可以用作前置条件”施加限制。
 </p>
 
 <blockquote>
@@ -660,11 +666,19 @@ A "strong validator" is representation metadata that changes value whenever a ch
 </p>
 </blockquote>
 
+<p>
+<ruby>强验证器<rt>strong validator</rt></ruby>是这样一种<ruby>表示形式元数据<rt>representation metadata</rt></ruby>：每当对应的<ruby>表示形式数据<rt>representation data</rt></ruby>的发生变化的时候，它们的值同样会作出改变。这种变化可以在回应给 GET 的 <code>200 (OK)</code> 响应的有效载荷里观察到。
+</p>
+
 <blockquote>
 <p>
-A strong validator might change for reasons other than a change to the representation data, such as when a semantically significant part of the representation metadata is changed (e.g., Content-Type), but it is in the best interests of the origin server to only change the value when it is necessary to invalidate the stored responses held by remote caches and authoring tools.
+A strong validator might change for reasons other than a change to the representation data, such as when a semantically significant part of the representation metadata is changed (e.g., <code>Content-Type</code>), but it is in the best interests of the origin server to only change the value when it is necessary to invalidate the stored responses held by remote caches and authoring tools.
 </p>
 </blockquote>
+
+<p>
+除了表示形式数据发生变化以外，强验证器还可能因为其他原因而发生改变，比如表示形式元数据中语义上的重要组成部分（例如 <code>Content-Type</code>）发生了变化，然而，当有必要让已存储在<ruby>远程缓存服务器<rt>remote caches</rt></ruby>或者<ruby>创作工具<rt>authoring tools</rt></ruby>里的响应<ruby>置为失效<rt>invalidate</rt></ruby>的时候，仅改变它的值是最符合源服务器的最大利益的。
+</p>
 
 <blockquote>
 <p>
@@ -672,17 +686,41 @@ Cache entries might persist for arbitrarily long periods, regardless of expirati
 </p>
 </blockquote>
 
+<p>
+缓存服务器里的条目可能持续存储到任意长的时间周期中，而不管它的过期时间。这样，缓存服务器可能会试图对它很久以前就获得的条目使用验证器来进行验证。对于一个特定资源相关的所有表示形式的所有版本，不管什么时候强验证器都是唯一的。然而，不同资源的表示形式没有唯一的实现（也就是说，同一个强验证器可能会同时用在多个资源的表示形式中，而且这并不意味着这些表示形式是等价的）。
+</p>
+
 <blockquote>
 <p>
-There are a variety of strong validators used in practice. The best are based on strict revision control, wherein each change to a representation always results in a unique node name and revision identifier being assigned before the representation is made accessible to GET. A collision-resistant hash function applied to the representation data is also sufficient if the data is available prior to the response header fields being sent and the digest does not need to be recalculated every time a validation request is received. However, if a resource has distinct representations that differ only in their metadata, such as might occur with content negotiation over media types that happen to share the same data format, then the origin server needs to incorporate additional information in the validator to distinguish those representations.
+译注：再说明一下，对于同一个资源，它的所有表示形式的所有版本的 <code>ETag</code> 都是不相同，即它们都是唯一的。但是，不能保证不同资源所使用的 <code>ETag</code> 是唯一的，即它们可能有相同的值。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-In contrast, a "weak validator" is representation metadata that might not change for every change to the representation data. This weakness might be due to limitations in how the value is calculated, such as clock resolution, an inability to ensure uniqueness for all possible representations of the resource, or a desire of the resource owner to group representations by some self-determined set of equivalency rather than unique sequences of data. An origin server SHOULD change a weak entity-tag whenever it considers prior representations to be unacceptable as a substitute for the current representation. In other words, a weak entity-tag ought to change whenever the origin server wants caches to invalidate old responses.
+There are a variety of strong validators used in practice. The best are based on strict revision control, wherein each change to a representation always results in a unique node name and revision identifier being assigned before the representation is made accessible to GET. A collision-resistant hash function applied to the representation data is also sufficient if the data is available prior to the response header fields being sent and the digest does not need to be recalculated every time a validation request is received. However, if a resource has distinct representations that differ only in their metadata, such as might occur with content negotiation over media types that happen to share the same data format, then the origin server needs to incorporate additional information in the [strong] validator to distinguish those representations.
 </p>
 </blockquote>
+
+<p>
+实践中使用了各种各样的强验证器。最好的方式是基于<ruby>严格的版本控制<rt>strict revision control</rt></ruby>，在让 GET 访问之前，对其内的每一个表示形式的每一次修改总是会得到一个唯一的记录节点和版本标识符。要在将要发送响应头字段之前表示形式数据的数据就可使用并且在每次接收到一个验证请求时并不需要重新计算摘要的充分条件是对这份数据应用冲突保护的<ruby>散列方法<rt>hash function</rt></ruby>。但是，如果资源的某些表示形式的区别只在于它们的元数据的话，比如可能发生在忽略媒体类型的内容协商导致共享了相同的数据格式的情况，那么，源服务器需要在强验证器内加入额外的信息来区分这些表示形式。
+</p>
+
+<blockquote>
+<p>
+译注：本段有勘误，见 <a href="https://www.rfc-editor.org/errata/eid5236">Errata #5236</a>。
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+In contrast, a "weak validator" is representation metadata that might not change for every change to the representation data. This weakness might be due to limitations in how the value is calculated, such as clock resolution, an inability to ensure uniqueness for all possible representations of the resource, or a desire of the resource owner to group representations by some self-determined set of equivalency rather than unique sequences of data. An origin server <b>SHOULD</b> change a weak entity-tag whenever it considers prior representations to be unacceptable as a substitute for the current representation. In other words, a weak entity-tag ought to change whenever the origin server wants caches to invalidate old responses.
+</p>
+</blockquote>
+
+<p>
+作为对比，<ruby>弱验证器<rt>weak validator</rt></ruby>是这样一种<ruby>表示形式元数据<rt>representation metadata</rt></ruby>：对应的表示形式数据每次发生变化的时候，它们的值并不一定会跟随改变。造成这种弱关系的原因可能是：由于计算它的值时的限制，比如<ruby>时间精度<rt>clock resolution</rt></ruby>，无法保证一个资源所有可能的表示形式的唯一性；或者由于资源所有者希望通过某些自主决定的等价规则而不是依据数据序列的唯一性，来对表示形式进行归纳。无论何时，一旦源服务器认为之前的那些表示形式不再能作为当前表示形式的替代的时候，它 <b>应当</b> 改变<ruby>弱实体标签<rt>weak entity-tag</rt></ruby>的值。换句话说，无论何时，一旦源服务器希望缓存服务器将旧的响应<ruby>置为失效<rt>invalidate</rt></ruby>的时候，弱实体标签应该被改变。
+</p>
 
 <blockquote>
 <p>
@@ -690,9 +728,23 @@ For example, the representation of a weather report that changes in content ever
 </p>
 </blockquote>
 
+<p>
+例如，基于动态的天气数据测量，天气报告的表示形式的内容在每一秒都会发生变化，但为了让已缓存的表示形式能够在一个合理的时间周期（这个时间周期可能基于服务器的负载或者天气质量而动态地调整）内仍然有效，可能会使用同一个弱验证器来将这些新产生的表示形式归纳到一系列等价的表示形式里（所谓等价是从源服务器的观点来看）。同样，一个表示形式的修改时间，如果仅仅使用时间精度为一秒来定义的话，而且如果这个表示形式有可能在一秒钟之内被修改两次并在这两次修改之间被请求获取，那么，它可能就是一个弱验证器。
+</p>
+
 <blockquote>
 <p>
-Likewise, a validator is weak if it is shared by two or more representations of a given resource at the same time, unless those representations have identical representation data. For example, if the origin server sends the same validator for a representation with a gzip content coding applied as it does for a representation with no content coding, then that validator is weak. However, two simultaneous representations might share the same strong validator if they differ only in the representation metadata, such as when two different media types are available for the same representation data.
+Likewise, a validator is weak if it is shared by two or more representations of a given resource at the same time, even if those representations have identical representation data. For example, if the origin server sends the same validator for a representation with a <code>gzip</code> content coding applied as it does for a representation with no content coding, then that validator is weak. However, two simultaneous representations might share the same strong validator if they differ only in the representation metadata, such as when two different media types are available for the same representation data.
+</p>
+</blockquote>
+
+<p>
+同样，如果一个验证器在同一时间内被一个给定资源的两个或以上表示形式所共享，即使这些表示形式有相同的<ruby>表示形式数据<rt>representation data</rt></ruby>，那么，这个验证器是弱类型的。例如，如果源服务器对于某个资源的一种应用过 <code>gzip</code> 内容编码的表示形式以及一种未应用任何内容编码的表示形式发送的都是相同的验证器，那么，可能确定这个验证器是弱类型的。但是，两个同时生成的表示形式可能共享相同的强验证器，如果它们的区别仅在于表示形式元数据，比如当两个不同的媒体类型都可用于同一份表示形式数据。
+</p>
+
+<blockquote>
+<p>
+译注：本段有勘误，见 <a href="https://www.rfc-editor.org/errata_search.php?rfc=7232">Errata #5236</a>。
 </p>
 </blockquote>
 

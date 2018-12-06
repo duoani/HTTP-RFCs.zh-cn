@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-05 Wed 18:56 -->
+<!-- 2018-12-06 Thu 19:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -7678,12 +7678,12 @@ Note that double-quote delimiters almost always are used with the <code>quoted-s
 
 <blockquote>
 <p>
-Many header fields use a format including (case-insensitively) named parameters (for instance, <code>Content-Type</code>, defined in Section 3.1.1.5). Allowing both unquoted (token) and quoted (quoted-string) syntax for the parameter value enables recipients to use existing parser components. When allowing both forms, the meaning of a parameter value ought to be independent of the syntax used for it (for an example, see the notes on parameter handling for media types in <a href="#org9cacf10">Section 3.1.1.1</a>).
+Many header fields use a format including (case-insensitively) named parameters (for instance, <code>Content-Type</code>, defined in <a href="#org55c71b5">Section 3.1.1.5</a>). Allowing both unquoted (token) and quoted (quoted-string) syntax for the parameter value enables recipients to use existing parser components. When allowing both forms, the meaning of a parameter value ought to be independent of the syntax used for it (for an example, see the notes on parameter handling for media types in <a href="#org9cacf10">Section 3.1.1.1</a>).
 </p>
 </blockquote>
 
 <p>
-某些头字段会使用一种格式——一种包含命名参数（不区分大小写）的格式，例如，定义在章节 3.1.1.5 的 <code>Content-Type</code>。参数值既允许使用<ruby>无引号句法<rt>unquoted syntax</rt></ruby>（用作<ruby>标记<rt>token</rt></ruby>），也允许使用<ruby>引号句法<rt>quoted syntax</rt></ruby>（用作<ruby>括号字符串<rt>quoted-string</rt></ruby>），使得接收端可以使用已有的解析组件。当允许使用上述两种形式的时候，参数值的含义应该不依赖于它所使用的句法（一个例子可以查看<a href="#org9cacf10">章节 3.1.1.1</a> 关于处理媒体类型的参数中的注意点）。
+某些头字段会使用一种格式——一种包含命名参数（不区分大小写）的格式，例如，定义在<a href="#org55c71b5">章节 3.1.1.5</a> 的 <code>Content-Type</code>。参数值既允许使用<ruby>无引号句法<rt>unquoted syntax</rt></ruby>（用作<ruby>标记<rt>token</rt></ruby>），也允许使用<ruby>引号句法<rt>quoted syntax</rt></ruby>（用作<ruby>括号字符串<rt>quoted-string</rt></ruby>），使得接收端可以使用已有的解析组件。当允许使用上述两种形式的时候，参数值的含义应该不依赖于它所使用的句法（一个例子可以查看<a href="#org9cacf10">章节 3.1.1.1</a> 关于处理媒体类型的参数中的注意点）。
 </p>
 
 <blockquote>
@@ -8106,7 +8106,7 @@ Attacks based on such special names tend to focus on either denial-of-service (e
 </blockquote>
 
 <p>
-其于这种特殊名称的攻击倾向于侧重<ruby>拒绝服务攻击<rt>denial-of-service</rt></ruby>（比如，告诉服务器去读取 COM 端口的数据）或者<ruby>泄露<rt>disclosure</rt></ruby>服务器并不想提供的配置和源文件。
+基于这种特殊名称的攻击倾向于侧重<ruby>拒绝服务攻击<rt>denial-of-service</rt></ruby>（比如，告诉服务器去读取 COM 端口的数据）或者<ruby>泄露<rt>disclosure</rt></ruby>服务器并不想提供的配置和源文件。
 </p>
 </div>
 </div>
@@ -8297,7 +8297,7 @@ In environments where proxies are used to enhance privacy, user agents ought to 
 </blockquote>
 
 <p>
-在代理用于加强隐私保护的环境中，用户代理应该<ruby>保守地<rt>conservative</rt></ruby>发送用于主动协商的头字段。提供对头字段高度配置功能的通用型用户代理应该告知用户：如果提供了过多的头字段细节的话，用户可能会关于<ruby>失去隐私<rt>loss of privacy</rt></ruby>。作为一种极端隐私的措施，代理可以在中转请求的时候，过滤掉所有主动协商的头字段。
+在代理用于加强隐私保护的环境中，用户代理应该<ruby>保守地<rt>conservative</rt></ruby>发送用于主动协商的头字段。提供对头字段高度配置功能的通用型用户代理应该告知用户：如果提供了过多的头字段细节的话，用户可能会<ruby>失去隐私<rt>loss of privacy</rt></ruby>。作为一种极端隐私的措施，代理可以在中转请求的时候，过滤掉所有主动协商的头字段。
 </p>
 </div>
 </div>
