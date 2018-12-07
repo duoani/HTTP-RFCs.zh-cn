@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-06 Thu 19:13 -->
+<!-- 2018-12-07 Fri 19:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7232: Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests</title>
@@ -406,17 +406,20 @@ for the JavaScript code in this tag.
 <li><a href="#org246112d">2. 验证器 / Validators</a>
 <ul>
 <li><a href="#org265ee00">2.1. 弱与强 / Weak versus Strong</a></li>
-<li><a href="#org3974cdd">2.2. Last-Modified</a></li>
-<li><a href="#org55436d6">2.2.1. Generation</a></li>
-<li><a href="#org21ffbba">2.2.2. Comparison</a></li>
-<li><a href="#orgf0f9907">2.3. ETag</a>
+<li><a href="#org3974cdd">2.2. Last-Modified</a>
 <ul>
-<li><a href="#org893de60">2.3.1. Generation</a></li>
-<li><a href="#orgef38b80">2.3.2. Comparison</a></li>
-<li><a href="#orge8cb238">2.3.3. Example: Entity-Tags Varying on Content-Negotiated Resources</a></li>
+<li><a href="#orgae2fffe">2.2.1. 生成 / Generation</a></li>
+<li><a href="#org29822b9">2.2.2. 对比 / Comparison</a></li>
 </ul>
 </li>
-<li><a href="#org6406f1a">2.4. When to Use Entity-Tags and Last-Modified Dates</a></li>
+<li><a href="#orgf0f9907">2.3. ETag</a>
+<ul>
+<li><a href="#orge4892c6">2.3.1. 生成 / Generation</a></li>
+<li><a href="#org078e6e7">2.3.2. 对比 / Comparison</a></li>
+<li><a href="#orga57841d">2.3.3. 示例：实体标签在内容协商资源上的变化 / Example: Entity-Tags Varying on Content-Negotiated Resources</a></li>
+</ul>
+</li>
+<li><a href="#org9ec4f9e">2.4. 什么时候使用实体标签和最后修改日期 / When to Use Entity-Tags and Last-Modified Dates</a></li>
 </ul>
 </li>
 <li><a href="#org895e757">3. 前置条件头字段 / Precondition Header Fields</a>
@@ -637,7 +640,7 @@ This specification defines two forms of metadata that are commonly used to obser
 </blockquote>
 
 <p>
-本规范定义了两类元数据：<ruby>日期修改<rt>modification dates</rt></ruby>（<a href="#org3974cdd">章节 2.2</a>）和<ruby>不透明实体标签<rt>opaque entity tags</rt></ruby>（<a href="#orgf0f9907">章节 2.3</a>），它们常用于观察资源的状态以及对前置条件进行测试。其他额外的反映资源状态的元数据定义在各种 HTTP 扩展当中，比如 <ruby>Web 分布式创作和版本管理<rt>Web Distributed Authoring and Versioning</rt></ruby>（WebDAV，【<a href="https://tools.ietf.org/html/rfc4918">RFC4918</a>】），超出了本规范的范畴。<ruby>资源元数据<rt>resource metadata</rt></ruby>的值使用在一个<ruby>前置条件<rt>precondition</rt></ruby>中的时候，它被称为“<ruby>验证器<rt>validator</rt></ruby>”。
+本规范定义了两类元数据：<ruby>修改日期<rt>modification dates</rt></ruby>（<a href="#org3974cdd">章节 2.2</a>）和<ruby>不透明实体标签<rt>opaque entity tags</rt></ruby>（<a href="#orgf0f9907">章节 2.3</a>），它们常用于观察资源的状态以及对前置条件进行测试。其他额外的反映资源状态的元数据定义在各种 HTTP 扩展当中，比如 <ruby>Web 分布式创作和版本管理<rt>Web Distributed Authoring and Versioning</rt></ruby>（WebDAV，【<a href="https://tools.ietf.org/html/rfc4918">RFC4918</a>】），超出了本规范的范畴。<ruby>资源元数据<rt>resource metadata</rt></ruby>的值使用在一个<ruby>前置条件<rt>precondition</rt></ruby>中的时候，它被称为“<ruby>验证器<rt>validator</rt></ruby>”。
 </p>
 
 <blockquote>
@@ -703,7 +706,7 @@ There are a variety of strong validators used in practice. The best are based on
 </blockquote>
 
 <p>
-实践中使用了各种各样的强验证器。最好的方式是基于<ruby>严格的版本控制<rt>strict revision control</rt></ruby>，在让 GET 访问之前，对其内的每一个表示形式的每一次修改总是会得到一个唯一的记录节点和版本标识符。要在将要发送响应头字段之前表示形式数据的数据就可使用并且在每次接收到一个验证请求时并不需要重新计算摘要的充分条件是对这份数据应用冲突保护的<ruby>散列方法<rt>hash function</rt></ruby>。但是，如果资源的某些表示形式的区别只在于它们的元数据的话，比如可能发生在忽略媒体类型的内容协商导致共享了相同的数据格式的情况，那么，源服务器需要在强验证器内加入额外的信息来区分这些表示形式。
+实践中使用了各种各样的强验证器。最好的方式是基于<ruby>严格的版本控制<rt>strict revision control</rt></ruby>，在让 GET 访问之前，对其内的每一个表示形式的每一次修改总是会得到一个唯一的记录节点和版本标识符。要在将要发送响应头字段之前表示形式数据的数据就可使用并且在每次接收到一个验证请求时并不需要重新计算摘要的充分条件是对这份数据应用<ruby>冲突保护<rt>collision-resistant</rt></ruby>的<ruby>散列方法<rt>hash function</rt></ruby>。但是，如果资源的某些表示形式的区别只在于它们的元数据的话，比如可能发生在忽略媒体类型的内容协商导致共享了相同的数据格式的情况，那么，源服务器需要在强验证器内加入额外的信息来区分这些表示形式。
 </p>
 
 <blockquote>
@@ -753,6 +756,10 @@ Likewise, a validator is weak if it is shared by two or more representations of 
 Strong validators are usable for all conditional requests, including cache validation, partial content ranges, and "lost update" avoidance. Weak validators are only usable when the client does not require exact equality with previously obtained representation data, such as when validating a cache entry or limiting a web traversal to recent changes.
 </p>
 </blockquote>
+
+<p>
+强验证器可使用于所有条件请求中，包括：缓存验证、部分内容范围、以及避免“丢失更新”。弱验证器仅能用于当客户端并不要求与之前所获得的表示形式数据完全相等的情况，比如当验证一个缓存条目或者限制一个网页遍历到最近的变更的情况。
+</p>
 </div>
 </div>
 
@@ -765,6 +772,10 @@ The "Last-Modified" header field in a response provides a timestamp indicating t
 </p>
 </blockquote>
 
+<p>
+响应里的 <code>Last-Modified</code> 头字段提供了一个时间戳，这个时间戳是指：源服务器认为这个<ruby>已选择的表示形式<rt>selected representation</rt></ruby>最后一次被修改的日期和时间。这个头字段是在请求处理结束时所确定的。
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">Last-Modified = HTTP-date
 </pre>
@@ -776,53 +787,76 @@ An example of its use is
 </p>
 </blockquote>
 
+<p>
+使用它的一个例子：
+</p>
+
 <pre class="example">
 Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT
 </pre>
 </div>
+
+<div id="outline-container-orgae2fffe" class="outline-4">
+<h4 id="orgae2fffe">2.2.1. 生成 / Generation</h4>
+<div class="outline-text-4" id="text-orgae2fffe">
+<blockquote>
+<p>
+An origin server <b>SHOULD</b> send <code>Last-Modified</code> for any selected representation for which a last modification date can be reasonably and consistently determined, since its use in conditional requests and evaluating cache freshness ([<a href="RFC7234.html">RFC7234</a>]) results in a substantial reduction of HTTP traffic on the Internet and can be a significant factor in improving service scalability and reliability.
+</p>
+</blockquote>
+
+<p>
+对于能够合理和统一确定最后修改日期的所有已选定表示形式，源服务器都 <b>应当</b> 发送 <code>Last-Modified</code>，这是因为这个头字段会用于条件请求中去对缓存的<ruby>新鲜度<rt>freshness</rt></ruby>进行求值（【<a href="RFC7234.html">RFC7234</a>】），从而降低接下来在互联网的 HTTP 流量成本，同时，它还是提升服务的<ruby>伸缩性<rt>scalability</rt></ruby>和<ruby>可靠性<rt>reliability</rt></ruby>的一个重要的因素。
+</p>
+
+<blockquote>
+<p>
+A representation is typically the sum of many parts behind the resource interface. The last-modified time would usually be the most recent time that any of those parts were changed. How that value is determined for any given resource is an implementation detail beyond the scope of this specification. What matters to HTTP is how recipients of the <code>Last-Modified</code> header field can use its value to make conditional requests and test the validity of locally cached responses.
+</p>
+</blockquote>
+
+<p>
+一个表示形式通常是由资源接口背后的许多部分组成的。最后修改时间一般是所有这些组成部分中最近一次出现改变的时间。如何为任意给定的资源来确定这个值，那是实现上的细节，已超出了本规范的范畴。HTTP 所关心的是 <code>Last-Modified</code> 头字段的接收端如何使用它的值来进行条件请求，以及测试本地缓存的响应的<ruby>有效性<rt>validity</rt></ruby>。
+</p>
+
+<blockquote>
+<p>
+An origin server <b>SHOULD</b> obtain the <code>Last-Modified</code> value of the representation as close as possible to the time that it generates the <code>Date</code> field value for its response. This allows a recipient to make an accurate assessment of the representation's modification time, especially if the representation changes near the time that the response is generated.
+</p>
+</blockquote>
+
+<p>
+源服务器 <b>应当</b> 尽可能获取靠近它对响应所生成的 <code>Date</code> 字段的时间来作为<ruby>表示形式<rt>representation</rt></ruby>的 <code>Last-Modified</code> 的值。这样，接收端就可以对表示形式的修改时间进行精确的评估，特别是如果表示形式在临近生成响应的时候又出现了变化。
+</p>
+
+<blockquote>
+<p>
+An origin server with a clock <b>MUST NOT</b> send a <code>Last-Modified</code> date that is later than the server's time of message origination (<code>Date</code>). If the last modification time is derived from implementation-specific metadata that evaluates to some time in the future, according to the origin server's clock, then the origin server <b>MUST</b> replace that value with the message origination date. This prevents a future modification date from having an adverse impact on cache validation.
+</p>
+</blockquote>
+
+<p>
+具备时钟功能的源服务器 <b>禁止</b> 发送一个比消息<ruby>创建<rt>origination</rt></ruby>的服务器时间（<code>Date</code>）还要晚的 <code>Last-Modified</code> 日期（译注：也就是说，响应里的 <code>Last-Modified</code> 字段的时间必须早于或等于 <code>Date</code> 字段的时间）。如果这个表示形式的最近修改的时间是源自<ruby>实现专用<rt>implementation-specific</rt></ruby>的元数据，而这些元数据依据源服务器的时钟计算得出最近修改时间是在将来某个时间，那么源服务器 <b>必须</b> 使用<ruby>消息的创建日期<rt>message origination date</rt></ruby>来替换这个值。这样做避免了一个将来的修改日期对缓存的验证的不利影响。
+</p>
+
+<blockquote>
+<p>
+An origin server without a clock <b>MUST NOT</b> assign <code>Last-Modified</code> values to a response unless these values were associated with the resource by some other system or user with a reliable clock.
+</p>
+</blockquote>
+
+<p>
+不具备时钟功能的源服务器 <b>禁止</b> 分配 <code>Last-Modified</code> 值到一个响应里，除非这些值是由某些具有可靠时钟功能的其他系统或用户关联到资源上的。
+</p>
+</div>
 </div>
 
-<div id="outline-container-org55436d6" class="outline-3">
-<h3 id="org55436d6">2.2.1. Generation</h3>
-<div class="outline-text-3" id="text-org55436d6">
+<div id="outline-container-org29822b9" class="outline-4">
+<h4 id="org29822b9">2.2.2. 对比 / Comparison</h4>
+<div class="outline-text-4" id="text-org29822b9">
 <blockquote>
 <p>
-An origin server SHOULD send Last-Modified for any selected representation for which a last modification date can be reasonably and consistently determined, since its use in conditional requests and evaluating cache freshness ([RFC7234]) results in a substantial reduction of HTTP traffic on the Internet and can be a significant factor in improving service scalability and reliability.
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-A representation is typically the sum of many parts behind the resource interface. The last-modified time would usually be the most recent time that any of those parts were changed. How that value is determined for any given resource is an implementation detail beyond the scope of this specification. What matters to HTTP is how recipients of the Last-Modified header field can use its value to make conditional requests and test the validity of locally cached responses.
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-An origin server SHOULD obtain the Last-Modified value of the representation as close as possible to the time that it generates the Date field value for its response. This allows a recipient to make an accurate assessment of the representation's modification time, especially if the representation changes near the time that the response is generated.
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-An origin server with a clock MUST NOT send a Last-Modified date that is later than the server's time of message origination (Date). If the last modification time is derived from implementation-specific metadata that evaluates to some time in the future, according to the origin server's clock, then the origin server MUST replace that value with the message origination date. This prevents a future modification date from having an adverse impact on cache validation.
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-An origin server without a clock MUST NOT assign Last-Modified values to a response unless these values were associated with the resource by some other system or user with a reliable clock.
-</p>
-</blockquote>
-</div>
-</div>
-
-<div id="outline-container-org21ffbba" class="outline-3">
-<h3 id="org21ffbba">2.2.2. Comparison</h3>
-<div class="outline-text-3" id="text-org21ffbba">
-<blockquote>
-<p>
-A Last-Modified time, when used as a validator in a request, is implicitly weak unless it is possible to deduce that it is strong, using the following rules:
+A <code>Last-Modified</code> time, when used as a validator in a request, is implicitly weak unless it is possible to deduce that it is strong, using the following rules:
 </p>
 
 <ul class="org-ul">
@@ -835,9 +869,9 @@ or
 </p>
 
 <ul class="org-ul">
-<li>The validator is about to be used by a client in an If-Modified-Since, If-Unmodified-Since, or If-Range header field, because the client has a cache entry for the associated representation, and</li>
-<li>That cache entry includes a Date value, which gives the time when the origin server sent the original response, and</li>
-<li>The presented Last-Modified time is at least 60 seconds before the Date value.</li>
+<li>The validator is about to be used by a client in an <code>If-Modified-Since</code>, <code>If-Unmodified-Since</code>, or <code>If-Range</code> header field, because the client has a cache entry for the associated representation, and</li>
+<li>That cache entry includes a <code>Date</code> value, which gives the time when the origin server sent the original response, and</li>
+<li>The presented <code>Last-Modified</code> time is at least 60 seconds before the <code>Date</code> value.</li>
 </ul>
 
 <p>
@@ -846,16 +880,58 @@ or
 
 <ul class="org-ul">
 <li>The validator is being compared by an intermediate cache to the validator stored in its cache entry for the representation, and</li>
-<li>That cache entry includes a Date value, which gives the time when the origin server sent the original response, and</li>
-<li>The presented Last-Modified time is at least 60 seconds before the Date value.</li>
+<li>That cache entry includes a <code>Date</code> value, which gives the time when the origin server sent the original response, and</li>
+<li>The presented <code>Last-Modified</code> time is at least 60 seconds before the <code>Date</code> value.</li>
 </ul>
 </blockquote>
 
+<p>
+当一个 <code>Last-Modified</code> 的时间用作一个请求里一个验证器的时候，这种使用方式暗示这个 <code>Last-Modified</code> 是弱验证类型，除非使用以下规则可以推断出它是强验证类型：
+</p>
+
+<ul class="org-ul">
+<li>源服务器会将这个验证器与表示形式的<ruby>当前真实的验证器<rt>actual current validator</rt></ruby>进行比较，并且</li>
+<li><p>
+源服务器可靠了解相关联的表示形式，在第二次适用这个在请求里出现的验证器期间（译注：也就是说，在源服务器通过了这次验证让客户端再次使用缓存的这段时间里），这些表示形式并不会被二次改变。
+</p>
+
 <blockquote>
 <p>
-This method relies on the fact that if two different responses were sent by the origin server during the same second, but both had the same Last-Modified time, then at least one of those responses would have a Date value equal to its Last-Modified time. The arbitrary 60-second limit guards against the possibility that the Date and Last-Modified values are generated from different clocks or at somewhat different times during the preparation of the response. An implementation MAY use a value larger than 60 seconds, if it is believed that 60 seconds is too short.
+译注：上述“这个验证器”指的是请求里带过来的 <code>Last-Modified</code>，之所以请求里会有这个字段，是因为在之前响应里，源服务器已经向客户端提供了这个资源表示形式的 Last-Modified。换句话说，这个请求已经是第二次（或以上）向源服务器请求同一个资源了。
+</p>
+</blockquote></li>
+</ul>
+
+<p>
+或者：
+</p>
+
+<ul class="org-ul">
+<li>这个验证器即将被客户端用于 <code>If-Modified-Since</code>、<code>If-Unmodified-Since</code>、或者 <code>If-Range</code> 头字段里，因为这个客户端有相关联的表示形式的缓存条目，并且</li>
+<li>这个缓存条目包含了一个 <code>Date</code> 值，给出了源服务器在什么时间发送这个原始响应，并且</li>
+<li>请求里出现的 <code>Last-Modified</code> 时间至少比这个 <code>Date</code> 值早 60 秒以上。</li>
+</ul>
+
+<p>
+或者：
+</p>
+
+<ul class="org-ul">
+<li>这个验证器会被一个中间人缓存服务器与存储在它的缓存条目中的对应的表示形式的验证器进行比较，并且</li>
+<li>这个缓存条目包含了一个 <code>Date</code> 值，给出了源服务器在什么时间发送这个原始响应，并且</li>
+<li>请求里出现的 <code>Last-Modified</code> 时间至少比这个 <code>Date</code> 值早 60 秒以上。</li>
+</ul>
+
+<blockquote>
+<p>
+This method relies on the fact that if two different responses were sent by the origin server during the same second, but both had the same <code>Last-Modified</code> time, then at least one of those responses would have a <code>Date</code> value equal to its <code>Last-Modified</code> time. The arbitrary 60-second limit guards against the possibility that the <code>Date</code> and <code>Last-Modified</code> values are generated from different clocks or at somewhat different times during the preparation of the response. An implementation <b>MAY</b> use a value larger than 60 seconds, if it is believed that 60 seconds is too short.
 </p>
 </blockquote>
+
+<p>
+上述这种方法是依赖于一个事实：如果两个不同的响应被源服务器在同一秒内发送，且两者都有相同的 <code>Last-Modified</code> 时间，那么，这些响应中至少有一个响应会带有其值与 <code>Last-Modified</code> 的时间相同的 <code>Date</code> 字段。这个随意设定的 60 秒限制是为是防止出现以下可能：<code>Date</code> 与 <code>Last-Modified</code> 的值是生成自不同的时钟，或者响应的准备时长有一点不同。如果<ruby>实现<rt>implementation</rt></ruby>认为 60 秒太短的话，它 <b>可以</b> 使用大于 60 秒的值。
+</p>
+</div>
 </div>
 </div>
 
@@ -865,6 +941,16 @@ This method relies on the fact that if two different responses were sent by the 
 <blockquote>
 <p>
 The "ETag" header field in a response provides the current entity-tag for the selected representation, as determined at the conclusion of handling the request. An entity-tag is an opaque validator for differentiating between multiple representations of the same resource, regardless of whether those multiple representations are due to resource state changes over time, content negotiation resulting in multiple representations being valid at the same time, or both. An entity-tag consists of an opaque quoted string, possibly prefixed by a weakness indicator.
+</p>
+</blockquote>
+
+<p>
+响应中的 <code>ETag</code> 头字段提供了已选定的表示形式当前的<ruby>实体标签<rt>entity-tag</rt></ruby>，这个头字段是在请求处理结束时所确定的。实体标签是一种<ruby>不透明的验证器<rt>opaque validator</rt></ruby>，以在同一个资源的不同表示形式之间进行区分，不管是由于资源状态随时间变化而产生的多个表示形式，还是内容协商的结果使同一时间内有多个合适的表示形式，还是两者都有（译注：也就是说，只要是同一个资源的表示形式，ETag 都能够进行区分，不管是以什么方式而产生的表示形式）。一个实体标签由一个<ruby>不透明的以引号包裹的字符串<rt>opaque quoted</rt></ruby>构成，可能会前置一个“弱验证”的指标符（"W/"）。
+</p>
+
+<blockquote>
+<p>
+译注：对于<ruby>不透明验证器<rt>opaque validator</rt></ruby>就是一种<ruby>不透明数据<rt>opaque data</rt></ruby>，对于不透明数据的解释见<a href="RFC7230.html#ID-1bd50237-cd26-4e74-8c0c-7af8d2d6b25f">【RFC7230】章节 3.2.4</a>末尾的译注。
 </p>
 </blockquote>
 
@@ -881,9 +967,13 @@ etagc      = %x21 / %x23-7E / obs-text
 
 <blockquote>
 <p>
-<b>Note:</b> Previously, opaque-tag was defined to be a quoted-string ([RFC2616], Section 3.11); thus, some recipients might perform backslash unescaping. Servers therefore ought to avoid backslash characters in entity tags.
+<b>Note:</b> Previously, opaque-tag was defined to be a quoted-string ([RFC2616], <a href="https://tools.ietf.org/html/rfc2616#section-3.11">Section 3.11</a>); thus, some recipients might perform backslash unescaping. Servers therefore ought to avoid backslash characters in entity tags.
 </p>
 </blockquote>
+
+<p>
+<b>注意：</b>  之前，<code>opaque-tag</code> 是定义为一个 <code>quoted-string</code> 的（<a href="https://tools.ietf.org/html/rfc2616#section-3.11">【RFC2616】章节 3.11</a>），由此，某些接收端可能会执行<ruby>反斜杠的逆转义<rt>backslash unescaping</rt></ruby>。所以，服务器应该避免在实体标签内出现反斜杠字符。
+</p>
 
 <blockquote>
 <p>
@@ -891,11 +981,19 @@ An entity-tag can be more reliable for validation than a modification date in si
 </p>
 </blockquote>
 
+<p>
+在以下这些情况下，基于<ruby>实体标签<rt>entity-tag</rt></ruby>的验证比<ruby>修改日期<rt>modification date</rt></ruby>更加可靠：不方便保存修改日期的情况；使用时间精度为 1 秒的 HTTP 日期不能满足需求的情况；修改日期不能<ruby>一直维持<rt>consistently maintained</rt></ruby>的情况。
+</p>
+
 <blockquote>
 <p>
 Examples:
 </p>
 </blockquote>
+
+<p>
+<code>ETag</code> 的例子：
+</p>
 
 <pre class="example">
 ETag: "xyzzy"
@@ -905,19 +1003,27 @@ ETag: ""
 
 <blockquote>
 <p>
-An entity-tag can be either a weak or strong validator, with strong being the default. If an origin server provides an entity-tag for a representation and the generation of that entity-tag does not satisfy all of the characteristics of a strong validator (Section 2.1), then the origin server MUST mark the entity-tag as weak by prefixing its opaque value with "W/" (case-sensitive).
+An entity-tag can be either a weak or strong validator, with strong being the default. If an origin server provides an entity-tag for a representation and the generation of that entity-tag does not satisfy all of the characteristics of a strong validator (<a href="#org265ee00">Section 2.1</a>), then the origin server <b>MUST</b> mark the entity-tag as weak by prefixing its opaque value with "W/" (case-sensitive).
 </p>
 </blockquote>
+
+<p>
+实体标签可以是一个弱验证器，也可以是一个强验证器，默认是强验证器。如果源服务器为一个表示形式提供了一个实体标签，但这个实体标签的生成并不能满足作为一个强验证器的所有特征（<a href="#org265ee00">章节 2.1</a>），那么，源服务器 <b>必须</b> 将这个实体标签标记为弱验证类型，具体是通过在它的不透明值的前面放置一个 "W/"（区分大小写）。
+</p>
 </div>
 
-<div id="outline-container-org893de60" class="outline-4">
-<h4 id="org893de60">2.3.1. Generation</h4>
-<div class="outline-text-4" id="text-org893de60">
+<div id="outline-container-orge4892c6" class="outline-4">
+<h4 id="orge4892c6">2.3.1. 生成 / Generation</h4>
+<div class="outline-text-4" id="text-orge4892c6">
 <blockquote>
 <p>
 The principle behind entity-tags is that only the service author knows the implementation of a resource well enough to select the most accurate and efficient validation mechanism for that resource, and that any such mechanism can be mapped to a simple sequence of octets for easy comparison. Since the value is opaque, there is no need for the client to be aware of how each entity-tag is constructed.
 </p>
 </blockquote>
+
+<p>
+实体标签背后的原理是：只有<ruby>服务创造者<rt>service author</rt></ruby>才懂得选择资源的最精确和最有效的验证机制的实现方法，而且所述的任何机制都可以映射为一组简单的字节序列来轻易对比。正因为这个值是不透明的，因此，客户端不需要了解每一个实体标签是如何构建的。
+</p>
 
 <blockquote>
 <p>
@@ -925,17 +1031,25 @@ For example, a resource that has implementation-specific versioning applied to a
 </p>
 </blockquote>
 
+<p>
+例如，某个实现具有<ruby>实现专用<rt>implementation-specific</rt></ruby>的版本管理功能，可以对资源的对所有改变进行版本管理，那么某个资源就可以使用一个内部修订号，可能会结合一个与内容协商所不同的标识符，来精确地区分所有表示形式。其他实现可能使用表示形式内容的一个<ruby>冲突保护<rt>collision-resistant</rt></ruby>散列，或者多个文件属性的结合，或者一个精度为<ruby>亚秒级<rt>sub-second</rt></ruby>的修改时间戳。
+</p>
+
 <blockquote>
 <p>
-An origin server SHOULD send an ETag for any selected representation for which detection of changes can be reasonably and consistently determined, since the entity-tag's use in conditional requests and evaluating cache freshness ([RFC7234]) can result in a substantial reduction of HTTP network traffic and can be a significant factor in improving service scalability and reliability.
+An origin server <b>SHOULD</b> send an <code>ETag</code> for any selected representation for which detection of changes can be reasonably and consistently determined, since the entity-tag's use in conditional requests and evaluating cache freshness ([<a href="RFC7234.html">RFC7234</a>]) can result in a substantial reduction of HTTP network traffic and can be a significant factor in improving service scalability and reliability.
 </p>
 </blockquote>
+
+<p>
+源服务器 <b>应当</b> 发送一个 <code>ETag</code>，因为实体标签在条件请求以及<ruby>缓存新鲜度评估<rt>evaluation cache freshness</rt></ruby>（【<a href="RFC7234.html">RFC7234</a>】）上的应用能够显著降低 HTTP 网络流量成本，同时，它还是提升服务的<ruby>伸缩性<rt>scalability</rt></ruby>和<ruby>可靠性<rt>reliability</rt></ruby>的一个重要的因素。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgef38b80" class="outline-4">
-<h4 id="orgef38b80">2.3.2. Comparison</h4>
-<div class="outline-text-4" id="text-orgef38b80">
+<div id="outline-container-org078e6e7" class="outline-4">
+<h4 id="org078e6e7"><a id="ID-e3a6dda6-2209-44aa-89af-c37f1b95c2fe"></a>2.3.2. 对比 / Comparison</h4>
+<div class="outline-text-4" id="text-org078e6e7">
 <blockquote>
 <p>
 There are two entity-tag comparison functions, depending on whether or not the comparison context allows the use of weak validators:
@@ -947,11 +1061,24 @@ There are two entity-tag comparison functions, depending on whether or not the c
 </ul>
 </blockquote>
 
+<p>
+有两种实体标签的对比方法，取决于<ruby>对比场景<rt>comparison context</rt></ruby>里是否允许使用弱验证器：
+</p>
+
+<ul class="org-ul">
+<li>强对比：当两个实体标签都不是弱验证类型，并且它们的 <code>opaque-tags</code> 里的字符一一匹配，那么，这两个实体标签是相等的。</li>
+<li>弱对比：当两个实体标签的 <code>opaque-tags</code> 里的字符一一匹配，而不必理会它们之中是否有被标记为弱类型（"W/"），那么，这两个实体标签是相等的。</li>
+</ul>
+
 <blockquote>
 <p>
 The example below shows the results for a set of entity-tag pairs and both the weak and strong comparison function results:
 </p>
 </blockquote>
+
+<p>
+下面的例子展示了一组实体标签使用弱对比方法和强对比方法的比较结果：
+</p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1006,20 +1133,28 @@ The example below shows the results for a set of entity-tag pairs and both the w
 </div>
 </div>
 
-<div id="outline-container-orge8cb238" class="outline-4">
-<h4 id="orge8cb238">2.3.3. Example: Entity-Tags Varying on Content-Negotiated Resources</h4>
-<div class="outline-text-4" id="text-orge8cb238">
+<div id="outline-container-orga57841d" class="outline-4">
+<h4 id="orga57841d">2.3.3. 示例：实体标签在内容协商资源上的变化 / Example: Entity-Tags Varying on Content-Negotiated Resources</h4>
+<div class="outline-text-4" id="text-orga57841d">
 <blockquote>
 <p>
-Consider a resource that is subject to content negotiation (Section 3.4 of [RFC7231]), and where the representations sent in response to a GET request vary based on the Accept-Encoding request header field (Section 5.3.4 of [RFC7231]):
+Consider a resource that is subject to content negotiation (<a href="RFC7231.html#ID-c45cb9ca-1e51-4738-8c43-231e7316ea86">Section 3.4</a> of [RFC7231]), and where the representations sent in response to a GET request vary based on the <code>Accept-Encoding</code> request header field (<a href="RFC7231.html#ID-a8fcc101-3782-4ed0-aec0-561b933e6a5f">Section 5.3.4</a> of [RFC7231]):
 </p>
 </blockquote>
+
+<p>
+假设一个资源受控于<ruby>内容协商<rt>content negotiation</rt></ruby>（<a href="RFC7231.html#ID-c45cb9ca-1e51-4738-8c43-231e7316ea86">【RFC7231】章节 3.4</a>），在回应给一个 GET 请求的响应中，发送哪一种表示形式是基于 <code>Accept-Encoding</code> 请求头字段（<a href="RFC7231.html#ID-a8fcc101-3782-4ed0-aec0-561b933e6a5f">【RFC7231】章节 5.3.4</a>）的不同而改变：
+</p>
 
 <blockquote>
 <p>
 &gt;&gt; Request:
 </p>
 </blockquote>
+
+<p>
+&gt;&gt; 请求：
+</p>
 
 <pre class="example">
 GET /index HTTP/1.1
@@ -1030,15 +1165,23 @@ Accept-Encoding: gzip
 
 <blockquote>
 <p>
-In this case, the response might or might not use the gzip content coding. If it does not, the response might look like:
+In this case, the response might or might not use the <code>gzip</code> content coding. If it does not, the response might look like:
 </p>
 </blockquote>
+
+<p>
+在这种情况，响应可能使用或不使用 <code>gzip</code> 内容编码。如果它不使用，那么响应可能看起来是这样的：
+</p>
 
 <blockquote>
 <p>
 &gt;&gt; Response:
 </p>
 </blockquote>
+
+<p>
+&gt;&gt; 响应：
+</p>
 
 <pre class="example">
 HTTP/1.1 200 OK
@@ -1057,15 +1200,23 @@ Hello World!
 
 <blockquote>
 <p>
-An alternative representation that does use gzip content coding would be:
+An alternative representation that does use <code>gzip</code> content coding would be:
 </p>
 </blockquote>
+
+<p>
+而使用 gzip 内容编码的表示形式可能是这样的：
+</p>
 
 <blockquote>
 <p>
 &gt;&gt; Response:
 </p>
 </blockquote>
+
+<p>
+&gt;&gt; 响应：
+</p>
 
 <pre class="example">
 HTTP/1.1 200 OK
@@ -1081,33 +1232,51 @@ Content-Encoding: gzip
 
 <blockquote>
 <p>
-Note: Content codings are a property of the representation data, so a strong entity-tag for a content-encoded representation has to be distinct from the entity tag of an unencoded representation to prevent potential conflicts during cache updates and range requests. In contrast, transfer codings (Section 4 of [RFC7230]) apply only during message transfer and do not result in distinct entity-tags.
+<b>Note:</b> Content codings are a property of the representation data, so a strong entity-tag for a content-encoded representation has to be distinct from the entity tag of an unencoded representation to prevent potential conflicts during cache updates and range requests. In contrast, transfer codings (<a href="RFC7230.html#ID-F7261A9D-8DF2-4A92-B8E8-D8F346005C6C">Section 4</a> of [RFC7230]) apply only during message transfer and do not result in distinct entity-tags.
 </p>
 </blockquote>
+
+<p>
+<b>注意：</b> <ruby>内容编码值<rt>content codings</rt></ruby>是表示形式数据的一种属性，因此，<ruby>经内容编码过<rt>content-encoded</rt></ruby>的表示形式的强实体标签必须区别于它的<ruby>未编码过<rt>unencoded</rt></ruby>的版本的强实体标签，以避免在缓存更新或<ruby>范围请求<rt>range requests</rt></ruby>期间可能发生的冲突。作为对比，传输编码值（<a href="RFC7230.html#ID-F7261A9D-8DF2-4A92-B8E8-D8F346005C6C">【RFC7230】章节 4</a>）仅作用于消息传输的期间，并不会导致实体标签的不同。
+</p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6406f1a" class="outline-3">
-<h3 id="org6406f1a">2.4. When to Use Entity-Tags and Last-Modified Dates</h3>
-<div class="outline-text-3" id="text-org6406f1a">
+<div id="outline-container-org9ec4f9e" class="outline-3">
+<h3 id="org9ec4f9e">2.4. 什么时候使用实体标签和最后修改日期 / When to Use Entity-Tags and Last-Modified Dates</h3>
+<div class="outline-text-3" id="text-org9ec4f9e">
 <blockquote>
 <p>
-In 200 (OK) responses to GET or HEAD, an origin server:
+In <code>200 (OK)</code> responses to GET or HEAD, an origin server:
 </p>
 
 <ul class="org-ul">
-<li>SHOULD send an entity-tag validator unless it is not feasible to generate one.</li>
-<li>MAY send a weak entity-tag instead of a strong entity-tag, if performance considerations support the use of weak entity-tags, or if it is unfeasible to send a strong entity-tag.</li>
-<li>SHOULD send a Last-Modified value if it is feasible to send one.</li>
+<li><b>SHOULD</b> send an entity-tag validator unless it is not feasible to generate one.</li>
+<li><b>MAY</b> send a weak entity-tag instead of a strong entity-tag, if performance considerations support the use of weak entity-tags, or if it is unfeasible to send a strong entity-tag.</li>
+<li><b>SHOULD</b> send a <code>Last-Modified</code> value if it is feasible to send one.</li>
 </ul>
 </blockquote>
 
+<p>
+在回应给 GET 或者 HEAD 的 <code>200 (OK)</code> 响应中，对于服务器：
+</p>
+
+<ul class="org-ul">
+<li><b>应当</b> 发送一个实体标签验证器，除非对于它来说生成一个实体标签验证器是<ruby>不可行的<rt>not feasible</rt></ruby>。</li>
+<li><b>可以</b> 发送一个弱比较类型的实体标签而不是强比较类型标签，如果出于性能方面的考虑支持弱比较类型的实体标签的使用，或者生成一个强比较类型的实体标签是不可行的。</li>
+<li><b>应当</b> 发送一个 <code>Last-Modified</code> 值，如果对于它来说发送一个 <code>Last_modified</code> 是可行的话。</li>
+</ul>
+
 <blockquote>
 <p>
-In other words, the preferred behavior for an origin server is to send both a strong entity-tag and a Last-Modified value in successful responses to a retrieval request.
+In other words, the preferred behavior for an origin server is to send both a strong entity-tag and a <code>Last-Modified</code> value in successful responses to a retrieval request.
 </p>
 </blockquote>
+
+<p>
+换句话说，源服务器的首选的行为是在回应给一个检索请求（译注：例如 HTTP GET 请求）的成功响应中，既发送一个强实体标签，也发送一个 <code>Last-Modified</code> 值。
+</p>
 
 <blockquote>
 <p>
@@ -1115,12 +1284,23 @@ A client:
 </p>
 
 <ul class="org-ul">
-<li>MUST send that entity-tag in any cache validation request (using If-Match or If-None-Match) if an entity-tag has been provided by the origin server.</li>
-<li>SHOULD send the Last-Modified value in non-subrange cache validation requests (using If-Modified-Since) if only a Last-Modified value has been provided by the origin server.</li>
-<li>MAY send the Last-Modified value in subrange cache validation requests (using If-Unmodified-Since) if only a Last-Modified value has been provided by an HTTP/1.0 origin server. The user agent SHOULD provide a way to disable this, in case of difficulty.</li>
-<li>SHOULD send both validators in cache validation requests if both an entity-tag and a Last-Modified value have been provided by the origin server. This allows both HTTP/1.0 and HTTP/1.1 caches to respond appropriately.</li>
+<li><b>MUST</b> send that entity-tag in any cache validation request (using <code>If-Match</code> or <code>If-None-Match</code>) if an entity-tag has been provided by the origin server.</li>
+<li><b>SHOULD</b> send the <code>Last-Modified</code> value in non-subrange cache validation requests (using <code>If-Modified-Since</code>) if only a <code>Last-Modified</code> value has been provided by the origin server.</li>
+<li><b>MAY</b> send the <code>Last-Modified</code> value in subrange cache validation requests (using <code>If-Unmodified-Since</code>) if only a <code>Last-Modified</code> value has been provided by an HTTP/1.0 origin server. The user agent <b>SHOULD</b> provide a way to disable this, in case of difficulty.</li>
+<li><b>SHOULD</b> send both validators in cache validation requests if both an entity-tag and a <code>Last-Modified</code> value have been provided by the origin server. This allows both HTTP/1.0 and HTTP/1.1 caches to respond appropriately.</li>
 </ul>
 </blockquote>
+
+<p>
+对于客户端：
+</p>
+
+<ul class="org-ul">
+<li><b>必须</b> 在任何<ruby>缓存验证请求<rt>cache validation request</rt></ruby>中发送实体标签（使用 <code>If-Match</code> 或者 <code>If-None-Match</code> 来发送），如果源服务器已经提供了一个实体标签的话。</li>
+<li><b>应当</b> 在<ruby>非子范围的缓存验证请求<rt>non-subrange cache validation requests</rt></ruby>中发送 <code>Last-Modified</code> 值（使用 <code>If-Modified-Since</code>），如果源服务器只提供了一个 <code>Last-Modified</code> 值（译注：即没有实体标签）的话。</li>
+<li><b>可以</b> 在<ruby>子范围缓存验证请求<rt>subrange cache validation requests</rt></ruby>中发送 <code>Last-Modified</code> 值（使用 <code>If-Unmodified-Since</code>），如果版本为 HTTP/1.0 的源服务器只提供了一个 <code>Last-Modified</code> 值的话。如果用户代理有困难的话，<b>应当</b> 提供一种途径来禁用这种行为。</li>
+<li><b>应当</b> 在缓存验证请求中将两种验证器都发送，如果源服务器既提供了一个实体标签，也提供了一个 <code>Last-Modified</code> 值的话。这样使得 HTTP/1.0 和 HTTP/1.1 的缓存服务器都可以恰当地响应请求。</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1130,9 +1310,13 @@ A client:
 <div class="outline-text-2" id="text-org895e757">
 <blockquote>
 <p>
-This section defines the syntax and semantics of HTTP/1.1 header fields for applying preconditions on requests. Section 5 defines when the preconditions are applied. Section 6 defines the order of evaluation when more than one precondition is present.
+This section defines the syntax and semantics of HTTP/1.1 header fields for applying preconditions on requests. <a href="#org8287389">Section 5</a> defines when the preconditions are applied. <a href="#org35abd07">Section 6</a> defines the order of evaluation when more than one precondition is present.
 </p>
 </blockquote>
+
+<p>
+本章节定义了用于在请求中应用<ruby>前置条件<rt>precondition</rt></ruby>的 HTTP/1.1 头字段的句法和语义。<a href="#org8287389">章节 5</a> 定义了前置条件会在什么时候被应用。<a href="#org35abd07">章节 6</a> 定义了当出现超过一种前置条件的时候它们的求值顺序。
+</p>
 </div>
 
 <div id="outline-container-org220193c" class="outline-3">
@@ -1144,11 +1328,23 @@ The "If-Match" header field makes the request method conditional on the recipien
 </p>
 </blockquote>
 
+<p>
+<code>If-Match</code> 头字段使得请求方法带有条件，接收端服务器仅在满足以下条件才会返回资源：
+</p>
+<ul class="org-ul">
+<li>当字段值为 "*" 的时候，目标资源存在至少一个当前表示形式，或者</li>
+<li>目标资源存在一个当前表示形式，这个表示形式带有一个实体标签与此字段值所列出的实体标签之一相匹配。</li>
+</ul>
+
 <blockquote>
 <p>
-An origin server MUST use the strong comparison function when comparing entity-tags for If-Match (Section 2.3.2), since the client intends this precondition to prevent the method from being applied if there have been any changes to the representation data.
+An origin server <b>MUST</b> use the strong comparison function when comparing entity-tags for <code>If-Match</code> (<a href="#org078e6e7">Section 2.3.2</a>), since the client intends this precondition to prevent the method from being applied if there have been any changes to the representation data.
 </p>
 </blockquote>
+
+<p>
+当源服务器对 <code>If-Match</code> 的实体标签进行对比的时候（<a href="#org078e6e7">章节 2.3.2</a>），源服务器 <b>必须</b> 使用强比较方法，这是因为客户端打算让这个前置条件来防止本执行本方法，如果表示形式数据有任何变化的话。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">If-Match = "*" / 1#entity-tag
@@ -1161,6 +1357,10 @@ Examples:
 </p>
 </blockquote>
 
+<p>
+示例：
+</p>
+
 <pre class="example">
 If-Match: "xyzzy"
 If-Match: "xyzzy", "r2d2xxxx", "c3piozzzz"
@@ -1169,7 +1369,7 @@ If-Match: *
 
 <blockquote>
 <p>
-If-Match is most often used with state-changing methods (e.g., POST, PUT, DELETE) to prevent accidental overwrites when multiple user agents might be acting in parallel on the same resource (i.e., to prevent the "lost update" problem). It can also be used with safe methods to abort a request if the selected representation does not match one already stored (or partially stored) from a prior request.
+<code>If-Match</code> is most often used with state-changing methods (e.g., POST, PUT, DELETE) to prevent accidental overwrites when multiple user agents might be acting in parallel on the same resource (i.e., to prevent the "lost update" problem). It can also be used with safe methods to abort a request if the selected representation does not match one already stored (or partially stored) from a prior request.
 </p>
 </blockquote>
 
