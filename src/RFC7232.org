@@ -196,6 +196,8 @@ Likewise, a validator is weak if it is shared by two or more representations of 
 Strong validators are usable for all conditional requests, including cache validation, partial content ranges, and "lost update" avoidance. Weak validators are only usable when the client does not require exact equality with previously obtained representation data, such as when validating a cache entry or limiting a web traversal to recent changes.
 #+END_QUOTE
 
+强验证器可使用于所有条件请求中，包括：缓存验证、部分内容范围、以及避免“丢失更新”。弱验证器仅能用于当客户端并不要求与之前所获得的表示形式数据完全相等的情况，比如当验证一个缓存条目或者限制一个网页遍历到最近的变更的情况。
+
 ** 2.2. Last-Modified
 :PROPERTIES:
 :ID:       9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840
@@ -205,6 +207,8 @@ Strong validators are usable for all conditional requests, including cache valid
 The "Last-Modified" header field in a response provides a timestamp indicating the date and time at which the origin server believes the selected representation was last modified, as determined at the conclusion of handling the request.
 #+END_QUOTE
 
+响应里的 =Last-Modified= 头字段提供了一个时间戳，这个时间戳是指：源服务器在处理完这个请求时所认为的这个[[ruby:selected%20representation][已选择的表示形式]]最后一次修改过的日期和时间。
+
 #+BEGIN_SRC text
   Last-Modified = HTTP-date
 #+END_SRC
@@ -213,33 +217,45 @@ The "Last-Modified" header field in a response provides a timestamp indicating t
 An example of its use is
 #+END_QUOTE
 
+使用它的一个例子：
+
 #+BEGIN_EXAMPLE
   Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT
 #+END_EXAMPLE
 
-** 2.2.1. Generation
+** 2.2.1. 生成 / Generation
 
 #+BEGIN_QUOTE
-An origin server SHOULD send Last-Modified for any selected representation for which a last modification date can be reasonably and consistently determined, since its use in conditional requests and evaluating cache freshness ([RFC7234]) results in a substantial reduction of HTTP traffic on the Internet and can be a significant factor in improving service scalability and reliability.
+An origin server *SHOULD* send =Last-Modified= for any selected representation for which a last modification date can be reasonably and consistently determined, since its use in conditional requests and evaluating cache freshness ([[[file:RFC7234.org][RFC7234]]]) results in a substantial reduction of HTTP traffic on the Internet and can be a significant factor in improving service scalability and reliability.
 #+END_QUOTE
+
+对于能够合理和统一确定最后修改日期的所有已选定表示形式，源服务器都 *应当* 发送 =Last-Modified=，这是因为这个头字段会用于条件请求中去对缓存的[[ruby:freshness][新鲜度]]进行求值（【[[file:RFC7234.org][RFC7234]]】），从而降低接下来在互联网的 HTTP 流量成本，同时，它还是提升服务的[[ruby:scalability][伸缩性]]和[[ruby:reliability][可靠性]]的一个重要的因素。
 
 #+BEGIN_QUOTE
-A representation is typically the sum of many parts behind the resource interface. The last-modified time would usually be the most recent time that any of those parts were changed. How that value is determined for any given resource is an implementation detail beyond the scope of this specification. What matters to HTTP is how recipients of the Last-Modified header field can use its value to make conditional requests and test the validity of locally cached responses.
+A representation is typically the sum of many parts behind the resource interface. The last-modified time would usually be the most recent time that any of those parts were changed. How that value is determined for any given resource is an implementation detail beyond the scope of this specification. What matters to HTTP is how recipients of the =Last-Modified= header field can use its value to make conditional requests and test the validity of locally cached responses.
 #+END_QUOTE
+
+一个表示形式通常是由资源接口背后的许多部分组成的。最后修改时间一般是所有这些组成部分中最近一次出现改变的时间。如何为任意给定的资源来确定这个值，那是实现上的细节，已超出了本规范的范畴。HTTP 所关心的是 =Last-Modified= 头字段的接收端如何使用它的值来进行条件请求，以及测试本地缓存的响应的[[ruby:validity][有效性]]。
 
 #+BEGIN_QUOTE
-An origin server SHOULD obtain the Last-Modified value of the representation as close as possible to the time that it generates the Date field value for its response. This allows a recipient to make an accurate assessment of the representation's modification time, especially if the representation changes near the time that the response is generated.
+An origin server *SHOULD* obtain the =Last-Modified= value of the representation as close as possible to the time that it generates the =Date= field value for its response. This allows a recipient to make an accurate assessment of the representation's modification time, especially if the representation changes near the time that the response is generated.
 #+END_QUOTE
+
+源服务器 *应当* 尽可能获取靠近它对响应所生成的 =Date= 字段的时间来作为[[ruby:representation][表示形式]]的 =Last-Modified= 的值。这样，接收端就可以对表示形式的修改时间进行精确的评估，特别是如果表示形式在临近生成响应的时候又出现了变化。
 
 #+BEGIN_QUOTE
-An origin server with a clock MUST NOT send a Last-Modified date that is later than the server's time of message origination (Date). If the last modification time is derived from implementation-specific metadata that evaluates to some time in the future, according to the origin server's clock, then the origin server MUST replace that value with the message origination date. This prevents a future modification date from having an adverse impact on cache validation.
+An origin server with a clock *MUST NOT* send a =Last-Modified= date that is later than the server's time of message origination (=Date=). If the last modification time is derived from implementation-specific metadata that evaluates to some time in the future, according to the origin server's clock, then the origin server *MUST* replace that value with the message origination date. This prevents a future modification date from having an adverse impact on cache validation.
 #+END_QUOTE
+
+具备时钟功能的源服务器 *禁止* 发送一个比消息[[ruby:origination][创建]]的服务器时间（=Date=）还要晚的 =Last-Modified= 日期（译注：也就是说，响应里的 =Last-Modified= 字段的时间必须早于或等于 =Date= 字段的时间）。如果这个表示形式的最近修改的时间是源自特定实现的元数据，而这些元数据依据源服务器的时钟计算得出最近修改时间是在将来某个时间，那么源服务器 *必须* 使用[[ruby:message%20origination%20date][消息的创建日期]]来替换这个值。这样做避免了一个将来的修改日期对缓存的验证的不利影响。
 
 #+BEGIN_QUOTE
-An origin server without a clock MUST NOT assign Last-Modified values to a response unless these values were associated with the resource by some other system or user with a reliable clock.
+An origin server without a clock *MUST NOT* assign =Last-Modified= values to a response unless these values were associated with the resource by some other system or user with a reliable clock.
 #+END_QUOTE
 
-** 2.2.2. Comparison
+不具备时钟功能的源服务器 *禁止* 分配 =Last-Modified= 值到一个响应里，除非这些值是由某些具有可靠时钟功能的其他系统或用户关联到资源上的。
+
+** 2.2.2. 对比 / Comparison
 
 #+BEGIN_QUOTE
 A Last-Modified time, when used as a validator in a request, is implicitly weak unless it is possible to deduce that it is strong, using the following rules:
