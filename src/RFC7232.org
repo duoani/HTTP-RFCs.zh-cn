@@ -379,6 +379,9 @@ An origin server *SHOULD* send an =ETag= for any selected representation for whi
 源服务器 *应当* 发送一个 =ETag=，因为实体标签在条件请求以及[[ruby:evaluation%20cache%20freshness][缓存新鲜度评估]]（【[[file:RFC7234.org][RFC7234]]】）上的应用能够显著降低 HTTP 网络流量成本，同时，它还是提升服务的[[ruby:scalability][伸缩性]]和[[ruby:reliability][可靠性]]的一个重要的因素。
 
 *** 2.3.2. 对比 / Comparison
+:PROPERTIES:
+:ID:       e3a6dda6-2209-44aa-89af-c37f1b95c2fe
+:END:
 
 #+BEGIN_QUOTE
 There are two entity-tag comparison functions, depending on whether or not the comparison context allows the use of weak validators:
@@ -496,7 +499,7 @@ In =200 (OK)= responses to GET or HEAD, an origin server:
 在回应给 GET 或者 HEAD 的 =200 (OK)= 响应中，对于服务器：
 
 - *应当* 发送一个实体标签验证器，除非对于它来说生成一个实体标签验证器是[[ruby:not%20feasible][不可行的]]。
-- *可以* 发送一个弱类型的实体标签而不是强类型标签，如果出于性能方面的考虑支持弱实体标签的使用，或者生成一个强实体标签是不可行的。
+- *可以* 发送一个弱比较类型的实体标签而不是强比较类型标签，如果出于性能方面的考虑支持弱比较类型的实体标签的使用，或者生成一个强比较类型的实体标签是不可行的。
 - *应当* 发送一个 =Last-Modified= 值，如果对于它来说发送一个 =Last_modified= 是可行的话。
 
 #+BEGIN_QUOTE
@@ -527,8 +530,10 @@ A client:
 :END:
 
 #+BEGIN_QUOTE
-This section defines the syntax and semantics of HTTP/1.1 header fields for applying preconditions on requests. Section 5 defines when the preconditions are applied. Section 6 defines the order of evaluation when more than one precondition is present.
+This section defines the syntax and semantics of HTTP/1.1 header fields for applying preconditions on requests. [[id:fce45320-6c1c-4486-a32b-2c553780d785][Section 5]] defines when the preconditions are applied. [[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][Section 6]] defines the order of evaluation when more than one precondition is present.
 #+END_QUOTE
+
+本章节定义了用于在请求中应用[[ruby:precondition][前置条件]]的 HTTP/1.1 头字段的句法和语义。[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]] 定义了前置条件会在什么时候被应用。[[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][章节 6]] 定义了当出现超过一种前置条件的时候它们的求值顺序。
 
 ** 3.1. If-Match
 :PROPERTIES:
@@ -539,9 +544,15 @@ This section defines the syntax and semantics of HTTP/1.1 header fields for appl
 The "If-Match" header field makes the request method conditional on the recipient origin server either having at least one current representation of the target resource, when the field-value is "*", or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.
 #+END_QUOTE
 
+=If-Match= 头字段使得请求方法带有条件，接收端服务器仅在满足以下条件才会返回资源：
+- 当字段值为 "*" 的时候，目标资源存在至少一个当前表示形式，或者
+- 目标资源存在一个当前表示形式，这个表示形式带有一个实体标签与此字段值所列出的实体标签之一相匹配。
+
 #+BEGIN_QUOTE
-An origin server MUST use the strong comparison function when comparing entity-tags for If-Match (Section 2.3.2), since the client intends this precondition to prevent the method from being applied if there have been any changes to the representation data.
+An origin server *MUST* use the strong comparison function when comparing entity-tags for =If-Match= ([[id:e3a6dda6-2209-44aa-89af-c37f1b95c2fe][Section 2.3.2]]), since the client intends this precondition to prevent the method from being applied if there have been any changes to the representation data.
 #+END_QUOTE
+
+当源服务器对 =If-Match= 的实体标签进行对比的时候（[[id:e3a6dda6-2209-44aa-89af-c37f1b95c2fe][章节 2.3.2]]），源服务器 *必须* 使用强比较方法，这是因为客户端打算让这个前置条件来防止本执行本方法，如果表示形式数据有任何变化的话。
 
 #+BEGIN_SRC text
   If-Match = "*" / 1#entity-tag
@@ -551,6 +562,8 @@ An origin server MUST use the strong comparison function when comparing entity-t
 Examples:
 #+END_QUOTE
 
+示例：
+
 #+BEGIN_EXAMPLE
   If-Match: "xyzzy"
   If-Match: "xyzzy", "r2d2xxxx", "c3piozzzz"
@@ -558,7 +571,7 @@ Examples:
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-If-Match is most often used with state-changing methods (e.g., POST, PUT, DELETE) to prevent accidental overwrites when multiple user agents might be acting in parallel on the same resource (i.e., to prevent the "lost update" problem). It can also be used with safe methods to abort a request if the selected representation does not match one already stored (or partially stored) from a prior request.
+=If-Match= is most often used with state-changing methods (e.g., POST, PUT, DELETE) to prevent accidental overwrites when multiple user agents might be acting in parallel on the same resource (i.e., to prevent the "lost update" problem). It can also be used with safe methods to abort a request if the selected representation does not match one already stored (or partially stored) from a prior request.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
