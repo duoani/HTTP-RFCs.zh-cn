@@ -4213,7 +4213,7 @@ URI 是打算用作共享的而非受保护的，即使它们标识了受保护�
 Authors of services ought to avoid GET-based forms for the submission of sensitive data because that data will be placed in the request-target. Many existing servers, proxies, and user agents log or display the request-target in places where it might be visible to third parties. Such services ought to use POST-based form submission instead.
 #+END_QUOTE
 
-服务的作者应该避免基于 GET 的表单来提交敏感数据，因为那些数据将会放置到[[ruby:request-target][请求目标]]里。很多已有的服务器、代理、以及用户代理，会在可能被第三方观察到的地方记录或者显示请求目标。这些服务应该改为使用基于 POST 的表单来提交。
+[[ruby:authors of services][服务的创造者]]应该避免基于 GET 的表单来提交敏感数据，因为那些数据将会放置到[[ruby:request-target][请求目标]]里。很多已有的服务器、代理、以及用户代理，会在可能被第三方观察到的地方记录或者显示请求目标。这些服务应该改为使用基于 POST 的表单来提交。
 
 #+BEGIN_QUOTE
 Since the =Referer= header field tells a target site about the context that resulted in a request, it has the potential to reveal information about the user's immediate browsing history and any personal information that might be found in the referring resource's URI. Limitations on the =Referer= header field are described in Section 5.5.2 to address some of its security considerations.

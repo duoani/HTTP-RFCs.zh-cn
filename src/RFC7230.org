@@ -1563,7 +1563,7 @@ When a server listening only for HTTP request messages, or processing what appea
 Transfer coding names are used to indicate an encoding transformation that has been, can be, or might need to be applied to a payload body in order to ensure "safe transport" through the network. This differs from a content coding in that the transfer coding is a property of the message rather than a property of the representation that is being transferred.
 #+END_QUOTE
 
-[[ruby:transfer%20coding][传输编码值]]是用于表示已经、能够或者可能需要应用到一个[[ruby:payload%20body][有效载荷]]中以确保网络传输安全的一种[[ruby:encoding%20transformation][编码转换]]。与[[ruby:content%20coding][内容编码值]]不同的是，传输编码值是一个消息的特性，而不是一个[[ruby:representation][表示形式]]的特性。
+[[ruby:transfer%20coding][传输编码值]]是用于表示已经、能够或者可能需要应用到一个[[ruby:payload%20body][有效载荷]]中以确保网络传输安全的一种[[ruby:encoding%20transformation][编码转换]]。与[[ruby:content%20coding][内容编码值]]不同的是，传输编码值是一个消息的属性，而不是一个[[ruby:representation][表示形式]]的属性。
 
 #+HEADER: :var chunked-rule-url=123123
 #+BEGIN_SRC org
