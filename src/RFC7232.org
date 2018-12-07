@@ -486,25 +486,40 @@ An alternative representation that does use =gzip= content coding would be:
 ** 2.4. 什么时候使用实体标签和最后修改日期 / When to Use Entity-Tags and Last-Modified Dates
 
 #+BEGIN_QUOTE
-In 200 (OK) responses to GET or HEAD, an origin server:
+In =200 (OK)= responses to GET or HEAD, an origin server:
 
-- SHOULD send an entity-tag validator unless it is not feasible to generate one.
-- MAY send a weak entity-tag instead of a strong entity-tag, if performance considerations support the use of weak entity-tags, or if it is unfeasible to send a strong entity-tag.
-- SHOULD send a Last-Modified value if it is feasible to send one.
+- *SHOULD* send an entity-tag validator unless it is not feasible to generate one.
+- *MAY* send a weak entity-tag instead of a strong entity-tag, if performance considerations support the use of weak entity-tags, or if it is unfeasible to send a strong entity-tag.
+- *SHOULD* send a =Last-Modified= value if it is feasible to send one.
 #+END_QUOTE
+
+在回应给 GET 或者 HEAD 的 =200 (OK)= 响应中，对于服务器：
+
+- *应当* 发送一个实体标签验证器，除非对于它来说生成一个实体标签验证器是[[ruby:not%20feasible][不可行的]]。
+- *可以* 发送一个弱类型的实体标签而不是强类型标签，如果出于性能方面的考虑支持弱实体标签的使用，或者生成一个强实体标签是不可行的。
+- *应当* 发送一个 =Last-Modified= 值，如果对于它来说发送一个 =Last_modified= 是可行的话。
 
 #+BEGIN_QUOTE
-In other words, the preferred behavior for an origin server is to send both a strong entity-tag and a Last-Modified value in successful responses to a retrieval request.
+In other words, the preferred behavior for an origin server is to send both a strong entity-tag and a =Last-Modified= value in successful responses to a retrieval request.
 #+END_QUOTE
+
+换句话说，源服务器的首选的行为是在回应给一个检索请求（译注：例如 HTTP GET 请求）的成功响应中，既发送一个强实体标签，也发送一个 =Last-Modified= 值。
 
 #+BEGIN_QUOTE
 A client:
 
-- MUST send that entity-tag in any cache validation request (using If-Match or If-None-Match) if an entity-tag has been provided by the origin server.
-- SHOULD send the Last-Modified value in non-subrange cache validation requests (using If-Modified-Since) if only a Last-Modified value has been provided by the origin server.
-- MAY send the Last-Modified value in subrange cache validation requests (using If-Unmodified-Since) if only a Last-Modified value has been provided by an HTTP/1.0 origin server. The user agent SHOULD provide a way to disable this, in case of difficulty.
-- SHOULD send both validators in cache validation requests if both an entity-tag and a Last-Modified value have been provided by the origin server. This allows both HTTP/1.0 and HTTP/1.1 caches to respond appropriately.
+- *MUST* send that entity-tag in any cache validation request (using =If-Match= or =If-None-Match=) if an entity-tag has been provided by the origin server.
+- *SHOULD* send the =Last-Modified= value in non-subrange cache validation requests (using =If-Modified-Since=) if only a =Last-Modified= value has been provided by the origin server.
+- *MAY* send the =Last-Modified= value in subrange cache validation requests (using =If-Unmodified-Since=) if only a =Last-Modified= value has been provided by an HTTP/1.0 origin server. The user agent *SHOULD* provide a way to disable this, in case of difficulty.
+- *SHOULD* send both validators in cache validation requests if both an entity-tag and a =Last-Modified= value have been provided by the origin server. This allows both HTTP/1.0 and HTTP/1.1 caches to respond appropriately.
 #+END_QUOTE
+
+对于客户端：
+
+- *必须* 在任何[[ruby:cache%20validation%20request][缓存验证请求]]中发送实体标签（使用 =If-Match= 或者 =If-None-Match= 来发送），如果源服务器已经提供了一个实体标签的话。
+- *应当* 在[[ruby:non-subrange%20cache%20validation%20requests][非子范围的缓存验证请求]]中发送 =Last-Modified= 值（使用 =If-Modified-Since=），如果源服务器只提供了一个 =Last-Modified= 值（译注：即没有实体标签）的话。
+- *可以* 在[[ruby:subrange%20cache%20validation%20requests][子范围缓存验证请求]]中发送 =Last-Modified= 值（使用 =If-Unmodified-Since=），如果版本为 HTTP/1.0 的源服务器只提供了一个 =Last-Modified= 值的话。如果用户代理有困难的话，*应当* 提供一种途径来禁用这种行为。
+- *应当* 在缓存验证请求中将两种验证器都发送，如果源服务器既提供了一个实体标签，也提供了一个 =Last-Modified= 值的话。这样使得 HTTP/1.0 和 HTTP/1.1 的缓存服务器都可以恰当地响应请求。
 
 * 3. 前置条件头字段 / Precondition Header Fields
 :PROPERTIES:
