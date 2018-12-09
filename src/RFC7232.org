@@ -586,12 +586,12 @@ An origin server that receives an =If-Match= header field *MUST* evaluate the co
 An origin server *MUST NOT* perform the requested method if a received =If-Match= condition evaluates to false; instead, the origin server *MUST* respond with either a) the =412 (Precondition Failed)= status code or b) one of the =2xx (Successful)= status codes if the origin server has verified that a state change is being requested and the final state is already reflected in the current state of the target resource (i.e., the change requested by the user agent has already succeeded, but the user agent might not be aware of it, perhaps because the prior response was lost or a compatible change was made by some other user agent). In the latter case, the origin server *MUST NOT* send a validator header field in the response unless it can verify that the request is a duplicate of an immediately prior change made by the same user agent.
 #+END_QUOTE
 
-源服务器 *禁止* 执行请求方法，如果所接收到的 =If-Match= 条件的求值结果为否的话。而是，源服务器 *必须* 响应以下其中之一：
+如果所接收到的 =If-Match= 条件的求值结果为否，源服务器 *禁止* 执行请求方法，而是，源服务器 *必须* 响应以下其中之一：
 
-1) =412 (Precondition Failed)= 状态码，或者
-2) =2xx (Successful)= 状态码的其中之一，如果源服务器已证实出目标资源又被请求了一种状态改变，并且它的最终状态已经反映为目标资源当前状态（也就是说，用户代理所请求的改变已经成功完成了，但是用户请求可能没有意识到这个，可能是因为之前的响应已经丢失了没有成功到达用户代理，或者其他某些用户代理也对目标资源请求了一种与之兼容的变化）。 
+1) 响应 =412 (Precondition Failed)= 状态码，或者
+2) 如果源服务器已检验出目标资源又被请求了一种状态改变，并且它的最终状态已经反映为目标资源当前状态（也就是说，用户代理所请求的改变已经成功完成了，但是用户请求可能没有意识到这个，可能是因为之前的响应已经丢失了没有成功到达用户代理，或者其他某些用户代理也对目标资源请求了一种与之兼容的变化），那么，响应 =2xx (Successful)= 状态码的其中之一。
 
-在其他情况下，源服务器 *禁止* 发送一个验证器头字段到响应里，除非它能够证实这个请求与对应的同一个用户代理所造成的前一个相邻的变化相重复。
+在其他情况下，源服务器 *禁止* 发送一个验证器头字段到响应里，除非它能够检验出这个请求与它的同一个用户代理所造成的前一个相邻的变化相重复。
 
 #+BEGIN_QUOTE
 The =If-Match= header field can be ignored by caches and intermediaries because it is not applicable to a stored response.
@@ -641,23 +641,34 @@ Examples:
 =If-None-Match= is primarily used in conditional GET requests to enable efficient updates of cached information with a minimum amount of transaction overhead. When a client desires to update one or more stored responses that have entity-tags, the client *SHOULD* generate an =If-None-Match= header field containing a list of those entity-tags when making a GET request; this allows recipient servers to send a =304 (Not Modified)= response to indicate when one of those stored responses matches the selected representation.
 #+END_QUOTE
 
-=If-None-Match= 主要用在条件 GET 请求中以启用缓存信息的有效更新
+=If-None-Match= 主要用在条件 GET 请求中使缓存信息能够以最小的传输开销来进行高效的更新。当客户端希望更新一个或多个它已经缓存的带有实体标签的响应的时候，客户端 *应当* 在执行 GET 请求的时候生成一个 =If-None-Match= 头字段来包含一个这些实体标签的列表，这样使得接收端服务器可以发送一个 =304 (Not Modified)= 响应来向客户端表明，什么时候这些已缓存的响应之一会匹配[[ruby:selected%20representation][已选定的表示形式]]。
 
 #+BEGIN_QUOTE
-=If-None-Match= can also be used with a value of "*" to prevent an unsafe request method (e.g., PUT) from inadvertently modifying an existing representation of the target resource when the client believes that the resource does not have a current representation (Section 4.2.1 of [RFC7231]). This is a variation on the "lost update" problem that might arise if more than one client attempts to create an initial representation for the target resource.
+=If-None-Match= can also be used with a value of "*" to prevent an unsafe request method (e.g., PUT) from inadvertently modifying an existing representation of the target resource when the client believes that the resource does not have a current representation ([[id:2f967e3d-8694-430b-ad06-e748fd39b281][Section 4.2.1]] of [RFC7231]). This is a variation on the "lost update" problem that might arise if more than one client attempts to create an initial representation for the target resource.
 #+END_QUOTE
 
+=If-None-Match= 的值也可以设置为 "*" 来阻止不安全的请求方法（比如，PUT）意外地修改了目标资源已经现存在的一种表示形式，当客户端认为所请求的资源没有这种表示形式的时候（[[id:2f967e3d-8694-430b-ad06-e748fd39b281][【RFC7231】章节 4.2.1]]）。这是一种“丢失更新”问题的变种，如果超过一个客户端试图为目标资源创建一个初始表示形式的时候，这种问题可能会发生。
+
 #+BEGIN_QUOTE
-An origin server that receives an =If-None-Match= header field MUST evaluate the condition prior to performing the method (Section 5). If the field-value is "*", the condition is false if the origin server has a current representation for the target resource. If the field-value is a list of entity-tags, the condition is false if one of the listed tags match the entity-tag of the selected representation.
+An origin server that receives an =If-None-Match= header field *MUST* evaluate the condition prior to performing the method (Section 5). If the field-value is "*", the condition is false if the origin server has a current representation for the target resource. If the field-value is a list of entity-tags, the condition is false if one of the listed tags match the entity-tag of the selected representation.
 #+END_QUOTE
+
+源服务器接收到一个 =If-None-Match= 头字段的时候，*必须* 在执行这个请求方法之前对条件进行求值（章节 5）。如果字段值是 "*"，并且源服务器的目标资源有当前表示形式，那么这个条件的求值结果为否。如果字段值是一个实体标签的列表，并且列表中的实体标签之一匹配上已选定的表示形式的实体标签，那么这个条件的求值结果为否。
 
 #+BEGIN_QUOTE
 An origin server *MUST NOT* perform the requested method if the condition evaluates to false; instead, the origin server *MUST* respond with either a) the =304 (Not Modified)= status code if the request method is GET or HEAD or b) the =412 (Precondition Failed)= status code for all other request methods.
 #+END_QUOTE
 
+如果条件求值为否，那么，源服务器 *禁止* 执行所请求的方法，而是，源服务器 *必须* 响应以下其中之一：
+
+1) 如果请求方法是 GET 或者 HEAD，响应 =304 (Not Modified)= 状态码，或者
+2) 如果是其他请求方法，响应 =412 (Precondition Failed)= 状态码。
+
 #+BEGIN_QUOTE
-Requirements on cache handling of a received =If-None-Match= header field are defined in Section 4.3.2 of [RFC7234].
+Requirements on cache handling of a received =If-None-Match= header field are defined in [[id:A500DFDD-0DD6-454E-A94A-EDBC8D38946E][Section 4.3.2]] of [RFC7234].
 #+END_QUOTE
+
+接收到 =If-None-Match= 头字段时的缓存处理的相关要求，定义在[[id:A500DFDD-0DD6-454E-A94A-EDBC8D38946E][【RFC7234】章节 4.3.2]] 中。
 
 ** 3.3. If-Modified-Since
 :PROPERTIES:

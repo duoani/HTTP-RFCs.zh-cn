@@ -70,6 +70,9 @@
 ** 4.3. Validation
 *** 4.3.1. Sending a Validation Request
 *** 4.3.2. Handling a Received Validation Request
+:PROPERTIES:
+:ID:       A500DFDD-0DD6-454E-A94A-EDBC8D38946E
+:END:
 *** 4.3.3. Handling a Validation Response
 *** 4.3.4. Freshening Stored Responses upon Validation
 *** 4.3.5. Freshening Responses via HEAD
