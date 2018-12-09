@@ -544,7 +544,7 @@ This section defines the syntax and semantics of HTTP/1.1 header fields for appl
 The "If-Match" header field makes the request method conditional on the recipient origin server either having at least one current representation of the target resource, when the field-value is "*", or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.
 #+END_QUOTE
 
-=If-Match= 头字段使得请求方法带有条件，接收端服务器仅在满足以下条件之一时才会返回资源：
+=If-Match= 头字段使得请求方法带有条件，接收端服务器仅在满足以下条件之一时才会成功响应：
 - 当字段值为 "*" 的时候，目标资源存在至少一个当前表示形式，或者
 - 目标资源存在一个当前表示形式，这个表示形式带有一个实体标签与此字段值所列出的实体标签之一相匹配。
 
@@ -608,7 +608,7 @@ The =If-Match= header field can be ignored by caches and intermediaries because 
 The "If-None-Match" header field makes the request method conditional on a recipient cache or origin server either not having any current representation of the target resource, when the field-value is "*", or having a selected representation with an entity-tag that does not match any of those listed in the field-value.
 #+END_QUOTE
 
-=If-None-Match= 头字段使得请求方法带有条件，接收端缓存服务器或源服务器仅在满足以下条件之一时才会返回资源：
+=If-None-Match= 头字段使得请求方法带有条件，接收端缓存服务器或源服务器仅在满足以下条件之一时才会成功响应：
 
 - 当字段值为 "*"，的时候，目标资源没有任何当前表示形式。
 - 有一种已选定的表示形式带有一个实体标签，这个实体标签并不与列在这个字段值里的任一实体标签相匹配。
@@ -679,6 +679,8 @@ Requirements on cache handling of a received =If-None-Match= header field are de
 The "If-Modified-Since" header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value. Transfer of the selected representation's data is avoided if that data has not changed.
 #+END_QUOTE
 
+=If-Modified-Since= 头字段使得 GET 或者 HEAD 请求方法带有条件，已选定的表示形式的修改日期比这个字段值的日期更加新的时候，服务器才会成功响应。避免表示形式的数据没有发生改变的情况下再次传输表示形式的数据。
+
 #+BEGIN_SRC text
   If-Modified-Since = HTTP-date
 #+END_SRC
@@ -687,29 +689,44 @@ The "If-Modified-Since" header field makes a GET or HEAD request method conditio
 An example of the field is:
 #+END_QUOTE
 
+这个字段的示例：
+
 #+BEGIN_EXAMPLE
   If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMT
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-A recipient MUST ignore If-Modified-Since if the request contains an If-None-Match header field; the condition in If-None-Match is considered to be a more accurate replacement for the condition in If-Modified-Since, and the two are only combined for the sake of interoperating with older intermediaries that might not implement If-None-Match.
+A recipient *MUST* ignore =If-Modified-Since= if the request contains an =If-None-Match= header field; the condition in =If-None-Match= is considered to be a more accurate replacement for the condition in =If-Modified-Since=, and the two are only combined for the sake of interoperating with older intermediaries that might not implement =If-None-Match=.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A recipient MUST ignore the If-Modified-Since header field if the received field-value is not a valid HTTP-date, or if the request method is neither GET nor HEAD.
-#+END_QUOTE
+如果请求包含有一个 =In-None-Match= 头字段，那么，接收端 *必须* 忽略 =If-Modified-Since= 头字段。在 =In-None-Match= 里的条件被认为是对在 =In-Modified-Since= 里的条件的更加精准的替代，结合这两种头字段的目的仅在于与可能未实现 =If-None-Match= 的旧中间人进行交互。
 
 #+BEGIN_QUOTE
-A recipient MUST interpret an If-Modified-Since field-value's timestamp in terms of the origin server's clock.
+A recipient *MUST* ignore the =If-Modified-Since= header field if the received field-value is not a valid HTTP-date, or if the request method is neither GET nor HEAD.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-If-Modified-Since is typically used for two distinct purposes: 1) to allow efficient updates of a cached representation that does not have an entity-tag and 2) to limit the scope of a web traversal to resources that have recently changed.
-#+END_QUOTE
+接收端如果接收到一个值不是一个合法的 HTTP-date 的 =If-Modified-Since= 头字段的时候，或者这个请求方法既不是 GET 也不是 HEAD 的时候，接收端 *必须* 忽略这个头字段。
 
 #+BEGIN_QUOTE
-When used for cache updates, a cache will typically use the value of the cached message's Last-Modified field to generate the field value of If-Modified-Since. This behavior is most interoperable for cases where clocks are poorly synchronized or when the server has chosen to only honor exact timestamp matches (due to a problem with Last-Modified dates that appear to go "back in time" when the origin server's clock is corrected or a representation is restored from an archived backup). However, caches occasionally generate the field value based on other data, such as the Date header field of the cached message or the local clock time that the message was received, particularly when the cached message does not contain a Last-Modified field.
+A recipient *MUST* interpret an =If-Modified-Since= field-value's timestamp in terms of the origin server's clock.
 #+END_QUOTE
+
+接收端 *必须* 依据源服务器的时钟来解释 =If-Modified-Since= 头字段值里的时间戳。
+
+#+BEGIN_QUOTE
+=If-Modified-Since= is typically used for two distinct purposes: 1) to allow efficient updates of a cached representation that does not have an entity-tag and 2) to limit the scope of a web traversal to resources that have recently changed.
+#+END_QUOTE
+
+使用 =If-Modified-Since= 通常有两个不同的目的：
+
+1) 可以高效地更新一个已缓存的但没有实体标签的表示形式高效；
+2) 将网页的资源遍历范围限制为只有最近有改变的资源上。
+
+#+BEGIN_QUOTE
+When used for cache updates, a cache will typically use the value of the cached message's =Last-Modified= field to generate the field value of =If-Modified-Since=. This behavior is most interoperable for cases where clocks are poorly synchronized or when the server has chosen to only honor exact timestamp matches (due to a problem with =Last-Modified= dates that appear to go "back in time" when the origin server's clock is corrected or a representation is restored from an archived backup). However, caches occasionally generate the field value based on other data, such as the =Date= header field of the cached message or the local clock time that the message was received, particularly when the cached message does not contain a =Last-Modified= field.
+#+END_QUOTE
+
+当用于更新缓存的时候，缓存服务器一般使用已缓存的消息的 =Last-Modified= 字段的值来生成 =If-Modified-Since= 字段的值。这种行为在以下情况下最有互可操作性：。
 
 #+BEGIN_QUOTE
 When used for limiting the scope of retrieval to a recent time window, a user agent will generate an If-Modified-Since field value based on either its own local clock or a Date header field received from the server in a prior response. Origin servers that choose an exact timestamp match based on the selected representation's Last-Modified field will not be able to help the user agent limit its data transfers to only those changed during the specified window.
