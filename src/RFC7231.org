@@ -4133,7 +4133,7 @@ The "HTTP Content Coding Registry" has been updated with the registrations below
 This section is meant to inform developers, information providers, and users of known security concerns relevant to HTTP semantics and its use for transferring information over the Internet. Considerations related to message syntax, parsing, and routing are discussed in [[id:aa52d5bd-e2f6-40db-826d-991544eeacb9][Section 9]] of [RFC7230].
 #+END_QUOTE
 
-本章节是为了告诉开发者、信息提供商、以及用户，已知的 HTTP [[ruby:semantics][语义]]及其使用在互联网上进行信息传输过程中相关的安全注意事项。与消息[[ruby:syntax][句法]]、[[ruby:parsing][解析]]、以及[[ruby:routing][路由]]相关的注意事项已在[[id:aa52d5bd-e2f6-40db-826d-991544eeacb9][【RFC7230】章节 9]] 中讨论过了。
+本章节是为了告诉开发者、信息提供商、以及用户，HTTP [[ruby:semantics][语义]]及其使用在互联网上进行信息传输过程中相关的已知的安全注意事项。与消息[[ruby:syntax][句法]]、[[ruby:parsing][解析]]、以及[[ruby:routing][路由]]相关的注意事项已在[[id:aa52d5bd-e2f6-40db-826d-991544eeacb9][【RFC7230】章节 9]] 中讨论过了。
 
 #+BEGIN_QUOTE
 The list of considerations below is not exhaustive. Most security concerns related to HTTP semantics are about securing server-side applications (code behind the HTTP interface), securing user agent processing of payloads received via HTTP, or secure use of the Internet in general, rather than security of the protocol. Various organizations maintain topical information and links to current research on Web application security (e.g., [[[https://www.owasp.org/index.php/Main_Page][OWASP]]]).
@@ -4619,7 +4619,7 @@ The following core rules are included by reference, as defined in Appendix B.1 o
 The rules below are defined in [[[file:RFC7230.org][RFC7230]]]:
 #+END_QUOTE
 
-以下规则定义在【[[file:RFC7230.org][RFC7230]]】：
+以下规则定义在【[[file:RFC7230.org][RFC7230]]】中：
 
 #+BEGIN_SRC text
   BWS           = <BWS, see [RFC7230], Section 3.2.3>

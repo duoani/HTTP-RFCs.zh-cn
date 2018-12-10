@@ -37,7 +37,7 @@
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document defines HTTP/1.1 conditional requests, including metadata header fields for indicating state changes, request header fields for making preconditions on such state, and rules for constructing the responses to a conditional request when one or more preconditions evaluate to false.
 #+END_QUOTE
 
-超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 条件请求，包括：[[ruby:metadata%20header%20fields][元数据头字段]]——用于表明状态的改变、[[ruby:request%20header%20fields][请求头字段]]——用于对这些状态设置前提条件、以及[[ruby:rules][规则]]——用于当一个或多个前提条件取值为否的时候构造响应给条件请求。
+超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 条件请求，包括：[[ruby:metadata%20header%20fields][元数据头字段]]——用于表明状态的改变、[[ruby:request%20header%20fields][请求头字段]]——用于对这些状态设置前提条件、以及[[ruby:rules][规则]]——用于当一个或多个前提条件求值结果为不成立的时候构造响应给条件请求。
 
 * 备忘状态 / Status of This Memo
 
@@ -85,7 +85,7 @@ Conditional GET requests are the most efficient mechanism for HTTP cache updates
 Conditional request preconditions are based on the state of the target resource as a whole (its current value set) or the state as observed in a previously obtained representation (one value in that set). A resource might have multiple current representations, each with its own observable state. The conditional request mechanisms assume that the mapping of requests to a "selected representation" ([[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][Section 3]] of [RFC7231]) will be consistent over time if the server intends to take advantage of conditionals. Regardless, if the mapping is inconsistent and the server is unable to select the appropriate representation, then no harm will result when the precondition evaluates to false.
 #+END_QUOTE
 
-总的来说，条件请求的前提条件是基于目标资源的状态（目标资源的[[ruby:current%20value][当前值]]的集合），或者在之前获得的一种表示形式所观察到的状态（这个当前值集合中的其中之一）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假定请求与一种“[[ruby:selected%20representation][已选定的表示形式]]”（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][【RFC7231】章节 3]]）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前提条件的求值结果为否（也就是条件不成立）的时候，最终结果应该要是无害的。
+总的来说，条件请求的前提条件是基于目标资源的状态（目标资源的[[ruby:current%20value][当前值]]的集合），或者在之前获得的一种表示形式所观察到的状态（这个当前值集合中的其中之一）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假定请求与一种“[[ruby:selected%20representation][已选定的表示形式]]”（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][【RFC7231】章节 3]]）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前提条件的求值结果为不成立（也就是条件为假）的时候，最终结果应该要是无害的。
 
 #+BEGIN_QUOTE
 The conditional request preconditions defined by this specification ([[id:5d82712b-331b-4303-85fc-19b1488af561][Section 3]]) are evaluated when applicable to the recipient ([[id:fce45320-6c1c-4486-a32b-2c553780d785][Section 5]]) according to their order of precedence ([[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][Section 6]]).
@@ -580,13 +580,13 @@ Examples:
 An origin server that receives an =If-Match= header field *MUST* evaluate the condition prior to performing the method ([[id:fce45320-6c1c-4486-a32b-2c553780d785][Section 5]]). If the field-value is "*", the condition is false if the origin server does not have a current representation for the target resource. If the field-value is a list of entity-tags, the condition is false if none of the listed tags match the entity-tag of the selected representation.
 #+END_QUOTE
 
-源服务器接收到一个 =If-Match= 字段时 *必须* 在执行对应的请求方法之前对这个条件进行求值（[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]]）。如果 =If-Match= 的字段值是 "*"，且源服务器的目标资源没有任何一种当前表示形式，那么，这个条件的求值结果为否。如果这个字段值是一个实体标签列表，且所列出的所有标签没有任何一个匹配已选定的表示形式的实体标签，那么这个条件的求值结果为否。
+源服务器接收到一个 =If-Match= 字段时 *必须* 在执行对应的请求方法之前对这个条件进行求值（[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]]）。如果 =If-Match= 的字段值是 "*"，且源服务器的目标资源没有任何一种当前表示形式，那么，这个条件的求值结果为不成立。如果这个字段值是一个实体标签列表，且所列出的所有标签没有任何一个匹配已选定的表示形式的实体标签，那么这个条件的求值结果为不成立。
 
 #+BEGIN_QUOTE
 An origin server *MUST NOT* perform the requested method if a received =If-Match= condition evaluates to false; instead, the origin server *MUST* respond with either a) the =412 (Precondition Failed)= status code or b) one of the =2xx (Successful)= status codes if the origin server has verified that a state change is being requested and the final state is already reflected in the current state of the target resource (i.e., the change requested by the user agent has already succeeded, but the user agent might not be aware of it, perhaps because the prior response was lost or a compatible change was made by some other user agent). In the latter case, the origin server *MUST NOT* send a validator header field in the response unless it can verify that the request is a duplicate of an immediately prior change made by the same user agent.
 #+END_QUOTE
 
-如果所接收到的 =If-Match= 条件的求值结果为否，源服务器 *禁止* 执行请求方法，而是，源服务器 *必须* 响应以下其中之一：
+如果所接收到的 =If-Match= 条件的求值结果为不成立，源服务器 *禁止* 执行请求方法，而是，源服务器 *必须* 响应以下其中之一：
 
 1) 响应 =412 (Precondition Failed)= 状态码，或者
 2) 如果源服务器已检验出目标资源又被请求了一种状态改变，并且它的最终状态已经反映为目标资源当前状态（也就是说，用户代理所请求的改变已经成功完成了，但是用户请求可能没有意识到这个，可能是因为之前的响应已经丢失了没有成功到达用户代理，或者其他某些用户代理也对目标资源请求了一种与之兼容的变化），那么，响应 =2xx (Successful)= 状态码的其中之一。
@@ -653,13 +653,13 @@ Examples:
 An origin server that receives an =If-None-Match= header field *MUST* evaluate the condition prior to performing the method (Section 5). If the field-value is "*", the condition is false if the origin server has a current representation for the target resource. If the field-value is a list of entity-tags, the condition is false if one of the listed tags match the entity-tag of the selected representation.
 #+END_QUOTE
 
-源服务器接收到一个 =If-None-Match= 头字段的时候，*必须* 在执行这个请求方法之前对条件进行求值（章节 5）。如果字段值是 "*"，并且源服务器的目标资源有当前表示形式，那么这个条件的求值结果为否。如果字段值是一个实体标签的列表，并且列表中的实体标签之一匹配上已选定的表示形式的实体标签，那么这个条件的求值结果为否。
+源服务器接收到一个 =If-None-Match= 头字段的时候，*必须* 在执行这个请求方法之前对条件进行求值（章节 5）。如果字段值是 "*"，并且源服务器的目标资源有当前表示形式，那么这个条件的求值结果为不成立。如果字段值是一个实体标签的列表，并且列表中的实体标签之一匹配上已选定的表示形式的实体标签，那么这个条件的求值结果为不成立。
 
 #+BEGIN_QUOTE
 An origin server *MUST NOT* perform the requested method if the condition evaluates to false; instead, the origin server *MUST* respond with either a) the =304 (Not Modified)= status code if the request method is GET or HEAD or b) the =412 (Precondition Failed)= status code for all other request methods.
 #+END_QUOTE
 
-如果条件求值为否，那么，源服务器 *禁止* 执行所请求的方法，而是，源服务器 *必须* 响应以下其中之一：
+如果条件求值为不成立，那么，源服务器 *禁止* 执行所请求的方法，而是，源服务器 *必须* 响应以下其中之一：
 
 1) 如果请求方法是 GET 或者 HEAD，响应 =304 (Not Modified)= 状态码，或者
 2) 如果是其他请求方法，响应 =412 (Precondition Failed)= 状态码。
@@ -872,7 +872,7 @@ A =304= response cannot contain a message-body; it is always terminated by the f
 The =412 (Precondition Failed)= status code indicates that one or more conditions given in the request header fields evaluated to false when tested on the server. This response code allows the client to place preconditions on the current resource state (its current representations and metadata) and, thus, prevent the request method from being applied if the target resource is in an unexpected state.
 #+END_QUOTE
 
-=412 (Precondition Failed)= 状态码表明：请求头字段所给定的一个或多个条件，在服务器上测试时的求值结果为否。这个响应让客户端可以放置前提条件到当前的资源状态（它的当前表示形式和元数据）上，然后，如果目标资源是处在一种预料之外的状态上时，阻止将请求方法的应用。
+=412 (Precondition Failed)= 状态码表明：请求头字段所给定的一个或多个条件，在服务器上测试时的求值结果为不成立。这个响应让客户端可以放置前提条件到当前的资源状态（它的当前表示形式和元数据）上，然后，如果目标资源是处在一种预料之外的状态上时，阻止将请求方法的应用。
 
 * 5. 求值 / Evaluation
 :PROPERTIES:
@@ -883,17 +883,25 @@ The =412 (Precondition Failed)= status code indicates that one or more condition
 Except when excluded below, a recipient cache or origin server *MUST* evaluate received request preconditions after it has successfully performed its normal request checks and just before it would perform the action associated with the request method. A server *MUST* ignore all received preconditions if its response to the same request without those conditions would have been a status code other than a =2xx (Successful)= or =412 (Precondition Failed)=. In other words, redirects and failures take precedence over the evaluation of preconditions in conditional requests.
 #+END_QUOTE
 
+除非被下面的情况所排除，接收端[[ruby:cache][缓存]]或者源服务器对所接收到的请求在成功完成的一般检查以后，在即将执行请求方法所关联的动作之前，*必须* 对这个请求的前提条件进行求值。如果一个请求在没有带有某些条件的时候，服务器将会响应除 =2xx (Successful)= 和 =412 (Precondition Failed)=，那么，相同的请求如果这些带有条件的话，服务器 *必须* 忽略所有接收到的前提条件。换句话说，在条件请求中，[[ruby:redirects][重定向响应]]以及[[ruby:failures][失败响应]]的优先级高于对前提条件的求值。
+
 #+BEGIN_QUOTE
 A server that is not the origin server for the target resource and cannot act as a cache for requests on the target resource *MUST NOT* evaluate the conditional request header fields defined by this specification, and it *MUST* forward them if the request is forwarded, since the generating client intends that they be evaluated by a server that can provide a current representation. Likewise, a server *MUST* ignore the conditional request header fields defined by this specification when received with a request method that does not involve the selection or modification of a selected representation, such as CONNECT, OPTIONS, or TRACE.
 #+END_QUOTE
 
+一个服务器，如果它既不是目标资源的源服务器，也不能充当一个所请求的目标资源的缓存服务器，那么，它 *禁止* 对本规范所定义的条件请求头字段进行求值，并且它 *必须* 转发这些头字段，如果请求会被转发的话，这是因为生成这些头字段的客户是想让它们被能提供一种当前表示形式的服务器来求值的。同样，当服务器所接收到的条件请求的请求方法并不涉及对已选定的表示形式的选择或修改（比如 CONNECT、OPTIONS、或者 TRACE）的时候，服务器 *必须* 忽略由本规范所定义的条件请求头字段。
+
 #+BEGIN_QUOTE
-Conditional request header fields that are defined by extensions to HTTP might place conditions on all recipients, on the state of the target resource in general, or on a group of resources. For instance, the "If" header field in WebDAV can make a request conditional on various aspects of multiple resources, such as locks, if the recipient understands and implements that field ([RFC4918], Section 10.4).
+Conditional request header fields that are defined by extensions to HTTP might place conditions on all recipients, on the state of the target resource in general, or on a group of resources. For instance, the "If" header field in WebDAV can make a request conditional on various aspects of multiple resources, such as locks, if the recipient understands and implements that field ([RFC4918], [[https://tools.ietf.org/html/rfc4918#section-10.4][Section 10.4]]).
 #+END_QUOTE
+
+由 HTTP 的扩展所定义的条件请求头字段可能将条件设定为针对所有接收端、或者针对目标资源的普遍状态、或者针对某一类资源。例如，WebDAV 规范里的 =If= 头字段能够发起一个针对多种资源的各个方面的条件请求，比较[[ruby:locks][锁]]，如果接收端理解并实现这个字段的话（[[https://tools.ietf.org/html/rfc4918#section-10.4][【RFC4918】章节 10.4]]）。
 
 #+BEGIN_QUOTE
 Although conditional request header fields are defined as being usable with the HEAD method (to keep HEAD's semantics consistent with those of GET), there is no point in sending a conditional HEAD because a successful response is around the same size as a =304 (Not Modified)= response and more useful than a =412 (Precondition Failed)= response.
 #+END_QUOTE
+
+虽然条件请求头字段是定义为可以和 HEAD 方法一起使用（为了保持 HEAD 与 GET 的语义一致），但是发送一个条件 HEAD 请求是没有任何意义的，因为它的成功响应的大小差不多与一个 =304 (Not Modified)= 响应一样，并且比一个 =412 (Precondition Failed)= 响应更加实用。
 
 * 6. 优先级 / Precedence
 :PROPERTIES:
@@ -904,18 +912,20 @@ Although conditional request header fields are defined as being usable with the 
 When more than one conditional request header field is present in a request, the order in which the fields are evaluated becomes important. In practice, the fields defined in this document are consistently implemented in a single, logical order, since "lost update" preconditions have more strict requirements than cache validation, a validated cache is more efficient than a partial response, and entity tags are presumed to be more accurate than date validators.
 #+END_QUOTE
 
+当一个请求中出现了超过一个条件请求头字段的时候，这些头字段的求值顺序就变得很重要了。实践中，本规范所定义的字段被一致实现为一种单一的逻辑顺序，但因为“丢失更新”的前提条件比[[ruby:cache%20validation][缓存验证]]有着更加严格的要求，因此，缓存验证比[[ruby:partial%20response][部分响应]]更加高效，以及，[[ruby:entity%20tags][实体标签]]被认为比[[ruby:date%20validators][日期验证器]]更加精准。
+
 #+BEGIN_QUOTE
 A recipient cache or origin server *MUST* evaluate the request preconditions defined by this specification in the following order:
 
 1. When recipient is the origin server and =If-Match= is present, evaluate the =If-Match= precondition:
    
    - if true, continue to step 3
-   - if false, respond =412 (Precondition Failed)= unless it can be determined that the state-changing request has already succeeded (see Section 3.1)
+   - if false, respond =412 (Precondition Failed)= unless it can be determined that the state-changing request has already succeeded (see [[id:2c4da24a-b694-472c-8ac3-f09c20a84216][Section 3.1]])
 
 2. When recipient is the origin server, =If-Match= is not present, and =If-Unmodified-Since= is present, evaluate the =If-Unmodified-Since= precondition:
 
    - if true, continue to step 3
-   - if false, respond =412 (Precondition Failed)= unless it can be determined that the state-changing request has already succeeded (see Section 3.4)
+   - if false, respond =412 (Precondition Failed)= unless it can be determined that the state-changing request has already succeeded (see [[id:7365caf4-85ba-4e10-90a2-1abc298dc569][Section 3.4]])
 
 3. When =If-None-Match= is present, evaluate the =If-None-Match= precondition:
    
@@ -923,23 +933,56 @@ A recipient cache or origin server *MUST* evaluate the request preconditions def
    - if false for GET/HEAD, respond =304 (Not Modified)=
    - if false for other methods, respond =412 (Precondition Failed)=
 
-4. When the method is GET or HEAD, =If-None-Match= is not present, and =If-Modified-Since= is present, evaluate the If-Modified-Since precondition:
+4. When the method is GET or HEAD, =If-None-Match= is not present, and =If-Modified-Since= is present, evaluate the =If-Modified-Since= precondition:
 
    - if true, continue to step 5
    - if false, respond =304 (Not Modified)=
 
 5. When the method is GET and both =Range= and =If-Range= are present, evaluate the =If-Range= precondition:
 
-   - if the validator matches and the Range specification is applicable to the selected representation, respond =206 (Partial Content)= [RFC7233]
+   - if the validator matches and the =Range= specification is applicable to the selected representation, respond =206 (Partial Content)= [[[file:RFC7233.org][RFC7233]]]
 
 6. Otherwise,
 
    - all conditions are met, so perform the requested action and respond according to its success or failure.
 #+END_QUOTE
 
+接收端缓存服务器或源服务器 *必须* 按以下的顺序来对本规范所定义的请求前提条件进行求值：
+
+1. 当接收端是源服务器，且出现了 =If-Match=，那么，对 =If-Match= 前提条件进行求值：
+
+   - 如果条件成立，跳到步骤 3；
+   - 如果条件不成立，响应 =412 (Precondition Failed)=，除非它能够确定这个会改变状态的请求已经是成功的；（[[id:2c4da24a-b694-472c-8ac3-f09c20a84216][章节 3.1]]）
+
+2. 当接收端是源服务器，未出现 =If-Match=，并且出现了 =If-Unmodified-Since=，那么，对 =If-Unmodified-Since= 前提条件进行求值：
+
+   - 如果条件成立，跳到步骤 3；
+   - 如果条件不成立，响应 =412 (Precondition Failed)=，除非它能够确定这个会改变状态的请求已经是成功的；（[[id:7365caf4-85ba-4e10-90a2-1abc298dc569][章节 3.4]]）
+
+3. 当出现了 =If-None-Match=，那么，对 =If-None-Match= 前提条件进行求值：
+
+   - 如果条件成立，跳到步骤 5；
+   - 如果条件不成立，且请求方法为 GET 或者 HEAD，响应 =304 (Not Modified)=；
+   - 如果条件不成立，且请求方法为其他方法，响应 =412 (Precondition Failed)=；
+
+4. 当请求方法是 GET 或者 HEAD，未出现 =If-None-Match=，并且出现了 =If-Modified-Since=，那么，对 =If-Modified-Since= 前提条件进行求值：
+
+   - 如果条件成立，跳到步骤 5；
+   - 如果条件不成立，响应 304 =(Not Modified)=；
+
+5. 当请求方法是 GET，并且 =Range= 和 =If-Range= 都出现了，那么，对 =If-Range= 前提条件进行求值：
+
+   - 如果这个验证器匹配上了，并且 =Range= 规范适用于已选定的表示形式，那么，响应 =206 (Partial Content)=；【[[file:RFC7233.org][RFC7233]]】
+
+6. 否则
+
+   - 所于已经遍历了所有条件了，因此执行所请求的动作并根据它的成功或失败作出响应。
+
 #+BEGIN_QUOTE
 Any extension to HTTP/1.1 that defines additional conditional request header fields ought to define its own expectations regarding the order for evaluating such fields in relation to those defined in this document and other conditionals that might be found in practice.
 #+END_QUOTE
+
+定义额外条件请求头字段的任何 HTTP/1.1 扩展都应该定义它自身期望这些字段相对于本文档所定义的字段以及其他可能在实践中所发现的条件式之间的求值顺序。
 
 * 7. IANA 注意事项 / IANA Considerations
 ** 7.1. 状态码登记 / Status Code Registration
@@ -948,10 +991,12 @@ Any extension to HTTP/1.1 that defines additional conditional request header fie
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <http://www.iana.org/assignments/http-status-codes> has been updated with the registrations below:
 #+END_QUOTE
 
+《超文本传输协议（HTTP）状态码登记表》定义在 <http://www.iana.org/assignments/http-status-codes>，已经更新了以下登记项。
+
 | Value | Description         | Reference   |
 |-------+---------------------+-------------|
-|   304 | Not Modified        | Section 4.1 |
-|   312 | Precondition Failed | Section 4.2 |
+|   304 | Not Modified        | [[id:6033b2bf-1408-4756-9929-15dd6510c7e3][Section 4.1]] |
+|   312 | Precondition Failed | [[id:02e5a084-aac8-4f06-840f-507ef2489bb1][Section 4.2]] |
 
 ** 7.2. 头字段登记 / Header Field Registration
 
@@ -959,42 +1004,56 @@ The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <http:/
 HTTP header fields are registered within the "Message Headers" registry maintained at <http://www.iana.org/assignments/message-headers/>.
 #+END_QUOTE
 
+HTTP 头字段被登记在《消息头部》登记表中，并维护在 <http://www.iana.org/assignments/message-headers/>。
+
 #+BEGIN_QUOTE
-This document defines the following HTTP header fields, so their associated registry entries have been updated according to the permanent registrations below (see [BCP90]):
+This document defines the following HTTP header fields, so their associated registry entries have been updated according to the permanent registrations below (see [[[https://tools.ietf.org/html/rfc3864][BCP90]]]):
 #+END_QUOTE
+
+本文档定义了以下 HTTP 头字段，因此它们相关联的登记项已经根据以下永久登记条目进行更新（见【[[https://tools.ietf.org/html/rfc3864][BCP90]]】）：
 
 | Header Field Name   | Protocol | Status   | Reference   |
 |---------------------+----------+----------+-------------|
-| ETag                | http     | standard | Section 2.3 |
-| If-Match            | http     | standard | Section 3.1 |
-| If-Modified-Since   | http     | standard | Section 3.3 |
-| If-None-Match       | http     | standard | Section 3.2 |
-| If-Unmodified-Since | http     | standard | Section 3.4 |
-| Last-Modified       | http     | standard | Section 2.2 |
+| ETag                | http     | standard | [[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][Section 2.3]] |
+| If-Match            | http     | standard | [[id:2c4da24a-b694-472c-8ac3-f09c20a84216][Section 3.1]] |
+| If-Modified-Since   | http     | standard | [[id:e71fa098-728a-46bf-b792-2388946ea0ee][Section 3.3]] |
+| If-None-Match       | http     | standard | [[id:30878863-9a64-4efe-bc9b-07386eae0ed7][Section 3.2]] |
+| If-Unmodified-Since | http     | standard | [[id:7365caf4-85ba-4e10-90a2-1abc298dc569][Section 3.4]] |
+| Last-Modified       | http     | standard | [[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][Section 2.2]] |
 
 #+BEGIN_QUOTE
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 #+END_QUOTE
 
+主管以上条目的变更的是 "IETF (iesg@ietf.org) - Internet Engineering Task Force"。
+
 * 8. 安全注意事项 / Security Considerations
 
 #+BEGIN_QUOTE
-This section is meant to inform developers, information providers, and users of known security concerns specific to the HTTP conditional request mechanisms. More general security considerations are addressed in HTTP "Message Syntax and Routing" [RFC7230] and "Semantics and Content" [RFC7231].
+This section is meant to inform developers, information providers, and users of known security concerns specific to the HTTP conditional request mechanisms. More general security considerations are addressed in HTTP "Message Syntax and Routing" [[[file:RFC7230.org][RFC7230]]] and "Semantics and Content" [[[file:RFC7231.org][RFC7231]]].
 #+END_QUOTE
+
+本章节是为了告诉开发者、信息提供商、以及用户，针对 HTTP 条件请求机制的已知的安全注意事项。《消息句法和路由》【[[file:RFC7230.org][RFC7230]]】以及《语义和内容》【[[file:RFC7231.org][RFC7231]]】有更广泛的安全注意事项。
 
 #+BEGIN_QUOTE
 The validators defined by this specification are not intended to ensure the validity of a representation, guard against malicious changes, or detect man-in-the-middle attacks. At best, they enable more efficient cache updates and optimistic concurrent writes when all participants are behaving nicely. At worst, the conditions will fail and the client will receive a response that is no more harmful than an HTTP exchange without conditional requests.
 #+END_QUOTE
 
+本规范所定义的验证器并不是试图去保证表示形式的[[ruby:validity][有效性]]、[[ruby:malicious%20changes][恶意修改]]的防范、以及[[ruby:man-in-the-middle%20attacks][中间人攻击]]的检测。最好的情况是，当所有参与者都行为良好，它们使得缓存的更新能够更加高效，使得支持乐观锁的写入。最坏的情况是，条件会失败并且客户端像没有进行条件请求一样正常地接收到响应。
+
 #+BEGIN_QUOTE
 An entity-tag can be abused in ways that create privacy risks. For example, a site might deliberately construct a semantically invalid entity-tag that is unique to the user or user agent, send it in a cacheable response with a long freshness time, and then read that entity-tag in later conditional requests as a means of re-identifying that user or user agent. Such an identifying tag would become a persistent identifier for as long as the user agent retained the original cache entry. User agents that cache representations ought to ensure that the cache is cleared or replaced whenever the user performs privacy-maintaining actions, such as clearing stored cookies or changing to a private browsing mode.
 #+END_QUOTE
 
+实体标签可能在生成私隐风险的方式上被滥用。例如，一个网站可能故意构造一个语义有效的实体标签，这个实体标签是一一对应于一个用户或用户代理的，然后将它发送到一个可缓存的响应里，带有一个非常长的新鲜度时间，然后在接下来的条件请求中读取这个实体标签来作为重新识别用户或用户代理的一种方法。只要用户代理保持原始的缓存条目，这种识别型的标签就会成为一种永久的标识符。每当用户执行[[ruby:privacy-maintaining%20actions][确保隐私的行为]]的时候，缓存表示形式的用户代理应该确保缓存已被清除或者替换，比如清除已存储的 cookies 或者变更为一种隐私浏览模式。
+
 * 9. 鸣谢 / Acknowledgments
 
 #+BEGIN_QUOTE
-See Section 10 of [RFC7230].
+See [[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][Section 10]] of [RFC7230].
 #+END_QUOTE
+
+见【RFC7230】[[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][章节 10]]。
 
 * 10. 参考资料 / References
 ** 10.1. 规范性参考资料 / Normative References
@@ -1015,24 +1074,34 @@ See Section 10 of [RFC7230].
 * 附录 A：相对 RFC 2616 的变化 / Appendix A. Changes from RFC 2616
 
 #+BEGIN_QUOTE
-The definition of validator weakness has been expanded and clarified. (Section 2.1)
+The definition of validator weakness has been expanded and clarified. ([[id:d232decc-3720-4edf-bbfa-df942f60aa50][Section 2.1]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Weak entity-tags are now allowed in all requests except range requests. (Sections 2.1 and 3.2)
-#+END_QUOTE
+扩充以及明确了验证器的弱验证类型的定义。（[[id:d232decc-3720-4edf-bbfa-df942f60aa50][章节 2.1]]）
 
 #+BEGIN_QUOTE
-The ETag header field ABNF has been changed to not use quoted-string, thus avoiding escaping issues. (Section 2.3)
+Weak entity-tags are now allowed in all requests except range requests. ([[id:d232decc-3720-4edf-bbfa-df942f60aa50][Sections 2.1]] and [[id:30878863-9a64-4efe-bc9b-07386eae0ed7][3.2]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-ETag is defined to provide an entity tag for the selected representation, thereby clarifying what it applies to in various situations (such as a PUT response). (Section 2.3)
-#+END_QUOTE
+现在，允许弱实体标签用在除范围请求以外的所有的请求中。（[[id:d232decc-3720-4edf-bbfa-df942f60aa50][章节 2.1]] 和 [[id:30878863-9a64-4efe-bc9b-07386eae0ed7][3.2]]）
 
 #+BEGIN_QUOTE
-The precedence for evaluation of conditional requests has been defined. (Section 6)
+The =ETag= header field ABNF has been changed to not use =quoted-string=, thus avoiding escaping issues. ([[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][Section 2.3]])
 #+END_QUOTE
+
+=ETag= 头字段的 ABNF 规则已经改变为不使用 =quoted-string= 规则，以避免转义的问题。（[[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][章节 2.3]]）
+
+#+BEGIN_QUOTE
+=ETag= is defined to provide an entity tag for the selected representation, thereby clarifying what it applies to in various situations (such as a PUT response). ([[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][Section 2.3]])
+#+END_QUOTE
+
+=ETag= 被定义为为已选定的表示形式提供一个实体标签，因此明确了它在各种场景中的适用范围（比如一个 PUT 响应）。（[[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][章节 2.3]]）
+
+#+BEGIN_QUOTE
+The precedence for evaluation of conditional requests has been defined. ([[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][Section 6]])
+#+END_QUOTE
+
+定义了条件请求的求值优级级。（[[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][章节 6]]）
 
 * 附录 B：引进的 ABNF / Appendix B. Imported ABNF
 :PROPERTIES:
@@ -1040,12 +1109,16 @@ The precedence for evaluation of conditional requests has been defined. (Section
 :END:
 
 #+BEGIN_QUOTE
-The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+The following core rules are included by reference, as defined in [[https://tools.ietf.org/html/rfc5234#appendix-B.1][Appendix B.1]] of [RFC5234]: =ALPHA= (letters), =CR= (carriage return), =CRLF= (CR LF), =CTL= (controls), =DIGIT= (decimal 0-9), =DQUOTE= (double quote), =HEXDIG= (hexadecimal 0-9/A-F/a-f), =LF= (line feed), =OCTET= (any 8-bit sequence of data), =SP= (space), and =VCHAR= (any visible US-ASCII character).
 #+END_QUOTE
 
+本规范引用了以下定义在[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：=ALPHA= （字母）、=CR= （回车符）、=CRLF= （回车换行符）、=CTL= （控制字符）、=DIGIT= （十进制数字 0-9）、=DQUOTE= （双引号）、=HEXDIG= （十六进制数字 0-9/A-F/a-f）、=HTAB= （水平制表符）、=LF= （换行符）、=OCTET= （八位组字节）、=SP= （空格）以及 =VCHAR= （【USASCII】可见字符）。
+
 #+BEGIN_QUOTE
-The rules below are defined in [RFC7230]:
+The rules below are defined in [[[file:RFC7230.org][RFC7230]]]:
 #+END_QUOTE
+
+以下规则定义在【[[file:RFC7230.org][RFC7230]]】中：
 
 #+BEGIN_SRC text
   OWS           = <OWS, see [RFC7230], Section 3.2.3>
@@ -1055,6 +1128,8 @@ The rules below are defined in [RFC7230]:
 #+BEGIN_QUOTE
 The rules below are defined in other parts:
 #+END_QUOTE
+
+以下规则定义在其他部分中：
 
 #+BEGIN_SRC text
   HTTP-date     = <HTTP-date, see [RFC7231], Section 7.1.1.1>
@@ -1066,8 +1141,10 @@ The rules below are defined in other parts:
 :END:
 
 #+BEGIN_QUOTE
-In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
+In the collected ABNF below, list rules are expanded as per [[id:f8234cb5-154d-4daf-82fd-ed54ac75cf8b][Section 1.2]] of [RFC7230].
 #+END_QUOTE
+
+下列 ABNF 规则集合中，列表规则是在[[id:f8234cb5-154d-4daf-82fd-ed54ac75cf8b][【RFC7230】章节 1.2]] 所扩充的。
 
 #+BEGIN_SRC text
   ETag = entity-tag
@@ -1097,6 +1174,69 @@ In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7
 
 * Index
 
+- 3
+  - 304 Not Modified (status code)  4.1, 7.1
+- 4
+  - 412 Precondition Failed (status code)  4.2, 7.1
+- B
+  - BCP90  7.2, 10.2
+- E
+  - ETag header field  2, 2.3, 7.2, A, A
+- G
+  - Grammar  
+    - entity-tag  2.3
+    - ETag  2.3
+    - etagc  2.3
+    - If-Match  3.1
+    - If-Modified-Since  3.3
+    - If-None-Match  3.2
+    - If-Unmodified-Since  3.4
+    - Last-Modified  2.2
+    - opaque-tag  2.3
+    - weak  2.3
+- I
+  - If-Match header field  3.1, 6, 7.2
+  - If-Modified-Since header field  3.3, 7.2
+  - If-None-Match header field  3.2, 7.2, A
+  - If-Unmodified-Since header field  3.4, 6, 7.2
+- L
+  - Last-Modified header field  2, 2.2, 7.2
+- M
+  - metadata  2
+- R
+  - RFC2119  1.1, 10.1
+  - RFC2616  2.3, 10.2
+    - Section 3.11  2.3
+  - RFC4918  2, 5, 10.2
+    - Section 10.4  5
+  - RFC5234  1.2, 10.1, B
+    - Appendix B.1  B
+  - RFC7230  1, 1.1, 1.2, 2.3.3, 8, 9, 10.1, B, B, B, C
+    - Section 1.2  C
+    - Section 2.5  1.1
+    - Section 3.2.3  B
+    - Section 3.2.6  B
+    - Section 4  2.3.3
+    - Section 7  1.2
+    - Section 10  9
+  - RFC7231  1, 1, 2.3.3, 2.3.3, 3.2, 8, 10.1, B
+    - Section 3  1
+    - Section 3.4  2.3.3
+    - Section 4.2.1  3.2
+    - Section 5.3.4  2.3.3
+    - Section 7.1.1.1  B
+  - RFC7233  3.5, 6, 10.1
+    - Section 3.2  3.5
+  - RFC7234  1, 2.2.1, 2.3.1, 3.2, 3.3, 4.1, 10.1
+    - Section 4.3.2  3.2, 3.3
+    - Section 4.3.4  4.1
+- S
+  - selected representation  1
+- V
+  - validator  2
+    - strong  2.1
+    - weak  2.1
+
 * Authors' Addresses
 
 #+BEGIN_EXAMPLE
@@ -1119,3 +1259,6 @@ Email: julian.reschke@greenbytes.de
 URI: http://greenbytes.de/tech/webdav/
 #+END_EXAMPLE
 
+#+BEGIN_EXAMPLE
+阿多（译者）
+#+END_EXAMPLE
