@@ -1000,7 +1000,7 @@ Header fields are fully extensible: there is no limit on the introduction of new
 New header fields can be defined such that, when they are understood by a recipient, they might override or enhance the interpretation of previously defined header fields, define preconditions on request evaluation, or refine the meaning of responses.
 #+END_QUOTE
 
-新头字段能够定义为这样：当新头字段能够被接收端所理解时，它们可以覆盖或增强之前所定义的头字段的[[ruby:interpretation][解释]]，定义对[[ruby:request%20evaluation][评估请求]]的[[ruby:preconditions][前置条件]]，或者[[ruby:refine][优化]]响应消息的含义。
+新头字段能够定义为这样：当新头字段能够被接收端所理解时，它们可以覆盖或增强之前所定义的头字段的[[ruby:interpretation][解释]]，定义对[[ruby:request%20evaluation][评估请求]]的[[ruby:preconditions][前提条件]]，或者[[ruby:refine][优化]]响应消息的含义。
 
 #+BEGIN_QUOTE
 译注：计算机或数学领域中一般将 "evaluation" 翻译为“求值”（参考[[https://www.gnu.org/software/emacs/manual/html_node/elisp/Evaluation.html#Evaluation][这里]]），例如，对一个表达式进行求值。"request evaluation"，请求求值？请求评估？没找到合适的词来形容。我的理解是对请求消息进行解释，提取其信息，并转化为接收端所能理解的形式，让接收端理解请求的意图，也说是说，对请求消息进行求值。

@@ -37,7 +37,7 @@
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document defines HTTP/1.1 conditional requests, including metadata header fields for indicating state changes, request header fields for making preconditions on such state, and rules for constructing the responses to a conditional request when one or more preconditions evaluate to false.
 #+END_QUOTE
 
-超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 条件请求，包括：[[ruby:metadata%20header%20fields][元数据头字段]]——用于表明状态的改变、[[ruby:request%20header%20fields][请求头字段]]——用于对这些状态设置前置条件、以及[[ruby:rules][规则]]——用于当一个或多个前置条件取值为否的时候构造响应给条件请求。
+超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 条件请求，包括：[[ruby:metadata%20header%20fields][元数据头字段]]——用于表明状态的改变、[[ruby:request%20header%20fields][请求头字段]]——用于对这些状态设置前提条件、以及[[ruby:rules][规则]]——用于当一个或多个前提条件取值为否的时候构造响应给条件请求。
 
 * 备忘状态 / Status of This Memo
 
@@ -73,7 +73,7 @@ This document may contain material from IETF Documents or IETF Contributions pub
 Conditional requests are HTTP requests [[[file:RFC7231.org][RFC7231]]] that include one or more header fields indicating a precondition to be tested before applying the method semantics to the target resource. This document defines the HTTP/1.1 conditional request mechanisms in terms of the architecture, syntax notation, and conformance criteria defined in [[[file:RFC7230.org][RFC7230]]].
 #+END_QUOTE
 
-[[ruby:conditional%20requests][条件请求]]是这样一种 HTTP 请求【[[file:RFC7231.org][RFC7231]]】，它包含了一个或多个头字段来表明一种[[ruby:precondition][前置条件]]，这种前置条件需要在将方法语义应用到目标资源之前进行测试。本文档依据【[[file:RFC7230.org][RFC7230]]】所定义的架构、句法标记、以及一致性准则，来定义 HTTP/1.1 条件请求的机制。
+[[ruby:conditional%20requests][条件请求]]是这样一种 HTTP 请求【[[file:RFC7231.org][RFC7231]]】，它包含了一个或多个头字段来表明一种[[ruby:precondition][前提条件]]，这种前提条件需要在将方法语义应用到目标资源之前进行测试。本文档依据【[[file:RFC7230.org][RFC7230]]】所定义的架构、句法标记、以及一致性准则，来定义 HTTP/1.1 条件请求的机制。
 
 #+BEGIN_QUOTE
 Conditional GET requests are the most efficient mechanism for HTTP cache updates [[[file:RFC7234.org][RFC7234]]]. Conditionals can also be applied to state-changing methods, such as PUT and DELETE, to prevent the "lost update" problem: one client accidentally overwriting the work of another client that has been acting in parallel.
@@ -85,13 +85,13 @@ Conditional GET requests are the most efficient mechanism for HTTP cache updates
 Conditional request preconditions are based on the state of the target resource as a whole (its current value set) or the state as observed in a previously obtained representation (one value in that set). A resource might have multiple current representations, each with its own observable state. The conditional request mechanisms assume that the mapping of requests to a "selected representation" ([[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][Section 3]] of [RFC7231]) will be consistent over time if the server intends to take advantage of conditionals. Regardless, if the mapping is inconsistent and the server is unable to select the appropriate representation, then no harm will result when the precondition evaluates to false.
 #+END_QUOTE
 
-总的来说，条件请求的前置条件是基于目标资源的状态（目标资源的[[ruby:current%20value][当前值]]的集合），或者在之前获得的一种表示形式所观察到的状态（这个当前值集合中的其中之一）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假定请求与一种“[[ruby:selected%20representation][已选定的表示形式]]”（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][【RFC7231】章节 3]]）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前置条件的求值结果为否的时候，最终结果应该要是无害的。
+总的来说，条件请求的前提条件是基于目标资源的状态（目标资源的[[ruby:current%20value][当前值]]的集合），或者在之前获得的一种表示形式所观察到的状态（这个当前值集合中的其中之一）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假定请求与一种“[[ruby:selected%20representation][已选定的表示形式]]”（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][【RFC7231】章节 3]]）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前提条件的求值结果为否（也就是条件不成立）的时候，最终结果应该要是无害的。
 
 #+BEGIN_QUOTE
 The conditional request preconditions defined by this specification ([[id:5d82712b-331b-4303-85fc-19b1488af561][Section 3]]) are evaluated when applicable to the recipient ([[id:fce45320-6c1c-4486-a32b-2c553780d785][Section 5]]) according to their order of precedence ([[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][Section 6]]).
 #+END_QUOTE
 
-由本规范所定义的条件请求的前置条件（[[id:5d82712b-331b-4303-85fc-19b1488af561][章节 3]]）会在应用到接收端的时候进行求值（[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]]），依据它们的优先级顺序（[[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][章节 6]]）。
+由本规范所定义的条件请求的前提条件（[[id:5d82712b-331b-4303-85fc-19b1488af561][章节 3]]）会在应用到接收端的时候进行求值（[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]]），依据它们的优先级顺序（[[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][章节 6]]）。
 
 ** 1.1. 一致性和错误处理 / Conformance and Error Handling
 
@@ -121,7 +121,7 @@ This specification uses the Augmented Backus-Naur Form (ABNF) notation of [[[htt
 This specification defines two forms of metadata that are commonly used to observe resource state and test for preconditions: modification dates ([[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][Section 2.2]]) and opaque entity tags ([[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][Section 2.3]]). Additional metadata that reflects resource state has been defined by various extensions of HTTP, such as Web Distributed Authoring and Versioning (WebDAV, [[[https://tools.ietf.org/html/rfc4918][RFC4918]]]), that are beyond the scope of this specification. A resource metadata value is referred to as a "validator" when it is used within a precondition.
 #+END_QUOTE
 
-本规范定义了两类元数据：[[ruby:modification%20dates][修改日期]]（[[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][章节 2.2]]）和[[ruby:opaque%20entity%20tags][不透明实体标签]]（[[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][章节 2.3]]），它们常用于观察资源的状态以及对前置条件进行测试。其他额外的反映资源状态的元数据定义在各种 HTTP 扩展当中，比如 [[ruby:Web%20Distributed%20Authoring%20and%20Versioning][Web 分布式创作和版本管理]]（WebDAV，【[[https://tools.ietf.org/html/rfc4918][RFC4918]]】），超出了本规范的范畴。[[ruby:resource%20metadata][资源元数据]]的值使用在一个[[ruby:precondition][前置条件]]中的时候，它被称为“[[ruby:validator][验证器]]”。
+本规范定义了两类元数据：[[ruby:modification%20dates][修改日期]]（[[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][章节 2.2]]）和[[ruby:opaque%20entity%20tags][不透明实体标签]]（[[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][章节 2.3]]），它们常用于观察资源的状态以及对前提条件进行测试。其他额外的反映资源状态的元数据定义在各种 HTTP 扩展当中，比如 [[ruby:Web%20Distributed%20Authoring%20and%20Versioning][Web 分布式创作和版本管理]]（WebDAV，【[[https://tools.ietf.org/html/rfc4918][RFC4918]]】），超出了本规范的范畴。[[ruby:resource%20metadata][资源元数据]]的值使用在一个[[ruby:precondition][前提条件]]中的时候，它被称为“[[ruby:validator][验证器]]”。
 
 #+BEGIN_QUOTE
 译注：可以先将验证器理解为是一种头字段，以方便理解下文。
@@ -136,7 +136,7 @@ This specification defines two forms of metadata that are commonly used to obser
 Validators come in two flavors: strong or weak. Weak validators are easy to generate but are far less useful for comparisons. Strong validators are ideal for comparisons but can be very difficult (and occasionally impossible) to generate efficiently. Rather than impose that all forms of resource adhere to the same strength of validator, HTTP exposes the type of validator in use and imposes restrictions on when weak validators can be used as preconditions.
 #+END_QUOTE
 
-[[ruby:validator][验证器]]分成两类：强验证和弱验证。[[ruby:weak%20validators][弱验证器]]容易生成，但对于比较来说几乎没有什么用处。[[ruby:strong%20validators][强验证器]]是理想的比较方式，但它很难有效地生成（有时甚至不可能生成）。与其强制资源的所有形式都附带相同的验证器类型，HTTP 显露出使用中的验证器的类型并对“什么时候弱验证器可以用作前置条件”施加限制。
+[[ruby:validator][验证器]]分成两类：强验证和弱验证。[[ruby:weak%20validators][弱验证器]]容易生成，但对于比较来说几乎没有什么用处。[[ruby:strong%20validators][强验证器]]是理想的比较方式，但它很难有效地生成（有时甚至不可能生成）。与其强制资源的所有形式都附带相同的验证器类型，HTTP 显露出使用中的验证器的类型并对“什么时候弱验证器可以用作前提条件”施加限制。
 
 #+BEGIN_QUOTE
 A "strong validator" is representation metadata that changes value whenever a change occurs to the representation data that would be observable in the payload body of a =200 (OK)= response to GET.
@@ -524,7 +524,7 @@ A client:
 - *可以* 在[[ruby:subrange%20cache%20validation%20requests][子范围缓存验证请求]]中发送 =Last-Modified= 值（使用 =If-Unmodified-Since=），如果版本为 HTTP/1.0 的源服务器只提供了一个 =Last-Modified= 值的话。如果用户代理有困难的话，*应当* 提供一种途径来禁用这种行为。
 - *应当* 在缓存验证请求中将两种验证器都发送，如果源服务器既提供了一个实体标签，也提供了一个 =Last-Modified= 值的话。这样使得 HTTP/1.0 和 HTTP/1.1 的缓存服务器都可以恰当地响应请求。
 
-* 3. 前置条件头字段 / Precondition Header Fields
+* 3. 前提条件头字段 / Precondition Header Fields
 :PROPERTIES:
 :ID:       5d82712b-331b-4303-85fc-19b1488af561
 :END:
@@ -533,7 +533,7 @@ A client:
 This section defines the syntax and semantics of HTTP/1.1 header fields for applying preconditions on requests. [[id:fce45320-6c1c-4486-a32b-2c553780d785][Section 5]] defines when the preconditions are applied. [[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][Section 6]] defines the order of evaluation when more than one precondition is present.
 #+END_QUOTE
 
-本章节定义了用于在请求中应用[[ruby:precondition][前置条件]]的 HTTP/1.1 头字段的句法和语义。[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]] 定义了前置条件会在什么时候被应用。[[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][章节 6]] 定义了当出现超过一种前置条件的时候它们的求值顺序。
+本章节定义了用于在请求中应用[[ruby:precondition][前提条件]]的 HTTP/1.1 头字段的句法和语义。[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]] 定义了前提条件会在什么时候被应用。[[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][章节 6]] 定义了当出现超过一种前提条件的时候它们的求值顺序。
 
 ** 3.1. If-Match
 :PROPERTIES:
@@ -552,7 +552,7 @@ The "If-Match" header field makes the request method conditional on the recipien
 An origin server *MUST* use the strong comparison function when comparing entity-tags for =If-Match= ([[id:e3a6dda6-2209-44aa-89af-c37f1b95c2fe][Section 2.3.2]]), since the client intends this precondition to prevent the method from being applied if there have been any changes to the representation data.
 #+END_QUOTE
 
-当源服务器对 =If-Match= 的实体标签进行对比的时候（[[id:e3a6dda6-2209-44aa-89af-c37f1b95c2fe][章节 2.3.2]]），源服务器 *必须* 使用强比较方法，这是因为客户端打算让这个前置条件来防止本执行本方法，如果表示形式数据有任何变化的话。
+当源服务器对 =If-Match= 的实体标签进行对比的时候（[[id:e3a6dda6-2209-44aa-89af-c37f1b95c2fe][章节 2.3.2]]），源服务器 *必须* 使用强比较方法，这是因为客户端打算让这个前提条件来防止本执行本方法，如果表示形式数据有任何变化的话。
 
 #+BEGIN_SRC text
   If-Match = "*" / 1#entity-tag
@@ -827,32 +827,43 @@ The "If-Range" header field provides a special conditional request mechanism tha
   :PROPERTIES:
   :ID:       c983830d-bf6f-4e61-a905-285f070f9d20
   :END:
-** 4.1. 304 Not Modified
+  
+** 4.1. 304 未更改 / 304 Not Modified
 :PROPERTIES:
 :ID:       6033b2bf-1408-4756-9929-15dd6510c7e3
 :END:
    
 #+BEGIN_QUOTE
-The =304 (Not Modified)= status code indicates that a conditional GET or HEAD request has been received and would have resulted in a 200 (OK) response if it were not for the fact that the condition evaluated to false. In other words, there is no need for the server to transfer a representation of the target resource because the request indicates that the client, which made the request conditional, already has a valid representation; the server is therefore redirecting the client to make use of that stored representation as if it were the payload of a =200 (OK)= response.
+The =304 (Not Modified)= status code indicates that a conditional GET or HEAD request has been received and would have resulted in a =200 (OK)= response if it were not for the fact that the condition evaluated to false. In other words, there is no need for the server to transfer a representation of the target resource because the request indicates that the client, which made the request conditional, already has a valid representation; the server is therefore redirecting the client to make use of that stored representation as if it were the payload of a =200 (OK)= response.
 #+END_QUOTE
+
+=304 (Not Modified)= 状态码表明：已接收到 GET 或 HEAD 条件请求，如果这个条件的求值结果不是否的话，将返回的是一个 =200 (OK)= 响应。换句话说，服务器不需要传输目标资源的一个表示形式，因为这个请求表明了发起这个条件请求的客户端已经有一个有效的表示形式了，因此服务器让客户端重新使用那个已缓存的表示形式，可以把它当作是一个 =200 (OK)= 响应的有效载荷。
 
 #+BEGIN_QUOTE
 The server generating a =304= response *MUST* generate any of the following header fields that would have been sent in a =200 (OK)= response to the same request: =Cache-Control=, =Content-Location=, =Date=, =ETag=, =Expires=, and =Vary=.
 #+END_QUOTE
 
+服务器生成一个 =304= 响应的时候，*必须* 把像生成一个 =200 (OK)= 响应到同一个请求时所具有的以下头字段生成到 =304= 响应里：=Cache-Control=、=Content-Location=、=Date=、=ETag=、=Expires=、以及 =Vary=。
+
 #+BEGIN_QUOTE
 Since the goal of a =304= response is to minimize information transfer when the recipient already has one or more cached representations, a sender *SHOULD NOT* generate representation metadata other than the above listed fields unless said metadata exists for the purpose of guiding cache updates (e.g., =Last-Modified= might be useful if the response does not have an =ETag= field).
 #+END_QUOTE
 
+因为 =304= 响应的目标是在接收端已经有一个或多个已缓存的表示形式的时候让发送端最小化信息传输，因此，发送端 *不应当* 生成除上述所列出的头字段以外的[[ruby:representation%20metadata][表示形式元数据]]，除非这些元数据是为指导缓存更新的目的而存在的（比如，=Last-Modified= 可能有用于如果响应并未带有一个 =ETag= 字段的情况）。
+
 #+BEGIN_QUOTE
-Requirements on a cache that receives a =304= response are defined in Section 4.3.4 of [RFC7234]. If the conditional request originated with an outbound client, such as a user agent with its own cache sending a conditional GET to a shared proxy, then the proxy *SHOULD* forward the =304= response to that client.
+Requirements on a cache that receives a =304= response are defined in [[id:eb92f86f-35bf-4b7a-b1ae-579da32c29a5][Section 4.3.4]] of [RFC7234]. If the conditional request originated with an outbound client, such as a user agent with its own cache sending a conditional GET to a shared proxy, then the proxy *SHOULD* forward the =304= response to that client.
 #+END_QUOTE
+
+接收到一个 =304= 响应时对于缓存服务器的要求，定义在[[id:eb92f86f-35bf-4b7a-b1ae-579da32c29a5][【RFC7234】章节 4.3.4]]。如果条件请求是源自一个[[ruby:outbound%20client][站外的客户端]]，比如一个用户代理具有它自己的缓存功能发送了一个条件 GET 到一个共享代理，那么，这个代理 *应当* 转发这个 =304= 响应到那个客户端。
 
 #+BEGIN_QUOTE
 A =304= response cannot contain a message-body; it is always terminated by the first empty line after the header fields.
 #+END_QUOTE
 
-** 4.2. 412 Precondition Failed
+=304= 响应消息不能包含一个[[ruby:message-body][消息体]]，它总是终止于头字段之后的第一个空行。
+
+** 4.2. 412 前提条件失败 / 412 Precondition Failed
 :PROPERTIES:
 :ID:       02e5a084-aac8-4f06-840f-507ef2489bb1
 :END:
@@ -860,6 +871,8 @@ A =304= response cannot contain a message-body; it is always terminated by the f
 #+BEGIN_QUOTE
 The =412 (Precondition Failed)= status code indicates that one or more conditions given in the request header fields evaluated to false when tested on the server. This response code allows the client to place preconditions on the current resource state (its current representations and metadata) and, thus, prevent the request method from being applied if the target resource is in an unexpected state.
 #+END_QUOTE
+
+=412 (Precondition Failed)= 状态码表明：请求头字段所给定的一个或多个条件，在服务器上测试时的求值结果为否。这个响应让客户端可以放置前提条件到当前的资源状态（它的当前表示形式和元数据）上，然后，如果目标资源是处在一种预料之外的状态上时，阻止将请求方法的应用。
 
 * 5. 求值 / Evaluation
 :PROPERTIES:

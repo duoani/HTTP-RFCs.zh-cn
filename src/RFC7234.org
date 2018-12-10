@@ -75,6 +75,9 @@
 :END:
 *** 4.3.3. Handling a Validation Response
 *** 4.3.4. Freshening Stored Responses upon Validation
+:PROPERTIES:
+:ID:       eb92f86f-35bf-4b7a-b1ae-579da32c29a5
+:END:
 *** 4.3.5. Freshening Responses via HEAD
 ** 4.4. Invalidation
 * 5. Header Field Definitions
