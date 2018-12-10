@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-07 Fri 19:17 -->
+<!-- 2018-12-10 Mon 19:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -3375,7 +3375,7 @@ The HTTP conditional request header fields [<a href="RFC7232.html">RFC7232</a>] 
 </blockquote>
 
 <p>
-HTTP 的<ruby>条件请求头字段<rt>conditional request fields</rt></ruby>【<a href="RFC7232.html">RFC7232</a>】让客户端可以在目标资源的状态上设置一个<ruby>前置条件<rt>precondition</rt></ruby>，使得如果前置条件不成立的话，该请求方法的语义所对应动作不会被执行。本规范所定义的每一种前置条件皆由从目标资源先前的<ruby>表示形式<rt>representations</rt></ruby>那里获得的一系列<ruby>验证器<rt>validators</rt></ruby>，与当前应用到已选定的表示形式的验证器的目前状态之间的比较来组成的（<a href="#org6496d0f">章节 7.2</a>）。因此，这些前置条件以客户端的一个给定的已知状态作为参考，来评估目标资源的状态是否已经改变了。这种评估的结果依赖于<ruby>请求方法的语义<rt>method semantics</rt></ruby>以及<ruby>条件句的选择<rt>choice of conditional</rt></ruby>，其定义见<a href="RFC7232.html#ID-fce45320-6c1c-4486-a32b-2c553780d785">【RFC7232】章节 5</a>。
+HTTP 的<ruby>条件请求头字段<rt>conditional request fields</rt></ruby>【<a href="RFC7232.html">RFC7232</a>】让客户端可以在目标资源的状态上设置一个<ruby>前提条件<rt>precondition</rt></ruby>，使得如果前提条件不成立的话，该请求方法的语义所对应动作不会被执行。本规范所定义的每一种前提条件皆由从目标资源先前的<ruby>表示形式<rt>representations</rt></ruby>那里获得的一系列<ruby>验证器<rt>validators</rt></ruby>，与当前应用到已选定的表示形式的验证器的目前状态之间的比较来组成的（<a href="#org6496d0f">章节 7.2</a>）。因此，这些前提条件以客户端的一个给定的已知状态作为参考，来评估目标资源的状态是否已经改变了。这种评估的结果依赖于<ruby>请求方法的语义<rt>method semantics</rt></ruby>以及<ruby>条件句的选择<rt>choice of conditional</rt></ruby>，其定义见<a href="RFC7232.html#ID-fce45320-6c1c-4486-a32b-2c553780d785">【RFC7232】章节 5</a>。
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -8062,7 +8062,7 @@ This section is meant to inform developers, information providers, and users of 
 </blockquote>
 
 <p>
-本章节是为了告诉开发者、信息提供商、以及用户，已知的 HTTP <ruby>语义<rt>semantics</rt></ruby>及其使用在互联网上进行信息传输过程中相关的安全注意事项。与消息<ruby>句法<rt>syntax</rt></ruby>、<ruby>解析<rt>parsing</rt></ruby>、以及<ruby>路由<rt>routing</rt></ruby>相关的注意事项已在<a href="RFC7230.html#ID-aa52d5bd-e2f6-40db-826d-991544eeacb9">【RFC7230】章节 9</a> 中讨论过了。
+本章节是为了告诉开发者、信息提供商、以及用户，HTTP <ruby>语义<rt>semantics</rt></ruby>及其使用在互联网上进行信息传输过程中相关的已知的安全注意事项。与消息<ruby>句法<rt>syntax</rt></ruby>、<ruby>解析<rt>parsing</rt></ruby>、以及<ruby>路由<rt>routing</rt></ruby>相关的注意事项已在<a href="RFC7230.html#ID-aa52d5bd-e2f6-40db-826d-991544eeacb9">【RFC7230】章节 9</a> 中讨论过了。
 </p>
 
 <blockquote>
@@ -8853,7 +8853,7 @@ The rules below are defined in [<a href="RFC7230.html">RFC7230</a>]:
 </blockquote>
 
 <p>
-以下规则定义在【<a href="RFC7230.html">RFC7230</a>】：
+以下规则定义在【<a href="RFC7230.html">RFC7230</a>】中：
 </p>
 
 <div class="org-src-container">

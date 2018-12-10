@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-04 Tue 19:10 -->
+<!-- 2018-12-10 Mon 19:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7233: Hypertext Transfer Protocol (HTTP/1.1): Range Requests</title>
@@ -394,29 +394,29 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2133284">Abstract</a></li>
-<li><a href="#org50d643c">Status of This Memo</a></li>
+<li><a href="#org3c2ed8a">摘要 / Abstract</a></li>
+<li><a href="#orga50eef7">备忘状态 / Status of This Memo</a></li>
 <li><a href="#org40d730c">Copyright Notice</a></li>
-<li><a href="#org187266d">1. Introduction</a>
+<li><a href="#org2afe060">1. 引言 / Introduction</a>
 <ul>
-<li><a href="#org3dbeb4b">1.1. Conformance and Error Handling</a></li>
-<li><a href="#org592fb75">1.2. Syntax Notation</a></li>
+<li><a href="#org02f2043">1.1. 一致性和错误处理 / Conformance and Error Handling</a></li>
+<li><a href="#orgad89526">1.2. 句法标记 / Syntax Notation</a></li>
 </ul>
 </li>
-<li><a href="#org964cdff">2. Range Units</a>
+<li><a href="#org954ce7c">2. 范围单位 / Range Units</a>
 <ul>
-<li><a href="#org8186894">2.1. Byte Ranges</a></li>
-<li><a href="#org13c9f8f">2.2. Other Range Units</a></li>
+<li><a href="#org95c1795">2.1. 字节范围 / Byte Ranges</a></li>
+<li><a href="#org606eaf7">2.2. 其他范围单位 / Other Range Units</a></li>
 <li><a href="#org6b1d683">2.3. Accept-Ranges</a></li>
 </ul>
 </li>
-<li><a href="#orgabdd4b0">3. Range Requests</a>
+<li><a href="#org8be9206">3. 范围请求 / Range Requests</a>
 <ul>
 <li><a href="#orgf26e511">3.1. Range</a></li>
 <li><a href="#org79d4a85">3.2. If-Range</a></li>
 </ul>
 </li>
-<li><a href="#org3bb2822">4. Responses to a Range Request</a>
+<li><a href="#org300aaf5">4. 响应给范围请求 / Responses to a Range Request</a>
 <ul>
 <li><a href="#org2d91892">4.1. 206 Partial Content</a></li>
 <li><a href="#org96d66d2">4.2. Content-Range</a></li>
@@ -424,39 +424,39 @@ for the JavaScript code in this tag.
 <li><a href="#org9a26c49">4.4. 416 Range Not Satisfiable</a></li>
 </ul>
 </li>
-<li><a href="#orga5fdf53">5. IANA Considerations</a>
+<li><a href="#org151b723">5. IANA 注意事项 / IANA Considerations</a>
 <ul>
-<li><a href="#org4c965e1">5.1. Range Unit Registry</a>
+<li><a href="#org2f133be">5.1. 范围单位登记表 / Range Unit Registry</a>
 <ul>
 <li><a href="#orgd9e592f">5.1.1. Procedure</a></li>
 <li><a href="#orgc516e6b">5.1.2. Registrations</a></li>
 </ul>
 </li>
-<li><a href="#orge3c1e57">5.2. Status Code Registration</a></li>
-<li><a href="#org750fe0c">5.3. Header Field Registration</a></li>
-<li><a href="#orgad4c2a6">5.4. Internet Media Type Registration</a>
+<li><a href="#org736a5ab">5.2. 状态码登记 / Status Code Registration</a></li>
+<li><a href="#org4f3ac8d">5.3. 头字段登记  / Header Field Registration</a></li>
+<li><a href="#org3ddef16">5.4. 互联网媒体类型登记 / Internet Media Type Registration</a>
 <ul>
 <li><a href="#org5f297a0">5.4.1. Internet Media Type multipart/byteranges</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org07a40e2">6. Security Considerations</a>
+<li><a href="#orgec0b449">6. 安全注意事项 / Security Considerations</a>
 <ul>
-<li><a href="#org4e7ae40">6.1. Denial-of-Service Attacks Using Range</a></li>
+<li><a href="#orgac5f1c2">6.1. 使用范围进行拒绝服务攻击 / Denial-of-Service Attacks Using Range</a></li>
 </ul>
 </li>
-<li><a href="#org0a72d12">7. Acknowledgments</a></li>
-<li><a href="#orgbeb3402">8. References</a>
+<li><a href="#org9d1ded4">7. 鸣谢 / Acknowledgments</a></li>
+<li><a href="#orgd544363">8. 参考资料 / References</a>
 <ul>
-<li><a href="#orgc0979c4">8.1. Normative References</a></li>
-<li><a href="#org199c976">8.2. Informative References</a></li>
+<li><a href="#org7771a36">8.1. 规范性参考资料 / Normative References</a></li>
+<li><a href="#org5e3956f">8.2. 信息性参考资料 / Informative References</a></li>
 </ul>
 </li>
-<li><a href="#org3530ef3">Appendix A. Internet Media Type multipart/byteranges</a></li>
-<li><a href="#org0d1b044">Appendix B. Changes from RFC 2616</a></li>
-<li><a href="#orgacb9ec2">Appendix C. Imported ABNF</a></li>
-<li><a href="#org5d79cab">Appendix D. Collected ABNF</a></li>
+<li><a href="#orgc85d248">附录 A：互联网媒体类型 multipart/byteranges / Appendix A. Internet Media Type multipart/byteranges</a></li>
+<li><a href="#org3c68003">附录 B：相对 RFC 2616 的变化 / Appendix B. Changes from RFC 2616</a></li>
+<li><a href="#orgbc51c3e">附录 C：引进的 ABNF / Appendix C. Imported ABNF</a></li>
+<li><a href="#org2da3bfc">附录 D：ABNF 集合 / Appendix D. Collected ABNF</a></li>
 <li><a href="#org020c35c">Index</a></li>
 <li><a href="#org212efb0">Authors' Addresses</a></li>
 </ul>
@@ -487,93 +487,153 @@ ISSN: 2070-1721                                          J. Reschke, Ed.
 </pre>
 </div>
 
-<div id="outline-container-org2133284" class="outline-2">
-<h2 id="org2133284">Abstract</h2>
-<div class="outline-text-2" id="text-org2133284">
+<div id="outline-container-org3c2ed8a" class="outline-2">
+<h2 id="org3c2ed8a">摘要 / Abstract</h2>
+<div class="outline-text-2" id="text-org3c2ed8a">
+<blockquote>
 <p>
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document defines range requests and the rules for constructing and combining responses to those requests.
 </p>
+</blockquote>
+
+<p>
+超文本传输协议（HTTP）是一种<ruby>无状态<rt>stateless</rt></ruby>的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了<ruby>范围请求<rt>range requests</rt></ruby>，以及回应给这些请求的响应相关的构造和结合规则。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org50d643c" class="outline-2">
-<h2 id="org50d643c">Status of This Memo</h2>
-<div class="outline-text-2" id="text-org50d643c">
+<div id="outline-container-orga50eef7" class="outline-2">
+<h2 id="orga50eef7">备忘状态 / Status of This Memo</h2>
+<div class="outline-text-2" id="text-orga50eef7">
+<blockquote>
 <p>
 This is an Internet Standards Track document.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in Section 2 of RFC 5741.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at <a href="http://www.rfc-editor.org/info/rfc7233">http://www.rfc-editor.org/info/rfc7233</a>.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org40d730c" class="outline-2">
 <h2 id="org40d730c">Copyright Notice</h2>
 <div class="outline-text-2" id="text-org40d730c">
+<blockquote>
 <p>
 Copyright © 2014 IETF Trust and the persons identified as the document authors. All rights reserved.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (<a href="http://trustee.ietf.org/license-info">http://trustee.ietf.org/license-info</a>) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document. Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This document may contain material from IETF Documents or IETF Contributions published or made publicly available before November 10, 2008. The person(s) controlling the copyright in some of this material may not have granted the IETF Trust the right to allow modifications of such material outside the IETF Standards Process. Without obtaining an adequate license from the person(s) controlling the copyright in such materials, this document may not be modified outside the IETF Standards Process, and derivative works of it may not be created outside the IETF Standards Process, except to format it for publication as an RFC or to translate it into languages other than English.
 </p>
+</blockquote>
 </div>
 </div>
 
-<div id="outline-container-org187266d" class="outline-2">
-<h2 id="org187266d">1. Introduction</h2>
-<div class="outline-text-2" id="text-org187266d">
+<div id="outline-container-org2afe060" class="outline-2">
+<h2 id="org2afe060">1. 引言 / Introduction</h2>
+<div class="outline-text-2" id="text-org2afe060">
+<blockquote>
 <p>
 Hypertext Transfer Protocol (HTTP) clients often encounter interrupted data transfers as a result of canceled requests or dropped connections. When a client has stored a partial representation, it is desirable to request the remainder of that representation in a subsequent request rather than transfer the entire representation. Likewise, devices with limited local storage might benefit from being able to request only a subset of a larger representation, such as a single page of a very large document, or the dimensions of an embedded image.
 </p>
+</blockquote>
 
+<p>
+超文本传输协议（HTTP）客户端在请求被取消或者连接被丢弃的时候，其结果通常是数据传输被打断。当客户端已经存储了表示形式的一部分的时候，理想的情况是在一个后续请求中继续请求这个表示形式的<ruby>剩余部分<rt>remainder</rt></ruby>，而不是重新传输<ruby>整个<rt>entire</rt></ruby>表示形式。同样，本地存储受限的设备可以受益于能够请求一个大的表示形式的一个<ruby>子集<rt>subset</rt></ruby>，比如一个非常大的文档中的其中一页，或者一张内嵌图像的尺寸。
+</p>
+
+<blockquote>
 <p>
 This document defines HTTP/1.1 range requests, partial responses, and the multipart/byteranges media type. Range requests are an OPTIONAL feature of HTTP, designed so that recipients not implementing this feature (or not supporting it for the target resource) can respond as if it is a normal GET request without impacting interoperability. Partial responses are indicated by a distinct status code to not be mistaken for full responses by caches that might not implement the feature.
 </p>
+</blockquote>
 
+<p>
+本文档定义了 HTTP/1.1 <ruby>范围请求<rt>range requests</rt></ruby>、<ruby>部分响应<rt>partial responses</rt></ruby>、以及 multipart/byteranges 媒体类型。范围请求是 HTTP 的一种 <b>可选的</b> 的功能，这样设计以便于接收端在没有实现这个功能（或者目标资源不支持这个功能）的情况下能够像一个普通 GET 请求一样作出响应，而不会影响<ruby>互操作性<rt>interoperability</rt></ruby>。<ruby>部分响应<rt>partial response</rt></ruby>由一个独特状态码来表明，以避免可能未实现这个功能的缓存不会误以为这是一个<ruby>完整的响应<rt>full response</rt></ruby>。
+</p>
+
+<blockquote>
 <p>
 Although the range request mechanism is designed to allow for extensible range types, this specification only defines requests for byte ranges.
 </p>
-</div>
-
-<div id="outline-container-org3dbeb4b" class="outline-3">
-<h3 id="org3dbeb4b">1.1. Conformance and Error Handling</h3>
-<div class="outline-text-3" id="text-org3dbeb4b">
-<p>
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
-</p>
+</blockquote>
 
 <p>
-Conformance criteria and considerations regarding error handling are defined in Section 2.5 of [RFC7230].
+虽然范围请求的机制被设计为允许<ruby>可扩展的范围类型<rt>extensible range types</rt></ruby>，但本规范只对<ruby>字节范围<rt>byte ranges</rt></ruby>的请求进行定义。
 </p>
 </div>
+
+<div id="outline-container-org02f2043" class="outline-3">
+<h3 id="org02f2043">1.1. 一致性和错误处理 / Conformance and Error Handling</h3>
+<div class="outline-text-3" id="text-org02f2043">
+<blockquote>
+<p>
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [<a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>].
+</p>
+</blockquote>
+
+<p>
+本文档中的关键词 <b><ruby>必须<rt>MUST</rt></ruby></b>、<b><ruby>禁止<rt>MUST NOT</rt></ruby></b>、<b><ruby>要求<rt>REQUIRED</rt></ruby></b>、<b><ruby>必须<rt>SHALL</rt></ruby></b>、<b><ruby>禁止<rt>SHALL NOT</rt></ruby></b>、<b><ruby>应该<rt>SHOULD</rt></ruby></b>、<b><ruby>不应当<rt>SHOULD NOT</rt></ruby></b>、<b><ruby>推荐<rt>RECOMMENDED</rt></ruby></b>、<b><ruby>可以<rt>MAY</rt></ruby></b> 和 <b><ruby>可选<rt>OPTIONAL</rt></ruby></b> 的意义与【<a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>】一致。
+</p>
+
+<blockquote>
+<p>
+Conformance criteria and considerations regarding error handling are defined in <a href="RFC7230.html#ID-A0441F72-9799-4667-9477-1E05885946A1">Section 2.5</a> of [RFC7230].
+</p>
+</blockquote>
+
+<p>
+关于错误处理的一致性标准以及注意事项已在<a href="RFC7230.html#ID-A0441F72-9799-4667-9477-1E05885946A1">【RFC7230】章节 2.5</a> 中定义了。
+</p>
+</div>
 </div>
 
-<div id="outline-container-org592fb75" class="outline-3">
-<h3 id="org592fb75">1.2. Syntax Notation</h3>
-<div class="outline-text-3" id="text-org592fb75">
+<div id="outline-container-orgad89526" class="outline-3">
+<h3 id="orgad89526">1.2. 句法标记 / Syntax Notation</h3>
+<div class="outline-text-3" id="text-orgad89526">
+<blockquote>
 <p>
-This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7 of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix C describes rules imported from other documents. Appendix D shows the collected grammar with all list operators expanded to standard ABNF notation.
+This specification uses the Augmented Backus-Naur Form (ABNF) notation of [<a href="https://tools.ietf.org/html/rfc5234">RFC5234</a>] with a list extension, defined in <a href="RFC7230.html#ID-b9db011d-fe47-4781-929a-4b1b0aa55aec">Section 7</a> of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). <a href="#orgbc51c3e">Appendix C</a> describes rules imported from other documents. <a href="#org2da3bfc">Appendix D</a> shows the collected grammar with all list operators expanded to standard ABNF notation.
+</p>
+</blockquote>
+
+<p>
+本规范使用了扩展巴科斯范式（ABNF）标记法【<a href="https://tools.ietf.org/html/rfc5234">RFC5234</a>】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见<a href="RFC7230.html#ID-b9db011d-fe47-4781-929a-4b1b0aa55aec">【RFC7230】章节 7</a>），允许使用一个 <code>#</code> 操作符（类似于 <code>*</code> 操作符，指代“重复”）来定义一种以逗号分隔的列表。<a href="#orgbc51c3e">附录 C</a> 描述了从其他文档中引进的规则。<a href="#org2da3bfc">附录 D</a> 展示了所有已收集的包含列表扩展规则以及标准 ABNF 标记的语法。
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org964cdff" class="outline-2">
-<h2 id="org964cdff">2. Range Units</h2>
-<div class="outline-text-2" id="text-org964cdff">
+<div id="outline-container-org954ce7c" class="outline-2">
+<h2 id="org954ce7c"><a id="ID-6d7d656a-9741-4193-abd3-60f2f2b3a11a"></a>2. 范围单位 / Range Units</h2>
+<div class="outline-text-2" id="text-org954ce7c">
+<blockquote>
 <p>
-A representation can be partitioned into subranges according to various structural units, depending on the structure inherent in the representation's media type. This "range unit" is used in the Accept-Ranges (Section 2.3) response header field to advertise support for range requests, the Range (Section 3.1) request header field to delineate the parts of a representation that are requested, and the Content-Range (Section 4.2) payload header field to describe which part of a representation is being transferred.
+A representation can be partitioned into subranges according to various structural units, depending on the structure inherent in the representation's media type. This "range unit" is used in the <code>Accept-Ranges</code> (<a href="#org6b1d683">Section 2.3</a>) response header field to advertise support for range requests, the <code>Range</code> (<a href="#orgf26e511">Section 3.1</a>) request header field to delineate the parts of a representation that are requested, and the <code>Content-Range</code> (<a href="#org96d66d2">Section 4.2</a>) payload header field to describe which part of a representation is being transferred.
+</p>
+</blockquote>
+
+<p>
+一个表示形式可以依据各种结构单元来划分为多个子范围，依赖于继承自这个表示形式的媒体类型的结构。这个“<ruby>范围单位<rt>range unit</rt></ruby>”是用在 <code>Accept-Ranges</code> （<a href="#org6b1d683">章节 2.3</a>）响应头字段里用来声明服务器支持范围请求；用在 <code>Range</code> （<a href="#orgf26e511">章节 3.1</a>）请求头字段里用来描绘所请求的一个表示形式的哪一部分；用在 <code>Content-Range</code> （<a href="#org96d66d2">章节 4.2</a>）有效载荷头字段来描述一个表示形式的哪一部分将会被传输。
 </p>
 
 <div class="org-src-container">
@@ -582,20 +642,38 @@ A representation can be partitioned into subranges according to various structur
 </div>
 </div>
 
-<div id="outline-container-org8186894" class="outline-3">
-<h3 id="org8186894">2.1. Byte Ranges</h3>
-<div class="outline-text-3" id="text-org8186894">
+<div id="outline-container-org95c1795" class="outline-3">
+<h3 id="org95c1795">2.1. 字节范围 / Byte Ranges</h3>
+<div class="outline-text-3" id="text-org95c1795">
+<blockquote>
 <p>
 Since representation data is transferred in payloads as a sequence of octets, a byte range is a meaningful substructure for any representation transferable over HTTP (Section 3 of [RFC7231]). The "bytes" range unit is defined for expressing subranges of the data's octet sequence.
 </p>
+</blockquote>
+
+<p>
+因为表示形式数据是以<ruby>字节<rt>octets</rt></ruby>序列的方式在有效载荷里传输的，因此，对于任何可通过 HTTP 进行传输的表示形式，<ruby>字节范围<rt>byte range</rt></ruby>都是<ruby>有意义的基础结构<rt>meaningful substructure</rt></ruby>。
+</p>
+
+<blockquote>
+<p>
+译注："octet" 和 "byte" 都译作字节，其区别是，"octet" 是特指 8 位的字节，因此也被称为“八位组”。而 "byte" 可能是 8 位，也可能为其他位。
+</p>
+</blockquote>
 
 <div class="org-src-container">
 <pre class="src src-text">bytes-unit       = "bytes"
 </pre>
 </div>
 
+<blockquote>
 <p>
 A byte-range request can specify a single range of bytes or a set of ranges within a single representation.
+</p>
+</blockquote>
+
+<p>
+一个字节范围请求能够指定一个单一的字节范围，也可以指定同一个表示形式里的一个范围集合。
 </p>
 
 <div class="org-src-container">
@@ -607,17 +685,33 @@ last-byte-pos   = 1*DIGIT
 </pre>
 </div>
 
+<blockquote>
 <p>
-The first-byte-pos value in a byte-range-spec gives the byte-offset of the first byte in a range. The last-byte-pos value gives the byte-offset of the last byte in the range; that is, the byte positions specified are inclusive. Byte offsets start at zero.
+The <code>first-byte-pos</code> value in a <code>byte-range-spec</code> gives the byte-offset of the first byte in a range. The <code>last-byte-pos</code> value gives the byte-offset of the last byte in the range; that is, the byte positions specified are inclusive. Byte offsets start at zero.
 </p>
+</blockquote>
 
 <p>
-Examples of byte-ranges-specifier values:
+在一个 <code>byte-range-spec</code> 中的 <code>first-byte-pos</code> 的值给出了在一个范围内第一个字节的<ruby>偏移量<rt>byte-offset</rt></ruby>。<code>last-byte-pos</code> 的值给出了在一个范围内最后一个字节的偏移量，也就是说，是<ruby>包括<rt>inclusive</rt></ruby>所指定的这个位置的字节的。字节偏移量从 0 开始。
+</p>
+
+<blockquote>
+<p>
+Examples of <code>byte-ranges-specifier</code> values:
+</p>
+</blockquote>
+
+<p>
+<code>byte-ranges-specifier</code> 值的一些示例：
 </p>
 
 <ul class="org-ul">
 <li><p>
 The first 500 bytes (byte offsets 0-499, inclusive):
+</p>
+
+<p>
+第一个 500 字节（字节偏移量为 0-499，<ruby>闭合区间<rt>inclusive</rt></ruby>）：
 </p>
 
 <pre class="example">
@@ -628,21 +722,43 @@ bytes=0-499
 The second 500 bytes (byte offsets 500-999, inclusive):
 </p>
 
+<p>
+第二个 500 字节（字节偏移量为 500-999，闭合区间）：
+</p>
+
 <pre class="example">
 bytes=500-999
 </pre></li>
 </ul>
 
+<blockquote>
 <p>
-A byte-range-spec is invalid if the last-byte-pos value is present and less than the first-byte-pos.
+A <code>byte-range-spec</code> is invalid if the <code>last-byte-pos</code> value is present and less than the <code>first-byte-pos</code>.
 </p>
+</blockquote>
 
 <p>
-A client can limit the number of bytes requested without knowing the size of the selected representation. If the last-byte-pos value is absent, or if the value is greater than or equal to the current length of the representation data, the byte range is interpreted as the remainder of the representation (i.e., the server replaces the value of last-byte-pos with a value that is one less than the current length of the selected representation).
+在 <code>byte-range-spec</code> 中，如果有出现 <code>last-byte-pos</code> 值，并且它小于 <code>first-byte-pos</code>，那么这个 <code>byte-range-spec</code> 是无效的。
 </p>
 
+<blockquote>
 <p>
-A client can request the last N bytes of the selected representation using a suffix-byte-range-spec.
+A client can limit the number of bytes requested without knowing the size of the selected representation. If the <code>last-byte-pos</code> value is absent, or if the value is greater than or equal to the current length of the representation data, the byte range is interpreted as the remainder of the representation (i.e., the server replaces the value of <code>last-byte-pos</code> with a value that is one less than the current length of the selected representation).
+</p>
+</blockquote>
+
+<p>
+客户端可以在不知道已选定的表示形式大小的情况下限制所请求的字节数量。如果缺少 <code>last-byte-pos</code> 值，或者其值大于或等于表示形式数据的当前长度，那么，字节范围会被解释为这个表示形式的剩余部分（也就是说，服务器将这个 <code>last-byte-pos</code> 的值替换为已选定表示形式的长度减 1 的值）。
+</p>
+
+<blockquote>
+<p>
+A client can request the last N bytes of the selected representation using a <code>suffix-byte-range-spec</code>.
+</p>
+</blockquote>
+
+<p>
+客户端可以使用一个 <code>suffix-byte-range-spec</code> 来请求已选定的表示形式的最后 N 个字节。
 </p>
 
 <div class="org-src-container">
@@ -651,17 +767,39 @@ suffix-length = 1*DIGIT
 </pre>
 </div>
 
+<blockquote>
 <p>
-If the selected representation is shorter than the specified suffix-length, the entire representation is used.
+译注：需要注意的是，<code>suffix-length</code> 的语义是“字节的长度”，而 <code>first-byte-pos</code> 和 <code>last-byte-pos</code> 的语义是“字节的序号（偏移量）”。
 </p>
+</blockquote>
+
+<blockquote>
+<p>
+If the selected representation is shorter than the specified <code>suffix-length</code>, the entire representation is used.
+</p>
+</blockquote>
 
 <p>
+如果已选定的表示形式的长度小于 <code>suffix-length</code> 所指定的值，表示使用整个表示形式。
+</p>
+
+<blockquote>
+<p>
 Additional examples, assuming a representation of length 10000:
+</p>
+</blockquote>
+
+<p>
+再给出一些例子，假设一个表示形式的长度为 10000：
 </p>
 
 <ul class="org-ul">
 <li><p>
 The final 500 bytes (byte offsets 9500-9999, inclusive):
+</p>
+
+<p>
+最后 500 字节（字节偏移量为 9500-9999，闭合区间）：
 </p>
 
 <pre class="example">
@@ -672,12 +810,20 @@ bytes=-500
 Or:
 </p>
 
+<p>
+或者
+</p>
+
 <pre class="example">
 bytes=9500-
 </pre></li>
 
 <li><p>
 The first and last bytes only (bytes 0 and 9999):
+</p>
+
+<p>
+第一个字节和最后一个字节（第 0 号字节和第 9999 号字节）：
 </p>
 
 <pre class="example">
@@ -688,27 +834,49 @@ bytes=0-0,-1
 Other valid (but not canonical) specifications of the second 500 bytes (byte offsets 500-999, inclusive):
 </p>
 
+<p>
+其他有效的（但<ruby>不规范的<rt>not canonical</rt></ruby>）对第二个 500 字节的指定（字节偏移量为 500-999，闭合区间）：
+</p>
+
 <pre class="example">
 bytes=500-600,601-999
 bytes=500-700,601-999
 </pre></li>
 </ul>
 
+<blockquote>
 <p>
-If a valid byte-range-set includes at least one byte-range-spec with a first-byte-pos that is less than the current length of the representation, or at least one suffix-byte-range-spec with a non-zero suffix-length, then the byte-range-set is satisfiable. Otherwise, the byte-range-set is unsatisfiable.
+If a valid <code>byte-range-set</code> includes at least one <code>byte-range-spec</code> with a <code>first-byte-pos</code> that is less than the current length of the representation, or at least one <code>suffix-byte-range-spec</code> with a non-zero <code>suffix-length</code>, then the <code>byte-range-set</code> is satisfiable. Otherwise, the <code>byte-range-set</code> is unsatisfiable.
 </p>
+</blockquote>
 
 <p>
-In the byte-range syntax, first-byte-pos, last-byte-pos, and suffix-length are expressed as decimal number of octets. Since there is no predefined limit to the length of a payload, recipients MUST anticipate potentially large decimal numerals and prevent parsing errors due to integer conversion overflows.
+如果一个有效的 <code>byte-range-set</code> 包含至少一个 <code>byte-range-spec</code> 带有少于表示形式的当前长度的一个 <code>first-byte-pos</code> 值，或者包含至少一个 <code>suffix-byte-range-spec</code> 带有一个非零的 <code>suffix-length</code>，那么，这个 <code>byte-range-set</code> 是<ruby>可以满足的<rt>satisfiable</rt></ruby>。否则，这个 <code>byte-range-set</code> 是<ruby>不可满足的<rt>unsatisfiable</rt></ruby>。
+</p>
+
+<blockquote>
+<p>
+In the byte-range syntax, <code>first-byte-pos</code>, <code>last-byte-pos</code>, and <code>suffix-length</code> are expressed as decimal number of octets. Since there is no predefined limit to the length of a payload, recipients <b>MUST</b> anticipate potentially large decimal numerals and prevent parsing errors due to integer conversion overflows.
+</p>
+</blockquote>
+
+<p>
+在字节范围句法中，<code>first-byte-pos</code>、<code>last-byte-pos</code>、以及 <code>suffix-length</code> 所表达的是<ruby>八位组字节的十进制数<rt>decimal number of octets</rt></ruby>。由于没有预定义有效载荷的长度限制，因此，接收端 <b>必须</b> 能预料到<ruby>特大数值<rt>big decimal numbers</rt></ruby>的可能，并且避免由于整型类型转换溢出所引起的解析错误。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org13c9f8f" class="outline-3">
-<h3 id="org13c9f8f">2.2. Other Range Units</h3>
-<div class="outline-text-3" id="text-org13c9f8f">
+<div id="outline-container-org606eaf7" class="outline-3">
+<h3 id="org606eaf7">2.2. 其他范围单位 / Other Range Units</h3>
+<div class="outline-text-3" id="text-org606eaf7">
+<blockquote>
 <p>
-Range units are intended to be extensible. New range units ought to be registered with IANA, as defined in Section 5.1.
+Range units are intended to be extensible. New range units ought to be registered with IANA, as defined in <a href="#org2f133be">Section 5.1</a>.
+</p>
+</blockquote>
+
+<p>
+范围单位是可扩展的。新的范围单位应该在 IANA 上进行登记，如<a href="#org2f133be">章节 5.1</a> 所述。
 </p>
 
 <div class="org-src-container">
@@ -721,8 +889,14 @@ Range units are intended to be extensible. New range units ought to be registere
 <div id="outline-container-org6b1d683" class="outline-3">
 <h3 id="org6b1d683"><a id="ID-cf601084-e3af-41bc-9ff7-8f903ca59fa8"></a>2.3. Accept-Ranges</h3>
 <div class="outline-text-3" id="text-org6b1d683">
+<blockquote>
 <p>
 The "Accept-Ranges" header field allows a server to indicate that it supports range requests for the target resource.
+</p>
+</blockquote>
+
+<p>
+<code>Accept-Range</code> 头字段让服务器可以表明它支持对这个目标资源的范围请求。
 </p>
 
 <div class="org-src-container">
@@ -731,42 +905,68 @@ acceptable-ranges = 1#range-unit / "none"
 </pre>
 </div>
 
+<blockquote>
 <p>
-An origin server that supports byte-range requests for a given target resource MAY send
+An origin server that supports byte-range requests for a given target resource <b>MAY</b> send
+</p>
+</blockquote>
+
+<p>
+支持对一个给定目标资源进行范围请求的源服务器 <b>可以</b> 发送：
 </p>
 
 <pre class="example">
 Accept-Ranges: bytes
 </pre>
 
+<blockquote>
 <p>
-to indicate what range units are supported. A client MAY generate range requests without having received this header field for the resource involved. Range units are defined in Section 2.
+to indicate what range units are supported. A client <b>MAY</b> generate range requests without having received this header field for the resource involved. Range units are defined in <a href="#org954ce7c">Section 2</a>.
 </p>
+</blockquote>
 
 <p>
-A server that does not support any kind of range request for the target resource MAY send
+来表明它支持什么范围单位。客户端 <b>可以</b> 在没有接收到这个头字段的情况下生成范围请求。范围单位定义在<a href="#org954ce7c">章节 2</a>。
+</p>
+
+<blockquote>
+<p>
+A server that does not support any kind of range request for the target resource <b>MAY</b> send
+</p>
+</blockquote>
+
+<p>
+不支持对目标资源进行任何类型的范围请求的服务器，<b>可以</b> 发送：
 </p>
 
 <pre class="example">
 Accept-Ranges: none
 </pre>
 
+<blockquote>
 <p>
 to advise the client not to attempt a range request.
+</p>
+</blockquote>
+
+<p>
+来通告客户端不要试图发送范围请求。
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgabdd4b0" class="outline-2">
-<h2 id="orgabdd4b0">3. Range Requests</h2>
-<div class="outline-text-2" id="text-orgabdd4b0">
+<div id="outline-container-org8be9206" class="outline-2">
+<h2 id="org8be9206"><a id="ID-6be04fa7-4c91-438b-8fa6-f152390569c0"></a>3. 范围请求 / Range Requests</h2>
+<div class="outline-text-2" id="text-org8be9206">
 </div>
 <div id="outline-container-orgf26e511" class="outline-3">
 <h3 id="orgf26e511"><a id="ID-a70b4aaa-f776-4d5b-a31d-60d1ad16d85e"></a>3.1. Range</h3>
 <div class="outline-text-3" id="text-orgf26e511">
 <p>
-The "Range" header field on a GET request modifies the method semantics to request transfer of only one or more subranges of the selected representation data, rather than the entire selected representation data.
+The#+BEGIN_QUOTE
+ "Range" header field on a GET request modifies the method semantics to request transfer of only one or more subranges of the selected representation data, rather than the entire selected representation data.
+#+END_QUOTE
 </p>
 
 <div class="org-src-container">
@@ -776,89 +976,121 @@ other-range-set = 1*VCHAR
 </pre>
 </div>
 
+<blockquote>
 <p>
 A server MAY ignore the Range header field. However, origin servers and intermediate caches ought to support byte ranges when possible, since Range supports efficient recovery from partially failed transfers and partial retrieval of large representations. A server MUST ignore a Range header field received with a request method other than GET.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 An origin server MUST ignore a Range header field that contains a range unit it does not understand. A proxy MAY discard a Range header field that contains a range unit it does not understand.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A server that supports range requests MAY ignore or reject a Range header field that consists of more than two overlapping ranges, or a set of many small ranges that are not listed in ascending order, since both are indications of either a broken client or a deliberate denial-of-service attack (Section 6.1). A client SHOULD NOT request multiple ranges that are inherently less efficient to process and transfer than a single range that encompasses the same data.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A client that is requesting multiple ranges SHOULD list those ranges in ascending order (the order in which they would typically be received in a complete representation) unless there is a specific need to request a later part earlier. For example, a user agent processing a large representation with an internal catalog of parts might need to request later parts first, particularly if the representation consists of pages stored in reverse order and the user agent wishes to transfer one page at a time.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The Range header field is evaluated after evaluating the precondition header fields defined in [RFC7232], and only if the result in absence of the Range header field would be a 200 (OK) response. In other words, Range is ignored when a conditional GET would result in a 304 (Not Modified) response.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The If-Range header field (Section 3.2) can be used as a precondition to applying the Range header field.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 If all of the preconditions are true, the server supports the Range header field for the target resource, and the specified range(s) are valid and satisfiable (as defined in Section 2.1), the server SHOULD send a 206 (Partial Content) response with a payload containing one or more partial representations that correspond to the satisfiable ranges requested, as defined in Section 4.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 If all of the preconditions are true, the server supports the Range header field for the target resource, and the specified range(s) are invalid or unsatisfiable, the server SHOULD send a 416 (Range Not Satisfiable) response.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org79d4a85" class="outline-3">
 <h3 id="org79d4a85"><a id="ID-2859ef1f-8309-4b7d-9e22-963391b5822a"></a>3.2. If-Range</h3>
 <div class="outline-text-3" id="text-org79d4a85">
+<blockquote>
 <p>
 If a client has a partial copy of a representation and wishes to have an up-to-date copy of the entire representation, it could use the Range header field with a conditional GET (using either or both of If-Unmodified-Since and If-Match.) However, if the precondition fails because the representation has been modified, the client would then have to make a second request to obtain the entire current representation.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The "If-Range" header field allows a client to "short-circuit" the second request. Informally, its meaning is as follows: if the representation is unchanged, send me the part(s) that I am requesting in Range; otherwise, send me the entire representation.
 </p>
+</blockquote>
 
 <div class="org-src-container">
 <pre class="src src-text">If-Range = entity-tag / HTTP-date
 </pre>
 </div>
 
+<blockquote>
 <p>
 A client MUST NOT generate an If-Range header field in a request that does not contain a Range header field. A server MUST ignore an If-Range header field received in a request that does not contain a Range header field. An origin server MUST ignore an If-Range header field received in a request for a target resource that does not support Range requests.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A client MUST NOT generate an If-Range header field containing an entity-tag that is marked as weak. A client MUST NOT generate an If-Range header field containing an HTTP-date unless the client has no entity-tag for the corresponding representation and the date is a strong validator in the sense defined by Section 2.2.2 of [RFC7232].
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A server that evaluates an If-Range precondition MUST use the strong comparison function when comparing entity-tags (Section 2.3.2 of [RFC7232]) and MUST evaluate the condition as false if an HTTP-date validator is provided that is not a strong validator in the sense defined by Section 2.2.2 of [RFC7232]. A valid entity-tag can be distinguished from a valid HTTP-date by examining the first two characters for a DQUOTE.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 If the validator given in the If-Range header field matches the current validator for the selected representation of the target resource, then the server SHOULD process the Range header field as requested. If the validator does not match, the server MUST ignore the Range header field. Note that this comparison by exact match, including when the validator is an HTTP-date, differs from the "earlier than or equal to" comparison used when evaluating an If-Unmodified-Since conditional.
 </p>
+</blockquote>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3bb2822" class="outline-2">
-<h2 id="org3bb2822"><a id="ID-028da72d-1e54-4bee-ac56-3d63169c6c3f"></a>4. Responses to a Range Request</h2>
-<div class="outline-text-2" id="text-org3bb2822">
+<div id="outline-container-org300aaf5" class="outline-2">
+<h2 id="org300aaf5"><a id="ID-028da72d-1e54-4bee-ac56-3d63169c6c3f"></a>4. 响应给范围请求 / Responses to a Range Request</h2>
+<div class="outline-text-2" id="text-org300aaf5">
 </div>
 <div id="outline-container-org2d91892" class="outline-3">
 <h3 id="org2d91892"><a id="ID-32182a4e-00f6-44d9-82e2-f08d98b59324"></a>4.1. 206 Partial Content</h3>
 <div class="outline-text-3" id="text-org2d91892">
+<blockquote>
 <p>
 The 206 (Partial Content) status code indicates that the server is successfully fulfilling a range request for the target resource by transferring one or more parts of the selected representation that correspond to the satisfiable ranges found in the request's Range header field (Section 3.1).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 If a single part is being transferred, the server generating the 206 response MUST generate a Content-Range header field, describing what range of the selected representation is enclosed, and a payload consisting of the range. For example:
 </p>
+</blockquote>
 
 <pre class="example">
 HTTP/1.1 206 Partial Content
@@ -871,13 +1103,17 @@ Content-Type: image/gif
 ... 26012 bytes of partial image data ...
 </pre>
 
+<blockquote>
 <p>
 If multiple parts are being transferred, the server generating the 206 response MUST generate a "multipart/byteranges" payload, as defined in Appendix A, and a Content-Type header field containing the multipart/byteranges media type and its required boundary parameter. To avoid confusion with single-part responses, a server MUST NOT generate a Content-Range header field in the HTTP header section of a multiple part response (this field will be sent in each part instead).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Within the header area of each body part in the multipart payload, the server MUST generate a Content-Range header field corresponding to the range being enclosed in that body part. If the selected representation would have had a Content-Type header field in a 200 (OK) response, the server SHOULD generate that same Content-Type field in the header area of each body part. For example:
 </p>
+</blockquote>
 
 <pre class="example">
 HTTP/1.1 206 Partial Content
@@ -899,37 +1135,51 @@ Content-Range: bytes 7000-7999/8000
 --THIS_STRING_SEPARATES--
 </pre>
 
+<blockquote>
 <p>
 When multiple ranges are requested, a server MAY coalesce any of the ranges that overlap, or that are separated by a gap that is smaller than the overhead of sending multiple parts, regardless of the order in which the corresponding byte-range-spec appeared in the received Range header field. Since the typical overhead between parts of a multipart/byteranges payload is around 80 bytes, depending on the selected representation's media type and the chosen boundary parameter length, it can be less efficient to transfer many small disjoint parts than it is to transfer the entire selected representation.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A server MUST NOT generate a multipart response to a request for a single range, since a client that does not request multiple parts might not support multipart responses. However, a server MAY generate a multipart/byteranges payload with only a single body part if multiple ranges were requested and only one range was found to be satisfiable or only one range remained after coalescing. A client that cannot process a multipart/byteranges response MUST NOT generate a request that asks for multiple ranges.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 When a multipart response payload is generated, the server SHOULD send the parts in the same order that the corresponding byte-range-spec appeared in the received Range header field, excluding those ranges that were deemed unsatisfiable or that were coalesced into other ranges. A client that receives a multipart response MUST inspect the Content-Range header field present in each body part in order to determine which range is contained in that body part; a client cannot rely on receiving the same ranges that it requested, nor the same order that it requested.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 When a 206 response is generated, the server MUST generate the following header fields, in addition to those required above, if the field would have been sent in a 200 (OK) response to the same request: Date, Cache-Control, ETag, Expires, Content-Location, and Vary.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 If a 206 is generated in response to a request with an If-Range header field, the sender SHOULD NOT generate other representation header fields beyond those required above, because the client is understood to already have a prior response containing those header fields. Otherwise, the sender MUST generate all of the representation header fields that would have been sent in a 200 (OK) response to the same request.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A 206 response is cacheable by default; i.e., unless otherwise indicated by explicit cache controls (see Section 4.2.2 of [RFC7234]).
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org96d66d2" class="outline-3">
-<h3 id="org96d66d2">4.2. Content-Range</h3>
+<h3 id="org96d66d2"><a id="ID-7a682301-f05e-4e79-8242-398bbfb57c74"></a>4.2. Content-Range</h3>
 <div class="outline-text-3" id="text-org96d66d2">
 <p>
-The "Content-Range" header field is sent in a single part 206 (Partial Content) response to indicate the partial range of the selected representation enclosed as the message payload, sent in each part of a multipart 206 response to indicate the range enclosed within each body part, and sent in 416 (Range Not Satisfiable) responses to provide information about the selected representation.
+Th#+BEGIN_QUOTE
+e "Content-Range" header field is sent in a single part 206 (Partial Content) response to indicate the partial range of the selected representation enclosed as the message payload, sent in each part of a multipart 206 response to indicate the range enclosed within each body part, and sent in 416 (Range Not Satisfiable) responses to provide information about the selected representation.
+#+END_QUOTE
 </p>
 
 <div class="org-src-container">
@@ -950,53 +1200,71 @@ other-range-resp    = *CHAR
 </pre>
 </div>
 
+<blockquote>
 <p>
 If a 206 (Partial Content) response contains a Content-Range header field with a range unit (Section 2) that the recipient does not understand, the recipient MUST NOT attempt to recombine it with a stored representation. A proxy that receives such a message SHOULD forward it downstream.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 For byte ranges, a sender SHOULD indicate the complete length of the representation from which the range has been extracted, unless the complete length is unknown or difficult to determine. An asterisk character ("*") in place of the complete-length indicates that the representation length was unknown when the header field was generated.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The following example illustrates when the complete length of the selected representation is known by the sender to be 1234 bytes:
 </p>
+</blockquote>
 
 <pre class="example">
 Content-Range: bytes 42-1233/1234
 </pre>
 
+<blockquote>
 <p>
 and this second example illustrates when the complete length is unknown:
 </p>
+</blockquote>
 
 <pre class="example">
 Content-Range: bytes 42-1233/*
 </pre>
 
+<blockquote>
 <p>
 A Content-Range field value is invalid if it contains a byte-range-resp that has a last-byte-pos value less than its first-byte-pos value, or a complete-length value less than or equal to its last-byte-pos value. The recipient of an invalid Content-Range MUST NOT attempt to recombine the received content with a stored representation.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A server generating a 416 (Range Not Satisfiable) response to a byte-range request SHOULD send a Content-Range header field with an unsatisfied-range value, as in the following example:
 </p>
+</blockquote>
 
 <pre class="example">
 Content-Range: bytes */1234
 </pre>
 
+<blockquote>
 <p>
 The complete-length in a 416 response indicates the current length of the selected representation.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The Content-Range header field has no meaning for status codes that do not explicitly describe its semantic. For this specification, only the 206 (Partial Content) and 416 (Range Not Satisfiable) status codes describe a meaning for Content-Range.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The following are examples of Content-Range values in which the selected representation contains a total of 1234 bytes:
 </p>
+</blockquote>
 
 <ul class="org-ul">
 <li><p>
@@ -1034,29 +1302,38 @@ Content-Range: bytes 734-1233/1234
 </div>
 </div>
 
-
 <div id="outline-container-orgbffe853" class="outline-3">
 <h3 id="orgbffe853">4.3. Combining Ranges</h3>
 <div class="outline-text-3" id="text-orgbffe853">
+<blockquote>
 <p>
 A response might transfer only a subrange of a representation if the connection closed prematurely or if the request used one or more Range specifications. After several such transfers, a client might have received several ranges of the same representation. These ranges can only be safely combined if they all have in common the same strong validator (Section 2.1 of [RFC7232]).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A client that has received multiple partial responses to GET requests on a target resource MAY combine those responses into a larger continuous range if they share the same strong validator.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 If the most recent response is an incomplete 200 (OK) response, then the header fields of that response are used for any combined response and replace those of the matching stored responses.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 If the most recent response is a 206 (Partial Content) response and at least one of the matching stored responses is a 200 (OK), then the combined response header fields consist of the most recent 200 response's header fields. If all of the matching stored responses are 206 responses, then the stored response with the most recent header fields is used as the source of header fields for the combined response, except that the client MUST use other header fields provided in the new response, aside from Content-Range, to replace all instances of the corresponding header fields in the stored response.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The combined response message body consists of the union of partial content ranges in the new response and each of the selected responses. If the union consists of the entire range of the representation, then the client MUST process the combined response as if it were a complete 200 (OK) response, including a Content-Length header field that reflects the complete length. Otherwise, the client MUST process the set of continuous ranges as one of the following: an incomplete 200 (OK) response if the combined response is a prefix of the representation, a single 206 (Partial Content) response containing a multipart/byteranges body, or multiple 206 (Partial Content) responses, each with one continuous range that is indicated by a Content-Range header field.
 </p>
+</blockquote>
 </div>
 </div>
 
@@ -1064,16 +1341,22 @@ The combined response message body consists of the union of partial content rang
 <h3 id="org9a26c49"><a id="ID-a2f29dcf-8c15-4b15-ab66-742f476d27f3"></a>4.4. 416 Range Not Satisfiable</h3>
 <div class="outline-text-3" id="text-org9a26c49">
 <p>
-The 416 (Range Not Satisfiable) status code indicates that none of the ranges in the request's Range header field (Section 3.1) overlap the current extent of the selected resource or that the set of ranges requested has been rejected due to invalid ranges or an excessive request of small or overlapping ranges.
+Th#+BEGIN_QUOTE
+e 416 (Range Not Satisfiable) status code indicates that none of the ranges in the request's Range header field (Section 3.1) overlap the current extent of the selected resource or that the set of ranges requested has been rejected due to invalid ranges or an excessive request of small or overlapping ranges.
+#+END_QUOTE
 </p>
 
+<blockquote>
 <p>
 For byte ranges, failing to overlap the current extent means that the first-byte-pos of all of the byte-range-spec values were greater than the current length of the selected representation. When this status code is generated in response to a byte-range request, the sender SHOULD generate a Content-Range header field specifying the current length of the selected representation (Section 4.2).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 For example:
 </p>
+</blockquote>
 
 <pre class="example">
 HTTP/1.1 416 Range Not Satisfiable
@@ -1081,28 +1364,33 @@ Date: Fri, 20 Jan 2012 15:41:54 GMT
 Content-Range: bytes */47022
 </pre>
 
+<blockquote>
 <p>
 <b>Note:</b> Because servers are free to ignore Range, many implementations will simply respond with the entire selected representation in a 200 (OK) response. That is partly because most clients are prepared to receive a 200 (OK) to complete the task (albeit less efficiently) and partly because clients might not stop making an invalid partial request until they have received a complete representation. Thus, clients cannot depend on receiving a 416 (Range Not Satisfiable) response even when it is most appropriate.
 </p>
+</blockquote>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga5fdf53" class="outline-2">
-<h2 id="orga5fdf53">5. IANA Considerations</h2>
-<div class="outline-text-2" id="text-orga5fdf53">
+<div id="outline-container-org151b723" class="outline-2">
+<h2 id="org151b723">5. IANA 注意事项 / IANA Considerations</h2>
+<div class="outline-text-2" id="text-org151b723">
 </div>
-<div id="outline-container-org4c965e1" class="outline-3">
-<h3 id="org4c965e1">5.1. Range Unit Registry</h3>
-<div class="outline-text-3" id="text-org4c965e1">
+<div id="outline-container-org2f133be" class="outline-3">
+<h3 id="org2f133be"><a id="ID-c7bd6955-92e0-4665-a775-766ad3133ac0"></a>5.1. 范围单位登记表 / Range Unit Registry</h3>
+<div class="outline-text-3" id="text-org2f133be">
+<blockquote>
 <p>
 The "HTTP Range Unit Registry" defines the namespace for the range unit names and refers to their corresponding specifications. The registry has been created and is now maintained at <a href="http://www.iana.org/assignments/http-parameters">http://www.iana.org/assignments/http-parameters</a>.
 </p>
+</blockquote>
 </div>
 
 <div id="outline-container-orgd9e592f" class="outline-4">
 <h4 id="orgd9e592f">5.1.1. Procedure</h4>
 <div class="outline-text-4" id="text-orgd9e592f">
+<blockquote>
 <p>
 Registration of an HTTP Range Unit MUST include the following fields:
 </p>
@@ -1112,19 +1400,24 @@ Registration of an HTTP Range Unit MUST include the following fields:
 <li>Description</li>
 <li>Pointer to specification text</li>
 </ul>
+</blockquote>
 
+<blockquote>
 <p>
 Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-orgc516e6b" class="outline-4">
 <h4 id="orgc516e6b">5.1.2. Registrations</h4>
 <div class="outline-text-4" id="text-orgc516e6b">
+<blockquote>
 <p>
 The initial range unit registry contains the registrations below:
 </p>
+</blockquote>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1158,19 +1451,23 @@ The initial range unit registry contains the registrations below:
 </tbody>
 </table>
 
+<blockquote>
 <p>
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 </p>
+</blockquote>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge3c1e57" class="outline-3">
-<h3 id="orge3c1e57">5.2. Status Code Registration</h3>
-<div class="outline-text-3" id="text-orge3c1e57">
+<div id="outline-container-org736a5ab" class="outline-3">
+<h3 id="org736a5ab">5.2. 状态码登记 / Status Code Registration</h3>
+<div class="outline-text-3" id="text-org736a5ab">
+<blockquote>
 <p>
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <a href="http://www.iana.org/assignments/http-status-codes">http://www.iana.org/assignments/http-status-codes</a> has been updated to include the registrations below:
 </p>
+</blockquote>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1206,16 +1503,20 @@ The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <a href
 </div>
 </div>
 
-<div id="outline-container-org750fe0c" class="outline-3">
-<h3 id="org750fe0c">5.3. Header Field Registration</h3>
-<div class="outline-text-3" id="text-org750fe0c">
+<div id="outline-container-org4f3ac8d" class="outline-3">
+<h3 id="org4f3ac8d">5.3. 头字段登记  / Header Field Registration</h3>
+<div class="outline-text-3" id="text-org4f3ac8d">
+<blockquote>
 <p>
 HTTP header fields are registered within the "Message Headers" registry maintained at <a href="http://www.iana.org/assignments/message-headers/">http://www.iana.org/assignments/message-headers/</a>.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This document defines the following HTTP header fields, so their associated registry entries have been updated according to the permanent registrations below (see [BCP90]):
 </p>
+</blockquote>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1268,22 +1569,28 @@ This document defines the following HTTP header fields, so their associated regi
 </tbody>
 </table>
 
+<blockquote>
 <p>
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 </p>
+</blockquote>
 </div>
 </div>
 
-<div id="outline-container-orgad4c2a6" class="outline-3">
-<h3 id="orgad4c2a6">5.4. Internet Media Type Registration</h3>
-<div class="outline-text-3" id="text-orgad4c2a6">
+<div id="outline-container-org3ddef16" class="outline-3">
+<h3 id="org3ddef16">5.4. 互联网媒体类型登记 / Internet Media Type Registration</h3>
+<div class="outline-text-3" id="text-org3ddef16">
+<blockquote>
 <p>
 IANA maintains the registry of Internet media types [BCP13] at <a href="http://www.iana.org/assignments/media-types">http://www.iana.org/assignments/media-types</a>.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This document serves as the specification for the Internet media type "multipart/byteranges". The following has been registered with IANA.
 </p>
+</blockquote>
 </div>
 
 <div id="outline-container-org5f297a0" class="outline-4">
@@ -1315,40 +1622,46 @@ Change controller: IESG
 </div>
 </div>
 </div>
-<div id="outline-container-org07a40e2" class="outline-2">
-<h2 id="org07a40e2">6. Security Considerations</h2>
-<div class="outline-text-2" id="text-org07a40e2">
+<div id="outline-container-orgec0b449" class="outline-2">
+<h2 id="orgec0b449">6. 安全注意事项 / Security Considerations</h2>
+<div class="outline-text-2" id="text-orgec0b449">
+<blockquote>
 <p>
 This section is meant to inform developers, information providers, and users of known security concerns specific to the HTTP range request mechanisms. More general security considerations are addressed in HTTP messaging [RFC7230] and semantics [RFC7231].
 </p>
+</blockquote>
 </div>
 
-<div id="outline-container-org4e7ae40" class="outline-3">
-<h3 id="org4e7ae40">6.1. Denial-of-Service Attacks Using Range</h3>
-<div class="outline-text-3" id="text-org4e7ae40">
+<div id="outline-container-orgac5f1c2" class="outline-3">
+<h3 id="orgac5f1c2">6.1. 使用范围进行拒绝服务攻击 / Denial-of-Service Attacks Using Range</h3>
+<div class="outline-text-3" id="text-orgac5f1c2">
+<blockquote>
 <p>
 Unconstrained multiple range requests are susceptible to denial-of-service attacks because the effort required to request many overlapping ranges of the same data is tiny compared to the time, memory, and bandwidth consumed by attempting to serve the requested data in many parts. Servers ought to ignore, coalesce, or reject egregious range requests, such as requests for more than two overlapping ranges or for many small ranges in a single set, particularly when the ranges are requested out of order for no apparent reason. Multipart range requests are not designed to support random access.
 </p>
+</blockquote>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0a72d12" class="outline-2">
-<h2 id="org0a72d12">7. Acknowledgments</h2>
-<div class="outline-text-2" id="text-org0a72d12">
+<div id="outline-container-org9d1ded4" class="outline-2">
+<h2 id="org9d1ded4">7. 鸣谢 / Acknowledgments</h2>
+<div class="outline-text-2" id="text-org9d1ded4">
+<blockquote>
 <p>
 See Section 10 of [RFC7230].
 </p>
+</blockquote>
 </div>
 </div>
 
-<div id="outline-container-orgbeb3402" class="outline-2">
-<h2 id="orgbeb3402">8. References</h2>
-<div class="outline-text-2" id="text-orgbeb3402">
+<div id="outline-container-orgd544363" class="outline-2">
+<h2 id="orgd544363">8. 参考资料 / References</h2>
+<div class="outline-text-2" id="text-orgd544363">
 </div>
-<div id="outline-container-orgc0979c4" class="outline-3">
-<h3 id="orgc0979c4">8.1. Normative References</h3>
-<div class="outline-text-3" id="text-orgc0979c4">
+<div id="outline-container-org7771a36" class="outline-3">
+<h3 id="org7771a36">8.1. 规范性参考资料 / Normative References</h3>
+<div class="outline-text-3" id="text-org7771a36">
 <dl class="org-dl">
 <dt>[RFC2046]</dt><dd>Freed, N. and N. Borenstein, “Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types”, RFC 2046, November 1996.</dd>
 <dt>[RFC2119]</dt><dd>Bradner, S., “Key words for use in RFCs to Indicate Requirement Levels”, BCP 14, RFC 2119, March 1997.</dd>
@@ -1361,9 +1674,9 @@ See Section 10 of [RFC7230].
 </div>
 </div>
 
-<div id="outline-container-org199c976" class="outline-3">
-<h3 id="org199c976">8.2. Informative References</h3>
-<div class="outline-text-3" id="text-org199c976">
+<div id="outline-container-org5e3956f" class="outline-3">
+<h3 id="org5e3956f">8.2. 信息性参考资料 / Informative References</h3>
+<div class="outline-text-3" id="text-org5e3956f">
 <dl class="org-dl">
 <dt>[BCP13]</dt><dd>Freed, N., Klensin, J., and T. Hansen, “Media Type Specifications and Registration Procedures”, BCP 13, RFC 6838, January 2013.</dd>
 <dt>[BCP90]</dt><dd>Klyne, G., Nottingham, M., and J. Mogul, “Registration Procedures for Message Header Fields”, BCP 90, RFC 3864, September 2004.</dd>
@@ -1374,17 +1687,22 @@ See Section 10 of [RFC7230].
 </div>
 </div>
 
-<div id="outline-container-org3530ef3" class="outline-2">
-<h2 id="org3530ef3"><a id="ID-d0f2a428-d1ab-49fd-9ac2-531946ecac25"></a>Appendix A. Internet Media Type multipart/byteranges</h2>
-<div class="outline-text-2" id="text-org3530ef3">
+<div id="outline-container-orgc85d248" class="outline-2">
+<h2 id="orgc85d248"><a id="ID-d0f2a428-d1ab-49fd-9ac2-531946ecac25"></a>附录 A：互联网媒体类型 multipart/byteranges / Appendix A. Internet Media Type multipart/byteranges</h2>
+<div class="outline-text-2" id="text-orgc85d248">
+<blockquote>
 <p>
 When a 206 (Partial Content) response message includes the content of multiple ranges, they are transmitted as body parts in a multipart message body ([RFC2046], Section 5.1) with the media type of "multipart/byteranges".
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The multipart/byteranges media type includes one or more body parts, each with its own Content-Type and Content-Range fields. The required boundary parameter specifies the boundary string used to separate each body part.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Implementation Notes:
 </p>
@@ -1394,10 +1712,13 @@ Implementation Notes:
 <li>Although [RFC2046] permits the boundary string to be quoted, some existing implementations handle a quoted boundary string incorrectly.</li>
 <li>A number of clients and servers were coded to an early draft of the byteranges specification that used a media type of multipart/x-byteranges, which is almost (but not quite) compatible with this type.</li>
 </ol>
+</blockquote>
 
+<blockquote>
 <p>
 Despite the name, the "multipart/byteranges" media type is not limited to byte ranges. The following example uses an "exampleunit" range unit:
 </p>
+</blockquote>
 
 <pre class="example">
 HTTP/1.1 206 Partial Content
@@ -1421,45 +1742,61 @@ Content-Range: exampleunit 11.2-14.3/25
 </div>
 </div>
 
-<div id="outline-container-org0d1b044" class="outline-2">
-<h2 id="org0d1b044">Appendix B. Changes from RFC 2616</h2>
-<div class="outline-text-2" id="text-org0d1b044">
+<div id="outline-container-org3c68003" class="outline-2">
+<h2 id="org3c68003">附录 B：相对 RFC 2616 的变化 / Appendix B. Changes from RFC 2616</h2>
+<div class="outline-text-2" id="text-org3c68003">
+<blockquote>
 <p>
 Servers are given more leeway in how they respond to a range request, in order to mitigate abuse by malicious (or just greedy) clients. (Section 3.1)
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A weak validator cannot be used in a 206 response. (Section 4.1)
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The Content-Range header field only has meaning when the status code explicitly defines its use. (Section 4.2)
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This specification introduces a Range Unit Registry. (Section 5.1)
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 multipart/byteranges can consist of a single part. (Appendix A)
 </p>
+</blockquote>
 </div>
 </div>
 
-<div id="outline-container-orgacb9ec2" class="outline-2">
-<h2 id="orgacb9ec2">Appendix C. Imported ABNF</h2>
-<div class="outline-text-2" id="text-orgacb9ec2">
+<div id="outline-container-orgbc51c3e" class="outline-2">
+<h2 id="orgbc51c3e"><a id="ID-47a9d902-5e79-48a6-b335-dae2828bbde5"></a>附录 C：引进的 ABNF / Appendix C. Imported ABNF</h2>
+<div class="outline-text-2" id="text-orgbc51c3e">
+<blockquote>
 <p>
 The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Note that all rules derived from token are to be compared case-insensitively, like range-unit and acceptable-ranges.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The rules below are defined in [RFC7230]:
 </p>
+</blockquote>
 
 <div class="org-src-container">
 <pre class="src src-text">OWS        = &lt;OWS, see [RFC7230], Section 3.2.3&gt;
@@ -1467,9 +1804,11 @@ token      = &lt;token, see [RFC7230], Section 3.2.6&gt;
 </pre>
 </div>
 
+<blockquote>
 <p>
 The rules below are defined in other parts:
 </p>
+</blockquote>
 
 <div class="org-src-container">
 <pre class="src src-text">HTTP-date  = &lt;HTTP-date, see [RFC7231], Section 7.1.1.1&gt;
@@ -1479,12 +1818,14 @@ entity-tag = &lt;entity-tag, see [RFC7232], Section 2.3&gt;
 </div>
 </div>
 
-<div id="outline-container-org5d79cab" class="outline-2">
-<h2 id="org5d79cab">Appendix D. Collected ABNF</h2>
-<div class="outline-text-2" id="text-org5d79cab">
+<div id="outline-container-org2da3bfc" class="outline-2">
+<h2 id="org2da3bfc"><a id="ID-89bbf73a-99bb-4124-88c1-b860a26b1f77"></a>附录 D：ABNF 集合 / Appendix D. Collected ABNF</h2>
+<div class="outline-text-2" id="text-org2da3bfc">
+<blockquote>
 <p>
 In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
 </p>
+</blockquote>
 
 <div class="org-src-container">
 <pre class="src src-text">Accept-Ranges = acceptable-ranges

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-07 Fri 19:17 -->
+<!-- 2018-12-10 Mon 19:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7232: Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests</title>
@@ -422,7 +422,7 @@ for the JavaScript code in this tag.
 <li><a href="#org9ec4f9e">2.4. 什么时候使用实体标签和最后修改日期 / When to Use Entity-Tags and Last-Modified Dates</a></li>
 </ul>
 </li>
-<li><a href="#org895e757">3. 前置条件头字段 / Precondition Header Fields</a>
+<li><a href="#org098ebb3">3. 前提条件头字段 / Precondition Header Fields</a>
 <ul>
 <li><a href="#org220193c">3.1. If-Match</a></li>
 <li><a href="#org870b652">3.2. If-None-Match</a></li>
@@ -433,8 +433,8 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#org1c69e05">4. 状态码定义 / Status Code Definitions</a>
 <ul>
-<li><a href="#orgbbfa9ac">4.1. 304 Not Modified</a></li>
-<li><a href="#org7051ecf">4.2. 412 Precondition Failed</a></li>
+<li><a href="#orgf85f7a6">4.1. 304 未更改 / 304 Not Modified</a></li>
+<li><a href="#org664c54f">4.2. 412 前提条件失败 / 412 Precondition Failed</a></li>
 </ul>
 </li>
 <li><a href="#org8287389">5. 求值 / Evaluation</a></li>
@@ -494,7 +494,7 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol
 </blockquote>
 
 <p>
-超文本传输协议（HTTP）是一种<ruby>无状态<rt>stateless</rt></ruby>的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 条件请求，包括：<ruby>元数据头字段<rt>metadata header fields</rt></ruby>——用于表明状态的改变、<ruby>请求头字段<rt>request header fields</rt></ruby>——用于对这些状态设置前置条件、以及<ruby>规则<rt>rules</rt></ruby>——用于当一个或多个前置条件取值为否的时候构造响应给条件请求。
+超文本传输协议（HTTP）是一种<ruby>无状态<rt>stateless</rt></ruby>的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 条件请求，包括：<ruby>元数据头字段<rt>metadata header fields</rt></ruby>——用于表明状态的改变、<ruby>请求头字段<rt>request header fields</rt></ruby>——用于对这些状态设置前提条件、以及<ruby>规则<rt>rules</rt></ruby>——用于当一个或多个前提条件求值结果为不成立的时候构造响应给条件请求。
 </p>
 </div>
 </div>
@@ -555,7 +555,7 @@ Conditional requests are HTTP requests [<a href="RFC7231.html">RFC7231</a>] that
 </blockquote>
 
 <p>
-<ruby>条件请求<rt>conditional requests</rt></ruby>是这样一种 HTTP 请求【<a href="RFC7231.html">RFC7231</a>】，它包含了一个或多个头字段来表明一种<ruby>前置条件<rt>precondition</rt></ruby>，这种前置条件需要在将方法语义应用到目标资源之前进行测试。本文档依据【<a href="RFC7230.html">RFC7230</a>】所定义的架构、句法标记、以及一致性准则，来定义 HTTP/1.1 条件请求的机制。
+<ruby>条件请求<rt>conditional requests</rt></ruby>是这样一种 HTTP 请求【<a href="RFC7231.html">RFC7231</a>】，它包含了一个或多个头字段来表明一种<ruby>前提条件<rt>precondition</rt></ruby>，这种前提条件需要在将方法语义应用到目标资源之前进行测试。本文档依据【<a href="RFC7230.html">RFC7230</a>】所定义的架构、句法标记、以及一致性准则，来定义 HTTP/1.1 条件请求的机制。
 </p>
 
 <blockquote>
@@ -575,17 +575,17 @@ Conditional request preconditions are based on the state of the target resource 
 </blockquote>
 
 <p>
-总的来说，条件请求的前置条件是基于目标资源的状态（目标资源的<ruby>当前值<rt>current value</rt></ruby>的集合），或者在之前获得的一种表示形式所观察到的状态（这个当前值集合中的其中之一）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假定请求与一种“<ruby>已选定的表示形式<rt>selected representation</rt></ruby>”（<a href="RFC7231.html#ID-7dd837af-fd6a-4918-9c62-cf12a4c31522">【RFC7231】章节 3</a>）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前置条件的求值结果为否的时候，最终结果应该要是无害的。
+总的来说，条件请求的前提条件是基于目标资源的状态（目标资源的<ruby>当前值<rt>current value</rt></ruby>的集合），或者在之前获得的一种表示形式所观察到的状态（这个当前值集合中的其中之一）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假定请求与一种“<ruby>已选定的表示形式<rt>selected representation</rt></ruby>”（<a href="RFC7231.html#ID-7dd837af-fd6a-4918-9c62-cf12a4c31522">【RFC7231】章节 3</a>）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前提条件的求值结果为不成立（也就是条件为假）的时候，最终结果应该要是无害的。
 </p>
 
 <blockquote>
 <p>
-The conditional request preconditions defined by this specification (<a href="#org895e757">Section 3</a>) are evaluated when applicable to the recipient (<a href="#org8287389">Section 5</a>) according to their order of precedence (<a href="#org35abd07">Section 6</a>).
+The conditional request preconditions defined by this specification (<a href="#org098ebb3">Section 3</a>) are evaluated when applicable to the recipient (<a href="#org8287389">Section 5</a>) according to their order of precedence (<a href="#org35abd07">Section 6</a>).
 </p>
 </blockquote>
 
 <p>
-由本规范所定义的条件请求的前置条件（<a href="#org895e757">章节 3</a>）会在应用到接收端的时候进行求值（<a href="#org8287389">章节 5</a>），依据它们的优先级顺序（<a href="#org35abd07">章节 6</a>）。
+由本规范所定义的条件请求的前提条件（<a href="#org098ebb3">章节 3</a>）会在应用到接收端的时候进行求值（<a href="#org8287389">章节 5</a>），依据它们的优先级顺序（<a href="#org35abd07">章节 6</a>）。
 </p>
 </div>
 
@@ -640,7 +640,7 @@ This specification defines two forms of metadata that are commonly used to obser
 </blockquote>
 
 <p>
-本规范定义了两类元数据：<ruby>修改日期<rt>modification dates</rt></ruby>（<a href="#org3974cdd">章节 2.2</a>）和<ruby>不透明实体标签<rt>opaque entity tags</rt></ruby>（<a href="#orgf0f9907">章节 2.3</a>），它们常用于观察资源的状态以及对前置条件进行测试。其他额外的反映资源状态的元数据定义在各种 HTTP 扩展当中，比如 <ruby>Web 分布式创作和版本管理<rt>Web Distributed Authoring and Versioning</rt></ruby>（WebDAV，【<a href="https://tools.ietf.org/html/rfc4918">RFC4918</a>】），超出了本规范的范畴。<ruby>资源元数据<rt>resource metadata</rt></ruby>的值使用在一个<ruby>前置条件<rt>precondition</rt></ruby>中的时候，它被称为“<ruby>验证器<rt>validator</rt></ruby>”。
+本规范定义了两类元数据：<ruby>修改日期<rt>modification dates</rt></ruby>（<a href="#org3974cdd">章节 2.2</a>）和<ruby>不透明实体标签<rt>opaque entity tags</rt></ruby>（<a href="#orgf0f9907">章节 2.3</a>），它们常用于观察资源的状态以及对前提条件进行测试。其他额外的反映资源状态的元数据定义在各种 HTTP 扩展当中，比如 <ruby>Web 分布式创作和版本管理<rt>Web Distributed Authoring and Versioning</rt></ruby>（WebDAV，【<a href="https://tools.ietf.org/html/rfc4918">RFC4918</a>】），超出了本规范的范畴。<ruby>资源元数据<rt>resource metadata</rt></ruby>的值使用在一个<ruby>前提条件<rt>precondition</rt></ruby>中的时候，它被称为“<ruby>验证器<rt>validator</rt></ruby>”。
 </p>
 
 <blockquote>
@@ -660,7 +660,7 @@ Validators come in two flavors: strong or weak. Weak validators are easy to gene
 </blockquote>
 
 <p>
-<ruby>验证器<rt>validator</rt></ruby>分成两类：强验证和弱验证。<ruby>弱验证器<rt>weak validators</rt></ruby>容易生成，但对于比较来说几乎没有什么用处。<ruby>强验证器<rt>strong validators</rt></ruby>是理想的比较方式，但它很难有效地生成（有时甚至不可能生成）。与其强制资源的所有形式都附带相同的验证器类型，HTTP 显露出使用中的验证器的类型并对“什么时候弱验证器可以用作前置条件”施加限制。
+<ruby>验证器<rt>validator</rt></ruby>分成两类：强验证和弱验证。<ruby>弱验证器<rt>weak validators</rt></ruby>容易生成，但对于比较来说几乎没有什么用处。<ruby>强验证器<rt>strong validators</rt></ruby>是理想的比较方式，但它很难有效地生成（有时甚至不可能生成）。与其强制资源的所有形式都附带相同的验证器类型，HTTP 显露出使用中的验证器的类型并对“什么时候弱验证器可以用作前提条件”施加限制。
 </p>
 
 <blockquote>
@@ -1305,9 +1305,9 @@ A client:
 </div>
 </div>
 
-<div id="outline-container-org895e757" class="outline-2">
-<h2 id="org895e757"><a id="ID-5d82712b-331b-4303-85fc-19b1488af561"></a>3. 前置条件头字段 / Precondition Header Fields</h2>
-<div class="outline-text-2" id="text-org895e757">
+<div id="outline-container-org098ebb3" class="outline-2">
+<h2 id="org098ebb3"><a id="ID-5d82712b-331b-4303-85fc-19b1488af561"></a>3. 前提条件头字段 / Precondition Header Fields</h2>
+<div class="outline-text-2" id="text-org098ebb3">
 <blockquote>
 <p>
 This section defines the syntax and semantics of HTTP/1.1 header fields for applying preconditions on requests. <a href="#org8287389">Section 5</a> defines when the preconditions are applied. <a href="#org35abd07">Section 6</a> defines the order of evaluation when more than one precondition is present.
@@ -1315,7 +1315,7 @@ This section defines the syntax and semantics of HTTP/1.1 header fields for appl
 </blockquote>
 
 <p>
-本章节定义了用于在请求中应用<ruby>前置条件<rt>precondition</rt></ruby>的 HTTP/1.1 头字段的句法和语义。<a href="#org8287389">章节 5</a> 定义了前置条件会在什么时候被应用。<a href="#org35abd07">章节 6</a> 定义了当出现超过一种前置条件的时候它们的求值顺序。
+本章节定义了用于在请求中应用<ruby>前提条件<rt>precondition</rt></ruby>的 HTTP/1.1 头字段的句法和语义。<a href="#org8287389">章节 5</a> 定义了前提条件会在什么时候被应用。<a href="#org35abd07">章节 6</a> 定义了当出现超过一种前提条件的时候它们的求值顺序。
 </p>
 </div>
 
@@ -1329,7 +1329,7 @@ The "If-Match" header field makes the request method conditional on the recipien
 </blockquote>
 
 <p>
-<code>If-Match</code> 头字段使得请求方法带有条件，接收端服务器仅在满足以下条件才会返回资源：
+<code>If-Match</code> 头字段使得请求方法带有条件，接收端服务器仅在满足以下条件之一时才会成功响应：
 </p>
 <ul class="org-ul">
 <li>当字段值为 "*" 的时候，目标资源存在至少一个当前表示形式，或者</li>
@@ -1343,7 +1343,7 @@ An origin server <b>MUST</b> use the strong comparison function when comparing e
 </blockquote>
 
 <p>
-当源服务器对 <code>If-Match</code> 的实体标签进行对比的时候（<a href="#org078e6e7">章节 2.3.2</a>），源服务器 <b>必须</b> 使用强比较方法，这是因为客户端打算让这个前置条件来防止本执行本方法，如果表示形式数据有任何变化的话。
+当源服务器对 <code>If-Match</code> 的实体标签进行对比的时候（<a href="#org078e6e7">章节 2.3.2</a>），源服务器 <b>必须</b> 使用强比较方法，这是因为客户端打算让这个前提条件来防止本执行本方法，如果表示形式数据有任何变化的话。
 </p>
 
 <div class="org-src-container">
@@ -1373,23 +1373,48 @@ If-Match: *
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-An origin server that receives an If-Match header field MUST evaluate the condition prior to performing the method (Section 5). If the field-value is "*", the condition is false if the origin server does not have a current representation for the target resource. If the field-value is a list of entity-tags, the condition is false if none of the listed tags match the entity-tag of the selected representation.
+<code>If-Match</code> 经常与<ruby>会状态改变<rt>state-changing</rt></ruby>的请求方法一起使用（比如：POST、PUT、DELETE），来避免当多个用户代理可能并行操作同一个资源的时候导致的意外覆盖（也就是说，避免“丢失更新”的问题）。它还可以与<ruby>安全方法<rt>safe methods</rt></ruby>一起使用来中止请求，如果已选定的表示形式并没有匹配上一个已经（或可能已经）从之前的请求里存储的表示形式。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-An origin server MUST NOT perform the requested method if a received If-Match condition evaluates to false; instead, the origin server MUST respond with either a) the 412 (Precondition Failed) status code or b) one of the 2xx (Successful) status codes if the origin server has verified that a state change is being requested and the final state is already reflected in the current state of the target resource (i.e., the change requested by the user agent has already succeeded, but the user agent might not be aware of it, perhaps because the prior response was lost or a compatible change was made by some other user agent). In the latter case, the origin server MUST NOT send a validator header field in the response unless it can verify that the request is a duplicate of an immediately prior change made by the same user agent.
+An origin server that receives an <code>If-Match</code> header field <b>MUST</b> evaluate the condition prior to performing the method (<a href="#org8287389">Section 5</a>). If the field-value is "*", the condition is false if the origin server does not have a current representation for the target resource. If the field-value is a list of entity-tags, the condition is false if none of the listed tags match the entity-tag of the selected representation.
 </p>
 </blockquote>
 
+<p>
+源服务器接收到一个 <code>If-Match</code> 字段时 <b>必须</b> 在执行对应的请求方法之前对这个条件进行求值（<a href="#org8287389">章节 5</a>）。如果 <code>If-Match</code> 的字段值是 "*"，且源服务器的目标资源没有任何一种当前表示形式，那么，这个条件的求值结果为不成立。如果这个字段值是一个实体标签列表，且所列出的所有标签没有任何一个匹配已选定的表示形式的实体标签，那么这个条件的求值结果为不成立。
+</p>
+
 <blockquote>
 <p>
-The If-Match header field can be ignored by caches and intermediaries because it is not applicable to a stored response.
+An origin server <b>MUST NOT</b> perform the requested method if a received <code>If-Match</code> condition evaluates to false; instead, the origin server <b>MUST</b> respond with either a) the <code>412 (Precondition Failed)</code> status code or b) one of the <code>2xx (Successful)</code> status codes if the origin server has verified that a state change is being requested and the final state is already reflected in the current state of the target resource (i.e., the change requested by the user agent has already succeeded, but the user agent might not be aware of it, perhaps because the prior response was lost or a compatible change was made by some other user agent). In the latter case, the origin server <b>MUST NOT</b> send a validator header field in the response unless it can verify that the request is a duplicate of an immediately prior change made by the same user agent.
 </p>
 </blockquote>
+
+<p>
+如果所接收到的 <code>If-Match</code> 条件的求值结果为不成立，源服务器 <b>禁止</b> 执行请求方法，而是，源服务器 <b>必须</b> 响应以下其中之一：
+</p>
+
+<ol class="org-ol">
+<li>响应 <code>412 (Precondition Failed)</code> 状态码，或者</li>
+<li>如果源服务器已检验出目标资源又被请求了一种状态改变，并且它的最终状态已经反映为目标资源当前状态（也就是说，用户代理所请求的改变已经成功完成了，但是用户请求可能没有意识到这个，可能是因为之前的响应已经丢失了没有成功到达用户代理，或者其他某些用户代理也对目标资源请求了一种与之兼容的变化），那么，响应 <code>2xx (Successful)</code> 状态码的其中之一。</li>
+</ol>
+
+<p>
+对于第二种情况，源服务器 <b>禁止</b> 在响应里发送验证器头字段，除非它能够检验出这个请求与它的同一个用户代理所造成的前一个相邻的变化相重复。
+</p>
+
+<blockquote>
+<p>
+The <code>If-Match</code> header field can be ignored by caches and intermediaries because it is not applicable to a stored response.
+</p>
+</blockquote>
+
+<p>
+<code>If-Match</code> 头字段可以被缓存服务器以及中间人所忽略，因为它并不适用于一个已存储的响应。
+</p>
 </div>
 </div>
 
@@ -1402,11 +1427,24 @@ The "If-None-Match" header field makes the request method conditional on a recip
 </p>
 </blockquote>
 
+<p>
+<code>If-None-Match</code> 头字段使得请求方法带有条件，接收端缓存服务器或源服务器仅在满足以下条件之一时才会成功响应：
+</p>
+
+<ul class="org-ul">
+<li>当字段值为 "*"，的时候，目标资源没有任何当前表示形式。</li>
+<li>有一种已选定的表示形式带有一个实体标签，这个实体标签并不与列在这个字段值里的任一实体标签相匹配。</li>
+</ul>
+
 <blockquote>
 <p>
-A recipient MUST use the weak comparison function when comparing entity-tags for If-None-Match (Section 2.3.2), since weak entity-tags can be used for cache validation even if there have been changes to the representation data.
+A recipient <b>MUST</b> use the weak comparison function when comparing entity-tags for <code>If-None-Match</code> (<a href="#org078e6e7">Section 2.3.2</a>), since weak entity-tags can be used for cache validation even if there have been changes to the representation data.
 </p>
 </blockquote>
+
+<p>
+当接收端对 <code>If-None-Match</code> 的实体标签进行对比的时候，<b>必须</b> 使用<ruby>弱比较方法<rt>weak comparison function</rt></ruby>（<a href="#org078e6e7">章节 2.3.2</a>）。这是因为即使<ruby>表示形式数据<rt>representation data</rt></ruby>已经改变，弱验证类型的实体标签还可以用来缓存验证。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">If-None-Match = "*" / 1#entity-tag
@@ -1419,6 +1457,10 @@ Examples:
 </p>
 </blockquote>
 
+<p>
+示例：
+</p>
+
 <pre class="example">
 If-None-Match: "xyzzy"
 If-None-Match: W/"xyzzy"
@@ -1429,33 +1471,58 @@ If-None-Match: *
 
 <blockquote>
 <p>
-If-None-Match is primarily used in conditional GET requests to enable efficient updates of cached information with a minimum amount of transaction overhead. When a client desires to update one or more stored responses that have entity-tags, the client SHOULD generate an If-None-Match header field containing a list of those entity-tags when making a GET request; this allows recipient servers to send a 304 (Not Modified) response to indicate when one of those stored responses matches the selected representation.
+<code>If-None-Match</code> is primarily used in conditional GET requests to enable efficient updates of cached information with a minimum amount of transaction overhead. When a client desires to update one or more stored responses that have entity-tags, the client <b>SHOULD</b> generate an <code>If-None-Match</code> header field containing a list of those entity-tags when making a GET request; this allows recipient servers to send a <code>304 (Not Modified)</code> response to indicate when one of those stored responses matches the selected representation.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-If-None-Match can also be used with a value of "*" to prevent an unsafe request method (e.g., PUT) from inadvertently modifying an existing representation of the target resource when the client believes that the resource does not have a current representation (Section 4.2.1 of [RFC7231]). This is a variation on the "lost update" problem that might arise if more than one client attempts to create an initial representation for the target resource.
+<code>If-None-Match</code> 主要用在条件 GET 请求中使缓存信息能够以最小的传输开销来进行高效的更新。当客户端希望更新一个或多个它已经缓存的带有实体标签的响应的时候，客户端 <b>应当</b> 在执行 GET 请求的时候生成一个 <code>If-None-Match</code> 头字段来包含一个这些实体标签的列表，这样使得接收端服务器可以发送一个 <code>304 (Not Modified)</code> 响应来向客户端表明，什么时候这些已缓存的响应之一会匹配<ruby>已选定的表示形式<rt>selected representation</rt></ruby>。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-An origin server that receives an If-None-Match header field MUST evaluate the condition prior to performing the method (Section 5). If the field-value is "*", the condition is false if the origin server has a current representation for the target resource. If the field-value is a list of entity-tags, the condition is false if one of the listed tags match the entity-tag of the selected representation.
+<code>If-None-Match</code> can also be used with a value of "*" to prevent an unsafe request method (e.g., PUT) from inadvertently modifying an existing representation of the target resource when the client believes that the resource does not have a current representation (<a href="RFC7231.html#ID-2f967e3d-8694-430b-ad06-e748fd39b281">Section 4.2.1</a> of [RFC7231]). This is a variation on the "lost update" problem that might arise if more than one client attempts to create an initial representation for the target resource.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-An origin server MUST NOT perform the requested method if the condition evaluates to false; instead, the origin server MUST respond with either a) the 304 (Not Modified) status code if the request method is GET or HEAD or b) the 412 (Precondition Failed) status code for all other request methods.
+<code>If-None-Match</code> 的值也可以设置为 "*" 来阻止不安全的请求方法（比如，PUT）意外地修改了目标资源已经现存在的一种表示形式，当客户端认为所请求的资源没有这种表示形式的时候（<a href="RFC7231.html#ID-2f967e3d-8694-430b-ad06-e748fd39b281">【RFC7231】章节 4.2.1</a>）。这是一种“丢失更新”问题的变种，如果超过一个客户端试图为目标资源创建一个初始表示形式的时候，这种问题可能会发生。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-Requirements on cache handling of a received If-None-Match header field are defined in Section 4.3.2 of [RFC7234].
+An origin server that receives an <code>If-None-Match</code> header field <b>MUST</b> evaluate the condition prior to performing the method (Section 5). If the field-value is "*", the condition is false if the origin server has a current representation for the target resource. If the field-value is a list of entity-tags, the condition is false if one of the listed tags match the entity-tag of the selected representation.
 </p>
 </blockquote>
+
+<p>
+源服务器接收到一个 <code>If-None-Match</code> 头字段的时候，<b>必须</b> 在执行这个请求方法之前对条件进行求值（章节 5）。如果字段值是 "*"，并且源服务器的目标资源有当前表示形式，那么这个条件的求值结果为不成立。如果字段值是一个实体标签的列表，并且列表中的实体标签之一匹配上已选定的表示形式的实体标签，那么这个条件的求值结果为不成立。
+</p>
+
+<blockquote>
+<p>
+An origin server <b>MUST NOT</b> perform the requested method if the condition evaluates to false; instead, the origin server <b>MUST</b> respond with either a) the <code>304 (Not Modified)</code> status code if the request method is GET or HEAD or b) the <code>412 (Precondition Failed)</code> status code for all other request methods.
+</p>
+</blockquote>
+
+<p>
+如果条件求值为不成立，那么，源服务器 <b>禁止</b> 执行所请求的方法，而是，源服务器 <b>必须</b> 响应以下其中之一：
+</p>
+
+<ol class="org-ol">
+<li>如果请求方法是 GET 或者 HEAD，响应 <code>304 (Not Modified)</code> 状态码，或者</li>
+<li>如果是其他请求方法，响应 <code>412 (Precondition Failed)</code> 状态码。</li>
+</ol>
+
+<blockquote>
+<p>
+Requirements on cache handling of a received <code>If-None-Match</code> header field are defined in <a href="RFC7234.html#ID-A500DFDD-0DD6-454E-A94A-EDBC8D38946E">Section 4.3.2</a> of [RFC7234].
+</p>
+</blockquote>
+
+<p>
+接收到 <code>If-None-Match</code> 头字段时的缓存处理的相关要求，定义在<a href="RFC7234.html#ID-A500DFDD-0DD6-454E-A94A-EDBC8D38946E">【RFC7234】章节 4.3.2</a> 中。
+</p>
 </div>
 </div>
 
@@ -1468,6 +1535,10 @@ The "If-Modified-Since" header field makes a GET or HEAD request method conditio
 </p>
 </blockquote>
 
+<p>
+<code>If-Modified-Since</code> 头字段使得 GET 或者 HEAD 请求方法带有条件，已选定的表示形式的修改日期晚于这个字段值的日期的时候，服务器才会成功响应。避免表示形式的数据没有发生改变的情况下再次传输表示形式的数据。
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">If-Modified-Since = HTTP-date
 </pre>
@@ -1479,57 +1550,98 @@ An example of the field is:
 </p>
 </blockquote>
 
+<p>
+这个字段的示例：
+</p>
+
 <pre class="example">
 If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMT
 </pre>
 
 <blockquote>
 <p>
-A recipient MUST ignore If-Modified-Since if the request contains an If-None-Match header field; the condition in If-None-Match is considered to be a more accurate replacement for the condition in If-Modified-Since, and the two are only combined for the sake of interoperating with older intermediaries that might not implement If-None-Match.
+A recipient <b>MUST</b> ignore <code>If-Modified-Since</code> if the request contains an <code>If-None-Match</code> header field; the condition in <code>If-None-Match</code> is considered to be a more accurate replacement for the condition in <code>If-Modified-Since</code>, and the two are only combined for the sake of interoperating with older intermediaries that might not implement <code>If-None-Match</code>.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A recipient MUST ignore the If-Modified-Since header field if the received field-value is not a valid HTTP-date, or if the request method is neither GET nor HEAD.
+如果请求包含有一个 <code>In-None-Match</code> 头字段，那么，接收端 <b>必须</b> 忽略 <code>If-Modified-Since</code> 头字段。在 <code>In-None-Match</code> 里的条件被认为是对在 <code>In-Modified-Since</code> 里的条件的更加精准的替代，结合使用这两种头字段的目的仅在于与可能未实现 <code>If-None-Match</code> 的旧中间人进行交互。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-A recipient MUST interpret an If-Modified-Since field-value's timestamp in terms of the origin server's clock.
+A recipient <b>MUST</b> ignore the <code>If-Modified-Since</code> header field if the received field-value is not a valid <code>HTTP-date</code>, or if the request method is neither GET nor HEAD.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-If-Modified-Since is typically used for two distinct purposes: 1) to allow efficient updates of a cached representation that does not have an entity-tag and 2) to limit the scope of a web traversal to resources that have recently changed.
+接收端如果接收到的 <code>If-Modified-Since</code> 头字段的值不是一个合法的 <code>HTTP-date</code>，或者这个请求方法既不是 GET 也不是 HEAD 的时候，接收端 <b>必须</b> 忽略这个头字段。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-When used for cache updates, a cache will typically use the value of the cached message's Last-Modified field to generate the field value of If-Modified-Since. This behavior is most interoperable for cases where clocks are poorly synchronized or when the server has chosen to only honor exact timestamp matches (due to a problem with Last-Modified dates that appear to go "back in time" when the origin server's clock is corrected or a representation is restored from an archived backup). However, caches occasionally generate the field value based on other data, such as the Date header field of the cached message or the local clock time that the message was received, particularly when the cached message does not contain a Last-Modified field.
+A recipient <b>MUST</b> interpret an <code>If-Modified-Since</code> field-value's timestamp in terms of the origin server's clock.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-When used for limiting the scope of retrieval to a recent time window, a user agent will generate an If-Modified-Since field value based on either its own local clock or a Date header field received from the server in a prior response. Origin servers that choose an exact timestamp match based on the selected representation's Last-Modified field will not be able to help the user agent limit its data transfers to only those changed during the specified window.
+接收端 <b>必须</b> 依据源服务器的时钟来解释 <code>If-Modified-Since</code> 头字段值里的时间戳。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-An origin server that receives an If-Modified-Since header field SHOULD evaluate the condition prior to performing the method (Section 5). The origin server SHOULD NOT perform the requested method if the selected representation's last modification date is earlier than or equal to the date provided in the field-value; instead, the origin server SHOULD generate a 304 (Not Modified) response, including only those metadata that are useful for identifying or updating a previously cached response.
+<code>If-Modified-Since</code> is typically used for two distinct purposes: 1) to allow efficient updates of a cached representation that does not have an entity-tag and 2) to limit the scope of a web traversal to resources that have recently changed.
 </p>
 </blockquote>
 
+<p>
+使用 <code>If-Modified-Since</code> 通常有两个不同的目的：
+</p>
+
+<ol class="org-ol">
+<li>可以高效地更新一个已缓存的但没有实体标签的表示形式高效；</li>
+<li>将网页的资源遍历范围限制为只有最近有改变的资源上。</li>
+</ol>
+
 <blockquote>
 <p>
-Requirements on cache handling of a received If-Modified-Since header field are defined in Section 4.3.2 of [RFC7234].
+When used for cache updates, a cache will typically use the value of the cached message's <code>Last-Modified</code> field to generate the field value of <code>If-Modified-Since</code>. This behavior is most interoperable for cases where clocks are poorly synchronized or when the server has chosen to only honor exact timestamp matches (due to a problem with <code>Last-Modified</code> dates that appear to go "back in time" when the origin server's clock is corrected or a representation is restored from an archived backup). However, caches occasionally generate the field value based on other data, such as the <code>Date</code> header field of the cached message or the local clock time that the message was received, particularly when the cached message does not contain a <code>Last-Modified</code> field.
 </p>
 </blockquote>
+
+<p>
+当用于更新缓存的时候，缓存服务器一般使用已缓存的消息的 <code>Last-Modified</code> 字段的值来生成 <code>If-Modified-Since</code> 字段的值。这种行为在以下情况下最有互可操作性：在时钟不同步的场景，或者当服务器选择为只遵循准确时间戳的匹配（由于 <code>Last-Modified</code> 的日期的问题，这个问题具体是这个日期貌似是要回到从前，当源服务器的时钟被修正过或者一个表示形式是恢复自一个归档备份的时候）。但是，缓存服务器偶尔会基于其他数据来生成这个字段值，比如已缓存的消息的 <code>Date</code> 头字段，或者接收到消息时的本地时钟时间，特别是当已缓存的消息并没有包含一个 <code>Last-Modified</code> 字段的时候。
+</p>
+
+<blockquote>
+<p>
+When used for limiting the scope of retrieval to a recent time window, a user agent will generate an <code>If-Modified-Since</code> field value based on either its own local clock or a <code>Date</code> header field received from the server in a prior response. Origin servers that choose an exact timestamp match based on the selected representation's <code>Last-Modified</code> field will not be able to help the user agent limit its data transfers to only those changed during the specified window.
+</p>
+</blockquote>
+
+<p>
+当用于对检索的范围限制为一个最近的时间窗口的时候，用户代理将会生成一个 <code>If-Modified-Since</code> 字段，其值或者基于用户代理的本地时钟，或者基于接收自服务器的之前一个响应的 <code>Date</code> 头字段。源服务器选择准确匹配上基于已选定的表示形式的 <code>Last-Modified</code> 字段的时间戳，将无法帮助用户代理限制它的数据传输为仅仅是那些具体时间窗口期间的改动。
+</p>
+
+<blockquote>
+<p>
+An origin server that receives an <code>If-Modified-Since</code> header field <b>SHOULD</b> evaluate the condition prior to performing the method (<a href="#org8287389">Section 5</a>). The origin server <b>SHOULD NOT</b> perform the requested method if the selected representation's last modification date is earlier than or equal to the date provided in the field-value; instead, the origin server <b>SHOULD</b> generate a <code>304 (Not Modified)</code> response, including only those metadata that are useful for identifying or updating a previously cached response.
+</p>
+</blockquote>
+
+<p>
+源服务器接收到一个 <code>If-Modified-Since</code> 头字段的时候，<b>应当</b> 在执行请求方法之前对条件进行求值（<a href="#org8287389">章节 5</a>）。如果已选定的表示形式的最后修改时间是早于或等于 <code>If-Modified-Since</code> 所提供的日期，那么，源服务器 <b>不应当</b> 执行所请求的方法，而是，源服务器 <b>应当</b> 生成一个 <code>304 (Not Modified)</code> 响应，只包含那些有用于的元数据，所述有用的元数据指的是用来表明或更新之前所缓存的响应的那些元数据。
+</p>
+
+<blockquote>
+<p>
+Requirements on cache handling of a received <code>If-Modified-Since</code> header field are defined in <a href="RFC7234.html#ID-A500DFDD-0DD6-454E-A94A-EDBC8D38946E">Section 4.3.2</a> of [RFC7234].
+</p>
+</blockquote>
+
+<p>
+接收到 <code>If-Modified-Since</code> 头字段时的缓存处理的相关要求，定义在<a href="RFC7234.html#ID-A500DFDD-0DD6-454E-A94A-EDBC8D38946E">【RFC7234】章节 4.3.2</a> 中。
+</p>
 </div>
 </div>
 
@@ -1538,9 +1650,13 @@ Requirements on cache handling of a received If-Modified-Since header field are 
 <div class="outline-text-3" id="text-org2f3f176">
 <blockquote>
 <p>
-The "If-Unmodified-Since" header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value. This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.
+The "If-Unmodified-Since" header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value. This field accomplishes the same purpose as <code>If-Match</code> for cases where the user agent does not have an entity-tag for the representation.
 </p>
 </blockquote>
+
+<p>
+<code>If-Unmodified-Since</code> 头字段使得请求方法带有条件，已选定的表示形式的修改日期早于或等于这个字段值的日期的时候，服务器才会成功响应。在用户代理并没有在表示形式上带有实体标签的情况下，这个字段实现了像 <code>If-Match</code> 相同的目的。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">If-Unmodified-Since = HTTP-date
@@ -1553,45 +1669,82 @@ An example of the field is:
 </p>
 </blockquote>
 
+<p>
+这个字段的一个示例：
+</p>
+
 <pre class="example">
 If-Unmodified-Since: Sat, 29 Oct 1994 19:43:31 GMT
 </pre>
 
 <blockquote>
 <p>
-A recipient MUST ignore If-Unmodified-Since if the request contains an If-Match header field; the condition in If-Match is considered to be a more accurate replacement for the condition in If-Unmodified-Since, and the two are only combined for the sake of interoperating with older intermediaries that might not implement If-Match.
+A recipient <b>MUST</b> ignore <code>If-Unmodified-Since</code> if the request contains an <code>If-Match</code> header field; the condition in <code>If-Match</code> is considered to be a more accurate replacement for the condition in <code>If-Unmodified-Since</code>, and the two are only combined for the sake of interoperating with older intermediaries that might not implement <code>If-Match</code>.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A recipient MUST ignore the If-Unmodified-Since header field if the received field-value is not a valid HTTP-date.
+如果请求包含有一个 <code>If-Match</code> 头字段的时候，接收端 <b>必须</b> 忽略掉 <code>If-Unmodified-Since</code> 字段。在 <code>In-Match</code> 里的条件被认为是对在 <code>In-Unmodified-Since</code> 里的条件的更加精准的替代，结合使用这两种头字段的目的仅在于与可能未实现 <code>If-Match</code> 的旧中间人进行交互。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-A recipient MUST interpret an If-Unmodified-Since field-value's timestamp in terms of the origin server's clock.
+A recipient <b>MUST</b> ignore the <code>If-Unmodified-Since</code> header field if the received field-value is not a valid <code>HTTP-date</code>.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-If-Unmodified-Since is most often used with state-changing methods (e.g., POST, PUT, DELETE) to prevent accidental overwrites when multiple user agents might be acting in parallel on a resource that does not supply entity-tags with its representations (i.e., to prevent the "lost update" problem). It can also be used with safe methods to abort a request if the selected representation does not match one already stored (or partially stored) from a prior request.
+接收端如果接收到 <code>If-Unmodified-Since</code> 头字段的值不是一个合法的 <code>HTTP-date</code>，接收端 <b>必须</b> 忽略这个头字段。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-An origin server that receives an If-Unmodified-Since header field MUST evaluate the condition prior to performing the method (Section 5). The origin server MUST NOT perform the requested method if the selected representation's last modification date is more recent than the date provided in the field-value; instead the origin server MUST respond with either a) the 412 (Precondition Failed) status code or b) one of the 2xx (Successful) status codes if the origin server has verified that a state change is being requested and the final state is already reflected in the current state of the target resource (i.e., the change requested by the user agent has already succeeded, but the user agent might not be aware of that because the prior response message was lost or a compatible change was made by some other user agent). In the latter case, the origin server MUST NOT send a validator header field in the response unless it can verify that the request is a duplicate of an immediately prior change made by the same user agent.
+A recipient <b>MUST</b> interpret an <code>If-Unmodified-Since</code> field-value's timestamp in terms of the origin server's clock.
 </p>
 </blockquote>
 
+<p>
+接收端 <b>必须</b> 依据源服务器的时钟来解释 <code>If-Unmodified-Since</code> 头字段值里的时间戳。
+</p>
+
 <blockquote>
 <p>
-The If-Unmodified-Since header field can be ignored by caches and intermediaries because it is not applicable to a stored response.
+<code>If-Unmodified-Since</code> is most often used with state-changing methods (e.g., POST, PUT, DELETE) to prevent accidental overwrites when multiple user agents might be acting in parallel on a resource that does not supply entity-tags with its representations (i.e., to prevent the "lost update" problem). It can also be used with safe methods to abort a request if the selected representation does not match one already stored (or partially stored) from a prior request.
 </p>
 </blockquote>
+
+<p>
+<code>If-Unmodified-Since</code> 经常与<ruby>会状态改变<rt>state-changing</rt></ruby>的请求方法一起使用（比如：POST、PUT、DELETE），来避免当多个用户代理可能并行操作同一个不支持实体标签的资源的时候导致的意外覆盖（也就是说，避免“丢失更新”的问题）。它还可以与<ruby>安全方法<rt>safe methods</rt></ruby>一起使用来中止请求，如果已选定的表示形式并没有匹配上一个已经（或可能已经）从之前的请求里存储的表示形式。
+</p>
+
+<blockquote>
+<p>
+An origin server that receives an <code>If-Unmodified-Since</code> header field <b>MUST</b> evaluate the condition prior to performing the method (<a href="#org8287389">Section 5</a>). The origin server <b>MUST NOT</b> perform the requested method if the selected representation's last modification date is more recent than the date provided in the field-value; instead the origin server <b>MUST</b> respond with either a) the <code>412 (Precondition Failed)</code> status code or b) one of the <code>2xx (Successful)</code> status codes if the origin server has verified that a state change is being requested and the final state is already reflected in the current state of the target resource (i.e., the change requested by the user agent has already succeeded, but the user agent might not be aware of that because the prior response message was lost or a compatible change was made by some other user agent). In the latter case, the origin server <b>MUST NOT</b> send a validator header field in the response unless it can verify that the request is a duplicate of an immediately prior change made by the same user agent.
+</p>
+</blockquote>
+
+<p>
+源服务器接收到一个 <code>If-Unmodified-Since</code> 头字段的时候，<b>必须</b> 在执行请求请求方法之前对条件进行求值（<a href="#org8287389">章节 5</a>）。如果已选定的表示形式的最后修改时间是晚于 <code>If-Unmodified-Since</code> 所提供的日期，那么，源服务器 <b>禁止</b> 执行所请求的方法，而是，源服务器 <b>必须</b> 响应以下其中之一：
+</p>
+
+<ol class="org-ol">
+<li>响应 <code>412 (Precondition Failed)</code> 状态码，或者</li>
+<li>如果源服务器检验出目标资源又被请求了一种状态改变，并且它的最终状态已经反映为目标资源当前状态（也就是说，用户代理所请求的改变已经成功完成了，但是用户请求可能没有意识到这个，可能是因为之前的响应已经丢失了没有成功到达用户代理，或者其他某些用户代理也对目标资源请求了一种与之兼容的变化），那么，响应 <code>2xx (Successful)</code> 状态码的其中之一。</li>
+</ol>
+
+<p>
+对于第一种情况，源服务器 <b>禁止</b> 在响应里发送验证器头字段，除非它能够检验出这个请求与它的同一个用户代理所造成的前一个相邻的变化相重复。
+</p>
+
+<blockquote>
+<p>
+The <code>If-Unmodified-Since</code> header field can be ignored by caches and intermediaries because it is not applicable to a stored response.
+</p>
+</blockquote>
+
+<p>
+<code>If-Unmodified-Since</code> 头字段可以被缓存服务器以及中间人所忽略，因为它并不适用于一个已存储的响应。
+</p>
 </div>
 </div>
 
@@ -1600,9 +1753,13 @@ The If-Unmodified-Since header field can be ignored by caches and intermediaries
 <div class="outline-text-3" id="text-org76fb615">
 <blockquote>
 <p>
-The "If-Range" header field provides a special conditional request mechanism that is similar to the If-Match and If-Unmodified-Since header fields but that instructs the recipient to ignore the Range header field if the validator doesn't match, resulting in transfer of the new selected representation instead of a 412 (Precondition Failed) response. If-Range is defined in Section 3.2 of [RFC7233].
+The "If-Range" header field provides a special conditional request mechanism that is similar to the <code>If-Match</code> and <code>If-Unmodified-Since</code> header fields but that instructs the recipient to ignore the <code>Range</code> header field if the validator doesn't match, resulting in transfer of the new selected representation instead of a <code>412 (Precondition Failed)</code> response. <code>If-Range</code> is defined in <a href="RFC7233.html#ID-2859ef1f-8309-4b7d-9e22-963391b5822a">Section 3.2</a> of [RFC7233].
 </p>
 </blockquote>
+
+<p>
+<code>If-Range</code> 头字段提供了一种特殊的条件请求机制。它类似于 <code>If-Match</code> 和 <code>If-Unmodified-Since</code> 头字段，但它指示接收到去忽略 <code>Range</code> 头字段，如果验证器不匹配的话，其结果是传输新的已选定的表示形式，而不是一个 <code>412 (Precondition Failed)</code> 响应。<code>If-Range</code> 是定义在<a href="RFC7233.html#ID-2859ef1f-8309-4b7d-9e22-963391b5822a">【RFC7233】章节 3.2</a>。
+</p>
 </div>
 </div>
 </div>
@@ -1611,49 +1768,74 @@ The "If-Range" header field provides a special conditional request mechanism tha
 <h2 id="org1c69e05"><a id="ID-c983830d-bf6f-4e61-a905-285f070f9d20"></a>4. 状态码定义 / Status Code Definitions</h2>
 <div class="outline-text-2" id="text-org1c69e05">
 </div>
-<div id="outline-container-orgbbfa9ac" class="outline-3">
-<h3 id="orgbbfa9ac"><a id="ID-6033b2bf-1408-4756-9929-15dd6510c7e3"></a>4.1. 304 Not Modified</h3>
-<div class="outline-text-3" id="text-orgbbfa9ac">
+
+<div id="outline-container-orgf85f7a6" class="outline-3">
+<h3 id="orgf85f7a6"><a id="ID-6033b2bf-1408-4756-9929-15dd6510c7e3"></a>4.1. 304 未更改 / 304 Not Modified</h3>
+<div class="outline-text-3" id="text-orgf85f7a6">
 <blockquote>
 <p>
-The 304 (Not Modified) status code indicates that a conditional GET or HEAD request has been received and would have resulted in a 200 (OK) response if it were not for the fact that the condition evaluated to false. In other words, there is no need for the server to transfer a representation of the target resource because the request indicates that the client, which made the request conditional, already has a valid representation; the server is therefore redirecting the client to make use of that stored representation as if it were the payload of a 200 (OK) response.
+The <code>304 (Not Modified)</code> status code indicates that a conditional GET or HEAD request has been received and would have resulted in a <code>200 (OK)</code> response if it were not for the fact that the condition evaluated to false. In other words, there is no need for the server to transfer a representation of the target resource because the request indicates that the client, which made the request conditional, already has a valid representation; the server is therefore redirecting the client to make use of that stored representation as if it were the payload of a <code>200 (OK)</code> response.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The server generating a 304 response MUST generate any of the following header fields that would have been sent in a 200 (OK) response to the same request: Cache-Control, Content-Location, Date, ETag, Expires, and Vary.
+<code>304 (Not Modified)</code> 状态码表明：已接收到 GET 或 HEAD 条件请求，如果这个条件的求值结果不是否的话，将返回的是一个 <code>200 (OK)</code> 响应。换句话说，服务器不需要传输目标资源的一个表示形式，因为这个请求表明了发起这个条件请求的客户端已经有一个有效的表示形式了，因此服务器让客户端重新使用那个已缓存的表示形式，可以把它当作是一个 <code>200 (OK)</code> 响应的有效载荷。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-Since the goal of a 304 response is to minimize information transfer when the recipient already has one or more cached representations, a sender SHOULD NOT generate representation metadata other than the above listed fields unless said metadata exists for the purpose of guiding cache updates (e.g., Last-Modified might be useful if the response does not have an ETag field).
+The server generating a <code>304</code> response <b>MUST</b> generate any of the following header fields that would have been sent in a <code>200 (OK)</code> response to the same request: <code>Cache-Control</code>, <code>Content-Location</code>, <code>Date</code>, <code>ETag</code>, <code>Expires</code>, and <code>Vary</code>.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-Requirements on a cache that receives a 304 response are defined in Section 4.3.4 of [RFC7234]. If the conditional request originated with an outbound client, such as a user agent with its own cache sending a conditional GET to a shared proxy, then the proxy SHOULD forward the 304 response to that client.
+服务器生成一个 <code>304</code> 响应的时候，<b>必须</b> 把像生成一个 <code>200 (OK)</code> 响应到同一个请求时所具有的以下头字段生成到 <code>304</code> 响应里：<code>Cache-Control</code>、<code>Content-Location</code>、<code>Date</code>、<code>ETag</code>、<code>Expires</code>、以及 <code>Vary</code>。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-A 304 response cannot contain a message-body; it is always terminated by the first empty line after the header fields.
+Since the goal of a <code>304</code> response is to minimize information transfer when the recipient already has one or more cached representations, a sender <b>SHOULD NOT</b> generate representation metadata other than the above listed fields unless said metadata exists for the purpose of guiding cache updates (e.g., <code>Last-Modified</code> might be useful if the response does not have an <code>ETag</code> field).
 </p>
 </blockquote>
+
+<p>
+因为 <code>304</code> 响应的目标是在接收端已经有一个或多个已缓存的表示形式的时候让发送端最小化信息传输，因此，发送端 <b>不应当</b> 生成除上述所列出的头字段以外的<ruby>表示形式元数据<rt>representation metadata</rt></ruby>，除非这些元数据是为指导缓存更新的目的而存在的（比如，<code>Last-Modified</code> 可能有用于如果响应并未带有一个 <code>ETag</code> 字段的情况）。
+</p>
+
+<blockquote>
+<p>
+Requirements on a cache that receives a <code>304</code> response are defined in <a href="RFC7234.html#ID-eb92f86f-35bf-4b7a-b1ae-579da32c29a5">Section 4.3.4</a> of [RFC7234]. If the conditional request originated with an outbound client, such as a user agent with its own cache sending a conditional GET to a shared proxy, then the proxy <b>SHOULD</b> forward the <code>304</code> response to that client.
+</p>
+</blockquote>
+
+<p>
+接收到一个 <code>304</code> 响应时对于缓存服务器的要求，定义在<a href="RFC7234.html#ID-eb92f86f-35bf-4b7a-b1ae-579da32c29a5">【RFC7234】章节 4.3.4</a>。如果条件请求是源自一个<ruby>站外的客户端<rt>outbound client</rt></ruby>，比如一个用户代理具有它自己的缓存功能发送了一个条件 GET 到一个共享代理，那么，这个代理 <b>应当</b> 转发这个 <code>304</code> 响应到那个客户端。
+</p>
+
+<blockquote>
+<p>
+A <code>304</code> response cannot contain a message-body; it is always terminated by the first empty line after the header fields.
+</p>
+</blockquote>
+
+<p>
+<code>304</code> 响应消息不能包含一个<ruby>消息体<rt>message-body</rt></ruby>，它总是终止于头字段之后的第一个空行。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org7051ecf" class="outline-3">
-<h3 id="org7051ecf"><a id="ID-02e5a084-aac8-4f06-840f-507ef2489bb1"></a>4.2. 412 Precondition Failed</h3>
-<div class="outline-text-3" id="text-org7051ecf">
+<div id="outline-container-org664c54f" class="outline-3">
+<h3 id="org664c54f"><a id="ID-02e5a084-aac8-4f06-840f-507ef2489bb1"></a>4.2. 412 前提条件失败 / 412 Precondition Failed</h3>
+<div class="outline-text-3" id="text-org664c54f">
 <blockquote>
 <p>
-The 412 (Precondition Failed) status code indicates that one or more conditions given in the request header fields evaluated to false when tested on the server. This response code allows the client to place preconditions on the current resource state (its current representations and metadata) and, thus, prevent the request method from being applied if the target resource is in an unexpected state.
+The <code>412 (Precondition Failed)</code> status code indicates that one or more conditions given in the request header fields evaluated to false when tested on the server. This response code allows the client to place preconditions on the current resource state (its current representations and metadata) and, thus, prevent the request method from being applied if the target resource is in an unexpected state.
 </p>
 </blockquote>
+
+<p>
+<code>412 (Precondition Failed)</code> 状态码表明：请求头字段所给定的一个或多个条件，在服务器上测试时的求值结果为不成立。这个响应让客户端可以放置前提条件到当前的资源状态（它的当前表示形式和元数据）上，然后，如果目标资源是处在一种预料之外的状态上时，阻止将请求方法的应用。
+</p>
 </div>
 </div>
 </div>
@@ -1663,27 +1845,43 @@ The 412 (Precondition Failed) status code indicates that one or more conditions 
 <div class="outline-text-2" id="text-org8287389">
 <blockquote>
 <p>
-Except when excluded below, a recipient cache or origin server MUST evaluate received request preconditions after it has successfully performed its normal request checks and just before it would perform the action associated with the request method. A server MUST ignore all received preconditions if its response to the same request without those conditions would have been a status code other than a 2xx (Successful) or 412 (Precondition Failed). In other words, redirects and failures take precedence over the evaluation of preconditions in conditional requests.
+Except when excluded below, a recipient cache or origin server <b>MUST</b> evaluate received request preconditions after it has successfully performed its normal request checks and just before it would perform the action associated with the request method. A server <b>MUST</b> ignore all received preconditions if its response to the same request without those conditions would have been a status code other than a <code>2xx (Successful)</code> or <code>412 (Precondition Failed)</code>. In other words, redirects and failures take precedence over the evaluation of preconditions in conditional requests.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A server that is not the origin server for the target resource and cannot act as a cache for requests on the target resource MUST NOT evaluate the conditional request header fields defined by this specification, and it MUST forward them if the request is forwarded, since the generating client intends that they be evaluated by a server that can provide a current representation. Likewise, a server MUST ignore the conditional request header fields defined by this specification when received with a request method that does not involve the selection or modification of a selected representation, such as CONNECT, OPTIONS, or TRACE.
+除非被下面的情况所排除，接收端<ruby>缓存<rt>cache</rt></ruby>或者源服务器对所接收到的请求在成功完成的一般检查以后，在即将执行请求方法所关联的动作之前，<b>必须</b> 对这个请求的前提条件进行求值。如果一个请求在没有带有某些条件的时候，服务器将会响应除 <code>2xx (Successful)</code> 和 <code>412 (Precondition Failed)</code>，那么，相同的请求如果这些带有条件的话，服务器 <b>必须</b> 忽略所有接收到的前提条件。换句话说，在条件请求中，<ruby>重定向响应<rt>redirects</rt></ruby>以及<ruby>失败响应<rt>failures</rt></ruby>的优先级高于对前提条件的求值。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-Conditional request header fields that are defined by extensions to HTTP might place conditions on all recipients, on the state of the target resource in general, or on a group of resources. For instance, the "If" header field in WebDAV can make a request conditional on various aspects of multiple resources, such as locks, if the recipient understands and implements that field ([RFC4918], Section 10.4).
+A server that is not the origin server for the target resource and cannot act as a cache for requests on the target resource <b>MUST NOT</b> evaluate the conditional request header fields defined by this specification, and it <b>MUST</b> forward them if the request is forwarded, since the generating client intends that they be evaluated by a server that can provide a current representation. Likewise, a server <b>MUST</b> ignore the conditional request header fields defined by this specification when received with a request method that does not involve the selection or modification of a selected representation, such as CONNECT, OPTIONS, or TRACE.
 </p>
 </blockquote>
 
+<p>
+一个服务器，如果它既不是目标资源的源服务器，也不能充当一个所请求的目标资源的缓存服务器，那么，它 <b>禁止</b> 对本规范所定义的条件请求头字段进行求值，并且它 <b>必须</b> 转发这些头字段，如果请求会被转发的话，这是因为生成这些头字段的客户是想让它们被能提供一种当前表示形式的服务器来求值的。同样，当服务器所接收到的条件请求的请求方法并不涉及对已选定的表示形式的选择或修改（比如 CONNECT、OPTIONS、或者 TRACE）的时候，服务器 <b>必须</b> 忽略由本规范所定义的条件请求头字段。
+</p>
+
 <blockquote>
 <p>
-Although conditional request header fields are defined as being usable with the HEAD method (to keep HEAD's semantics consistent with those of GET), there is no point in sending a conditional HEAD because a successful response is around the same size as a 304 (Not Modified) response and more useful than a 412 (Precondition Failed) response.
+Conditional request header fields that are defined by extensions to HTTP might place conditions on all recipients, on the state of the target resource in general, or on a group of resources. For instance, the "If" header field in WebDAV can make a request conditional on various aspects of multiple resources, such as locks, if the recipient understands and implements that field ([RFC4918], <a href="https://tools.ietf.org/html/rfc4918#section-10.4">Section 10.4</a>).
 </p>
 </blockquote>
+
+<p>
+由 HTTP 的扩展所定义的条件请求头字段可能将条件设定为针对所有接收端、或者针对目标资源的普遍状态、或者针对某一类资源。例如，WebDAV 规范里的 <code>If</code> 头字段能够发起一个针对多种资源的各个方面的条件请求，比较<ruby>锁<rt>locks</rt></ruby>，如果接收端理解并实现这个字段的话（<a href="https://tools.ietf.org/html/rfc4918#section-10.4">【RFC4918】章节 10.4</a>）。
+</p>
+
+<blockquote>
+<p>
+Although conditional request header fields are defined as being usable with the HEAD method (to keep HEAD's semantics consistent with those of GET), there is no point in sending a conditional HEAD because a successful response is around the same size as a <code>304 (Not Modified)</code> response and more useful than a <code>412 (Precondition Failed)</code> response.
+</p>
+</blockquote>
+
+<p>
+虽然条件请求头字段是定义为可以和 HEAD 方法一起使用（为了保持 HEAD 与 GET 的语义一致），但是发送一个条件 HEAD 请求是没有任何意义的，因为它的成功响应的大小差不多与一个 <code>304 (Not Modified)</code> 响应一样，并且比一个 <code>412 (Precondition Failed)</code> 响应更加实用。
+</p>
 </div>
 </div>
 
@@ -1696,45 +1894,49 @@ When more than one conditional request header field is present in a request, the
 </p>
 </blockquote>
 
+<p>
+当一个请求中出现了超过一个条件请求头字段的时候，这些头字段的求值顺序就变得很重要了。实践中，本规范所定义的字段被一致实现为一种单一的逻辑顺序，但因为“丢失更新”的前提条件比<ruby>缓存验证<rt>cache validation</rt></ruby>有着更加严格的要求，因此，缓存验证比<ruby>部分响应<rt>partial response</rt></ruby>更加高效，以及，<ruby>实体标签<rt>entity tags</rt></ruby>被认为比<ruby>日期验证器<rt>date validators</rt></ruby>更加精准。
+</p>
+
 <blockquote>
 <p>
-A recipient cache or origin server MUST evaluate the request preconditions defined by this specification in the following order:
+A recipient cache or origin server <b>MUST</b> evaluate the request preconditions defined by this specification in the following order:
 </p>
 
 <ol class="org-ol">
-<li>When recipient is the origin server and If-Match is present, evaluate the If-Match precondition:
+<li>When recipient is the origin server and <code>If-Match</code> is present, evaluate the <code>If-Match</code> precondition:
 
 <ul class="org-ul">
 <li>if true, continue to step 3</li>
-<li>if false, respond 412 (Precondition Failed) unless it can be determined that the state-changing request has already succeeded (see Section 3.1)</li>
+<li>if false, respond <code>412 (Precondition Failed)</code> unless it can be determined that the state-changing request has already succeeded (see <a href="#org220193c">Section 3.1</a>)</li>
 </ul></li>
 
-<li>When recipient is the origin server, If-Match is not present, and If-Unmodified-Since is present, evaluate the If-Unmodified-Since precondition:
+<li>When recipient is the origin server, <code>If-Match</code> is not present, and <code>If-Unmodified-Since</code> is present, evaluate the <code>If-Unmodified-Since</code> precondition:
 
 <ul class="org-ul">
 <li>if true, continue to step 3</li>
-<li>if false, respond 412 (Precondition Failed) unless it can be determined that the state-changing request has already succeeded (see Section 3.4)</li>
+<li>if false, respond <code>412 (Precondition Failed)</code> unless it can be determined that the state-changing request has already succeeded (see <a href="#org2f3f176">Section 3.4</a>)</li>
 </ul></li>
 
-<li>When If-None-Match is present, evaluate the If-None-Match precondition:
+<li>When <code>If-None-Match</code> is present, evaluate the <code>If-None-Match</code> precondition:
 
 <ul class="org-ul">
 <li>if true, continue to step 5</li>
-<li>if false for GET/HEAD, respond 304 (Not Modified)</li>
-<li>if false for other methods, respond 412 (Precondition Failed)</li>
+<li>if false for GET/HEAD, respond <code>304 (Not Modified)</code></li>
+<li>if false for other methods, respond <code>412 (Precondition Failed)</code></li>
 </ul></li>
 
-<li>When the method is GET or HEAD, If-None-Match is not present, and If-Modified-Since is present, evaluate the If-Modified-Since precondition:
+<li>When the method is GET or HEAD, <code>If-None-Match</code> is not present, and <code>If-Modified-Since</code> is present, evaluate the <code>If-Modified-Since</code> precondition:
 
 <ul class="org-ul">
 <li>if true, continue to step 5</li>
-<li>if false, respond 304 (Not Modified)</li>
+<li>if false, respond <code>304 (Not Modified)</code></li>
 </ul></li>
 
-<li>When the method is GET and both Range and If-Range are present, evaluate the If-Range precondition:
+<li>When the method is GET and both <code>Range</code> and <code>If-Range</code> are present, evaluate the <code>If-Range</code> precondition:
 
 <ul class="org-ul">
-<li>if the validator matches and the Range specification is applicable to the selected representation, respond 206 (Partial Content) [RFC7233]</li>
+<li>if the validator matches and the <code>Range</code> specification is applicable to the selected representation, respond <code>206 (Partial Content)</code> [<a href="RFC7233.html">RFC7233</a>]</li>
 </ul></li>
 
 <li>Otherwise,
@@ -1745,11 +1947,62 @@ A recipient cache or origin server MUST evaluate the request preconditions defin
 </ol>
 </blockquote>
 
+<p>
+接收端缓存服务器或源服务器 <b>必须</b> 按以下的顺序来对本规范所定义的请求前提条件进行求值：
+</p>
+
+<ol class="org-ol">
+<li>当接收端是源服务器，且出现了 <code>If-Match</code>，那么，对 <code>If-Match</code> 前提条件进行求值：
+
+<ul class="org-ul">
+<li>如果条件成立，跳到步骤 3；</li>
+<li>如果条件不成立，响应 <code>412 (Precondition Failed)</code>，除非它能够确定这个会改变状态的请求已经是成功的；（<a href="#org220193c">章节 3.1</a>）</li>
+</ul></li>
+
+<li>当接收端是源服务器，未出现 <code>If-Match</code>，并且出现了 <code>If-Unmodified-Since</code>，那么，对 <code>If-Unmodified-Since</code> 前提条件进行求值：
+
+<ul class="org-ul">
+<li>如果条件成立，跳到步骤 3；</li>
+<li>如果条件不成立，响应 <code>412 (Precondition Failed)</code>，除非它能够确定这个会改变状态的请求已经是成功的；（<a href="#org2f3f176">章节 3.4</a>）</li>
+</ul></li>
+
+<li>当出现了 <code>If-None-Match</code>，那么，对 <code>If-None-Match</code> 前提条件进行求值：
+
+<ul class="org-ul">
+<li>如果条件成立，跳到步骤 5；</li>
+<li>如果条件不成立，且请求方法为 GET 或者 HEAD，响应 <code>304 (Not Modified)</code>；</li>
+<li>如果条件不成立，且请求方法为其他方法，响应 <code>412 (Precondition Failed)</code>；</li>
+</ul></li>
+
+<li>当请求方法是 GET 或者 HEAD，未出现 <code>If-None-Match</code>，并且出现了 <code>If-Modified-Since</code>，那么，对 <code>If-Modified-Since</code> 前提条件进行求值：
+
+<ul class="org-ul">
+<li>如果条件成立，跳到步骤 5；</li>
+<li>如果条件不成立，响应 304 <code>(Not Modified)</code>；</li>
+</ul></li>
+
+<li>当请求方法是 GET，并且 <code>Range</code> 和 <code>If-Range</code> 都出现了，那么，对 <code>If-Range</code> 前提条件进行求值：
+
+<ul class="org-ul">
+<li>如果这个验证器匹配上了，并且 <code>Range</code> 规范适用于已选定的表示形式，那么，响应 <code>206 (Partial Content)</code>；【<a href="RFC7233.html">RFC7233</a>】</li>
+</ul></li>
+
+<li>否则
+
+<ul class="org-ul">
+<li>所于已经遍历了所有条件了，因此执行所请求的动作并根据它的成功或失败作出响应。</li>
+</ul></li>
+</ol>
+
 <blockquote>
 <p>
 Any extension to HTTP/1.1 that defines additional conditional request header fields ought to define its own expectations regarding the order for evaluating such fields in relation to those defined in this document and other conditionals that might be found in practice.
 </p>
 </blockquote>
+
+<p>
+定义额外条件请求头字段的任何 HTTP/1.1 扩展都应该定义它自身期望这些字段相对于本文档所定义的字段以及其他可能在实践中所发现的条件式之间的求值顺序。
+</p>
 </div>
 </div>
 
@@ -1765,6 +2018,10 @@ Any extension to HTTP/1.1 that defines additional conditional request header fie
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <a href="http://www.iana.org/assignments/http-status-codes">http://www.iana.org/assignments/http-status-codes</a> has been updated with the registrations below:
 </p>
 </blockquote>
+
+<p>
+《超文本传输协议（HTTP）状态码登记表》定义在 <a href="http://www.iana.org/assignments/http-status-codes">http://www.iana.org/assignments/http-status-codes</a>，已经更新了以下登记项。
+</p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1787,13 +2044,13 @@ The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <a href
 <tr>
 <td class="org-right">304</td>
 <td class="org-left">Not Modified</td>
-<td class="org-left">Section 4.1</td>
+<td class="org-left"><a href="#orgf85f7a6">Section 4.1</a></td>
 </tr>
 
 <tr>
 <td class="org-right">312</td>
 <td class="org-left">Precondition Failed</td>
-<td class="org-left">Section 4.2</td>
+<td class="org-left"><a href="#org664c54f">Section 4.2</a></td>
 </tr>
 </tbody>
 </table>
@@ -1809,11 +2066,19 @@ HTTP header fields are registered within the "Message Headers" registry maintain
 </p>
 </blockquote>
 
+<p>
+HTTP 头字段被登记在《消息头部》登记表中，并维护在 <a href="http://www.iana.org/assignments/message-headers/">http://www.iana.org/assignments/message-headers/</a>。
+</p>
+
 <blockquote>
 <p>
-This document defines the following HTTP header fields, so their associated registry entries have been updated according to the permanent registrations below (see [BCP90]):
+This document defines the following HTTP header fields, so their associated registry entries have been updated according to the permanent registrations below (see [<a href="https://tools.ietf.org/html/rfc3864">BCP90</a>]):
 </p>
 </blockquote>
+
+<p>
+本文档定义了以下 HTTP 头字段，因此它们相关联的登记项已经根据以下永久登记条目进行更新（见【<a href="https://tools.ietf.org/html/rfc3864">BCP90</a>】）：
+</p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1840,42 +2105,42 @@ This document defines the following HTTP header fields, so their associated regi
 <td class="org-left">ETag</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 2.3</td>
+<td class="org-left"><a href="#orgf0f9907">Section 2.3</a></td>
 </tr>
 
 <tr>
 <td class="org-left">If-Match</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 3.1</td>
+<td class="org-left"><a href="#org220193c">Section 3.1</a></td>
 </tr>
 
 <tr>
 <td class="org-left">If-Modified-Since</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 3.3</td>
+<td class="org-left"><a href="#orgbe71300">Section 3.3</a></td>
 </tr>
 
 <tr>
 <td class="org-left">If-None-Match</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 3.2</td>
+<td class="org-left"><a href="#org870b652">Section 3.2</a></td>
 </tr>
 
 <tr>
 <td class="org-left">If-Unmodified-Since</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 3.4</td>
+<td class="org-left"><a href="#org2f3f176">Section 3.4</a></td>
 </tr>
 
 <tr>
 <td class="org-left">Last-Modified</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 2.2</td>
+<td class="org-left"><a href="#org3974cdd">Section 2.2</a></td>
 </tr>
 </tbody>
 </table>
@@ -1885,6 +2150,10 @@ This document defines the following HTTP header fields, so their associated regi
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 </p>
 </blockquote>
+
+<p>
+主管以上条目的变更的是 "IETF (iesg@ietf.org) - Internet Engineering Task Force"。
+</p>
 </div>
 </div>
 </div>
@@ -1894,9 +2163,13 @@ The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Forc
 <div class="outline-text-2" id="text-org01ca2bc">
 <blockquote>
 <p>
-This section is meant to inform developers, information providers, and users of known security concerns specific to the HTTP conditional request mechanisms. More general security considerations are addressed in HTTP "Message Syntax and Routing" [RFC7230] and "Semantics and Content" [RFC7231].
+This section is meant to inform developers, information providers, and users of known security concerns specific to the HTTP conditional request mechanisms. More general security considerations are addressed in HTTP "Message Syntax and Routing" [<a href="RFC7230.html">RFC7230</a>] and "Semantics and Content" [<a href="RFC7231.html">RFC7231</a>].
 </p>
 </blockquote>
+
+<p>
+本章节是为了告诉开发者、信息提供商、以及用户，针对 HTTP 条件请求机制的已知的安全注意事项。《消息句法和路由》【<a href="RFC7230.html">RFC7230</a>】以及《语义和内容》【<a href="RFC7231.html">RFC7231</a>】有更广泛的安全注意事项。
+</p>
 
 <blockquote>
 <p>
@@ -1904,11 +2177,19 @@ The validators defined by this specification are not intended to ensure the vali
 </p>
 </blockquote>
 
+<p>
+本规范所定义的验证器并不是试图去保证表示形式的<ruby>有效性<rt>validity</rt></ruby>、<ruby>恶意修改<rt>malicious changes</rt></ruby>的防范、以及<ruby>中间人攻击<rt>man-in-the-middle attacks</rt></ruby>的检测。最好的情况是，当所有参与者都行为良好，它们使得缓存的更新能够更加高效，使得支持乐观锁的写入。最坏的情况是，条件会失败并且客户端像没有进行条件请求一样正常地接收到响应。
+</p>
+
 <blockquote>
 <p>
 An entity-tag can be abused in ways that create privacy risks. For example, a site might deliberately construct a semantically invalid entity-tag that is unique to the user or user agent, send it in a cacheable response with a long freshness time, and then read that entity-tag in later conditional requests as a means of re-identifying that user or user agent. Such an identifying tag would become a persistent identifier for as long as the user agent retained the original cache entry. User agents that cache representations ought to ensure that the cache is cleared or replaced whenever the user performs privacy-maintaining actions, such as clearing stored cookies or changing to a private browsing mode.
 </p>
 </blockquote>
+
+<p>
+实体标签可能在生成私隐风险的方式上被滥用。例如，一个网站可能故意构造一个语义有效的实体标签，这个实体标签是一一对应于一个用户或用户代理的，然后将它发送到一个可缓存的响应里，带有一个非常长的新鲜度时间，然后在接下来的条件请求中读取这个实体标签来作为重新识别用户或用户代理的一种方法。只要用户代理保持原始的缓存条目，这种识别型的标签就会成为一种永久的标识符。每当用户执行<ruby>确保隐私的行为<rt>privacy-maintaining actions</rt></ruby>的时候，缓存表示形式的用户代理应该确保缓存已被清除或者替换，比如清除已存储的 cookies 或者变更为一种隐私浏览模式。
+</p>
 </div>
 </div>
 
@@ -1917,9 +2198,13 @@ An entity-tag can be abused in ways that create privacy risks. For example, a si
 <div class="outline-text-2" id="text-org196768e">
 <blockquote>
 <p>
-See Section 10 of [RFC7230].
+See <a href="RFC7230.html#ID-ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626">Section 10</a> of [RFC7230].
 </p>
 </blockquote>
+
+<p>
+见【RFC7230】<a href="RFC7230.html#ID-ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626">章节 10</a>。
+</p>
 </div>
 </div>
 
@@ -1958,33 +2243,53 @@ See Section 10 of [RFC7230].
 <div class="outline-text-2" id="text-orga07aac9">
 <blockquote>
 <p>
-The definition of validator weakness has been expanded and clarified. (Section 2.1)
+The definition of validator weakness has been expanded and clarified. (<a href="#org265ee00">Section 2.1</a>)
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-Weak entity-tags are now allowed in all requests except range requests. (Sections 2.1 and 3.2)
+扩充以及明确了验证器的弱验证类型的定义。（<a href="#org265ee00">章节 2.1</a>）
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The ETag header field ABNF has been changed to not use quoted-string, thus avoiding escaping issues. (Section 2.3)
+Weak entity-tags are now allowed in all requests except range requests. (<a href="#org265ee00">Sections 2.1</a> and <a href="#org870b652">3.2</a>)
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-ETag is defined to provide an entity tag for the selected representation, thereby clarifying what it applies to in various situations (such as a PUT response). (Section 2.3)
+现在，允许弱实体标签用在除范围请求以外的所有的请求中。（<a href="#org265ee00">章节 2.1</a> 和 <a href="#org870b652">3.2</a>）
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The precedence for evaluation of conditional requests has been defined. (Section 6)
+The <code>ETag</code> header field ABNF has been changed to not use <code>quoted-string</code>, thus avoiding escaping issues. (<a href="#orgf0f9907">Section 2.3</a>)
 </p>
 </blockquote>
+
+<p>
+<code>ETag</code> 头字段的 ABNF 规则已经改变为不使用 <code>quoted-string</code> 规则，以避免转义的问题。（<a href="#orgf0f9907">章节 2.3</a>）
+</p>
+
+<blockquote>
+<p>
+<code>ETag</code> is defined to provide an entity tag for the selected representation, thereby clarifying what it applies to in various situations (such as a PUT response). (<a href="#orgf0f9907">Section 2.3</a>)
+</p>
+</blockquote>
+
+<p>
+<code>ETag</code> 被定义为为已选定的表示形式提供一个实体标签，因此明确了它在各种场景中的适用范围（比如一个 PUT 响应）。（<a href="#orgf0f9907">章节 2.3</a>）
+</p>
+
+<blockquote>
+<p>
+The precedence for evaluation of conditional requests has been defined. (<a href="#org35abd07">Section 6</a>)
+</p>
+</blockquote>
+
+<p>
+定义了条件请求的求值优级级。（<a href="#org35abd07">章节 6</a>）
+</p>
 </div>
 </div>
 
@@ -1993,15 +2298,23 @@ The precedence for evaluation of conditional requests has been defined. (Section
 <div class="outline-text-2" id="text-org4dbc73e">
 <blockquote>
 <p>
-The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+The following core rules are included by reference, as defined in <a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">Appendix B.1</a> of [RFC5234]: <code>ALPHA</code> (letters), <code>CR</code> (carriage return), <code>CRLF</code> (CR LF), <code>CTL</code> (controls), <code>DIGIT</code> (decimal 0-9), <code>DQUOTE</code> (double quote), <code>HEXDIG</code> (hexadecimal 0-9/A-F/a-f), <code>LF</code> (line feed), <code>OCTET</code> (any 8-bit sequence of data), <code>SP</code> (space), and <code>VCHAR</code> (any visible US-ASCII character).
 </p>
 </blockquote>
 
+<p>
+本规范引用了以下定义在<a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">【RFC5234】附录 B.1</a> 中的核心规则：<code>ALPHA</code> （字母）、<code>CR</code> （回车符）、<code>CRLF</code> （回车换行符）、<code>CTL</code> （控制字符）、<code>DIGIT</code> （十进制数字 0-9）、<code>DQUOTE</code> （双引号）、<code>HEXDIG</code> （十六进制数字 0-9/A-F/a-f）、<code>HTAB</code> （水平制表符）、<code>LF</code> （换行符）、<code>OCTET</code> （八位组字节）、<code>SP</code> （空格）以及 <code>VCHAR</code> （【USASCII】可见字符）。
+</p>
+
 <blockquote>
 <p>
-The rules below are defined in [RFC7230]:
+The rules below are defined in [<a href="RFC7230.html">RFC7230</a>]:
 </p>
 </blockquote>
+
+<p>
+以下规则定义在【<a href="RFC7230.html">RFC7230</a>】中：
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">OWS           = &lt;OWS, see [RFC7230], Section 3.2.3&gt;
@@ -2015,6 +2328,10 @@ The rules below are defined in other parts:
 </p>
 </blockquote>
 
+<p>
+以下规则定义在其他部分中：
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">HTTP-date     = &lt;HTTP-date, see [RFC7231], Section 7.1.1.1&gt;
 </pre>
@@ -2027,9 +2344,13 @@ The rules below are defined in other parts:
 <div class="outline-text-2" id="text-orgbc516f2">
 <blockquote>
 <p>
-In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
+In the collected ABNF below, list rules are expanded as per <a href="RFC7230.html#ID-f8234cb5-154d-4daf-82fd-ed54ac75cf8b">Section 1.2</a> of [RFC7230].
 </p>
 </blockquote>
+
+<p>
+下列 ABNF 规则集合中，列表规则是在<a href="RFC7230.html#ID-f8234cb5-154d-4daf-82fd-ed54ac75cf8b">【RFC7230】章节 1.2</a> 所扩充的。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">ETag = entity-tag
@@ -2062,6 +2383,112 @@ weak = %x57.2F ; W/
 
 <div id="outline-container-orgddedd39" class="outline-2">
 <h2 id="orgddedd39">Index</h2>
+<div class="outline-text-2" id="text-orgddedd39">
+<ul class="org-ul">
+<li>3
+<ul class="org-ul">
+<li>304 Not Modified (status code)  4.1, 7.1</li>
+</ul></li>
+<li>4
+<ul class="org-ul">
+<li>412 Precondition Failed (status code)  4.2, 7.1</li>
+</ul></li>
+<li>B
+<ul class="org-ul">
+<li>BCP90  7.2, 10.2</li>
+</ul></li>
+<li>E
+<ul class="org-ul">
+<li>ETag header field  2, 2.3, 7.2, A, A</li>
+</ul></li>
+<li>G
+<ul class="org-ul">
+<li>Grammar  
+<ul class="org-ul">
+<li>entity-tag  2.3</li>
+<li>ETag  2.3</li>
+<li>etagc  2.3</li>
+<li>If-Match  3.1</li>
+<li>If-Modified-Since  3.3</li>
+<li>If-None-Match  3.2</li>
+<li>If-Unmodified-Since  3.4</li>
+<li>Last-Modified  2.2</li>
+<li>opaque-tag  2.3</li>
+<li>weak  2.3</li>
+</ul></li>
+</ul></li>
+<li>I
+<ul class="org-ul">
+<li>If-Match header field  3.1, 6, 7.2</li>
+<li>If-Modified-Since header field  3.3, 7.2</li>
+<li>If-None-Match header field  3.2, 7.2, A</li>
+<li>If-Unmodified-Since header field  3.4, 6, 7.2</li>
+</ul></li>
+<li>L
+<ul class="org-ul">
+<li>Last-Modified header field  2, 2.2, 7.2</li>
+</ul></li>
+<li>M
+<ul class="org-ul">
+<li>metadata  2</li>
+</ul></li>
+<li>R
+<ul class="org-ul">
+<li>RFC2119  1.1, 10.1</li>
+<li>RFC2616  2.3, 10.2
+<ul class="org-ul">
+<li>Section 3.11  2.3</li>
+</ul></li>
+<li>RFC4918  2, 5, 10.2
+<ul class="org-ul">
+<li>Section 10.4  5</li>
+</ul></li>
+<li>RFC5234  1.2, 10.1, B
+<ul class="org-ul">
+<li>Appendix B.1  B</li>
+</ul></li>
+<li>RFC7230  1, 1.1, 1.2, 2.3.3, 8, 9, 10.1, B, B, B, C
+<ul class="org-ul">
+<li>Section 1.2  C</li>
+<li>Section 2.5  1.1</li>
+<li>Section 3.2.3  B</li>
+<li>Section 3.2.6  B</li>
+<li>Section 4  2.3.3</li>
+<li>Section 7  1.2</li>
+<li>Section 10  9</li>
+</ul></li>
+<li>RFC7231  1, 1, 2.3.3, 2.3.3, 3.2, 8, 10.1, B
+<ul class="org-ul">
+<li>Section 3  1</li>
+<li>Section 3.4  2.3.3</li>
+<li>Section 4.2.1  3.2</li>
+<li>Section 5.3.4  2.3.3</li>
+<li>Section 7.1.1.1  B</li>
+</ul></li>
+<li>RFC7233  3.5, 6, 10.1
+<ul class="org-ul">
+<li>Section 3.2  3.5</li>
+</ul></li>
+<li>RFC7234  1, 2.2.1, 2.3.1, 3.2, 3.3, 4.1, 10.1
+<ul class="org-ul">
+<li>Section 4.3.2  3.2, 3.3</li>
+<li>Section 4.3.4  4.1</li>
+</ul></li>
+</ul></li>
+<li>S
+<ul class="org-ul">
+<li>selected representation  1</li>
+</ul></li>
+<li>V
+<ul class="org-ul">
+<li>validator  2
+<ul class="org-ul">
+<li>strong  2.1</li>
+<li>weak  2.1</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
 </div>
 
 <div id="outline-container-org59265de" class="outline-2">
@@ -2085,6 +2512,10 @@ Muenster, NW 48155
 Germany
 Email: julian.reschke@greenbytes.de
 URI: http://greenbytes.de/tech/webdav/
+</pre>
+
+<pre class="example">
+阿多（译者）
 </pre>
 </div>
 </div>

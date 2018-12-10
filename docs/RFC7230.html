@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-07 Fri 19:17 -->
+<!-- 2018-12-10 Mon 19:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -2108,7 +2108,7 @@ New header fields can be defined such that, when they are understood by a recipi
 </blockquote>
 
 <p>
-新头字段能够定义为这样：当新头字段能够被接收端所理解时，它们可以覆盖或增强之前所定义的头字段的<ruby>解释<rt>interpretation</rt></ruby>，定义对<ruby>评估请求<rt>request evaluation</rt></ruby>的<ruby>前置条件<rt>preconditions</rt></ruby>，或者<ruby>优化<rt>refine</rt></ruby>响应消息的含义。
+新头字段能够定义为这样：当新头字段能够被接收端所理解时，它们可以覆盖或增强之前所定义的头字段的<ruby>解释<rt>interpretation</rt></ruby>，定义对<ruby>评估请求<rt>request evaluation</rt></ruby>的<ruby>前提条件<rt>preconditions</rt></ruby>，或者<ruby>优化<rt>refine</rt></ruby>响应消息的含义。
 </p>
 
 <blockquote>
@@ -2735,7 +2735,7 @@ Any <code>Content-Length</code> field value greater than or equal to zero is val
 </blockquote>
 
 <p>
-任何大于或等于 0 的 <code>Content-Length</code> 的字段值都是合法的。因为没有预先定义有效载荷的长度限制，接收端 <b>必须</b> 能预料到<ruby>特大数值<rt>big decimal</rt></ruby>的可能性，并且避免由于整型类型转换溢出所引起的解析错误（<a href="#orga446fa3">章节 9.3</a>）。
+任何大于或等于 0 的 <code>Content-Length</code> 的字段值都是合法的。由于没有预定义有效载荷的长度限制，因此，接收端 <b>必须</b> 能预料到<ruby>特大数值<rt>big decimal</rt></ruby>的可能，并且避免由于整型类型转换溢出所引起的解析错误（<a href="#orga446fa3">章节 9.3</a>）。
 </p>
 
 <blockquote>
