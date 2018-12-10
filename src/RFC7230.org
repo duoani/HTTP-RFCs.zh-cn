@@ -1400,7 +1400,7 @@ Aside from the cases defined above, in the absence of =Transfer-Encoding=, an or
 Any =Content-Length= field value greater than or equal to zero is valid. Since there is no predefined limit to the length of a payload, a recipient *MUST* anticipate potentially large decimal numerals and prevent parsing errors due to integer conversion overflows ([[id:131aeb62-94c8-4b26-84eb-29051aac72e2][Section 9.3]]).
 #+END_QUOTE
 
-任何大于或等于 0 的 =Content-Length= 的字段值都是合法的。因为没有预先定义有效载荷的长度限制，接收端 *必须* 能预料到[[ruby:big%20decimal][特大数值]]的可能性，并且避免由于整型类型转换溢出所引起的解析错误（[[id:131aeb62-94c8-4b26-84eb-29051aac72e2][章节 9.3]]）。
+任何大于或等于 0 的 =Content-Length= 的字段值都是合法的。由于没有预定义有效载荷的长度限制，因此，接收端 *必须* 能预料到[[ruby:big%20decimal][特大数值]]的可能，并且避免由于整型类型转换溢出所引起的解析错误（[[id:131aeb62-94c8-4b26-84eb-29051aac72e2][章节 9.3]]）。
 
 #+BEGIN_QUOTE
 If a message is received that has multiple =Content-Length= header fields with =field-values= consisting of the same decimal value, or a single =Content-Length= header field with a field value containing a list of identical decimal values (e.g., "Content-Length: 42, 42"), indicating that duplicate =Content-Length= header fields have been generated or combined by an upstream message processor, then the recipient *MUST* either reject the message as invalid or replace the duplicated =field-values= with a single valid =Content-Length= field containing that decimal value prior to determining the message body length or forwarding the message.
