@@ -6,8 +6,6 @@
 
 翻译工作是非常花时间的，如果你觉得对你有帮助的话，欢迎 :star2: 一个。
 
-目前已翻译完成 [RFC7230](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7230.html)、 [RFC7231](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7231.html)。
-
 ## 翻译进度
 
 - [x] [RFC7230: HTTP/1.1: Message Syntax and Routing](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7230.html)

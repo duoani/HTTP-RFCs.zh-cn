@@ -1344,7 +1344,7 @@ When a message does not have a =Transfer-Encoding= header field, a =Content-Leng
 #+END_QUOTE
 
 当一个消息不带有 =Transfer-Encoding= 头字段的时候，=Content-Length= 头字段能够提供对于一个潜在的[[ruby:payload%20body][有效载荷]]的预期的大小。=Content-Length= 是一个十进制数字，以[[ruby:octets][字节]]形式。对于包含一个有效载荷的消息，=Content-Length= 的 =field-value=
-提供了决定消息体在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的消息，=Content-Length= 指明了[[ruby:selected%20representation][已选定的表示形式]]（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][【RFC7231】章节 3]]）的大小。
+提供了决定消息体在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的消息，=Content-Length= 指明了[[ruby:selected%20representation][已选表示形式]]（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][【RFC7231】章节 3]]）的大小。
 
 #+BEGIN_SRC text
 Content-Length = 1*DIGIT
@@ -2411,7 +2411,7 @@ A proxy *MAY* transform the payload of a message that does not contain a =no-tra
 A proxy *SHOULD NOT* modify header fields that provide information about the endpoints of the communication chain, the resource state, or the selected representation (other than the payload) unless the field's definition specifically allows such modification or the modification is deemed necessary for privacy or security.
 #+END_QUOTE
 
-代理 *不应当* 修改提供有关通信链路端点、资源状态，或者[[ruby:selected%20representation][已选定的表示形式]]（除了有效载荷）的信息的头字段，除非该字段的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
+代理 *不应当* 修改提供有关通信链路端点、资源状态，或者[[ruby:selected%20representation][已选表示形式]]（除了有效载荷）的信息的头字段，除非该字段的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
 
 * 6. 连接管理 / Connection Management
 :PROPERTIES:

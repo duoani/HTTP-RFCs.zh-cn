@@ -37,7 +37,7 @@
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document defines HTTP/1.1 conditional requests, including metadata header fields for indicating state changes, request header fields for making preconditions on such state, and rules for constructing the responses to a conditional request when one or more preconditions evaluate to false.
 #+END_QUOTE
 
-超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 条件请求，包括：[[ruby:metadata%20header%20fields][元数据头字段]]——用于表明状态的改变、[[ruby:request%20header%20fields][请求头字段]]——用于对这些状态设置前提条件、以及[[ruby:rules][规则]]——用于当一个或多个前提条件求值结果为不成立的时候构造响应给条件请求。
+超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 条件请求，包括：[[ruby:metadata%20header%20fields][元数据头字段]]——用于表明状态的改变、[[ruby:request%20header%20fields][请求头字段]]——用于对这些状态设置前提条件、以及[[ruby:rules][规则]]——用于当一个或多个前提条件求值结果为[[ruby:false][假]]的时候构造响应给条件请求。
 
 * 备忘状态 / Status of This Memo
 
@@ -85,7 +85,7 @@ Conditional GET requests are the most efficient mechanism for HTTP cache updates
 Conditional request preconditions are based on the state of the target resource as a whole (its current value set) or the state as observed in a previously obtained representation (one value in that set). A resource might have multiple current representations, each with its own observable state. The conditional request mechanisms assume that the mapping of requests to a "selected representation" ([[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][Section 3]] of [RFC7231]) will be consistent over time if the server intends to take advantage of conditionals. Regardless, if the mapping is inconsistent and the server is unable to select the appropriate representation, then no harm will result when the precondition evaluates to false.
 #+END_QUOTE
 
-总的来说，条件请求的前提条件是基于目标资源的状态（目标资源的[[ruby:current%20value][当前值]]的集合），或者在之前获得的一种表示形式所观察到的状态（这个当前值集合中的其中之一）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假定请求与一种“[[ruby:selected%20representation][已选定的表示形式]]”（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][【RFC7231】章节 3]]）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前提条件的求值结果为不成立（也就是条件为假）的时候，最终结果应该要是无害的。
+总的来说，条件请求的前提条件是基于目标资源的状态（目标资源的[[ruby:current%20value][当前值]]的集合），或者在之前获得的一种表示形式所观察到的状态（这个当前值集合中的其中之一）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假定请求与一种“[[ruby:selected%20representation][已选表示形式]]”（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][【RFC7231】章节 3]]）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前提条件的求值结果为假（即条件不成立）的时候，最终结果应该要是无害的。
 
 #+BEGIN_QUOTE
 The conditional request preconditions defined by this specification ([[id:5d82712b-331b-4303-85fc-19b1488af561][Section 3]]) are evaluated when applicable to the recipient ([[id:fce45320-6c1c-4486-a32b-2c553780d785][Section 5]]) according to their order of precedence ([[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][Section 6]]).
@@ -256,6 +256,9 @@ An origin server without a clock *MUST NOT* assign =Last-Modified= values to a r
 不具备时钟功能的源服务器 *禁止* 分配 =Last-Modified= 值到一个响应里，除非这些值是由某些具有可靠时钟功能的其他系统或用户关联到资源上的。
 
 *** 2.2.2. 对比 / Comparison
+    :PROPERTIES:
+    :ID:       ba954c8f-272f-409a-9fdd-e092207700c5
+    :END:
 
 #+BEGIN_QUOTE
 A =Last-Modified= time, when used as a validator in a request, is implicitly weak unless it is possible to deduce that it is strong, using the following rules:
@@ -312,7 +315,7 @@ This method relies on the fact that if two different responses were sent by the 
 The "ETag" header field in a response provides the current entity-tag for the selected representation, as determined at the conclusion of handling the request. An entity-tag is an opaque validator for differentiating between multiple representations of the same resource, regardless of whether those multiple representations are due to resource state changes over time, content negotiation resulting in multiple representations being valid at the same time, or both. An entity-tag consists of an opaque quoted string, possibly prefixed by a weakness indicator.
 #+END_QUOTE
 
-响应中的 =ETag= 头字段提供了已选定的表示形式当前的[[ruby:entity-tag][实体标签]]，这个头字段是在请求处理结束时所确定的。实体标签是一种[[ruby:opaque%20validator][不透明的验证器]]，以在同一个资源的不同表示形式之间进行区分，不管是由于资源状态随时间变化而产生的多个表示形式，还是内容协商的结果使同一时间内有多个合适的表示形式，还是两者都有（译注：也就是说，只要是同一个资源的表示形式，ETag 都能够进行区分，不管是以什么方式而产生的表示形式）。一个实体标签由一个[[ruby:opaque%20quoted%20string][不透明的以引号包裹的字符串]]构成，可能会前置一个“弱验证”的指标符（"W/"）。
+响应中的 =ETag= 头字段提供了已选表示形式当前的[[ruby:entity-tag][实体标签]]，这个头字段是在请求处理结束时所确定的。实体标签是一种[[ruby:opaque%20validator][不透明的验证器]]，以在同一个资源的不同表示形式之间进行区分，不管是由于资源状态随时间变化而产生的多个表示形式，还是内容协商的结果使同一时间内有多个合适的表示形式，还是两者都有（译注：也就是说，只要是同一个资源的表示形式，ETag 都能够进行区分，不管是以什么方式而产生的表示形式）。一个实体标签由一个[[ruby:opaque%20quoted%20string][不透明的以引号包裹的字符串]]构成，可能会前置一个“弱验证”的指标符（"W/"）。
 
 #+BEGIN_QUOTE
 译注：对于[[ruby:opaque%20validator][不透明验证器]]就是一种[[ruby:opaque%20data][不透明数据]]，对于不透明数据的解释见[[id:1bd50237-cd26-4e74-8c0c-7af8d2d6b25f][【RFC7230】章节 3.2.4]]末尾的译注。
@@ -574,19 +577,19 @@ Examples:
 =If-Match= is most often used with state-changing methods (e.g., POST, PUT, DELETE) to prevent accidental overwrites when multiple user agents might be acting in parallel on the same resource (i.e., to prevent the "lost update" problem). It can also be used with safe methods to abort a request if the selected representation does not match one already stored (or partially stored) from a prior request.
 #+END_QUOTE
 
-=If-Match= 经常与[[ruby:state-changing][会状态改变]]的请求方法一起使用（比如：POST、PUT、DELETE），来避免当多个用户代理可能并行操作同一个资源的时候导致的意外覆盖（也就是说，避免“丢失更新”的问题）。它还可以与[[ruby:safe%20methods][安全方法]]一起使用来中止请求，如果已选定的表示形式并没有匹配上一个已经（或可能已经）从之前的请求里存储的表示形式。
+=If-Match= 经常与[[ruby:state-changing][会状态改变]]的请求方法一起使用（比如：POST、PUT、DELETE），来避免当多个用户代理可能并行操作同一个资源的时候导致的意外覆盖（也就是说，避免“丢失更新”的问题）。它还可以与[[ruby:safe%20methods][安全方法]]一起使用来中止请求，如果已选表示形式并没有匹配上一个已经（或可能已经）从之前的请求里存储的表示形式。
 
 #+BEGIN_QUOTE
 An origin server that receives an =If-Match= header field *MUST* evaluate the condition prior to performing the method ([[id:fce45320-6c1c-4486-a32b-2c553780d785][Section 5]]). If the field-value is "*", the condition is false if the origin server does not have a current representation for the target resource. If the field-value is a list of entity-tags, the condition is false if none of the listed tags match the entity-tag of the selected representation.
 #+END_QUOTE
 
-源服务器接收到一个 =If-Match= 字段时 *必须* 在执行对应的请求方法之前对这个条件进行求值（[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]]）。如果 =If-Match= 的字段值是 "*"，且源服务器的目标资源没有任何一种当前表示形式，那么，这个条件的求值结果为不成立。如果这个字段值是一个实体标签列表，且所列出的所有标签没有任何一个匹配已选定的表示形式的实体标签，那么这个条件的求值结果为不成立。
+源服务器接收到一个 =If-Match= 字段时 *必须* 在执行对应的请求方法之前对这个条件进行求值（[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]]）。如果 =If-Match= 的字段值是 "*"，且源服务器的目标资源没有任何一种当前表示形式，那么，这个条件的求值结果为假。如果这个字段值是一个实体标签列表，且所列出的所有标签没有任何一个匹配已选表示形式的实体标签，那么这个条件的求值结果为假。
 
 #+BEGIN_QUOTE
 An origin server *MUST NOT* perform the requested method if a received =If-Match= condition evaluates to false; instead, the origin server *MUST* respond with either a) the =412 (Precondition Failed)= status code or b) one of the =2xx (Successful)= status codes if the origin server has verified that a state change is being requested and the final state is already reflected in the current state of the target resource (i.e., the change requested by the user agent has already succeeded, but the user agent might not be aware of it, perhaps because the prior response was lost or a compatible change was made by some other user agent). In the latter case, the origin server *MUST NOT* send a validator header field in the response unless it can verify that the request is a duplicate of an immediately prior change made by the same user agent.
 #+END_QUOTE
 
-如果所接收到的 =If-Match= 条件的求值结果为不成立，源服务器 *禁止* 执行请求方法，而是，源服务器 *必须* 响应以下其中之一：
+如果所接收到的 =If-Match= 条件的求值结果为假，源服务器 *禁止* 执行请求方法，而是，源服务器 *必须* 响应以下其中之一：
 
 1) 响应 =412 (Precondition Failed)= 状态码，或者
 2) 如果源服务器已检验出目标资源又被请求了一种状态改变，并且它的最终状态已经反映为目标资源当前状态（也就是说，用户代理所请求的改变已经成功完成了，但是用户请求可能没有意识到这个，可能是因为之前的响应已经丢失了没有成功到达用户代理，或者其他某些用户代理也对目标资源请求了一种与之兼容的变化），那么，响应 =2xx (Successful)= 状态码的其中之一。
@@ -611,7 +614,7 @@ The "If-None-Match" header field makes the request method conditional on a recip
 =If-None-Match= 头字段使得请求方法带有条件，接收端缓存服务器或源服务器仅在满足以下条件之一时才会成功响应：
 
 - 当字段值为 "*"，的时候，目标资源没有任何当前表示形式。
-- 有一种已选定的表示形式带有一个实体标签，这个实体标签并不与列在这个字段值里的任一实体标签相匹配。
+- 有一种已选表示形式带有一个实体标签，这个实体标签并不与列在这个字段值里的任一实体标签相匹配。
 
 #+BEGIN_QUOTE
 A recipient *MUST* use the weak comparison function when comparing entity-tags for =If-None-Match= ([[id:e3a6dda6-2209-44aa-89af-c37f1b95c2fe][Section 2.3.2]]), since weak entity-tags can be used for cache validation even if there have been changes to the representation data.
@@ -641,7 +644,7 @@ Examples:
 =If-None-Match= is primarily used in conditional GET requests to enable efficient updates of cached information with a minimum amount of transaction overhead. When a client desires to update one or more stored responses that have entity-tags, the client *SHOULD* generate an =If-None-Match= header field containing a list of those entity-tags when making a GET request; this allows recipient servers to send a =304 (Not Modified)= response to indicate when one of those stored responses matches the selected representation.
 #+END_QUOTE
 
-=If-None-Match= 主要用在条件 GET 请求中使缓存信息能够以最小的传输开销来进行高效的更新。当客户端希望更新一个或多个它已经缓存的带有实体标签的响应的时候，客户端 *应当* 在执行 GET 请求的时候生成一个 =If-None-Match= 头字段来包含一个这些实体标签的列表，这样使得接收端服务器可以发送一个 =304 (Not Modified)= 响应来向客户端表明，什么时候这些已缓存的响应之一会匹配[[ruby:selected%20representation][已选定的表示形式]]。
+=If-None-Match= 主要用在条件 GET 请求中使缓存信息能够以最小的传输开销来进行高效的更新。当客户端希望更新一个或多个它已经缓存的带有实体标签的响应的时候，客户端 *应当* 在执行 GET 请求的时候生成一个 =If-None-Match= 头字段来包含一个这些实体标签的列表，这样使得接收端服务器可以发送一个 =304 (Not Modified)= 响应来向客户端表明，什么时候这些已缓存的响应之一会匹配[[ruby:selected%20representation][已选表示形式]]。
 
 #+BEGIN_QUOTE
 =If-None-Match= can also be used with a value of "*" to prevent an unsafe request method (e.g., PUT) from inadvertently modifying an existing representation of the target resource when the client believes that the resource does not have a current representation ([[id:2f967e3d-8694-430b-ad06-e748fd39b281][Section 4.2.1]] of [RFC7231]). This is a variation on the "lost update" problem that might arise if more than one client attempts to create an initial representation for the target resource.
@@ -653,13 +656,13 @@ Examples:
 An origin server that receives an =If-None-Match= header field *MUST* evaluate the condition prior to performing the method (Section 5). If the field-value is "*", the condition is false if the origin server has a current representation for the target resource. If the field-value is a list of entity-tags, the condition is false if one of the listed tags match the entity-tag of the selected representation.
 #+END_QUOTE
 
-源服务器接收到一个 =If-None-Match= 头字段的时候，*必须* 在执行这个请求方法之前对条件进行求值（章节 5）。如果字段值是 "*"，并且源服务器的目标资源有当前表示形式，那么这个条件的求值结果为不成立。如果字段值是一个实体标签的列表，并且列表中的实体标签之一匹配上已选定的表示形式的实体标签，那么这个条件的求值结果为不成立。
+源服务器接收到一个 =If-None-Match= 头字段的时候，*必须* 在执行这个请求方法之前对条件进行求值（章节 5）。如果字段值是 "*"，并且源服务器的目标资源有当前表示形式，那么这个条件的求值结果为假。如果字段值是一个实体标签的列表，并且列表中的实体标签之一匹配上已选表示形式的实体标签，那么这个条件的求值结果为假。
 
 #+BEGIN_QUOTE
 An origin server *MUST NOT* perform the requested method if the condition evaluates to false; instead, the origin server *MUST* respond with either a) the =304 (Not Modified)= status code if the request method is GET or HEAD or b) the =412 (Precondition Failed)= status code for all other request methods.
 #+END_QUOTE
 
-如果条件求值为不成立，那么，源服务器 *禁止* 执行所请求的方法，而是，源服务器 *必须* 响应以下其中之一：
+如果条件求值为假，那么，源服务器 *禁止* 执行所请求的方法，而是，源服务器 *必须* 响应以下其中之一：
 
 1) 如果请求方法是 GET 或者 HEAD，响应 =304 (Not Modified)= 状态码，或者
 2) 如果是其他请求方法，响应 =412 (Precondition Failed)= 状态码。
@@ -679,7 +682,7 @@ Requirements on cache handling of a received =If-None-Match= header field are de
 The "If-Modified-Since" header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value. Transfer of the selected representation's data is avoided if that data has not changed.
 #+END_QUOTE
 
-=If-Modified-Since= 头字段使得 GET 或者 HEAD 请求方法带有条件，已选定的表示形式的修改日期晚于这个字段值的日期的时候，服务器才会成功响应。避免表示形式的数据没有发生改变的情况下再次传输表示形式的数据。
+=If-Modified-Since= 头字段使得 GET 或者 HEAD 请求方法带有条件，已选表示形式的修改日期晚于这个字段值的日期的时候，服务器才会成功响应。避免表示形式的数据没有发生改变的情况下再次传输表示形式的数据。
 
 #+BEGIN_SRC text
   If-Modified-Since = HTTP-date
@@ -732,13 +735,13 @@ When used for cache updates, a cache will typically use the value of the cached 
 When used for limiting the scope of retrieval to a recent time window, a user agent will generate an =If-Modified-Since= field value based on either its own local clock or a =Date= header field received from the server in a prior response. Origin servers that choose an exact timestamp match based on the selected representation's =Last-Modified= field will not be able to help the user agent limit its data transfers to only those changed during the specified window.
 #+END_QUOTE
 
-当用于对检索的范围限制为一个最近的时间窗口的时候，用户代理将会生成一个 =If-Modified-Since= 字段，其值或者基于用户代理的本地时钟，或者基于接收自服务器的之前一个响应的 =Date= 头字段。源服务器选择准确匹配上基于已选定的表示形式的 =Last-Modified= 字段的时间戳，将无法帮助用户代理限制它的数据传输为仅仅是那些具体时间窗口期间的改动。
+当用于对检索的范围限制为一个最近的时间窗口的时候，用户代理将会生成一个 =If-Modified-Since= 字段，其值或者基于用户代理的本地时钟，或者基于接收自服务器的之前一个响应的 =Date= 头字段。源服务器选择准确匹配上基于已选表示形式的 =Last-Modified= 字段的时间戳，将无法帮助用户代理限制它的数据传输为仅仅是那些具体时间窗口期间的改动。
 
 #+BEGIN_QUOTE
 An origin server that receives an =If-Modified-Since= header field *SHOULD* evaluate the condition prior to performing the method ([[id:fce45320-6c1c-4486-a32b-2c553780d785][Section 5]]). The origin server *SHOULD NOT* perform the requested method if the selected representation's last modification date is earlier than or equal to the date provided in the field-value; instead, the origin server *SHOULD* generate a =304 (Not Modified)= response, including only those metadata that are useful for identifying or updating a previously cached response.
 #+END_QUOTE
 
-源服务器接收到一个 =If-Modified-Since= 头字段的时候，*应当* 在执行请求方法之前对条件进行求值（[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]]）。如果已选定的表示形式的最后修改时间是早于或等于 =If-Modified-Since= 所提供的日期，那么，源服务器 *不应当* 执行所请求的方法，而是，源服务器 *应当* 生成一个 =304 (Not Modified)= 响应，只包含那些有用于的元数据，所述有用的元数据指的是用来表明或更新之前所缓存的响应的那些元数据。
+源服务器接收到一个 =If-Modified-Since= 头字段的时候，*应当* 在执行请求方法之前对条件进行求值（[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]]）。如果已选表示形式的最后修改时间是早于或等于 =If-Modified-Since= 所提供的日期，那么，源服务器 *不应当* 执行所请求的方法，而是，源服务器 *应当* 生成一个 =304 (Not Modified)= 响应，只包含那些有用于的元数据，所述有用的元数据指的是用来表明或更新之前所缓存的响应的那些元数据。
 
 #+BEGIN_QUOTE
 Requirements on cache handling of a received =If-Modified-Since= header field are defined in [[id:A500DFDD-0DD6-454E-A94A-EDBC8D38946E][Section 4.3.2]] of [RFC7234].
@@ -755,7 +758,7 @@ Requirements on cache handling of a received =If-Modified-Since= header field ar
 The "If-Unmodified-Since" header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value. This field accomplishes the same purpose as =If-Match= for cases where the user agent does not have an entity-tag for the representation.
 #+END_QUOTE
 
-=If-Unmodified-Since= 头字段使得请求方法带有条件，已选定的表示形式的修改日期早于或等于这个字段值的日期的时候，服务器才会成功响应。在用户代理并没有在表示形式上带有实体标签的情况下，这个字段实现了像 =If-Match= 相同的目的。
+=If-Unmodified-Since= 头字段使得请求方法带有条件，已选表示形式的修改日期早于或等于这个字段值的日期的时候，服务器才会成功响应。在用户代理并没有在表示形式上带有实体标签的情况下，这个字段实现了像 =If-Match= 相同的目的。
 
 #+BEGIN_SRC text
   If-Unmodified-Since = HTTP-date
@@ -793,13 +796,13 @@ A recipient *MUST* interpret an =If-Unmodified-Since= field-value's timestamp in
 =If-Unmodified-Since= is most often used with state-changing methods (e.g., POST, PUT, DELETE) to prevent accidental overwrites when multiple user agents might be acting in parallel on a resource that does not supply entity-tags with its representations (i.e., to prevent the "lost update" problem). It can also be used with safe methods to abort a request if the selected representation does not match one already stored (or partially stored) from a prior request.
 #+END_QUOTE
 
-=If-Unmodified-Since= 经常与[[ruby:state-changing][会状态改变]]的请求方法一起使用（比如：POST、PUT、DELETE），来避免当多个用户代理可能并行操作同一个不支持实体标签的资源的时候导致的意外覆盖（也就是说，避免“丢失更新”的问题）。它还可以与[[ruby:safe%20methods][安全方法]]一起使用来中止请求，如果已选定的表示形式并没有匹配上一个已经（或可能已经）从之前的请求里存储的表示形式。
+=If-Unmodified-Since= 经常与[[ruby:state-changing][会状态改变]]的请求方法一起使用（比如：POST、PUT、DELETE），来避免当多个用户代理可能并行操作同一个不支持实体标签的资源的时候导致的意外覆盖（也就是说，避免“丢失更新”的问题）。它还可以与[[ruby:safe%20methods][安全方法]]一起使用来中止请求，如果已选表示形式并没有匹配上一个已经（或可能已经）从之前的请求里存储的表示形式。
 
 #+BEGIN_QUOTE
 An origin server that receives an =If-Unmodified-Since= header field *MUST* evaluate the condition prior to performing the method ([[id:fce45320-6c1c-4486-a32b-2c553780d785][Section 5]]). The origin server *MUST NOT* perform the requested method if the selected representation's last modification date is more recent than the date provided in the field-value; instead the origin server *MUST* respond with either a) the =412 (Precondition Failed)= status code or b) one of the =2xx (Successful)= status codes if the origin server has verified that a state change is being requested and the final state is already reflected in the current state of the target resource (i.e., the change requested by the user agent has already succeeded, but the user agent might not be aware of that because the prior response message was lost or a compatible change was made by some other user agent). In the latter case, the origin server *MUST NOT* send a validator header field in the response unless it can verify that the request is a duplicate of an immediately prior change made by the same user agent.
 #+END_QUOTE
 
-源服务器接收到一个 =If-Unmodified-Since= 头字段的时候，*必须* 在执行请求请求方法之前对条件进行求值（[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]]）。如果已选定的表示形式的最后修改时间是晚于 =If-Unmodified-Since= 所提供的日期，那么，源服务器 *禁止* 执行所请求的方法，而是，源服务器 *必须* 响应以下其中之一：
+源服务器接收到一个 =If-Unmodified-Since= 头字段的时候，*必须* 在执行请求请求方法之前对条件进行求值（[[id:fce45320-6c1c-4486-a32b-2c553780d785][章节 5]]）。如果已选表示形式的最后修改时间是晚于 =If-Unmodified-Since= 所提供的日期，那么，源服务器 *禁止* 执行所请求的方法，而是，源服务器 *必须* 响应以下其中之一：
 
 1) 响应 =412 (Precondition Failed)= 状态码，或者
 2) 如果源服务器检验出目标资源又被请求了一种状态改变，并且它的最终状态已经反映为目标资源当前状态（也就是说，用户代理所请求的改变已经成功完成了，但是用户请求可能没有意识到这个，可能是因为之前的响应已经丢失了没有成功到达用户代理，或者其他某些用户代理也对目标资源请求了一种与之兼容的变化），那么，响应 =2xx (Successful)= 状态码的其中之一。
@@ -821,7 +824,7 @@ The =If-Unmodified-Since= header field can be ignored by caches and intermediari
 The "If-Range" header field provides a special conditional request mechanism that is similar to the =If-Match= and =If-Unmodified-Since= header fields but that instructs the recipient to ignore the =Range= header field if the validator doesn't match, resulting in transfer of the new selected representation instead of a =412 (Precondition Failed)= response. =If-Range= is defined in [[id:2859ef1f-8309-4b7d-9e22-963391b5822a][Section 3.2]] of [RFC7233].
 #+END_QUOTE
 
-=If-Range= 头字段提供了一种特殊的条件请求机制。它类似于 =If-Match= 和 =If-Unmodified-Since= 头字段，但它指示接收到去忽略 =Range= 头字段，如果验证器不匹配的话，其结果是传输新的已选定的表示形式，而不是一个 =412 (Precondition Failed)= 响应。=If-Range= 是定义在[[id:2859ef1f-8309-4b7d-9e22-963391b5822a][【RFC7233】章节 3.2]]。
+=If-Range= 头字段提供了一种特殊的条件请求机制。它类似于 =If-Match= 和 =If-Unmodified-Since= 头字段，但它指示接收到去忽略 =Range= 头字段，如果验证器不匹配的话，其结果是传输新的已选表示形式，而不是一个 =412 (Precondition Failed)= 响应。=If-Range= 是定义在[[id:2859ef1f-8309-4b7d-9e22-963391b5822a][【RFC7233】章节 3.2]]。
 
 * 4. 状态码定义 / Status Code Definitions
   :PROPERTIES:
@@ -837,7 +840,7 @@ The "If-Range" header field provides a special conditional request mechanism tha
 The =304 (Not Modified)= status code indicates that a conditional GET or HEAD request has been received and would have resulted in a =200 (OK)= response if it were not for the fact that the condition evaluated to false. In other words, there is no need for the server to transfer a representation of the target resource because the request indicates that the client, which made the request conditional, already has a valid representation; the server is therefore redirecting the client to make use of that stored representation as if it were the payload of a =200 (OK)= response.
 #+END_QUOTE
 
-=304 (Not Modified)= 状态码表明：已接收到 GET 或 HEAD 条件请求，如果这个条件的求值结果不成立的话，将返回的是一个 =200 (OK)= 响应。换句话说，服务器不需要传输目标资源的一个表示形式，因为这个请求表明了发起这个条件请求的客户端已经有一个有效的表示形式了，因此服务器让客户端重新使用那个已缓存的表示形式，可以把它当作是一个 =200 (OK)= 响应的有效载荷。
+=304 (Not Modified)= 状态码表明：已接收到 GET 或 HEAD 条件请求，如果这个条件的求值结果为假的话，将返回的是一个 =200 (OK)= 响应。换句话说，服务器不需要传输目标资源的一个表示形式，因为这个请求表明了发起这个条件请求的客户端已经有一个有效的表示形式了，因此服务器让客户端重新使用那个已缓存的表示形式，可以把它当作是一个 =200 (OK)= 响应的有效载荷。
 
 #+BEGIN_QUOTE
 The server generating a =304= response *MUST* generate any of the following header fields that would have been sent in a =200 (OK)= response to the same request: =Cache-Control=, =Content-Location=, =Date=, =ETag=, =Expires=, and =Vary=.
@@ -872,7 +875,7 @@ A =304= response cannot contain a message-body; it is always terminated by the f
 The =412 (Precondition Failed)= status code indicates that one or more conditions given in the request header fields evaluated to false when tested on the server. This response code allows the client to place preconditions on the current resource state (its current representations and metadata) and, thus, prevent the request method from being applied if the target resource is in an unexpected state.
 #+END_QUOTE
 
-=412 (Precondition Failed)= 状态码表明：请求头字段所给定的一个或多个条件，在服务器上测试时的求值结果为不成立。这个响应让客户端可以放置前提条件到当前的资源状态（它的当前表示形式和元数据）上，然后，如果目标资源是处在一种预料之外的状态上时，阻止将请求方法的应用。
+=412 (Precondition Failed)= 状态码表明：请求头字段所给定的一个或多个条件，在服务器上测试时的求值结果为假。这个响应让客户端可以放置前提条件到当前的资源状态（它的当前表示形式和元数据）上，然后，如果目标资源是处在一种预料之外的状态上时，阻止将请求方法的应用。
 
 * 5. 求值 / Evaluation
 :PROPERTIES:
@@ -889,7 +892,7 @@ Except when excluded below, a recipient cache or origin server *MUST* evaluate r
 A server that is not the origin server for the target resource and cannot act as a cache for requests on the target resource *MUST NOT* evaluate the conditional request header fields defined by this specification, and it *MUST* forward them if the request is forwarded, since the generating client intends that they be evaluated by a server that can provide a current representation. Likewise, a server *MUST* ignore the conditional request header fields defined by this specification when received with a request method that does not involve the selection or modification of a selected representation, such as CONNECT, OPTIONS, or TRACE.
 #+END_QUOTE
 
-一个服务器，如果它既不是目标资源的源服务器，也不能充当一个所请求的目标资源的缓存服务器，那么，它 *禁止* 对本规范所定义的条件请求头字段进行求值，并且它 *必须* 转发这些头字段，如果请求会被转发的话，这是因为生成这些头字段的客户是想让它们被能提供一种当前表示形式的服务器来求值的。同样，当服务器所接收到的条件请求的请求方法并不涉及对已选定的表示形式的选择或修改（比如 CONNECT、OPTIONS、或者 TRACE）的时候，服务器 *必须* 忽略由本规范所定义的条件请求头字段。
+一个服务器，如果它既不是目标资源的源服务器，也不能充当一个所请求的目标资源的缓存服务器，那么，它 *禁止* 对本规范所定义的条件请求头字段进行求值，并且它 *必须* 转发这些头字段，如果请求会被转发的话，这是因为生成这些头字段的客户是想让它们被能提供一种当前表示形式的服务器来求值的。同样，当服务器所接收到的条件请求的请求方法并不涉及对已选表示形式的选择或修改（比如 CONNECT、OPTIONS、或者 TRACE）的时候，服务器 *必须* 忽略由本规范所定义的条件请求头字段。
 
 #+BEGIN_QUOTE
 Conditional request header fields that are defined by extensions to HTTP might place conditions on all recipients, on the state of the target resource in general, or on a group of resources. For instance, the "If" header field in WebDAV can make a request conditional on various aspects of multiple resources, such as locks, if the recipient understands and implements that field ([RFC4918], [[https://tools.ietf.org/html/rfc4918#section-10.4][Section 10.4]]).
@@ -951,28 +954,28 @@ A recipient cache or origin server *MUST* evaluate the request preconditions def
 
 1. 当接收端是源服务器，且出现了 =If-Match=，那么，对 =If-Match= 前提条件进行求值：
 
-   - 如果条件成立，跳到步骤 3；
-   - 如果条件不成立，响应 =412 (Precondition Failed)=，除非它能够确定这个会改变状态的请求已经是成功的；（[[id:2c4da24a-b694-472c-8ac3-f09c20a84216][章节 3.1]]）
+   - 如果条件为真，跳到步骤 3；
+   - 如果条件为假，响应 =412 (Precondition Failed)=，除非它能够确定这个会改变状态的请求已经是成功的；（[[id:2c4da24a-b694-472c-8ac3-f09c20a84216][章节 3.1]]）
 
 2. 当接收端是源服务器，未出现 =If-Match=，但出现了 =If-Unmodified-Since=，那么，对 =If-Unmodified-Since= 前提条件进行求值：
 
-   - 如果条件成立，跳到步骤 3；
-   - 如果条件不成立，响应 =412 (Precondition Failed)=，除非它能够确定这个会改变状态的请求已经是成功的；（[[id:7365caf4-85ba-4e10-90a2-1abc298dc569][章节 3.4]]）
+   - 如果条件为真，跳到步骤 3；
+   - 如果条件为假，响应 =412 (Precondition Failed)=，除非它能够确定这个会改变状态的请求已经是成功的；（[[id:7365caf4-85ba-4e10-90a2-1abc298dc569][章节 3.4]]）
 
 3. 当出现了 =If-None-Match=，那么，对 =If-None-Match= 前提条件进行求值：
 
-   - 如果条件成立，跳到步骤 5；
-   - 如果条件不成立，且请求方法为 GET 或者 HEAD，响应 =304 (Not Modified)=；
-   - 如果条件不成立，且请求方法为其他方法，响应 =412 (Precondition Failed)=；
+   - 如果条件为真，跳到步骤 5；
+   - 如果条件为假，且请求方法为 GET 或者 HEAD，响应 =304 (Not Modified)=；
+   - 如果条件为假，且请求方法为其他方法，响应 =412 (Precondition Failed)=；
 
 4. 当请求方法是 GET 或者 HEAD，未出现 =If-None-Match=，但出现了 =If-Modified-Since=，那么，对 =If-Modified-Since= 前提条件进行求值：
 
-   - 如果条件成立，跳到步骤 5；
-   - 如果条件不成立，响应 304 =(Not Modified)=；
+   - 如果条件为真，跳到步骤 5；
+   - 如果条件为假，响应 304 =(Not Modified)=；
 
 5. 当请求方法是 GET，并且 =Range= 和 =If-Range= 都出现了，那么，对 =If-Range= 前提条件进行求值：
 
-   - 如果这个验证器匹配上了，并且 =Range= 规范适用于已选定的表示形式，那么，响应 =206 (Partial Content)=；【[[file:RFC7233.org][RFC7233]]】
+   - 如果这个验证器匹配上了，并且 =Range= 规范适用于已选表示形式，那么，响应 =206 (Partial Content)=；【[[file:RFC7233.org][RFC7233]]】
 
 6. 否则
 
@@ -1095,7 +1098,7 @@ The =ETag= header field ABNF has been changed to not use =quoted-string=, thus a
 =ETag= is defined to provide an entity tag for the selected representation, thereby clarifying what it applies to in various situations (such as a PUT response). ([[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][Section 2.3]])
 #+END_QUOTE
 
-=ETag= 被定义为为已选定的表示形式提供一个实体标签，因此明确了它在各种场景中的适用范围（比如一个 PUT 响应）。（[[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][章节 2.3]]）
+=ETag= 被定义为为已选表示形式提供一个实体标签，因此明确了它在各种场景中的适用范围（比如一个 PUT 响应）。（[[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][章节 2.3]]）
 
 #+BEGIN_QUOTE
 The precedence for evaluation of conditional requests has been defined. ([[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][Section 6]])

@@ -1,11 +1,11 @@
 * 已翻译完成的 RFC：
 - [[file:RFC7230.org][RFC7230: HTTP/1.1: Message Syntax and Routing]]
 - [[file:RFC7231.org][RFC7231: HTTP/1.1: Semantics and Content]]
-
-* 正在翻译的 RFC：
 - [[file:RFC7232.org][RFC7232: HTTP/1.1: Conditional Requests]]
 
-* 计划翻译的 RFC
+* 正在翻译的 RFC：
 - [[file:RFC7233.org][RFC7233: HTTP/1.1: Range Requests]]
+
+* 计划翻译的 RFC
 - [[file:RFC7234.org][RFC7234: HTTP/1.1: Caching]]
 - [[file:RFC7235.org][RFC7235: HTTP/1.1: Authentication]]

@@ -322,7 +322,7 @@ HTTP [[ruby:message%20framing][消息分帧]] 并不会使用 multipart 的 =bou
 The "Content-Type" header field indicates the media type of the associated representation: either the representation enclosed in the message payload or the selected representation, as determined by the message semantics. The indicated media type defines both the data format and how that data is intended to be processed by a recipient, within the scope of the received message semantics, after any content codings indicated by =Content-Encoding= are decoded.
 #+END_QUOTE
 
-=Content-Type= 头字段指明了它所关联的[[ruby:representation][表示形式]]的媒体类型。所述“关联的表示形式”，是封装在消息有效载荷内的表示形式或者[[ruby:selected%20representation][已选定的表示形式]]，由消息语义所决定。 =Content-Type= 所指定的媒体类型定义了[[ruby:representation][表示形式]]的数据格式以及期望该数据被接收端如何处理，在该消息的语义范围之内，在依照 =Content-Encoding= 里的所有内容编码进行解码之后。
+=Content-Type= 头字段指明了它所关联的[[ruby:representation][表示形式]]的媒体类型。所述“关联的表示形式”，是封装在消息有效载荷内的表示形式或者[[ruby:selected%20representation][已选表示形式]]，由消息语义所决定。 =Content-Type= 所指定的媒体类型定义了[[ruby:representation][表示形式]]的数据格式以及期望该数据被接收端如何处理，在该消息的语义范围之内，在依照 =Content-Encoding= 里的所有内容编码进行解码之后。
 
 #+BEGIN_SRC text
   Content-Type = media-type
@@ -599,7 +599,7 @@ If =Content-Location= is included in a =2xx (Successful)= response message and i
 #+END_QUOTE
 
 如果 =Content-Location= 被包含在一个 =2xx (Successful)= 响应消息里，且它的字段值指向于一个与实际请求 URI 不相同的 URI，那么，源服务器[[ruby:claim][声称]]该 URI 是一个与封装在该有效载荷内的[[ruby:representation][表示形式]]相对应的不同资源的标识符。这种声称只能在这两个标识符具有相同的资源所有者，且该资源所有者不能经由 HTTP 以编程方式来确定的情况下才能被相信。
-- 对于回应给 GET 或 HEAD 请求的一个响应，它表明：[[ruby:effective%20request%20URI][实际请求 URI]] 指向到一个服从[[ruby:content%20negotiation][内容协商]]的资源，并且针对[[ruby:selected%20representation][已选定的表示形式]]来说，=Content-Location= 的字段值是一个更加具体的标识符。
+- 对于回应给 GET 或 HEAD 请求的一个响应，它表明：[[ruby:effective%20request%20URI][实际请求 URI]] 指向到一个服从[[ruby:content%20negotiation][内容协商]]的资源，并且针对[[ruby:selected%20representation][已选表示形式]]来说，=Content-Location= 的字段值是一个更加具体的标识符。
 - 对于回应给[[ruby:state-changing%20method][会改变资源状态的请求方法]]的一个 =201 (Created)= 响应，如果 =Content-Location= 的字段值与 =Location= 的字段值相同，表明：这个有效载荷是新近被创建的资源的[[ruby:current%20representation][当前表示形式]]。
 - 否则，这个 =Content-Location= 表明：这个有效载荷是一个对所请求的动作的状态方面进行报告的 representation，且对于给定的 URI ，同样的报告是可供使用的（用于将来 GET 请求对[[ruby:representation][表示形式]]进行访问）。例如，一个经由 POST 请求而产生的购买交易可能包含一个以一份收款凭据作为 =200 (OK)= 响应的有效载荷，=Content-Location= 的字段值提供了一个标识符，用于将来重新获取这份收款凭据的一个备份。
 
@@ -947,7 +947,7 @@ It is tempting to think of resource identifiers as remote file system pathnames 
 A client can alter the semantics of GET to be a "range request", requesting transfer of only some part(s) of the selected representation, by sending a =Range= header field in the request ([[[https://tools.ietf.org/html/rfc7233][RFC7233]]]).
 #+END_QUOTE
 
-客户端能够将 GET 的语义改变为一种“[[ruby:range%20request][范围请求]]”，通过在其发送的请求消息中带有一个 =Range= 头字段，来实现只对[[ruby:selected%20representation][已选定的表示形式]]中的某（几）部分进行请求传输（【[[https://tools.ietf.org/html/rfc7233][RFC7233]]】）。
+客户端能够将 GET 的语义改变为一种“[[ruby:range%20request][范围请求]]”，通过在其发送的请求消息中带有一个 =Range= 头字段，来实现只对[[ruby:selected%20representation][已选表示形式]]中的某（几）部分进行请求传输（【[[https://tools.ietf.org/html/rfc7233][RFC7233]]】）。
 
 #+BEGIN_QUOTE
 A payload within a GET request message has no defined semantics; sending a payload body on a GET request might cause some existing implementations to reject the request.
@@ -978,7 +978,7 @@ The HTTP GET method requests a representation of the specified resource. Request
 :END:
 The HEAD method is identical to GET except that the server *MUST NOT* send a message body in the response (i.e., the response terminates at the end of the header section). The server *SHOULD* send the same header fields in response to a HEAD request as it would have sent if the request had been a GET, except that the payload header fields ([[id:4c395bab-baa6-4895-b677-5daa1584da6e][Section 3.3]]) *MAY* be omitted. This method can be used for obtaining metadata about the selected representation without transferring the representation data and is often used for testing hypertext links for validity, accessibility, and recent modification.
 
-HEAD 方法几乎与 GET 方法等价，除了服务器 *禁止* 在回应 HEAD 请求的响应消息里带有[[ruby:message%20body][消息体]]（也就是说，响应消息在[[ruby:header%20section][消息头部]]之后就结束了）。服务器回应给 GET 请求的响应消息里带有什么头字段，回应给 HEAD 请求的响应消息里就 *应当* 带有什么头字段，除了[[ruby:payload%20header%20fields][有效载荷头字段]]（[[id:4c395bab-baa6-4895-b677-5daa1584da6e][章节 3.3]]） *可以* 被忽略以外。HEAD 方法能够用于在不需要传输[[ruby:representation%20data][表示形式数据]]的情况下获取[[ruby:selected%20representation][已选定的表示形式]]（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][章节 3]]） 相关的元数据。同时，它也常用于测试[[ruby:hypertext%20links][超链接]]的正确性、可访问性和最近是否有修改。
+HEAD 方法几乎与 GET 方法等价，除了服务器 *禁止* 在回应 HEAD 请求的响应消息里带有[[ruby:message%20body][消息体]]（也就是说，响应消息在[[ruby:header%20section][消息头部]]之后就结束了）。服务器回应给 GET 请求的响应消息里带有什么头字段，回应给 HEAD 请求的响应消息里就 *应当* 带有什么头字段，除了[[ruby:payload%20header%20fields][有效载荷头字段]]（[[id:4c395bab-baa6-4895-b677-5daa1584da6e][章节 3.3]]） *可以* 被忽略以外。HEAD 方法能够用于在不需要传输[[ruby:representation%20data][表示形式数据]]的情况下获取[[ruby:selected%20representation][已选表示形式]]（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][章节 3]]） 相关的元数据。同时，它也常用于测试[[ruby:hypertext%20links][超链接]]的正确性、可访问性和最近是否有修改。
 
 A payload within a HEAD request message has no defined semantics; sending a payload body on a HEAD request might cause some existing implementations to reject the request.
 
@@ -1629,7 +1629,7 @@ A recipient *MAY* ignore a =Max-Forwards= header field received with any other r
 The HTTP conditional request header fields [[[file:RFC7232.org][RFC7232]]] allow a client to place a precondition on the state of the target resource, so that the action corresponding to the method semantics will not be applied if the precondition evaluates to false. Each precondition defined by this specification consists of a comparison between a set of validators obtained from prior representations of the target resource to the current state of validators for the selected representation ([[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][Section 7.2]]). Hence, these preconditions evaluate whether the state of the target resource has changed since a given state known by the client. The effect of such an evaluation depends on the method semantics and choice of conditional, as defined in [[id:fce45320-6c1c-4486-a32b-2c553780d785][Section 5]] of [RFC7232].
 #+END_QUOTE
 
-HTTP 的[[ruby:conditional%20request%20fields][条件请求头字段]]【[[file:RFC7232.org][RFC7232]]】让客户端可以在目标资源的状态上设置一个[[ruby:precondition][前提条件]]，使得如果前提条件不成立的话，该请求方法的语义所对应动作不会被执行。本规范所定义的每一种前提条件皆由从目标资源先前的[[ruby:representations][表示形式]]那里获得的一系列[[ruby:validators][验证器]]，与当前应用到已选定的表示形式的验证器的目前状态之间的比较来组成的（[[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][章节 7.2]]）。因此，这些前提条件以客户端的一个给定的已知状态作为参考，来评估目标资源的状态是否已经改变了。这种评估的结果依赖于[[ruby:method%20semantics][请求方法的语义]]以及[[ruby:choice%20of%20conditional][条件句的选择]]，其定义见[[id:fce45320-6c1c-4486-a32b-2c553780d785][【RFC7232】章节 5]]。
+HTTP 的[[ruby:conditional%20request%20fields][条件请求头字段]]【[[file:RFC7232.org][RFC7232]]】让客户端可以在目标资源的状态上设置一个[[ruby:precondition][前提条件]]，使得如果前提条件不成立的话，该请求方法的语义所对应动作不会被执行。本规范所定义的每一种前提条件皆由从目标资源先前的[[ruby:representations][表示形式]]那里获得的一系列[[ruby:validators][验证器]]，与当前应用到已选表示形式的验证器的目前状态之间的比较来组成的（[[id:efd98bfe-3f3c-4d75-9fa9-041a5af2f917][章节 7.2]]）。因此，这些前提条件以客户端的一个给定的已知状态作为参考，来评估目标资源的状态是否已经改变了。这种评估的结果依赖于[[ruby:method%20semantics][请求方法的语义]]以及[[ruby:choice%20of%20conditional][条件句的选择]]，其定义见[[id:fce45320-6c1c-4486-a32b-2c553780d785][【RFC7232】章节 5]]。
 
 | Header Field Name   | Defined in...            |
 |---------------------+--------------------------|
@@ -3587,7 +3587,7 @@ An origin server *SHOULD* send a =Vary= header field when its algorithm for sele
 Validator header fields convey metadata about the selected representation ([[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][Section 3]]). In responses to safe requests, validator fields describe the selected representation chosen by the origin server while handling the response. Note that, depending on the status code semantics, the selected representation for a given response is not necessarily the same as the representation enclosed as response payload.
 #+END_QUOTE
 
-[[ruby:validator%20header%20fields][验证器头字段]]负责运载关于[[ruby:selected%20representation][已选定的表示形式]]的元数据（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][章节 3]]）。回应给[[ruby:safe%20requests][安全请求]]的响应中，验证器头字段描述了由源服务器所选定的表示形式。需要注意的是，根据状态码的语义，对于一个给定的响应的已选定的表示形式，不必和封装为响应有效载荷的表示形式相同。
+[[ruby:validator%20header%20fields][验证器头字段]]负责运载关于[[ruby:selected%20representation][已选表示形式]]的元数据（[[id:7dd837af-fd6a-4918-9c62-cf12a4c31522][章节 3]]）。回应给[[ruby:safe%20requests][安全请求]]的响应中，验证器头字段描述了由源服务器所选定的表示形式。需要注意的是，根据状态码的语义，对于一个给定的响应的已选表示形式，不必和封装为响应有效载荷的表示形式相同。
 
 #+BEGIN_QUOTE
 In a successful response to a state-changing request, validator fields describe the new representation that has replaced the prior selected representation as a result of processing the request.
