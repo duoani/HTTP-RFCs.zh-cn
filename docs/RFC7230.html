@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-10 Mon 19:21 -->
+<!-- 2018-12-11 Tue 10:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -1587,7 +1587,7 @@ The "http" URI scheme is hereby defined for the purpose of minting identifiers a
 
 <blockquote>
 <p>
-译注：<a href="https://en.wikipedia.org/wiki/Namespace">namespace</a>，即命名空间，一般我们认为命名空间就是 Java、C# 等编程语言的语法规则，实际上，命名空间是一个广义的概念，它只是一组符号按一定的规则组合而成的用于关联一个对象的字符序列，这个字符序列就组成了一个命名空间（或者叫命名空间的名称），以便于通过这个命名空间来引用相关的对象。觉见的命名空间的例子有文件系统、Java 等编程语言的 namespace 关键字、计算机网络或分布式系统中对资源的命名等。
+译注：<a href="https://en.wikipedia.org/wiki/Namespace">namespace</a>，即命名空间，一般我们认为命名空间就是 Java、C# 等编程语言的语法规则，实际上，命名空间是一个广义的概念，它只是一组符号按一定的规则组合而成的用于关联一个对象的字符序列，这个字符序列就组成了一个命名空间（或者叫命名空间的名称），以便于通过这个命名空间来引用相关的对象。常见的命名空间的例子有文件系统、Java 等编程语言的 namespace 关键字、计算机网络或分布式系统中对资源的命名等。
 </p>
 </blockquote>
 
@@ -1715,7 +1715,7 @@ Note that the "https" URI scheme depends on both TLS and TCP for establishing au
 </blockquote>
 
 <p>
-需要注意的是，"https" URI 方案依赖于 TLS 以及 TCP 来<ruby>确立权威<rt>establishing authority</rt></ruby>（<a href="#org626caed">章节 9.1</a>）。通过 "https" 方案标识的资源与通过 "https" 方案标识的资源两者间并没有任何关系，即使它们的 <code>authority</code> 组件一样（有相同的 <code>host</code> 和相同的 TCP <code>port</code>）。它们的命名空间是有区别的，因此指向的是两个不同的源服务器。然而，后来的规范对 HTTP 进行了扩展来（使某些特性）适用于所有主机域名，例如 Cookie 协议<a href="https://tools.ietf.org/html/rfc6265">【RFC6265】</a>，能够允许一个服务设置某些信息，通过一个关于主机域名的匹配规则集合来影响与其他服务的通信。
+需要注意的是，"https" URI 方案依赖于 TLS 以及 TCP 来<ruby>确立权威<rt>establishing authority</rt></ruby>（<a href="#org626caed">章节 9.1</a>）。通过 "https" 方案标识的资源与通过 "http" 方案标识的资源两者间并没有任何关系，即使它们的 <code>authority</code> 组件一样（有相同的 <code>host</code> 和相同的 TCP <code>port</code>）。它们的命名空间是有区别的，因此指向的是两个不同的源服务器。然而，后来的规范对 HTTP 进行了扩展来（使某些特性）适用于所有主机域名，例如 Cookie 协议<a href="https://tools.ietf.org/html/rfc6265">【RFC6265】</a>，能够允许一个服务设置某些信息，通过一个关于主机域名的匹配规则集合来影响与其他服务的通信。
 </p>
 
 <blockquote>
