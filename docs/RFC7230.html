@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-11 Tue 10:11 -->
+<!-- 2018-12-11 Tue 19:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -2645,7 +2645,7 @@ When a message does not have a <code>Transfer-Encoding</code> header field, a <c
 
 <p>
 当一个消息不带有 <code>Transfer-Encoding</code> 头字段的时候，<code>Content-Length</code> 头字段能够提供对于一个潜在的<ruby>有效载荷<rt>payload body</rt></ruby>的预期的大小。<code>Content-Length</code> 是一个十进制数字，以<ruby>字节<rt>octets</rt></ruby>形式。对于包含一个有效载荷的消息，<code>Content-Length</code> 的 <code>field-value</code>
-提供了决定消息体在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的消息，<code>Content-Length</code> 指明了<ruby>已选定的表示形式<rt>selected representation</rt></ruby>（<a href="RFC7231.html#ID-7dd837af-fd6a-4918-9c62-cf12a4c31522">【RFC7231】章节 3</a>）的大小。
+提供了决定消息体在哪里结束的必要的分帧信息。对于没有包含一个有效载荷的消息，<code>Content-Length</code> 指明了<ruby>已选表示形式<rt>selected representation</rt></ruby>（<a href="RFC7231.html#ID-7dd837af-fd6a-4918-9c62-cf12a4c31522">【RFC7231】章节 3</a>）的大小。
 </p>
 
 <div class="org-src-container">
@@ -4273,7 +4273,7 @@ A proxy <b>SHOULD NOT</b> modify header fields that provide information about th
 </blockquote>
 
 <p>
-代理 <b>不应当</b> 修改提供有关通信链路端点、资源状态，或者<ruby>已选定的表示形式<rt>selected representation</rt></ruby>（除了有效载荷）的信息的头字段，除非该字段的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
+代理 <b>不应当</b> 修改提供有关通信链路端点、资源状态，或者<ruby>已选表示形式<rt>selected representation</rt></ruby>（除了有效载荷）的信息的头字段，除非该字段的定义明确允许这种修改或者该修改被认为对于保护隐私或安全性是必要的。
 </p>
 </div>
 </div>

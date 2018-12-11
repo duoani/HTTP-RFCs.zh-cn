@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-11 Tue 11:00 -->
+<!-- 2018-12-11 Tue 19:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7232: Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests</title>
@@ -494,7 +494,7 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol
 </blockquote>
 
 <p>
-超文本传输协议（HTTP）是一种<ruby>无状态<rt>stateless</rt></ruby>的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 条件请求，包括：<ruby>元数据头字段<rt>metadata header fields</rt></ruby>——用于表明状态的改变、<ruby>请求头字段<rt>request header fields</rt></ruby>——用于对这些状态设置前提条件、以及<ruby>规则<rt>rules</rt></ruby>——用于当一个或多个前提条件求值结果为不成立的时候构造响应给条件请求。
+超文本传输协议（HTTP）是一种<ruby>无状态<rt>stateless</rt></ruby>的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP/1.1 条件请求，包括：<ruby>元数据头字段<rt>metadata header fields</rt></ruby>——用于表明状态的改变、<ruby>请求头字段<rt>request header fields</rt></ruby>——用于对这些状态设置前提条件、以及<ruby>规则<rt>rules</rt></ruby>——用于当一个或多个前提条件求值结果为<ruby>假<rt>false</rt></ruby>的时候构造响应给条件请求。
 </p>
 </div>
 </div>
@@ -575,7 +575,7 @@ Conditional request preconditions are based on the state of the target resource 
 </blockquote>
 
 <p>
-总的来说，条件请求的前提条件是基于目标资源的状态（目标资源的<ruby>当前值<rt>current value</rt></ruby>的集合），或者在之前获得的一种表示形式所观察到的状态（这个当前值集合中的其中之一）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假定请求与一种“<ruby>已选定的表示形式<rt>selected representation</rt></ruby>”（<a href="RFC7231.html#ID-7dd837af-fd6a-4918-9c62-cf12a4c31522">【RFC7231】章节 3</a>）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前提条件的求值结果为不成立（也就是条件为假）的时候，最终结果应该要是无害的。
+总的来说，条件请求的前提条件是基于目标资源的状态（目标资源的<ruby>当前值<rt>current value</rt></ruby>的集合），或者在之前获得的一种表示形式所观察到的状态（这个当前值集合中的其中之一）的。一个资源可以有多种当前表示形式，每个具有它自身可观察到的状态码。如果服务器打算使用条件请求，条件请求的机制会假定请求与一种“<ruby>已选表示形式<rt>selected representation</rt></ruby>”（<a href="RFC7231.html#ID-7dd837af-fd6a-4918-9c62-cf12a4c31522">【RFC7231】章节 3</a>）的映射会随时间的改变而保持一致。不管怎么样，如果这种映射是不一致的，并且服务器不能够选择合适的表示形式，那么，当前提条件的求值结果为假（即条件不成立）的时候，最终结果应该要是无害的。
 </p>
 
 <blockquote>
@@ -852,7 +852,7 @@ An origin server without a clock <b>MUST NOT</b> assign <code>Last-Modified</cod
 </div>
 
 <div id="outline-container-org29822b9" class="outline-4">
-<h4 id="org29822b9">2.2.2. 对比 / Comparison</h4>
+<h4 id="org29822b9"><a id="ID-ba954c8f-272f-409a-9fdd-e092207700c5"></a>2.2.2. 对比 / Comparison</h4>
 <div class="outline-text-4" id="text-org29822b9">
 <blockquote>
 <p>
@@ -945,7 +945,7 @@ The "ETag" header field in a response provides the current entity-tag for the se
 </blockquote>
 
 <p>
-响应中的 <code>ETag</code> 头字段提供了已选定的表示形式当前的<ruby>实体标签<rt>entity-tag</rt></ruby>，这个头字段是在请求处理结束时所确定的。实体标签是一种<ruby>不透明的验证器<rt>opaque validator</rt></ruby>，以在同一个资源的不同表示形式之间进行区分，不管是由于资源状态随时间变化而产生的多个表示形式，还是内容协商的结果使同一时间内有多个合适的表示形式，还是两者都有（译注：也就是说，只要是同一个资源的表示形式，ETag 都能够进行区分，不管是以什么方式而产生的表示形式）。一个实体标签由一个<ruby>不透明的以引号包裹的字符串<rt>opaque quoted string</rt></ruby>构成，可能会前置一个“弱验证”的指标符（"W/"）。
+响应中的 <code>ETag</code> 头字段提供了已选表示形式当前的<ruby>实体标签<rt>entity-tag</rt></ruby>，这个头字段是在请求处理结束时所确定的。实体标签是一种<ruby>不透明的验证器<rt>opaque validator</rt></ruby>，以在同一个资源的不同表示形式之间进行区分，不管是由于资源状态随时间变化而产生的多个表示形式，还是内容协商的结果使同一时间内有多个合适的表示形式，还是两者都有（译注：也就是说，只要是同一个资源的表示形式，ETag 都能够进行区分，不管是以什么方式而产生的表示形式）。一个实体标签由一个<ruby>不透明的以引号包裹的字符串<rt>opaque quoted string</rt></ruby>构成，可能会前置一个“弱验证”的指标符（"W/"）。
 </p>
 
 <blockquote>
@@ -1374,7 +1374,7 @@ If-Match: *
 </blockquote>
 
 <p>
-<code>If-Match</code> 经常与<ruby>会状态改变<rt>state-changing</rt></ruby>的请求方法一起使用（比如：POST、PUT、DELETE），来避免当多个用户代理可能并行操作同一个资源的时候导致的意外覆盖（也就是说，避免“丢失更新”的问题）。它还可以与<ruby>安全方法<rt>safe methods</rt></ruby>一起使用来中止请求，如果已选定的表示形式并没有匹配上一个已经（或可能已经）从之前的请求里存储的表示形式。
+<code>If-Match</code> 经常与<ruby>会状态改变<rt>state-changing</rt></ruby>的请求方法一起使用（比如：POST、PUT、DELETE），来避免当多个用户代理可能并行操作同一个资源的时候导致的意外覆盖（也就是说，避免“丢失更新”的问题）。它还可以与<ruby>安全方法<rt>safe methods</rt></ruby>一起使用来中止请求，如果已选表示形式并没有匹配上一个已经（或可能已经）从之前的请求里存储的表示形式。
 </p>
 
 <blockquote>
@@ -1384,7 +1384,7 @@ An origin server that receives an <code>If-Match</code> header field <b>MUST</b>
 </blockquote>
 
 <p>
-源服务器接收到一个 <code>If-Match</code> 字段时 <b>必须</b> 在执行对应的请求方法之前对这个条件进行求值（<a href="#org8287389">章节 5</a>）。如果 <code>If-Match</code> 的字段值是 "*"，且源服务器的目标资源没有任何一种当前表示形式，那么，这个条件的求值结果为不成立。如果这个字段值是一个实体标签列表，且所列出的所有标签没有任何一个匹配已选定的表示形式的实体标签，那么这个条件的求值结果为不成立。
+源服务器接收到一个 <code>If-Match</code> 字段时 <b>必须</b> 在执行对应的请求方法之前对这个条件进行求值（<a href="#org8287389">章节 5</a>）。如果 <code>If-Match</code> 的字段值是 "*"，且源服务器的目标资源没有任何一种当前表示形式，那么，这个条件的求值结果为假。如果这个字段值是一个实体标签列表，且所列出的所有标签没有任何一个匹配已选表示形式的实体标签，那么这个条件的求值结果为假。
 </p>
 
 <blockquote>
@@ -1394,7 +1394,7 @@ An origin server <b>MUST NOT</b> perform the requested method if a received <cod
 </blockquote>
 
 <p>
-如果所接收到的 <code>If-Match</code> 条件的求值结果为不成立，源服务器 <b>禁止</b> 执行请求方法，而是，源服务器 <b>必须</b> 响应以下其中之一：
+如果所接收到的 <code>If-Match</code> 条件的求值结果为假，源服务器 <b>禁止</b> 执行请求方法，而是，源服务器 <b>必须</b> 响应以下其中之一：
 </p>
 
 <ol class="org-ol">
@@ -1433,7 +1433,7 @@ The "If-None-Match" header field makes the request method conditional on a recip
 
 <ul class="org-ul">
 <li>当字段值为 "*"，的时候，目标资源没有任何当前表示形式。</li>
-<li>有一种已选定的表示形式带有一个实体标签，这个实体标签并不与列在这个字段值里的任一实体标签相匹配。</li>
+<li>有一种已选表示形式带有一个实体标签，这个实体标签并不与列在这个字段值里的任一实体标签相匹配。</li>
 </ul>
 
 <blockquote>
@@ -1476,7 +1476,7 @@ If-None-Match: *
 </blockquote>
 
 <p>
-<code>If-None-Match</code> 主要用在条件 GET 请求中使缓存信息能够以最小的传输开销来进行高效的更新。当客户端希望更新一个或多个它已经缓存的带有实体标签的响应的时候，客户端 <b>应当</b> 在执行 GET 请求的时候生成一个 <code>If-None-Match</code> 头字段来包含一个这些实体标签的列表，这样使得接收端服务器可以发送一个 <code>304 (Not Modified)</code> 响应来向客户端表明，什么时候这些已缓存的响应之一会匹配<ruby>已选定的表示形式<rt>selected representation</rt></ruby>。
+<code>If-None-Match</code> 主要用在条件 GET 请求中使缓存信息能够以最小的传输开销来进行高效的更新。当客户端希望更新一个或多个它已经缓存的带有实体标签的响应的时候，客户端 <b>应当</b> 在执行 GET 请求的时候生成一个 <code>If-None-Match</code> 头字段来包含一个这些实体标签的列表，这样使得接收端服务器可以发送一个 <code>304 (Not Modified)</code> 响应来向客户端表明，什么时候这些已缓存的响应之一会匹配<ruby>已选表示形式<rt>selected representation</rt></ruby>。
 </p>
 
 <blockquote>
@@ -1496,7 +1496,7 @@ An origin server that receives an <code>If-None-Match</code> header field <b>MUS
 </blockquote>
 
 <p>
-源服务器接收到一个 <code>If-None-Match</code> 头字段的时候，<b>必须</b> 在执行这个请求方法之前对条件进行求值（章节 5）。如果字段值是 "*"，并且源服务器的目标资源有当前表示形式，那么这个条件的求值结果为不成立。如果字段值是一个实体标签的列表，并且列表中的实体标签之一匹配上已选定的表示形式的实体标签，那么这个条件的求值结果为不成立。
+源服务器接收到一个 <code>If-None-Match</code> 头字段的时候，<b>必须</b> 在执行这个请求方法之前对条件进行求值（章节 5）。如果字段值是 "*"，并且源服务器的目标资源有当前表示形式，那么这个条件的求值结果为假。如果字段值是一个实体标签的列表，并且列表中的实体标签之一匹配上已选表示形式的实体标签，那么这个条件的求值结果为假。
 </p>
 
 <blockquote>
@@ -1506,7 +1506,7 @@ An origin server <b>MUST NOT</b> perform the requested method if the condition e
 </blockquote>
 
 <p>
-如果条件求值为不成立，那么，源服务器 <b>禁止</b> 执行所请求的方法，而是，源服务器 <b>必须</b> 响应以下其中之一：
+如果条件求值为假，那么，源服务器 <b>禁止</b> 执行所请求的方法，而是，源服务器 <b>必须</b> 响应以下其中之一：
 </p>
 
 <ol class="org-ol">
@@ -1536,7 +1536,7 @@ The "If-Modified-Since" header field makes a GET or HEAD request method conditio
 </blockquote>
 
 <p>
-<code>If-Modified-Since</code> 头字段使得 GET 或者 HEAD 请求方法带有条件，已选定的表示形式的修改日期晚于这个字段值的日期的时候，服务器才会成功响应。避免表示形式的数据没有发生改变的情况下再次传输表示形式的数据。
+<code>If-Modified-Since</code> 头字段使得 GET 或者 HEAD 请求方法带有条件，已选表示形式的修改日期晚于这个字段值的日期的时候，服务器才会成功响应。避免表示形式的数据没有发生改变的情况下再次传输表示形式的数据。
 </p>
 
 <div class="org-src-container">
@@ -1620,7 +1620,7 @@ When used for limiting the scope of retrieval to a recent time window, a user ag
 </blockquote>
 
 <p>
-当用于对检索的范围限制为一个最近的时间窗口的时候，用户代理将会生成一个 <code>If-Modified-Since</code> 字段，其值或者基于用户代理的本地时钟，或者基于接收自服务器的之前一个响应的 <code>Date</code> 头字段。源服务器选择准确匹配上基于已选定的表示形式的 <code>Last-Modified</code> 字段的时间戳，将无法帮助用户代理限制它的数据传输为仅仅是那些具体时间窗口期间的改动。
+当用于对检索的范围限制为一个最近的时间窗口的时候，用户代理将会生成一个 <code>If-Modified-Since</code> 字段，其值或者基于用户代理的本地时钟，或者基于接收自服务器的之前一个响应的 <code>Date</code> 头字段。源服务器选择准确匹配上基于已选表示形式的 <code>Last-Modified</code> 字段的时间戳，将无法帮助用户代理限制它的数据传输为仅仅是那些具体时间窗口期间的改动。
 </p>
 
 <blockquote>
@@ -1630,7 +1630,7 @@ An origin server that receives an <code>If-Modified-Since</code> header field <b
 </blockquote>
 
 <p>
-源服务器接收到一个 <code>If-Modified-Since</code> 头字段的时候，<b>应当</b> 在执行请求方法之前对条件进行求值（<a href="#org8287389">章节 5</a>）。如果已选定的表示形式的最后修改时间是早于或等于 <code>If-Modified-Since</code> 所提供的日期，那么，源服务器 <b>不应当</b> 执行所请求的方法，而是，源服务器 <b>应当</b> 生成一个 <code>304 (Not Modified)</code> 响应，只包含那些有用于的元数据，所述有用的元数据指的是用来表明或更新之前所缓存的响应的那些元数据。
+源服务器接收到一个 <code>If-Modified-Since</code> 头字段的时候，<b>应当</b> 在执行请求方法之前对条件进行求值（<a href="#org8287389">章节 5</a>）。如果已选表示形式的最后修改时间是早于或等于 <code>If-Modified-Since</code> 所提供的日期，那么，源服务器 <b>不应当</b> 执行所请求的方法，而是，源服务器 <b>应当</b> 生成一个 <code>304 (Not Modified)</code> 响应，只包含那些有用于的元数据，所述有用的元数据指的是用来表明或更新之前所缓存的响应的那些元数据。
 </p>
 
 <blockquote>
@@ -1655,7 +1655,7 @@ The "If-Unmodified-Since" header field makes the request method conditional on t
 </blockquote>
 
 <p>
-<code>If-Unmodified-Since</code> 头字段使得请求方法带有条件，已选定的表示形式的修改日期早于或等于这个字段值的日期的时候，服务器才会成功响应。在用户代理并没有在表示形式上带有实体标签的情况下，这个字段实现了像 <code>If-Match</code> 相同的目的。
+<code>If-Unmodified-Since</code> 头字段使得请求方法带有条件，已选表示形式的修改日期早于或等于这个字段值的日期的时候，服务器才会成功响应。在用户代理并没有在表示形式上带有实体标签的情况下，这个字段实现了像 <code>If-Match</code> 相同的目的。
 </p>
 
 <div class="org-src-container">
@@ -1714,7 +1714,7 @@ A recipient <b>MUST</b> interpret an <code>If-Unmodified-Since</code> field-valu
 </blockquote>
 
 <p>
-<code>If-Unmodified-Since</code> 经常与<ruby>会状态改变<rt>state-changing</rt></ruby>的请求方法一起使用（比如：POST、PUT、DELETE），来避免当多个用户代理可能并行操作同一个不支持实体标签的资源的时候导致的意外覆盖（也就是说，避免“丢失更新”的问题）。它还可以与<ruby>安全方法<rt>safe methods</rt></ruby>一起使用来中止请求，如果已选定的表示形式并没有匹配上一个已经（或可能已经）从之前的请求里存储的表示形式。
+<code>If-Unmodified-Since</code> 经常与<ruby>会状态改变<rt>state-changing</rt></ruby>的请求方法一起使用（比如：POST、PUT、DELETE），来避免当多个用户代理可能并行操作同一个不支持实体标签的资源的时候导致的意外覆盖（也就是说，避免“丢失更新”的问题）。它还可以与<ruby>安全方法<rt>safe methods</rt></ruby>一起使用来中止请求，如果已选表示形式并没有匹配上一个已经（或可能已经）从之前的请求里存储的表示形式。
 </p>
 
 <blockquote>
@@ -1724,7 +1724,7 @@ An origin server that receives an <code>If-Unmodified-Since</code> header field 
 </blockquote>
 
 <p>
-源服务器接收到一个 <code>If-Unmodified-Since</code> 头字段的时候，<b>必须</b> 在执行请求请求方法之前对条件进行求值（<a href="#org8287389">章节 5</a>）。如果已选定的表示形式的最后修改时间是晚于 <code>If-Unmodified-Since</code> 所提供的日期，那么，源服务器 <b>禁止</b> 执行所请求的方法，而是，源服务器 <b>必须</b> 响应以下其中之一：
+源服务器接收到一个 <code>If-Unmodified-Since</code> 头字段的时候，<b>必须</b> 在执行请求请求方法之前对条件进行求值（<a href="#org8287389">章节 5</a>）。如果已选表示形式的最后修改时间是晚于 <code>If-Unmodified-Since</code> 所提供的日期，那么，源服务器 <b>禁止</b> 执行所请求的方法，而是，源服务器 <b>必须</b> 响应以下其中之一：
 </p>
 
 <ol class="org-ol">
@@ -1758,7 +1758,7 @@ The "If-Range" header field provides a special conditional request mechanism tha
 </blockquote>
 
 <p>
-<code>If-Range</code> 头字段提供了一种特殊的条件请求机制。它类似于 <code>If-Match</code> 和 <code>If-Unmodified-Since</code> 头字段，但它指示接收到去忽略 <code>Range</code> 头字段，如果验证器不匹配的话，其结果是传输新的已选定的表示形式，而不是一个 <code>412 (Precondition Failed)</code> 响应。<code>If-Range</code> 是定义在<a href="RFC7233.html#ID-2859ef1f-8309-4b7d-9e22-963391b5822a">【RFC7233】章节 3.2</a>。
+<code>If-Range</code> 头字段提供了一种特殊的条件请求机制。它类似于 <code>If-Match</code> 和 <code>If-Unmodified-Since</code> 头字段，但它指示接收到去忽略 <code>Range</code> 头字段，如果验证器不匹配的话，其结果是传输新的已选表示形式，而不是一个 <code>412 (Precondition Failed)</code> 响应。<code>If-Range</code> 是定义在<a href="RFC7233.html#ID-2859ef1f-8309-4b7d-9e22-963391b5822a">【RFC7233】章节 3.2</a>。
 </p>
 </div>
 </div>
@@ -1779,7 +1779,7 @@ The <code>304 (Not Modified)</code> status code indicates that a conditional GET
 </blockquote>
 
 <p>
-<code>304 (Not Modified)</code> 状态码表明：已接收到 GET 或 HEAD 条件请求，如果这个条件的求值结果不成立的话，将返回的是一个 <code>200 (OK)</code> 响应。换句话说，服务器不需要传输目标资源的一个表示形式，因为这个请求表明了发起这个条件请求的客户端已经有一个有效的表示形式了，因此服务器让客户端重新使用那个已缓存的表示形式，可以把它当作是一个 <code>200 (OK)</code> 响应的有效载荷。
+<code>304 (Not Modified)</code> 状态码表明：已接收到 GET 或 HEAD 条件请求，如果这个条件的求值结果为假的话，将返回的是一个 <code>200 (OK)</code> 响应。换句话说，服务器不需要传输目标资源的一个表示形式，因为这个请求表明了发起这个条件请求的客户端已经有一个有效的表示形式了，因此服务器让客户端重新使用那个已缓存的表示形式，可以把它当作是一个 <code>200 (OK)</code> 响应的有效载荷。
 </p>
 
 <blockquote>
@@ -1834,7 +1834,7 @@ The <code>412 (Precondition Failed)</code> status code indicates that one or mor
 </blockquote>
 
 <p>
-<code>412 (Precondition Failed)</code> 状态码表明：请求头字段所给定的一个或多个条件，在服务器上测试时的求值结果为不成立。这个响应让客户端可以放置前提条件到当前的资源状态（它的当前表示形式和元数据）上，然后，如果目标资源是处在一种预料之外的状态上时，阻止将请求方法的应用。
+<code>412 (Precondition Failed)</code> 状态码表明：请求头字段所给定的一个或多个条件，在服务器上测试时的求值结果为假。这个响应让客户端可以放置前提条件到当前的资源状态（它的当前表示形式和元数据）上，然后，如果目标资源是处在一种预料之外的状态上时，阻止将请求方法的应用。
 </p>
 </div>
 </div>
@@ -1860,7 +1860,7 @@ A server that is not the origin server for the target resource and cannot act as
 </blockquote>
 
 <p>
-一个服务器，如果它既不是目标资源的源服务器，也不能充当一个所请求的目标资源的缓存服务器，那么，它 <b>禁止</b> 对本规范所定义的条件请求头字段进行求值，并且它 <b>必须</b> 转发这些头字段，如果请求会被转发的话，这是因为生成这些头字段的客户是想让它们被能提供一种当前表示形式的服务器来求值的。同样，当服务器所接收到的条件请求的请求方法并不涉及对已选定的表示形式的选择或修改（比如 CONNECT、OPTIONS、或者 TRACE）的时候，服务器 <b>必须</b> 忽略由本规范所定义的条件请求头字段。
+一个服务器，如果它既不是目标资源的源服务器，也不能充当一个所请求的目标资源的缓存服务器，那么，它 <b>禁止</b> 对本规范所定义的条件请求头字段进行求值，并且它 <b>必须</b> 转发这些头字段，如果请求会被转发的话，这是因为生成这些头字段的客户是想让它们被能提供一种当前表示形式的服务器来求值的。同样，当服务器所接收到的条件请求的请求方法并不涉及对已选表示形式的选择或修改（比如 CONNECT、OPTIONS、或者 TRACE）的时候，服务器 <b>必须</b> 忽略由本规范所定义的条件请求头字段。
 </p>
 
 <blockquote>
@@ -1955,36 +1955,36 @@ A recipient cache or origin server <b>MUST</b> evaluate the request precondition
 <li>当接收端是源服务器，且出现了 <code>If-Match</code>，那么，对 <code>If-Match</code> 前提条件进行求值：
 
 <ul class="org-ul">
-<li>如果条件成立，跳到步骤 3；</li>
-<li>如果条件不成立，响应 <code>412 (Precondition Failed)</code>，除非它能够确定这个会改变状态的请求已经是成功的；（<a href="#org220193c">章节 3.1</a>）</li>
+<li>如果条件为真，跳到步骤 3；</li>
+<li>如果条件为假，响应 <code>412 (Precondition Failed)</code>，除非它能够确定这个会改变状态的请求已经是成功的；（<a href="#org220193c">章节 3.1</a>）</li>
 </ul></li>
 
 <li>当接收端是源服务器，未出现 <code>If-Match</code>，但出现了 <code>If-Unmodified-Since</code>，那么，对 <code>If-Unmodified-Since</code> 前提条件进行求值：
 
 <ul class="org-ul">
-<li>如果条件成立，跳到步骤 3；</li>
-<li>如果条件不成立，响应 <code>412 (Precondition Failed)</code>，除非它能够确定这个会改变状态的请求已经是成功的；（<a href="#org2f3f176">章节 3.4</a>）</li>
+<li>如果条件为真，跳到步骤 3；</li>
+<li>如果条件为假，响应 <code>412 (Precondition Failed)</code>，除非它能够确定这个会改变状态的请求已经是成功的；（<a href="#org2f3f176">章节 3.4</a>）</li>
 </ul></li>
 
 <li>当出现了 <code>If-None-Match</code>，那么，对 <code>If-None-Match</code> 前提条件进行求值：
 
 <ul class="org-ul">
-<li>如果条件成立，跳到步骤 5；</li>
-<li>如果条件不成立，且请求方法为 GET 或者 HEAD，响应 <code>304 (Not Modified)</code>；</li>
-<li>如果条件不成立，且请求方法为其他方法，响应 <code>412 (Precondition Failed)</code>；</li>
+<li>如果条件为真，跳到步骤 5；</li>
+<li>如果条件为假，且请求方法为 GET 或者 HEAD，响应 <code>304 (Not Modified)</code>；</li>
+<li>如果条件为假，且请求方法为其他方法，响应 <code>412 (Precondition Failed)</code>；</li>
 </ul></li>
 
 <li>当请求方法是 GET 或者 HEAD，未出现 <code>If-None-Match</code>，但出现了 <code>If-Modified-Since</code>，那么，对 <code>If-Modified-Since</code> 前提条件进行求值：
 
 <ul class="org-ul">
-<li>如果条件成立，跳到步骤 5；</li>
-<li>如果条件不成立，响应 304 <code>(Not Modified)</code>；</li>
+<li>如果条件为真，跳到步骤 5；</li>
+<li>如果条件为假，响应 304 <code>(Not Modified)</code>；</li>
 </ul></li>
 
 <li>当请求方法是 GET，并且 <code>Range</code> 和 <code>If-Range</code> 都出现了，那么，对 <code>If-Range</code> 前提条件进行求值：
 
 <ul class="org-ul">
-<li>如果这个验证器匹配上了，并且 <code>Range</code> 规范适用于已选定的表示形式，那么，响应 <code>206 (Partial Content)</code>；【<a href="RFC7233.html">RFC7233</a>】</li>
+<li>如果这个验证器匹配上了，并且 <code>Range</code> 规范适用于已选表示形式，那么，响应 <code>206 (Partial Content)</code>；【<a href="RFC7233.html">RFC7233</a>】</li>
 </ul></li>
 
 <li>否则
@@ -2278,7 +2278,7 @@ The <code>ETag</code> header field ABNF has been changed to not use <code>quoted
 </blockquote>
 
 <p>
-<code>ETag</code> 被定义为为已选定的表示形式提供一个实体标签，因此明确了它在各种场景中的适用范围（比如一个 PUT 响应）。（<a href="#orgf0f9907">章节 2.3</a>）
+<code>ETag</code> 被定义为为已选表示形式提供一个实体标签，因此明确了它在各种场景中的适用范围（比如一个 PUT 响应）。（<a href="#orgf0f9907">章节 2.3</a>）
 </p>
 
 <blockquote>

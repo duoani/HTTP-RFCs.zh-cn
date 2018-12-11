@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-11 Tue 11:00 -->
+<!-- 2018-12-11 Tue 19:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7233: Hypertext Transfer Protocol (HTTP/1.1): Range Requests</title>
@@ -643,7 +643,7 @@ A representation can be partitioned into subranges according to various structur
 </div>
 
 <div id="outline-container-org95c1795" class="outline-3">
-<h3 id="org95c1795">2.1. 字节范围 / Byte Ranges</h3>
+<h3 id="org95c1795"><a id="ID-67c9bce9-6c76-46ec-9932-1b5dde9f7746"></a>2.1. 字节范围 / Byte Ranges</h3>
 <div class="outline-text-3" id="text-org95c1795">
 <blockquote>
 <p>
@@ -748,7 +748,7 @@ A client can limit the number of bytes requested without knowing the size of the
 </blockquote>
 
 <p>
-客户端可以在不知道已选定的表示形式大小的情况下限制所请求的字节数量。如果缺少 <code>last-byte-pos</code> 值，或者其值大于或等于表示形式数据的当前长度，那么，字节范围会被解释为这个表示形式的剩余部分（也就是说，服务器将这个 <code>last-byte-pos</code> 的值替换为已选定表示形式的长度减 1 的值）。
+客户端可以在不知道已选表示形式大小的情况下限制所请求的字节数量。如果缺少 <code>last-byte-pos</code> 值，或者其值大于或等于表示形式数据的当前长度，那么，字节范围会被解释为这个表示形式的剩余部分（也就是说，服务器将这个 <code>last-byte-pos</code> 的值替换为已选定表示形式的长度减 1 的值）。
 </p>
 
 <blockquote>
@@ -758,7 +758,7 @@ A client can request the last N bytes of the selected representation using a <co
 </blockquote>
 
 <p>
-客户端可以使用一个 <code>suffix-byte-range-spec</code> 来请求已选定的表示形式的最后 N 个字节。
+客户端可以使用一个 <code>suffix-byte-range-spec</code> 来请求已选表示形式的最后 N 个字节。
 </p>
 
 <div class="org-src-container">
@@ -780,7 +780,7 @@ If the selected representation is shorter than the specified <code>suffix-length
 </blockquote>
 
 <p>
-如果已选定的表示形式的长度小于 <code>suffix-length</code> 所指定的值，表示使用整个表示形式。
+如果已选表示形式的长度小于 <code>suffix-length</code> 所指定的值，表示使用整个表示形式。
 </p>
 
 <blockquote>
@@ -963,10 +963,14 @@ to advise the client not to attempt a range request.
 <div id="outline-container-orgf26e511" class="outline-3">
 <h3 id="orgf26e511"><a id="ID-a70b4aaa-f776-4d5b-a31d-60d1ad16d85e"></a>3.1. Range</h3>
 <div class="outline-text-3" id="text-orgf26e511">
+<blockquote>
 <p>
-The#+BEGIN_QUOTE
- "Range" header field on a GET request modifies the method semantics to request transfer of only one or more subranges of the selected representation data, rather than the entire selected representation data.
-#+END_QUOTE
+The "Range" header field on a GET request modifies the method semantics to request transfer of only one or more subranges of the selected representation data, rather than the entire selected representation data.
+</p>
+</blockquote>
+
+<p>
+在一个 GET 请求中的 <code>Range</code> 头字段将请求方法的语义修改为去请求传输<ruby>已选表示形式数据<rt>selected representation data</rt></ruby>的仅仅一个或多个子范围，而不是整个已选表示形式数据。
 </p>
 
 <div class="org-src-container">
@@ -978,51 +982,89 @@ other-range-set = 1*VCHAR
 
 <blockquote>
 <p>
-A server MAY ignore the Range header field. However, origin servers and intermediate caches ought to support byte ranges when possible, since Range supports efficient recovery from partially failed transfers and partial retrieval of large representations. A server MUST ignore a Range header field received with a request method other than GET.
+A server <b>MAY</b> ignore the <code>Range</code> header field. However, origin servers and intermediate caches ought to support byte ranges when possible, since <code>Range</code> supports efficient recovery from partially failed transfers and partial retrieval of large representations. A server <b>MUST</b> ignore a <code>Range</code> header field received with a request method other than GET.
+</p>
+</blockquote>
+
+<p>
+服务器 <b>可以</b> 忽略 <code>Range</code> 头字段。但是，源服务器和中间人缓存服务器应该尽可能去支持<ruby>字节范围<rt>byte ranges</rt></ruby>，因为 <code>Range</code> 支持从传输一部分数据后（因某种原因导致）传输失败了的场景中高效地恢复过来，还支持获取大表示形式中的一部分。如果所接收到的请求方法不是 GET，那么，服务器 <b>必须</b> 忽略这个消息中的 <code>Range</code> 头字段。
+</p>
+
+<blockquote>
+<p>
+An origin server <b>MUST</b> ignore a <code>Range</code> header field that contains a range unit it does not understand. A proxy <b>MAY</b> discard a <code>Range</code> header field that contains a range unit it does not understand.
+</p>
+</blockquote>
+
+<p>
+如果 <code>Range</code> 头字段包含了源服务器所不能理解的<ruby>范围单位<rt>range unit</rt></ruby>，那么，源服务器 <b>必须</b> 忽略这个头字段。如果 <code>Range</code> 头字段包含了代理所不能理解的范围单位，代理 <b>可以</b> 丢弃掉这个头字段。
+</p>
+
+<blockquote>
+<p>
+A server that supports range requests <b>MAY</b> ignore or reject a <code>Range</code> header field that consists of more than two overlapping ranges, or a set of many small ranges that are not listed in ascending order, since both are indications of either a broken client or a deliberate denial-of-service attack (<a href="#orgac5f1c2">Section 6.1</a>). A client <b>SHOULD NOT</b> request multiple ranges that are inherently less efficient to process and transfer than a single range that encompasses the same data.
+</p>
+</blockquote>
+
+<p>
+如果 <code>Range</code> 头字段由不止两个的重叠范围组成，或者由许多不是以升序排列的小范围组成，那么，支持范围请求的服务器 <b>可以</b> 忽略或者拒绝这个头字段。因为这两种组成方式所表明的是要不就是客户端的实现有问题，要不就是出现了刻意的<ruby>拒绝服务攻击<rt>denial-of-service attack</rt></ruby>（<a href="#orgac5f1c2">章节 6.1</a>）。如果划分为多个小范围进行处理和传输本质上比包含同样数据的单个大范围的效率要差的话，客户端 <b>不应当</b> 请求多个范围。
+</p>
+
+<blockquote>
+<p>
+A client that is requesting multiple ranges <b>SHOULD</b> list those ranges in ascending order (the order in which they would typically be received in a complete representation) unless there is a specific need to request a later part earlier. For example, a user agent processing a large representation with an internal catalog of parts might need to request later parts first, particularly if the representation consists of pages stored in reverse order and the user agent wishes to transfer one page at a time.
+</p>
+</blockquote>
+
+<p>
+客户端在请求多个范围时，<b>应当</b> 将这些范围按升序排序（按它们通常被接收成为一个完整的表示形式的顺序），除非它明确需要更早地请求一个更后的部分。例如，用户代理正在处理一个非常大的表示形式，这个表示形式带有一个自身组成部分的内部目录可能需要先请求更后的部分的情况，特别是如果这个表示形式由多页组成，以页码倒序的方式保存，并且用户代理希望一次一页地传输。
+</p>
+
+<blockquote>
+<p>
+The <code>Range</code> header field is evaluated after evaluating the precondition header fields defined in [<a href="RFC7232.html">RFC7232</a>], and only if the result in absence of the <code>Range</code> header field would be a <code>200 (OK)</code> response. In other words, <code>Range</code> is ignored when a conditional GET would result in a <code>304 (Not Modified)</code> response.
+</p>
+
+<p>
+在<ruby>前提条件头字段<rt>precondition header fields</rt></ruby>（定义在【<a href="RFC7232.html">RFC7232</a>】）求值以后，并且假如没有 <code>Range</code> 头字段的话这次请求的最终结果将会是一个 <code>200 (OK)</code> 响应的情况下，<code>Range</code> 头字段才会被求值。换句话说，当一个条件 GET 请求的结果是一个 <code>304 (Not Modified)</code> 响应的时候，<code>Range</code> 会被忽略。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-An origin server MUST ignore a Range header field that contains a range unit it does not understand. A proxy MAY discard a Range header field that contains a range unit it does not understand.
+The <code>If-Range</code> header field (<a href="#org79d4a85">Section 3.2</a>) can be used as a precondition to applying the <code>Range</code> header field.
+</p>
+</blockquote>
+
+<p>
+<code>If-Range</code> 头字段（<a href="#org79d4a85">章节 3.2</a>）能够被用作应用 <code>Range</code> 头字段的一个前提条件。
+</p>
+
+<blockquote>
+<p>
+译注：也就是说，当 <code>If-Range</code> 的求值结果为真（即条件成立）的时候，才会对 <code>Range</code> 进行求值。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-A server that supports range requests MAY ignore or reject a Range header field that consists of more than two overlapping ranges, or a set of many small ranges that are not listed in ascending order, since both are indications of either a broken client or a deliberate denial-of-service attack (Section 6.1). A client SHOULD NOT request multiple ranges that are inherently less efficient to process and transfer than a single range that encompasses the same data.
+If all of the preconditions are true, the server supports the <code>Range</code> header field for the target resource, and the specified range(s) are valid and satisfiable (as defined in <a href="#org95c1795">Section 2.1</a>), the server <b>SHOULD</b> send a <code>206 (Partial Content)</code> response with a payload containing one or more partial representations that correspond to the satisfiable ranges requested, as defined in <a href="#org300aaf5">Section 4</a>.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A client that is requesting multiple ranges SHOULD list those ranges in ascending order (the order in which they would typically be received in a complete representation) unless there is a specific need to request a later part earlier. For example, a user agent processing a large representation with an internal catalog of parts might need to request later parts first, particularly if the representation consists of pages stored in reverse order and the user agent wishes to transfer one page at a time.
+如果所有前提条件皆为真，且服务器支持对目标资源应用 <code>Range</code> 头字段，且所指定的范围皆为有效的和<ruby>可满足的<rt>satisfiable</rt></ruby>（其定义见<a href="#org95c1795">章节 2.1</a>），那么，服务器 <b>应当</b> 发送一个 <code>206 (Partial Content)</code> 响应，带有一个有效载荷来包含一个或多个<ruby>局部表示形式<rt>partial representations</rt></ruby>，这些局部表示形式与所请求的<ruby>可满足的范围<rt>satisfiable ranges</rt></ruby>一一对应，其定义见<a href="#org300aaf5">章节 4</a>。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The Range header field is evaluated after evaluating the precondition header fields defined in [RFC7232], and only if the result in absence of the Range header field would be a 200 (OK) response. In other words, Range is ignored when a conditional GET would result in a 304 (Not Modified) response.
+If all of the preconditions are true, the server supports the <code>Range</code> header field for the target resource, and the specified range(s) are invalid or unsatisfiable, the server <b>SHOULD</b> send a <code>416 (Range Not Satisfiable)</code> response.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The If-Range header field (Section 3.2) can be used as a precondition to applying the Range header field.
+如果所有前提条件皆为真，且服务器支持对目标资源应用 <code>Range</code> 头字段，但所指定的范围无效或不可满足的，那么，服务器 <b>应当</b> 发送一个 <code>416 (Range Not Satisfiable)</code> 响应。
 </p>
-</blockquote>
-
-<blockquote>
-<p>
-If all of the preconditions are true, the server supports the Range header field for the target resource, and the specified range(s) are valid and satisfiable (as defined in Section 2.1), the server SHOULD send a 206 (Partial Content) response with a payload containing one or more partial representations that correspond to the satisfiable ranges requested, as defined in Section 4.
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-If all of the preconditions are true, the server supports the Range header field for the target resource, and the specified range(s) are invalid or unsatisfiable, the server SHOULD send a 416 (Range Not Satisfiable) response.
-</p>
-</blockquote>
 </div>
 </div>
 
@@ -1031,13 +1073,27 @@ If all of the preconditions are true, the server supports the Range header field
 <div class="outline-text-3" id="text-org79d4a85">
 <blockquote>
 <p>
-If a client has a partial copy of a representation and wishes to have an up-to-date copy of the entire representation, it could use the Range header field with a conditional GET (using either or both of If-Unmodified-Since and If-Match.) However, if the precondition fails because the representation has been modified, the client would then have to make a second request to obtain the entire current representation.
+If a client has a partial copy of a representation and wishes to have an up-to-date copy of the entire representation, it could use the <code>Range</code> header field with a conditional GET (using either or both of <code>If-Unmodified-Since</code> and <code>If-Match</code>.) However, if the precondition fails because the representation has been modified, the client would then have to make a second request to obtain the entire current representation.
 </p>
 </blockquote>
 
+<p>
+如果客户端已有一个表示形式的<ruby>一部分副本<rt>partial copy</rt></ruby>，它希望获得整个表示形式的一份最新副本，那么，它可以使用在一个条件 GET 请求中带有 <code>Range</code> 头字段（使用 <code>If-Unmodified-Since</code> 和 <code>If-Match</code> 两者或两者之一）。但是，如果因表示形式已经被修改而导致前提条件不成立的话，客户端将不得不发起第二次请求来获得整个当前表示形式。
+</p>
+
 <blockquote>
 <p>
-The "If-Range" header field allows a client to "short-circuit" the second request. Informally, its meaning is as follows: if the representation is unchanged, send me the part(s) that I am requesting in Range; otherwise, send me the entire representation.
+The "If-Range" header field allows a client to "short-circuit" the second request. Informally, its meaning is as follows: if the representation is unchanged, send me the part(s) that I am requesting in <code>Range</code>; otherwise, send me the entire representation.
+</p>
+</blockquote>
+
+<p>
+If-Range 头字段让客户端可以“<ruby>短路<rt>short-circuit</rt></ruby>”第二次请求。通俗地说，它的含义如下：如果表示形式未发生变化，把我在 <code>Range</code> 所请求的范围的那部分发送给我；否则，把整个表示形式发送给我。
+</p>
+
+<blockquote>
+<p>
+译注：编程语言中的逻辑表达式 and 和 or 通常都带有“短路”功能。
 </p>
 </blockquote>
 
@@ -1048,27 +1104,54 @@ The "If-Range" header field allows a client to "short-circuit" the second reques
 
 <blockquote>
 <p>
-A client MUST NOT generate an If-Range header field in a request that does not contain a Range header field. A server MUST ignore an If-Range header field received in a request that does not contain a Range header field. An origin server MUST ignore an If-Range header field received in a request for a target resource that does not support Range requests.
+A client <b>MUST NOT</b> generate an <code>If-Range</code> header field in a request that does not contain a <code>Range</code> header field. A server <b>MUST</b> ignore an <code>If-Range</code> header field received in a request that does not contain a <code>Range</code> header field. An origin server <b>MUST</b> ignore an <code>If-Range</code> header field received in a request for a target resource that does not support <code>Range</code> requests.
+</p>
+</blockquote>
+
+<p>
+如果一个请求中不包含有 <code>Range</code> 头字段，那么，客户端 <b>禁止</b> 在这个请求中生成 <code>If-Range</code> 头字段。如果服务器所接收到的请求中不包含有 <code>Range</code> 头字段，那么，服务器 <b>必须</b> 忽略这个请求中的 <code>If-Range</code> 头字段。如果源服务器所接收到的请求所指的目标资源并不支持 <code>Range</code> 范围请求，那么，源服务器 <b>必须</b> 忽略这个请求中的 <code>If-Range</code> 头字段。
+</p>
+
+<blockquote>
+<p>
+A client <b>MUST NOT</b> generate an <code>If-Range</code> header field containing an entity-tag that is marked as weak. A client <b>MUST NOT</b> generate an <code>If-Range</code> header field containing an <code>HTTP-date</code> unless the client has no entity-tag for the corresponding representation and the date is a strong validator in the sense defined by <a href="RFC7232.html#ID-ba954c8f-272f-409a-9fdd-e092207700c5">Section 2.2.2</a> of [RFC7232].
+</p>
+</blockquote>
+
+<p>
+客户端 <b>禁止</b> 生成这样一种 <code>If-Range</code> 头字段，其值是一个标记为弱验证类型的实体标签。客户端 <b>禁止</b> 生成这样一种 <code>If-Range</code> 头字段，其值是一个 HTTP-date，除非这个客户端的表示形式没有对应的实体标签，并且这个日期是一种<a href="RFC7232.html#ID-ba954c8f-272f-409a-9fdd-e092207700c5">【RFC7232】章节 2.2.2</a> 所说的强验证类型。
+</p>
+
+<blockquote>
+<p>
+A server that evaluates an <code>If-Range</code> precondition <b>MUST</b> use the strong comparison function when comparing entity-tags (<a href="RFC7232.html#ID-e3a6dda6-2209-44aa-89af-c37f1b95c2fe">Section 2.3.2</a> of [RFC7232]) and <b>MUST</b> evaluate the condition as false if an <code>HTTP-date</code> validator is provided that is not a strong validator in the sense defined by <a href="RFC7232.html#ID-ba954c8f-272f-409a-9fdd-e092207700c5">Section 2.2.2</a> of [RFC7232]. A valid entity-tag can be distinguished from a valid <code>HTTP-date</code> by examining the first two characters for a <code>DQUOTE</code>.
+</p>
+</blockquote>
+
+<p>
+服务器对一个 <code>If-Range</code> 前提条件进行求值的时候，如果它的值是一个实体标签的话，那么，服务器 <b>必须</b> 使用强对比方法（<a href="RFC7232.html#ID-e3a6dda6-2209-44aa-89af-c37f1b95c2fe">【RFC7232】章节 2.3.2</a>）；另外，如果它的值是一个 <code>HTTP-date</code> 验证器，但不是一种<a href="RFC7232.html#ID-ba954c8f-272f-409a-9fdd-e092207700c5">【RFC7232】章节 2.2.2</a> 所说的强验证器，那么，服务器 <b>必须</b> 将这个条件求值为假。有个有效的（强验证类型的）实体标签可以通过检测前两个字符是否有一个双引号 <code>DQUOTE</code> 来区分一个有效的 HTTP-date。
+</p>
+
+<blockquote>
+<p>
+译注：
+强实体标签第一个字符必定为双引号，如： "xyzzy"，弱实体标签的开头带有一个 <code>W\</code>，如：W\"zyzzy"。详细的 ABNF 见章<a href="RFC7232.html#ID-0244a602-2c4a-46aa-96c4-3bd14c3eb244">【RFC7232】章节 2.3</a>。
+</p>
+
+<p>
+<code>HTTP-date</code> 并不是一个字符串，它没被双引号包裹，见<a href="RFC7231.html#ID-2091e4af-684f-4511-aaa1-8094dc7dcb21">【RFC7231】章节 7.1.1.1</a>。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-A client MUST NOT generate an If-Range header field containing an entity-tag that is marked as weak. A client MUST NOT generate an If-Range header field containing an HTTP-date unless the client has no entity-tag for the corresponding representation and the date is a strong validator in the sense defined by Section 2.2.2 of [RFC7232].
+If the validator given in the <code>If-Range</code> header field matches the current validator for the selected representation of the target resource, then the server <b>SHOULD</b> process the <code>Range</code> header field as requested. If the validator does not match, the server <b>MUST</b> ignore the <code>Range</code> header field. Note that this comparison by exact match, including when the validator is an <code>HTTP-date</code>, differs from the "earlier than or equal to" comparison used when evaluating an <code>If-Unmodified-Since</code> conditional.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A server that evaluates an If-Range precondition MUST use the strong comparison function when comparing entity-tags (Section 2.3.2 of [RFC7232]) and MUST evaluate the condition as false if an HTTP-date validator is provided that is not a strong validator in the sense defined by Section 2.2.2 of [RFC7232]. A valid entity-tag can be distinguished from a valid HTTP-date by examining the first two characters for a DQUOTE.
+如果 <code>If-Range</code> 头字段所给出的验证器匹配上了目标资源的已选表示形式的当前验证器，那么，服务器 <b>应当</b> 将 <code>Range</code> 头字段作为所要请求的范围来处理。如果验证器没有匹配，那么，服务器 <b>必须</b> 忽略 <code>Range</code> 头字段。需要注意的是，这种对比是通过精准匹配的，包含验证器是一个 <code>HTTP-date</code> 的情况，区别于对一个 <code>If-Unmodified-Since</code> 条件式进行求值时所使用的“早于或等于”对比方式。
 </p>
-</blockquote>
-
-<blockquote>
-<p>
-If the validator given in the If-Range header field matches the current validator for the selected representation of the target resource, then the server SHOULD process the Range header field as requested. If the validator does not match, the server MUST ignore the Range header field. Note that this comparison by exact match, including when the validator is an HTTP-date, differs from the "earlier than or equal to" comparison used when evaluating an If-Unmodified-Since conditional.
-</p>
-</blockquote>
 </div>
 </div>
 </div>
@@ -1623,7 +1706,7 @@ Change controller: IESG
 </div>
 </div>
 <div id="outline-container-orgec0b449" class="outline-2">
-<h2 id="orgec0b449">6. 安全注意事项 / Security Considerations</h2>
+<h2 id="orgec0b449"><a id="ID-10894c92-80fd-43f6-b8b7-652df6045f37"></a>6. 安全注意事项 / Security Considerations</h2>
 <div class="outline-text-2" id="text-orgec0b449">
 <blockquote>
 <p>
@@ -1633,7 +1716,7 @@ This section is meant to inform developers, information providers, and users of 
 </div>
 
 <div id="outline-container-orgac5f1c2" class="outline-3">
-<h3 id="orgac5f1c2">6.1. 使用范围进行拒绝服务攻击 / Denial-of-Service Attacks Using Range</h3>
+<h3 id="orgac5f1c2"><a id="ID-f9a13f54-ed44-4a7f-b1ef-1e912979e5cd"></a>6.1. 使用范围进行拒绝服务攻击 / Denial-of-Service Attacks Using Range</h3>
 <div class="outline-text-3" id="text-orgac5f1c2">
 <blockquote>
 <p>
