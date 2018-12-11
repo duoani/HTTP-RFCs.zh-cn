@@ -8,17 +8,19 @@
 
 目前已翻译完成 [RFC7230](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7230.html)、 [RFC7231](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7231.html)。
 
-## 翻译计划
+## 翻译进度
 
 - [x] [RFC7230: HTTP/1.1: Message Syntax and Routing](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7230.html)
 - [x] [RFC7231: HTTP/1.1: Semantics and Content](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7231.html)
-- [ ] [RFC7232: HTTP/1.1: Conditional Requests](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7232.html)
+- [x] [RFC7232: HTTP/1.1: Conditional Requests](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7232.html)
 - [ ] [RFC7233: HTTP/1.1: Range Requests](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7233.html)
 - [ ] [RFC7234: HTTP/1.1: Caching](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7234.html)
 - [ ] [RFC7235: HTTP/1.1: Authentication](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7235.html)
 - [ ] RFC7260: Hypertext Transfer Protocol Version 2 (HTTP/2)
 
-另外，目前 RFC723* 已有多个堪误表（Errata），目前还未有计划对其进行翻译。如果要查看最新的堪误，[请移步这里](https://datatracker.ietf.org/wg/httpbis/documents/)。
+另外，目前 RFC723* 系列文档已有多个堪误表（Errata），目前还未有计划对其进行翻译。如果要查看最新的堪误，[请移步这里](https://datatracker.ietf.org/wg/httpbis/documents/)。
+
+**注意：** 目前 RFC723* 系列文档正被再一次修订，只不过直到现在为止还是处于草案阶段（Internet-Draft）。你可以[在这里查看总体的情况](https://github.com/httpwg/http-core#draft-http-core-documents)，你还可以[在这里查看 RFC723* 与这份草案的改动对比](https://httpwg.org/http-core/diffs/diff_semantics_01.html)。
 
 ## 初衷
 
@@ -37,12 +39,17 @@
 
 ## 如何使用？
 
-开始之前，如果你对下列问题一脸懵逼的话，强烈建议你先看一下 Mark Nottingham 大神博客上的 ["How to Read an RFC"](https://www.mnot.net/blog/2018/07/31/read_rfc)。
+开始之前，先问问自己：
 
 1. RFC 有什么类型？什么是 Standard Track？
 2. 这一份 RFC 是不是最新的、它有后续更新或相关前置 RFC 吗？
 3. RFC 里的 MUST、SHALL、SHOULD、MAY、OPTIONAL 等有什么区别？
 4. 什么是 ABNF？
+
+如果你对下列问题一脸懵逼的话，强烈建议你先看一下 Mark Nottingham 大神博客上的一篇文章：
+
+- ["How to Read an RFC"](https://www.mnot.net/blog/2018/07/31/read_rfc)
+- 这是在网上找到的[中文翻译版](https://www.freebuf.com/column/184598.html)
 
 然后就可以直接访问：<https://duoani.github.io/HTTP-RFCs.zh-cn/>，我会直接转换为 HTML 版本。
 

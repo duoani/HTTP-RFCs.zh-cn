@@ -120,7 +120,7 @@ This specification uses the Augmented Backus-Naur Form (ABNF) notation of [[[htt
 A representation can be partitioned into subranges according to various structural units, depending on the structure inherent in the representation's media type. This "range unit" is used in the =Accept-Ranges= ([[id:cf601084-e3af-41bc-9ff7-8f903ca59fa8][Section 2.3]]) response header field to advertise support for range requests, the =Range= ([[id:a70b4aaa-f776-4d5b-a31d-60d1ad16d85e][Section 3.1]]) request header field to delineate the parts of a representation that are requested, and the =Content-Range= ([[id:7a682301-f05e-4e79-8242-398bbfb57c74][Section 4.2]]) payload header field to describe which part of a representation is being transferred.
 #+END_QUOTE
 
-一个表示形式可以依据各种结构单元来划分为多个子范围，依赖于继承自这个表示形式的媒体类型的结构。这个“[[ruby:range%20unit][范围单位]]”是用在 =Accept-Ranges= （[[id:cf601084-e3af-41bc-9ff7-8f903ca59fa8][章节 2.3]]）响应头字段里用来声明服务器支持范围请求；用在 =Range= （[[id:a70b4aaa-f776-4d5b-a31d-60d1ad16d85e][章节 3.1]]）请求头字段里用来描绘所请求的一个表示形式的哪一部分；用在 =Content-Range= （[[id:7a682301-f05e-4e79-8242-398bbfb57c74][章节 4.2]]）有效载荷头字段来描述一个表示形式的哪一部分将会被传输。
+一个表示形式可以依据各种[[ruby:structural%20units][结构单元（结构单位）]]来划分为多个子范围，这种划分依赖于继承自这个表示形式的媒体类型的结构。这个“[[ruby:range%20unit][范围单位]]”是用在 =Accept-Ranges= （[[id:cf601084-e3af-41bc-9ff7-8f903ca59fa8][章节 2.3]]）响应头字段里以声明：服务器能够支持范围请求；用在 =Range= （[[id:a70b4aaa-f776-4d5b-a31d-60d1ad16d85e][章节 3.1]]）请求头字段里以描绘：所请求的一个表示形式的哪一部分；用在 =Content-Range= （[[id:7a682301-f05e-4e79-8242-398bbfb57c74][章节 4.2]]）有效载荷头字段里以描述：一个表示形式的哪一部分将会被传输。
 
 #+BEGIN_SRC text
   range-unit       = bytes-unit / other-range-unit
@@ -170,7 +170,7 @@ Examples of =byte-ranges-specifier= values:
 
 - The first 500 bytes (byte offsets 0-499, inclusive):
   
-  第一个 500 字节（字节偏移量为 0-499，[[ruby:inclusive][闭合区间]]）：
+  第一组 500 个字节（字节偏移量为 0-499，[[ruby:inclusive][闭合区间]]）：
   
   #+BEGIN_EXAMPLE
     bytes=0-499
@@ -178,7 +178,7 @@ Examples of =byte-ranges-specifier= values:
   
 - The second 500 bytes (byte offsets 500-999, inclusive):
   
-  第二个 500 字节（字节偏移量为 500-999，闭合区间）：
+  第二组 500 个字节（字节偏移量为 500-999，闭合区间）：
 
   #+BEGIN_EXAMPLE
     bytes=500-999
@@ -225,7 +225,7 @@ Additional examples, assuming a representation of length 10000:
 
 - The final 500 bytes (byte offsets 9500-9999, inclusive):
   
-  最后 500 字节（字节偏移量为 9500-9999，闭合区间）：
+  最后 500 个字节（字节偏移量为 9500-9999，闭合区间）：
 
   #+BEGIN_EXAMPLE
     bytes=-500
@@ -249,7 +249,7 @@ Additional examples, assuming a representation of length 10000:
   
 - Other valid (but not canonical) specifications of the second 500 bytes (byte offsets 500-999, inclusive):
   
-  其他有效的（但[[ruby:not%20canonical][不规范的]]）对第二个 500 字节的指定（字节偏移量为 500-999，闭合区间）：
+  其他有效的（但[[ruby:not%20canonical][不规范的]]）对第二组 500 个字节的指定（字节偏移量为 500-999，闭合区间）：
 
   #+BEGIN_EXAMPLE
   bytes=500-600,601-999

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-10 Mon 19:21 -->
+<!-- 2018-12-11 Tue 11:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7232: Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests</title>
@@ -660,7 +660,7 @@ Validators come in two flavors: strong or weak. Weak validators are easy to gene
 </blockquote>
 
 <p>
-<ruby>验证器<rt>validator</rt></ruby>分成两类：强验证和弱验证。<ruby>弱验证器<rt>weak validators</rt></ruby>容易生成，但对于比较来说几乎没有什么用处。<ruby>强验证器<rt>strong validators</rt></ruby>是理想的比较方式，但它很难有效地生成（有时甚至不可能生成）。与其强制资源的所有形式都附带相同的验证器类型，HTTP 显露出使用中的验证器的类型并对“什么时候弱验证器可以用作前提条件”施加限制。
+<ruby>验证器<rt>validator</rt></ruby>分成两类：强验证和弱验证。<ruby>弱验证器<rt>weak validators</rt></ruby>容易生成，但对于<ruby>对比<rt>comparisons</rt></ruby>来说几乎没有什么用处。<ruby>强验证器<rt>strong validators</rt></ruby>是理想的对比方式，但它很难有效地生成（有时甚至不可能生成）。与其强制资源的所有形式都附带相同的验证器类型，HTTP 显露出使用中的验证器的类型并对“什么时候弱验证器可以用作前提条件”施加限制。
 </p>
 
 <blockquote>
@@ -742,7 +742,7 @@ Likewise, a validator is weak if it is shared by two or more representations of 
 </blockquote>
 
 <p>
-同样，如果一个验证器在同一时间内被一个给定资源的两个或以上表示形式所共享，即使这些表示形式有相同的<ruby>表示形式数据<rt>representation data</rt></ruby>，那么，这个验证器是弱类型的。例如，如果源服务器对于某个资源的一种应用过 <code>gzip</code> 内容编码的表示形式以及一种未应用任何内容编码的表示形式发送的都是相同的验证器，那么，可能确定这个验证器是弱类型的。但是，两个同时生成的表示形式可能共享相同的强验证器，如果它们的区别仅在于表示形式元数据，比如当两个不同的媒体类型都可用于同一份表示形式数据。
+同样，如果一个验证器在同一时间内被一个给定资源的两个或以上表示形式所共享，即使这些表示形式有相同的<ruby>表示形式数据<rt>representation data</rt></ruby>，那么，这个验证器是弱类型的。例如，如果源服务器对于某个资源的一种应用过 <code>gzip</code> 内容编码的表示形式以及一种未应用任何内容编码的表示形式发送的都是相同的验证器，那么，可以确定这个验证器是弱类型的。但是，两个同时生成的表示形式可能共享相同的强验证器，如果它们的区别仅在于表示形式元数据，比如当两个不同的媒体类型都可用于同一份表示形式数据。
 </p>
 
 <blockquote>
@@ -826,7 +826,7 @@ An origin server <b>SHOULD</b> obtain the <code>Last-Modified</code> value of th
 </blockquote>
 
 <p>
-源服务器 <b>应当</b> 尽可能获取靠近它对响应所生成的 <code>Date</code> 字段的时间来作为<ruby>表示形式<rt>representation</rt></ruby>的 <code>Last-Modified</code> 的值。这样，接收端就可以对表示形式的修改时间进行精确的评估，特别是如果表示形式在临近生成响应的时候又出现了变化。
+源服务器 <b>应当</b> 尽可能获取靠近它在响应里生成的 <code>Date</code> 字段的时间来作为<ruby>表示形式<rt>representation</rt></ruby>的 <code>Last-Modified</code> 的值。这样，接收端就可以对表示形式的修改时间进行精确的评估，特别是如果表示形式在临近生成响应的时候又出现了变化。
 </p>
 
 <blockquote>
@@ -890,7 +890,7 @@ or
 </p>
 
 <ul class="org-ul">
-<li>源服务器会将这个验证器与表示形式的<ruby>当前真实的验证器<rt>actual current validator</rt></ruby>进行比较，并且</li>
+<li>源服务器会将这个验证器与表示形式的<ruby>当前真实的验证器<rt>actual current validator</rt></ruby>进行对比，并且</li>
 <li><p>
 源服务器可靠了解相关联的表示形式，在第二次适用这个在请求里出现的验证器期间（译注：也就是说，在源服务器通过了这次验证让客户端再次使用缓存的这段时间里），这些表示形式并不会被二次改变。
 </p>
@@ -917,7 +917,7 @@ or
 </p>
 
 <ul class="org-ul">
-<li>这个验证器会被一个中间人缓存服务器与存储在它的缓存条目中的对应的表示形式的验证器进行比较，并且</li>
+<li>这个验证器会被一个中间人缓存服务器与存储在它的缓存条目中的对应的表示形式的验证器进行对比，并且</li>
 <li>这个缓存条目包含了一个 <code>Date</code> 值，给出了源服务器在什么时间发送这个原始响应，并且</li>
 <li>请求里出现的 <code>Last-Modified</code> 时间至少比这个 <code>Date</code> 值早 60 秒以上。</li>
 </ul>
@@ -929,7 +929,7 @@ This method relies on the fact that if two different responses were sent by the 
 </blockquote>
 
 <p>
-上述这种方法是依赖于一个事实：如果两个不同的响应被源服务器在同一秒内发送，且两者都有相同的 <code>Last-Modified</code> 时间，那么，这些响应中至少有一个响应会带有其值与 <code>Last-Modified</code> 的时间相同的 <code>Date</code> 字段。这个随意设定的 60 秒限制是为是防止出现以下可能：<code>Date</code> 与 <code>Last-Modified</code> 的值是生成自不同的时钟，或者响应的准备时长有一点不同。如果<ruby>实现<rt>implementation</rt></ruby>认为 60 秒太短的话，它 <b>可以</b> 使用大于 60 秒的值。
+上述这种方法是依赖于一个事实：如果两个不同的响应被源服务器在同一秒内发送，且两者都有相同的 <code>Last-Modified</code> 时间，那么，这些响应中至少有一个响应会带有其值与 <code>Last-Modified</code> 的时间相同的 <code>Date</code> 字段。这个随意设定的 60 秒限制是为了防止出现以下可能：<code>Date</code> 与 <code>Last-Modified</code> 的值是生成自不同的时钟，或者响应的准备时长有一点不同。如果<ruby>实现<rt>implementation</rt></ruby>认为 60 秒太短的话，它 <b>可以</b> 使用大于 60 秒的值。
 </p>
 </div>
 </div>
@@ -945,7 +945,7 @@ The "ETag" header field in a response provides the current entity-tag for the se
 </blockquote>
 
 <p>
-响应中的 <code>ETag</code> 头字段提供了已选定的表示形式当前的<ruby>实体标签<rt>entity-tag</rt></ruby>，这个头字段是在请求处理结束时所确定的。实体标签是一种<ruby>不透明的验证器<rt>opaque validator</rt></ruby>，以在同一个资源的不同表示形式之间进行区分，不管是由于资源状态随时间变化而产生的多个表示形式，还是内容协商的结果使同一时间内有多个合适的表示形式，还是两者都有（译注：也就是说，只要是同一个资源的表示形式，ETag 都能够进行区分，不管是以什么方式而产生的表示形式）。一个实体标签由一个<ruby>不透明的以引号包裹的字符串<rt>opaque quoted</rt></ruby>构成，可能会前置一个“弱验证”的指标符（"W/"）。
+响应中的 <code>ETag</code> 头字段提供了已选定的表示形式当前的<ruby>实体标签<rt>entity-tag</rt></ruby>，这个头字段是在请求处理结束时所确定的。实体标签是一种<ruby>不透明的验证器<rt>opaque validator</rt></ruby>，以在同一个资源的不同表示形式之间进行区分，不管是由于资源状态随时间变化而产生的多个表示形式，还是内容协商的结果使同一时间内有多个合适的表示形式，还是两者都有（译注：也就是说，只要是同一个资源的表示形式，ETag 都能够进行区分，不管是以什么方式而产生的表示形式）。一个实体标签由一个<ruby>不透明的以引号包裹的字符串<rt>opaque quoted string</rt></ruby>构成，可能会前置一个“弱验证”的指标符（"W/"）。
 </p>
 
 <blockquote>
@@ -1077,7 +1077,7 @@ The example below shows the results for a set of entity-tag pairs and both the w
 </blockquote>
 
 <p>
-下面的例子展示了一组实体标签使用弱对比方法和强对比方法的比较结果：
+下面的例子展示了一组实体标签使用弱对比方法和强对比方法的对比结果：
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1264,8 +1264,8 @@ In <code>200 (OK)</code> responses to GET or HEAD, an origin server:
 
 <ul class="org-ul">
 <li><b>应当</b> 发送一个实体标签验证器，除非对于它来说生成一个实体标签验证器是<ruby>不可行的<rt>not feasible</rt></ruby>。</li>
-<li><b>可以</b> 发送一个弱比较类型的实体标签而不是强比较类型标签，如果出于性能方面的考虑支持弱比较类型的实体标签的使用，或者生成一个强比较类型的实体标签是不可行的。</li>
-<li><b>应当</b> 发送一个 <code>Last-Modified</code> 值，如果对于它来说发送一个 <code>Last_modified</code> 是可行的话。</li>
+<li><b>可以</b> 发送一个弱验证类型的实体标签而不是强验证类型标签，如果出于性能方面的考虑支持弱验证类型的实体标签的使用，或者生成一个强验证类型的实体标签是不可行的。</li>
+<li><b>应当</b> 发送一个 <code>Last-Modified</code> 值，如果对于它来说发送一个 <code>Last-Modified</code> 是可行的话。</li>
 </ul>
 
 <blockquote>
@@ -1343,7 +1343,7 @@ An origin server <b>MUST</b> use the strong comparison function when comparing e
 </blockquote>
 
 <p>
-当源服务器对 <code>If-Match</code> 的实体标签进行对比的时候（<a href="#org078e6e7">章节 2.3.2</a>），源服务器 <b>必须</b> 使用强比较方法，这是因为客户端打算让这个前提条件来防止本执行本方法，如果表示形式数据有任何变化的话。
+当源服务器对 <code>If-Match</code> 的实体标签进行对比的时候（<a href="#org078e6e7">章节 2.3.2</a>），源服务器 <b>必须</b> 使用强对比方法，这是因为客户端打算让这个前提条件来防止本执行本方法，如果表示形式数据有任何变化的话。
 </p>
 
 <div class="org-src-container">
@@ -1443,7 +1443,7 @@ A recipient <b>MUST</b> use the weak comparison function when comparing entity-t
 </blockquote>
 
 <p>
-当接收端对 <code>If-None-Match</code> 的实体标签进行对比的时候，<b>必须</b> 使用<ruby>弱比较方法<rt>weak comparison function</rt></ruby>（<a href="#org078e6e7">章节 2.3.2</a>）。这是因为即使<ruby>表示形式数据<rt>representation data</rt></ruby>已经改变，弱验证类型的实体标签还可以用来缓存验证。
+当接收端对 <code>If-None-Match</code> 的实体标签进行对比的时候，<b>必须</b> 使用<ruby>弱对比方法<rt>weak comparison function</rt></ruby>（<a href="#org078e6e7">章节 2.3.2</a>）。这是因为即使<ruby>表示形式数据<rt>representation data</rt></ruby>已经改变，弱验证类型的实体标签还可以用来缓存验证。
 </p>
 
 <div class="org-src-container">
@@ -1779,7 +1779,7 @@ The <code>304 (Not Modified)</code> status code indicates that a conditional GET
 </blockquote>
 
 <p>
-<code>304 (Not Modified)</code> 状态码表明：已接收到 GET 或 HEAD 条件请求，如果这个条件的求值结果不是否的话，将返回的是一个 <code>200 (OK)</code> 响应。换句话说，服务器不需要传输目标资源的一个表示形式，因为这个请求表明了发起这个条件请求的客户端已经有一个有效的表示形式了，因此服务器让客户端重新使用那个已缓存的表示形式，可以把它当作是一个 <code>200 (OK)</code> 响应的有效载荷。
+<code>304 (Not Modified)</code> 状态码表明：已接收到 GET 或 HEAD 条件请求，如果这个条件的求值结果不成立的话，将返回的是一个 <code>200 (OK)</code> 响应。换句话说，服务器不需要传输目标资源的一个表示形式，因为这个请求表明了发起这个条件请求的客户端已经有一个有效的表示形式了，因此服务器让客户端重新使用那个已缓存的表示形式，可以把它当作是一个 <code>200 (OK)</code> 响应的有效载荷。
 </p>
 
 <blockquote>
@@ -1870,7 +1870,7 @@ Conditional request header fields that are defined by extensions to HTTP might p
 </blockquote>
 
 <p>
-由 HTTP 的扩展所定义的条件请求头字段可能将条件设定为针对所有接收端、或者针对目标资源的普遍状态、或者针对某一类资源。例如，WebDAV 规范里的 <code>If</code> 头字段能够发起一个针对多种资源的各个方面的条件请求，比较<ruby>锁<rt>locks</rt></ruby>，如果接收端理解并实现这个字段的话（<a href="https://tools.ietf.org/html/rfc4918#section-10.4">【RFC4918】章节 10.4</a>）。
+由 HTTP 的扩展所定义的条件请求头字段可能将条件设定为针对所有接收端、或者针对目标资源的普遍状态、或者针对某一类资源。例如，WebDAV 规范里的 <code>If</code> 头字段能够发起一个针对多种资源的各个方面的条件请求，比如<ruby>锁<rt>locks</rt></ruby>，如果接收端理解并实现这个字段的话（<a href="https://tools.ietf.org/html/rfc4918#section-10.4">【RFC4918】章节 10.4</a>）。
 </p>
 
 <blockquote>
@@ -1959,7 +1959,7 @@ A recipient cache or origin server <b>MUST</b> evaluate the request precondition
 <li>如果条件不成立，响应 <code>412 (Precondition Failed)</code>，除非它能够确定这个会改变状态的请求已经是成功的；（<a href="#org220193c">章节 3.1</a>）</li>
 </ul></li>
 
-<li>当接收端是源服务器，未出现 <code>If-Match</code>，并且出现了 <code>If-Unmodified-Since</code>，那么，对 <code>If-Unmodified-Since</code> 前提条件进行求值：
+<li>当接收端是源服务器，未出现 <code>If-Match</code>，但出现了 <code>If-Unmodified-Since</code>，那么，对 <code>If-Unmodified-Since</code> 前提条件进行求值：
 
 <ul class="org-ul">
 <li>如果条件成立，跳到步骤 3；</li>
@@ -1974,7 +1974,7 @@ A recipient cache or origin server <b>MUST</b> evaluate the request precondition
 <li>如果条件不成立，且请求方法为其他方法，响应 <code>412 (Precondition Failed)</code>；</li>
 </ul></li>
 
-<li>当请求方法是 GET 或者 HEAD，未出现 <code>If-None-Match</code>，并且出现了 <code>If-Modified-Since</code>，那么，对 <code>If-Modified-Since</code> 前提条件进行求值：
+<li>当请求方法是 GET 或者 HEAD，未出现 <code>If-None-Match</code>，但出现了 <code>If-Modified-Since</code>，那么，对 <code>If-Modified-Since</code> 前提条件进行求值：
 
 <ul class="org-ul">
 <li>如果条件成立，跳到步骤 5；</li>
@@ -1990,7 +1990,7 @@ A recipient cache or origin server <b>MUST</b> evaluate the request precondition
 <li>否则
 
 <ul class="org-ul">
-<li>所于已经遍历了所有条件了，因此执行所请求的动作并根据它的成功或失败作出响应。</li>
+<li>已经遍历了所有条件了，于是执行所请求的动作并根据它的成功或失败作出响应。</li>
 </ul></li>
 </ol>
 
@@ -2188,7 +2188,7 @@ An entity-tag can be abused in ways that create privacy risks. For example, a si
 </blockquote>
 
 <p>
-实体标签可能在生成私隐风险的方式上被滥用。例如，一个网站可能故意构造一个语义有效的实体标签，这个实体标签是一一对应于一个用户或用户代理的，然后将它发送到一个可缓存的响应里，带有一个非常长的新鲜度时间，然后在接下来的条件请求中读取这个实体标签来作为重新识别用户或用户代理的一种方法。只要用户代理保持原始的缓存条目，这种识别型的标签就会成为一种永久的标识符。每当用户执行<ruby>确保隐私的行为<rt>privacy-maintaining actions</rt></ruby>的时候，缓存表示形式的用户代理应该确保缓存已被清除或者替换，比如清除已存储的 cookies 或者变更为一种隐私浏览模式。
+实体标签可能在生成私隐风险方面被滥用。例如，一个网站可能故意构造一个语义有效的实体标签，这个实体标签是一一对应于一个用户或用户代理的，然后将它发送到一个可缓存的响应里，带有一个非常长的新鲜度时间，然后在接下来的条件请求中读取这个实体标签来作为重新识别用户或用户代理的一种方法。只要用户代理保持原始的缓存条目，这种识别型的标签就会成为一种永久的标识符。每当用户执行<ruby>确保隐私的行为<rt>privacy-maintaining actions</rt></ruby>的时候，缓存表示形式的用户代理应该确保缓存已被清除或者替换，比如清除已存储的 cookies 或者变更为一种隐私浏览模式。
 </p>
 </div>
 </div>

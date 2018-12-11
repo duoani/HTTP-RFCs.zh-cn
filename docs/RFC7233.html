@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-10 Mon 19:20 -->
+<!-- 2018-12-11 Tue 11:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7233: Hypertext Transfer Protocol (HTTP/1.1): Range Requests</title>
@@ -633,7 +633,7 @@ A representation can be partitioned into subranges according to various structur
 </blockquote>
 
 <p>
-一个表示形式可以依据各种结构单元来划分为多个子范围，依赖于继承自这个表示形式的媒体类型的结构。这个“<ruby>范围单位<rt>range unit</rt></ruby>”是用在 <code>Accept-Ranges</code> （<a href="#org6b1d683">章节 2.3</a>）响应头字段里用来声明服务器支持范围请求；用在 <code>Range</code> （<a href="#orgf26e511">章节 3.1</a>）请求头字段里用来描绘所请求的一个表示形式的哪一部分；用在 <code>Content-Range</code> （<a href="#org96d66d2">章节 4.2</a>）有效载荷头字段来描述一个表示形式的哪一部分将会被传输。
+一个表示形式可以依据各种<ruby>结构单元（结构单位）<rt>structural units</rt></ruby>来划分为多个子范围，这种划分依赖于继承自这个表示形式的媒体类型的结构。这个“<ruby>范围单位<rt>range unit</rt></ruby>”是用在 <code>Accept-Ranges</code> （<a href="#org6b1d683">章节 2.3</a>）响应头字段里以声明：服务器能够支持范围请求；用在 <code>Range</code> （<a href="#orgf26e511">章节 3.1</a>）请求头字段里以描绘：所请求的一个表示形式的哪一部分；用在 <code>Content-Range</code> （<a href="#org96d66d2">章节 4.2</a>）有效载荷头字段里以描述：一个表示形式的哪一部分将会被传输。
 </p>
 
 <div class="org-src-container">
@@ -711,7 +711,7 @@ The first 500 bytes (byte offsets 0-499, inclusive):
 </p>
 
 <p>
-第一个 500 字节（字节偏移量为 0-499，<ruby>闭合区间<rt>inclusive</rt></ruby>）：
+第一组 500 个字节（字节偏移量为 0-499，<ruby>闭合区间<rt>inclusive</rt></ruby>）：
 </p>
 
 <pre class="example">
@@ -723,7 +723,7 @@ The second 500 bytes (byte offsets 500-999, inclusive):
 </p>
 
 <p>
-第二个 500 字节（字节偏移量为 500-999，闭合区间）：
+第二组 500 个字节（字节偏移量为 500-999，闭合区间）：
 </p>
 
 <pre class="example">
@@ -799,7 +799,7 @@ The final 500 bytes (byte offsets 9500-9999, inclusive):
 </p>
 
 <p>
-最后 500 字节（字节偏移量为 9500-9999，闭合区间）：
+最后 500 个字节（字节偏移量为 9500-9999，闭合区间）：
 </p>
 
 <pre class="example">
@@ -835,7 +835,7 @@ Other valid (but not canonical) specifications of the second 500 bytes (byte off
 </p>
 
 <p>
-其他有效的（但<ruby>不规范的<rt>not canonical</rt></ruby>）对第二个 500 字节的指定（字节偏移量为 500-999，闭合区间）：
+其他有效的（但<ruby>不规范的<rt>not canonical</rt></ruby>）对第二组 500 个字节的指定（字节偏移量为 500-999，闭合区间）：
 </p>
 
 <pre class="example">
