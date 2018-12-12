@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-11 Tue 19:12 -->
+<!-- 2018-12-12 Wed 19:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7233: Hypertext Transfer Protocol (HTTP/1.1): Range Requests</title>
@@ -418,10 +418,10 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#org300aaf5">4. 响应给范围请求 / Responses to a Range Request</a>
 <ul>
-<li><a href="#org2d91892">4.1. 206 Partial Content</a></li>
+<li><a href="#org5528062">4.1. 206 部分内容 / 206 Partial Content</a></li>
 <li><a href="#org96d66d2">4.2. Content-Range</a></li>
 <li><a href="#orgbffe853">4.3. Combining Ranges</a></li>
-<li><a href="#org9a26c49">4.4. 416 Range Not Satisfiable</a></li>
+<li><a href="#org3d17c50">4.4. 416 范围无法满足 / 416 Range Not Satisfiable</a></li>
 </ul>
 </li>
 <li><a href="#org151b723">5. IANA 注意事项 / IANA Considerations</a>
@@ -987,7 +987,7 @@ A server <b>MAY</b> ignore the <code>Range</code> header field. However, origin 
 </blockquote>
 
 <p>
-服务器 <b>可以</b> 忽略 <code>Range</code> 头字段。但是，源服务器和中间人缓存服务器应该尽可能去支持<ruby>字节范围<rt>byte ranges</rt></ruby>，因为 <code>Range</code> 支持从传输一部分数据后（因某种原因导致）传输失败了的场景中高效地恢复过来，还支持获取大表示形式中的一部分。如果所接收到的请求方法不是 GET，那么，服务器 <b>必须</b> 忽略这个消息中的 <code>Range</code> 头字段。
+服务器 <b>可以</b> 忽略 <code>Range</code> 头字段。但是，源服务器和中间人缓存服务器应该尽可能去支持<ruby>字节范围<rt>byte ranges</rt></ruby>，因为 <code>Range</code> 支持从传输一部分数据后（因某种原因导致）传输失败了的场景中高效地恢复过来，还支持获取一个大的表示形式中的一部分。如果所接收到的请求方法不是 GET，那么，服务器 <b>必须</b> 忽略这个消息中的 <code>Range</code> 头字段。
 </p>
 
 <blockquote>
@@ -1007,7 +1007,7 @@ A server that supports range requests <b>MAY</b> ignore or reject a <code>Range<
 </blockquote>
 
 <p>
-如果 <code>Range</code> 头字段由不止两个的重叠范围组成，或者由许多不是以升序排列的小范围组成，那么，支持范围请求的服务器 <b>可以</b> 忽略或者拒绝这个头字段。因为这两种组成方式所表明的是要不就是客户端的实现有问题，要不就是出现了刻意的<ruby>拒绝服务攻击<rt>denial-of-service attack</rt></ruby>（<a href="#orgac5f1c2">章节 6.1</a>）。如果划分为多个小范围进行处理和传输本质上比包含同样数据的单个大范围的效率要差的话，客户端 <b>不应当</b> 请求多个范围。
+如果 <code>Range</code> 头字段由不止两个的重叠范围组成，或者由许多不是以升序排列的小范围组成，那么，支持范围请求的服务器 <b>可以</b> 忽略或者拒绝这个头字段。因为之所以出现这两种组成方式，要不就是客户端的实现有问题，要不就是出现了刻意的<ruby>拒绝服务攻击<rt>denial-of-service attack</rt></ruby>（<a href="#orgac5f1c2">章节 6.1</a>）。如果划分为多个小范围进行处理和传输本质上比包含同样数据的单个大范围的效率要差的话，客户端 <b>不应当</b> 请求多个范围。
 </p>
 
 <blockquote>
@@ -1026,7 +1026,7 @@ The <code>Range</code> header field is evaluated after evaluating the preconditi
 </p>
 
 <p>
-在<ruby>前提条件头字段<rt>precondition header fields</rt></ruby>（定义在【<a href="RFC7232.html">RFC7232</a>】）求值以后，并且假如没有 <code>Range</code> 头字段的话这次请求的最终结果将会是一个 <code>200 (OK)</code> 响应的情况下，<code>Range</code> 头字段才会被求值。换句话说，当一个条件 GET 请求的结果是一个 <code>304 (Not Modified)</code> 响应的时候，<code>Range</code> 会被忽略。
+在<ruby>前提条件头字段<rt>precondition header fields</rt></ruby>（定义在【<a href="RFC7232.html">RFC7232</a>】）求值以后，并且假如没有 <code>Range</code> 头字段的话这次请求的最终结果将会是一个 <code>200 (OK)</code> 响应，那么，<code>Range</code> 头字段才会被求值。换句话说，当一个条件 GET 请求的结果是一个 <code>304 (Not Modified)</code> 响应的时候，<code>Range</code> 会被忽略。
 </p>
 </blockquote>
 
@@ -1053,7 +1053,7 @@ If all of the preconditions are true, the server supports the <code>Range</code>
 </blockquote>
 
 <p>
-如果所有前提条件皆为真，且服务器支持对目标资源应用 <code>Range</code> 头字段，且所指定的范围皆为有效的和<ruby>可满足的<rt>satisfiable</rt></ruby>（其定义见<a href="#org95c1795">章节 2.1</a>），那么，服务器 <b>应当</b> 发送一个 <code>206 (Partial Content)</code> 响应，带有一个有效载荷来包含一个或多个<ruby>局部表示形式<rt>partial representations</rt></ruby>，这些局部表示形式与所请求的<ruby>可满足的范围<rt>satisfiable ranges</rt></ruby>一一对应，其定义见<a href="#org300aaf5">章节 4</a>。
+如果所有前提条件皆为真，且服务器支持对目标资源应用 <code>Range</code> 头字段，且所指定的范围皆为有效的和<ruby>可满足的<rt>satisfiable</rt></ruby>（其定义见<a href="#org95c1795">章节 2.1</a>），那么，服务器 <b>应当</b> 发送一个 <code>206 (Partial Content)</code> 响应，带有一个有效载荷来包含一个表示形式的一个或多个部分，这些部分对应于客户端所请求的<ruby>可满足的范围<rt>satisfiable ranges</rt></ruby>，其定义见<a href="#org300aaf5">章节 4</a>。
 </p>
 
 <blockquote>
@@ -1088,7 +1088,7 @@ The "If-Range" header field allows a client to "short-circuit" the second reques
 </blockquote>
 
 <p>
-If-Range 头字段让客户端可以“<ruby>短路<rt>short-circuit</rt></ruby>”第二次请求。通俗地说，它的含义如下：如果表示形式未发生变化，把我在 <code>Range</code> 所请求的范围的那部分发送给我；否则，把整个表示形式发送给我。
+<code>If-Range</code> 头字段让客户端可以“<ruby>短路<rt>short-circuit</rt></ruby>”第二次请求。通俗地说，它的含义如下：如果表示形式未发生变化，把我在 <code>Range</code> 所请求的范围的那部分发送给我；否则，把整个表示形式发送给我。
 </p>
 
 <blockquote>
@@ -1119,7 +1119,7 @@ A client <b>MUST NOT</b> generate an <code>If-Range</code> header field containi
 </blockquote>
 
 <p>
-客户端 <b>禁止</b> 生成这样一种 <code>If-Range</code> 头字段，其值是一个标记为弱验证类型的实体标签。客户端 <b>禁止</b> 生成这样一种 <code>If-Range</code> 头字段，其值是一个 HTTP-date，除非这个客户端的表示形式没有对应的实体标签，并且这个日期是一种<a href="RFC7232.html#ID-ba954c8f-272f-409a-9fdd-e092207700c5">【RFC7232】章节 2.2.2</a> 所说的强验证类型。
+客户端 <b>禁止</b> 生成这样一种 <code>If-Range</code> 头字段，其值是一个标记为弱验证类型的实体标签。客户端 <b>禁止</b> 生成这样一种 <code>If-Range</code> 头字段，其值是一个 <code>HTTP-date</code>，除非这个客户端的表示形式没有对应的实体标签，并且这个日期是一种<a href="RFC7232.html#ID-ba954c8f-272f-409a-9fdd-e092207700c5">【RFC7232】章节 2.2.2</a> 所说的强验证类型。
 </p>
 
 <blockquote>
@@ -1129,7 +1129,7 @@ A server that evaluates an <code>If-Range</code> precondition <b>MUST</b> use th
 </blockquote>
 
 <p>
-服务器对一个 <code>If-Range</code> 前提条件进行求值的时候，如果它的值是一个实体标签的话，那么，服务器 <b>必须</b> 使用强对比方法（<a href="RFC7232.html#ID-e3a6dda6-2209-44aa-89af-c37f1b95c2fe">【RFC7232】章节 2.3.2</a>）；另外，如果它的值是一个 <code>HTTP-date</code> 验证器，但不是一种<a href="RFC7232.html#ID-ba954c8f-272f-409a-9fdd-e092207700c5">【RFC7232】章节 2.2.2</a> 所说的强验证器，那么，服务器 <b>必须</b> 将这个条件求值为假。有个有效的（强验证类型的）实体标签可以通过检测前两个字符是否有一个双引号 <code>DQUOTE</code> 来区分一个有效的 HTTP-date。
+服务器对一个 <code>If-Range</code> 前提条件进行求值的时候，如果它的值是一个实体标签的话，那么，服务器 <b>必须</b> 使用强对比方法（<a href="RFC7232.html#ID-e3a6dda6-2209-44aa-89af-c37f1b95c2fe">【RFC7232】章节 2.3.2</a>）；另外，如果它的值是一个 <code>HTTP-date</code> 验证器，但不是一种<a href="RFC7232.html#ID-ba954c8f-272f-409a-9fdd-e092207700c5">【RFC7232】章节 2.2.2</a> 所说的强验证类型，那么，服务器 <b>必须</b> 将这个条件求值为假。一个有效的（强验证类型的）实体标签可以通过检测前两个字符是否有一个双引号 <code>DQUOTE</code> 来区分一个有效的 HTTP-date。
 </p>
 
 <blockquote>
@@ -1150,7 +1150,7 @@ If the validator given in the <code>If-Range</code> header field matches the cur
 </blockquote>
 
 <p>
-如果 <code>If-Range</code> 头字段所给出的验证器匹配上了目标资源的已选表示形式的当前验证器，那么，服务器 <b>应当</b> 将 <code>Range</code> 头字段作为所要请求的范围来处理。如果验证器没有匹配，那么，服务器 <b>必须</b> 忽略 <code>Range</code> 头字段。需要注意的是，这种对比是通过精准匹配的，包含验证器是一个 <code>HTTP-date</code> 的情况，区别于对一个 <code>If-Unmodified-Since</code> 条件式进行求值时所使用的“早于或等于”对比方式。
+如果 <code>If-Range</code> 头字段所给出的验证器匹配上了目标资源的已选表示形式的当前验证器，那么，服务器 <b>应当</b> 将 <code>Range</code> 头字段作为所要请求的范围来处理。如果验证器没有匹配，那么，服务器 <b>必须</b> 忽略 <code>Range</code> 头字段。需要注意的是，这种对比是通过精准匹配的，包括验证器是一个 <code>HTTP-date</code> 的情况，区别于对一个 <code>If-Unmodified-Since</code> 条件式进行求值时所使用的“早于或等于”对比方式。
 </p>
 </div>
 </div>
@@ -1160,20 +1160,28 @@ If the validator given in the <code>If-Range</code> header field matches the cur
 <h2 id="org300aaf5"><a id="ID-028da72d-1e54-4bee-ac56-3d63169c6c3f"></a>4. 响应给范围请求 / Responses to a Range Request</h2>
 <div class="outline-text-2" id="text-org300aaf5">
 </div>
-<div id="outline-container-org2d91892" class="outline-3">
-<h3 id="org2d91892"><a id="ID-32182a4e-00f6-44d9-82e2-f08d98b59324"></a>4.1. 206 Partial Content</h3>
-<div class="outline-text-3" id="text-org2d91892">
+<div id="outline-container-org5528062" class="outline-3">
+<h3 id="org5528062"><a id="ID-32182a4e-00f6-44d9-82e2-f08d98b59324"></a>4.1. 206 部分内容 / 206 Partial Content</h3>
+<div class="outline-text-3" id="text-org5528062">
 <blockquote>
 <p>
-The 206 (Partial Content) status code indicates that the server is successfully fulfilling a range request for the target resource by transferring one or more parts of the selected representation that correspond to the satisfiable ranges found in the request's Range header field (Section 3.1).
+The <code>206 (Partial Content)</code> status code indicates that the server is successfully fulfilling a range request for the target resource by transferring one or more parts of the selected representation that correspond to the satisfiable ranges found in the request's <code>Range</code> header field (<a href="#orgf26e511">Section 3.1</a>).
 </p>
 </blockquote>
 
+<p>
+<code>206 (Partial Content)</code> 状态码表明：服务器通过传输已选表示形式的一个或多个部分，已经成功地<ruby>实现<rt>fulfilling</rt></ruby>了客户端对目标资源的一个范围请求，这些部分的表示形式对应于请求消息的 <code>Range</code> 头字段（<a href="#orgf26e511">章节 3.1</a>）里的可满足的范围。
+</p>
+
 <blockquote>
 <p>
-If a single part is being transferred, the server generating the 206 response MUST generate a Content-Range header field, describing what range of the selected representation is enclosed, and a payload consisting of the range. For example:
+If a single part is being transferred, the server generating the <code>206</code> response <b>MUST</b> generate a <code>Content-Range</code> header field, describing what range of the selected representation is enclosed, and a payload consisting of the range. For example:
 </p>
 </blockquote>
+
+<p>
+服务器在生成一个 206 响应的时候，如果即将传输的是表示形式的<ruby>单个部分<rt>single part</rt></ruby>（区别于<ruby>多个部分<rt>multiple part</rt></ruby>），那么，服务器 <b>必须</b> 生成一个 <code>Content-Range</code> 头字段来描述这个响应所封装的是已选表示形式的什么范围，以及生成这个范围所组成的一个有效载荷。例如：
+</p>
 
 <pre class="example">
 HTTP/1.1 206 Partial Content
@@ -1188,15 +1196,23 @@ Content-Type: image/gif
 
 <blockquote>
 <p>
-If multiple parts are being transferred, the server generating the 206 response MUST generate a "multipart/byteranges" payload, as defined in Appendix A, and a Content-Type header field containing the multipart/byteranges media type and its required boundary parameter. To avoid confusion with single-part responses, a server MUST NOT generate a Content-Range header field in the HTTP header section of a multiple part response (this field will be sent in each part instead).
+If multiple parts are being transferred, the server generating the <code>206</code> response <b>MUST</b> generate a "multipart/byteranges" payload, as defined in <a href="#orgc85d248">Appendix A</a>, and a <code>Content-Type</code> header field containing the multipart/byteranges media type and its required <code>boundary</code> parameter. To avoid confusion with single-part responses, a server <b>MUST NOT</b> generate a <code>Content-Range</code> header field in the HTTP header section of a multiple part response (this field will be sent in each part instead).
 </p>
 </blockquote>
 
+<p>
+服务器在生成一个 <code>206</code> 响应的时候，如果即将传输的是表示形式的<ruby>多个部分<rt>multiple parts</rt></ruby>（区别于<ruby>单个部分<rt>single part</rt></ruby>），那么，服务器 <b>必须</b> 生成一个 "multipart/byteranges" 类型的有效载荷（其定义见<a href="#orgc85d248">附录 A</a>），以及生成一个 <code>Content-Type</code> 头字段，这个头字段包含 multipart/byteranges 媒体类型以及该媒体类型所要求的 <code>boundary</code> 参数。为了避免与<ruby>单个部分的响应<rt>single-part responses</rt></ruby>产生混淆，服务器 <b>禁止</b> 在<ruby>多个部分<rt>multiple part</rt></ruby>的 HTTP 响应头里生成 <code>Content-Range</code> 头字段（而是改为将这个字段在每一个部分内部进行发送）。
+</p>
+
 <blockquote>
 <p>
-Within the header area of each body part in the multipart payload, the server MUST generate a Content-Range header field corresponding to the range being enclosed in that body part. If the selected representation would have had a Content-Type header field in a 200 (OK) response, the server SHOULD generate that same Content-Type field in the header area of each body part. For example:
+Within the header area of each body part in the multipart payload, the server <b>MUST</b> generate a <code>Content-Range</code> header field corresponding to the range being enclosed in that body part. If the selected representation would have had a <code>Content-Type</code> header field in a <code>200 (OK)</code> response, the server <b>SHOULD</b> generate that same <code>Content-Type</code> field in the header area of each body part. For example:
 </p>
 </blockquote>
+
+<p>
+对于 multipart 类型的有效载荷，服务器 <b>必须</b> 在这种有效载荷中的每一个<ruby>主体部分<rt>body part</rt></ruby>的<ruby>头部区域<rt>header area</rt></ruby>内都生成一个 <code>Content-Range</code> 头字段，每个头字段的值表示被置入到对应的主体部分的表示形式数据的范围。假设这个已选表示形式在 <code>200 (OK)</code> 响应的时候会带有一个 <code>Content-Type</code> 头字段，那么，在 <code>206</code> 响应中，服务器 <b>应当</b> 在每个主体部分的头部区域中生成同样的 <code>Content-Type</code> 字段。例如：
+</p>
 
 <pre class="example">
 HTTP/1.1 206 Partial Content
@@ -1220,39 +1236,66 @@ Content-Range: bytes 7000-7999/8000
 
 <blockquote>
 <p>
-When multiple ranges are requested, a server MAY coalesce any of the ranges that overlap, or that are separated by a gap that is smaller than the overhead of sending multiple parts, regardless of the order in which the corresponding byte-range-spec appeared in the received Range header field. Since the typical overhead between parts of a multipart/byteranges payload is around 80 bytes, depending on the selected representation's media type and the chosen boundary parameter length, it can be less efficient to transfer many small disjoint parts than it is to transfer the entire selected representation.
+When multiple ranges are requested, a server <b>MAY</b> coalesce any of the ranges that overlap, or that are separated by a gap that is smaller than the overhead of sending multiple parts, regardless of the order in which the corresponding <code>byte-range-spec</code> appeared in the received <code>Range</code> header field. Since the typical overhead between parts of a multipart/byteranges payload is around 80 bytes, depending on the selected representation's media type and the chosen <code>boundary</code> parameter length, it can be less efficient to transfer many small disjoint parts than it is to transfer the entire selected representation.
+</p>
+</blockquote>
+
+<p>
+当服务器被请求<ruby>多个范围<rt>multiple ranges</rt></ruby>，无论这些范围所对应的 <code>byte-range-spec</code> 按什么顺序出现在服务器接收到的 <code>Range</code> 头字段里，服务器都 <b>可以</b> 将这些范围的重叠部分合并起来，或者将以一个小间隙分隔的范围合并起来——如果这个间隙小于发送多个部分的<ruby>开销<rt>overhead</rt></ruby>的话。因为一个 multipart/byteranges 类型的有效载荷的各个部分之间的一般开销是 80 <ruby>字节<rt>bytes</rt></ruby>，根据已选表示形式的媒体类型以及所选择的 <code>boundary</code> 参数的长度，传输许多小的分离部分的效率可能会低于传输整个已选表示形式。
+</p>
+
+<blockquote>
+<p>
+overhead，在计算机网络的帧结构中，除了有用数据以外，还有很多控制信息，这些控制信息用来保证通信的完成。这些控制信息被称作系统开销。
+——百度百科
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-A server MUST NOT generate a multipart response to a request for a single range, since a client that does not request multiple parts might not support multipart responses. However, a server MAY generate a multipart/byteranges payload with only a single body part if multiple ranges were requested and only one range was found to be satisfiable or only one range remained after coalescing. A client that cannot process a multipart/byteranges response MUST NOT generate a request that asks for multiple ranges.
+A server <b>MUST NOT</b> generate a multipart response to a request for a single range, since a client that does not request multiple parts might not support multipart responses. However, a server <b>MAY</b> generate a multipart/byteranges payload with only a single body part if multiple ranges were requested and only one range was found to be satisfiable or only one range remained after coalescing. A client that cannot process a multipart/byteranges response <b>MUST NOT</b> generate a request that asks for multiple ranges.
+</p>
+</blockquote>
+
+<p>
+当客户端请求一个<ruby>单个范围<rt>single range</rt></ruby>的时候，服务器 <b>禁止</b> 生成一个<ruby>多个部分的响应<rt>multipart response</rt></ruby>来回应，这是因为客户端之所以不请求多个部分，可能是由于它不支持多个部分的响应。但是，如果所请求的是多个范围，并且最后发现只有一个范围可被满足，或者经合并后只剩下一个范围，那么，服务器 <b>可以</b> 生成一个 multipart/byteranges 有效载荷，其仅带有单个主体部分。不能处理 multipart/byteranges 响应的客户端 <b>禁止</b> 生成一个<ruby>请求<rt>asks for</rt></ruby>多个范围的请求消息。
+</p>
+
+<blockquote>
+<p>
+When a multipart response payload is generated, the server <b>SHOULD</b> send the parts in the same order that the corresponding <code>byte-range-spec</code> appeared in the received <code>Range</code> header field, excluding those ranges that were deemed unsatisfiable or that were coalesced into other ranges. A client that receives a multipart response <b>MUST</b> inspect the <code>Content-Range</code> header field present in each body part in order to determine which range is contained in that body part; a client cannot rely on receiving the same ranges that it requested, nor the same order that it requested.
+</p>
+</blockquote>
+
+<p>
+当服务器生成了一个<ruby>多个部分的响应有效载荷<rt>multipart response payload</rt></ruby>的时候，服务器 <b>应当</b> 按照它所接收到的 <code>Range</code> 头字段里的 <code>byte-range-spec</code> 的出现顺序（排除掉它认为是不可满足的或合并成其他范围的那些范围）来发送这些部分。客户端在接收到一个多个部分的响应时，<b>必须</b> 检查出现在每一个主体部分里的 <code>Content-Range</code> 头字段，为了确定哪一个范围是包含在那个主体部分里的。客户端不能完全相信可以接收到与它所请求相一致的范围，或者与它所请求相一致的顺序。
+</p>
+
+<blockquote>
+<p>
+When a <code>206</code> response is generated, the server <b>MUST</b> generate the following header fields, in addition to those required above, if the field would have been sent in a <code>200 (OK)</code> response to the same request: <code>Date</code>, <code>Cache-Control</code>, <code>ETag</code>, <code>Expires</code>, <code>Content-Location</code>, and <code>Vary</code>.
+</p>
+</blockquote>
+
+<p>
+服务器生成一个 <code>206</code> 响应的时候，服务器除了需要生成上述所要求的头字段以外，假如生成的是一个 <code>200 (OK)</code> 响应到同一个请求，如果这个 <code>200</code> 响应包含下列头字段，那么，服务器 <b>必须</b> 将这些头字段同样生成到 <code>206</code> 响应里，包括：<code>Date</code>、<code>Cache-Control</code>、<code>ETag</code>、<code>Expires</code>、<code>Content-Location</code>、以及 <code>Vary</code>。
+</p>
+
+<blockquote>
+<p>
+If a <code>206</code> is generated in response to a request with an <code>If-Range</code> header field, the sender <b>SHOULD NOT</b> generate other representation header fields beyond those required above, because the client is understood to already have a prior response containing those header fields. Otherwise, the sender <b>MUST</b> generate all of the representation header fields that would have been sent in a <code>200 (OK)</code> response to the same request.
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-When a multipart response payload is generated, the server SHOULD send the parts in the same order that the corresponding byte-range-spec appeared in the received Range header field, excluding those ranges that were deemed unsatisfiable or that were coalesced into other ranges. A client that receives a multipart response MUST inspect the Content-Range header field present in each body part in order to determine which range is contained in that body part; a client cannot rely on receiving the same ranges that it requested, nor the same order that it requested.
+A <code>206</code> response is cacheable by default; i.e., unless otherwise indicated by explicit cache controls (see Section 4.2.2 of [RFC7234]).
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-When a 206 response is generated, the server MUST generate the following header fields, in addition to those required above, if the field would have been sent in a 200 (OK) response to the same request: Date, Cache-Control, ETag, Expires, Content-Location, and Vary.
+<code>206</code> 响应默认是<ruby>可缓存的<rt>cacheable</rt></ruby>，也就是说，除非由显式带有的<ruby>缓存控制<rt>cache controls</rt></ruby>（<a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">【RFC7234】章节 4.2.2</a>）另有指定。
 </p>
-</blockquote>
-
-<blockquote>
-<p>
-If a 206 is generated in response to a request with an If-Range header field, the sender SHOULD NOT generate other representation header fields beyond those required above, because the client is understood to already have a prior response containing those header fields. Otherwise, the sender MUST generate all of the representation header fields that would have been sent in a 200 (OK) response to the same request.
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-A 206 response is cacheable by default; i.e., unless otherwise indicated by explicit cache controls (see Section 4.2.2 of [RFC7234]).
-</p>
-</blockquote>
 </div>
 </div>
 
@@ -1420,9 +1463,9 @@ The combined response message body consists of the union of partial content rang
 </div>
 </div>
 
-<div id="outline-container-org9a26c49" class="outline-3">
-<h3 id="org9a26c49"><a id="ID-a2f29dcf-8c15-4b15-ab66-742f476d27f3"></a>4.4. 416 Range Not Satisfiable</h3>
-<div class="outline-text-3" id="text-org9a26c49">
+<div id="outline-container-org3d17c50" class="outline-3">
+<h3 id="org3d17c50"><a id="ID-a2f29dcf-8c15-4b15-ab66-742f476d27f3"></a>4.4. 416 范围无法满足 / 416 Range Not Satisfiable</h3>
+<div class="outline-text-3" id="text-org3d17c50">
 <p>
 Th#+BEGIN_QUOTE
 e 416 (Range Not Satisfiable) status code indicates that none of the ranges in the request's Range header field (Section 3.1) overlap the current extent of the selected resource or that the set of ranges requested has been rejected due to invalid ranges or an excessive request of small or overlapping ranges.

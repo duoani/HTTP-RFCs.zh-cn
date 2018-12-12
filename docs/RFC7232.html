@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-11 Tue 19:12 -->
+<!-- 2018-12-12 Wed 19:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7232: Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests</title>
@@ -1789,7 +1789,7 @@ The server generating a <code>304</code> response <b>MUST</b> generate any of th
 </blockquote>
 
 <p>
-服务器生成一个 <code>304</code> 响应的时候，<b>必须</b> 把像生成一个 <code>200 (OK)</code> 响应到同一个请求时所具有的以下头字段生成到 <code>304</code> 响应里：<code>Cache-Control</code>、<code>Content-Location</code>、<code>Date</code>、<code>ETag</code>、<code>Expires</code>、以及 <code>Vary</code>。
+服务器生成一个 <code>304</code> 响应的时候，假如生成的是一个 <code>200 (OK)</code> 响应到同一个请求，如果这个 <code>200</code> 响应包含下列头字段，那么，服务器 <b>必须</b> 将这些头字段同样生成到 <code>304</code> 响应里，包括：<code>Cache-Control</code>、<code>Content-Location</code>、<code>Date</code>、<code>ETag</code>、<code>Expires</code>、以及 <code>Vary</code>。
 </p>
 
 <blockquote>
