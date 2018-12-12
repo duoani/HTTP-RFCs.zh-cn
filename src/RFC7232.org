@@ -846,7 +846,7 @@ The =304 (Not Modified)= status code indicates that a conditional GET or HEAD re
 The server generating a =304= response *MUST* generate any of the following header fields that would have been sent in a =200 (OK)= response to the same request: =Cache-Control=, =Content-Location=, =Date=, =ETag=, =Expires=, and =Vary=.
 #+END_QUOTE
 
-服务器生成一个 =304= 响应的时候，*必须* 把像生成一个 =200 (OK)= 响应到同一个请求时所具有的以下头字段生成到 =304= 响应里：=Cache-Control=、=Content-Location=、=Date=、=ETag=、=Expires=、以及 =Vary=。
+服务器生成一个 =304= 响应的时候，假如生成的是一个 =200 (OK)= 响应到同一个请求，如果这个 =200= 响应包含下列头字段，那么，服务器 *必须* 将这些头字段同样生成到 =304= 响应里，包括：=Cache-Control=、=Content-Location=、=Date=、=ETag=、=Expires=、以及 =Vary=。
 
 #+BEGIN_QUOTE
 Since the goal of a =304= response is to minimize information transfer when the recipient already has one or more cached representations, a sender *SHOULD NOT* generate representation metadata other than the above listed fields unless said metadata exists for the purpose of guiding cache updates (e.g., =Last-Modified= might be useful if the response does not have an =ETag= field).
