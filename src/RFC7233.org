@@ -356,7 +356,7 @@ The "Range" header field on a GET request modifies the method semantics to reque
 A server *MAY* ignore the =Range= header field. However, origin servers and intermediate caches ought to support byte ranges when possible, since =Range= supports efficient recovery from partially failed transfers and partial retrieval of large representations. A server *MUST* ignore a =Range= header field received with a request method other than GET.
 #+END_QUOTE
 
-服务器 *可以* 忽略 =Range= 头字段。但是，源服务器和中间人缓存服务器应该尽可能去支持[[ruby:byte%20ranges][字节范围]]，因为 =Range= 支持从传输一部分数据后（因某种原因导致）传输失败了的场景中高效地恢复过来，还支持获取大表示形式中的一部分。如果所接收到的请求方法不是 GET，那么，服务器 *必须* 忽略这个消息中的 =Range= 头字段。
+服务器 *可以* 忽略 =Range= 头字段。但是，源服务器和中间人缓存服务器应该尽可能去支持[[ruby:byte%20ranges][字节范围]]，因为 =Range= 支持从传输一部分数据后（因某种原因导致）传输失败了的场景中高效地恢复过来，还支持获取一个大的表示形式中的一部分。如果所接收到的请求方法不是 GET，那么，服务器 *必须* 忽略这个消息中的 =Range= 头字段。
 
 #+BEGIN_QUOTE
 An origin server *MUST* ignore a =Range= header field that contains a range unit it does not understand. A proxy *MAY* discard a =Range= header field that contains a range unit it does not understand.
@@ -368,7 +368,7 @@ An origin server *MUST* ignore a =Range= header field that contains a range unit
 A server that supports range requests *MAY* ignore or reject a =Range= header field that consists of more than two overlapping ranges, or a set of many small ranges that are not listed in ascending order, since both are indications of either a broken client or a deliberate denial-of-service attack ([[id:f9a13f54-ed44-4a7f-b1ef-1e912979e5cd][Section 6.1]]). A client *SHOULD NOT* request multiple ranges that are inherently less efficient to process and transfer than a single range that encompasses the same data.
 #+END_QUOTE
 
-如果 =Range= 头字段由不止两个的重叠范围组成，或者由许多不是以升序排列的小范围组成，那么，支持范围请求的服务器 *可以* 忽略或者拒绝这个头字段。因为这两种组成方式所表明的是要不就是客户端的实现有问题，要不就是出现了刻意的[[ruby:denial-of-service%20attack][拒绝服务攻击]]（[[id:f9a13f54-ed44-4a7f-b1ef-1e912979e5cd][章节 6.1]]）。如果划分为多个小范围进行处理和传输本质上比包含同样数据的单个大范围的效率要差的话，客户端 *不应当* 请求多个范围。
+如果 =Range= 头字段由不止两个的重叠范围组成，或者由许多不是以升序排列的小范围组成，那么，支持范围请求的服务器 *可以* 忽略或者拒绝这个头字段。因为之所以出现这两种组成方式，要不就是客户端的实现有问题，要不就是出现了刻意的[[ruby:denial-of-service%20attack][拒绝服务攻击]]（[[id:f9a13f54-ed44-4a7f-b1ef-1e912979e5cd][章节 6.1]]）。如果划分为多个小范围进行处理和传输本质上比包含同样数据的单个大范围的效率要差的话，客户端 *不应当* 请求多个范围。
 
 #+BEGIN_QUOTE
 A client that is requesting multiple ranges *SHOULD* list those ranges in ascending order (the order in which they would typically be received in a complete representation) unless there is a specific need to request a later part earlier. For example, a user agent processing a large representation with an internal catalog of parts might need to request later parts first, particularly if the representation consists of pages stored in reverse order and the user agent wishes to transfer one page at a time.
@@ -379,7 +379,7 @@ A client that is requesting multiple ranges *SHOULD* list those ranges in ascend
 #+BEGIN_QUOTE
 The =Range= header field is evaluated after evaluating the precondition header fields defined in [[[file:RFC7232.org][RFC7232]]], and only if the result in absence of the =Range= header field would be a =200 (OK)= response. In other words, =Range= is ignored when a conditional GET would result in a =304 (Not Modified)= response.
 
-在[[ruby:precondition%20header%20fields][前提条件头字段]]（定义在【[[file:RFC7232.org][RFC7232]]】）求值以后，并且假如没有 =Range= 头字段的话这次请求的最终结果将会是一个 =200 (OK)= 响应的情况下，=Range= 头字段才会被求值。换句话说，当一个条件 GET 请求的结果是一个 =304 (Not Modified)= 响应的时候，=Range= 会被忽略。
+在[[ruby:precondition%20header%20fields][前提条件头字段]]（定义在【[[file:RFC7232.org][RFC7232]]】）求值以后，并且假如没有 =Range= 头字段的话这次请求的最终结果将会是一个 =200 (OK)= 响应，那么，=Range= 头字段才会被求值。换句话说，当一个条件 GET 请求的结果是一个 =304 (Not Modified)= 响应的时候，=Range= 会被忽略。
 
 #+END_QUOTE
 
@@ -397,7 +397,7 @@ The =If-Range= header field ([[id:2859ef1f-8309-4b7d-9e22-963391b5822a][Section 
 If all of the preconditions are true, the server supports the =Range= header field for the target resource, and the specified range(s) are valid and satisfiable (as defined in [[id:67c9bce9-6c76-46ec-9932-1b5dde9f7746][Section 2.1]]), the server *SHOULD* send a =206 (Partial Content)= response with a payload containing one or more partial representations that correspond to the satisfiable ranges requested, as defined in [[id:028da72d-1e54-4bee-ac56-3d63169c6c3f][Section 4]].
 #+END_QUOTE
 
-如果所有前提条件皆为真，且服务器支持对目标资源应用 =Range= 头字段，且所指定的范围皆为有效的和[[ruby:satisfiable][可满足的]]（其定义见[[id:67c9bce9-6c76-46ec-9932-1b5dde9f7746][章节 2.1]]），那么，服务器 *应当* 发送一个 =206 (Partial Content)= 响应，带有一个有效载荷来包含一个或多个[[ruby:partial%20representations][局部表示形式]]，这些局部表示形式与所请求的[[ruby:satisfiable%20ranges][可满足的范围]]一一对应，其定义见[[id:028da72d-1e54-4bee-ac56-3d63169c6c3f][章节 4]]。
+如果所有前提条件皆为真，且服务器支持对目标资源应用 =Range= 头字段，且所指定的范围皆为有效的和[[ruby:satisfiable][可满足的]]（其定义见[[id:67c9bce9-6c76-46ec-9932-1b5dde9f7746][章节 2.1]]），那么，服务器 *应当* 发送一个 =206 (Partial Content)= 响应，带有一个有效载荷来包含一个或多个[[ruby:partial%20representations][局部表示形式]]，这些局部表示形式对应于所请求的[[ruby:satisfiable%20ranges][可满足的范围]]，其定义见[[id:028da72d-1e54-4bee-ac56-3d63169c6c3f][章节 4]]。
 
 #+BEGIN_QUOTE
 If all of the preconditions are true, the server supports the =Range= header field for the target resource, and the specified range(s) are invalid or unsatisfiable, the server *SHOULD* send a =416 (Range Not Satisfiable)= response.
@@ -420,7 +420,7 @@ If a client has a partial copy of a representation and wishes to have an up-to-d
 The "If-Range" header field allows a client to "short-circuit" the second request. Informally, its meaning is as follows: if the representation is unchanged, send me the part(s) that I am requesting in =Range=; otherwise, send me the entire representation.
 #+END_QUOTE
 
-If-Range 头字段让客户端可以“[[ruby:short-circuit][短路]]”第二次请求。通俗地说，它的含义如下：如果表示形式未发生变化，把我在 =Range= 所请求的范围的那部分发送给我；否则，把整个表示形式发送给我。
+=If-Range= 头字段让客户端可以“[[ruby:short-circuit][短路]]”第二次请求。通俗地说，它的含义如下：如果表示形式未发生变化，把我在 =Range= 所请求的范围的那部分发送给我；否则，把整个表示形式发送给我。
 
 #+BEGIN_QUOTE
 译注：编程语言中的逻辑表达式 and 和 or 通常都带有“短路”功能。
@@ -440,13 +440,13 @@ A client *MUST NOT* generate an =If-Range= header field in a request that does n
 A client *MUST NOT* generate an =If-Range= header field containing an entity-tag that is marked as weak. A client *MUST NOT* generate an =If-Range= header field containing an =HTTP-date= unless the client has no entity-tag for the corresponding representation and the date is a strong validator in the sense defined by [[id:ba954c8f-272f-409a-9fdd-e092207700c5][Section 2.2.2]] of [RFC7232].
 #+END_QUOTE
 
-客户端 *禁止* 生成这样一种 =If-Range= 头字段，其值是一个标记为弱验证类型的实体标签。客户端 *禁止* 生成这样一种 =If-Range= 头字段，其值是一个 HTTP-date，除非这个客户端的表示形式没有对应的实体标签，并且这个日期是一种[[id:ba954c8f-272f-409a-9fdd-e092207700c5][【RFC7232】章节 2.2.2]] 所说的强验证类型。
+客户端 *禁止* 生成这样一种 =If-Range= 头字段，其值是一个标记为弱验证类型的实体标签。客户端 *禁止* 生成这样一种 =If-Range= 头字段，其值是一个 =HTTP-date=，除非这个客户端的表示形式没有对应的实体标签，并且这个日期是一种[[id:ba954c8f-272f-409a-9fdd-e092207700c5][【RFC7232】章节 2.2.2]] 所说的强验证类型。
 
 #+BEGIN_QUOTE
 A server that evaluates an =If-Range= precondition *MUST* use the strong comparison function when comparing entity-tags ([[id:e3a6dda6-2209-44aa-89af-c37f1b95c2fe][Section 2.3.2]] of [RFC7232]) and *MUST* evaluate the condition as false if an =HTTP-date= validator is provided that is not a strong validator in the sense defined by [[id:ba954c8f-272f-409a-9fdd-e092207700c5][Section 2.2.2]] of [RFC7232]. A valid entity-tag can be distinguished from a valid =HTTP-date= by examining the first two characters for a =DQUOTE=.
 #+END_QUOTE
 
-服务器对一个 =If-Range= 前提条件进行求值的时候，如果它的值是一个实体标签的话，那么，服务器 *必须* 使用强对比方法（[[id:e3a6dda6-2209-44aa-89af-c37f1b95c2fe][【RFC7232】章节 2.3.2]]）；另外，如果它的值是一个 =HTTP-date= 验证器，但不是一种[[id:ba954c8f-272f-409a-9fdd-e092207700c5][【RFC7232】章节 2.2.2]] 所说的强验证器，那么，服务器 *必须* 将这个条件求值为假。有个有效的（强验证类型的）实体标签可以通过检测前两个字符是否有一个双引号 =DQUOTE= 来区分一个有效的 HTTP-date。
+服务器对一个 =If-Range= 前提条件进行求值的时候，如果它的值是一个实体标签的话，那么，服务器 *必须* 使用强对比方法（[[id:e3a6dda6-2209-44aa-89af-c37f1b95c2fe][【RFC7232】章节 2.3.2]]）；另外，如果它的值是一个 =HTTP-date= 验证器，但不是一种[[id:ba954c8f-272f-409a-9fdd-e092207700c5][【RFC7232】章节 2.2.2]] 所说的强验证类型，那么，服务器 *必须* 将这个条件求值为假。一个有效的（强验证类型的）实体标签可以通过检测前两个字符是否有一个双引号 =DQUOTE= 来区分一个有效的 HTTP-date。
 
 #+BEGIN_QUOTE
 译注：
@@ -459,7 +459,7 @@ A server that evaluates an =If-Range= precondition *MUST* use the strong compari
 If the validator given in the =If-Range= header field matches the current validator for the selected representation of the target resource, then the server *SHOULD* process the =Range= header field as requested. If the validator does not match, the server *MUST* ignore the =Range= header field. Note that this comparison by exact match, including when the validator is an =HTTP-date=, differs from the "earlier than or equal to" comparison used when evaluating an =If-Unmodified-Since= conditional.
 #+END_QUOTE
 
-如果 =If-Range= 头字段所给出的验证器匹配上了目标资源的已选表示形式的当前验证器，那么，服务器 *应当* 将 =Range= 头字段作为所要请求的范围来处理。如果验证器没有匹配，那么，服务器 *必须* 忽略 =Range= 头字段。需要注意的是，这种对比是通过精准匹配的，包含验证器是一个 =HTTP-date= 的情况，区别于对一个 =If-Unmodified-Since= 条件式进行求值时所使用的“早于或等于”对比方式。
+如果 =If-Range= 头字段所给出的验证器匹配上了目标资源的已选表示形式的当前验证器，那么，服务器 *应当* 将 =Range= 头字段作为所要请求的范围来处理。如果验证器没有匹配，那么，服务器 *必须* 忽略 =Range= 头字段。需要注意的是，这种对比是通过精准匹配的，包括验证器是一个 =HTTP-date= 的情况，区别于对一个 =If-Unmodified-Since= 条件式进行求值时所使用的“早于或等于”对比方式。
 
 * 4. 响应给范围请求 / Responses to a Range Request
   :PROPERTIES:

@@ -44,7 +44,7 @@
 3. RFC 里的 MUST、SHALL、SHOULD、MAY、OPTIONAL 等有什么区别？
 4. 什么是 ABNF？
 
-如果你对下列问题一脸懵逼的话，强烈建议你先看一下 Mark Nottingham 大神博客上的一篇文章：
+如果你对上述问题一脸懵逼的话，强烈建议你先看一下 Mark Nottingham 大神博客上的一篇文章：
 
 - ["How to Read an RFC"](https://www.mnot.net/blog/2018/07/31/read_rfc)
 - 这是在网上找到的[中文翻译版](https://www.freebuf.com/column/184598.html)
