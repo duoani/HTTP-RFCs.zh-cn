@@ -558,8 +558,10 @@ When a =206= response is generated, the server *MUST* generate the following hea
 If a =206= is generated in response to a request with an =If-Range= header field, the sender *SHOULD NOT* generate other representation header fields beyond those required above, because the client is understood to already have a prior response containing those header fields. Otherwise, the sender *MUST* generate all of the representation header fields that would have been sent in a =200 (OK)= response to the same request.
 #+END_QUOTE
 
+如果一个请求带有一个 =If-Range= 头字段，那么，发送端在生成一个 =206= 来回应这个请求的时候，*不应当* 生成上述所要求的头字段以外的其他的表示形式头字段，因为客户端被认为是已经有一个之前的响应包含那些头字段了。否则，发送端 *必须* 像生成一个 =200 (OK)= 响应给同一个请求时所带有的所有表示形式头字段生成到这个 =206= 响应里。
+
 #+BEGIN_QUOTE
-A =206= response is cacheable by default; i.e., unless otherwise indicated by explicit cache controls (see Section 4.2.2 of [RFC7234]).
+A =206= response is cacheable by default; i.e., unless otherwise indicated by explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
 
 =206= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非由显式带有的[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）另有指定。
@@ -569,9 +571,11 @@ A =206= response is cacheable by default; i.e., unless otherwise indicated by ex
 :ID:       7a682301-f05e-4e79-8242-398bbfb57c74
 :END:
 
-Th#+BEGIN_QUOTE
-e "Content-Range" header field is sent in a single part 206 (Partial Content) response to indicate the partial range of the selected representation enclosed as the message payload, sent in each part of a multipart 206 response to indicate the range enclosed within each body part, and sent in 416 (Range Not Satisfiable) responses to provide information about the selected representation.
+#+BEGIN_QUOTE
+The "Content-Range" header field is sent in a single part =206 (Partial Content)= response to indicate the partial range of the selected representation enclosed as the message payload, sent in each part of a multipart =206= response to indicate the range enclosed within each body part, and sent in =416 (Range Not Satisfiable)= responses to provide information about the selected representation.
 #+END_QUOTE
+
+如果 =Content-Range= 头字段发送在一种[[ruby:single%20part][单个部分]]的 =206 (Partial Content)= 响应里，那么它表明一个范围，这个范围是指封装为消息有效载荷的已选表示形式的[[ruby:partial%20range][局部范围]]。如果它发送在一种[[ruby:multipart][多个部分]]的 =206= 响应里的每一个[[ruby:part][分部]]中，那么它表示一个范围，这个范围是指封装在每个[[ruby:body%20part][分部主体]]中的表示形式的范围。如果它发送在 =416 (Range Not Staisfiable)= 响应中，它提供了已选表示形式的相关信息。
 
 #+BEGIN_SRC text
   Content-Range       = byte-content-range
@@ -591,16 +595,22 @@ e "Content-Range" header field is sent in a single part 206 (Partial Content) re
 #+END_SRC
 
 #+BEGIN_QUOTE
-If a 206 (Partial Content) response contains a Content-Range header field with a range unit (Section 2) that the recipient does not understand, the recipient MUST NOT attempt to recombine it with a stored representation. A proxy that receives such a message SHOULD forward it downstream.
+If a =206 (Partial Content)= response contains a =Content-Range= header field with a range unit ([[id:6d7d656a-9741-4193-abd3-60f2f2b3a11a][Section 2]]) that the recipient does not understand, the recipient *MUST NOT* attempt to recombine it with a stored representation. A proxy that receives such a message *SHOULD* forward it downstream.
 #+END_QUOTE
 
+如果一个 =206 (Partial Content)= 响应包含有一个 =Content-Range= 头字段，这个头字段使用了一种接收端无法理解的[[ruby:range%20unit][范围单位]]（[[id:6d7d656a-9741-4193-abd3-60f2f2b3a11a][章节 2]]），那么，接收端 *禁止* 试图去使用一个已存储的表示形式来[[ruby:recombine][重组]]它。代理在接收到这种消息时 *应当* 将它转发给下游。
+
 #+BEGIN_QUOTE
-For byte ranges, a sender SHOULD indicate the complete length of the representation from which the range has been extracted, unless the complete length is unknown or difficult to determine. An asterisk character ("*") in place of the complete-length indicates that the representation length was unknown when the header field was generated.
+For byte ranges, a sender *SHOULD* indicate the complete length of the representation from which the range has been extracted, unless the complete length is unknown or difficult to determine. An asterisk character ("*") in place of the complete-length indicates that the representation length was unknown when the header field was generated.
 #+END_QUOTE
+
+对于[[ruby:byte%20ranges][字节范围]]，发送端 *应当* 指明表示形式的[[ruby:complete%20length][完整长度]]，除非完整长度是未知的或者是难以确定的，所述表示形式指的是提取出这个字节范围的那一个表示形式。使用一个星号字符（"*"）来代替 =complete-length=，表明：当头字段生成的时候，表示形式的长度还是未知的。
 
 #+BEGIN_QUOTE
 The following example illustrates when the complete length of the selected representation is known by the sender to be 1234 bytes:
 #+END_QUOTE
+
+以下示例说明了当发送端知道已选表示形式的完整长度是 1234 个字节的时候：
 
 #+BEGIN_EXAMPLE
   Content-Range: bytes 42-1233/1234
@@ -610,35 +620,54 @@ The following example illustrates when the complete length of the selected repre
 and this second example illustrates when the complete length is unknown:
 #+END_QUOTE
 
+第二个示例说明当完整长度是未知的时候：
+
 #+BEGIN_EXAMPLE
   Content-Range: bytes 42-1233/*
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-A Content-Range field value is invalid if it contains a byte-range-resp that has a last-byte-pos value less than its first-byte-pos value, or a complete-length value less than or equal to its last-byte-pos value. The recipient of an invalid Content-Range MUST NOT attempt to recombine the received content with a stored representation.
+A =Content-Range= field value is invalid if it contains a =byte-range-resp= that has a =last-byte-pos= value less than its =first-byte-pos= value, or a =complete-length= value less than or equal to its =last-byte-pos= value. The recipient of an invalid =Content-Range= *MUST NOT* attempt to recombine the received content with a stored representation.
 #+END_QUOTE
 
+如果 =Content-Range= 的值包含有带有 =last-byte-pos= 值的一个 =byte-range-resp= 符合下列情况之一，那么，这个 =Content-Range= 的值就是无效的：
+
+- =last-byte-pos= 的值小于 =first-byte-pos= 的值。
+- =complete-length= 的值小于或等于 =last-byte-pos= 的值。
+
+接收端在接收到一个无效的 =Content-Range= 头字段的时候，*禁止* 试图使用一个已存储的表示形式去重组所接收到的内容。
+
 #+BEGIN_QUOTE
-A server generating a 416 (Range Not Satisfiable) response to a byte-range request SHOULD send a Content-Range header field with an unsatisfied-range value, as in the following example:
+A server generating a =416 (Range Not Satisfiable)= response to a byte-range request *SHOULD* send a =Content-Range= header field with an unsatisfied-range value, as in the following example:
 #+END_QUOTE
+
+服务器在生成一个 =416 (Range Not Satisfiable)= 响应来回应给一个[[ruby:byte-range%20request][字节范围请求]]的时候，*应当* 发送一个 =Content-Range= 头字段，它的值表示一个[[ruby:unsatisfied-range][不可满足的范围]]，见以下示例：
 
 #+BEGIN_EXAMPLE
   Content-Range: bytes */1234
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-The complete-length in a 416 response indicates the current length of the selected representation.
+The =complete-length= in a =416= response indicates the current length of the selected representation.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The Content-Range header field has no meaning for status codes that do not explicitly describe its semantic. For this specification, only the 206 (Partial Content) and 416 (Range Not Satisfiable) status codes describe a meaning for Content-Range.
-#+END_QUOTE
+=416= 响应里的 =complete-length= 表明已选表示形式的当前长度。
 
 #+BEGIN_QUOTE
-The following are examples of Content-Range values in which the selected representation contains a total of 1234 bytes:
+The =Content-Range= header field has no meaning for status codes that do not explicitly describe its semantic. For this specification, only the =206 (Partial Content)= and =416 (Range Not Satisfiable)= status codes describe a meaning for =Content-Range=.
 #+END_QUOTE
+
+=Content-Range= 使用在没有明确描述它的语义的那些状态码里是没有任何意义的。对于本规范，只有 =206 (Partial Content)= 和 =416 (Range Not Satisfiable)= 有描述过 =Content-Range= 的意义。
+
+#+BEGIN_QUOTE
+The following are examples of =Content-Range= values in which the selected representation contains a total of 1234 bytes:
+#+END_QUOTE
+
+以下是一个总大小为 1234 字节的已选表示形式中的 =Content-Range= 值的示例：
 
 - The first 500 bytes:
+  
+  第一组 500 个字节：
   
   #+BEGIN_EXAMPLE
     Content-Range: bytes 0-499/1234
@@ -646,17 +675,23 @@ The following are examples of Content-Range values in which the selected represe
 
 - The second 500 bytes:
 
+  第二组 500 个字节：
+  
   #+BEGIN_EXAMPLE
     Content-Range: bytes 500-999/1234
   #+END_EXAMPLE
 
 - All except for the first 500 bytes:
 
+  所有字节，除了第一组 500 个字节以外：
+
   #+BEGIN_EXAMPLE
     Content-Range: bytes 500-1233/1234
   #+END_EXAMPLE
   
 - The last 500 bytes:
+
+  最后一组 500 个字节：
 
   #+BEGIN_EXAMPLE
     Content-Range: bytes 734-1233/1234

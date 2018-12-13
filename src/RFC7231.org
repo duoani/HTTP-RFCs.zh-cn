@@ -2419,7 +2419,7 @@ Aside from responses to CONNECT, a =200= response always has a payload, though a
 A =200= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
 
-=200= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
+=200= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非由请求方法的定义或者显式带有的[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）另有指定。
 
 *** 6.3.2. 201 已创建 / 201 Created
 :PROPERTIES:
@@ -2476,7 +2476,7 @@ The =203= response is similar to the =Warning= code of =214 Transformation Appli
 A =203= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
 
-=203= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
+=203= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非由请求方法的定义或者显式带有的[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）另有指定。
 
 *** 6.3.5. 204 无内容 / 204 No Content
 :PROPERTIES:
@@ -2517,7 +2517,7 @@ A =204= response is terminated by the first empty line after the header fields b
 A =204= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
 
-=204= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
+=204= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非由请求方法的定义或者显式带有的[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）另有指定。
 
 *** 6.3.6. 205 重置内容 / 205 Reset Content
 :PROPERTIES:
@@ -2621,7 +2621,7 @@ For request methods other than HEAD, the server *SHOULD* generate a payload in t
 A =300= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
 
-=300= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
+=300= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非由请求方法的定义或者显式带有的[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）另有指定。
 
 
 #+BEGIN_QUOTE
@@ -2658,7 +2658,7 @@ The server *SHOULD* generate a =Location= header field in the response containin
 A =301= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
 
-=301= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
+=301= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非由请求方法的定义或者显式带有的[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）另有指定。
 
 *** 6.4.3. 302 发现 / 302 Found
 :PROPERTIES:
@@ -2832,7 +2832,7 @@ The =404 (Not Found)= status code indicates that the origin server did not find 
 A =404= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
 
-=404= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
+=404= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非由请求方法的定义或者显式带有的[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）另有指定。
 
 *** 6.5.5. 405 方法不允许 / 405 Method Not Allowed
 :PROPERTIES:
@@ -2849,7 +2849,7 @@ The =405 (Method Not Allowed)= status code indicates that the method received in
 A =405= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
 
-=405= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
+=405= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非由请求方法的定义或者显式带有的[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）另有指定。
 
 *** 6.5.6. 406 不接受 / 406 Not Acceptable
 :PROPERTIES:
@@ -2917,7 +2917,7 @@ The =410= response is primarily intended to assist the task of web maintenance b
 A =410= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
 
-=410= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
+=410= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非由请求方法的定义或者显式带有的[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）另有指定。
 
 *** 6.5.10. 411 要求长度 / 411 Length Required
 :PROPERTIES:
@@ -2970,7 +2970,7 @@ The =414 (URI Too Long)= status code indicates that the server is refusing to se
 A =414= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
 
-=414= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
+=414= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非由请求方法的定义或者显式带有的[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）另有指定。
 
 *** 6.5.13. 415 不支持的媒体类型 / 415 Unsupported Media Type
 :PROPERTIES:
@@ -3058,7 +3058,7 @@ The =501 (Not Implemented)= status code indicates that the server does not suppo
 A =501= response is cacheable by default; i.e., unless otherwise indicated by the method definition or explicit cache controls (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]] of [RFC7234]).
 #+END_QUOTE
 
-=501= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非在请求方法的定义里另有指定，或者显式带有[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）。
+=501= 响应默认是[[ruby:cacheable][可缓存的]]，也就是说，除非由请求方法的定义或者显式带有的[[ruby:cache%20controls][缓存控制]]（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][【RFC7234】章节 4.2.2]]）另有指定。
 
 *** 6.6.3. 502 无效网关 / 502 Bad Gateway
 :PROPERTIES:
