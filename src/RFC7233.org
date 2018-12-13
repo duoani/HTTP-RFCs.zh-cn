@@ -738,17 +738,23 @@ The combined response message body consists of the union of partial content rang
 :ID:       a2f29dcf-8c15-4b15-ab66-742f476d27f3
 :END:
 
-Th#+BEGIN_QUOTE
-e 416 (Range Not Satisfiable) status code indicates that none of the ranges in the request's Range header field (Section 3.1) overlap the current extent of the selected resource or that the set of ranges requested has been rejected due to invalid ranges or an excessive request of small or overlapping ranges.
+#+BEGIN_QUOTE
+The =416 (Range Not Satisfiable)= status code indicates that none of the ranges in the request's =Range= header field (Section 3.1) overlap the current extent of the selected resource or that the set of ranges requested has been rejected due to invalid ranges or an excessive request of small or overlapping ranges.
 #+END_QUOTE
 
+=416 (Range Not Satisfiable)= 状态码表明：请求的 =Range= 头字段中没有一个范围与已选资源的当前范围有[[ruby:overlap][重合]]，或者所请求的范围集由于范围无效或者请求了太多小的或重合的范围已被拒绝。
+
 #+BEGIN_QUOTE
-For byte ranges, failing to overlap the current extent means that the first-byte-pos of all of the byte-range-spec values were greater than the current length of the selected representation. When this status code is generated in response to a byte-range request, the sender SHOULD generate a Content-Range header field specifying the current length of the selected representation (Section 4.2).
+For byte ranges, failing to overlap the current extent means that the =first-byte-pos= of all of the =byte-range-spec= values were greater than the current length of the selected representation. When this status code is generated in response to a byte-range request, the sender *SHOULD* generate a =Content-Range= header field specifying the current length of the selected representation ([[id:7a682301-f05e-4e79-8242-398bbfb57c74][Section 4.2]]).
 #+END_QUOTE
+
+对于[[ruby:byte%20ranges][字节范围]]，与当前范围没有重合的意思是所有 =byte-range-spec= 的值里的 =first-byte-pos= 都大于已选表示形式的当前长度。当生成这个状态码来回应一个[[ruby:byte-range%20request][字节范围请求]]的时候，发送端 *应当* 生成一个 =Content-Range= 头字段来指定已选表示形式的当前长度（[[id:7a682301-f05e-4e79-8242-398bbfb57c74][章节 4.2]]）。
 
 #+BEGIN_QUOTE
 For example:
 #+END_QUOTE
+
+例如：
 
 #+BEGIN_EXAMPLE
   HTTP/1.1 416 Range Not Satisfiable
@@ -757,8 +763,10 @@ For example:
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-*Note:* Because servers are free to ignore Range, many implementations will simply respond with the entire selected representation in a 200 (OK) response. That is partly because most clients are prepared to receive a 200 (OK) to complete the task (albeit less efficiently) and partly because clients might not stop making an invalid partial request until they have received a complete representation. Thus, clients cannot depend on receiving a 416 (Range Not Satisfiable) response even when it is most appropriate.
+*Note:* Because servers are free to ignore =Range=, many implementations will simply respond with the entire selected representation in a =200 (OK)= response. That is partly because most clients are prepared to receive a =200 (OK)= to complete the task (albeit less efficiently) and partly because clients might not stop making an invalid partial request until they have received a complete representation. Thus, clients cannot depend on receiving a =416 (Range Not Satisfiable)= response even when it is most appropriate.
 #+END_QUOTE
+
+*注意：* 因为服务器可以自由忽略 =Range=，许多实现会简单地使用一个 =200 (OK)= 包含整个已选表示形式来响应这种请求。有部分原因是因为大多数客户端都准备使用一个 =200 (OK)= 来完成请求任务（即使不那么高效），以及有部分原因是因为客户端可能不会停止发送一个无效的[[ruby:partial%20request][部分请求]]直到它们已经接收到一个完整的表示形式。所以，客户端不能完全相信一个 =416 (Range Not Satisfiable)= 响应，即使这种响应是最合适的。
 
 * 5. IANA 注意事项 / IANA Considerations
 ** 5.1. 范围单位登记表 / Range Unit Registry
