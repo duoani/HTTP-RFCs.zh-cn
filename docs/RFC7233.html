@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-12 Wed 19:11 -->
+<!-- 2018-12-13 Thu 19:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7233: Hypertext Transfer Protocol (HTTP/1.1): Range Requests</title>
@@ -420,7 +420,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org5528062">4.1. 206 部分内容 / 206 Partial Content</a></li>
 <li><a href="#org96d66d2">4.2. Content-Range</a></li>
-<li><a href="#orgbffe853">4.3. Combining Ranges</a></li>
+<li><a href="#org2f5dc26">4.3. 重组范围 / Combining Ranges</a></li>
 <li><a href="#org3d17c50">4.4. 416 范围无法满足 / 416 Range Not Satisfiable</a></li>
 </ul>
 </li>
@@ -428,8 +428,8 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org2f133be">5.1. 范围单位登记表 / Range Unit Registry</a>
 <ul>
-<li><a href="#orgd9e592f">5.1.1. Procedure</a></li>
-<li><a href="#orgc516e6b">5.1.2. Registrations</a></li>
+<li><a href="#org4095f21">5.1.1. 手续 / Procedure</a></li>
+<li><a href="#org50a6102">5.1.2. 登记 / Registrations</a></li>
 </ul>
 </li>
 <li><a href="#org736a5ab">5.2. 状态码登记 / Status Code Registration</a></li>
@@ -1287,9 +1287,13 @@ If a <code>206</code> is generated in response to a request with an <code>If-Ran
 </p>
 </blockquote>
 
+<p>
+如果一个请求带有一个 <code>If-Range</code> 头字段，那么，发送端在生成一个 <code>206</code> 来回应这个请求的时候，<b>不应当</b> 生成上述所要求的头字段以外的其他的表示形式头字段，因为客户端被认为是已经有一个之前的响应包含那些头字段了。否则，发送端 <b>必须</b> 像生成一个 <code>200 (OK)</code> 响应给同一个请求时所带有的所有表示形式头字段生成到这个 <code>206</code> 响应里。
+</p>
+
 <blockquote>
 <p>
-A <code>206</code> response is cacheable by default; i.e., unless otherwise indicated by explicit cache controls (see Section 4.2.2 of [RFC7234]).
+A <code>206</code> response is cacheable by default; i.e., unless otherwise indicated by explicit cache controls (see <a href="RFC7234.html#ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01">Section 4.2.2</a> of [RFC7234]).
 </p>
 </blockquote>
 
@@ -1302,10 +1306,14 @@ A <code>206</code> response is cacheable by default; i.e., unless otherwise indi
 <div id="outline-container-org96d66d2" class="outline-3">
 <h3 id="org96d66d2"><a id="ID-7a682301-f05e-4e79-8242-398bbfb57c74"></a>4.2. Content-Range</h3>
 <div class="outline-text-3" id="text-org96d66d2">
+<blockquote>
 <p>
-Th#+BEGIN_QUOTE
-e "Content-Range" header field is sent in a single part 206 (Partial Content) response to indicate the partial range of the selected representation enclosed as the message payload, sent in each part of a multipart 206 response to indicate the range enclosed within each body part, and sent in 416 (Range Not Satisfiable) responses to provide information about the selected representation.
-#+END_QUOTE
+The "Content-Range" header field is sent in a single part <code>206 (Partial Content)</code> response to indicate the partial range of the selected representation enclosed as the message payload, sent in each part of a multipart <code>206</code> response to indicate the range enclosed within each body part, and sent in <code>416 (Range Not Satisfiable)</code> responses to provide information about the selected representation.
+</p>
+</blockquote>
+
+<p>
+如果 <code>Content-Range</code> 头字段发送在一种<ruby>单个部分<rt>single part</rt></ruby>的 <code>206 (Partial Content)</code> 响应里，那么它表明一个范围，这个范围是指封装为消息有效载荷的已选表示形式的<ruby>局部范围<rt>partial range</rt></ruby>。如果它发送在一种<ruby>多个部分<rt>multipart</rt></ruby>的 <code>206</code> 响应里的每一个<ruby>分部<rt>part</rt></ruby>中，那么它表示一个范围，这个范围是指封装在每个<ruby>分部主体<rt>body part</rt></ruby>中的表示形式的范围。如果它发送在 <code>416 (Range Not Staisfiable)</code> 响应中，它提供了已选表示形式的相关信息。
 </p>
 
 <div class="org-src-container">
@@ -1328,21 +1336,33 @@ other-range-resp    = *CHAR
 
 <blockquote>
 <p>
-If a 206 (Partial Content) response contains a Content-Range header field with a range unit (Section 2) that the recipient does not understand, the recipient MUST NOT attempt to recombine it with a stored representation. A proxy that receives such a message SHOULD forward it downstream.
+If a <code>206 (Partial Content)</code> response contains a <code>Content-Range</code> header field with a range unit (<a href="#org954ce7c">Section 2</a>) that the recipient does not understand, the recipient <b>MUST NOT</b> attempt to recombine it with a stored representation. A proxy that receives such a message <b>SHOULD</b> forward it downstream.
 </p>
 </blockquote>
 
+<p>
+如果一个 <code>206 (Partial Content)</code> 响应包含有一个 <code>Content-Range</code> 头字段，这个头字段使用了一种接收端无法理解的<ruby>范围单位<rt>range unit</rt></ruby>（<a href="#org954ce7c">章节 2</a>），那么，接收端 <b>禁止</b> 试图去使用一个已存储的表示形式来<ruby>重组<rt>recombine</rt></ruby>它。代理在接收到这种消息时 <b>应当</b> 将它转发给下游。
+</p>
+
 <blockquote>
 <p>
-For byte ranges, a sender SHOULD indicate the complete length of the representation from which the range has been extracted, unless the complete length is unknown or difficult to determine. An asterisk character ("*") in place of the complete-length indicates that the representation length was unknown when the header field was generated.
+For byte ranges, a sender <b>SHOULD</b> indicate the complete length of the representation from which the range has been extracted, unless the complete length is unknown or difficult to determine. An asterisk character ("*") in place of the complete-length indicates that the representation length was unknown when the header field was generated.
 </p>
 </blockquote>
+
+<p>
+对于<ruby>字节范围<rt>byte ranges</rt></ruby>，发送端 <b>应当</b> 指明表示形式的<ruby>完整长度<rt>complete length</rt></ruby>，除非完整长度是未知的或者是难以确定的，所述表示形式指的是提取出这个字节范围的那一个表示形式。使用一个星号字符（"*"）来代替 <code>complete-length</code>，表明：当头字段生成的时候，表示形式的长度还是未知的。
+</p>
 
 <blockquote>
 <p>
 The following example illustrates when the complete length of the selected representation is known by the sender to be 1234 bytes:
 </p>
 </blockquote>
+
+<p>
+以下示例说明了当发送端知道已选表示形式的完整长度是 1234 个字节的时候：
+</p>
 
 <pre class="example">
 Content-Range: bytes 42-1233/1234
@@ -1354,21 +1374,42 @@ and this second example illustrates when the complete length is unknown:
 </p>
 </blockquote>
 
+<p>
+第二个示例说明当完整长度是未知的时候：
+</p>
+
 <pre class="example">
 Content-Range: bytes 42-1233/*
 </pre>
 
 <blockquote>
 <p>
-A Content-Range field value is invalid if it contains a byte-range-resp that has a last-byte-pos value less than its first-byte-pos value, or a complete-length value less than or equal to its last-byte-pos value. The recipient of an invalid Content-Range MUST NOT attempt to recombine the received content with a stored representation.
+A <code>Content-Range</code> field value is invalid if it contains a <code>byte-range-resp</code> that has a <code>last-byte-pos</code> value less than its <code>first-byte-pos</code> value, or a <code>complete-length</code> value less than or equal to its <code>last-byte-pos</code> value. The recipient of an invalid <code>Content-Range</code> <b>MUST NOT</b> attempt to recombine the received content with a stored representation.
 </p>
 </blockquote>
 
+<p>
+如果 <code>Content-Range</code> 的值包含有带有 <code>last-byte-pos</code> 值的一个 <code>byte-range-resp</code> 符合下列情况之一，那么，这个 <code>Content-Range</code> 的值就是无效的：
+</p>
+
+<ul class="org-ul">
+<li><code>last-byte-pos</code> 的值小于 <code>first-byte-pos</code> 的值。</li>
+<li><code>complete-length</code> 的值小于或等于 <code>last-byte-pos</code> 的值。</li>
+</ul>
+
+<p>
+接收端在接收到一个无效的 <code>Content-Range</code> 头字段的时候，<b>禁止</b> 试图使用一个已存储的表示形式去重组所接收到的内容。
+</p>
+
 <blockquote>
 <p>
-A server generating a 416 (Range Not Satisfiable) response to a byte-range request SHOULD send a Content-Range header field with an unsatisfied-range value, as in the following example:
+A server generating a <code>416 (Range Not Satisfiable)</code> response to a byte-range request <b>SHOULD</b> send a <code>Content-Range</code> header field with an unsatisfied-range value, as in the following example:
 </p>
 </blockquote>
+
+<p>
+服务器在生成一个 <code>416 (Range Not Satisfiable)</code> 响应来回应给一个<ruby>字节范围请求<rt>byte-range request</rt></ruby>的时候，<b>应当</b> 发送一个 <code>Content-Range</code> 头字段，它的值表示一个<ruby>不可满足的范围<rt>unsatisfied-range</rt></ruby>，见以下示例：
+</p>
 
 <pre class="example">
 Content-Range: bytes */1234
@@ -1376,25 +1417,41 @@ Content-Range: bytes */1234
 
 <blockquote>
 <p>
-The complete-length in a 416 response indicates the current length of the selected representation.
+The <code>complete-length</code> in a <code>416</code> response indicates the current length of the selected representation.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The Content-Range header field has no meaning for status codes that do not explicitly describe its semantic. For this specification, only the 206 (Partial Content) and 416 (Range Not Satisfiable) status codes describe a meaning for Content-Range.
+<code>416</code> 响应里的 <code>complete-length</code> 表明已选表示形式的当前长度。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The following are examples of Content-Range values in which the selected representation contains a total of 1234 bytes:
+The <code>Content-Range</code> header field has no meaning for status codes that do not explicitly describe its semantic. For this specification, only the <code>206 (Partial Content)</code> and <code>416 (Range Not Satisfiable)</code> status codes describe a meaning for <code>Content-Range</code>.
 </p>
 </blockquote>
+
+<p>
+<code>Content-Range</code> 使用在没有明确描述它的语义的那些状态码里是没有任何意义的。对于本规范，只有 <code>206 (Partial Content)</code> 和 <code>416 (Range Not Satisfiable)</code> 有描述过 <code>Content-Range</code> 的意义。
+</p>
+
+<blockquote>
+<p>
+The following are examples of <code>Content-Range</code> values in which the selected representation contains a total of 1234 bytes:
+</p>
+</blockquote>
+
+<p>
+以下是一个总大小为 1234 字节的已选表示形式中的 <code>Content-Range</code> 值的示例：
+</p>
 
 <ul class="org-ul">
 <li><p>
 The first 500 bytes:
+</p>
+
+<p>
+第一组 500 个字节：
 </p>
 
 <pre class="example">
@@ -1405,12 +1462,20 @@ Content-Range: bytes 0-499/1234
 The second 500 bytes:
 </p>
 
+<p>
+第二组 500 个字节：
+</p>
+
 <pre class="example">
 Content-Range: bytes 500-999/1234
 </pre></li>
 
 <li><p>
 All except for the first 500 bytes:
+</p>
+
+<p>
+所有字节，除了第一组 500 个字节以外：
 </p>
 
 <pre class="example">
@@ -1421,6 +1486,10 @@ Content-Range: bytes 500-1233/1234
 The last 500 bytes:
 </p>
 
+<p>
+最后一组 500 个字节：
+</p>
+
 <pre class="example">
 Content-Range: bytes 734-1233/1234
 </pre></li>
@@ -1428,61 +1497,99 @@ Content-Range: bytes 734-1233/1234
 </div>
 </div>
 
-<div id="outline-container-orgbffe853" class="outline-3">
-<h3 id="orgbffe853">4.3. Combining Ranges</h3>
-<div class="outline-text-3" id="text-orgbffe853">
+<div id="outline-container-org2f5dc26" class="outline-3">
+<h3 id="org2f5dc26">4.3. 重组范围 / Combining Ranges</h3>
+<div class="outline-text-3" id="text-org2f5dc26">
 <blockquote>
 <p>
-A response might transfer only a subrange of a representation if the connection closed prematurely or if the request used one or more Range specifications. After several such transfers, a client might have received several ranges of the same representation. These ranges can only be safely combined if they all have in common the same strong validator (Section 2.1 of [RFC7232]).
+A response might transfer only a subrange of a representation if the connection closed prematurely or if the request used one or more <code>Range</code> specifications. After several such transfers, a client might have received several ranges of the same representation. These ranges can only be safely combined if they all have in common the same strong validator (<a href="RFC7232.html#ID-d232decc-3720-4edf-bbfa-df942f60aa50">Section 2.1</a> of [RFC7232]).
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A client that has received multiple partial responses to GET requests on a target resource MAY combine those responses into a larger continuous range if they share the same strong validator.
+如果连接被过早地关闭了，或者请求使用了一个或多个 <code>Range</code> 规格，那么，一个响应可能只对一个表示形式的一个<ruby>子范围<rt>subrange</rt></ruby>进行传输。历经多次这样的传输以后，客户端可能已接收到同一个表示形式的许多范围。这些范围只有在它们都具有同一个<ruby>强验证器<rt>strong validator</rt></ruby>（<a href="RFC7232.html#ID-d232decc-3720-4edf-bbfa-df942f60aa50">【RFC7232】章节 2.1</a>）的时候才能够被安全地<ruby>重组<rt>combined</rt></ruby>起来。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-If the most recent response is an incomplete 200 (OK) response, then the header fields of that response are used for any combined response and replace those of the matching stored responses.
+A client that has received multiple partial responses to GET requests on a target resource <b>MAY</b> combine those responses into a larger continuous range if they share the same strong validator.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-If the most recent response is a 206 (Partial Content) response and at least one of the matching stored responses is a 200 (OK), then the combined response header fields consist of the most recent 200 response's header fields. If all of the matching stored responses are 206 responses, then the stored response with the most recent header fields is used as the source of header fields for the combined response, except that the client MUST use other header fields provided in the new response, aside from Content-Range, to replace all instances of the corresponding header fields in the stored response.
+在向一个目标资源发起多次 GET 请求后，客户端接收到多个<ruby>部分响应<rt>partial responses</rt></ruby>，那么，客户端 <b>可以</b> 将这些响应重组为一个大的连续的范围，如果它们共享同一个强验证器的话。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The combined response message body consists of the union of partial content ranges in the new response and each of the selected responses. If the union consists of the entire range of the representation, then the client MUST process the combined response as if it were a complete 200 (OK) response, including a Content-Length header field that reflects the complete length. Otherwise, the client MUST process the set of continuous ranges as one of the following: an incomplete 200 (OK) response if the combined response is a prefix of the representation, a single 206 (Partial Content) response containing a multipart/byteranges body, or multiple 206 (Partial Content) responses, each with one continuous range that is indicated by a Content-Range header field.
+If the most recent response is an incomplete <code>200 (OK)</code> response, then the header fields of that response are used for any combined response and replace those of the matching stored responses.
 </p>
 </blockquote>
+
+<p>
+如果最近一次响应是一个不完整的 <code>200 (OK)</code> 响应，那么，这个响应的头字段会被用作任何重组后的响应，并替换掉与已存储的响应相匹配的那些头字段。
+</p>
+
+<blockquote>
+<p>
+If the most recent response is a <code>206 (Partial Content)</code> response and at least one of the matching stored responses is a <code>200 (OK)</code>, then the combined response header fields consist of the most recent <code>200</code> response's header fields. If all of the matching stored responses are <code>206</code> responses, then the stored response with the most recent header fields is used as the source of header fields for the combined response, except that the client <b>MUST</b> use other header fields provided in the new response, aside from <code>Content-Range</code>, to replace all instances of the corresponding header fields in the stored response.
+</p>
+</blockquote>
+
+<p>
+如果最近一次响应是一个 <code>206 (Partial Content)</code> 响应，并且与之匹配的已存储的响应中至少有一个的状态码是 <code>200 (OK)</code>，那么，重组后的响应的头字段由最后一次 <code>200</code> 响应的那些头字段组成。如果与之匹配的所有已存储的响应都是 <code>206</code> 响应，那么，已存储的响应中，以具有最新的头字段的那个响应来作为重组后的响应的头字段的来源，除了以下情况的头字段以外：客户端 <b>必须</b> 使用提供自新响应的（除了 <code>Content-Range</code> 以外还有）其他的头字段来替换有已存储的响应中所有对应的头字段的实际值。
+</p>
+
+<blockquote>
+<p>
+The combined response message body consists of the union of partial content ranges in the new response and each of the selected responses. If the union consists of the entire range of the representation, then the client <b>MUST</b> process the combined response as if it were a complete <code>200 (OK)</code> response, including a <code>Content-Length</code> header field that reflects the complete length. Otherwise, the client <b>MUST</b> process the set of continuous ranges as one of the following: an incomplete <code>200 (OK)</code> response if the combined response is a prefix of the representation, a single <code>206 (Partial Content)</code> response containing a multipart/byteranges body, or multiple <code>206 (Partial Content)</code> responses, each with one continuous range that is indicated by a <code>Content-Range</code> header field.
+</p>
+</blockquote>
+
+<p>
+重组后的响应消息体由新响应内的部分内容范围以及选定的响应的每个部分联合组成。如果这个联合是由表示形式的完整范围组成，那么，客户端 <b>必须</b> 像处理一个完整的 <code>200 (OK)</code> 响应一样来处理这个重组后的响应，包括使用一个 <code>Content-Length</code> 头字段来反映完整的长度。否则，客户端 <b>必须</b> 按以下的方式之一来处理连续的范围：
+</p>
+
+<ul class="org-ul">
+<li>一个不完整的 <code>200 (OK)</code> 响应，如果重组后的响应是表示形式的开头部分</li>
+<li>一个单个的 <code>206 (Partial Content)</code> 响应，包含一个 multipart/byteranges 主体部分</li>
+<li>多个 <code>206 (Partial Content)</code> 响应，其中每个都是一个连续的范围并且都由一个 <code>Content-Range</code> 头字段来指明。</li>
+</ul>
 </div>
 </div>
 
 <div id="outline-container-org3d17c50" class="outline-3">
 <h3 id="org3d17c50"><a id="ID-a2f29dcf-8c15-4b15-ab66-742f476d27f3"></a>4.4. 416 范围无法满足 / 416 Range Not Satisfiable</h3>
 <div class="outline-text-3" id="text-org3d17c50">
+<blockquote>
 <p>
-Th#+BEGIN_QUOTE
-e 416 (Range Not Satisfiable) status code indicates that none of the ranges in the request's Range header field (Section 3.1) overlap the current extent of the selected resource or that the set of ranges requested has been rejected due to invalid ranges or an excessive request of small or overlapping ranges.
-#+END_QUOTE
+The <code>416 (Range Not Satisfiable)</code> status code indicates that none of the ranges in the request's <code>Range</code> header field (Section 3.1) overlap the current extent of the selected resource or that the set of ranges requested has been rejected due to invalid ranges or an excessive request of small or overlapping ranges.
+</p>
+</blockquote>
+
+<p>
+<code>416 (Range Not Satisfiable)</code> 状态码表明：请求的 <code>Range</code> 头字段中没有一个范围与已选资源的当前范围有<ruby>重合<rt>overlap</rt></ruby>，或者所请求的范围集由于范围无效或者请求了太多小的或重合的范围已被拒绝。
 </p>
 
 <blockquote>
 <p>
-For byte ranges, failing to overlap the current extent means that the first-byte-pos of all of the byte-range-spec values were greater than the current length of the selected representation. When this status code is generated in response to a byte-range request, the sender SHOULD generate a Content-Range header field specifying the current length of the selected representation (Section 4.2).
+For byte ranges, failing to overlap the current extent means that the <code>first-byte-pos</code> of all of the <code>byte-range-spec</code> values were greater than the current length of the selected representation. When this status code is generated in response to a byte-range request, the sender <b>SHOULD</b> generate a <code>Content-Range</code> header field specifying the current length of the selected representation (<a href="#org96d66d2">Section 4.2</a>).
 </p>
 </blockquote>
+
+<p>
+对于<ruby>字节范围<rt>byte ranges</rt></ruby>，与当前范围没有重合的意思是所有 <code>byte-range-spec</code> 的值里的 <code>first-byte-pos</code> 都大于已选表示形式的当前长度。当生成这个状态码来回应一个<ruby>字节范围请求<rt>byte-range request</rt></ruby>的时候，发送端 <b>应当</b> 生成一个 <code>Content-Range</code> 头字段来指定已选表示形式的当前长度（<a href="#org96d66d2">章节 4.2</a>）。
+</p>
 
 <blockquote>
 <p>
 For example:
 </p>
 </blockquote>
+
+<p>
+例如：
+</p>
 
 <pre class="example">
 HTTP/1.1 416 Range Not Satisfiable
@@ -1492,9 +1599,13 @@ Content-Range: bytes */47022
 
 <blockquote>
 <p>
-<b>Note:</b> Because servers are free to ignore Range, many implementations will simply respond with the entire selected representation in a 200 (OK) response. That is partly because most clients are prepared to receive a 200 (OK) to complete the task (albeit less efficiently) and partly because clients might not stop making an invalid partial request until they have received a complete representation. Thus, clients cannot depend on receiving a 416 (Range Not Satisfiable) response even when it is most appropriate.
+<b>Note:</b> Because servers are free to ignore <code>Range</code>, many implementations will simply respond with the entire selected representation in a <code>200 (OK)</code> response. That is partly because most clients are prepared to receive a <code>200 (OK)</code> to complete the task (albeit less efficiently) and partly because clients might not stop making an invalid partial request until they have received a complete representation. Thus, clients cannot depend on receiving a <code>416 (Range Not Satisfiable)</code> response even when it is most appropriate.
 </p>
 </blockquote>
+
+<p>
+<b>注意：</b> 因为服务器可以自由忽略 <code>Range</code>，许多实现会简单地使用一个 <code>200 (OK)</code> 包含整个已选表示形式来响应这种请求。有部分原因是因为大多数客户端都准备使用一个 <code>200 (OK)</code> 来完成请求任务（即使不那么高效），以及有部分原因是因为客户端可能不会停止发送一个无效的<ruby>部分请求<rt>partial request</rt></ruby>直到它们已经接收到一个完整的表示形式。所以，客户端不能完全相信一个 <code>416 (Range Not Satisfiable)</code> 响应，即使这种响应是最合适的。
+</p>
 </div>
 </div>
 </div>
@@ -1511,14 +1622,18 @@ Content-Range: bytes */47022
 The "HTTP Range Unit Registry" defines the namespace for the range unit names and refers to their corresponding specifications. The registry has been created and is now maintained at <a href="http://www.iana.org/assignments/http-parameters">http://www.iana.org/assignments/http-parameters</a>.
 </p>
 </blockquote>
+
+<p>
+《HTTP 范围单位登记表》为范围单位定义了命名空间，并引用到它们对应的规范上。这份登记表已经被创建，目前维护在 <a href="http://www.iana.org/assignments/http-parameters">http://www.iana.org/assignments/http-parameters</a>。
+</p>
 </div>
 
-<div id="outline-container-orgd9e592f" class="outline-4">
-<h4 id="orgd9e592f">5.1.1. Procedure</h4>
-<div class="outline-text-4" id="text-orgd9e592f">
+<div id="outline-container-org4095f21" class="outline-4">
+<h4 id="org4095f21">5.1.1. 手续 / Procedure</h4>
+<div class="outline-text-4" id="text-org4095f21">
 <blockquote>
 <p>
-Registration of an HTTP Range Unit MUST include the following fields:
+Registration of an HTTP Range Unit <b>MUST</b> include the following fields:
 </p>
 
 <ul class="org-ul">
@@ -1528,22 +1643,40 @@ Registration of an HTTP Range Unit MUST include the following fields:
 </ul>
 </blockquote>
 
+<p>
+一个 HTTP 范围单位的登记 <b>必须</b> 包括以下字段：
+</p>
+
+<ul class="org-ul">
+<li>名称</li>
+<li>描述</li>
+<li>指向到规范文本的引用</li>
+</ul>
+
 <blockquote>
 <p>
-Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
+Values to be added to this namespace require IETF Review (see [RFC5226], <a href="https://tools.ietf.org/html/rfc5226#section-4.1">Section 4.1</a>).
 </p>
 </blockquote>
+
+<p>
+添加到 HTTP 状态码命名空间的值要求由 IETF 复审（见<a href="https://tools.ietf.org/html/rfc5226#section-4.1">【RFC5226】章节 4.1</a>）。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgc516e6b" class="outline-4">
-<h4 id="orgc516e6b">5.1.2. Registrations</h4>
-<div class="outline-text-4" id="text-orgc516e6b">
+<div id="outline-container-org50a6102" class="outline-4">
+<h4 id="org50a6102">5.1.2. 登记 / Registrations</h4>
+<div class="outline-text-4" id="text-org50a6102">
 <blockquote>
 <p>
 The initial range unit registry contains the registrations below:
 </p>
 </blockquote>
+
+<p>
+初始的《范围单位登记表》包含以下登记项：
+</p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1566,13 +1699,13 @@ The initial range unit registry contains the registrations below:
 <tr>
 <td class="org-left">bytes</td>
 <td class="org-left">a range of octets</td>
-<td class="org-left">Section 2.1</td>
+<td class="org-left"><a href="#org95c1795">Section 2.1</a></td>
 </tr>
 
 <tr>
 <td class="org-left">none</td>
 <td class="org-left">reserved as keyword, indicating no ranges are supported</td>
-<td class="org-left">Section 2.3</td>
+<td class="org-left"><a href="#org6b1d683">Section 2.3</a></td>
 </tr>
 </tbody>
 </table>
@@ -1582,6 +1715,10 @@ The initial range unit registry contains the registrations below:
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 </p>
 </blockquote>
+
+<p>
+主管以上条目的变更的是 "IETF (iesg@ietf.org) - Internet Engineering Task Force"。
+</p>
 </div>
 </div>
 </div>
@@ -1594,6 +1731,10 @@ The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Forc
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <a href="http://www.iana.org/assignments/http-status-codes">http://www.iana.org/assignments/http-status-codes</a> has been updated to include the registrations below:
 </p>
 </blockquote>
+
+<p>
+《超文本传输协议（HTTP）状态码登记表》位于 <a href="http://www.iana.org/assignments/http-status-codes">http://www.iana.org/assignments/http-status-codes</a>，已经更新了以下登记项。
+</p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1616,13 +1757,13 @@ The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <a href
 <tr>
 <td class="org-right">206</td>
 <td class="org-left">Partial Control</td>
-<td class="org-left">Section 4.1</td>
+<td class="org-left"><a href="#org5528062">Section 4.1</a></td>
 </tr>
 
 <tr>
 <td class="org-right">416</td>
 <td class="org-left">Range Not Satisfiable</td>
-<td class="org-left">Section 4.4</td>
+<td class="org-left"><a href="#org3d17c50">Section 4.4</a></td>
 </tr>
 </tbody>
 </table>
@@ -1638,11 +1779,19 @@ HTTP header fields are registered within the "Message Headers" registry maintain
 </p>
 </blockquote>
 
+<p>
+HTTP 头字段被登记在《消息头部》登记表中，并维护在 <a href="http://www.iana.org/assignments/message-headers/">http://www.iana.org/assignments/message-headers/</a>。
+</p>
+
 <blockquote>
 <p>
-This document defines the following HTTP header fields, so their associated registry entries have been updated according to the permanent registrations below (see [BCP90]):
+This document defines the following HTTP header fields, so their associated registry entries have been updated according to the permanent registrations below (see [<a href="https://tools.ietf.org/html/rfc3864">BCP90</a>]):
 </p>
 </blockquote>
+
+<p>
+本文档定义了以下 HTTP 头字段，因此它们相关联的登记项已经根据以下永久登记条目进行更新（见【<a href="https://tools.ietf.org/html/rfc3864">BCP90</a>】）：
+</p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1669,28 +1818,28 @@ This document defines the following HTTP header fields, so their associated regi
 <td class="org-left">Accept-Ranges</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 2.3</td>
+<td class="org-left"><a href="#org6b1d683">Section 2.3</a></td>
 </tr>
 
 <tr>
 <td class="org-left">Content-Range</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 4.2</td>
+<td class="org-left"><a href="#org96d66d2">Section 4.2</a></td>
 </tr>
 
 <tr>
 <td class="org-left">If-Range</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 3.2</td>
+<td class="org-left"><a href="#org79d4a85">Section 3.2</a></td>
 </tr>
 
 <tr>
 <td class="org-left">Range</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 3.1</td>
+<td class="org-left"><a href="#orgf26e511">Section 3.1</a></td>
 </tr>
 </tbody>
 </table>
@@ -1700,6 +1849,10 @@ This document defines the following HTTP header fields, so their associated regi
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 </p>
 </blockquote>
+
+<p>
+主管以上条目的变更的是 "IETF (iesg@ietf.org) - Internet Engineering Task Force"。
+</p>
 </div>
 </div>
 
@@ -1708,15 +1861,23 @@ The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Forc
 <div class="outline-text-3" id="text-org3ddef16">
 <blockquote>
 <p>
-IANA maintains the registry of Internet media types [BCP13] at <a href="http://www.iana.org/assignments/media-types">http://www.iana.org/assignments/media-types</a>.
+IANA maintains the registry of Internet media types [<a href="https://tools.ietf.org/html/rfc6838">BCP13</a>] at <a href="http://www.iana.org/assignments/media-types">http://www.iana.org/assignments/media-types</a>.
 </p>
 </blockquote>
+
+<p>
+IANA 将互联网媒体类型的登记表【<a href="https://tools.ietf.org/html/rfc6838">BCP13</a>】维护在 <a href="http://www.iana.org/assignments/media-types">http://www.iana.org/assignments/media-types</a>。
+</p>
 
 <blockquote>
 <p>
 This document serves as the specification for the Internet media type "multipart/byteranges". The following has been registered with IANA.
 </p>
 </blockquote>
+
+<p>
+本文档充当 "multipart/byteranges" 互联网媒体类型的规范。以下信息已经在 IANA 进行过登记。
+</p>
 </div>
 
 <div id="outline-container-org5f297a0" class="outline-4">
@@ -1753,9 +1914,13 @@ Change controller: IESG
 <div class="outline-text-2" id="text-orgec0b449">
 <blockquote>
 <p>
-This section is meant to inform developers, information providers, and users of known security concerns specific to the HTTP range request mechanisms. More general security considerations are addressed in HTTP messaging [RFC7230] and semantics [RFC7231].
+This section is meant to inform developers, information providers, and users of known security concerns specific to the HTTP range request mechanisms. More general security considerations are addressed in HTTP messaging [<a href="RFC7230.html">RFC7230</a>] and semantics [<a href="RFC7231.html">RFC7231</a>].
 </p>
 </blockquote>
+
+<p>
+本章节是为了告诉开发者、信息提供商、以及用户，针对 HTTP 范围请求机制的已知的安全注意事项。《消息句法和路由》【<a href="RFC7230.html">RFC7230</a>】以及《语义和内容》【<a href="RFC7231.html">RFC7231</a>】有更广泛的安全注意事项。
+</p>
 </div>
 
 <div id="outline-container-orgac5f1c2" class="outline-3">
@@ -1766,6 +1931,10 @@ This section is meant to inform developers, information providers, and users of 
 Unconstrained multiple range requests are susceptible to denial-of-service attacks because the effort required to request many overlapping ranges of the same data is tiny compared to the time, memory, and bandwidth consumed by attempting to serve the requested data in many parts. Servers ought to ignore, coalesce, or reject egregious range requests, such as requests for more than two overlapping ranges or for many small ranges in a single set, particularly when the ranges are requested out of order for no apparent reason. Multipart range requests are not designed to support random access.
 </p>
 </blockquote>
+
+<p>
+不加约束的<ruby>多个部分的范围请求<rt>multiple range requests</rt></ruby>容易受到<ruby>拒绝服务攻击<rt>denial-of-service attacks</rt></ruby>的影响，这是因为请求相同数据的许多重合范围的工作量与试图提供所请求的许多部分的数据所消耗的时间、内存、以及宽带相比显得太微不足道了。服务器应该忽略、合并、或者拒绝
+</p>
 </div>
 </div>
 </div>
@@ -1775,9 +1944,13 @@ Unconstrained multiple range requests are susceptible to denial-of-service attac
 <div class="outline-text-2" id="text-org9d1ded4">
 <blockquote>
 <p>
-See Section 10 of [RFC7230].
+See <a href="RFC7230.html#ID-ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626">Section 10</a> of [RFC7230].
 </p>
 </blockquote>
+
+<p>
+见<a href="RFC7230.html#ID-ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626">【RFC7230】章节 10</a>。
+</p>
 </div>
 </div>
 

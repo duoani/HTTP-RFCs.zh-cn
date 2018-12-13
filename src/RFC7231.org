@@ -3736,7 +3736,7 @@ HTTP 方法的登记 *必须* 包括以下几个字段：
 - 方法名称（见[[id:e6ec0aa0-3e4d-4367-bffd-423e028210b0][章节 4]]）
 - 安全（“是”或“否”，见[[id:2f967e3d-8694-430b-ad06-e748fd39b281][章节 4.2.1]]）
 - 幂等（“是”或“否”，见[[id:6f2b6a60-5e9f-49cc-94f8-a7ee8f07862f][章节 4.2.2]]）
-- 指向规范文本的指针
+- 指向到规范文本的引用
 - 添加到这个命名空间的值要求由 IETF 复审（见[[https://tools.ietf.org/html/rfc5226#section-4.1][【RFC5226】章节 4.1]]）。
 
 *** 8.1.2. 新方法的注意事项 / Considerations for New Methods
@@ -3809,15 +3809,19 @@ A registration *MUST* include the following fields:
 - Status Code (3 digits)
 - Short Description
 - Pointer to specification text
-- Values to be added to the HTTP status code namespace require IETF Review (see [RFC5226], [[https://tools.ietf.org/html/rfc5226#section-4.1][Section 4.1]]).
 #+END_QUOTE
 
 登记 *必须* 包括以下字段：
 
 - 状态码（3 位数字）
 - 简短描述
-- 指向规范文本的指针
-- 添加到 HTTP 状态码命名空间的值要求由 IETF 复审（见[[https://tools.ietf.org/html/rfc5226#section-4.1][【RFC5226】章节 4.1]]）。
+- 指向到规范文本的引用
+
+#+BEGIN_QUOTE
+Values to be added to the HTTP status code namespace require IETF Review (see [RFC5226], [[https://tools.ietf.org/html/rfc5226#section-4.1][Section 4.1]]).
+#+END_QUOTE
+
+添加到 HTTP 状态码命名空间的值要求由 IETF 复审（见[[https://tools.ietf.org/html/rfc5226#section-4.1][【RFC5226】章节 4.1]]）。
 
 *** 8.2.2. 新状态码的注意事项 / Considerations for New Status Codes
 
@@ -4101,7 +4105,7 @@ Content coding registrations *MUST* include the following fields:
 
 - 名称
 - 描述
-- 指向规范文本的指针
+- 指向到规范文本的引用
 
 #+BEGIN_QUOTE
 Names of content codings *MUST NOT* overlap with names of transfer codings ([[id:F7261A9D-8DF2-4A92-B8E8-D8F346005C6C][Section 4]] of [RFC7230]), unless the encoding transformation is identical (as is the case for the compression codings defined in [[id:3a8bf61f-e04c-462f-862f-a0f47298dab2][Section 4.2]] of [RFC7230]).

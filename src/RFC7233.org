@@ -778,34 +778,48 @@ For example:
 The "HTTP Range Unit Registry" defines the namespace for the range unit names and refers to their corresponding specifications. The registry has been created and is now maintained at <http://www.iana.org/assignments/http-parameters>.
 #+END_QUOTE
 
-*** 5.1.1. Procedure
+《HTTP 范围单位登记表》为范围单位定义了命名空间，并引用到它们对应的规范上。这份登记表已经被创建，目前维护在 <http://www.iana.org/assignments/http-parameters>。
+
+*** 5.1.1. 手续 / Procedure
 
 #+BEGIN_QUOTE
-Registration of an HTTP Range Unit MUST include the following fields:
+Registration of an HTTP Range Unit *MUST* include the following fields:
 
 - Name
 - Description
 - Pointer to specification text
 #+END_QUOTE
 
+一个 HTTP 范围单位的登记 *必须* 包括以下字段：
+
+- 名称
+- 描述
+- 指向到规范文本的引用
+
 #+BEGIN_QUOTE
-Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
+Values to be added to this namespace require IETF Review (see [RFC5226], [[https://tools.ietf.org/html/rfc5226#section-4.1][Section 4.1]]).
 #+END_QUOTE
 
-*** 5.1.2. Registrations
+添加到 HTTP 状态码命名空间的值要求由 IETF 复审（见[[https://tools.ietf.org/html/rfc5226#section-4.1][【RFC5226】章节 4.1]]）。
+
+*** 5.1.2. 登记 / Registrations
 
 #+BEGIN_QUOTE
 The initial range unit registry contains the registrations below:
 #+END_QUOTE
 
+初始的《范围单位登记表》包含以下登记项：
+
 | Range Unit Name | Description                                             | Reference   |
 |-----------------+---------------------------------------------------------+-------------|
-| bytes           | a range of octets                                       | Section 2.1 |
-| none            | reserved as keyword, indicating no ranges are supported | Section 2.3 |
+| bytes           | a range of octets                                       | [[id:67c9bce9-6c76-46ec-9932-1b5dde9f7746][Section 2.1]] |
+| none            | reserved as keyword, indicating no ranges are supported | [[id:cf601084-e3af-41bc-9ff7-8f903ca59fa8][Section 2.3]] |
 
 #+BEGIN_QUOTE
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 #+END_QUOTE
+
+主管以上条目的变更的是 "IETF (iesg@ietf.org) - Internet Engineering Task Force"。
 
 ** 5.2. 状态码登记 / Status Code Registration
 
@@ -813,10 +827,12 @@ The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Forc
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <http://www.iana.org/assignments/http-status-codes> has been updated to include the registrations below:
 #+END_QUOTE
 
+《超文本传输协议（HTTP）状态码登记表》位于 <http://www.iana.org/assignments/http-status-codes>，已经更新了以下登记项。
+
 | Value | Description           | Reference   |
 |-------+-----------------------+-------------|
-|   206 | Partial Control       | Section 4.1 |
-|   416 | Range Not Satisfiable | Section 4.4 |
+|   206 | Partial Control       | [[id:32182a4e-00f6-44d9-82e2-f08d98b59324][Section 4.1]] |
+|   416 | Range Not Satisfiable | [[id:a2f29dcf-8c15-4b15-ab66-742f476d27f3][Section 4.4]] |
 
 ** 5.3. 头字段登记  / Header Field Registration
 
@@ -824,30 +840,40 @@ The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <http:/
 HTTP header fields are registered within the "Message Headers" registry maintained at <http://www.iana.org/assignments/message-headers/>.
 #+END_QUOTE
 
+HTTP 头字段被登记在《消息头部》登记表中，并维护在 <http://www.iana.org/assignments/message-headers/>。
+
 #+BEGIN_QUOTE
-This document defines the following HTTP header fields, so their associated registry entries have been updated according to the permanent registrations below (see [BCP90]):
+This document defines the following HTTP header fields, so their associated registry entries have been updated according to the permanent registrations below (see [[[https://tools.ietf.org/html/rfc3864][BCP90]]]):
 #+END_QUOTE
+
+本文档定义了以下 HTTP 头字段，因此它们相关联的登记项已经根据以下永久登记条目进行更新（见【[[https://tools.ietf.org/html/rfc3864][BCP90]]】）：
 
 | Header Field name | Protocol | Status   | Reference   |
 |-------------------+----------+----------+-------------|
-| Accept-Ranges     | http     | standard | Section 2.3 |
-| Content-Range     | http     | standard | Section 4.2 |
-| If-Range          | http     | standard | Section 3.2 |
-| Range             | http     | standard | Section 3.1 |
+| Accept-Ranges     | http     | standard | [[id:cf601084-e3af-41bc-9ff7-8f903ca59fa8][Section 2.3]] |
+| Content-Range     | http     | standard | [[id:7a682301-f05e-4e79-8242-398bbfb57c74][Section 4.2]] |
+| If-Range          | http     | standard | [[id:2859ef1f-8309-4b7d-9e22-963391b5822a][Section 3.2]] |
+| Range             | http     | standard | [[id:a70b4aaa-f776-4d5b-a31d-60d1ad16d85e][Section 3.1]] |
 
 #+BEGIN_QUOTE
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 #+END_QUOTE
 
+主管以上条目的变更的是 "IETF (iesg@ietf.org) - Internet Engineering Task Force"。
+
 ** 5.4. 互联网媒体类型登记 / Internet Media Type Registration
 
 #+BEGIN_QUOTE
-IANA maintains the registry of Internet media types [BCP13] at <http://www.iana.org/assignments/media-types>.
+IANA maintains the registry of Internet media types [[[https://tools.ietf.org/html/rfc6838][BCP13]]] at <http://www.iana.org/assignments/media-types>.
 #+END_QUOTE
+
+IANA 将互联网媒体类型的登记表【[[https://tools.ietf.org/html/rfc6838][BCP13]]】维护在 <http://www.iana.org/assignments/media-types>。
 
 #+BEGIN_QUOTE
 This document serves as the specification for the Internet media type "multipart/byteranges". The following has been registered with IANA.
 #+END_QUOTE
+
+本文档充当 "multipart/byteranges" 互联网媒体类型的规范。以下信息已经在 IANA 进行过登记。
 
 *** 5.4.1. Internet Media Type multipart/byteranges
 
@@ -879,8 +905,10 @@ This document serves as the specification for the Internet media type "multipart
 :END:
 
 #+BEGIN_QUOTE
-This section is meant to inform developers, information providers, and users of known security concerns specific to the HTTP range request mechanisms. More general security considerations are addressed in HTTP messaging [RFC7230] and semantics [RFC7231].
+This section is meant to inform developers, information providers, and users of known security concerns specific to the HTTP range request mechanisms. More general security considerations are addressed in HTTP messaging [[[file:RFC7230.org][RFC7230]]] and semantics [[[file:RFC7231.org][RFC7231]]].
 #+END_QUOTE
+
+本章节是为了告诉开发者、信息提供商、以及用户，针对 HTTP 范围请求机制的已知的安全注意事项。《消息句法和路由》【[[file:RFC7230.org][RFC7230]]】以及《语义和内容》【[[file:RFC7231.org][RFC7231]]】有更广泛的安全注意事项。
 
 ** 6.1. 使用范围进行拒绝服务攻击 / Denial-of-Service Attacks Using Range
 :PROPERTIES:
@@ -891,11 +919,15 @@ This section is meant to inform developers, information providers, and users of 
 Unconstrained multiple range requests are susceptible to denial-of-service attacks because the effort required to request many overlapping ranges of the same data is tiny compared to the time, memory, and bandwidth consumed by attempting to serve the requested data in many parts. Servers ought to ignore, coalesce, or reject egregious range requests, such as requests for more than two overlapping ranges or for many small ranges in a single set, particularly when the ranges are requested out of order for no apparent reason. Multipart range requests are not designed to support random access.
 #+END_QUOTE
 
+不加约束的[[ruby:multiple%20range%20requests][多个部分的范围请求]]容易受到[[ruby:denial-of-service%20attacks][拒绝服务攻击]]的影响，这是因为请求相同数据的许多重合范围的工作量与试图提供所请求的许多部分的数据所消耗的时间、内存、以及宽带相比显得太微不足道了。服务器应该忽略、合并、或者拒绝
+
 * 7. 鸣谢 / Acknowledgments
 
 #+BEGIN_QUOTE
-See Section 10 of [RFC7230].
+See [[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][Section 10]] of [RFC7230].
 #+END_QUOTE
+
+见[[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][【RFC7230】章节 10]]。
 
 * 8. 参考资料 / References
 ** 8.1. 规范性参考资料 / Normative References

@@ -994,7 +994,7 @@ Any extension to HTTP/1.1 that defines additional conditional request header fie
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <http://www.iana.org/assignments/http-status-codes> has been updated with the registrations below:
 #+END_QUOTE
 
-《超文本传输协议（HTTP）状态码登记表》定义在 <http://www.iana.org/assignments/http-status-codes>，已经更新了以下登记项。
+《超文本传输协议（HTTP）状态码登记表》位于 <http://www.iana.org/assignments/http-status-codes>，已经更新了以下登记项。
 
 | Value | Description         | Reference   |
 |-------+---------------------+-------------|
