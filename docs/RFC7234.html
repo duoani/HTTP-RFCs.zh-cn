@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-10 Mon 19:20 -->
+<!-- 2018-12-14 Fri 18:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7234: Hypertext Transfer Protocol (HTTP/1.1): Caching</title>
@@ -394,28 +394,28 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org141944c">Abstract</a></li>
-<li><a href="#orgb2c98e6">Status of This Memo</a></li>
+<li><a href="#org3ea0b18">摘要 / Abstract</a></li>
+<li><a href="#orga688a65">备忘状态 / Status of This Memo</a></li>
 <li><a href="#orga31f7ca">Copyright Notice</a></li>
-<li><a href="#org40c13c4">1. Introduction</a>
+<li><a href="#org3548e07">1. 引言 / Introduction</a>
 <ul>
-<li><a href="#org4bacb45">1.1. Conformance and Error Handling</a></li>
-<li><a href="#orgfbb7a0d">1.2. Syntax Notation</a>
+<li><a href="#org56f5b8d">1.1. 一致性和错误处理 / Conformance and Error Handling</a></li>
+<li><a href="#org4c3fc32">1.2. 句法标记 / Syntax Notation</a>
 <ul>
 <li><a href="#org79b5fcd">1.2.1. Delta Seconds</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org8d5d857">2. Overview of Cache Operation</a></li>
-<li><a href="#orga99f1d4">3. Storing Responses in Caches</a>
+<li><a href="#org00d9855">2. 缓存操作的概况 / Overview of Cache Operation</a></li>
+<li><a href="#orgafdba8c">3. 存储响应到缓存 / Storing Responses in Caches</a>
 <ul>
-<li><a href="#orgc3052d4">3.1. Storing Incomplete Responses</a></li>
+<li><a href="#orgb02ed9d">3.1. 存储不完整的响应 / Storing Incomplete Responses</a></li>
 <li><a href="#orgee2807b">3.2. Storing Responses to Authenticated Requests</a></li>
-<li><a href="#orge80e3d3">3.3. Combining Partial Content</a></li>
+<li><a href="#org15206ea">3.3. 结合部分内容 / Combining Partial Content</a></li>
 </ul>
 </li>
-<li><a href="#org8aa38a8">4. Constructing Responses from Caches</a>
+<li><a href="#org5a0bba4">4. 从缓存构造响应 / Constructing Responses from Caches</a>
 <ul>
 <li><a href="#org6000733">4.1. Calculating Secondary Keys with Vary</a></li>
 <li><a href="#org4447f13">4.2. Freshness</a>
@@ -438,13 +438,35 @@ for the JavaScript code in this tag.
 <li><a href="#org02b7f70">4.4. Invalidation</a></li>
 </ul>
 </li>
-<li><a href="#org48ffa85">5. Header Field Definitions</a>
+<li><a href="#org711b085">5. 头字段定义 / Header Field Definitions</a>
 <ul>
 <li><a href="#orgb943d27">5.1. Age</a></li>
 <li><a href="#org96b62f3">5.2. Cache-Control</a>
 <ul>
-<li><a href="#org5de394c">5.2.1. Request Cache-Control Directives</a></li>
-<li><a href="#org628b869">5.2.2. Response Cache-Control Directives</a></li>
+<li><a href="#org5de394c">5.2.1. Request Cache-Control Directives</a>
+<ul>
+<li><a href="#orge31ad97">5.2.1.1. max-age</a></li>
+<li><a href="#org2366c46">5.2.1.2. max-stale</a></li>
+<li><a href="#org993888e">5.2.1.3. min-fresh</a></li>
+<li><a href="#orga64526f">5.2.1.4. no-cache</a></li>
+<li><a href="#orgeead007">5.2.1.5. no-store</a></li>
+<li><a href="#orge5b428d">5.2.1.6. no-transform</a></li>
+<li><a href="#orgdb45a14">5.2.1.7. only-if-cached</a></li>
+</ul>
+</li>
+<li><a href="#org628b869">5.2.2. Response Cache-Control Directives</a>
+<ul>
+<li><a href="#org19ae67e">5.2.2.1. must-revalidate</a></li>
+<li><a href="#org6dee7ff">5.2.2.2. no-cache</a></li>
+<li><a href="#org15305e1">5.2.2.3. no-store</a></li>
+<li><a href="#org453b87f">5.2.2.4. no-transform</a></li>
+<li><a href="#org300811e">5.2.2.5. public</a></li>
+<li><a href="#orgc298f3c">5.2.2.6. private</a></li>
+<li><a href="#orge47f656">5.2.2.7. proxy-revalidate</a></li>
+<li><a href="#orgc309465">5.2.2.8. max-age</a></li>
+<li><a href="#orgf601e80">5.2.2.9. s-maxage</a></li>
+</ul>
+</li>
 <li><a href="#orgdc9554b">5.2.3. Cache Control Extensions</a></li>
 </ul>
 </li>
@@ -463,37 +485,38 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
-<li><a href="#org3a17515">6. History Lists</a></li>
-<li><a href="#org40755b3">7. IANA Considerations</a>
+<li><a href="#orgace9974">6. 历史列表 / History Lists</a></li>
+<li><a href="#orgf20038c">7. IANA 注意事项 / IANA Considerations</a>
 <ul>
-<li><a href="#org5dcc798">7.1. Cache Directive Registry</a>
+<li><a href="#orgb841771">7.1. 缓存指令登记表 / Cache Directive Registry</a>
 <ul>
-<li><a href="#org69d7336">7.1.1. Procedure</a></li>
-<li><a href="#orgb25ba1a">7.1.2. Considerations for New Cache Control Directives</a></li>
-<li><a href="#org2c21586">7.1.3. Registrations</a></li>
+<li><a href="#org785241a">7.1.1. 手续 / Procedure</a></li>
+<li><a href="#org0611a08">7.1.2. 新的缓存控制指令的注意事项 / Considerations for New Cache Control Directives</a></li>
+<li><a href="#orgc2896c5">7.1.3. 登记 / Registrations</a></li>
 </ul>
 </li>
-<li><a href="#org466d228">7.2. Warn Code Registry</a>
+<li><a href="#orgf57606b">7.2. 警告码登记表 / Warn Code Registry</a>
 <ul>
-<li><a href="#org351c1a0">7.2.1. Procedure</a></li>
-<li><a href="#org97804d3">7.2.2. Registrations</a></li>
+<li><a href="#org37163f9">7.2.1. 手续 / Procedure</a></li>
+<li><a href="#org614b44a">7.2.2. 登记 / Registrations</a></li>
 </ul>
 </li>
-<li><a href="#org927fed5">7.3. Header Field Registration</a></li>
+<li><a href="#org857923c">7.3. 头字段登记 / Header Field Registration</a></li>
 </ul>
 </li>
-<li><a href="#org6c00754">8. Security Considerations</a></li>
-<li><a href="#org0a041b5">9. Acknowledgments</a></li>
-<li><a href="#orgd06cb87">10. References</a>
+<li><a href="#orgf9e4b61">8. 安全注意事项 / Security Considerations</a></li>
+<li><a href="#org9f32532">9. 鸣谢 / Acknowledgments</a></li>
+<li><a href="#org2dbfe2e">10. 参考资料 / References</a>
 <ul>
-<li><a href="#org2b71ddd">10.1. Normative References</a></li>
-<li><a href="#org3e703a8">10.2. Informative References</a></li>
+<li><a href="#org13349db">10.1. 规范性参考资料 / Normative References</a></li>
+<li><a href="#org8fdaaa1">10.2. 信息性参考资料 / Informative References</a></li>
 </ul>
 </li>
-<li><a href="#orgc9bd707">Appendix A. Changes from RFC 2616</a></li>
-<li><a href="#org4bbdb03">Appendix B. Imported ABNF</a></li>
-<li><a href="#orgb7cbe97">Appendix C. Collected ABNF</a></li>
-<li><a href="#org97f7d6f">Index</a></li>
+<li><a href="#orga6bc8f3">附录 A：相对 RFC 2616 的变化 / Appendix A. Changes from RFC 2616</a></li>
+<li><a href="#org981c4e6">附录 B：引进的 ABNF / Appendix B. Imported ABNF</a></li>
+<li><a href="#org72bdc79">附录 C：ABNF 集合 / Appendix C. Collected ABNF</a></li>
+<li><a href="#org37dfe9c">索引 / Index</a></li>
+<li><a href="#org79cb7b1">Authors' Addresses</a></li>
 </ul>
 </div>
 </div>
@@ -522,235 +545,2583 @@ ISSN: 2070-1721                                          J. Reschke, Ed.
 </pre>
 </div>
 
-<div id="outline-container-org141944c" class="outline-2">
-<h2 id="org141944c">Abstract</h2>
+<div id="outline-container-org3ea0b18" class="outline-2">
+<h2 id="org3ea0b18">摘要 / Abstract</h2>
+<div class="outline-text-2" id="text-org3ea0b18">
+<blockquote>
+<p>
+The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document defines HTTP caches and the associated header fields that control cache behavior or indicate cacheable response messages.
+</p>
+</blockquote>
+
+<p>
+超文本传输协议（HTTP）是一种<ruby>无状态<rt>stateless</rt></ruby>的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP 的缓存以及相关的头字段，这些头字段负责控制缓存的行为，或者表明是一种<ruby>可缓存<rt>cacheable</rt></ruby>的响应消息。
+</p>
+</div>
 </div>
 
-<div id="outline-container-orgb2c98e6" class="outline-2">
-<h2 id="orgb2c98e6">Status of This Memo</h2>
+<div id="outline-container-orga688a65" class="outline-2">
+<h2 id="orga688a65">备忘状态 / Status of This Memo</h2>
+<div class="outline-text-2" id="text-orga688a65">
+<blockquote>
+<p>
+This is an Internet Standards Track document.
+</p>
+</blockquote>
+
+<p>
+这是一个 Internet Standards Track 文档。
+</p>
+
+<blockquote>
+<p>
+This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in <ruby>Section 2<rt>https://tools.ietf.org/html/rfc5741</rt></ruby> of RFC 5741.
+</p>
+</blockquote>
+
+<p>
+本文档是<ruby>互联网工程任务组<rt>Internet Engineering Task Force</rt></ruby>（IETF）的产品。它代表了 IETF 社区的共识。它已经接受公众审核并且已经被<ruby>互联网工程指导组<rt>Internet Engineering Steering Group</rt></ruby>（IESG）批准发布。有关<ruby>互联网标准<rt>Internet Standards</rt></ruby>的更多信息，请参阅 RFC 5741 <ruby>章节 2<rt>https://tools.ietf.org/html/rfc5741</rt></ruby>。
+</p>
+
+<blockquote>
+<p>
+Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at <a href="http://www.rfc-editor.org/info/rfc7234">http://www.rfc-editor.org/info/rfc7234</a>.
+</p>
+</blockquote>
+
+<p>
+关于本文档的当前状态，任何勘误以及如何提供反馈的信息可以从 <a href="http://www.rfc-editor.org/info/rfc7234">http://www.rfc-editor.org/info/rfc7234</a> 获得。
+</p>
+</div>
 </div>
 
 <div id="outline-container-orga31f7ca" class="outline-2">
 <h2 id="orga31f7ca">Copyright Notice</h2>
+<div class="outline-text-2" id="text-orga31f7ca">
+<blockquote>
+<p>
+Copyright © 2014 IETF Trust and the persons identified as the document authors. All rights reserved.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (<a href="http://trustee.ietf.org/license-info">http://trustee.ietf.org/license-info</a>) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document. Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This document may contain material from IETF Documents or IETF Contributions published or made publicly available before November 10, 2008. The person(s) controlling the copyright in some of this material may not have granted the IETF Trust the right to allow modifications of such material outside the IETF Standards Process. Without obtaining an adequate license from the person(s) controlling the copyright in such materials, this document may not be modified outside the IETF Standards Process, and derivative works of it may not be created outside the IETF Standards Process, except to format it for publication as an RFC or to translate it into languages other than English.
+</p>
+</blockquote>
+</div>
 </div>
 
-<div id="outline-container-org40c13c4" class="outline-2">
-<h2 id="org40c13c4">1. Introduction</h2>
-<div class="outline-text-2" id="text-org40c13c4">
+<div id="outline-container-org3548e07" class="outline-2">
+<h2 id="org3548e07">1. 引言 / Introduction</h2>
+<div class="outline-text-2" id="text-org3548e07">
+<blockquote>
+<p>
+HTTP is typically used for distributed information systems, where performance can be improved by the use of response caches. This document defines aspects of HTTP/1.1 related to caching and reusing response messages.
+</p>
+</blockquote>
+
+<p>
+HTTP 通常用于分布式信息系统，通过使用响应缓存能够提升这些系统的性能。本文档定义了 HTTP/1.1 缓存响应消息以及复用响应消息相关的内容。
+</p>
+
+<blockquote>
+<p>
+An HTTP cache is a local store of response messages and the subsystem that controls storage, retrieval, and deletion of messages in it. A cache stores cacheable responses in order to reduce the response time and network bandwidth consumption on future, equivalent requests. Any client or server <b>MAY</b> employ a cache, though a cache cannot be used by a server that is acting as a tunnel.
+</p>
+</blockquote>
+
+<p>
+HTTP <ruby>缓存<rt>cache</rt></ruby>，是一种响应消息的本地存储，以及控制其内的消息的存储、获取和删除的子系统。缓存存储了<ruby>可缓存的<rt>cacheable</rt></ruby>响应是为了减少将来的响应时间和网络带宽消耗。任何客户端或者服务器 <b>可以</b> 使用缓存，但是，当服务器作为<ruby>隧道<rt>tunnel</rt></ruby>而使用时，不能使用缓存。 
+</p>
+
+<blockquote>
+<p>
+A shared cache is a cache that stores responses to be reused by more than one user; shared caches are usually (but not always) deployed as a part of an intermediary. A private cache, in contrast, is dedicated to a single user; often, they are deployed as a component of a user agent.
+</p>
+</blockquote>
+
+<p>
+<ruby>共享缓存<rt>shared cache</rt></ruby>是一种缓存，它存储响应用于给一个以上的用户来复用，通常（但并不总是）部署作为一个中间人的一部分。与之相对的是<ruby>私有缓存<rt>private cache</rt></ruby>，这种缓存专门用于某一个用户，通常部署为一个用户代理的一个组件。
+</p>
+
+<blockquote>
+<p>
+The goal of caching in HTTP/1.1 is to significantly improve performance by reusing a prior response message to satisfy a current request. A stored response is considered "fresh", as defined in <a href="#org4447f13">Section 4.2</a>, if the response can be reused without "validation" (checking with the origin server to see if the cached response remains valid for this request). A fresh response can therefore reduce both latency and network overhead each time it is reused. When a cached response is not fresh, it might still be reusable if it can be freshened by validation (<a href="#org5c70daa">Section 4.3</a>) or if the origin is unavailable (<a href="#org39d29de">Section 4.2.4</a>).
+</p>
+</blockquote>
+
+<p>
+在 HTTP/1.1 中，缓存通过复用一个之前的响应消息来满足当前的请求，其目的是显著提升性能。一个已存储的响应，如果它在不需要“验证”的情况就可以用来复用，那么，它被认为是“<ruby>新鲜的<rt>fresh</rt></ruby>”（<a href="#org4447f13">章节 4.2</a>）。所谓“<ruby>验证<rt>validation</rt></ruby>”，是指和源服务器一起检查，看看这个已存储的响应是否仍然有效于这个请求。因此，每一次复用一个新鲜的响应的时候，都可以减少双方的延迟以及网络开销。当一个已存储的响应不再新鲜，它可能仍旧可以获得复用，如果它可以通过验证（<a href="#org5c70daa">章节 4.3</a>）而<ruby>唤发新鲜<rt>freshened</rt></ruby>，或者原始的已不可用（<a href="#org39d29de">章节 4.2.4</a>）。
+</p>
 </div>
-<div id="outline-container-org4bacb45" class="outline-3">
-<h3 id="org4bacb45">1.1. Conformance and Error Handling</h3>
+
+<div id="outline-container-org56f5b8d" class="outline-3">
+<h3 id="org56f5b8d">1.1. 一致性和错误处理 / Conformance and Error Handling</h3>
+<div class="outline-text-3" id="text-org56f5b8d">
+<blockquote>
+<p>
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [<a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>].
+</p>
+</blockquote>
+
+<p>
+本文档中的关键词 <b><ruby>必须<rt>MUST</rt></ruby></b>、<b><ruby>禁止<rt>MUST NOT</rt></ruby></b>、<b><ruby>要求<rt>REQUIRED</rt></ruby></b>、<b><ruby>必须<rt>SHALL</rt></ruby></b>、<b><ruby>禁止<rt>SHALL NOT</rt></ruby></b>、<b><ruby>应该<rt>SHOULD</rt></ruby></b>、<b><ruby>不应当<rt>SHOULD NOT</rt></ruby></b>、<b><ruby>推荐<rt>RECOMMENDED</rt></ruby></b>、<b><ruby>可以<rt>MAY</rt></ruby></b> 和 <b><ruby>可选<rt>OPTIONAL</rt></ruby></b> 的意义与【<a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>】一致。
+</p>
+
+<blockquote>
+<p>
+Conformance criteria and considerations regarding error handling are defined in <a href="RFC7230.html#ID-A0441F72-9799-4667-9477-1E05885946A1">Section 2.5</a> of [RFC7230].
+</p>
+</blockquote>
+
+<p>
+关于错误处理的一致性标准以及注意事项已在<a href="RFC7230.html#ID-A0441F72-9799-4667-9477-1E05885946A1">【RFC7230】章节 2.5</a> 中定义了。
+</p>
 </div>
-<div id="outline-container-orgfbb7a0d" class="outline-3">
-<h3 id="orgfbb7a0d">1.2. Syntax Notation</h3>
-<div class="outline-text-3" id="text-orgfbb7a0d">
 </div>
+
+<div id="outline-container-org4c3fc32" class="outline-3">
+<h3 id="org4c3fc32">1.2. 句法标记 / Syntax Notation</h3>
+<div class="outline-text-3" id="text-org4c3fc32">
+<blockquote>
+<p>
+This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7 of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). <a href="#org981c4e6">Appendix B</a> describes rules imported from other documents. <a href="#org72bdc79">Appendix C</a> shows the collected grammar with all list operators expanded to standard ABNF notation.
+</p>
+</blockquote>
+
+<p>
+本规范使用了<ruby>扩展巴科斯范式<rt>Augmented Backus-Naur Form</rt></ruby>（ABNF）标记法【<a href="https://tools.ietf.org/html/rfc5234">RFC5234</a>】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见<a href="RFC7230.html#ID-b9db011d-fe47-4781-929a-4b1b0aa55aec">章节 7</a>），允许使用一个 <code>#</code> 操作符（类似于 <code>*</code> 操作符，指代“重复”）来定义一种以逗号分隔的列表。<a href="#org981c4e6">附录 B</a> 描述了从其他文档中引进的规则。<a href="#org72bdc79">附录 C</a> 展示了所有已收集的包含列表扩展规则以及标准 ABNF 标记的语法。
+</p>
+</div>
+
 <div id="outline-container-org79b5fcd" class="outline-4">
 <h4 id="org79b5fcd">1.2.1. Delta Seconds</h4>
+<div class="outline-text-4" id="text-org79b5fcd">
+<blockquote>
+<p>
+The delta-seconds rule specifies a non-negative integer, representing time in seconds.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">delta-seconds  = 1*DIGIT
+</pre>
+</div>
+
+<blockquote>
+<p>
+A recipient parsing a delta-seconds value and converting it to binary form ought to use an arithmetic type of at least 31 bits of non-negative integer range. If a cache receives a delta-seconds value greater than the greatest integer it can represent, or if any of its subsequent calculations overflows, the cache MUST consider the value to be either 2147483648 (231) or the greatest positive integer it can conveniently represent.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> The value 2147483648 is here for historical reasons, effectively represents infinity (over 68 years), and does not need to be stored in binary form; an implementation could produce it as a canned string if any overflow occurs, even if the calculations are performed with an arithmetic type incapable of directly representing that number. What matters here is that an overflow be detected and not treated as a negative value in later calculations.
+</p>
+</blockquote>
 </div>
 </div>
 </div>
-<div id="outline-container-org8d5d857" class="outline-2">
-<h2 id="org8d5d857"><a id="ID-a09dfe13-47b3-4258-a219-ba801a1f0467"></a>2. Overview of Cache Operation</h2>
-<div class="outline-text-2" id="text-org8d5d857">
+</div>
+
+<div id="outline-container-org00d9855" class="outline-2">
+<h2 id="org00d9855"><a id="ID-a09dfe13-47b3-4258-a219-ba801a1f0467"></a>2. 缓存操作的概况 / Overview of Cache Operation</h2>
+<div class="outline-text-2" id="text-org00d9855">
+<blockquote>
+<p>
+Proper cache operation preserves the semantics of HTTP transfers ([RFC7231]) while eliminating the transfer of information already held in the cache. Although caching is an entirely <b>OPTIONAL</b> feature of HTTP, it can be assumed that reusing a cached response is desirable and that such reuse is the default behavior when no requirement or local configuration prevents it. Therefore, HTTP cache requirements are focused on preventing a cache from either storing a non-reusable response or reusing a stored response inappropriately, rather than mandating that caches always store and reuse particular responses.
+</p>
+</blockquote>
+
+<p>
+恰当的缓存操作可以在消除已存储在缓存中的消息的网络传输的同时还能保持 HTTP 传输的语义。虽然缓存是完全 <b>可选的</b> HTTP 功能，但我们可以认为复用一个已缓存的响应是大家想要的，并且这样的复用行为是默认的（如果没有要求或本地配置阻止去缓存的话）。所以，HTTP 缓存的要求主要集中在阻止一个缓存去存储一个不可复用的响应，或者不恰当地复用一个已存储的响应这些方面；而不是在是否准许缓存总是存储并复用具体的响应。
+</p>
+
+<blockquote>
+<p>
+Each cache entry consists of a cache key and one or more HTTP responses corresponding to prior requests that used the same key. The most common form of cache entry is a successful result of a retrieval request: i.e., a <code>200 (OK)</code> response to a GET request, which contains a representation of the resource identified by the request target (<a href="RFC7231.html#ID-698bab73-07b1-4349-8a03-5a4a89d966d8">Section 4.3.1</a> of [RFC7231]). However, it is also possible to cache permanent redirects, negative results (e.g., <code>404 (Not Found)</code>), incomplete results (e.g., <code>206 (Partial Content)</code>), and responses to methods other than GET if the method's definition allows such caching and defines something suitable for use as a cache key.
+</p>
+</blockquote>
+
+<p>
+每个<ruby>缓存条目<rt>cache entry</rt></ruby>是由一个缓存 key（映射键）以及一个或多个 HTTP 响应组成的，这些响应对应于之前有使用过相同的 key 的请求。缓存条目最常见的形式是一个检索请求（<a href="RFC7231.html#ID-698bab73-07b1-4349-8a03-5a4a89d966d8">【RFC7231】章节 4.3.1</a>）的成功返回结果，比如，一个回应给 GET 请求的 <code>200 (OK)</code> 响应。这种成功返回结果包含了一个由请求目标所标识的资源表示形式。但是，它同样可能去缓存一个永久重定向（<code>301</code>，见<a href="RFC7231.html#ID-e883e3aa-aac3-46ca-83cc-2a085889f9d2">【RFC7231】章节 6.4.2</a>）、否定的结果（比如，<code>404 (Not Found)</code>）、不完整的结果（比如，<code>206 (Partial Content)</code>）、以及回应给非 GET 方法的响应（如果方法的定义允许这种缓存行为并定义了某种适合用作一个缓存 key 的东西）。
+</p>
+
+<blockquote>
+<p>
+The primary cache key consists of the request method and target URI. However, since HTTP caches in common use today are typically limited to caching responses to GET, many caches simply decline other methods and use only the URI as the primary cache key.
+</p>
+</blockquote>
+
+<p>
+主要的缓存 key 是由<ruby>请求方法<rt>request method</rt></ruby>以及目标 URI 组成的。但是，因为如今普遍使用的 HTTP 缓存通常都被限制为只对 GET 的响应进行缓存，因此，许多缓存简单地拒绝其他方法，并只使用 URI 作为主要的缓存 key。
+</p>
+
+<blockquote>
+<p>
+If a request target is subject to content negotiation, its cache entry might consist of multiple stored responses, each differentiated by a secondary key for the values of the original request's selecting header fields (<a href="#org6000733">Section 4.1</a>).
+</p>
+</blockquote>
+
+<p>
+如果请求目标受到<ruby>内容协商<rt>content negotiation</rt></ruby>的影响，那么它的缓存条目可能是由多个已存储的响应来组成的，每一个响应由一个次要的 key 来进行区分，这个次要的 key 的值是原始请求选定的头字段（<a href="#org6000733">章节 4.1</a>）。
+</p>
 </div>
 </div>
-<div id="outline-container-orga99f1d4" class="outline-2">
-<h2 id="orga99f1d4"><a id="ID-e41d8ccc-5b69-40e3-a8ab-ca27327f15fa"></a>3. Storing Responses in Caches</h2>
-<div class="outline-text-2" id="text-orga99f1d4">
+
+<div id="outline-container-orgafdba8c" class="outline-2">
+<h2 id="orgafdba8c"><a id="ID-e41d8ccc-5b69-40e3-a8ab-ca27327f15fa"></a>3. 存储响应到缓存 / Storing Responses in Caches</h2>
+<div class="outline-text-2" id="text-orgafdba8c">
+<blockquote>
+<p>
+A cache <b>MUST NOT</b> store a response to any request, unless:
+</p>
+
+<ul class="org-ul">
+<li>The request method is understood by the cache and defined as being cacheable, and</li>
+<li>the response status code is understood by the cache, and</li>
+<li>the "no-store" cache directive (see Section 5.2) does not appear in request or response header fields, and</li>
+<li>the "private" response directive (see Section 5.2.2.6) does not appear in the response, if the cache is shared, and</li>
+<li>the Authorization header field (see Section 4.2 of [RFC7235]) does not appear in the request, if the cache is shared, unless the response explicitly allows it (see Section 3.2), and</li>
+<li>the response either:
+<ul class="org-ul">
+<li>contains an <code>Expires</code> header field (see Section 5.3), or</li>
+<li>contains a <code>max-age</code> response directive (see Section 5.2.2.8), or</li>
+<li>contains a <code>s-maxage</code> response directive (see Section 5.2.2.9) and the cache is shared, or</li>
+<li>contains a Cache Control Extension (see Section 5.2.3) that allows it to be cached, or</li>
+<li>has a status code that is defined as cacheable by default (see Section 4.2.2), or</li>
+<li>contains a <code>public</code> response directive (see Section 5.2.2.5).</li>
+</ul></li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+Note that any of the requirements listed above can be overridden by a cache-control extension; see Section 5.2.3.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+In this context, a cache has "understood" a request method or a response status code if it recognizes it and implements all specified caching-related behavior.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Note that, in normal operation, some caches will not store a response that has neither a cache validator nor an explicit expiration time, as such responses are not usually useful to store. However, caches are not prohibited from storing such responses.
+</p>
+</blockquote>
 </div>
-<div id="outline-container-orgc3052d4" class="outline-3">
-<h3 id="orgc3052d4">3.1. Storing Incomplete Responses</h3>
+
+<div id="outline-container-orgb02ed9d" class="outline-3">
+<h3 id="orgb02ed9d">3.1. 存储不完整的响应 / Storing Incomplete Responses</h3>
+<div class="outline-text-3" id="text-orgb02ed9d">
+<blockquote>
+<p>
+A response message is considered complete when all of the octets indicated by the message framing ([RFC7230]) are received prior to the connection being closed. If the request method is GET, the response status code is 200 (OK), and the entire response header section has been received, a cache MAY store an incomplete response message body if the cache entry is recorded as incomplete. Likewise, a 206 (Partial Content) response MAY be stored as if it were an incomplete 200 (OK) cache entry. However, a cache MUST NOT store incomplete or partial-content responses if it does not support the Range and Content-Range header fields or if it does not understand the range units used in those fields.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A cache MAY complete a stored incomplete response by making a subsequent range request ([RFC7233]) and combining the successful response with the stored entry, as defined in Section 3.3. A cache MUST NOT use an incomplete response to answer requests unless the response has been made complete or the request is partial and specifies a range that is wholly within the incomplete response. A cache MUST NOT send a partial response to a client without explicitly marking it as such using the 206 (Partial Content) status code.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-orgee2807b" class="outline-3">
 <h3 id="orgee2807b">3.2. Storing Responses to Authenticated Requests</h3>
+<div class="outline-text-3" id="text-orgee2807b">
+<blockquote>
+<p>
+A shared cache MUST NOT use a cached response to a request with an Authorization header field (Section 4.2 of [RFC7235]) to satisfy any subsequent request unless a cache directive that allows such responses to be stored is present in the response.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+In this specification, the following Cache-Control response directives (Section 5.2.2) have such an effect: must-revalidate, public, and s-maxage.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Note that cached responses that contain the "must-revalidate" and/or "s-maxage" response directives are not allowed to be served stale (Section 4.2.4) by shared caches. In particular, a response with either "max-age=0, must-revalidate" or "s-maxage=0" cannot be used to satisfy a subsequent request without revalidating it on the origin server.
+</p>
+</blockquote>
 </div>
-<div id="outline-container-orge80e3d3" class="outline-3">
-<h3 id="orge80e3d3">3.3. Combining Partial Content</h3>
+</div>
+
+<div id="outline-container-org15206ea" class="outline-3">
+<h3 id="org15206ea">3.3. 结合部分内容 / Combining Partial Content</h3>
+<div class="outline-text-3" id="text-org15206ea">
+<blockquote>
+<p>
+A response might transfer only a partial representation if the connection closed prematurely or if the request used one or more Range specifiers ([RFC7233]). After several such transfers, a cache might have received several ranges of the same representation. A cache MAY combine these ranges into a single stored response, and reuse that response to satisfy later requests, if they all share the same strong validator and the cache complies with the client requirements in Section 4.3 of [RFC7233].
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+When combining the new response with one or more stored responses, a cache MUST:
+</p>
+
+<ul class="org-ul">
+<li>delete any Warning header fields in the stored response with warn-code 1xx (see Section 5.5);</li>
+<li>retain any Warning header fields in the stored response with warn-code 2xx; and,</li>
+<li>use other header fields provided in the new response, aside from Content-Range, to replace all instances of the corresponding header fields in the stored response.</li>
+</ul>
+</blockquote>
 </div>
 </div>
-<div id="outline-container-org8aa38a8" class="outline-2">
-<h2 id="org8aa38a8">4. Constructing Responses from Caches</h2>
-<div class="outline-text-2" id="text-org8aa38a8">
 </div>
+
+<div id="outline-container-org5a0bba4" class="outline-2">
+<h2 id="org5a0bba4">4. 从缓存构造响应 / Constructing Responses from Caches</h2>
+<div class="outline-text-2" id="text-org5a0bba4">
+<blockquote>
+<p>
+When presented with a request, a cache MUST NOT reuse a stored response, unless:
+</p>
+
+<ul class="org-ul">
+<li>The presented effective request URI (Section 5.5 of [RFC7230]) and that of the stored response match, and</li>
+<li>the request method associated with the stored response allows it to be used for the presented request, and</li>
+<li>selecting header fields nominated by the stored response (if any) match those presented (see Section 4.1), and</li>
+<li>the presented request does not contain the no-cache pragma (Section 5.4), nor the no-cache cache directive (Section 5.2.1), unless the stored response is successfully validated (Section 4.3), and</li>
+<li>the stored response does not contain the no-cache cache directive (Section 5.2.2.2), unless it is successfully validated (Section 4.3), and</li>
+<li>the stored response is either:
+<ul class="org-ul">
+<li>fresh (see Section 4.2), or</li>
+<li>allowed to be served stale (see Section 4.2.4), or</li>
+<li>successfully validated (see Section 4.3).</li>
+</ul></li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+Note that any of the requirements listed above can be overridden by a cache-control extension; see Section 5.2.3.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+When a stored response is used to satisfy a request without validation, a cache MUST generate an Age header field (Section 5.1), replacing any present in the response with a value equal to the stored response's current_age; see Section 4.2.3.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A cache MUST write through requests with methods that are unsafe (Section 4.2.1 of [RFC7231]) to the origin server; i.e., a cache is not allowed to generate a reply to such a request before having forwarded the request and having received a corresponding response.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Also, note that unsafe requests might invalidate already-stored responses; see Section 4.4.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+When more than one suitable response is stored, a cache MUST use the most recent response (as determined by the Date header field). It can also forward the request with "Cache-Control: max-age=0" or "Cache-Control: no-cache" to disambiguate which response to use.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A cache that does not have a clock available MUST NOT use stored responses without revalidating them upon every use.
+</p>
+</blockquote>
+</div>
+
 <div id="outline-container-org6000733" class="outline-3">
 <h3 id="org6000733"><a id="ID-352eb301-a424-48e9-9027-3c6633da4b77"></a>4.1. Calculating Secondary Keys with Vary</h3>
 <div class="outline-text-3" id="text-org6000733">
+<blockquote>
+<p>
+When a cache receives a request that can be satisfied by a stored response that has a Vary header field (Section 7.1.4 of [RFC7231]), it MUST NOT use that response unless all of the selecting header fields nominated by the Vary header field match in both the original request (i.e., that associated with the stored response), and the presented request.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The selecting header fields from two requests are defined to match if and only if those in the first request can be transformed to those in the second request by applying any of the following:
+</p>
+
+<ul class="org-ul">
+<li>adding or removing whitespace, where allowed in the header field's syntax</li>
+<li>combining multiple header fields with the same field name (see Section 3.2 of [RFC7230])</li>
+<li>normalizing both header field values in a way that is known to have identical semantics, according to the header field's specification (e.g., reordering field values when order is not significant; case-normalization, where values are defined to be case-insensitive)</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+If (after any normalization that might take place) a header field is absent from a request, it can only match another request if it is also absent there.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A Vary header field-value of "*" always fails to match.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The stored response with matching selecting header fields is known as the selected response.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If multiple selected responses are available (potentially including responses without a Vary header field), the cache will need to choose one to use. When a selecting header field has a known mechanism for doing so (e.g., qvalues on Accept and similar request header fields), that mechanism MAY be used to select preferred responses; of the remainder, the most recent response (as determined by the Date header field) is used, as per Section 4.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If no selected response is available, the cache cannot satisfy the presented request. Typically, it is forwarded to the origin server in a (possibly conditional; see Section 4.3) request.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-org4447f13" class="outline-3">
-<h3 id="org4447f13">4.2. Freshness</h3>
+<h3 id="org4447f13"><a id="ID-d414d2f7-d865-4b94-9efd-6b2578df86aa"></a>4.2. Freshness</h3>
 <div class="outline-text-3" id="text-org4447f13">
+<blockquote>
+<p>
+A fresh response is one whose age has not yet exceeded its freshness lifetime. Conversely, a stale response is one where it has.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A response's freshness lifetime is the length of time between its generation by the origin server and its expiration time. An explicit expiration time is the time at which the origin server intends that a stored response can no longer be used by a cache without further validation, whereas a heuristic expiration time is assigned by a cache when no explicit expiration time is available.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A response's age is the time that has passed since it was generated by, or successfully validated with, the origin server.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+When a response is "fresh" in the cache, it can be used to satisfy subsequent requests without contacting the origin server, thereby improving efficiency.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The primary mechanism for determining freshness is for an origin server to provide an explicit expiration time in the future, using either the Expires header field (Section 5.3) or the max-age response directive (Section 5.2.2.8). Generally, origin servers will assign future explicit expiration times to responses in the belief that the representation is not likely to change in a semantically significant way before the expiration time is reached.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If an origin server wishes to force a cache to validate every request, it can assign an explicit expiration time in the past to indicate that the response is already stale. Compliant caches will normally validate a stale cached response before reusing it for subsequent requests (see Section 4.2.4).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Since origin servers do not always provide explicit expiration times, caches are also allowed to use a heuristic to determine an expiration time under certain circumstances (see Section 4.2.2).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The calculation to determine if a response is fresh is:
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">response_is_fresh = (freshness_lifetime &gt; current_age)
+</pre>
 </div>
+
+<blockquote>
+<p>
+freshness_lifetime is defined in Section 4.2.1; current_age is defined in Section 4.2.3.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Clients can send the max-age or min-fresh cache directives in a request to constrain or relax freshness calculations for the corresponding response (Section 5.2.1).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+When calculating freshness, to avoid common problems in date parsing:
+</p>
+
+<ul class="org-ul">
+<li>Although all date formats are specified to be case-sensitive, a cache recipient SHOULD match day, week, and time-zone names case-insensitively.</li>
+<li>If a cache recipient's internal implementation of time has less resolution than the value of an HTTP-date, the recipient MUST internally represent a parsed Expires date as the nearest time equal to or earlier than the received value.</li>
+<li>A cache recipient MUST NOT allow local time zones to influence the calculation or comparison of an age or expiration time.</li>
+<li>A cache recipient SHOULD consider a date with a zone abbreviation other than GMT or UTC to be invalid for calculating expiration.</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+Note that freshness applies only to cache operation; it cannot be used to force a user agent to refresh its display or reload a resource. See Section 6 for an explanation of the difference between caches and history mechanisms.
+</p>
+</blockquote>
+</div>
+
 <div id="outline-container-org546ba65" class="outline-4">
 <h4 id="org546ba65">4.2.1. Calculating Freshness Lifetime</h4>
+<div class="outline-text-4" id="text-org546ba65">
+<blockquote>
+<p>
+A cache can calculate the freshness lifetime (denoted as freshness_lifetime) of a response by using the first match of the following:
+</p>
+
+<ul class="org-ul">
+<li>If the cache is shared and the s-maxage response directive (Section 5.2.2.9) is present, use its value, or</li>
+<li>If the max-age response directive (Section 5.2.2.8) is present, use its value, or</li>
+<li>If the Expires response header field (Section 5.3) is present, use its value minus the value of the Date response header field, or</li>
+<li>Otherwise, no explicit expiration time is present in the response. A heuristic freshness lifetime might be applicable; see Section 4.2.2.</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+Note that this calculation is not vulnerable to clock skew, since all of the information comes from the origin server.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+When there is more than one value present for a given directive (e.g., two Expires header fields, multiple Cache-Control: max-age directives), the directive's value is considered invalid. Caches are encouraged to consider responses that have invalid freshness information to be stale.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-orgafe6b84" class="outline-4">
 <h4 id="orgafe6b84"><a id="ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01"></a>4.2.2. Calculating Heuristic Freshness</h4>
 <div class="outline-text-4" id="text-orgafe6b84">
+<blockquote>
+<p>
+Since origin servers do not always provide explicit expiration times, a cache MAY assign a heuristic expiration time when an explicit time is not specified, employing algorithms that use other header field values (such as the Last-Modified time) to estimate a plausible expiration time. This specification does not provide specific algorithms, but does impose worst-case constraints on their results.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A cache MUST NOT use heuristics to determine freshness when an explicit expiration time is present in the stored response. Because of the requirements in Section 3, this means that, effectively, heuristics can only be used on responses without explicit freshness whose status codes are defined as cacheable by default (see Section 6.1 of [RFC7231]), and those responses without explicit freshness that have been marked as explicitly cacheable (e.g., with a "public" response directive).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If the response has a Last-Modified header field (Section 2.2 of [RFC7232]), caches are encouraged to use a heuristic expiration value that is no more than some fraction of the interval since that time. A typical setting of this fraction might be 10%.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+When a heuristic is used to calculate freshness lifetime, a cache SHOULD generate a Warning header field with a 113 warn-code (see Section 5.5.4) in the response if its current_age is more than 24 hours and such a warning is not already present.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> Section 13.9 of [RFC2616] prohibited caches from calculating heuristic freshness for URIs with query components (i.e., those containing '?'). In practice, this has not been widely implemented. Therefore, origin servers are encouraged to send explicit directives (e.g., Cache-Control: no-cache) if they wish to preclude caching.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-org8a496e1" class="outline-4">
 <h4 id="org8a496e1">4.2.3. Calculating Age</h4>
+<div class="outline-text-4" id="text-org8a496e1">
+<blockquote>
+<p>
+The Age header field is used to convey an estimated age of the response message when obtained from a cache. The Age field value is the cache's estimate of the number of seconds since the response was generated or validated by the origin server. In essence, the Age value is the sum of the time that the response has been resident in each of the caches along the path from the origin server, plus the amount of time it has been in transit along network paths.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The following data is used for the age calculation:
+</p>
+
+<dl class="org-dl">
+<dt>age_value</dt><dd>The term "age_value" denotes the value of the Age header field (Section 5.1), in a form appropriate for arithmetic operation; or 0, if not available.</dd>
+<dt>date_value</dt><dd>The term "date_value" denotes the value of the Date header field, in a form appropriate for arithmetic operations. See Section 7.1.1.2 of [RFC7231] for the definition of the Date header field, and for requirements regarding responses without it.</dd>
+<dt>now</dt><dd>The term "now" means "the current value of the clock at the host performing the calculation". A host ought to use NTP ([RFC5905]) or some similar protocol to synchronize its clocks to Coordinated Universal Time.</dd>
+<dt>request_time</dt><dd>The current value of the clock at the host at the time the request resulting in the stored response was made.</dd>
+<dt>response_time</dt><dd>The current value of the clock at the host at the time the response was received.</dd>
+</dl>
+</blockquote>
+
+<blockquote>
+<p>
+A response's age can be calculated in two entirely independent ways:
+</p>
+
+<ol class="org-ol">
+<li>the "apparent_age": response_time minus date_value, if the local clock is reasonably well synchronized to the origin server's clock. If the result is negative, the result is replaced by zero.</li>
+<li>the "corrected_age_value", if all of the caches along the response path implement HTTP/1.1. A cache MUST interpret this value relative to the time the request was initiated, not the time that the response was received.</li>
+</ol>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">apparent_age = max(0, response_time - date_value);
+
+response_delay = response_time - request_time;
+corrected_age_value = age_value + response_delay;  
+</pre>
 </div>
+
+<blockquote>
+<p>
+These are combined as
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">corrected_initial_age = max(apparent_age, corrected_age_value);
+</pre>
+</div>
+
+<blockquote>
+<p>
+unless the cache is confident in the value of the Age header field (e.g., because there are no HTTP/1.0 hops in the Via header field), in which case the corrected_age_value MAY be used as the corrected_initial_age.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The current_age of a stored response can then be calculated by adding the amount of time (in seconds) since the stored response was last validated by the origin server to the corrected_initial_age.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">resident_time = now - response_time;
+current_age = corrected_initial_age + resident_time;
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org39d29de" class="outline-4">
-<h4 id="org39d29de">4.2.4. Serving Stale Responses</h4>
+<h4 id="org39d29de"><a id="ID-630361ae-a4e3-4fec-b337-8eff30325ddf"></a>4.2.4. Serving Stale Responses</h4>
+<div class="outline-text-4" id="text-org39d29de">
+<blockquote>
+<p>
+A "stale" response is one that either has explicit expiry information or is allowed to have heuristic expiry calculated, but is not fresh according to the calculations in Section 4.2.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A cache MUST NOT generate a stale response if it is prohibited by an explicit in-protocol directive (e.g., by a "no-store" or "no-cache" cache directive, a "must-revalidate" cache-response-directive, or an applicable "s-maxage" or "proxy-revalidate" cache-response-directive; see Section 5.2.2).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A cache MUST NOT send stale responses unless it is disconnected (i.e., it cannot contact the origin server or otherwise find a forward path) or doing so is explicitly allowed (e.g., by the max-stale request directive; see Section 5.2.1).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A cache SHOULD generate a Warning header field with the 110 warn-code (see Section 5.5.1) in stale responses. Likewise, a cache SHOULD generate a 112 warn-code (see Section 5.5.3) in stale responses if the cache is disconnected.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A cache SHOULD NOT generate a new Warning header field when forwarding a response that does not have an Age header field, even if the response is already stale. A cache need not validate a response that merely became stale in transit.
+</p>
+</blockquote>
 </div>
 </div>
+</div>
+
 <div id="outline-container-org5c70daa" class="outline-3">
-<h3 id="org5c70daa">4.3. Validation</h3>
+<h3 id="org5c70daa"><a id="ID-47a8482e-e33f-435a-8abd-9a82f117f7a0"></a>4.3. Validation</h3>
 <div class="outline-text-3" id="text-org5c70daa">
+<blockquote>
+<p>
+When a cache has one or more stored responses for a requested URI, but cannot serve any of them (e.g., because they are not fresh, or one cannot be selected; see Section 4.1), it can use the conditional request mechanism [RFC7232] in the forwarded request to give the next inbound server an opportunity to select a valid stored response to use, updating the stored metadata in the process, or to replace the stored response(s) with a new response. This process is known as "validating" or "revalidating" the stored response.
+</p>
+</blockquote>
 </div>
+
 <div id="outline-container-orgf72e636" class="outline-4">
 <h4 id="orgf72e636">4.3.1. Sending a Validation Request</h4>
+<div class="outline-text-4" id="text-orgf72e636">
+<blockquote>
+<p>
+When sending a conditional request for cache validation, a cache sends one or more precondition header fields containing validator metadata from its stored response(s), which is then compared by recipients to determine whether a stored response is equivalent to a current representation of the resource.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+One such validator is the timestamp given in a Last-Modified header field (Section 2.2 of [RFC7232]), which can be used in an If-Modified-Since header field for response validation, or in an If-Unmodified-Since or If-Range header field for representation selection (i.e., the client is referring specifically to a previously obtained representation with that timestamp).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Another validator is the entity-tag given in an ETag header field (Section 2.3 of [RFC7232]). One or more entity-tags, indicating one or more stored responses, can be used in an If-None-Match header field for response validation, or in an If-Match or If-Range header field for representation selection (i.e., the client is referring specifically to one or more previously obtained representations with the listed entity-tags).
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org7b229f6" class="outline-4">
 <h4 id="org7b229f6"><a id="ID-A500DFDD-0DD6-454E-A94A-EDBC8D38946E"></a>4.3.2. Handling a Received Validation Request</h4>
 <div class="outline-text-4" id="text-org7b229f6">
+<blockquote>
+<p>
+Each client in the request chain may have its own cache, so it is common for a cache at an intermediary to receive conditional requests from other (outbound) caches. Likewise, some user agents make use of conditional requests to limit data transfers to recently modified representations or to complete the transfer of a partially retrieved representation.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If a cache receives a request that can be satisfied by reusing one of its stored 200 (OK) or 206 (Partial Content) responses, the cache SHOULD evaluate any applicable conditional header field preconditions received in that request with respect to the corresponding validators contained within the selected response. A cache MUST NOT evaluate conditional header fields that are only applicable to an origin server, found in a request with semantics that cannot be satisfied with a cached response, or applied to a target resource for which it has no stored responses; such preconditions are likely intended for some other (inbound) server.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The proper evaluation of conditional requests by a cache depends on the received precondition header fields and their precedence, as defined in Section 6 of [RFC7232]. The If-Match and If-Unmodified-Since conditional header fields are not applicable to a cache.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A request containing an If-None-Match header field (Section 3.2 of [RFC7232]) indicates that the client wants to validate one or more of its own stored responses in comparison to whichever stored response is selected by the cache. If the field-value is "*", or if the field-value is a list of entity-tags and at least one of them matches the entity-tag of the selected stored response, a cache recipient SHOULD generate a 304 (Not Modified) response (using the metadata of the selected stored response) instead of sending that stored response.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+When a cache decides to revalidate its own stored responses for a request that contains an If-None-Match list of entity-tags, the cache MAY combine the received list with a list of entity-tags from its own stored set of responses (fresh or stale) and send the union of the two lists as a replacement If-None-Match header field value in the forwarded request. If a stored response contains only partial content, the cache MUST NOT include its entity-tag in the union unless the request is for a range that would be fully satisfied by that partial stored response. If the response to the forwarded request is 304 (Not Modified) and has an ETag header field value with an entity-tag that is not in the client's list, the cache MUST generate a 200 (OK) response for the client by reusing its corresponding stored response, as updated by the 304 response metadata (Section 4.3.4).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If an If-None-Match header field is not present, a request containing an If-Modified-Since header field (Section 3.3 of [RFC7232]) indicates that the client wants to validate one or more of its own stored responses by modification date. A cache recipient SHOULD generate a 304 (Not Modified) response (using the metadata of the selected stored response) if one of the following cases is true: 1) the selected stored response has a Last-Modified field-value that is earlier than or equal to the conditional timestamp; 2) no Last-Modified field is present in the selected stored response, but it has a Date field-value that is earlier than or equal to the conditional timestamp; or, 3) neither Last-Modified nor Date is present in the selected stored response, but the cache recorded it as having been received at a time earlier than or equal to the conditional timestamp.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A cache that implements partial responses to range requests, as defined in [RFC7233], also needs to evaluate a received If-Range header field (Section 3.2 of [RFC7233]) with respect to its selected stored response.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-org7f01145" class="outline-4">
 <h4 id="org7f01145">4.3.3. Handling a Validation Response</h4>
+<div class="outline-text-4" id="text-org7f01145">
+<blockquote>
+<p>
+Cache handling of a response to a conditional request is dependent upon its status code:
+</p>
+
+<ul class="org-ul">
+<li>A 304 (Not Modified) response status code indicates that the stored response can be updated and reused; see Section 4.3.4.</li>
+<li>A full response (i.e., one with a payload body) indicates that none of the stored responses nominated in the conditional request is suitable. Instead, the cache MUST use the full response to satisfy the request and MAY replace the stored response(s).</li>
+<li>However, if a cache receives a 5xx (Server Error) response while attempting to validate a response, it can either forward this response to the requesting client, or act as if the server failed to respond. In the latter case, the cache MAY send a previously stored response (see Section 4.2.4).</li>
+</ul>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org3d49f06" class="outline-4">
 <h4 id="org3d49f06"><a id="ID-eb92f86f-35bf-4b7a-b1ae-579da32c29a5"></a>4.3.4. Freshening Stored Responses upon Validation</h4>
 <div class="outline-text-4" id="text-org3d49f06">
+<blockquote>
+<p>
+When a cache receives a 304 (Not Modified) response and already has one or more stored 200 (OK) responses for the same cache key, the cache needs to identify which of the stored responses are updated by this new response and then update the stored response(s) with the new information provided in the 304 response.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The stored response to update is identified by using the first match (if any) of the following:
+</p>
+
+<ul class="org-ul">
+<li>If the new response contains a strong validator (see Section 2.1 of [RFC7232]), then that strong validator identifies the selected representation for update. All of the stored responses with the same strong validator are selected. If none of the stored responses contain the same strong validator, then the cache MUST NOT use the new response to update any stored responses.</li>
+<li>If the new response contains a weak validator and that validator corresponds to one of the cache's stored responses, then the most recent of those matching stored responses is selected for update.</li>
+<li>If the new response does not include any form of validator (such as in the case where a client generates an If-Modified-Since request from a source other than the Last-Modified response header field), and there is only one stored response, and that stored response also lacks a validator, then that stored response is selected for update.</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+If a stored response is selected for update, the cache MUST:
+</p>
+
+<ul class="org-ul">
+<li>delete any Warning header fields in the stored response with warn-code 1xx (see Section 5.5);</li>
+<li>retain any Warning header fields in the stored response with warn-code 2xx; and,</li>
+<li>use other header fields provided in the 304 (Not Modified) response to replace all instances of the corresponding header fields in the stored response.</li>
+</ul>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-orgde53d09" class="outline-4">
 <h4 id="orgde53d09">4.3.5. Freshening Responses via HEAD</h4>
+<div class="outline-text-4" id="text-orgde53d09">
+<blockquote>
+<p>
+A response to the HEAD method is identical to what an equivalent request made with a GET would have been, except it lacks a body. This property of HEAD responses can be used to invalidate or update a cached GET response if the more efficient conditional GET request mechanism is not available (due to no validators being present in the stored response) or if transmission of the representation body is not desired even if it has changed.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+When a cache makes an inbound HEAD request for a given request target and receives a 200 (OK) response, the cache SHOULD update or invalidate each of its stored GET responses that could have been selected for that request (see Section 4.1).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+For each of the stored responses that could have been selected, if the stored response and HEAD response have matching values for any received validator fields (ETag and Last-Modified) and, if the HEAD response has a Content-Length header field, the value of Content-Length matches that of the stored response, the cache SHOULD update the stored response as described below; otherwise, the cache SHOULD consider the stored response to be stale.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If a cache updates a stored response with the metadata provided in a HEAD response, the cache MUST:
+</p>
+
+<ul class="org-ul">
+<li>delete any Warning header fields in the stored response with warn-code 1xx (see Section 5.5);</li>
+<li>retain any Warning header fields in the stored response with warn-code 2xx; and,</li>
+<li>use other header fields provided in the HEAD response to replace all instances of the corresponding header fields in the stored response and append new header fields to the stored response's header section unless otherwise restricted by the Cache-Control header field.</li>
+</ul>
+</blockquote>
 </div>
 </div>
+</div>
+
 <div id="outline-container-org02b7f70" class="outline-3">
 <h3 id="org02b7f70">4.4. Invalidation</h3>
+<div class="outline-text-3" id="text-org02b7f70">
+<blockquote>
+<p>
+Because unsafe request methods (Section 4.2.1 of [RFC7231]) such as PUT, POST or DELETE have the potential for changing state on the origin server, intervening caches can use them to keep their contents up to date.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A cache MUST invalidate the effective Request URI (Section 5.5 of [RFC7230]) as well as the URI(s) in the Location and Content-Location response header fields (if present) when a non-error status code is received in response to an unsafe request method.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+However, a cache MUST NOT invalidate a URI from a Location or Content-Location response header field if the host part of that URI differs from the host part in the effective request URI (Section 5.5 of [RFC7230]). This helps prevent denial-of-service attacks.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A cache MUST invalidate the effective request URI (Section 5.5 of [RFC7230]) when it receives a non-error response to a request with a method whose safety is unknown.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Here, a "non-error response" is one with a 2xx (Successful) or 3xx (Redirection) status code. "Invalidate" means that the cache will either remove all stored responses related to the effective request URI or will mark these as "invalid" and in need of a mandatory validation before they can be sent in response to a subsequent request.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Note that this does not guarantee that all appropriate responses are invalidated. For example, a state-changing request might invalidate responses in the caches it travels through, but relevant responses still might be stored in other caches that it has not.
+</p>
+</blockquote>
 </div>
 </div>
-<div id="outline-container-org48ffa85" class="outline-2">
-<h2 id="org48ffa85">5. Header Field Definitions</h2>
-<div class="outline-text-2" id="text-org48ffa85">
 </div>
+
+<div id="outline-container-org711b085" class="outline-2">
+<h2 id="org711b085">5. 头字段定义 / Header Field Definitions</h2>
+<div class="outline-text-2" id="text-org711b085">
+<blockquote>
+<p>
+This section defines the syntax and semantics of HTTP/1.1 header fields related to caching.
+</p>
+</blockquote>
+</div>
+
 <div id="outline-container-orgb943d27" class="outline-3">
 <h3 id="orgb943d27"><a id="ID-0fda7a59-2592-493d-9ce1-01e72543c6c0"></a>5.1. Age</h3>
 <div class="outline-text-3" id="text-orgb943d27">
+<blockquote>
+<p>
+The "Age" header field conveys the sender's estimate of the amount of time since the response was generated or successfully validated at the origin server. Age values are calculated as specified in Section 4.2.3.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Age = delta-seconds
+</pre>
+</div>
+
+<blockquote>
+<p>
+The Age field-value is a non-negative integer, representing time in seconds (see Section 1.2.1).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The presence of an Age header field implies that the response was not generated or validated by the origin server for this request. However, lack of an Age header field does not imply the origin was contacted, since the response might have been received from an HTTP/1.0 cache that does not implement Age.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-org96b62f3" class="outline-3">
 <h3 id="org96b62f3"><a id="ID-03c2dad4-a6d2-4d3c-b087-d08717bf09ec"></a>5.2. Cache-Control</h3>
 <div class="outline-text-3" id="text-org96b62f3">
+<blockquote>
+<p>
+The "Cache-Control" header field is used to specify directives for caches along the request/response chain. Such cache directives are unidirectional in that the presence of a directive in a request does not imply that the same directive is to be given in the response.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A cache MUST obey the requirements of the Cache-Control directives defined in this section. See Section 5.2.3 for information about how Cache-Control directives defined elsewhere are handled.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> Some HTTP/1.0 caches might not implement Cache-Control.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A proxy, whether or not it implements a cache, MUST pass cache directives through in forwarded messages, regardless of their significance to that application, since the directives might be applicable to all recipients along the request/response chain. It is not possible to target a directive to a specific cache.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Cache directives are identified by a token, to be compared case-insensitively, and have an optional argument, that can use both token and quoted-string syntax. For the directives defined below that define arguments, recipients ought to accept both forms, even if one is documented to be preferred. For any directive not defined by this specification, a recipient MUST accept both forms.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Cache-Control   = 1#cache-directive
+
+cache-directive = token [ "=" ( token / quoted-string ) ]
+</pre>
 </div>
+
+<blockquote>
+<p>
+For the cache directives defined below, no argument is defined (nor allowed) unless stated otherwise.
+</p>
+</blockquote>
+</div>
+
 <div id="outline-container-org5de394c" class="outline-4">
 <h4 id="org5de394c">5.2.1. Request Cache-Control Directives</h4>
+<div class="outline-text-4" id="text-org5de394c">
 </div>
+<div id="outline-container-orge31ad97" class="outline-5">
+<h5 id="orge31ad97">5.2.1.1. max-age</h5>
+<div class="outline-text-5" id="text-orge31ad97">
+<blockquote>
+<p>
+Argument syntax:
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">delta-seconds (see Section 1.2.1)
+</pre>
+</div>
+
+<blockquote>
+<p>
+The "max-age" request directive indicates that the client is unwilling to accept a response whose age is greater than the specified number of seconds. Unless the max-stale request directive is also present, the client is not willing to accept a stale response.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This directive uses the token form of the argument syntax: e.g., 'max-age=5' not 'max-age="5"'. A sender SHOULD NOT generate the quoted-string form.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org2366c46" class="outline-5">
+<h5 id="org2366c46">5.2.1.2. max-stale</h5>
+<div class="outline-text-5" id="text-org2366c46">
+<blockquote>
+<p>
+Argument syntax:
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">delta-seconds (see Section 1.2.1)
+</pre>
+</div>
+
+<blockquote>
+<p>
+The "max-stale" request directive indicates that the client is willing to accept a response that has exceeded its freshness lifetime. If max-stale is assigned a value, then the client is willing to accept a response that has exceeded its freshness lifetime by no more than the specified number of seconds. If no value is assigned to max-stale, then the client is willing to accept a stale response of any age.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This directive uses the token form of the argument syntax: e.g., 'max-stale=10' not 'max-stale="10"'. A sender SHOULD NOT generate the quoted-string form.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org993888e" class="outline-5">
+<h5 id="org993888e">5.2.1.3. min-fresh</h5>
+<div class="outline-text-5" id="text-org993888e">
+<blockquote>
+<p>
+Argument syntax:
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">delta-seconds (see Section 1.2.1)
+</pre>
+</div>
+
+<blockquote>
+<p>
+The "min-fresh" request directive indicates that the client is willing to accept a response whose freshness lifetime is no less than its current age plus the specified time in seconds. That is, the client wants a response that will still be fresh for at least the specified number of seconds.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This directive uses the token form of the argument syntax: e.g., 'min-fresh=20' not 'min-fresh="20"'. A sender SHOULD NOT generate the quoted-string form.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orga64526f" class="outline-5">
+<h5 id="orga64526f">5.2.1.4. no-cache</h5>
+<div class="outline-text-5" id="text-orga64526f">
+<blockquote>
+<p>
+The "no-cache" request directive indicates that a cache MUST NOT use a stored response to satisfy the request without successful validation on the origin server.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgeead007" class="outline-5">
+<h5 id="orgeead007">5.2.1.5. no-store</h5>
+<div class="outline-text-5" id="text-orgeead007">
+<blockquote>
+<p>
+The "no-store" request directive indicates that a cache MUST NOT store any part of either this request or any response to it. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache MUST NOT intentionally store the information in non-volatile storage, and MUST make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This directive is NOT a reliable or sufficient mechanism for ensuring privacy. In particular, malicious or compromised caches might not recognize or obey this directive, and communications networks might be vulnerable to eavesdropping.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Note that if a request containing this directive is satisfied from a cache, the no-store request directive does not apply to the already stored response.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orge5b428d" class="outline-5">
+<h5 id="orge5b428d">5.2.1.6. no-transform</h5>
+<div class="outline-text-5" id="text-orge5b428d">
+<blockquote>
+<p>
+The "no-transform" request directive indicates that an intermediary (whether or not it implements a cache) MUST NOT transform the payload, as defined in Section 5.7.2 of [RFC7230].
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgdb45a14" class="outline-5">
+<h5 id="orgdb45a14">5.2.1.7. only-if-cached</h5>
+<div class="outline-text-5" id="text-orgdb45a14">
+<blockquote>
+<p>
+The "only-if-cached" request directive indicates that the client only wishes to obtain a stored response. If it receives this directive, a cache SHOULD either respond using a stored response that is consistent with the other constraints of the request, or respond with a 504 (Gateway Timeout) status code. If a group of caches is being operated as a unified system with good internal connectivity, a member cache MAY forward such a request within that group of caches.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org628b869" class="outline-4">
 <h4 id="org628b869">5.2.2. Response Cache-Control Directives</h4>
+<div class="outline-text-4" id="text-org628b869">
 </div>
+<div id="outline-container-org19ae67e" class="outline-5">
+<h5 id="org19ae67e">5.2.2.1. must-revalidate</h5>
+<div class="outline-text-5" id="text-org19ae67e">
+<blockquote>
+<p>
+The "must-revalidate" response directive indicates that once it has become stale, a cache MUST NOT use the response to satisfy subsequent requests without successful validation on the origin server.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The must-revalidate directive is necessary to support reliable operation for certain protocol features. In all circumstances a cache MUST obey the must-revalidate directive; in particular, if a cache cannot reach the origin server for any reason, it MUST generate a 504 (Gateway Timeout) response.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The must-revalidate directive ought to be used by servers if and only if failure to validate a request on the representation could result in incorrect operation, such as a silently unexecuted financial transaction.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org6dee7ff" class="outline-5">
+<h5 id="org6dee7ff">5.2.2.2. no-cache</h5>
+<div class="outline-text-5" id="text-org6dee7ff">
+<blockquote>
+<p>
+Argument syntax:
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">#field-name
+</pre>
+</div>
+
+<blockquote>
+<p>
+The "no-cache" response directive indicates that the response MUST NOT be used to satisfy a subsequent request without successful validation on the origin server. This allows an origin server to prevent a cache from using it to satisfy a request without contacting it, even by caches that have been configured to send stale responses.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If the no-cache response directive specifies one or more field-names, then a cache MAY use the response to satisfy a subsequent request, subject to any other restrictions on caching. However, any header fields in the response that have the field-name(s) listed MUST NOT be sent in the response to a subsequent request without successful revalidation with the origin server. This allows an origin server to prevent the re-use of certain header fields in a response, while still allowing caching of the rest of the response.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The field-names given are not limited to the set of header fields defined by this specification. Field names are case-insensitive.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This directive uses the quoted-string form of the argument syntax. A sender SHOULD NOT generate the token form (even if quoting appears not to be needed for single-entry lists).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> Although it has been back-ported to many implementations, some HTTP/1.0 caches will not recognize or obey this directive. Also, no-cache response directives with field-names are often handled by caches as if an unqualified no-cache directive was received; i.e., the special handling for the qualified form is not widely implemented.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org15305e1" class="outline-5">
+<h5 id="org15305e1">5.2.2.3. no-store</h5>
+<div class="outline-text-5" id="text-org15305e1">
+<blockquote>
+<p>
+The "no-store" response directive indicates that a cache MUST NOT store any part of either the immediate request or response. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache MUST NOT intentionally store the information in non-volatile storage, and MUST make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This directive is NOT a reliable or sufficient mechanism for ensuring privacy. In particular, malicious or compromised caches might not recognize or obey this directive, and communications networks might be vulnerable to eavesdropping.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org453b87f" class="outline-5">
+<h5 id="org453b87f">5.2.2.4. no-transform</h5>
+<div class="outline-text-5" id="text-org453b87f">
+<blockquote>
+<p>
+The "no-transform" response directive indicates that an intermediary (regardless of whether it implements a cache) MUST NOT transform the payload, as defined in Section 5.7.2 of [RFC7230].
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org300811e" class="outline-5">
+<h5 id="org300811e">5.2.2.5. public</h5>
+<div class="outline-text-5" id="text-org300811e">
+<blockquote>
+<p>
+The "public" response directive indicates that any cache MAY store the response, even if the response would normally be non-cacheable or cacheable only within a private cache. (See Section 3.2 for additional details related to the use of public in response to a request containing Authorization, and Section 3 for details of how public affects responses that would normally not be stored, due to their status codes not being defined as cacheable by default; see Section 4.2.2.)
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgc298f3c" class="outline-5">
+<h5 id="orgc298f3c">5.2.2.6. private</h5>
+<div class="outline-text-5" id="text-orgc298f3c">
+<blockquote>
+<p>
+Argument syntax:
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">#field-name
+</pre>
+</div>
+
+<blockquote>
+<p>
+The "private" response directive indicates that the response message is intended for a single user and MUST NOT be stored by a shared cache. A private cache MAY store the response and reuse it for later requests, even if the response would normally be non-cacheable.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If the private response directive specifies one or more field-names, this requirement is limited to the field-values associated with the listed response header fields. That is, a shared cache MUST NOT store the specified field-names(s), whereas it MAY store the remainder of the response message.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The field-names given are not limited to the set of header fields defined by this specification. Field names are case-insensitive.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This directive uses the quoted-string form of the argument syntax. A sender SHOULD NOT generate the token form (even if quoting appears not to be needed for single-entry lists).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> This usage of the word "private" only controls where the response can be stored; it cannot ensure the privacy of the message content. Also, private response directives with field-names are often handled by caches as if an unqualified private directive was received; i.e., the special handling for the qualified form is not widely implemented.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orge47f656" class="outline-5">
+<h5 id="orge47f656">5.2.2.7. proxy-revalidate</h5>
+<div class="outline-text-5" id="text-orge47f656">
+<blockquote>
+<p>
+The "proxy-revalidate" response directive has the same meaning as the must-revalidate response directive, except that it does not apply to private caches.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgc309465" class="outline-5">
+<h5 id="orgc309465">5.2.2.8. max-age</h5>
+<div class="outline-text-5" id="text-orgc309465">
+<blockquote>
+<p>
+Argument syntax:
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">delta-seconds (see Section 1.2.1)
+</pre>
+</div>
+
+<blockquote>
+<p>
+The "max-age" response directive indicates that the response is to be considered stale after its age is greater than the specified number of seconds.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This directive uses the token form of the argument syntax: e.g., 'max-age=5' not 'max-age="5"'. A sender SHOULD NOT generate the quoted-string form.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgf601e80" class="outline-5">
+<h5 id="orgf601e80">5.2.2.9. s-maxage</h5>
+<div class="outline-text-5" id="text-orgf601e80">
+<blockquote>
+<p>
+Argument syntax:
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">delta-seconds (see Section 1.2.1)
+</pre>
+</div>
+
+<blockquote>
+<p>
+The "s-maxage" response directive indicates that, in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the max-age directive or the Expires header field. The s-maxage directive also implies the semantics of the proxy-revalidate response directive.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This directive uses the token form of the argument syntax: e.g., 's-maxage=10' not 's-maxage="10"'. A sender SHOULD NOT generate the quoted-string form.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
 <div id="outline-container-orgdc9554b" class="outline-4">
 <h4 id="orgdc9554b">5.2.3. Cache Control Extensions</h4>
+<div class="outline-text-4" id="text-orgdc9554b">
+<blockquote>
+<p>
+The Cache-Control header field can be extended through the use of one or more cache-extension tokens, each with an optional value. A cache MUST ignore unrecognized cache directives.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Informational extensions (those that do not require a change in cache behavior) can be added without changing the semantics of other directives.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Behavioral extensions are designed to work by acting as modifiers to the existing base of cache directives. Both the new directive and the old directive are supplied, such that applications that do not understand the new directive will default to the behavior specified by the old directive, and those that understand the new directive will recognize it as modifying the requirements associated with the old directive. In this way, extensions to the existing cache-control directives can be made without breaking deployed caches.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+For example, consider a hypothetical new response directive called "community" that acts as a modifier to the private directive: in addition to private caches, any cache that is shared only by members of the named community is allowed to cache the response. An origin server wishing to allow the UCI community to use an otherwise private response in their shared cache(s) could do so by including
+</p>
+</blockquote>
+
+<pre class="example">
+Cache-Control: private, community="UCI"
+</pre>
+
+<blockquote>
+<p>
+A cache that recognizes such a community cache-extension could broaden its behavior in accordance with that extension. A cache that does not recognize the community cache-extension would ignore it and adhere to the private directive.
+</p>
+</blockquote>
 </div>
 </div>
+</div>
+
 <div id="outline-container-org304d2d1" class="outline-3">
 <h3 id="org304d2d1"><a id="ID-18d3caca-869d-4ae8-8038-2c57cd36fef5"></a>5.3. Expires</h3>
 <div class="outline-text-3" id="text-org304d2d1">
+<blockquote>
+<p>
+The "Expires" header field gives the date/time after which the response is considered stale. See Section 4.2 for further discussion of the freshness model.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The presence of an Expires field does not imply that the original resource will change or cease to exist at, before, or after that time.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The Expires value is an HTTP-date timestamp, as defined in Section 7.1.1.1 of [RFC7231].
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Expires = HTTP-date
+</pre>
+</div>
+
+<blockquote>
+<p>
+For example
+</p>
+</blockquote>
+
+<pre class="example">
+Expires: Thu, 01 Dec 1994 16:00:00 GMT
+</pre>
+
+<blockquote>
+<p>
+A cache recipient MUST interpret invalid date formats, especially the value "0", as representing a time in the past (i.e., "already expired").
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If a response includes a Cache-Control field with the max-age directive (Section 5.2.2.8), a recipient MUST ignore the Expires field. Likewise, if a response includes the s-maxage directive (Section 5.2.2.9), a shared cache recipient MUST ignore the Expires field. In both these cases, the value in Expires is only intended for recipients that have not yet implemented the Cache-Control field.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+An origin server without a clock MUST NOT generate an Expires field unless its value represents a fixed time in the past (always expired) or its value has been associated with the resource by a system or user with a reliable clock.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Historically, HTTP required the Expires field-value to be no more than a year in the future. While longer freshness lifetimes are no longer prohibited, extremely large values have been demonstrated to cause problems (e.g., clock overflows due to use of 32-bit integers for time values), and many caches will evict a response far sooner than that.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-orga139761" class="outline-3">
 <h3 id="orga139761"><a id="ID-8414ec2d-e5b5-4f9c-8160-c354c12b7504"></a>5.4. Pragma</h3>
 <div class="outline-text-3" id="text-orga139761">
+<blockquote>
+<p>
+The "Pragma" header field allows backwards compatibility with HTTP/1.0 caches, so that clients can specify a "no-cache" request that they will understand (as Cache-Control was not defined until HTTP/1.1). When the Cache-Control header field is also present and understood in a request, Pragma is ignored.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+In HTTP/1.0, Pragma was defined as an extensible field for implementation-specified directives for recipients. This specification deprecates such extensions to improve interoperability.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Pragma           = 1#pragma-directive
+pragma-directive = "no-cache" / extension-pragma
+extension-pragma = token [ "=" ( token / quoted-string ) ]
+</pre>
+</div>
+
+<blockquote>
+<p>
+When the Cache-Control header field is not present in a request, caches MUST consider the no-cache request pragma-directive as having the same effect as if "Cache-Control: no-cache" were present (see Section 5.2.1).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+When sending a no-cache request, a client ought to include both the pragma and cache-control directives, unless Cache-Control: no-cache is purposefully omitted to target other Cache-Control response directives at HTTP/1.1 caches. For example:
+</p>
+</blockquote>
+
+<pre class="example">
+GET / HTTP/1.1
+Host: www.example.com
+Cache-Control: max-age=30
+Pragma: no-cache
+</pre>
+
+<blockquote>
+<p>
+will constrain HTTP/1.1 caches to serve a response no older than 30 seconds, while precluding implementations that do not understand Cache-Control from serving a cached response.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Note:</b> Because the meaning of "Pragma: no-cache" in responses is not specified, it does not provide a reliable replacement for "Cache-Control: no-cache" in them.
+</p>
+</blockquote>
 </div>
 </div>
+
 <div id="outline-container-org203fe8a" class="outline-3">
 <h3 id="org203fe8a"><a id="ID-84f5867e-4a3e-45fa-b085-dd23e8598a6b"></a>5.5. Warning</h3>
 <div class="outline-text-3" id="text-org203fe8a">
+<blockquote>
+<p>
+The "Warning" header field is used to carry additional information about the status or transformation of a message that might not be reflected in the status code. This information is typically used to warn about possible incorrectness introduced by caching operations or transformations applied to the payload of the message.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Warnings can be used for other purposes, both cache-related and otherwise. The use of a warning, rather than an error status code, distinguishes these responses from true failures.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Warning header fields can in general be applied to any message, however some warn-codes are specific to caches and can only be applied to response messages.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Warning       = 1#warning-value
+
+warning-value = warn-code SP warn-agent SP warn-text
+                                      [ SP warn-date ]
+
+warn-code  = 3DIGIT
+warn-agent = ( uri-host [ ":" port ] ) / pseudonym
+                ; the name or pseudonym of the server adding
+                ; the Warning header field, for use in debugging
+                ; a single "-" is recommended when agent unknown
+warn-text  = quoted-string
+warn-date  = DQUOTE HTTP-date DQUOTE
+</pre>
 </div>
+
+<blockquote>
+<p>
+Multiple warnings can be generated in a response (either by the origin server or by a cache), including multiple warnings with the same warn-code number that only differ in warn-text.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A user agent that receives one or more Warning header fields SHOULD inform the user of as many of them as possible, in the order that they appear in the response. Senders that generate multiple Warning header fields are encouraged to order them with this user agent behavior in mind. A sender that generates new Warning header fields MUST append them after any existing Warning header fields.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Warnings are assigned three digit warn-codes. The first digit indicates whether the Warning is required to be deleted from a stored response after validation:
+</p>
+
+<ul class="org-ul">
+<li>1xx warn-codes describe the freshness or validation status of the response, and so they MUST be deleted by a cache after validation. They can only be generated by a cache when validating a cached entry, and MUST NOT be generated in any other situation.</li>
+<li>2xx warn-codes describe some aspect of the representation that is not rectified by a validation (for example, a lossy compression of the representation) and they MUST NOT be deleted by a cache after validation, unless a full response is sent, in which case they MUST be.</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+If a sender generates one or more 1xx warn-codes in a message to be sent to a recipient known to implement only HTTP/1.0, the sender MUST include in each corresponding warning-value a warn-date that matches the Date header field in the message. For example:
+</p>
+</blockquote>
+
+<pre class="example">
+HTTP/1.1 200 OK
+Date: Sat, 25 Aug 2012 23:34:45 GMT
+Warning: 112 - "network down" "Sat, 25 Aug 2012 23:34:45 GMT"
+
+</pre>
+
+<blockquote>
+<p>
+Warnings have accompanying warn-text that describes the error, e.g., for logging. It is advisory only, and its content does not affect interpretation of the warn-code.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+If a recipient that uses, evaluates, or displays Warning header fields receives a warn-date that is different from the Date value in the same message, the recipient MUST exclude the warning-value containing that warn-date before storing, forwarding, or using the message. This allows recipients to exclude warning-values that were improperly retained after a cache validation. If all of the warning-values are excluded, the recipient MUST exclude the Warning header field as well.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The following warn-codes are defined by this specification, each with a recommended warn-text in English, and a description of its meaning. The procedure for defining additional warn codes is described in Section 7.2.1.
+</p>
+</blockquote>
+</div>
+
 <div id="outline-container-orgb2503cc" class="outline-4">
 <h4 id="orgb2503cc">5.5.1. Warning: 110 - "Response is Stale"</h4>
+<div class="outline-text-4" id="text-orgb2503cc">
+<blockquote>
+<p>
+A cache SHOULD generate this whenever the sent response is stale.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org26c6391" class="outline-4">
 <h4 id="org26c6391">5.5.2. Warning: 111 - "Revalidation Failed"</h4>
+<div class="outline-text-4" id="text-org26c6391">
+<blockquote>
+<p>
+A cache SHOULD generate this when sending a stale response because an attempt to validate the response failed, due to an inability to reach the server.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org0637a23" class="outline-4">
 <h4 id="org0637a23">5.5.3. Warning: 112 - "Disconnected Operation"</h4>
+<div class="outline-text-4" id="text-org0637a23">
+<blockquote>
+<p>
+A cache SHOULD generate this if it is intentionally disconnected from the rest of the network for a period of time.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org61c78c6" class="outline-4">
 <h4 id="org61c78c6">5.5.4. Warning: 113 - "Heuristic Expiration"</h4>
+<div class="outline-text-4" id="text-org61c78c6">
+<blockquote>
+<p>
+A cache SHOULD generate this if it heuristically chose a freshness lifetime greater than 24 hours and the response's age is greater than 24 hours.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org2498663" class="outline-4">
 <h4 id="org2498663">5.5.5. Warning: 199 - "Miscellaneous Warning"</h4>
+<div class="outline-text-4" id="text-org2498663">
+<blockquote>
+<p>
+The warning text can include arbitrary information to be presented to a human user or logged. A system receiving this warning MUST NOT take any automated action, besides presenting the warning to the user.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-org3ffd641" class="outline-4">
 <h4 id="org3ffd641">5.5.6. Warning: 214 - "Transformation Applied"</h4>
+<div class="outline-text-4" id="text-org3ffd641">
+<blockquote>
+<p>
+This Warning code MUST be added by a proxy if it applies any transformation to the representation, such as changing the content-coding, media-type, or modifying the representation data, unless this Warning code already appears in the response.
+</p>
+</blockquote>
 </div>
+</div>
+
 <div id="outline-container-orgbf8e92c" class="outline-4">
 <h4 id="orgbf8e92c">5.5.7. Warning: 299 - "Miscellaneous Persistent Warning"</h4>
+<div class="outline-text-4" id="text-orgbf8e92c">
+<blockquote>
+<p>
+The warning text can include arbitrary information to be presented to a human user or logged. A system receiving this warning MUST NOT take any automated action.
+</p>
+</blockquote>
 </div>
 </div>
 </div>
-<div id="outline-container-org3a17515" class="outline-2">
-<h2 id="org3a17515">6. History Lists</h2>
 </div>
-<div id="outline-container-org40755b3" class="outline-2">
-<h2 id="org40755b3">7. IANA Considerations</h2>
-<div class="outline-text-2" id="text-org40755b3">
-</div>
-<div id="outline-container-org5dcc798" class="outline-3">
-<h3 id="org5dcc798">7.1. Cache Directive Registry</h3>
-<div class="outline-text-3" id="text-org5dcc798">
-</div>
-<div id="outline-container-org69d7336" class="outline-4">
-<h4 id="org69d7336">7.1.1. Procedure</h4>
-</div>
-<div id="outline-container-orgb25ba1a" class="outline-4">
-<h4 id="orgb25ba1a">7.1.2. Considerations for New Cache Control Directives</h4>
-</div>
-<div id="outline-container-org2c21586" class="outline-4">
-<h4 id="org2c21586">7.1.3. Registrations</h4>
-</div>
-</div>
-<div id="outline-container-org466d228" class="outline-3">
-<h3 id="org466d228">7.2. Warn Code Registry</h3>
-<div class="outline-text-3" id="text-org466d228">
-</div>
-<div id="outline-container-org351c1a0" class="outline-4">
-<h4 id="org351c1a0">7.2.1. Procedure</h4>
-</div>
-<div id="outline-container-org97804d3" class="outline-4">
-<h4 id="org97804d3">7.2.2. Registrations</h4>
+
+<div id="outline-container-orgace9974" class="outline-2">
+<h2 id="orgace9974">6. 历史列表 / History Lists</h2>
+<div class="outline-text-2" id="text-orgace9974">
+<blockquote>
+<p>
+User agents often have history mechanisms, such as "Back" buttons and history lists, that can be used to redisplay a representation retrieved earlier in a session.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The freshness model (Section 4.2) does not necessarily apply to history mechanisms. That is, a history mechanism can display a previous representation even if it has expired.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This does not prohibit the history mechanism from telling the user that a view might be stale or from honoring cache directives (e.g., Cache-Control: no-store).
+</p>
+</blockquote>
 </div>
 </div>
-<div id="outline-container-org927fed5" class="outline-3">
-<h3 id="org927fed5">7.3. Header Field Registration</h3>
+
+<div id="outline-container-orgf20038c" class="outline-2">
+<h2 id="orgf20038c">7. IANA 注意事项 / IANA Considerations</h2>
+<div class="outline-text-2" id="text-orgf20038c">
+</div>
+<div id="outline-container-orgb841771" class="outline-3">
+<h3 id="orgb841771">7.1. 缓存指令登记表 / Cache Directive Registry</h3>
+<div class="outline-text-3" id="text-orgb841771">
+<blockquote>
+<p>
+The "Hypertext Transfer Protocol (HTTP) Cache Directive Registry" defines the namespace for the cache directives. It has been created and is now maintained at <a href="http://www.iana.org/assignments/http-cache-directives">http://www.iana.org/assignments/http-cache-directives</a>.
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-org785241a" class="outline-4">
+<h4 id="org785241a">7.1.1. 手续 / Procedure</h4>
+<div class="outline-text-4" id="text-org785241a">
+<blockquote>
+<p>
+A registration MUST include the following fields:
+</p>
+
+<ul class="org-ul">
+<li>Cache Directive Name</li>
+<li>Pointer to specification text</li>
+<li>Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).</li>
+</ul>
+</blockquote>
 </div>
 </div>
-<div id="outline-container-org6c00754" class="outline-2">
-<h2 id="org6c00754"><a id="ID-258f834a-496c-4173-b6bd-dda94f1d74fe"></a>8. Security Considerations</h2>
-<div class="outline-text-2" id="text-org6c00754">
+
+<div id="outline-container-org0611a08" class="outline-4">
+<h4 id="org0611a08">7.1.2. 新的缓存控制指令的注意事项 / Considerations for New Cache Control Directives</h4>
+<div class="outline-text-4" id="text-org0611a08">
+<blockquote>
+<p>
+New extension directives ought to consider defining:
+</p>
+
+<ul class="org-ul">
+<li>What it means for a directive to be specified multiple times,</li>
+<li>When the directive does not take an argument, what it means when an argument is present,</li>
+<li>When the directive requires an argument, what it means when it is missing,</li>
+<li>Whether the directive is specific to requests, responses, or able to be used in either.</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+See also Section 5.2.3.
+</p>
+</blockquote>
 </div>
 </div>
-<div id="outline-container-org0a041b5" class="outline-2">
-<h2 id="org0a041b5">9. Acknowledgments</h2>
+
+<div id="outline-container-orgc2896c5" class="outline-4">
+<h4 id="orgc2896c5">7.1.3. 登记 / Registrations</h4>
+<div class="outline-text-4" id="text-orgc2896c5">
+<blockquote>
+<p>
+The registry has been populated with the registrations below:
+</p>
+</blockquote>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Cache Directive</th>
+<th scope="col" class="org-left">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">max-age</td>
+<td class="org-left">Section 5.2.1.1, Section 5.2.2.8</td>
+</tr>
+
+<tr>
+<td class="org-left">max-stale</td>
+<td class="org-left">Section 5.2.1.2</td>
+</tr>
+
+<tr>
+<td class="org-left">min-fresh</td>
+<td class="org-left">Section 5.2.1.3</td>
+</tr>
+
+<tr>
+<td class="org-left">must-revalidate</td>
+<td class="org-left">Section 5.2.2.1</td>
+</tr>
+
+<tr>
+<td class="org-left">no-cache</td>
+<td class="org-left">Section 5.2.1.4, Section 5.2.2.2</td>
+</tr>
+
+<tr>
+<td class="org-left">no-store</td>
+<td class="org-left">Section 5.2.1.5, Section 5.2.2.3</td>
+</tr>
+
+<tr>
+<td class="org-left">no-transform</td>
+<td class="org-left">Section 5.2.1.6, Section 5.2.2.4</td>
+</tr>
+
+<tr>
+<td class="org-left">only-if-cached</td>
+<td class="org-left">Section 5.2.1.7</td>
+</tr>
+
+<tr>
+<td class="org-left">private</td>
+<td class="org-left">Section 5.2.2.6</td>
+</tr>
+
+<tr>
+<td class="org-left">proxy-revalidate</td>
+<td class="org-left">Section 5.2.2.7</td>
+</tr>
+
+<tr>
+<td class="org-left">public</td>
+<td class="org-left">Section 5.2.2.5</td>
+</tr>
+
+<tr>
+<td class="org-left">s-maxage</td>
+<td class="org-left">Section 5.2.2.9</td>
+</tr>
+
+<tr>
+<td class="org-left">stale-if-error</td>
+<td class="org-left">[RFC5861], Section 4</td>
+</tr>
+
+<tr>
+<td class="org-left">stale-while-revalidate</td>
+<td class="org-left">[RFC5861], Section 3</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="outline-container-orgd06cb87" class="outline-2">
-<h2 id="orgd06cb87">10. References</h2>
-<div class="outline-text-2" id="text-orgd06cb87">
-</div>
-<div id="outline-container-org2b71ddd" class="outline-3">
-<h3 id="org2b71ddd">10.1. Normative References</h3>
-</div>
-<div id="outline-container-org3e703a8" class="outline-3">
-<h3 id="org3e703a8">10.2. Informative References</h3>
 </div>
 </div>
-<div id="outline-container-orgc9bd707" class="outline-2">
-<h2 id="orgc9bd707">Appendix A. Changes from RFC 2616</h2>
+
+<div id="outline-container-orgf57606b" class="outline-3">
+<h3 id="orgf57606b">7.2. 警告码登记表 / Warn Code Registry</h3>
+<div class="outline-text-3" id="text-orgf57606b">
+<blockquote>
+<p>
+The "Hypertext Transfer Protocol (HTTP) Warn Codes" registry defines the namespace for warn codes. It has been created and is now maintained at <a href="http://www.iana.org/assignments/http-warn-codes">http://www.iana.org/assignments/http-warn-codes</a>.
+</p>
+</blockquote>
 </div>
-<div id="outline-container-org4bbdb03" class="outline-2">
-<h2 id="org4bbdb03">Appendix B. Imported ABNF</h2>
+
+<div id="outline-container-org37163f9" class="outline-4">
+<h4 id="org37163f9">7.2.1. 手续 / Procedure</h4>
+<div class="outline-text-4" id="text-org37163f9">
+<blockquote>
+<p>
+A registration MUST include the following fields:
+</p>
+
+<ul class="org-ul">
+<li>Warn Code (3 digits)</li>
+<li>Short Description</li>
+<li>Pointer to specification text</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<p>
+Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
+</p>
+</blockquote>
 </div>
-<div id="outline-container-orgb7cbe97" class="outline-2">
-<h2 id="orgb7cbe97">Appendix C. Collected ABNF</h2>
 </div>
-<div id="outline-container-org97f7d6f" class="outline-2">
-<h2 id="org97f7d6f">Index</h2>
+
+<div id="outline-container-org614b44a" class="outline-4">
+<h4 id="org614b44a">7.2.2. 登记 / Registrations</h4>
+<div class="outline-text-4" id="text-org614b44a">
+<blockquote>
+<p>
+The registry has been populated with the registrations below:
+</p>
+</blockquote>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">Warn Code</th>
+<th scope="col" class="org-left">Short Description</th>
+<th scope="col" class="org-left">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">110</td>
+<td class="org-left">Response is Stale</td>
+<td class="org-left">Section 5.5.1</td>
+</tr>
+
+<tr>
+<td class="org-right">111</td>
+<td class="org-left">Revalidation Failed</td>
+<td class="org-left">Section 5.5.2</td>
+</tr>
+
+<tr>
+<td class="org-right">112</td>
+<td class="org-left">Disconnected Operation</td>
+<td class="org-left">Section 5.5.3</td>
+</tr>
+
+<tr>
+<td class="org-right">113</td>
+<td class="org-left">Heuristic Expiration</td>
+<td class="org-left">Section 5.5.4</td>
+</tr>
+
+<tr>
+<td class="org-right">199</td>
+<td class="org-left">Miscellaneous Warning</td>
+<td class="org-left">Section 5.5.5</td>
+</tr>
+
+<tr>
+<td class="org-right">214</td>
+<td class="org-left">Transformation Applied</td>
+<td class="org-left">Section 5.5.6</td>
+</tr>
+
+<tr>
+<td class="org-right">299</td>
+<td class="org-left">Miscellaneous Persistent Warning</td>
+<td class="org-left">Section 5.5.7</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org857923c" class="outline-3">
+<h3 id="org857923c">7.3. 头字段登记 / Header Field Registration</h3>
+<div class="outline-text-3" id="text-org857923c">
+<blockquote>
+<p>
+HTTP header fields are registered within the "Message Headers" registry maintained at <a href="http://www.iana.org/assignments/message-headers/">http://www.iana.org/assignments/message-headers/</a>.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This document defines the following HTTP header fields, so the "Permanent Message Header Field Names" registry has been updated accordingly (see [BCP90]).
+</p>
+</blockquote>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Header Field Name</th>
+<th scope="col" class="org-left">Protocol</th>
+<th scope="col" class="org-left">Status</th>
+<th scope="col" class="org-left">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Age</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.1</td>
+</tr>
+
+<tr>
+<td class="org-left">Cache-Control</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.2</td>
+</tr>
+
+<tr>
+<td class="org-left">Expires</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.3</td>
+</tr>
+
+<tr>
+<td class="org-left">Pragma</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.4</td>
+</tr>
+
+<tr>
+<td class="org-left">Warning</td>
+<td class="org-left">http</td>
+<td class="org-left">standard</td>
+<td class="org-left">Section 5.5</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>
+The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf9e4b61" class="outline-2">
+<h2 id="orgf9e4b61"><a id="ID-258f834a-496c-4173-b6bd-dda94f1d74fe"></a>8. 安全注意事项 / Security Considerations</h2>
+<div class="outline-text-2" id="text-orgf9e4b61">
+<blockquote>
+<p>
+This section is meant to inform developers, information providers, and users of known security concerns specific to HTTP caching. More general security considerations are addressed in HTTP messaging [RFC7230] and semantics [RFC7231].
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Caches expose additional potential vulnerabilities, since the contents of the cache represent an attractive target for malicious exploitation. Because cache contents persist after an HTTP request is complete, an attack on the cache can reveal information long after a user believes that the information has been removed from the network. Therefore, cache contents need to be protected as sensitive information.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+In particular, various attacks might be amplified by being stored in a shared cache; such "cache poisoning" attacks use the cache to distribute a malicious payload to many clients, and are especially effective when an attacker can use implementation flaws, elevated privileges, or other techniques to insert such a response into a cache. One common attack vector for cache poisoning is to exploit differences in message parsing on proxies and in user agents; see Section 3.3.3 of [RFC7230] for the relevant requirements.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Likewise, implementation flaws (as well as misunderstanding of cache operation) might lead to caching of sensitive information (e.g., authentication credentials) that is thought to be private, exposing it to unauthorized parties.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Furthermore, the very use of a cache can bring about privacy concerns. For example, if two users share a cache, and the first one browses to a site, the second may be able to detect that the other has been to that site, because the resources from it load more quickly, thanks to the cache.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Note that the Set-Cookie response header field [RFC6265] does not inhibit caching; a cacheable response with a Set-Cookie header field can be (and often is) used to satisfy subsequent requests to caches. Servers who wish to control caching of these responses are encouraged to emit appropriate Cache-Control response header fields.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org9f32532" class="outline-2">
+<h2 id="org9f32532">9. 鸣谢 / Acknowledgments</h2>
+<div class="outline-text-2" id="text-org9f32532">
+<blockquote>
+<p>
+See Section 10 of [RFC7230].
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org2dbfe2e" class="outline-2">
+<h2 id="org2dbfe2e">10. 参考资料 / References</h2>
+<div class="outline-text-2" id="text-org2dbfe2e">
+</div>
+<div id="outline-container-org13349db" class="outline-3">
+<h3 id="org13349db">10.1. 规范性参考资料 / Normative References</h3>
+<div class="outline-text-3" id="text-org13349db">
+<dl class="org-dl">
+<dt>[RFC2119]</dt><dd>Bradner, S., “Key words for use in RFCs to Indicate Requirement Levels”, BCP 14, RFC 2119, March 1997.</dd>
+<dt>[RFC5234]</dt><dd>Crocker, D., Ed. and P. Overell, “Augmented BNF for Syntax Specifications: ABNF”, STD 68, RFC 5234, January 2008.</dd>
+<dt>[RFC7230]</dt><dd>Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing”, RFC 7230, June 2014.</dd>
+<dt>[RFC7231]</dt><dd>Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content”, RFC 7231, June 2014.</dd>
+<dt>[RFC7232]</dt><dd>Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests”, RFC 7232, June 2014.</dd>
+<dt>[RFC7233]</dt><dd>Fielding, R., Ed., Lafon, Y., Ed., and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Range Requests”, RFC 7233, June 2014.</dd>
+<dt>[RFC7235]</dt><dd>Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Authentication”, RFC 7235, June 2014.</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org8fdaaa1" class="outline-3">
+<h3 id="org8fdaaa1">10.2. 信息性参考资料 / Informative References</h3>
+<div class="outline-text-3" id="text-org8fdaaa1">
+<dl class="org-dl">
+<dt>[BCP90]</dt><dd>Klyne, G., Nottingham, M., and J. Mogul, “Registration Procedures for Message Header Fields”, BCP 90, RFC 3864, September 2004.</dd>
+<dt>[RFC2616]</dt><dd>Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, “Hypertext Transfer Protocol &#x2013; HTTP/1.1”, RFC 2616, June 1999.</dd>
+<dt>[RFC5226]</dt><dd>Narten, T. and H. Alvestrand, “Guidelines for Writing an IANA Considerations Section in RFCs”, BCP 26, RFC 5226, May 2008.</dd>
+<dt>[RFC5861]</dt><dd>Nottingham, M., “HTTP Cache-Control Extensions for Stale Content”, RFC 5861, April 2010.</dd>
+<dt>[RFC5905]</dt><dd>Mills, D., Martin, J., Ed., Burbank, J., and W. Kasch, “Network Time Protocol Version 4: Protocol and Algorithms Specification”, RFC 5905, June 2010.</dd>
+<dt>[RFC6265]</dt><dd>Barth, A., “HTTP State Management Mechanism”, RFC 6265, April 2011.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga6bc8f3" class="outline-2">
+<h2 id="orga6bc8f3">附录 A：相对 RFC 2616 的变化 / Appendix A. Changes from RFC 2616</h2>
+<div class="outline-text-2" id="text-orga6bc8f3">
+<blockquote>
+<p>
+The specification has been substantially rewritten for clarity.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The conditions under which an authenticated response can be cached have been clarified. (Section 3.2)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+New status codes can now define that caches are allowed to use heuristic freshness with them. Caches are now allowed to calculate heuristic freshness for URIs with query components. (Section 4.2.2)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The algorithm for calculating age is now less conservative. Caches are now required to handle dates with time zones as if they're invalid, because it's not possible to accurately guess. (Section 4.2.3)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The Content-Location response header field is no longer used to determine the appropriate response to use when validating. (Section 4.3)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The algorithm for selecting a cached negotiated response to use has been clarified in several ways. In particular, it now explicitly allows header-specific canonicalization when processing selecting header fields. (Section 4.1)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Requirements regarding denial-of-service attack avoidance when performing invalidation have been clarified. (Section 4.4)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Cache invalidation only occurs when a successful response is received. (Section 4.4)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Cache directives are explicitly defined to be case-insensitive. Handling of multiple instances of cache directives when only one is expected is now defined. (Section 5.2)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The "no-store" request directive doesn't apply to responses; i.e., a cache can satisfy a request with no-store on it and does not invalidate it. (Section 5.2.1.5)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The qualified forms of the private and no-cache cache directives are noted to not be widely implemented; for example, "private=foo" is interpreted by many caches as simply "private". Additionally, the meaning of the qualified form of no-cache has been clarified. (Section 5.2.2)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The "no-cache" response directive's meaning has been clarified. (Section 5.2.2.2)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The one-year limit on Expires header field values has been removed; instead, the reasoning for using a sensible value is given. (Section 5.3)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The Pragma header field is now only defined for backwards compatibility; future pragmas are deprecated. (Section 5.4)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Some requirements regarding production and processing of the Warning header fields have been relaxed, as it is not widely implemented. Furthermore, the Warning header field no longer uses RFC 2047 encoding, nor does it allow multiple languages, as these aspects were not implemented. (Section 5.5)
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+This specification introduces the Cache Directive and Warn Code Registries, and defines considerations for new cache directives. (Section 7.1 and Section 7.2)
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org981c4e6" class="outline-2">
+<h2 id="org981c4e6"><a id="ID-dd632d27-1596-43fe-90f8-dba848353e12"></a>附录 B：引进的 ABNF / Appendix B. Imported ABNF</h2>
+<div class="outline-text-2" id="text-org981c4e6">
+<blockquote>
+<p>
+The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The rules below are defined in [RFC7230]:
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">OWS           = &lt;OWS, see [RFC7230], Section 3.2.3&gt;
+field-name    = &lt;field-name, see [RFC7230], Section 3.2&gt;
+quoted-string = &lt;quoted-string, see [RFC7230], Section 3.2.6&gt;
+token         = &lt;token, see [RFC7230], Section 3.2.6&gt;
+
+port          = &lt;port, see [RFC7230], Section 2.7&gt;
+pseudonym     = &lt;pseudonym, see [RFC7230], Section 5.7.1&gt; 
+uri-host      = &lt;uri-host, see [RFC7230], Section 2.7&gt;
+</pre>
+</div>
+
+<blockquote>
+<p>
+The rules below are defined in other parts:
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">HTTP-date     = &lt;HTTP-date, see [RFC7231], Section 7.1.1.1&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org72bdc79" class="outline-2">
+<h2 id="org72bdc79"><a id="ID-33ccb99a-6b09-4750-9e71-4cc1e43b49c5"></a>附录 C：ABNF 集合 / Appendix C. Collected ABNF</h2>
+<div class="outline-text-2" id="text-org72bdc79">
+<blockquote>
+<p>
+In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-text">Age = delta-seconds
+
+Cache-Control = *( "," OWS ) cache-directive *( OWS "," [ OWS
+ cache-directive ] )
+
+Expires = HTTP-date
+
+HTTP-date = &lt;HTTP-date, see [RFC7231], Section 7.1.1.1&gt;
+
+OWS = &lt;OWS, see [RFC7230], Section 3.2.3&gt;
+
+Pragma = *( "," OWS ) pragma-directive *( OWS "," [ OWS
+ pragma-directive ] )
+
+Warning = *( "," OWS ) warning-value *( OWS "," [ OWS warning-value ]
+ )
+
+cache-directive = token [ "=" ( token / quoted-string ) ]
+
+delta-seconds = 1*DIGIT
+
+extension-pragma = token [ "=" ( token / quoted-string ) ]
+
+field-name = &lt;field-name, see [RFC7230], Section 3.2&gt;
+
+port = &lt;port, see [RFC7230], Section 2.7&gt;
+pragma-directive = "no-cache" / extension-pragma
+pseudonym = &lt;pseudonym, see [RFC7230], Section 5.7.1&gt;
+
+quoted-string = &lt;quoted-string, see [RFC7230], Section 3.2.6&gt;
+
+token = &lt;token, see [RFC7230], Section 3.2.6&gt;
+
+uri-host = &lt;uri-host, see [RFC7230], Section 2.7&gt;
+
+warn-agent = ( uri-host [ ":" port ] ) / pseudonym
+warn-code = 3DIGIT
+warn-date = DQUOTE HTTP-date DQUOTE
+warn-text = quoted-string
+warning-value = warn-code SP warn-agent SP warn-text [ SP warn-date
+ ]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org37dfe9c" class="outline-2">
+<h2 id="org37dfe9c">索引 / Index</h2>
+<div class="outline-text-2" id="text-org37dfe9c">
+<ul class="org-ul">
+<li>1
+<ul class="org-ul">
+<li>110 (warn-code)  4.2.4, 5.5.1, 7.2.2</li>
+<li>111 (warn-code)  5.5.2, 7.2.2</li>
+<li>112 (warn-code)  4.2.4, 5.5.3, 7.2.2</li>
+<li>113 (warn-code)  4.2.2, 5.5.4, 7.2.2</li>
+<li>199 (warn-code)  5.5.5, 7.2.2</li>
+</ul></li>
+<li>2
+<ul class="org-ul">
+<li>214 (warn-code)  5.5.6, 7.2.2</li>
+<li>299 (warn-code)  5.5.7, 7.2.2</li>
+</ul></li>
+<li>A
+<ul class="org-ul">
+<li>age  4.2</li>
+<li>Age header field  4, 4.2.3, 5.1, 7.3</li>
+</ul></li>
+<li>B
+<ul class="org-ul">
+<li>BCP90  7.3, 10.2</li>
+</ul></li>
+<li>C
+<ul class="org-ul">
+<li>cache  1</li>
+<li>cache entry  2</li>
+<li>cache key  2, 2</li>
+<li>Cache-Control header field  3, 5.2, 7.3, A</li>
+</ul></li>
+<li>D
+<ul class="org-ul">
+<li>Disconnected Operation (warn-text)  4.2.4, 5.5.3, 7.2.2</li>
+</ul></li>
+<li>E
+<ul class="org-ul">
+<li>Expires header field  3, 4.2, 4.2.1, 5.3, 7.3, A</li>
+<li>explicit expiration time  4.2</li>
+</ul></li>
+<li>F
+<ul class="org-ul">
+<li>fresh  4.2</li>
+<li>freshness lifetime  4.2</li>
+</ul></li>
+<li>G
+<ul class="org-ul">
+<li>Grammar  
+<ul class="org-ul">
+<li>Age  5.1</li>
+<li>Cache-Control  5.2</li>
+<li>cache-directive  5.2</li>
+<li>delta-seconds  1.2.1</li>
+<li>Expires  5.3</li>
+<li>extension-pragma  5.4</li>
+<li>Pragma  5.4</li>
+<li>pragma-directive  5.4</li>
+<li>warn-agent  5.5</li>
+<li>warn-code  5.5</li>
+<li>warn-date  5.5</li>
+<li>warn-text  5.5</li>
+<li>Warning  5.5</li>
+<li>warning-value  5.5</li>
+</ul></li>
+</ul></li>
+<li>H
+<ul class="org-ul">
+<li>Heuristic Expiration (warn-text)  4.2.2, 5.5.4, 7.2.2</li>
+<li>heuristic expiration time  4.2</li>
+</ul></li>
+<li>M
+<ul class="org-ul">
+<li>max-age (cache directive)  5.2.1.1, 5.2.2.8</li>
+<li>max-stale (cache directive)  5.2.1.2</li>
+<li>min-fresh (cache directive)  5.2.1.3</li>
+<li>Miscellaneous Persistent Warning (warn-text)  5.5.7, 7.2.2</li>
+<li>Miscellaneous Warning (warn-text)  5.5.5, 7.2.2</li>
+<li>must-revalidate (cache directive)  5.2.2.1</li>
+</ul></li>
+<li>N
+<ul class="org-ul">
+<li>no-cache (cache directive)  5.2.1.4, 5.2.2.2</li>
+<li>no-store (cache directive)  5.2.1.5, 5.2.2.3</li>
+<li>no-transform (cache directive)  5.2.1.6, 5.2.2.4</li>
+</ul></li>
+<li>O
+<ul class="org-ul">
+<li>only-if-cached (cache directive)  5.2.1.7</li>
+</ul></li>
+<li>P
+<ul class="org-ul">
+<li>Pragma header field  4, 5.4, 7.3, A</li>
+<li>private (cache directive)  5.2.2.6</li>
+<li>private cache  1</li>
+<li>proxy-revalidate (cache directive)  5.2.2.7</li>
+<li>public (cache directive)  5.2.2.5</li>
+</ul></li>
+<li>R
+<ul class="org-ul">
+<li>Response is Stale (warn-text)  4.2.4, 5.5.1, 7.2.2</li>
+<li>Revalidation Failed (warn-text)  5.5.2, 7.2.2</li>
+<li>RFC2119  1.1, 10.1</li>
+<li>RFC2616  4.2.2, 10.2
+<ul class="org-ul">
+<li>Section 13.9  4.2.2</li>
+</ul></li>
+<li>RFC5226  7.1.1, 7.2.1, 10.2
+<ul class="org-ul">
+<li>Section 4.1  7.1.1, 7.2.1</li>
+</ul></li>
+<li>RFC5234  1.2, 10.1, B
+<ul class="org-ul">
+<li>Appendix B.1  B</li>
+</ul></li>
+<li>RFC5861  7.1.3, 7.1.3, 10.2
+<ul class="org-ul">
+<li>Section 3  7.1.3</li>
+<li>Section 4  7.1.3</li>
+</ul></li>
+<li>RFC5905  4.2.3, 10.2</li>
+<li>RFC6265  8, 10.2</li>
+<li>RFC7230  1.1, 1.2, 3.1, 4, 4.1, 4.4, 4.4, 4.4, 5.2.1.6, 5.2.2.4, 8, 8, 9, 10.1, B, B, B, B, B, B, B, B, C
+<ul class="org-ul">
+<li>Section 1.2  C</li>
+<li>Section 2.5  1.1</li>
+<li>Section 2.7  B, B</li>
+<li>Section 3.2  4.1, B</li>
+<li>Section 3.2.3  B</li>
+<li>Section 3.2.6  B, B</li>
+<li>Section 3.3.3  8</li>
+<li>Section 5.5  4, 4.4, 4.4, 4.4</li>
+<li>Section 5.7.1  B</li>
+<li>Section 5.7.2  5.2.1.6, 5.2.2.4</li>
+<li>Section 7  1.2</li>
+<li>Section 10  9</li>
+</ul></li>
+<li>RFC7231  2, 2, 4, 4.1, 4.2.2, 4.2.3, 4.4, 5.3, 8, 10.1, B
+<ul class="org-ul">
+<li>Section 4.2.1  4, 4.4</li>
+<li>Section 4.3.1  2</li>
+<li>Section 6.1  4.2.2</li>
+<li>Section 7.1.1.1  5.3, B</li>
+<li>Section 7.1.1.2  4.2.3</li>
+<li>Section 7.1.4  4.1</li>
+</ul></li>
+<li>RFC7232  4.2.2, 4.3, 4.3.1, 4.3.1, 4.3.2, 4.3.2, 4.3.2, 4.3.4, 10.1
+<ul class="org-ul">
+<li>Section 2.1  4.3.4</li>
+<li>Section 2.2  4.2.2, 4.3.1</li>
+<li>Section 2.3  4.3.1</li>
+<li>Section 3.2  4.3.2</li>
+<li>Section 3.3  4.3.2</li>
+<li>Section 6  4.3.2</li>
+</ul></li>
+<li>RFC7233  3.1, 3.3, 3.3, 4.3.2, 4.3.2, 10.1
+<ul class="org-ul">
+<li>Section 3.2  4.3.2</li>
+<li>Section 4.3  3.3</li>
+</ul></li>
+<li>RFC7235  3, 3.2, 10.1
+<ul class="org-ul">
+<li>Section 4.2  3, 3.2</li>
+</ul></li>
+</ul></li>
+<li>S
+<ul class="org-ul">
+<li>s-maxage (cache directive)  5.2.2.9</li>
+<li>shared cache  1</li>
+<li>stale  4.2</li>
+<li>strong validator  4.3.4</li>
+</ul></li>
+<li>T
+<ul class="org-ul">
+<li>Transformation Applied (warn-text)  5.5.6, 7.2.2</li>
+</ul></li>
+<li>V
+<ul class="org-ul">
+<li>validator  4.3.1</li>
+</ul></li>
+<li>W
+<ul class="org-ul">
+<li>Warning header field  3.3, 4.3.4, 4.3.5, 5.5, 7.3, A</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org79cb7b1" class="outline-2">
+<h2 id="org79cb7b1">Authors' Addresses</h2>
+<div class="outline-text-2" id="text-org79cb7b1">
+<pre class="example">
+Roy T. Fielding (editor)
+Adobe Systems Incorporated
+345 Park Ave
+San Jose, CA 95110
+USA
+Email: fielding@gbiv.com
+URI: http://roy.gbiv.com/
+</pre>
+
+<pre class="example">
+Mark Nottingham (editor)
+Akamai
+Email: mnot@mnot.net
+URI: http://www.mnot.net/
+</pre>
+
+<pre class="example">
+Julian F. Reschke (editor)
+greenbytes GmbH
+Hafenweg 16
+Muenster, NW 48155
+Germany
+Email: julian.reschke@greenbytes.de
+URI: http://greenbytes.de/tech/webdav/
+</pre>
+</div>
 </div>
 </div>
 </body>

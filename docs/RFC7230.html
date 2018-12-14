@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-13 Thu 19:15 -->
+<!-- 2018-12-14 Fri 18:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -752,12 +752,12 @@ Conformance criteria and considerations regarding error handling are defined in 
 <div class="outline-text-3" id="text-org4275ffd">
 <blockquote>
 <p>
-This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7, that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix B shows the collected grammar with all list operators expanded to standard ABNF notation.
+This specification uses the Augmented Backus-Naur Form (ABNF) notation of [<a href="https://tools.ietf.org/html/rfc5234">RFC5234</a>] with a list extension, defined in Section 7, that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). <a href="#org1421e28">Appendix B</a> shows the collected grammar with all list operators expanded to standard ABNF notation.
 </p>
 </blockquote>
 
 <p>
-本规范使用了<ruby>扩展巴科斯范式<rt>Augmented Backus-Naur Form</rt></ruby>（ABNF）标记法【<a href="https://tools.ietf.org/html/rfc5234">RFC5234</a>】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见<a href="#orgbe29b5b">章节 7</a>），允许使用一个 <code>#</code> 操作符（类似于 <code>*</code> 操作符，指代“重复”）来定义一种以逗号分隔的列表。
+本规范使用了<ruby>扩展巴科斯范式<rt>Augmented Backus-Naur Form</rt></ruby>（ABNF）标记法【<a href="https://tools.ietf.org/html/rfc5234">RFC5234</a>】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见<a href="#orgbe29b5b">章节 7</a>），允许使用一个 <code>#</code> 操作符（类似于 <code>*</code> 操作符，指代“重复”）来定义一种以逗号分隔的列表。<a href="#org1421e28">附录 B</a> 展示了所有已收集的包含列表扩展规则以及标准 ABNF 标记的语法。
 </p>
 
 <blockquote>
@@ -1154,7 +1154,7 @@ A "cache" is a local store of previous response messages and the subsystem that 
 </blockquote>
 
 <p>
-<ruby>缓存<rt>cache</rt></ruby>，是一种保存之前的响应消息的本地存储，以及控制其消息的存储、获取和删除的子系统。缓存存储了<ruby>可缓存的<rt>cacheable</rt></ruby>响应是为了减少将来的响应时间和网络带宽消耗。任何客户端或者服务器 <b>可以</b> 使用缓存，但是，当服务器作为<ruby>隧道<rt>tunnel</rt></ruby>而使用时，不能使用缓存。
+<ruby>缓存<rt>cache</rt></ruby>，是一种保存之前的响应消息的本地存储，以及控制其内的消息的存储、获取和删除的子系统。缓存存储了<ruby>可缓存的<rt>cacheable</rt></ruby>响应是为了减少将来的响应时间和网络带宽消耗。任何客户端或者服务器 <b>可以</b> 使用缓存，但是，当服务器作为<ruby>隧道<rt>tunnel</rt></ruby>而使用时，不能使用缓存。 
 </p>
 
 <blockquote>
