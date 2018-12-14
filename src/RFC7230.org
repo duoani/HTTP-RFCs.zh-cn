@@ -135,10 +135,10 @@ Conformance criteria and considerations regarding error handling are defined in 
 :ID:       f8234cb5-154d-4daf-82fd-ed54ac75cf8b
 :END:
 #+BEGIN_QUOTE
-This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7, that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix B shows the collected grammar with all list operators expanded to standard ABNF notation.
+This specification uses the Augmented Backus-Naur Form (ABNF) notation of [[[https://tools.ietf.org/html/rfc5234][RFC5234]]] with a list extension, defined in Section 7, that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). [[id:8a089adc-ec59-476e-92ed-a59470f939d4][Appendix B]] shows the collected grammar with all list operators expanded to standard ABNF notation.
 #+END_QUOTE
 
-本规范使用了[[ruby:Augmented%20Backus-Naur%20Form][扩展巴科斯范式]]（ABNF）标记法【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][章节 7]]），允许使用一个 =#= 操作符（类似于 =*= 操作符，指代“重复”）来定义一种以逗号分隔的列表。
+本规范使用了[[ruby:Augmented%20Backus-Naur%20Form][扩展巴科斯范式]]（ABNF）标记法【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][章节 7]]），允许使用一个 =#= 操作符（类似于 =*= 操作符，指代“重复”）来定义一种以逗号分隔的列表。[[id:8a089adc-ec59-476e-92ed-a59470f939d4][附录 B]] 展示了所有已收集的包含列表扩展规则以及标准 ABNF 标记的语法。
 
 #+BEGIN_QUOTE
 The following core rules are included by reference, as defined in [RFC5234], Appendix B.1: =ALPHA= (letters), =CR= (carriage return), =CRLF= (CR LF), =CTL= (controls), =DbbIGIT= (decimal 0-9), =DQUOTE= (double quote), =HEXDIG= (hexadecimal 0-9/A-F/a-f), =HTAB= (horizontal tab), =LF= (line feed), =OCTET= (any 8-bit sequence of data), =SP= (space), and =VCHAR= (any visible [USASCII] character).
@@ -380,11 +380,12 @@ HTTP 被定义为一种无状态的协议，意味着每一个请求消息都能
 #+END_QUOTE
 
 ** 2.4. 缓存 / Caches
+
 #+BEGIN_QUOTE
 A "cache" is a local store of previous response messages and the subsystem that controls its message storage, retrieval, and deletion. A cache stores cacheable responses in order to reduce the response time and network bandwidth consumption on future, equivalent requests. Any client or server *MAY* employ a cache, though a cache cannot be used by a server while it is acting as a tunnel.
 #+END_QUOTE
 
-[[ruby:cache][缓存]]，是一种保存之前的响应消息的本地存储，以及控制其消息的存储、获取和删除的子系统。缓存存储了[[ruby:cacheable][可缓存的]]响应是为了减少将来的响应时间和网络带宽消耗。任何客户端或者服务器 *可以* 使用缓存，但是，当服务器作为[[ruby:tunnel][隧道]]而使用时，不能使用缓存。
+[[ruby:cache][缓存]]，是一种保存之前的响应消息的本地存储，以及控制其内的消息的存储、获取和删除的子系统。缓存存储了[[ruby:cacheable][可缓存的]]响应是为了减少将来的响应时间和网络带宽消耗。任何客户端或者服务器 *可以* 使用缓存，但是，当服务器作为[[ruby:tunnel][隧道]]而使用时，不能使用缓存。 
 
 #+BEGIN_QUOTE
 The effect of a cache is that the request/response chain is shortened if one of the participants along the chain has a cached response applicable to that request. The following illustrates the resulting chain if B has a cached copy of an earlier response from O (via C) for a request that has not been cached by UA or A.

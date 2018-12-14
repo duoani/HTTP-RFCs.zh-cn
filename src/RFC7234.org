@@ -33,25 +33,33 @@
                                                                  June 2014
 #+END_SRC
 
-* Abstract
+* 摘要 / Abstract
 
 #+BEGIN_QUOTE
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document defines HTTP caches and the associated header fields that control cache behavior or indicate cacheable response messages.
 #+END_QUOTE
 
-* Status of This Memo
+超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP 的缓存以及相关的头字段，这些头字段负责控制缓存的行为，或者表明是一种[[ruby:cacheable][可缓存]]的响应消息。
+
+* 备忘状态 / Status of This Memo
 
 #+BEGIN_QUOTE
 This is an Internet Standards Track document.
 #+END_QUOTE
 
+这是一个 Internet Standards Track 文档。
+
 #+BEGIN_QUOTE
-This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in Section 2 of RFC 5741.
+This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in [[ruby:https://tools.ietf.org/html/rfc5741][Section 2]] of RFC 5741.
 #+END_QUOTE
+
+本文档是[[ruby:Internet%20Engineering%20Task%20Force][互联网工程任务组]]（IETF）的产品。它代表了 IETF 社区的共识。它已经接受公众审核并且已经被[[ruby:Internet%20Engineering%20Steering%20Group][互联网工程指导组]]（IESG）批准发布。有关[[ruby:Internet%20Standards][互联网标准]]的更多信息，请参阅 RFC 5741 [[ruby:https://tools.ietf.org/html/rfc5741][章节 2]]。
 
 #+BEGIN_QUOTE
 Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at http://www.rfc-editor.org/info/rfc7234.
 #+END_QUOTE
+
+关于本文档的当前状态，任何勘误以及如何提供反馈的信息可以从 http://www.rfc-editor.org/info/rfc7234 获得。
 
 * Copyright Notice
 
@@ -67,39 +75,53 @@ This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relatin
 This document may contain material from IETF Documents or IETF Contributions published or made publicly available before November 10, 2008. The person(s) controlling the copyright in some of this material may not have granted the IETF Trust the right to allow modifications of such material outside the IETF Standards Process. Without obtaining an adequate license from the person(s) controlling the copyright in such materials, this document may not be modified outside the IETF Standards Process, and derivative works of it may not be created outside the IETF Standards Process, except to format it for publication as an RFC or to translate it into languages other than English.
 #+END_QUOTE
 
-* 1. Introduction
+* 1. 引言 / Introduction
 
 #+BEGIN_QUOTE
 HTTP is typically used for distributed information systems, where performance can be improved by the use of response caches. This document defines aspects of HTTP/1.1 related to caching and reusing response messages.
 #+END_QUOTE
 
+HTTP 通常用于分布式信息系统，通过使用响应缓存能够提升这些系统的性能。本文档定义了 HTTP/1.1 缓存响应消息以及复用响应消息相关的内容。
+
 #+BEGIN_QUOTE
-An HTTP cache is a local store of response messages and the subsystem that controls storage, retrieval, and deletion of messages in it. A cache stores cacheable responses in order to reduce the response time and network bandwidth consumption on future, equivalent requests. Any client or server MAY employ a cache, though a cache cannot be used by a server that is acting as a tunnel.
+An HTTP cache is a local store of response messages and the subsystem that controls storage, retrieval, and deletion of messages in it. A cache stores cacheable responses in order to reduce the response time and network bandwidth consumption on future, equivalent requests. Any client or server *MAY* employ a cache, though a cache cannot be used by a server that is acting as a tunnel.
 #+END_QUOTE
+
+HTTP [[ruby:cache][缓存]]，是一种响应消息的本地存储，以及控制其内的消息的存储、获取和删除的子系统。缓存存储了[[ruby:cacheable][可缓存的]]响应是为了减少将来的响应时间和网络带宽消耗。任何客户端或者服务器 *可以* 使用缓存，但是，当服务器作为[[ruby:tunnel][隧道]]而使用时，不能使用缓存。 
 
 #+BEGIN_QUOTE
 A shared cache is a cache that stores responses to be reused by more than one user; shared caches are usually (but not always) deployed as a part of an intermediary. A private cache, in contrast, is dedicated to a single user; often, they are deployed as a component of a user agent.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The goal of caching in HTTP/1.1 is to significantly improve performance by reusing a prior response message to satisfy a current request. A stored response is considered "fresh", as defined in Section 4.2, if the response can be reused without "validation" (checking with the origin server to see if the cached response remains valid for this request). A fresh response can therefore reduce both latency and network overhead each time it is reused. When a cached response is not fresh, it might still be reusable if it can be freshened by validation (Section 4.3) or if the origin is unavailable (Section 4.2.4).
-#+END_QUOTE
-
-** 1.1. Conformance and Error Handling
+[[ruby:shared%20cache][共享缓存]]是一种缓存，它存储响应用于给一个以上的用户来复用，通常（但并不总是）部署作为一个中间人的一部分。与之相对的是[[ruby:private%20cache][私有缓存]]，这种缓存专门用于某一个用户，通常部署为一个用户代理的一个组件。
 
 #+BEGIN_QUOTE
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
+The goal of caching in HTTP/1.1 is to significantly improve performance by reusing a prior response message to satisfy a current request. A stored response is considered "fresh", as defined in [[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][Section 4.2]], if the response can be reused without "validation" (checking with the origin server to see if the cached response remains valid for this request). A fresh response can therefore reduce both latency and network overhead each time it is reused. When a cached response is not fresh, it might still be reusable if it can be freshened by validation ([[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][Section 4.3]]) or if the origin is unavailable ([[id:630361ae-a4e3-4fec-b337-8eff30325ddf][Section 4.2.4]]).
 #+END_QUOTE
+
+在 HTTP/1.1 中，缓存通过复用一个之前的响应消息来满足当前的请求，其目的是显著提升性能。一个已存储的响应，如果它在不需要“验证”的情况就可以用来复用，那么，它被认为是“[[ruby:fresh][新鲜的]]”（[[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][章节 4.2]]）。所谓“[[ruby:validation][验证]]”，是指和源服务器一起检查，看看这个已存储的响应是否仍然有效于这个请求。因此，每一次复用一个新鲜的响应的时候，都可以减少双方的延迟以及网络开销。当一个已存储的响应不再新鲜，它可能仍旧可以获得复用，如果它可以通过验证（[[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][章节 4.3]]）而[[ruby:freshened][唤发新鲜]]，或者原始的已不可用（[[id:630361ae-a4e3-4fec-b337-8eff30325ddf][章节 4.2.4]]）。
+
+** 1.1. 一致性和错误处理 / Conformance and Error Handling
 
 #+BEGIN_QUOTE
-Conformance criteria and considerations regarding error handling are defined in Section 2.5 of [RFC7230].
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [[[https://tools.ietf.org/html/rfc2119][RFC2119]]].
 #+END_QUOTE
 
-** 1.2. Syntax Notation
+本文档中的关键词 *[[ruby:MUST][必须]]*、*[[ruby:MUST%20NOT][禁止]]*、*[[ruby:REQUIRED][要求]]*、*[[ruby:SHALL][必须]]*、*[[ruby:SHALL%20NOT][禁止]]*、*[[ruby:SHOULD][应该]]*、*[[ruby:SHOULD%20NOT][不应当]]*、*[[ruby:RECOMMENDED][推荐]]*、*[[ruby:MAY][可以]]* 和 *[[ruby:OPTIONAL][可选]]* 的意义与【[[https://tools.ietf.org/html/rfc2119][RFC2119]]】一致。
 
 #+BEGIN_QUOTE
-This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7 of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix B describes rules imported from other documents. Appendix C shows the collected grammar with all list operators expanded to standard ABNF notation.
+Conformance criteria and considerations regarding error handling are defined in [[id:A0441F72-9799-4667-9477-1E05885946A1][Section 2.5]] of [RFC7230].
 #+END_QUOTE
+
+关于错误处理的一致性标准以及注意事项已在[[id:A0441F72-9799-4667-9477-1E05885946A1][【RFC7230】章节 2.5]] 中定义了。
+
+** 1.2. 句法标记 / Syntax Notation
+
+#+BEGIN_QUOTE
+This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7 of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). [[id:dd632d27-1596-43fe-90f8-dba848353e12][Appendix B]] describes rules imported from other documents. [[id:33ccb99a-6b09-4750-9e71-4cc1e43b49c5][Appendix C]] shows the collected grammar with all list operators expanded to standard ABNF notation.
+#+END_QUOTE
+
+本规范使用了[[ruby:Augmented%20Backus-Naur%20Form][扩展巴科斯范式]]（ABNF）标记法【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][章节 7]]），允许使用一个 =#= 操作符（类似于 =*= 操作符，指代“重复”）来定义一种以逗号分隔的列表。[[id:dd632d27-1596-43fe-90f8-dba848353e12][附录 B]] 描述了从其他文档中引进的规则。[[id:33ccb99a-6b09-4750-9e71-4cc1e43b49c5][附录 C]] 展示了所有已收集的包含列表扩展规则以及标准 ABNF 标记的语法。
 
 *** 1.2.1. Delta Seconds
 
@@ -119,28 +141,36 @@ A recipient parsing a delta-seconds value and converting it to binary form ought
 *Note:* The value 2147483648 is here for historical reasons, effectively represents infinity (over 68 years), and does not need to be stored in binary form; an implementation could produce it as a canned string if any overflow occurs, even if the calculations are performed with an arithmetic type incapable of directly representing that number. What matters here is that an overflow be detected and not treated as a negative value in later calculations.
 #+END_QUOTE
 
-* 2. Overview of Cache Operation
+* 2. 缓存操作的概况 / Overview of Cache Operation
 :PROPERTIES:
 :ID:       a09dfe13-47b3-4258-a219-ba801a1f0467
 :END:
 
 #+BEGIN_QUOTE
-Proper cache operation preserves the semantics of HTTP transfers ([RFC7231]) while eliminating the transfer of information already held in the cache. Although caching is an entirely OPTIONAL feature of HTTP, it can be assumed that reusing a cached response is desirable and that such reuse is the default behavior when no requirement or local configuration prevents it. Therefore, HTTP cache requirements are focused on preventing a cache from either storing a non-reusable response or reusing a stored response inappropriately, rather than mandating that caches always store and reuse particular responses.
+Proper cache operation preserves the semantics of HTTP transfers ([RFC7231]) while eliminating the transfer of information already held in the cache. Although caching is an entirely *OPTIONAL* feature of HTTP, it can be assumed that reusing a cached response is desirable and that such reuse is the default behavior when no requirement or local configuration prevents it. Therefore, HTTP cache requirements are focused on preventing a cache from either storing a non-reusable response or reusing a stored response inappropriately, rather than mandating that caches always store and reuse particular responses.
 #+END_QUOTE
 
+恰当的缓存操作可以在消除已存储在缓存中的消息的网络传输的同时还能保持 HTTP 传输的语义。虽然缓存是完全 *可选的* HTTP 功能，但我们可以认为复用一个已缓存的响应是大家想要的，并且这样的复用行为是默认的（如果没有要求或本地配置阻止去缓存的话）。所以，HTTP 缓存的要求主要集中在阻止一个缓存去存储一个不可复用的响应，或者不恰当地复用一个已存储的响应这些方面；而不是在是否准许缓存总是存储并复用具体的响应。
+
 #+BEGIN_QUOTE
-Each cache entry consists of a cache key and one or more HTTP responses corresponding to prior requests that used the same key. The most common form of cache entry is a successful result of a retrieval request: i.e., a 200 (OK) response to a GET request, which contains a representation of the resource identified by the request target (Section 4.3.1 of [RFC7231]). However, it is also possible to cache permanent redirects, negative results (e.g., 404 (Not Found)), incomplete results (e.g., 206 (Partial Content)), and responses to methods other than GET if the method's definition allows such caching and defines something suitable for use as a cache key.
+Each cache entry consists of a cache key and one or more HTTP responses corresponding to prior requests that used the same key. The most common form of cache entry is a successful result of a retrieval request: i.e., a =200 (OK)= response to a GET request, which contains a representation of the resource identified by the request target ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]] of [RFC7231]). However, it is also possible to cache permanent redirects, negative results (e.g., =404 (Not Found)=), incomplete results (e.g., =206 (Partial Content)=), and responses to methods other than GET if the method's definition allows such caching and defines something suitable for use as a cache key.
 #+END_QUOTE
+
+每个[[ruby:cache%20entry][缓存条目]]是由一个缓存 key（映射键）以及一个或多个 HTTP 响应组成的，这些响应对应于之前有使用过相同的 key 的请求。缓存条目最常见的形式是一个检索请求（[[id:698bab73-07b1-4349-8a03-5a4a89d966d8][【RFC7231】章节 4.3.1]]）的成功返回结果，比如，一个回应给 GET 请求的 =200 (OK)= 响应。这种成功返回结果包含了一个由请求目标所标识的资源表示形式。但是，它同样可能去缓存一个永久重定向（=301=，见[[id:e883e3aa-aac3-46ca-83cc-2a085889f9d2][【RFC7231】章节 6.4.2]]）、否定的结果（比如，=404 (Not Found)=）、不完整的结果（比如，=206 (Partial Content)=）、以及回应给非 GET 方法的响应（如果方法的定义允许这种缓存行为并定义了某种适合用作一个缓存 key 的东西）。
 
 #+BEGIN_QUOTE
 The primary cache key consists of the request method and target URI. However, since HTTP caches in common use today are typically limited to caching responses to GET, many caches simply decline other methods and use only the URI as the primary cache key.
 #+END_QUOTE
 
+主要的缓存 key 是由[[ruby:request%20method][请求方法]]以及目标 URI 组成的。但是，因为如今普遍使用的 HTTP 缓存通常都被限制为只对 GET 的响应进行缓存，因此，许多缓存简单地拒绝其他方法，并只使用 URI 作为主要的缓存 key。
+
 #+BEGIN_QUOTE
-If a request target is subject to content negotiation, its cache entry might consist of multiple stored responses, each differentiated by a secondary key for the values of the original request's selecting header fields (Section 4.1).
+If a request target is subject to content negotiation, its cache entry might consist of multiple stored responses, each differentiated by a secondary key for the values of the original request's selecting header fields ([[id:352eb301-a424-48e9-9027-3c6633da4b77][Section 4.1]]).
 #+END_QUOTE
 
-* 3. Storing Responses in Caches
+如果请求目标受到[[ruby:content%20negotiation][内容协商]]的影响，那么它的缓存条目可能是由多个已存储的响应来组成的，每一个响应由一个次要的 key 来进行区分，这个次要的 key 的值是原始请求选定的头字段（[[id:352eb301-a424-48e9-9027-3c6633da4b77][章节 4.1]]）。
+
+* 3. 存储响应到缓存 / Storing Responses in Caches
 :PROPERTIES:
 :ID:       e41d8ccc-5b69-40e3-a8ab-ca27327f15fa
 :END:
@@ -154,12 +184,12 @@ A cache *MUST NOT* store a response to any request, unless:
 - the "private" response directive (see Section 5.2.2.6) does not appear in the response, if the cache is shared, and
 - the Authorization header field (see Section 4.2 of [RFC7235]) does not appear in the request, if the cache is shared, unless the response explicitly allows it (see Section 3.2), and
 - the response either:
-  - contains an Expires header field (see Section 5.3), or
-  - contains a max-age response directive (see Section 5.2.2.8), or
-  - contains a s-maxage response directive (see Section 5.2.2.9) and the cache is shared, or
+  - contains an =Expires= header field (see Section 5.3), or
+  - contains a =max-age= response directive (see Section 5.2.2.8), or
+  - contains a =s-maxage= response directive (see Section 5.2.2.9) and the cache is shared, or
   - contains a Cache Control Extension (see Section 5.2.3) that allows it to be cached, or
   - has a status code that is defined as cacheable by default (see Section 4.2.2), or
-  - contains a public response directive (see Section 5.2.2.5).
+  - contains a =public= response directive (see Section 5.2.2.5).
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -174,7 +204,7 @@ In this context, a cache has "understood" a request method or a response status 
 Note that, in normal operation, some caches will not store a response that has neither a cache validator nor an explicit expiration time, as such responses are not usually useful to store. However, caches are not prohibited from storing such responses.
 #+END_QUOTE
 
-** 3.1. Storing Incomplete Responses
+** 3.1. 存储不完整的响应 / Storing Incomplete Responses
 
 #+BEGIN_QUOTE
 A response message is considered complete when all of the octets indicated by the message framing ([RFC7230]) are received prior to the connection being closed. If the request method is GET, the response status code is 200 (OK), and the entire response header section has been received, a cache MAY store an incomplete response message body if the cache entry is recorded as incomplete. Likewise, a 206 (Partial Content) response MAY be stored as if it were an incomplete 200 (OK) cache entry. However, a cache MUST NOT store incomplete or partial-content responses if it does not support the Range and Content-Range header fields or if it does not understand the range units used in those fields.
@@ -198,7 +228,7 @@ In this specification, the following Cache-Control response directives (Section 
 Note that cached responses that contain the "must-revalidate" and/or "s-maxage" response directives are not allowed to be served stale (Section 4.2.4) by shared caches. In particular, a response with either "max-age=0, must-revalidate" or "s-maxage=0" cannot be used to satisfy a subsequent request without revalidating it on the origin server.
 #+END_QUOTE
 
-** 3.3. Combining Partial Content
+** 3.3. 结合部分内容 / Combining Partial Content
 
 #+BEGIN_QUOTE
 A response might transfer only a partial representation if the connection closed prematurely or if the request used one or more Range specifiers ([RFC7233]). After several such transfers, a cache might have received several ranges of the same representation. A cache MAY combine these ranges into a single stored response, and reuse that response to satisfy later requests, if they all share the same strong validator and the cache complies with the client requirements in Section 4.3 of [RFC7233].
@@ -212,7 +242,7 @@ When combining the new response with one or more stored responses, a cache MUST:
 - use other header fields provided in the new response, aside from Content-Range, to replace all instances of the corresponding header fields in the stored response.
 #+END_QUOTE
 
-* 4. Constructing Responses from Caches
+* 4. 从缓存构造响应 / Constructing Responses from Caches
 
 #+BEGIN_QUOTE
 When presented with a request, a cache MUST NOT reuse a stored response, unless:
@@ -290,6 +320,9 @@ If no selected response is available, the cache cannot satisfy the presented req
 #+END_QUOTE
 
 ** 4.2. Freshness
+:PROPERTIES:
+:ID:       d414d2f7-d865-4b94-9efd-6b2578df86aa
+:END:
 
 #+BEGIN_QUOTE
 A fresh response is one whose age has not yet exceeded its freshness lifetime. Conversely, a stale response is one where it has.
@@ -444,6 +477,9 @@ The current_age of a stored response can then be calculated by adding the amount
 #+END_SRC
 
 *** 4.2.4. Serving Stale Responses
+:PROPERTIES:
+:ID:       630361ae-a4e3-4fec-b337-8eff30325ddf
+:END:
 
 #+BEGIN_QUOTE
 A "stale" response is one that either has explicit expiry information or is allowed to have heuristic expiry calculated, but is not fresh according to the calculations in Section 4.2.
@@ -466,6 +502,9 @@ A cache SHOULD NOT generate a new Warning header field when forwarding a respons
 #+END_QUOTE
 
 ** 4.3. Validation
+:PROPERTIES:
+:ID:       47a8482e-e33f-435a-8abd-9a82f117f7a0
+:END:
 
 #+BEGIN_QUOTE
 When a cache has one or more stored responses for a requested URI, but cannot serve any of them (e.g., because they are not fresh, or one cannot be selected; see Section 4.1), it can use the conditional request mechanism [RFC7232] in the forwarded request to give the next inbound server an opportunity to select a valid stored response to use, updating the stored metadata in the process, or to replace the stored response(s) with a new response. This process is known as "validating" or "revalidating" the stored response.
@@ -601,7 +640,7 @@ Here, a "non-error response" is one with a 2xx (Successful) or 3xx (Redirection)
 Note that this does not guarantee that all appropriate responses are invalidated. For example, a state-changing request might invalidate responses in the caches it travels through, but relevant responses still might be stored in other caches that it has not.
 #+END_QUOTE
 
-* 5. Header Field Definitions
+* 5. 头字段定义 / Header Field Definitions
 
 #+BEGIN_QUOTE
 This section defines the syntax and semantics of HTTP/1.1 header fields related to caching.
@@ -1116,7 +1155,7 @@ This Warning code MUST be added by a proxy if it applies any transformation to t
 The warning text can include arbitrary information to be presented to a human user or logged. A system receiving this warning MUST NOT take any automated action.
 #+END_QUOTE
 
-* 6. History Lists
+* 6. 历史列表 / History Lists
 
 #+BEGIN_QUOTE
 User agents often have history mechanisms, such as "Back" buttons and history lists, that can be used to redisplay a representation retrieved earlier in a session.
@@ -1130,14 +1169,14 @@ The freshness model (Section 4.2) does not necessarily apply to history mechanis
 This does not prohibit the history mechanism from telling the user that a view might be stale or from honoring cache directives (e.g., Cache-Control: no-store).
 #+END_QUOTE
 
-* 7. IANA Considerations
-** 7.1. Cache Directive Registry
+* 7. IANA 注意事项 / IANA Considerations
+** 7.1. 缓存指令登记表 / Cache Directive Registry
 
 #+BEGIN_QUOTE
 The "Hypertext Transfer Protocol (HTTP) Cache Directive Registry" defines the namespace for the cache directives. It has been created and is now maintained at <http://www.iana.org/assignments/http-cache-directives>.
 #+END_QUOTE
 
-*** 7.1.1. Procedure
+*** 7.1.1. 手续 / Procedure
 
 #+BEGIN_QUOTE
 A registration MUST include the following fields:
@@ -1147,7 +1186,7 @@ A registration MUST include the following fields:
 - Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
 #+END_QUOTE
 
-*** 7.1.2. Considerations for New Cache Control Directives
+*** 7.1.2. 新的缓存控制指令的注意事项 / Considerations for New Cache Control Directives
 
 #+BEGIN_QUOTE
 New extension directives ought to consider defining:
@@ -1162,7 +1201,7 @@ New extension directives ought to consider defining:
 See also Section 5.2.3.
 #+END_QUOTE
 
-*** 7.1.3. Registrations
+*** 7.1.3. 登记 / Registrations
 
 #+BEGIN_QUOTE
 The registry has been populated with the registrations below:
@@ -1185,13 +1224,13 @@ The registry has been populated with the registrations below:
 | stale-if-error         | [RFC5861], Section 4             |
 | stale-while-revalidate | [RFC5861], Section 3             |
 
-** 7.2. Warn Code Registry
+** 7.2. 警告码登记表 / Warn Code Registry
 
 #+BEGIN_QUOTE
 The "Hypertext Transfer Protocol (HTTP) Warn Codes" registry defines the namespace for warn codes. It has been created and is now maintained at <http://www.iana.org/assignments/http-warn-codes>.
 #+END_QUOTE
 
-*** 7.2.1. Procedure
+*** 7.2.1. 手续 / Procedure
 
 #+BEGIN_QUOTE
 A registration MUST include the following fields:
@@ -1205,7 +1244,7 @@ A registration MUST include the following fields:
 Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
 #+END_QUOTE
 
-*** 7.2.2. Registrations
+*** 7.2.2. 登记 / Registrations
 
 #+BEGIN_QUOTE
 The registry has been populated with the registrations below:
@@ -1221,7 +1260,7 @@ The registry has been populated with the registrations below:
 |       214 | Transformation Applied           | Section 5.5.6 |
 |       299 | Miscellaneous Persistent Warning | Section 5.5.7 |
 
-** 7.3. Header Field Registration
+** 7.3. 头字段登记 / Header Field Registration
 
 #+BEGIN_QUOTE
 HTTP header fields are registered within the "Message Headers" registry maintained at <http://www.iana.org/assignments/message-headers/>.
@@ -1243,7 +1282,7 @@ This document defines the following HTTP header fields, so the "Permanent Messag
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 #+END_QUOTE
 
-* 8. Security Considerations
+* 8. 安全注意事项 / Security Considerations
 :PROPERTIES:
 :ID:       258f834a-496c-4173-b6bd-dda94f1d74fe
 :END:
@@ -1272,14 +1311,14 @@ Furthermore, the very use of a cache can bring about privacy concerns. For examp
 Note that the Set-Cookie response header field [RFC6265] does not inhibit caching; a cacheable response with a Set-Cookie header field can be (and often is) used to satisfy subsequent requests to caches. Servers who wish to control caching of these responses are encouraged to emit appropriate Cache-Control response header fields.
 #+END_QUOTE
 
-* 9. Acknowledgments
+* 9. 鸣谢 / Acknowledgments
 
 #+BEGIN_QUOTE
 See Section 10 of [RFC7230].
 #+END_QUOTE
 
-* 10. References
-** 10.1. Normative References
+* 10. 参考资料 / References
+** 10.1. 规范性参考资料 / Normative References
 
 - [RFC2119] :: Bradner, S., “Key words for use in RFCs to Indicate Requirement Levels”, BCP 14, RFC 2119, March 1997.
 - [RFC5234] :: Crocker, D., Ed. and P. Overell, “Augmented BNF for Syntax Specifications: ABNF”, STD 68, RFC 5234, January 2008.
@@ -1289,7 +1328,7 @@ See Section 10 of [RFC7230].
 - [RFC7233] :: Fielding, R., Ed., Lafon, Y., Ed., and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Range Requests”, RFC 7233, June 2014.
 - [RFC7235] :: Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Authentication”, RFC 7235, June 2014.
 
-** 10.2. Informative References
+** 10.2. 信息性参考资料 / Informative References
 
 - [BCP90] :: Klyne, G., Nottingham, M., and J. Mogul, “Registration Procedures for Message Header Fields”, BCP 90, RFC 3864, September 2004.
 - [RFC2616] :: Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, “Hypertext Transfer Protocol -- HTTP/1.1”, RFC 2616, June 1999.
@@ -1298,7 +1337,7 @@ See Section 10 of [RFC7230].
 - [RFC5905] :: Mills, D., Martin, J., Ed., Burbank, J., and W. Kasch, “Network Time Protocol Version 4: Protocol and Algorithms Specification”, RFC 5905, June 2010.
 - [RFC6265] :: Barth, A., “HTTP State Management Mechanism”, RFC 6265, April 2011.
 
-* Appendix A. Changes from RFC 2616
+* 附录 A：相对 RFC 2616 的变化 / Appendix A. Changes from RFC 2616
 
 #+BEGIN_QUOTE
 The specification has been substantially rewritten for clarity.
@@ -1364,7 +1403,10 @@ Some requirements regarding production and processing of the Warning header fiel
 This specification introduces the Cache Directive and Warn Code Registries, and defines considerations for new cache directives. (Section 7.1 and Section 7.2)
 #+END_QUOTE
 
-* Appendix B. Imported ABNF
+* 附录 B：引进的 ABNF / Appendix B. Imported ABNF
+:PROPERTIES:
+:ID:       dd632d27-1596-43fe-90f8-dba848353e12
+:END:
 
 #+BEGIN_QUOTE
 The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
@@ -1393,7 +1435,10 @@ The rules below are defined in other parts:
   HTTP-date     = <HTTP-date, see [RFC7231], Section 7.1.1.1>
 #+END_SRC
 
-* Appendix C. Collected ABNF
+* 附录 C：ABNF 集合 / Appendix C. Collected ABNF
+:PROPERTIES:
+:ID:       33ccb99a-6b09-4750-9e71-4cc1e43b49c5
+:END:
 
 #+BEGIN_QUOTE
 In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
@@ -1443,7 +1488,7 @@ In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7
    ]
 #+END_SRC
 
-* Index
+* 索引 / Index
 
 - 1
   - 110 (warn-code)  4.2.4, 5.5.1, 7.2.2

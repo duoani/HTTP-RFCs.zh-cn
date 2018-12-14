@@ -1141,7 +1141,7 @@ In the collected ABNF below, list rules are expanded as per [[id:f8234cb5-154d-4
   unsatisfied-range = "*/" complete-length
 #+END_SRC
 
-* Index
+* 索引 / Index
 
 - 2
   - 206 Partial Content (status code)  4.1, 5.2, B
