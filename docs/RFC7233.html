@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-13 Thu 19:15 -->
+<!-- 2018-12-14 Fri 11:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7233: Hypertext Transfer Protocol (HTTP/1.1): Range Requests</title>
@@ -1211,7 +1211,7 @@ Within the header area of each body part in the multipart payload, the server <b
 </blockquote>
 
 <p>
-对于 multipart 类型的有效载荷，服务器 <b>必须</b> 在这种有效载荷中的每一个<ruby>主体部分<rt>body part</rt></ruby>的<ruby>头部区域<rt>header area</rt></ruby>内都生成一个 <code>Content-Range</code> 头字段，每个头字段的值表示被置入到对应的主体部分的表示形式数据的范围。假设这个已选表示形式在 <code>200 (OK)</code> 响应的时候会带有一个 <code>Content-Type</code> 头字段，那么，在 <code>206</code> 响应中，服务器 <b>应当</b> 在每个主体部分的头部区域中生成同样的 <code>Content-Type</code> 字段。例如：
+对于 multipart 类型的有效载荷，服务器 <b>必须</b> 在这种有效载荷中的每一个 <code>body-part</code> 的<ruby>头部区域<rt>header area</rt></ruby>内都生成一个 <code>Content-Range</code> 头字段，每个头字段的值表示被置入到对应的 <code>body-part</code> 的表示形式数据的范围。假设这个已选表示形式在 <code>200 (OK)</code> 响应的时候会带有一个 <code>Content-Type</code> 头字段，那么，在 <code>206</code> 响应中，服务器 <b>应当</b> 在每个 <code>body-part</code> 的头部区域中生成同样的 <code>Content-Type</code> 字段。例如：
 </p>
 
 <pre class="example">
@@ -1258,7 +1258,7 @@ A server <b>MUST NOT</b> generate a multipart response to a request for a single
 </blockquote>
 
 <p>
-当客户端请求一个<ruby>单个范围<rt>single range</rt></ruby>的时候，服务器 <b>禁止</b> 生成一个<ruby>多个部分的响应<rt>multipart response</rt></ruby>来回应，这是因为客户端之所以不请求多个部分，可能是由于它不支持多个部分的响应。但是，如果所请求的是多个范围，并且最后发现只有一个范围可被满足，或者经合并后只剩下一个范围，那么，服务器 <b>可以</b> 生成一个 multipart/byteranges 有效载荷，其仅带有单个主体部分。不能处理 multipart/byteranges 响应的客户端 <b>禁止</b> 生成一个<ruby>请求<rt>asks for</rt></ruby>多个范围的请求消息。
+当客户端请求一个<ruby>单个范围<rt>single range</rt></ruby>的时候，服务器 <b>禁止</b> 生成一个<ruby>多个部分的响应<rt>multipart response</rt></ruby>来回应，这是因为客户端之所以不请求多个部分，可能是由于它不支持多个部分的响应。但是，如果所请求的是多个范围，并且最后发现只有一个范围可被满足，或者经合并后只剩下一个范围，那么，服务器 <b>可以</b> 生成一个 multipart/byteranges 有效载荷，其仅带有单个 <code>body-part</code>。不能处理 multipart/byteranges 响应的客户端 <b>禁止</b> 生成一个<ruby>请求<rt>asks for</rt></ruby>多个范围的请求消息。
 </p>
 
 <blockquote>
@@ -1268,7 +1268,7 @@ When a multipart response payload is generated, the server <b>SHOULD</b> send th
 </blockquote>
 
 <p>
-当服务器生成了一个<ruby>多个部分的响应有效载荷<rt>multipart response payload</rt></ruby>的时候，服务器 <b>应当</b> 按照它所接收到的 <code>Range</code> 头字段里的 <code>byte-range-spec</code> 的出现顺序（排除掉它认为是不可满足的或合并成其他范围的那些范围）来发送这些部分。客户端在接收到一个多个部分的响应时，<b>必须</b> 检查出现在每一个主体部分里的 <code>Content-Range</code> 头字段，为了确定哪一个范围是包含在那个主体部分里的。客户端不能完全相信可以接收到与它所请求相一致的范围，或者与它所请求相一致的顺序。
+当服务器生成了一个<ruby>多个部分的响应有效载荷<rt>multipart response payload</rt></ruby>的时候，服务器 <b>应当</b> 按照它所接收到的 <code>Range</code> 头字段里的 <code>byte-range-spec</code> 的出现顺序（排除掉它认为是不可满足的或合并成其他范围的那些范围）来发送这些部分。客户端在接收到一个多个部分的响应时，<b>必须</b> 检查出现在每一个 <code>body-part</code> 里的 <code>Content-Range</code> 头字段，为了确定哪一个范围是包含在那个主体部分里的。客户端不能完全相信可以接收到与它所请求相一致的范围，或者与它所请求相一致的顺序。
 </p>
 
 <blockquote>
@@ -1313,8 +1313,14 @@ The "Content-Range" header field is sent in a single part <code>206 (Partial Con
 </blockquote>
 
 <p>
-如果 <code>Content-Range</code> 头字段发送在一种<ruby>单个部分<rt>single part</rt></ruby>的 <code>206 (Partial Content)</code> 响应里，那么它表明一个范围，这个范围是指封装为消息有效载荷的已选表示形式的<ruby>局部范围<rt>partial range</rt></ruby>。如果它发送在一种<ruby>多个部分<rt>multipart</rt></ruby>的 <code>206</code> 响应里的每一个<ruby>分部<rt>part</rt></ruby>中，那么它表示一个范围，这个范围是指封装在每个<ruby>分部主体<rt>body part</rt></ruby>中的表示形式的范围。如果它发送在 <code>416 (Range Not Staisfiable)</code> 响应中，它提供了已选表示形式的相关信息。
+如果 <code>Content-Range</code> 头字段发送在一种<ruby>单个部分<rt>single part</rt></ruby>的 <code>206 (Partial Content)</code> 响应里，那么它表明一个范围，这个范围是指封装为消息有效载荷的已选表示形式的<ruby>局部范围<rt>partial range</rt></ruby>。如果它发送在一种<ruby>多个部分<rt>multipart</rt></ruby>的 <code>206</code> 响应里的每一个 <code>body-part</code> 中，那么它表示一个范围，这个范围是指封装在每个 <code>body-part</code> 中的表示形式的范围。如果它发送在 <code>416 (Range Not Staisfiable)</code> 响应中，它提供了已选表示形式的相关信息。
 </p>
+
+<blockquote>
+<p>
+译注：下文会多次提及 <code>body-part</code> 这个概念，可在<a href="https://tools.ietf.org/html/rfc2046#section-5.1">【RFC2046】章节 5</a> 找到更详细的信息。
+</p>
+</blockquote>
 
 <div class="org-src-container">
 <pre class="src src-text">Content-Range       = byte-content-range
@@ -1933,7 +1939,7 @@ Unconstrained multiple range requests are susceptible to denial-of-service attac
 </blockquote>
 
 <p>
-不加约束的<ruby>多个部分的范围请求<rt>multiple range requests</rt></ruby>容易受到<ruby>拒绝服务攻击<rt>denial-of-service attacks</rt></ruby>的影响，这是因为请求相同数据的许多重合范围的工作量与试图提供所请求的许多部分的数据所消耗的时间、内存、以及宽带相比显得太微不足道了。服务器应该忽略、合并、或者拒绝
+不加约束的<ruby>多个部分的范围请求<rt>multiple range requests</rt></ruby>容易受到<ruby>拒绝服务攻击<rt>denial-of-service attacks</rt></ruby>的影响，这是因为请求相同数据的许多重合范围的工作量与试图提供所请求的许多部分的数据所消耗的时间、内存、以及宽带相比显得太微不足道了。服务器应该忽略、合并、或者拒绝异常的范围请求，比如请求超过两个以上的重合范围，或者在在一个范围集里面请求了许多小范围，特别是当这些范围顺序混乱又没有合理的理由的情况。<ruby>多个部分的范围请求<rt>multipart range requests</rt></ruby>不是为了支持<ruby>随机访问<rt>random access</rt></ruby>而设计的。
 </p>
 </div>
 </div>
@@ -1991,15 +1997,23 @@ See <a href="RFC7230.html#ID-ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626">Section 10</a
 <div class="outline-text-2" id="text-orgc85d248">
 <blockquote>
 <p>
-When a 206 (Partial Content) response message includes the content of multiple ranges, they are transmitted as body parts in a multipart message body ([RFC2046], Section 5.1) with the media type of "multipart/byteranges".
+When a <code>206 (Partial Content)</code> response message includes the content of multiple ranges, they are transmitted as body parts in a multipart message body ([RFC2046], <a href="https://tools.ietf.org/html/rfc2046#section-5.1">Section 5.1</a>) with the media type of "multipart/byteranges".
 </p>
 </blockquote>
 
+<p>
+当一个 <code>206 (Partial Content)</code> 响应消息包含了多个范围的内容的时候，它们会作为 multipart 类型的消息体（<a href="https://tools.ietf.org/html/rfc2046#section-5.1">【RFC2046】章节 5.1</a>）的 <code>body-part</code> 来传输，这个消息体带有一个 "multipart/byteranges" 的媒体类型。
+</p>
+
 <blockquote>
 <p>
-The multipart/byteranges media type includes one or more body parts, each with its own Content-Type and Content-Range fields. The required boundary parameter specifies the boundary string used to separate each body part.
+The multipart/byteranges media type includes one or more body parts, each with its own <code>Content-Type</code> and <code>Content-Range</code> fields. The required boundary parameter specifies the boundary string used to separate each body part.
 </p>
 </blockquote>
+
+<p>
+multipart/byteranges 媒体类型包括一个或多个的 <code>body-part</code>，每个都带有自己的 <code>Content-Type</code> 和 <code>Content-Range</code> 字段。必要的 <code>boundary</code> 参数指定了用来分隔每一个 <code>body-part</code> 所使用的<ruby>边界字符串<rt>boundary string</rt></ruby>。
+</p>
 
 <blockquote>
 <p>
@@ -2008,16 +2022,30 @@ Implementation Notes:
 
 <ol class="org-ol">
 <li>Additional CRLFs might precede the first boundary string in the body.</li>
-<li>Although [RFC2046] permits the boundary string to be quoted, some existing implementations handle a quoted boundary string incorrectly.</li>
+<li>Although [<a href="https://tools.ietf.org/html/rfc2046">RFC2046</a>] permits the boundary string to be quoted, some existing implementations handle a quoted boundary string incorrectly.</li>
 <li>A number of clients and servers were coded to an early draft of the byteranges specification that used a media type of multipart/x-byteranges, which is almost (but not quite) compatible with this type.</li>
 </ol>
 </blockquote>
+
+<p>
+实现注意事项：
+</p>
+
+<ol class="org-ol">
+<li>在消息体内的第一个边界字符串之前可能会有额外的换行符 <code>CRLF</code>。</li>
+<li>虽然【<a href="https://tools.ietf.org/html/rfc2046">RFC2046</a>】允许使用引号将边界字符串<ruby>包裹<rt>quoted</rt></ruby>起来，但现有的某些实现并没有正确处理好带引号包裹的边界字符串。</li>
+<li>有大量的客户端及服务器的程序是按照字节范围规范的<ruby>早期草案<rt>early draft</rt></ruby>来编写的，使用了一个 multipart/x-byteranges 的媒体类型，这个媒体类型几乎（但并不完全）兼容 multipart/byteranges。</li>
+</ol>
 
 <blockquote>
 <p>
 Despite the name, the "multipart/byteranges" media type is not limited to byte ranges. The following example uses an "exampleunit" range unit:
 </p>
 </blockquote>
+
+<p>
+尽管 "multipart/byteranges" 的名称看起来是限定为使用字节范围，但其实并不是。以下示例使用了一个名叫 "exampleunit" 的范围单位：
+</p>
 
 <pre class="example">
 HTTP/1.1 206 Partial Content
@@ -2046,33 +2074,53 @@ Content-Range: exampleunit 11.2-14.3/25
 <div class="outline-text-2" id="text-org3c68003">
 <blockquote>
 <p>
-Servers are given more leeway in how they respond to a range request, in order to mitigate abuse by malicious (or just greedy) clients. (Section 3.1)
+Servers are given more leeway in how they respond to a range request, in order to mitigate abuse by malicious (or just greedy) clients. (<a href="#orgf26e511">Section 3.1</a>)
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A weak validator cannot be used in a 206 response. (Section 4.1)
+对于如何响应给一个范围请求，为服务器留出了更多的回旋余地，以减少被恶意（或仅为贪婪）的客户端滥用的可能性。（<a href="#orgf26e511">章节 3.1</a>）
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The Content-Range header field only has meaning when the status code explicitly defines its use. (Section 4.2)
+A weak validator cannot be used in a <code>206</code> response. (<a href="#org5528062">Section 4.1</a>)
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-This specification introduces a Range Unit Registry. (Section 5.1)
+弱验证器不能用在 <code>206</code> 响应里。（<a href="#org5528062">章节 4.1</a>）
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-multipart/byteranges can consist of a single part. (Appendix A)
+The <code>Content-Range</code> header field only has meaning when the status code explicitly defines its use. (<a href="#org96d66d2">Section 4.2</a>)
 </p>
 </blockquote>
+
+<p>
+<code>Content-Range</code> 头字段仅用在那些有确切定义它的使用方式的状态码中才有意义。（<a href="#org96d66d2">章节 4.2</a>）
+</p>
+
+<blockquote>
+<p>
+This specification introduces a Range Unit Registry. (<a href="#org2f133be">Section 5.1</a>)
+</p>
+</blockquote>
+
+<p>
+本规范引进了一份《范围单位登记表》。（<a href="#org2f133be">章节 5.1</a>）
+</p>
+
+<blockquote>
+<p>
+multipart/byteranges can consist of a single part. (<a href="#orgc85d248">Appendix A</a>)
+</p>
+</blockquote>
+
+<p>
+multipart/byteranges 能够由单个部分来组成。（<a href="#orgc85d248">附录 A</a>）
+</p>
 </div>
 </div>
 
@@ -2081,21 +2129,33 @@ multipart/byteranges can consist of a single part. (Appendix A)
 <div class="outline-text-2" id="text-orgbc51c3e">
 <blockquote>
 <p>
-The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+The following core rules are included by reference, as defined in <a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">Appendix B.1</a> of [RFC5234]: <code>ALPHA</code> (letters), <code>CR</code> (carriage return), <code>CRLF</code> (CR LF), <code>CTL</code> (controls), <code>DIGIT</code> (decimal 0-9), <code>DQUOTE</code> (double quote), <code>HEXDIG</code> (hexadecimal 0-9/A-F/a-f), <code>LF</code> (line feed), <code>OCTET</code> (any 8-bit sequence of data), <code>SP</code> (space), and <code>VCHAR</code> (any visible US-ASCII character).
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-Note that all rules derived from token are to be compared case-insensitively, like range-unit and acceptable-ranges.
+本规范引用了以下定义在<a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">【RFC5234】附录 B.1</a> 中的核心规则：<code>ALPHA</code> （字母）、<code>CR</code> （回车符）、<code>CRLF</code> （回车换行符）、<code>CTL</code> （控制字符）、<code>DIGIT</code> （十进制数字 0-9）、<code>DQUOTE</code> （双引号）、<code>HEXDIG</code> （十六进制数字 0-9/A-F/a-f）、<code>HTAB</code> （水平制表符）、<code>LF</code> （换行符）、<code>OCTET</code> （八位组字节）、<code>SP</code> （空格）以及 <code>VCHAR</code> （【USASCII】可见字符）。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The rules below are defined in [RFC7230]:
+Note that all rules derived from token are to be compared case-insensitively, like <code>range-unit</code> and <code>acceptable-ranges</code>.
 </p>
 </blockquote>
+
+<p>
+需要注意的是衍生自<ruby>名称标记<rt>token</rt></ruby>所有规则都是以不区分大小写的方式进行比较的，像 <a href="#org954ce7c">range-unit</a> 和 <a href="#org6b1d683">acceptable-ranges</a>。
+</p>
+
+<blockquote>
+<p>
+The rules below are defined in [<a href="RFC7230.html">RFC7230</a>]:
+</p>
+</blockquote>
+
+<p>
+以下规则定义在【<a href="RFC7230.html">RFC7230</a>】中：
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">OWS        = &lt;OWS, see [RFC7230], Section 3.2.3&gt;
@@ -2108,6 +2168,10 @@ token      = &lt;token, see [RFC7230], Section 3.2.6&gt;
 The rules below are defined in other parts:
 </p>
 </blockquote>
+
+<p>
+以下规则定义在其他部分中：
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">HTTP-date  = &lt;HTTP-date, see [RFC7231], Section 7.1.1.1&gt;
@@ -2122,9 +2186,13 @@ entity-tag = &lt;entity-tag, see [RFC7232], Section 2.3&gt;
 <div class="outline-text-2" id="text-org2da3bfc">
 <blockquote>
 <p>
-In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
+In the collected ABNF below, list rules are expanded as per <a href="RFC7230.html#ID-f8234cb5-154d-4daf-82fd-ed54ac75cf8b">Section 1.2</a> of [RFC7230].
 </p>
 </blockquote>
+
+<p>
+下列 ABNF 规则集合中，列表规则是在<a href="RFC7230.html#ID-f8234cb5-154d-4daf-82fd-ed54ac75cf8b">【RFC7230】章节 1.2</a> 所扩充的。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Accept-Ranges = acceptable-ranges
@@ -2182,6 +2250,117 @@ unsatisfied-range = "*/" complete-length
 
 <div id="outline-container-org020c35c" class="outline-2">
 <h2 id="org020c35c">Index</h2>
+<div class="outline-text-2" id="text-org020c35c">
+<ul class="org-ul">
+<li>2
+<ul class="org-ul">
+<li>206 Partial Content (status code)  4.1, 5.2, B</li>
+</ul></li>
+<li>4
+<ul class="org-ul">
+<li>416 Range Not Satisfiable (status code)  4.4, 5.2</li>
+</ul></li>
+<li>A
+<ul class="org-ul">
+<li>Accept-Ranges header field  2, 2.3, 5.1.2, 5.3</li>
+</ul></li>
+<li>B
+<ul class="org-ul">
+<li>BCP13  5.4, 8.2</li>
+<li>BCP90  5.3, 8.2</li>
+</ul></li>
+<li>C
+<ul class="org-ul">
+<li>Content-Range header field  2, 4.2, 4.4, 5.3, B</li>
+</ul></li>
+<li>G
+<ul class="org-ul">
+<li>Grammar  
+<ul class="org-ul">
+<li>Accept-Ranges  2.3</li>
+<li>acceptable-ranges  2.3</li>
+<li>byte-content-range  4.2</li>
+<li>byte-range  4.2</li>
+<li>byte-range-resp  4.2</li>
+<li>byte-range-set  2.1</li>
+<li>byte-range-spec  2.1</li>
+<li>byte-ranges-specifier  2.1</li>
+<li>bytes-unit  2, 2.1</li>
+<li>complete-length  4.2</li>
+<li>Content-Range  4.2</li>
+<li>first-byte-pos  2.1</li>
+<li>If-Range  3.2</li>
+<li>last-byte-pos  2.1</li>
+<li>other-content-range  4.2</li>
+<li>other-range-resp  4.2</li>
+<li>other-range-unit  2, 2.2</li>
+<li>Range  3.1</li>
+<li>range-unit  2</li>
+<li>ranges-specifier  2.1</li>
+<li>suffix-byte-range-spec  2.1</li>
+<li>suffix-length  2.1</li>
+<li>unsatisfied-range  4.2</li>
+</ul></li>
+</ul></li>
+<li>I
+<ul class="org-ul">
+<li>If-Range header field  3.1, 3.2, 5.3</li>
+</ul></li>
+<li>M
+<ul class="org-ul">
+<li>Media Type  
+<ul class="org-ul">
+<li>multipart/byteranges  5.4.1, A</li>
+<li>multipart/x-byteranges  A</li>
+</ul></li>
+<li>multipart/byteranges Media Type  5.4.1, A</li>
+<li>multipart/x-byteranges Media Type  A</li>
+</ul></li>
+<li>R
+<ul class="org-ul">
+<li>Range header field  2, 3.1, 4.1, 4.4, 5.3, B</li>
+<li>RFC2046  8.1, A, A
+<ul class="org-ul">
+<li>Section 5.1  A</li>
+</ul></li>
+<li>RFC2119  1.1, 8.1</li>
+<li>RFC2616  8.2</li>
+<li>RFC5226  5.1.1, 8.2
+<ul class="org-ul">
+<li>Section 4.1  5.1.1</li>
+</ul></li>
+<li>RFC5234  1.2, 8.1, C
+<ul class="org-ul">
+<li>Appendix B.1  C</li>
+</ul></li>
+<li>RFC7230  1.1, 1.2, 6, 7, 8.1, C, C, C, D
+<ul class="org-ul">
+<li>Section 1.2  D</li>
+<li>Section 2.5  1.1</li>
+<li>Section 3.2.3  C</li>
+<li>Section 3.2.6  C</li>
+<li>Section 7  1.2</li>
+<li>Section 10  7</li>
+</ul></li>
+<li>RFC7231  2.1, 6, 8.1, C
+<ul class="org-ul">
+<li>Section 3  2.1</li>
+<li>Section 7.1.1.1  C</li>
+</ul></li>
+<li>RFC7232  3.1, 3.2, 3.2, 3.2, 4.3, 8.1, C
+<ul class="org-ul">
+<li>Section 2.1  4.3</li>
+<li>Section 2.2.2  3.2, 3.2</li>
+<li>Section 2.3  C</li>
+<li>Section 2.3.2  3.2</li>
+</ul></li>
+<li>RFC7234  4.1, 8.1
+<ul class="org-ul">
+<li>Section 4.2.2  4.1</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
 </div>
 
 <div id="outline-container-org212efb0" class="outline-2">

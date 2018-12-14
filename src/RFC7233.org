@@ -503,7 +503,7 @@ If multiple parts are being transferred, the server generating the =206= respons
 Within the header area of each body part in the multipart payload, the server *MUST* generate a =Content-Range= header field corresponding to the range being enclosed in that body part. If the selected representation would have had a =Content-Type= header field in a =200 (OK)= response, the server *SHOULD* generate that same =Content-Type= field in the header area of each body part. For example:
 #+END_QUOTE
 
-对于 multipart 类型的有效载荷，服务器 *必须* 在这种有效载荷中的每一个[[ruby:body%20part][主体部分]]的[[ruby:header%20area][头部区域]]内都生成一个 =Content-Range= 头字段，每个头字段的值表示被置入到对应的主体部分的表示形式数据的范围。假设这个已选表示形式在 =200 (OK)= 响应的时候会带有一个 =Content-Type= 头字段，那么，在 =206= 响应中，服务器 *应当* 在每个主体部分的头部区域中生成同样的 =Content-Type= 字段。例如：
+对于 multipart 类型的有效载荷，服务器 *必须* 在这种有效载荷中的每一个 =body-part= 的[[ruby:header%20area][头部区域]]内都生成一个 =Content-Range= 头字段，每个头字段的值表示被置入到对应的 =body-part= 的表示形式数据的范围。假设这个已选表示形式在 =200 (OK)= 响应的时候会带有一个 =Content-Type= 头字段，那么，在 =206= 响应中，服务器 *应当* 在每个 =body-part= 的头部区域中生成同样的 =Content-Type= 字段。例如：
 
 #+BEGIN_EXAMPLE
   HTTP/1.1 206 Partial Content
@@ -540,13 +540,13 @@ overhead，在计算机网络的帧结构中，除了有用数据以外，还有
 A server *MUST NOT* generate a multipart response to a request for a single range, since a client that does not request multiple parts might not support multipart responses. However, a server *MAY* generate a multipart/byteranges payload with only a single body part if multiple ranges were requested and only one range was found to be satisfiable or only one range remained after coalescing. A client that cannot process a multipart/byteranges response *MUST NOT* generate a request that asks for multiple ranges.
 #+END_QUOTE
 
-当客户端请求一个[[ruby:single%20range][单个范围]]的时候，服务器 *禁止* 生成一个[[ruby:multipart%20response][多个部分的响应]]来回应，这是因为客户端之所以不请求多个部分，可能是由于它不支持多个部分的响应。但是，如果所请求的是多个范围，并且最后发现只有一个范围可被满足，或者经合并后只剩下一个范围，那么，服务器 *可以* 生成一个 multipart/byteranges 有效载荷，其仅带有单个主体部分。不能处理 multipart/byteranges 响应的客户端 *禁止* 生成一个[[ruby:asks%20for][请求]]多个范围的请求消息。
+当客户端请求一个[[ruby:single%20range][单个范围]]的时候，服务器 *禁止* 生成一个[[ruby:multipart%20response][多个部分的响应]]来回应，这是因为客户端之所以不请求多个部分，可能是由于它不支持多个部分的响应。但是，如果所请求的是多个范围，并且最后发现只有一个范围可被满足，或者经合并后只剩下一个范围，那么，服务器 *可以* 生成一个 multipart/byteranges 有效载荷，其仅带有单个 =body-part=。不能处理 multipart/byteranges 响应的客户端 *禁止* 生成一个[[ruby:asks%20for][请求]]多个范围的请求消息。
 
 #+BEGIN_QUOTE
 When a multipart response payload is generated, the server *SHOULD* send the parts in the same order that the corresponding =byte-range-spec= appeared in the received =Range= header field, excluding those ranges that were deemed unsatisfiable or that were coalesced into other ranges. A client that receives a multipart response *MUST* inspect the =Content-Range= header field present in each body part in order to determine which range is contained in that body part; a client cannot rely on receiving the same ranges that it requested, nor the same order that it requested.
 #+END_QUOTE
 
-当服务器生成了一个[[ruby:multipart%20response%20payload][多个部分的响应有效载荷]]的时候，服务器 *应当* 按照它所接收到的 =Range= 头字段里的 =byte-range-spec= 的出现顺序（排除掉它认为是不可满足的或合并成其他范围的那些范围）来发送这些部分。客户端在接收到一个多个部分的响应时，*必须* 检查出现在每一个主体部分里的 =Content-Range= 头字段，为了确定哪一个范围是包含在那个主体部分里的。客户端不能完全相信可以接收到与它所请求相一致的范围，或者与它所请求相一致的顺序。
+当服务器生成了一个[[ruby:multipart%20response%20payload][多个部分的响应有效载荷]]的时候，服务器 *应当* 按照它所接收到的 =Range= 头字段里的 =byte-range-spec= 的出现顺序（排除掉它认为是不可满足的或合并成其他范围的那些范围）来发送这些部分。客户端在接收到一个多个部分的响应时，*必须* 检查出现在每一个 =body-part= 里的 =Content-Range= 头字段，为了确定哪一个范围是包含在那个主体部分里的。客户端不能完全相信可以接收到与它所请求相一致的范围，或者与它所请求相一致的顺序。
 
 #+BEGIN_QUOTE
 When a =206= response is generated, the server *MUST* generate the following header fields, in addition to those required above, if the field would have been sent in a =200 (OK)= response to the same request: =Date=, =Cache-Control=, =ETag=, =Expires=, =Content-Location=, and =Vary=.
@@ -575,7 +575,11 @@ A =206= response is cacheable by default; i.e., unless otherwise indicated by ex
 The "Content-Range" header field is sent in a single part =206 (Partial Content)= response to indicate the partial range of the selected representation enclosed as the message payload, sent in each part of a multipart =206= response to indicate the range enclosed within each body part, and sent in =416 (Range Not Satisfiable)= responses to provide information about the selected representation.
 #+END_QUOTE
 
-如果 =Content-Range= 头字段发送在一种[[ruby:single%20part][单个部分]]的 =206 (Partial Content)= 响应里，那么它表明一个范围，这个范围是指封装为消息有效载荷的已选表示形式的[[ruby:partial%20range][局部范围]]。如果它发送在一种[[ruby:multipart][多个部分]]的 =206= 响应里的每一个[[ruby:part][分部]]中，那么它表示一个范围，这个范围是指封装在每个[[ruby:body%20part][分部主体]]中的表示形式的范围。如果它发送在 =416 (Range Not Staisfiable)= 响应中，它提供了已选表示形式的相关信息。
+如果 =Content-Range= 头字段发送在一种[[ruby:single%20part][单个部分]]的 =206 (Partial Content)= 响应里，那么它表明一个范围，这个范围是指封装为消息有效载荷的已选表示形式的[[ruby:partial%20range][局部范围]]。如果它发送在一种[[ruby:multipart][多个部分]]的 =206= 响应里的每一个 =body-part= 中，那么它表示一个范围，这个范围是指封装在每个 =body-part= 中的表示形式的范围。如果它发送在 =416 (Range Not Staisfiable)= 响应中，它提供了已选表示形式的相关信息。
+
+#+BEGIN_QUOTE
+译注：下文会多次提及 =body-part= 这个概念，可在[[https://tools.ietf.org/html/rfc2046#section-5.1][【RFC2046】章节 5]] 找到更详细的信息。
+#+END_QUOTE
 
 #+BEGIN_SRC text
   Content-Range       = byte-content-range
@@ -919,7 +923,7 @@ This section is meant to inform developers, information providers, and users of 
 Unconstrained multiple range requests are susceptible to denial-of-service attacks because the effort required to request many overlapping ranges of the same data is tiny compared to the time, memory, and bandwidth consumed by attempting to serve the requested data in many parts. Servers ought to ignore, coalesce, or reject egregious range requests, such as requests for more than two overlapping ranges or for many small ranges in a single set, particularly when the ranges are requested out of order for no apparent reason. Multipart range requests are not designed to support random access.
 #+END_QUOTE
 
-不加约束的[[ruby:multiple%20range%20requests][多个部分的范围请求]]容易受到[[ruby:denial-of-service%20attacks][拒绝服务攻击]]的影响，这是因为请求相同数据的许多重合范围的工作量与试图提供所请求的许多部分的数据所消耗的时间、内存、以及宽带相比显得太微不足道了。服务器应该忽略、合并、或者拒绝
+不加约束的[[ruby:multiple%20range%20requests][多个部分的范围请求]]容易受到[[ruby:denial-of-service%20attacks][拒绝服务攻击]]的影响，这是因为请求相同数据的许多重合范围的工作量与试图提供所请求的许多部分的数据所消耗的时间、内存、以及宽带相比显得太微不足道了。服务器应该忽略、合并、或者拒绝异常的范围请求，比如请求超过两个以上的重合范围，或者在在一个范围集里面请求了许多小范围，特别是当这些范围顺序混乱又没有合理的理由的情况。[[ruby:multipart%20range%20requests][多个部分的范围请求]]不是为了支持[[ruby:random%20access][随机访问]]而设计的。
 
 * 7. 鸣谢 / Acknowledgments
 
@@ -953,24 +957,36 @@ See [[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][Section 10]] of [RFC7230].
 :END:
 
 #+BEGIN_QUOTE
-When a 206 (Partial Content) response message includes the content of multiple ranges, they are transmitted as body parts in a multipart message body ([RFC2046], Section 5.1) with the media type of "multipart/byteranges".
+When a =206 (Partial Content)= response message includes the content of multiple ranges, they are transmitted as body parts in a multipart message body ([RFC2046], [[https://tools.ietf.org/html/rfc2046#section-5.1][Section 5.1]]) with the media type of "multipart/byteranges".
 #+END_QUOTE
 
+当一个 =206 (Partial Content)= 响应消息包含了多个范围的内容的时候，它们会作为 multipart 类型的消息体（[[https://tools.ietf.org/html/rfc2046#section-5.1][【RFC2046】章节 5.1]]）的 =body-part= 来传输，这个消息体带有一个 "multipart/byteranges" 的媒体类型。
+
 #+BEGIN_QUOTE
-The multipart/byteranges media type includes one or more body parts, each with its own Content-Type and Content-Range fields. The required boundary parameter specifies the boundary string used to separate each body part.
+The multipart/byteranges media type includes one or more body parts, each with its own =Content-Type= and =Content-Range= fields. The required boundary parameter specifies the boundary string used to separate each body part.
 #+END_QUOTE
+
+multipart/byteranges 媒体类型包括一个或多个的 =body-part=，每个都带有自己的 =Content-Type= 和 =Content-Range= 字段。必要的 =boundary= 参数指定了用来分隔每一个 =body-part= 所使用的[[ruby:boundary%20string][边界字符串]]。
 
 #+BEGIN_QUOTE
 Implementation Notes:
 
 1. Additional CRLFs might precede the first boundary string in the body.
-2. Although [RFC2046] permits the boundary string to be quoted, some existing implementations handle a quoted boundary string incorrectly.
+2. Although [[[https://tools.ietf.org/html/rfc2046][RFC2046]]] permits the boundary string to be quoted, some existing implementations handle a quoted boundary string incorrectly.
 3. A number of clients and servers were coded to an early draft of the byteranges specification that used a media type of multipart/x-byteranges, which is almost (but not quite) compatible with this type.
 #+END_QUOTE
+
+实现注意事项：
+
+1. 在消息体内的第一个边界字符串之前可能会有额外的换行符 =CRLF=。
+2. 虽然【[[https://tools.ietf.org/html/rfc2046][RFC2046]]】允许使用引号将边界字符串[[ruby:quoted][包裹]]起来，但现有的某些实现并没有正确处理好带引号包裹的边界字符串。
+3. 有大量的客户端及服务器的程序是按照字节范围规范的[[ruby:early%20draft][早期草案]]来编写的，使用了一个 multipart/x-byteranges 的媒体类型，这个媒体类型几乎（但并不完全）兼容 multipart/byteranges。
 
 #+BEGIN_QUOTE
 Despite the name, the "multipart/byteranges" media type is not limited to byte ranges. The following example uses an "exampleunit" range unit:
 #+END_QUOTE
+
+尽管 "multipart/byteranges" 的名称看起来是限定为使用字节范围，但其实并不是。以下示例使用了一个名叫 "exampleunit" 的范围单位：
 
 #+BEGIN_EXAMPLE
   HTTP/1.1 206 Partial Content
@@ -995,24 +1011,34 @@ Despite the name, the "multipart/byteranges" media type is not limited to byte r
 * 附录 B：相对 RFC 2616 的变化 / Appendix B. Changes from RFC 2616
 
 #+BEGIN_QUOTE
-Servers are given more leeway in how they respond to a range request, in order to mitigate abuse by malicious (or just greedy) clients. (Section 3.1)
+Servers are given more leeway in how they respond to a range request, in order to mitigate abuse by malicious (or just greedy) clients. ([[id:a70b4aaa-f776-4d5b-a31d-60d1ad16d85e][Section 3.1]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A weak validator cannot be used in a 206 response. (Section 4.1)
-#+END_QUOTE
+对于如何响应给一个范围请求，为服务器留出了更多的回旋余地，以减少被恶意（或仅为贪婪）的客户端滥用的可能性。（[[id:a70b4aaa-f776-4d5b-a31d-60d1ad16d85e][章节 3.1]]）
 
 #+BEGIN_QUOTE
-The Content-Range header field only has meaning when the status code explicitly defines its use. (Section 4.2)
+A weak validator cannot be used in a =206= response. ([[id:32182a4e-00f6-44d9-82e2-f08d98b59324][Section 4.1]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-This specification introduces a Range Unit Registry. (Section 5.1)
-#+END_QUOTE
+弱验证器不能用在 =206= 响应里。（[[id:32182a4e-00f6-44d9-82e2-f08d98b59324][章节 4.1]]）
 
 #+BEGIN_QUOTE
-multipart/byteranges can consist of a single part. (Appendix A)
+The =Content-Range= header field only has meaning when the status code explicitly defines its use. ([[id:7a682301-f05e-4e79-8242-398bbfb57c74][Section 4.2]])
 #+END_QUOTE
+
+=Content-Range= 头字段仅用在那些有确切定义它的使用方式的状态码中才有意义。（[[id:7a682301-f05e-4e79-8242-398bbfb57c74][章节 4.2]]）
+
+#+BEGIN_QUOTE
+This specification introduces a Range Unit Registry. ([[id:c7bd6955-92e0-4665-a775-766ad3133ac0][Section 5.1]])
+#+END_QUOTE
+
+本规范引进了一份《范围单位登记表》。（[[id:c7bd6955-92e0-4665-a775-766ad3133ac0][章节 5.1]]）
+
+#+BEGIN_QUOTE
+multipart/byteranges can consist of a single part. ([[id:d0f2a428-d1ab-49fd-9ac2-531946ecac25][Appendix A]])
+#+END_QUOTE
+
+multipart/byteranges 能够由单个部分来组成。（[[id:d0f2a428-d1ab-49fd-9ac2-531946ecac25][附录 A]]）
 
 * 附录 C：引进的 ABNF / Appendix C. Imported ABNF
 :PROPERTIES:
@@ -1020,16 +1046,22 @@ multipart/byteranges can consist of a single part. (Appendix A)
 :END:
 
 #+BEGIN_QUOTE
-The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+The following core rules are included by reference, as defined in [[https://tools.ietf.org/html/rfc5234#appendix-B.1][Appendix B.1]] of [RFC5234]: =ALPHA= (letters), =CR= (carriage return), =CRLF= (CR LF), =CTL= (controls), =DIGIT= (decimal 0-9), =DQUOTE= (double quote), =HEXDIG= (hexadecimal 0-9/A-F/a-f), =LF= (line feed), =OCTET= (any 8-bit sequence of data), =SP= (space), and =VCHAR= (any visible US-ASCII character).
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Note that all rules derived from token are to be compared case-insensitively, like range-unit and acceptable-ranges.
-#+END_QUOTE
+本规范引用了以下定义在[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：=ALPHA= （字母）、=CR= （回车符）、=CRLF= （回车换行符）、=CTL= （控制字符）、=DIGIT= （十进制数字 0-9）、=DQUOTE= （双引号）、=HEXDIG= （十六进制数字 0-9/A-F/a-f）、=HTAB= （水平制表符）、=LF= （换行符）、=OCTET= （八位组字节）、=SP= （空格）以及 =VCHAR= （【USASCII】可见字符）。
 
 #+BEGIN_QUOTE
-The rules below are defined in [RFC7230]:
+Note that all rules derived from token are to be compared case-insensitively, like =range-unit= and =acceptable-ranges=.
 #+END_QUOTE
+
+需要注意的是衍生自[[ruby:token][名称标记]]所有规则都是以不区分大小写的方式进行比较的，像 [[id:6d7d656a-9741-4193-abd3-60f2f2b3a11a][range-unit]] 和 [[id:cf601084-e3af-41bc-9ff7-8f903ca59fa8][acceptable-ranges]]。
+
+#+BEGIN_QUOTE
+The rules below are defined in [[[file:RFC7230.org][RFC7230]]]:
+#+END_QUOTE
+
+以下规则定义在【[[file:RFC7230.org][RFC7230]]】中：
 
 #+BEGIN_SRC text
   OWS        = <OWS, see [RFC7230], Section 3.2.3>
@@ -1039,6 +1071,8 @@ The rules below are defined in [RFC7230]:
 #+BEGIN_QUOTE
 The rules below are defined in other parts:
 #+END_QUOTE
+
+以下规则定义在其他部分中：
 
 #+BEGIN_SRC text
   HTTP-date  = <HTTP-date, see [RFC7231], Section 7.1.1.1>
@@ -1051,8 +1085,10 @@ The rules below are defined in other parts:
 :END:
 
 #+BEGIN_QUOTE
-In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
+In the collected ABNF below, list rules are expanded as per [[id:f8234cb5-154d-4daf-82fd-ed54ac75cf8b][Section 1.2]] of [RFC7230].
 #+END_QUOTE
+
+下列 ABNF 规则集合中，列表规则是在[[id:f8234cb5-154d-4daf-82fd-ed54ac75cf8b][【RFC7230】章节 1.2]] 所扩充的。
 
 #+BEGIN_SRC text
   Accept-Ranges = acceptable-ranges
@@ -1106,6 +1142,78 @@ In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7
 #+END_SRC
 
 * Index
+
+- 2
+  - 206 Partial Content (status code)  4.1, 5.2, B
+- 4
+  - 416 Range Not Satisfiable (status code)  4.4, 5.2
+- A
+  - Accept-Ranges header field  2, 2.3, 5.1.2, 5.3
+- B
+  - BCP13  5.4, 8.2
+  - BCP90  5.3, 8.2
+- C
+  - Content-Range header field  2, 4.2, 4.4, 5.3, B
+- G
+  - Grammar  
+    - Accept-Ranges  2.3
+    - acceptable-ranges  2.3
+    - byte-content-range  4.2
+    - byte-range  4.2
+    - byte-range-resp  4.2
+    - byte-range-set  2.1
+    - byte-range-spec  2.1
+    - byte-ranges-specifier  2.1
+    - bytes-unit  2, 2.1
+    - complete-length  4.2
+    - Content-Range  4.2
+    - first-byte-pos  2.1
+    - If-Range  3.2
+    - last-byte-pos  2.1
+    - other-content-range  4.2
+    - other-range-resp  4.2
+    - other-range-unit  2, 2.2
+    - Range  3.1
+    - range-unit  2
+    - ranges-specifier  2.1
+    - suffix-byte-range-spec  2.1
+    - suffix-length  2.1
+    - unsatisfied-range  4.2
+- I
+  - If-Range header field  3.1, 3.2, 5.3
+- M
+  - Media Type  
+    - multipart/byteranges  5.4.1, A
+    - multipart/x-byteranges  A
+  - multipart/byteranges Media Type  5.4.1, A
+  - multipart/x-byteranges Media Type  A
+- R
+  - Range header field  2, 3.1, 4.1, 4.4, 5.3, B
+  - RFC2046  8.1, A, A
+    - Section 5.1  A
+  - RFC2119  1.1, 8.1
+  - RFC2616  8.2
+  - RFC5226  5.1.1, 8.2
+    - Section 4.1  5.1.1
+  - RFC5234  1.2, 8.1, C
+    - Appendix B.1  C
+  - RFC7230  1.1, 1.2, 6, 7, 8.1, C, C, C, D
+    - Section 1.2  D
+    - Section 2.5  1.1
+    - Section 3.2.3  C
+    - Section 3.2.6  C
+    - Section 7  1.2
+    - Section 10  7
+  - RFC7231  2.1, 6, 8.1, C
+    - Section 3  2.1
+    - Section 7.1.1.1  C
+  - RFC7232  3.1, 3.2, 3.2, 3.2, 4.3, 8.1, C
+    - Section 2.1  4.3
+    - Section 2.2.2  3.2, 3.2
+    - Section 2.3  C
+    - Section 2.3.2  3.2
+  - RFC7234  4.1, 8.1
+    - Section 4.2.2  4.1
 
 * Authors' Addresses
 
