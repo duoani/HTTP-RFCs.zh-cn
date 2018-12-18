@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-14 Fri 18:00 -->
+<!-- 2018-12-18 Tue 19:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7234: Hypertext Transfer Protocol (HTTP/1.1): Caching</title>
@@ -402,31 +402,31 @@ for the JavaScript code in this tag.
 <li><a href="#org56f5b8d">1.1. 一致性和错误处理 / Conformance and Error Handling</a></li>
 <li><a href="#org4c3fc32">1.2. 句法标记 / Syntax Notation</a>
 <ul>
-<li><a href="#org79b5fcd">1.2.1. Delta Seconds</a></li>
+<li><a href="#orgd2ac10d">1.2.1. 秒差 / Delta Seconds</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#org00d9855">2. 缓存操作的概况 / Overview of Cache Operation</a></li>
-<li><a href="#orgafdba8c">3. 存储响应到缓存 / Storing Responses in Caches</a>
+<li><a href="#orga05eb41">3. 将响应存储到缓存 / Storing Responses in Caches</a>
 <ul>
 <li><a href="#orgb02ed9d">3.1. 存储不完整的响应 / Storing Incomplete Responses</a></li>
-<li><a href="#orgee2807b">3.2. Storing Responses to Authenticated Requests</a></li>
+<li><a href="#orga28b8b1">3.2. 存储回应给认证请求的响应 / Storing Responses to Authenticated Requests</a></li>
 <li><a href="#org15206ea">3.3. 结合部分内容 / Combining Partial Content</a></li>
 </ul>
 </li>
-<li><a href="#org5a0bba4">4. 从缓存构造响应 / Constructing Responses from Caches</a>
+<li><a href="#org937cf43">4. 从缓存中构造响应 / Constructing Responses from Caches</a>
 <ul>
-<li><a href="#org6000733">4.1. Calculating Secondary Keys with Vary</a></li>
-<li><a href="#org4447f13">4.2. Freshness</a>
+<li><a href="#org64a44b1">4.1. 使用 Vary 来计算次要缓存键 / Calculating Secondary Keys with Vary</a></li>
+<li><a href="#org85ed084">4.2. 新鲜度 / Freshness</a>
 <ul>
 <li><a href="#org546ba65">4.2.1. Calculating Freshness Lifetime</a></li>
 <li><a href="#orgafe6b84">4.2.2. Calculating Heuristic Freshness</a></li>
 <li><a href="#org8a496e1">4.2.3. Calculating Age</a></li>
-<li><a href="#org39d29de">4.2.4. Serving Stale Responses</a></li>
+<li><a href="#orga71285a">4.2.4. 提供陈旧的响应 / Serving Stale Responses</a></li>
 </ul>
 </li>
-<li><a href="#org5c70daa">4.3. Validation</a>
+<li><a href="#org7ccec2c">4.3. 验证 / Validation</a>
 <ul>
 <li><a href="#orgf72e636">4.3.1. Sending a Validation Request</a></li>
 <li><a href="#org7b229f6">4.3.2. Handling a Received Validation Request</a></li>
@@ -435,7 +435,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgde53d09">4.3.5. Freshening Responses via HEAD</a></li>
 </ul>
 </li>
-<li><a href="#org02b7f70">4.4. Invalidation</a></li>
+<li><a href="#org305f677">4.4. 无效化 / Invalidation</a></li>
 </ul>
 </li>
 <li><a href="#org711b085">5. 头字段定义 / Header Field Definitions</a>
@@ -575,12 +575,12 @@ This is an Internet Standards Track document.
 
 <blockquote>
 <p>
-This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in <ruby>Section 2<rt>https://tools.ietf.org/html/rfc5741</rt></ruby> of RFC 5741.
+This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in <a href="https://tools.ietf.org/html/rfc5741">Section 2</a> of RFC 5741.
 </p>
 </blockquote>
 
 <p>
-本文档是<ruby>互联网工程任务组<rt>Internet Engineering Task Force</rt></ruby>（IETF）的产品。它代表了 IETF 社区的共识。它已经接受公众审核并且已经被<ruby>互联网工程指导组<rt>Internet Engineering Steering Group</rt></ruby>（IESG）批准发布。有关<ruby>互联网标准<rt>Internet Standards</rt></ruby>的更多信息，请参阅 RFC 5741 <ruby>章节 2<rt>https://tools.ietf.org/html/rfc5741</rt></ruby>。
+本文档是<ruby>互联网工程任务组<rt>Internet Engineering Task Force</rt></ruby>（IETF）的产品。它代表了 IETF 社区的共识。它已经接受公众审核并且已经被<ruby>互联网工程指导组<rt>Internet Engineering Steering Group</rt></ruby>（IESG）批准发布。有关<ruby>互联网标准<rt>Internet Standards</rt></ruby>的更多信息，请参阅 RFC 5741 <a href="https://tools.ietf.org/html/rfc5741">章节 2</a>。
 </p>
 
 <blockquote>
@@ -653,12 +653,12 @@ A shared cache is a cache that stores responses to be reused by more than one us
 
 <blockquote>
 <p>
-The goal of caching in HTTP/1.1 is to significantly improve performance by reusing a prior response message to satisfy a current request. A stored response is considered "fresh", as defined in <a href="#org4447f13">Section 4.2</a>, if the response can be reused without "validation" (checking with the origin server to see if the cached response remains valid for this request). A fresh response can therefore reduce both latency and network overhead each time it is reused. When a cached response is not fresh, it might still be reusable if it can be freshened by validation (<a href="#org5c70daa">Section 4.3</a>) or if the origin is unavailable (<a href="#org39d29de">Section 4.2.4</a>).
+The goal of caching in HTTP/1.1 is to significantly improve performance by reusing a prior response message to satisfy a current request. A stored response is considered "fresh", as defined in <a href="#org85ed084">Section 4.2</a>, if the response can be reused without "validation" (checking with the origin server to see if the cached response remains valid for this request). A fresh response can therefore reduce both latency and network overhead each time it is reused. When a cached response is not fresh, it might still be reusable if it can be freshened by validation (<a href="#org7ccec2c">Section 4.3</a>) or if the origin is unavailable (<a href="#orga71285a">Section 4.2.4</a>).
 </p>
 </blockquote>
 
 <p>
-在 HTTP/1.1 中，缓存通过复用一个之前的响应消息来满足当前的请求，其目的是显著提升性能。一个已存储的响应，如果它在不需要“验证”的情况就可以用来复用，那么，它被认为是“<ruby>新鲜的<rt>fresh</rt></ruby>”（<a href="#org4447f13">章节 4.2</a>）。所谓“<ruby>验证<rt>validation</rt></ruby>”，是指和源服务器一起检查，看看这个已存储的响应是否仍然有效于这个请求。因此，每一次复用一个新鲜的响应的时候，都可以减少双方的延迟以及网络开销。当一个已存储的响应不再新鲜，它可能仍旧可以获得复用，如果它可以通过验证（<a href="#org5c70daa">章节 4.3</a>）而<ruby>唤发新鲜<rt>freshened</rt></ruby>，或者原始的已不可用（<a href="#org39d29de">章节 4.2.4</a>）。
+在 HTTP/1.1 中，缓存通过复用一个之前的响应消息来满足当前的请求，其目的是显著提升性能。一个已存储的响应，如果它在不需要“验证”的情况就可以用来复用，那么，它被认为是“<ruby>新鲜的<rt>fresh</rt></ruby>”（<a href="#org85ed084">章节 4.2</a>）。所谓“<ruby>验证<rt>validation</rt></ruby>”，是指和源服务器一起检查，看看这个已存储的响应是否仍然有效于这个请求。因此，每一次复用一个新鲜的响应的时候，都可以减少双方的延迟以及网络开销。当一个已存储的响应不再新鲜，它可能仍旧可以获得复用，如果它可以通过验证（<a href="#org7ccec2c">章节 4.3</a>）而<ruby>唤发新鲜<rt>freshened</rt></ruby>，或者原始的已不可用（<a href="#orga71285a">章节 4.2.4</a>）。
 </p>
 </div>
 
@@ -701,14 +701,18 @@ This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC52
 </p>
 </div>
 
-<div id="outline-container-org79b5fcd" class="outline-4">
-<h4 id="org79b5fcd">1.2.1. Delta Seconds</h4>
-<div class="outline-text-4" id="text-org79b5fcd">
+<div id="outline-container-orgd2ac10d" class="outline-4">
+<h4 id="orgd2ac10d">1.2.1. 秒差 / Delta Seconds</h4>
+<div class="outline-text-4" id="text-orgd2ac10d">
 <blockquote>
 <p>
-The delta-seconds rule specifies a non-negative integer, representing time in seconds.
+The <code>delta-seconds</code> rule specifies a non-negative integer, representing time in seconds.
 </p>
 </blockquote>
+
+<p>
+<code>delta-seconds</code> 规则指定了一个非负整数来以秒数表示时间。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">delta-seconds  = 1*DIGIT
@@ -717,15 +721,23 @@ The delta-seconds rule specifies a non-negative integer, representing time in se
 
 <blockquote>
 <p>
-A recipient parsing a delta-seconds value and converting it to binary form ought to use an arithmetic type of at least 31 bits of non-negative integer range. If a cache receives a delta-seconds value greater than the greatest integer it can represent, or if any of its subsequent calculations overflows, the cache MUST consider the value to be either 2147483648 (231) or the greatest positive integer it can conveniently represent.
+A recipient parsing a <code>delta-seconds</code> value and converting it to binary form ought to use an arithmetic type of at least 31 bits of non-negative integer range. If a cache receives a <code>delta-seconds</code> value greater than the greatest integer it can represent, or if any of its subsequent calculations overflows, the cache <b>MUST</b> consider the value to be either 2147483648 (2<sup>31</sup>) or the greatest positive integer it can conveniently represent.
 </p>
 </blockquote>
+
+<p>
+接收端在解析一个 <code>delta-seconds</code> 值并将它转换为<ruby>二进制形式<rt>binary form</rt></ruby>的时候，应该使用一种至少 31 位的非负整数范围的算术类型。如果一个缓存接收到一个 <code>delta-seconds</code> 的值大于缓存能够表示的最大整数，或者如果它接下来的任何运算出现数据溢出的情况，那么，缓存 <b>必须</b> 将该值视作 2147483648 (2<sup>31</sup>) 或者视作它能够方便表示的最大正整数。
+</p>
 
 <blockquote>
 <p>
 <b>Note:</b> The value 2147483648 is here for historical reasons, effectively represents infinity (over 68 years), and does not need to be stored in binary form; an implementation could produce it as a canned string if any overflow occurs, even if the calculations are performed with an arithmetic type incapable of directly representing that number. What matters here is that an overflow be detected and not treated as a negative value in later calculations.
 </p>
 </blockquote>
+
+<p>
+<b>注意：</b> 这里的 2147483648 数值是出于历史的原因，有效地表示无限（超过 68 年），并且并不需要存储为二进制形式，也就是说，如果发生了任何溢出，HTTP 实现可以使用预制的字符串来产生这个值，即使执行运算的算术类型无法直接表示这个数值。重要的是检测到了一个数据溢出，并且在后续的运算当中没有将其作为一个负值来对待。
+</p>
 </div>
 </div>
 </div>
@@ -741,7 +753,7 @@ Proper cache operation preserves the semantics of HTTP transfers ([RFC7231]) whi
 </blockquote>
 
 <p>
-恰当的缓存操作可以在消除已存储在缓存中的消息的网络传输的同时还能保持 HTTP 传输的语义。虽然缓存是完全 <b>可选的</b> HTTP 功能，但我们可以认为复用一个已缓存的响应是大家想要的，并且这样的复用行为是默认的（如果没有要求或本地配置阻止去缓存的话）。所以，HTTP 缓存的要求主要集中在阻止一个缓存去存储一个不可复用的响应，或者不恰当地复用一个已存储的响应这些方面；而不是在是否准许缓存总是存储并复用具体的响应。
+恰当的缓存操作可以在消除已存储在缓存中的消息的网络传输的同时还能保持 HTTP 传输的语义。虽然缓存是一种完全 <b>可选的</b> HTTP 功能，但我们可以认为复用一个已缓存的响应是大家想要的，并且这样的复用行为是默认的（如果没有要求或本地配置阻止去缓存的话）。所以，HTTP 缓存的要求主要集中在阻止一个缓存去存储一个不可复用的响应，或者不恰当地复用一个已存储的响应这些方面；而不是在是否准许缓存总是存储并复用具体的响应。
 </p>
 
 <blockquote>
@@ -766,19 +778,19 @@ The primary cache key consists of the request method and target URI. However, si
 
 <blockquote>
 <p>
-If a request target is subject to content negotiation, its cache entry might consist of multiple stored responses, each differentiated by a secondary key for the values of the original request's selecting header fields (<a href="#org6000733">Section 4.1</a>).
+If a request target is subject to content negotiation, its cache entry might consist of multiple stored responses, each differentiated by a secondary key for the values of the original request's selecting header fields (<a href="#org64a44b1">Section 4.1</a>).
 </p>
 </blockquote>
 
 <p>
-如果请求目标受到<ruby>内容协商<rt>content negotiation</rt></ruby>的影响，那么它的缓存条目可能是由多个已存储的响应来组成的，每一个响应由一个次要的 key 来进行区分，这个次要的 key 的值是原始请求选定的头字段（<a href="#org6000733">章节 4.1</a>）。
+如果请求目标受到<ruby>内容协商<rt>content negotiation</rt></ruby>的影响，那么它的缓存条目可能是由多个已存储的响应来组成的，每一个响应由一个次要的 key 来进行区分，这个次要的 key 的值是原始请求选定的头字段（<a href="#org64a44b1">章节 4.1</a>）。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgafdba8c" class="outline-2">
-<h2 id="orgafdba8c"><a id="ID-e41d8ccc-5b69-40e3-a8ab-ca27327f15fa"></a>3. 存储响应到缓存 / Storing Responses in Caches</h2>
-<div class="outline-text-2" id="text-orgafdba8c">
+<div id="outline-container-orga05eb41" class="outline-2">
+<h2 id="orga05eb41"><a id="ID-e41d8ccc-5b69-40e3-a8ab-ca27327f15fa"></a>3. 将响应存储到缓存 / Storing Responses in Caches</h2>
+<div class="outline-text-2" id="text-orga05eb41">
 <blockquote>
 <p>
 A cache <b>MUST NOT</b> store a response to any request, unless:
@@ -787,26 +799,51 @@ A cache <b>MUST NOT</b> store a response to any request, unless:
 <ul class="org-ul">
 <li>The request method is understood by the cache and defined as being cacheable, and</li>
 <li>the response status code is understood by the cache, and</li>
-<li>the "no-store" cache directive (see Section 5.2) does not appear in request or response header fields, and</li>
-<li>the "private" response directive (see Section 5.2.2.6) does not appear in the response, if the cache is shared, and</li>
-<li>the Authorization header field (see Section 4.2 of [RFC7235]) does not appear in the request, if the cache is shared, unless the response explicitly allows it (see Section 3.2), and</li>
+<li>the "<code>no-store</code>" cache directive (see <a href="#org96b62f3">Section 5.2</a>) does not appear in request or response header fields, and</li>
+<li>the "<code>private</code>" response directive (see <a href="#orgc298f3c">Section 5.2.2.6</a>) does not appear in the response, if the cache is shared, and</li>
+<li>the <code>Authorization</code> header field (see <a href="RFC7235.html#ID-14671c8e-e5a4-4f9d-ad1d-6460328ed7f5">Section 4.2</a> of [RFC7235]) does not appear in the request, if the cache is shared, unless the response explicitly allows it (see <a href="#orga28b8b1">Section 3.2</a>), and</li>
 <li>the response either:
 <ul class="org-ul">
-<li>contains an <code>Expires</code> header field (see Section 5.3), or</li>
-<li>contains a <code>max-age</code> response directive (see Section 5.2.2.8), or</li>
-<li>contains a <code>s-maxage</code> response directive (see Section 5.2.2.9) and the cache is shared, or</li>
-<li>contains a Cache Control Extension (see Section 5.2.3) that allows it to be cached, or</li>
-<li>has a status code that is defined as cacheable by default (see Section 4.2.2), or</li>
-<li>contains a <code>public</code> response directive (see Section 5.2.2.5).</li>
+<li>contains an <code>Expires</code> header field (see <a href="#org304d2d1">Section 5.3</a>), or</li>
+<li>contains a <code>max-age</code> response directive (see <a href="#orgc309465">Section 5.2.2.8</a>), or</li>
+<li>contains a <code>s-maxage</code> response directive (see <a href="#orgf601e80">Section 5.2.2.9</a>) and the cache is shared, or</li>
+<li>contains a Cache Control Extension (see <a href="#orgdc9554b">Section 5.2.3</a>) that allows it to be cached, or</li>
+<li>has a status code that is defined as cacheable by default (see <a href="#orgafe6b84">Section 4.2.2</a>), or</li>
+<li>contains a <code>public</code> response directive (see <a href="#org300811e">Section 5.2.2.5</a>).</li>
 </ul></li>
 </ul>
 </blockquote>
 
+<p>
+除了可以存储回应给以下请求的响应以外，缓存 <b>禁止</b> 存储任何响应：
+</p>
+
+<ul class="org-ul">
+<li><ruby>请求方法<rt>request method</rt></ruby>为缓存所理解，并被定义为<ruby>可缓存的<rt>cacheable</rt></ruby>，并且：</li>
+<li><ruby>响应状态码<rt>response status code</rt></ruby>为缓存所理解，并且：</li>
+<li><code>no-store</code> <ruby>缓存指令<rt>cache directive</rt></ruby>（<a href="#org96b62f3">章节 5.2</a>）没有出现在请求或者响应的头字段里，并且：</li>
+<li><code>private</code> 响应指令（<a href="#orgc298f3c">章节 5.2.2.6</a>）没有出现在响应里，如果这是个共享缓存的话，并且：</li>
+<li><code>Authorization</code> 头字段（<a href="RFC7235.html#ID-14671c8e-e5a4-4f9d-ad1d-6460328ed7f5">【RFC7235】章节 4.2</a>）没有出现在请求里，如果这是个共享缓存的话，除非响应显式允许它（<a href="#orga28b8b1">章节 3.2</a>），并且：</li>
+<li>响应符合以下情况之一：
+<ul class="org-ul">
+<li>包含一个 <code>Expires</code> 头字段（<a href="#org304d2d1">章节 5.3</a>），或者：</li>
+<li>包含一个 <code>max-age</code> 响应指令（<a href="#orgc309465">章节 5.2.2.8</a>），或者：</li>
+<li>包含一个 <code>s-maxage</code> 响应指令（<a href="#orgf601e80">章节 5.2.2.9</a>）并且缓存是共享的，或者：</li>
+<li>包含一个<ruby>缓存控制扩展<rt>Cache Control Extension</rt></ruby>（<a href="#orgdc9554b">章节 5.2.3</a>），该缓存控制扩展允许缓存这个响应，或者：</li>
+<li>带有一个状态码，该状态码默认是可缓存的（<a href="#orgafe6b84">章节 4.2.2</a>），或者：</li>
+<li>包含一个 <code>public</code> 响应指令（<a href="#org300811e">章节 5.2.2.5</a>）。</li>
+</ul></li>
+</ul>
+
 <blockquote>
 <p>
-Note that any of the requirements listed above can be overridden by a cache-control extension; see Section 5.2.3.
+Note that any of the requirements listed above can be overridden by a <code>cache-control</code> extension; see <a href="#orgdc9554b">Section 5.2.3</a>.
 </p>
 </blockquote>
+
+<p>
+需要注意的是，上述所列出的任何要求都可以被 <code>cache-control</code> 扩展所覆盖，见<a href="#orgdc9554b">章节 5.2.3</a>。
+</p>
 
 <blockquote>
 <p>
@@ -814,11 +851,19 @@ In this context, a cache has "understood" a request method or a response status 
 </p>
 </blockquote>
 
+<p>
+在这个场景中，一个缓存已经“理解”一个请求方法或者一个响应状态码，指的是缓存可以识别到它并实现了所有缓存相关的行为。
+</p>
+
 <blockquote>
 <p>
 Note that, in normal operation, some caches will not store a response that has neither a cache validator nor an explicit expiration time, as such responses are not usually useful to store. However, caches are not prohibited from storing such responses.
 </p>
 </blockquote>
+
+<p>
+需要注意的是，在常规操作中，如果一个响应既没有<ruby>缓存验证器<rt>cache validator</rt></ruby>也没有一个显式的过期时间，某些缓存将不会存储这种响应，因为存储这种响应通常是没有用处的。但是，缓存不会被禁止存储这种响应。
+</p>
 </div>
 
 <div id="outline-container-orgb02ed9d" class="outline-3">
@@ -826,133 +871,225 @@ Note that, in normal operation, some caches will not store a response that has n
 <div class="outline-text-3" id="text-orgb02ed9d">
 <blockquote>
 <p>
-A response message is considered complete when all of the octets indicated by the message framing ([RFC7230]) are received prior to the connection being closed. If the request method is GET, the response status code is 200 (OK), and the entire response header section has been received, a cache MAY store an incomplete response message body if the cache entry is recorded as incomplete. Likewise, a 206 (Partial Content) response MAY be stored as if it were an incomplete 200 (OK) cache entry. However, a cache MUST NOT store incomplete or partial-content responses if it does not support the Range and Content-Range header fields or if it does not understand the range units used in those fields.
+A response message is considered complete when all of the octets indicated by the message framing ([<a href="RFC7230.html">RFC7230</a>]) are received prior to the connection being closed. If the request method is GET, the response status code is <code>200 (OK)</code>, and the entire response header section has been received, a cache <b>MAY</b> store an incomplete response message body if the cache entry is recorded as incomplete. Likewise, a <code>206 (Partial Content)</code> response <b>MAY</b> be stored as if it were an incomplete <code>200 (OK)</code> cache entry. However, a cache <b>MUST NOT</b> store incomplete or partial-content responses if it does not support the <code>Range</code> and <code>Content-Range</code> header fields or if it does not understand the range units used in those fields.
 </p>
 </blockquote>
 
+<p>
+在连接被关闭之前，所有由<ruby>消息分帧<rt>message framing</rt></ruby>（【<a href="RFC7230.html">RFC7230</a>】）所表明的<ruby>字节<rt>octets</rt></ruby>都已被接收到，那么，这个响应消息被认为是<ruby>完整的<rt>complete</rt></ruby>。如果请求方法是 GET，响应状态码是 <code>200 (OK)</code>，并且整个<ruby>响应头部<rt>response header section</rt></ruby>都已经被接收到，那么，缓存 <b>可以</b> 存储一个<ruby>不完整<rt>incomplete</rt></ruby>的<ruby>响应消息体<rt>response message body</rt></ruby>，如果对应的缓存条目是被记录为不完整的话。同样，一个 <code>206 (Partial Content)</code> 响应 <b>可以</b> 被缓存作为一个不完整的 <code>200 (OK)</code> 的缓存条目。但是，如果缓存并不支持 <code>Range</code> 和 <code>Content-Range</code> 头字段，或者它并不理解用在这些头字段中的<ruby>范围单位<rt>range unit</rt></ruby>，那么，缓存 <b>禁止</b> 存储<ruby>不完整<rt>incomplete</rt></ruby>的或者<ruby>部分内容<rt>partial-content</rt></ruby>的响应。
+</p>
+
 <blockquote>
 <p>
-A cache MAY complete a stored incomplete response by making a subsequent range request ([RFC7233]) and combining the successful response with the stored entry, as defined in Section 3.3. A cache MUST NOT use an incomplete response to answer requests unless the response has been made complete or the request is partial and specifies a range that is wholly within the incomplete response. A cache MUST NOT send a partial response to a client without explicitly marking it as such using the 206 (Partial Content) status code.
+A cache <b>MAY</b> complete a stored incomplete response by making a subsequent range request ([<a href="RFC7233.html">RFC7233</a>]) and combining the successful response with the stored entry, as defined in <a href="#org15206ea">Section 3.3</a>. A cache <b>MUST NOT</b> use an incomplete response to answer requests unless the response has been made complete or the request is partial and specifies a range that is wholly within the incomplete response. A cache <b>MUST NOT</b> send a partial response to a client without explicitly marking it as such using the <code>206 (Partial Content)</code> status code.
 </p>
 </blockquote>
+
+<p>
+缓存 <b>可以</b> 通过发起后续<ruby>范围请求<rt>range request</rt></ruby>（【<a href="RFC7233.html">RFC7233</a>】）并将<ruby>成功响应<rt>successful response</rt></ruby>和已存储的条目进行结合，来使一个已存储的不完整响应补充完整，正如<a href="#org15206ea">章节 3.3</a> 所定义的。缓存 <b>禁止</b> 使用一个不完整响应来回应请求，除非这个响应已被补充完整，或者这个请求是一个<ruby>部分请求<rt>partial request</rt></ruby>并指定了一个范围且这个范围统统在该不完整响应以内。对于没有显式地使用 <code>206 (Partial Content)</code> 状态码进行标记的<ruby>部分响应<rt>partial response</rt></ruby>，缓存 <b>禁止</b> 发送这种<ruby>部分响应<rt>partial response</rt></ruby>到一个客户端。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgee2807b" class="outline-3">
-<h3 id="orgee2807b">3.2. Storing Responses to Authenticated Requests</h3>
-<div class="outline-text-3" id="text-orgee2807b">
+<div id="outline-container-orga28b8b1" class="outline-3">
+<h3 id="orga28b8b1"><a id="ID-d6b247ad-fe70-4ddf-9bd3-ebc35ea6ac99"></a>3.2. 存储回应给认证请求的响应 / Storing Responses to Authenticated Requests</h3>
+<div class="outline-text-3" id="text-orga28b8b1">
 <blockquote>
 <p>
-A shared cache MUST NOT use a cached response to a request with an Authorization header field (Section 4.2 of [RFC7235]) to satisfy any subsequent request unless a cache directive that allows such responses to be stored is present in the response.
+A shared cache <b>MUST NOT</b> use a cached response to a request with an <code>Authorization</code> header field (<a href="RFC7235.html#ID-14671c8e-e5a4-4f9d-ad1d-6460328ed7f5">Section 4.2</a> of [RFC7235]) to satisfy any subsequent request unless a cache directive that allows such responses to be stored is present in the response.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-In this specification, the following Cache-Control response directives (Section 5.2.2) have such an effect: must-revalidate, public, and s-maxage.
+如果共享缓存所缓存的一个响应的 key 对应于一个带有 <code>Authorization</code> 头字段（<a href="RFC7235.html#ID-14671c8e-e5a4-4f9d-ad1d-6460328ed7f5">【RFC7235】章节 4.2</a>）的请求，那么，共享缓存 <b>禁止</b> 使用这个已缓存的响应来满足任何后续的请求，除非这个响应里出现了一个缓存指令，该指令允许这个响应被存储。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-Note that cached responses that contain the "must-revalidate" and/or "s-maxage" response directives are not allowed to be served stale (Section 4.2.4) by shared caches. In particular, a response with either "max-age=0, must-revalidate" or "s-maxage=0" cannot be used to satisfy a subsequent request without revalidating it on the origin server.
+In this specification, the following <code>Cache-Control</code> response directives (<a href="#org628b869">Section 5.2.2</a>) have such an effect: <code>must-revalidate</code>, <code>public</code>, and <code>s-maxage</code>.
+</p>
+</blockquote>
+
+<p>
+在本规范中，以下 <code>Cache-Control</code> 响应指令（<a href="#org628b869">章节 5.2.2</a>）有上述这种影响：<code>must-revalidate</code>、<code>public</code>、以及 <code>s-maxage</code>。
+</p>
+
+<blockquote>
+<p>
+Note that cached responses that contain the "<code>must-revalidate</code>" and/or "<code>s-maxage</code>" response directives are not allowed to be served stale (<a href="#orga71285a">Section 4.2.4</a>) by shared caches. In particular, a response with either "<code>max-age=0, must-revalidate</code>" or "<code>s-maxage=0</code>" cannot be used to satisfy a subsequent request without revalidating it on the origin server.
+</p>
+</blockquote>
+
+<p>
+需要注意的是，如果已缓存的响应包含有 <code>must-revalidate</code> 并且/或者 <code>s-maxage</code> 响应指令，那么，这些缓存响应是不允许被共享缓存用来<ruby>提供陈旧响应<rt>serve stale</rt></ruby>的（<a href="#orga71285a">章节 4.2.4</a>）。实践中，一个响应，如果它带有 <code>max-age=0, must-revalidate</code>，或者带有 <code>s-maxage=0</code>，那么，在没有经过源服务器<ruby>重新验证<rt>revalidating</rt></ruby>的情况下，它是不能用来满足后续请求的。
+</p>
+
+<blockquote>
+<p>
+译注：所谓 "serve stale"，指的是：提供陈旧的缓存响应来作为响应，即使这个已缓存的响应已经过期。对于一个请求，当对应的已缓存的响应已经过期（stale），并且源服务器无响应或者返回一个错误，这时候，缓存服务器返回这个 stale 的响应来作为回应，而不是返回错误。在大多数情况下，与其响应超时或返回其他错误，倒不如返回给用户一个能用的但过期的响应。
 </p>
 </blockquote>
 </div>
 </div>
 
 <div id="outline-container-org15206ea" class="outline-3">
-<h3 id="org15206ea">3.3. 结合部分内容 / Combining Partial Content</h3>
+<h3 id="org15206ea"><a id="ID-f00b0325-c5eb-4b84-8b33-3cc68031d045"></a>3.3. 结合部分内容 / Combining Partial Content</h3>
 <div class="outline-text-3" id="text-org15206ea">
 <blockquote>
 <p>
-A response might transfer only a partial representation if the connection closed prematurely or if the request used one or more Range specifiers ([RFC7233]). After several such transfers, a cache might have received several ranges of the same representation. A cache MAY combine these ranges into a single stored response, and reuse that response to satisfy later requests, if they all share the same strong validator and the cache complies with the client requirements in Section 4.3 of [RFC7233].
+A response might transfer only a partial representation if the connection closed prematurely or if the request used one or more <code>Range</code> specifiers ([<a href="RFC7233.html">RFC7233</a>]). After several such transfers, a cache might have received several ranges of the same representation. A cache <b>MAY</b> combine these ranges into a single stored response, and reuse that response to satisfy later requests, if they all share the same strong validator and the cache complies with the client requirements in <a href="RFC7233.html#ID-a995c03a-651b-4bd1-9429-30f97b353acd">Section 4.3</a> of [RFC7233].
 </p>
 </blockquote>
 
+<p>
+如果连接被过早地关闭了，或者请求使用了一个或多个 Range 规格，那么，一个响应可能只传输一个表示形式的一部分（【<a href="RFC7233.html">RFC7233</a>】）。历经多次这样的传输以后，缓存可能已接收到同一个表示形式的许多范围。缓存 <b>可以</b> 将这些范围合并为单个已存储的响应，并复用这个响应来满足接下来的请求，如果这些请求都共享同一个强验证器，并且缓存遵从<a href="RFC7233.html#ID-a995c03a-651b-4bd1-9429-30f97b353acd">【RFC7233】章节 4.3</a> 对于客户端方面的要求的话。
+</p>
+
 <blockquote>
 <p>
-When combining the new response with one or more stored responses, a cache MUST:
+When combining the new response with one or more stored responses, a cache <b>MUST</b>:
 </p>
 
 <ul class="org-ul">
-<li>delete any Warning header fields in the stored response with warn-code 1xx (see Section 5.5);</li>
-<li>retain any Warning header fields in the stored response with warn-code 2xx; and,</li>
-<li>use other header fields provided in the new response, aside from Content-Range, to replace all instances of the corresponding header fields in the stored response.</li>
+<li>delete any <code>Warning</code> header fields in the stored response with warn-code <code>1xx</code> (see Section 5.5);</li>
+<li>retain any <code>Warning</code> header fields in the stored response with warn-code <code>2xx</code>; and,</li>
+<li>use other header fields provided in the new response, aside from <code>Content-Range</code>, to replace all instances of the corresponding header fields in the stored response.</li>
 </ul>
 </blockquote>
-</div>
-</div>
-</div>
 
-<div id="outline-container-org5a0bba4" class="outline-2">
-<h2 id="org5a0bba4">4. 从缓存构造响应 / Constructing Responses from Caches</h2>
-<div class="outline-text-2" id="text-org5a0bba4">
-<blockquote>
 <p>
-When presented with a request, a cache MUST NOT reuse a stored response, unless:
+当将一个或多个已存储的响应结合成一个新的响应的时候，缓存 <b>必须</b> 对这个新响应做如下处理：
 </p>
 
 <ul class="org-ul">
-<li>The presented effective request URI (Section 5.5 of [RFC7230]) and that of the stored response match, and</li>
+<li>删除在已存储的响应里警告码为 <code>1xx</code> 的任何 <code>Warning</code> 头字段（见章节 5.5）；</li>
+<li>保留在已存储的响应里警告码为 <code>2xx</code> 的任何 <code>Warning</code> 头字段；并且</li>
+<li>使用新响应所提供的其他头字段，除以 <code>Content-Range</code> 以外，来替换所有在已存储的响应对应的头字段。</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org937cf43" class="outline-2">
+<h2 id="org937cf43"><a id="ID-cd0b2da5-6fd4-4ce2-9f59-27ba0d529181"></a>4. 从缓存中构造响应 / Constructing Responses from Caches</h2>
+<div class="outline-text-2" id="text-org937cf43">
+<blockquote>
+<p>
+When presented with a request, a cache <b>MUST NOT</b> reuse a stored response, unless:
+</p>
+
+<ul class="org-ul">
+<li>The presented effective request URI (<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">Section 5.5</a> of [RFC7230]) and that of the stored response match, and</li>
 <li>the request method associated with the stored response allows it to be used for the presented request, and</li>
-<li>selecting header fields nominated by the stored response (if any) match those presented (see Section 4.1), and</li>
-<li>the presented request does not contain the no-cache pragma (Section 5.4), nor the no-cache cache directive (Section 5.2.1), unless the stored response is successfully validated (Section 4.3), and</li>
-<li>the stored response does not contain the no-cache cache directive (Section 5.2.2.2), unless it is successfully validated (Section 4.3), and</li>
+<li>selecting header fields nominated by the stored response (if any) match those presented (see <a href="#org64a44b1">Section 4.1</a>), and</li>
+<li>the presented request does not contain the <code>no-cache</code> pragma (<a href="#orga139761">Section 5.4</a>), nor the <code>no-cache</code> cache directive (<a href="#org5de394c">Section 5.2.1</a>), unless the stored response is successfully validated (<a href="#org7ccec2c">Section 4.3</a>), and</li>
+<li>the stored response does not contain the <code>no-cache</code> cache directive (<a href="#org6dee7ff">Section 5.2.2.2</a>), unless it is successfully validated (<a href="#org7ccec2c">Section 4.3</a>), and</li>
 <li>the stored response is either:
 <ul class="org-ul">
-<li>fresh (see Section 4.2), or</li>
-<li>allowed to be served stale (see Section 4.2.4), or</li>
-<li>successfully validated (see Section 4.3).</li>
+<li>fresh (see <a href="#org85ed084">Section 4.2</a>), or</li>
+<li>allowed to be served stale (see <a href="#orga71285a">Section 4.2.4</a>), or</li>
+<li>successfully validated (see <a href="#org7ccec2c">Section 4.3</a>).</li>
 </ul></li>
 </ul>
 </blockquote>
 
+<p>
+当面临一个请求的时候，缓存 <b>禁止</b> 复用一个已存储的响应，除非：
+</p>
+
+<ul class="org-ul">
+<li>所面临的<ruby>实际请求 URI<rt>effective request URI</rt></ruby>（<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）与已存储的响应所对应的实际请求 URI 相匹配，并且：</li>
+<li>已存储的响应所关联的请求方法允许这个响应用于所面临的请求，并且：</li>
+<li>由已存储的响应所<ruby>指定<rt>nominated</rt></ruby>的选择头字段与所面临的请求的头字段相匹配（<a href="#org64a44b1">章节 4.1</a>），并且：</li>
+<li>所面临的请求并没有包含一个值为 <code>no-cache</code> 的 <code>Pragma</code> 头字段（<a href="#orga139761">章节 5.4</a>），也没有包含一个值为 <code>no-cache</code> 的缓存指令（<a href="#org5de394c">章节 5.2.1</a>），除非已存储的响应是<ruby>被成功验证的<rt>successfully validated</rt></ruby>（<a href="#org7ccec2c">章节 4.3</a>），并且：</li>
+<li>已存储的响应并没有包含一个 <code>no-cache</code> 缓存指令（<a href="#org6dee7ff">章节 5.2.2.2</a>），除非它是被成功验证的（<a href="#org7ccec2c">章节 4.3</a>），并且：</li>
+<li>已存储的响应是以下情况之一：
+<ul class="org-ul">
+<li><ruby>新鲜的<rt>fresh</rt></ruby>（<a href="#org85ed084">章节 4.2</a>），或者：</li>
+<li>允许<ruby>作为陈旧响应来提供<rt>served stale</rt></ruby>（<a href="#orga71285a">章节 4.2.4</a>），或者：</li>
+<li>被成功验证的（<a href="#org7ccec2c">章节 4.3</a>）。</li>
+</ul></li>
+</ul>
+
 <blockquote>
 <p>
-Note that any of the requirements listed above can be overridden by a cache-control extension; see Section 5.2.3.
+Note that any of the requirements listed above can be overridden by a cache-control extension; see <a href="#orgdc9554b">Section 5.2.3</a>.
+</p>
+</blockquote>
+
+<p>
+需要注意的是，上述所列出的任何要求都可以被 <code>cache-control</code> 扩展所覆盖，见<a href="#orgdc9554b">章节 5.2.3</a>。
+</p>
+
+<blockquote>
+<p>
+When a stored response is used to satisfy a request without validation, a cache <b>MUST</b> generate an <code>Age</code> header field (<a href="#orgb943d27">Section 5.1</a>), replacing any present in the response with a value equal to the stored response's <code>current_age</code>; see <a href="#org8a496e1">Section 4.2.3</a>.
+</p>
+</blockquote>
+
+<p>
+在没有<ruby>验证<rt>validation</rt></ruby>的情况下将一个已存储的响应用于满足一个请求时，缓存 <b>必须</b> 生成一个 <code>Age</code> 头字段（<a href="#orgb943d27">章节 5.1</a>），其值等于已存储的响应的 <code>current_age</code>，来替换掉出现在该响应里的任何 <code>Age</code> 字段，见<a href="#org8a496e1">章节 4.2.3</a>。
+</p>
+
+<blockquote>
+<p>
+A cache <b>MUST</b> write through requests with methods that are unsafe (<a href="RFC7231.html#ID-2f967e3d-8694-430b-ad06-e748fd39b281">Section 4.2.1</a> of [RFC7231]) to the origin server; i.e., a cache is not allowed to generate a reply to such a request before having forwarded the request and having received a corresponding response.
+</p>
+</blockquote>
+
+<p>
+如果请求带有对源服务器来说是<ruby>不安全的方法<rt>unsafe methods</rt></ruby>（<a href="RFC7231.html#ID-2f967e3d-8694-430b-ad06-e748fd39b281">【RFC7231】章节 4.2.1</a>），那么，缓存 <b>必须</b> 使用<ruby>直写模式<rt>write through</rt></ruby>来写入请求，也就是说，在缓存已经转发这种请求并且已经接收到一个对应的响应之前，不允许缓存生成一个回复到这种请求上。
+</p>
+
+<blockquote>
+<p>
+译注：缓存有两种基础写入策略：<ruby>直写模式<rt>Write-through</rt></ruby>和<ruby>回写模式<rt>Write-back</rt></ruby>，详情见 <a href="https://en.wikipedia.org/wiki/Cache_(computing)#WRITE-THROUGH">Wikipedia: Cache - Writing Policies</a>。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-When a stored response is used to satisfy a request without validation, a cache MUST generate an Age header field (Section 5.1), replacing any present in the response with a value equal to the stored response's current_age; see Section 4.2.3.
+Also, note that unsafe requests might invalidate already-stored responses; see <a href="#org305f677">Section 4.4</a>.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A cache MUST write through requests with methods that are unsafe (Section 4.2.1 of [RFC7231]) to the origin server; i.e., a cache is not allowed to generate a reply to such a request before having forwarded the request and having received a corresponding response.
+另外，还需要注意的是，不安全的请求可能会使已经存储的响应置为无效，见<a href="#org305f677">章节 4.4</a>。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-Also, note that unsafe requests might invalidate already-stored responses; see Section 4.4.
+When more than one suitable response is stored, a cache <b>MUST</b> use the most recent response (as determined by the <code>Date</code> header field). It can also forward the request with "<code>Cache-Control: max-age=0</code>" or "<code>Cache-Control: no-cache</code>" to disambiguate which response to use.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-When more than one suitable response is stored, a cache MUST use the most recent response (as determined by the Date header field). It can also forward the request with "Cache-Control: max-age=0" or "Cache-Control: no-cache" to disambiguate which response to use.
+当存储了超过一个以上的合适响应，缓存 <b>必须</b> 使用时间最近的响应（由 <code>Date</code> 头字段的时间来决定）。它还可以在转发这个请求的时候带上 <code>Cache-Control: max-age=0</code> 或者 <code>Cache-Control: no-cache</code> 以区分使用的是哪一个响应。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-A cache that does not have a clock available MUST NOT use stored responses without revalidating them upon every use.
+A cache that does not have a clock available <b>MUST NOT</b> use stored responses without revalidating them upon every use.
 </p>
 </blockquote>
+
+<p>
+如果缓存不具有一个可用的时钟功能，那么，在每次使用已存储的响应的时候，<b>禁止</b> 在没有重新验证的情况下使用它们。
+</p>
 </div>
 
-<div id="outline-container-org6000733" class="outline-3">
-<h3 id="org6000733"><a id="ID-352eb301-a424-48e9-9027-3c6633da4b77"></a>4.1. Calculating Secondary Keys with Vary</h3>
-<div class="outline-text-3" id="text-org6000733">
+<div id="outline-container-org64a44b1" class="outline-3">
+<h3 id="org64a44b1"><a id="ID-352eb301-a424-48e9-9027-3c6633da4b77"></a>4.1. 使用 Vary 来计算次要缓存键 / Calculating Secondary Keys with Vary</h3>
+<div class="outline-text-3" id="text-org64a44b1">
 <blockquote>
 <p>
-When a cache receives a request that can be satisfied by a stored response that has a Vary header field (Section 7.1.4 of [RFC7231]), it MUST NOT use that response unless all of the selecting header fields nominated by the Vary header field match in both the original request (i.e., that associated with the stored response), and the presented request.
+When a cache receives a request that can be satisfied by a stored response that has a <code>Vary</code> header field (<a href="RFC7231.html#ID-ca7f8781-b183-4563-a90a-b9b7ad4f1032">Section 7.1.4</a> of [RFC7231]), it <b>MUST NOT</b> use that response unless all of the selecting header fields nominated by the <code>Vary</code> header field match in both the original request (i.e., that associated with the stored response), and the presented request.
 </p>
 </blockquote>
+
+<p>
+一个缓存，当它接收到一个请求，而这个请求可以通过一个已缓存的带有一个 <code>Vary</code> 头字段（<a href="RFC7231.html#ID-ca7f8781-b183-4563-a90a-b9b7ad4f1032">【RFC7231】章节 7.1.4</a>）的响应来满足，那么，它 <b>禁止</b> 使用这种响应，除非所有由 <code>Vary</code> 头字段所指定的<ruby>选择头字段<rt>selecting header fields</rt></ruby>既与原始请求（即这个已存储响应所关联的那个请求）相匹配，也与所面临的请求相匹配。
+</p>
 
 <blockquote>
 <p>
@@ -961,10 +1098,20 @@ The selecting header fields from two requests are defined to match if and only i
 
 <ul class="org-ul">
 <li>adding or removing whitespace, where allowed in the header field's syntax</li>
-<li>combining multiple header fields with the same field name (see Section 3.2 of [RFC7230])</li>
+<li>combining multiple header fields with the same field name (see <a href="RFC7230.html#ID-a6c4dceb-8a19-4799-a39b-b7240755c672">Section 3.2</a> of [RFC7230])</li>
 <li>normalizing both header field values in a way that is known to have identical semantics, according to the header field's specification (e.g., reordering field values when order is not significant; case-normalization, where values are defined to be case-insensitive)</li>
 </ul>
 </blockquote>
+
+<p>
+来自这两个请求的<ruby>选择头字段<rt>selecting header fields</rt></ruby>是定义为相互匹配的，当且仅当在第一个请求的选择头字段，通过应用以下任何方式，能够转换为在第二个请求的选择头字段：
+</p>
+
+<ul class="org-ul">
+<li>在头字段的句法所允许的位置添加或删除空格</li>
+<li>合并多个相同字段名称的头字段（<a href="RFC7230.html#ID-a6c4dceb-8a19-4799-a39b-b7240755c672">【RFC7230】章节 3.2</a>）</li>
+<li>依据头字段的规范，使用已知是具有同等语义的方式，来规范化两者的头字段值（比如，将头字段的值进行<ruby>重新排序<rt>reordering</rt></ruby>，如果它的顺序并不重要的话；对于值是定义为不区分大小写的地方进行<ruby>大小写规范化<rt>case-normalization</rt></ruby>）。</li>
+</ul>
 
 <blockquote>
 <p>
@@ -972,11 +1119,19 @@ If (after any normalization that might take place) a header field is absent from
 </p>
 </blockquote>
 
+<p>
+如果（在进行过任何规范化操作以后）一个请求缺少某一个头字段，那么，它只能匹配上另一个同样缺少这个头字段的请求。
+</p>
+
 <blockquote>
 <p>
-A Vary header field-value of "*" always fails to match.
+A <code>Vary</code> header field-value of "*" always fails to match.
 </p>
 </blockquote>
+
+<p>
+值为 "*" 的 <code>Vary</code> 头字段总是无法匹配。
+</p>
 
 <blockquote>
 <p>
@@ -984,34 +1139,54 @@ The stored response with matching selecting header fields is known as the select
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-If multiple selected responses are available (potentially including responses without a Vary header field), the cache will need to choose one to use. When a selecting header field has a known mechanism for doing so (e.g., qvalues on Accept and similar request header fields), that mechanism MAY be used to select preferred responses; of the remainder, the most recent response (as determined by the Date header field) is used, as per Section 4.
+带有匹配上的<ruby>选择头字段<rt>selecting header fields</rt></ruby>的已存储响应，被称为<ruby>已选响应<rt>selected response</rt></ruby>。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-If no selected response is available, the cache cannot satisfy the presented request. Typically, it is forwarded to the origin server in a (possibly conditional; see Section 4.3) request.
+If multiple selected responses are available (potentially including responses without a <code>Vary</code> header field), the cache will need to choose one to use. When a selecting header field has a known mechanism for doing so (e.g., qvalues on <code>Accept</code> and similar request header fields), that mechanism <b>MAY</b> be used to select preferred responses; of the remainder, the most recent response (as determined by the <code>Date</code> header field) is used, as per <a href="#org937cf43">Section 4</a>.
 </p>
 </blockquote>
+
+<p>
+如果有多个可用的已选响应（可能包括没有 <code>Vary</code> 头字段的响应），缓存将需要选择一个来使用。当一个选择头字段有已知的机制用于做这种选择的时候（比如，<code>Accept</code> 上的 <code>qvalue</code> 以及类似的请求头字段），这种机制 <b>可以</b> 被用来选择<ruby>最优响应（可能多个）<rt>preferred responses</rt></ruby>。选择好最优响应以后，使用时间最近的那一个响应，见<a href="#org937cf43">章节 4</a>。
+</p>
+
+<blockquote>
+<p>
+If no selected response is available, the cache cannot satisfy the presented request. Typically, it is forwarded to the origin server in a (possibly conditional; see <a href="#org7ccec2c">Section 4.3</a>) request.
+</p>
+</blockquote>
+
+<p>
+如果没有可用的已选响应，那么，缓存无法满足所面临的请求。通常，它会以一个（可能是条件化的，见<a href="#org7ccec2c">章节 4.3</a>）请求将其转发到源服务器。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org4447f13" class="outline-3">
-<h3 id="org4447f13"><a id="ID-d414d2f7-d865-4b94-9efd-6b2578df86aa"></a>4.2. Freshness</h3>
-<div class="outline-text-3" id="text-org4447f13">
+<div id="outline-container-org85ed084" class="outline-3">
+<h3 id="org85ed084"><a id="ID-d414d2f7-d865-4b94-9efd-6b2578df86aa"></a>4.2. 新鲜度 / Freshness</h3>
+<div class="outline-text-3" id="text-org85ed084">
 <blockquote>
 <p>
 A fresh response is one whose age has not yet exceeded its freshness lifetime. Conversely, a stale response is one where it has.
 </p>
 </blockquote>
 
+<p>
+<ruby>新鲜的响应<rt>fresh response</rt></ruby>，是日期还没超过它的<ruby>保鲜期<rt>freshness lifetime</rt></ruby>的一种响应。相反，<ruby>陈旧的响应<rt>stale response</rt></ruby>，是日期已经超过它的保鲜期的一种响应。
+</p>
+
 <blockquote>
 <p>
 A response's freshness lifetime is the length of time between its generation by the origin server and its expiration time. An explicit expiration time is the time at which the origin server intends that a stored response can no longer be used by a cache without further validation, whereas a heuristic expiration time is assigned by a cache when no explicit expiration time is available.
 </p>
 </blockquote>
+
+<p>
+响应的<ruby>保鲜期<rt>freshness lifetime</rt></ruby>是从它被源服务器生成开始到它的<ruby>过期时间<rt>expiration time</rt></ruby>之间的时间长度。一个<ruby>显式的过期时间<rt>explicit expiration time</rt></ruby>，是源服务器打算让一个已存储的响应，在没有进一步的验证的情况下，不再能够被缓存所使用的那个时间点。与之相对，一个<ruby>启发式的过期时间<rt>heuristic expiration time</rt></ruby>，是当没有可用的显式的过期时间的时候，由缓存所分配的。
+</p>
 
 <blockquote>
 <p>
@@ -1074,8 +1249,8 @@ When calculating freshness, to avoid common problems in date parsing:
 <ul class="org-ul">
 <li>Although all date formats are specified to be case-sensitive, a cache recipient SHOULD match day, week, and time-zone names case-insensitively.</li>
 <li>If a cache recipient's internal implementation of time has less resolution than the value of an HTTP-date, the recipient MUST internally represent a parsed Expires date as the nearest time equal to or earlier than the received value.</li>
-<li>A cache recipient MUST NOT allow local time zones to influence the calculation or comparison of an age or expiration time.</li>
-<li>A cache recipient SHOULD consider a date with a zone abbreviation other than GMT or UTC to be invalid for calculating expiration.</li>
+<li>A cache recipient <b>MUST NOT</b> allow local time zones to influence the calculation or comparison of an age or expiration time.</li>
+<li>A cache recipient <b>SHOULD</b> consider a date with a zone abbreviation other than GMT or UTC to be invalid for calculating expiration.</li>
 </ul>
 </blockquote>
 
@@ -1087,7 +1262,7 @@ Note that freshness applies only to cache operation; it cannot be used to force 
 </div>
 
 <div id="outline-container-org546ba65" class="outline-4">
-<h4 id="org546ba65">4.2.1. Calculating Freshness Lifetime</h4>
+<h4 id="org546ba65"><a id="ID-297b33de-eb1e-4988-b28f-b21e8ecc5ffa"></a>4.2.1. Calculating Freshness Lifetime</h4>
 <div class="outline-text-4" id="text-org546ba65">
 <blockquote>
 <p>
@@ -1152,11 +1327,11 @@ When a heuristic is used to calculate freshness lifetime, a cache SHOULD generat
 </div>
 
 <div id="outline-container-org8a496e1" class="outline-4">
-<h4 id="org8a496e1">4.2.3. Calculating Age</h4>
+<h4 id="org8a496e1"><a id="ID-80278eea-c1e4-478a-b972-ca42270c1fd0"></a>4.2.3. Calculating Age</h4>
 <div class="outline-text-4" id="text-org8a496e1">
 <blockquote>
 <p>
-The Age header field is used to convey an estimated age of the response message when obtained from a cache. The Age field value is the cache's estimate of the number of seconds since the response was generated or validated by the origin server. In essence, the Age value is the sum of the time that the response has been resident in each of the caches along the path from the origin server, plus the amount of time it has been in transit along network paths.
+The <code>Age</code> header field is used to convey an estimated age of the response message when obtained from a cache. The <code>Age</code> field value is the cache's estimate of the number of seconds since the response was generated or validated by the origin server. In essence, the <code>Age</code> value is the sum of the time that the response has been resident in each of the caches along the path from the origin server, plus the amount of time it has been in transit along network paths.
 </p>
 </blockquote>
 
@@ -1166,9 +1341,9 @@ The following data is used for the age calculation:
 </p>
 
 <dl class="org-dl">
-<dt>age_value</dt><dd>The term "age_value" denotes the value of the Age header field (Section 5.1), in a form appropriate for arithmetic operation; or 0, if not available.</dd>
-<dt>date_value</dt><dd>The term "date_value" denotes the value of the Date header field, in a form appropriate for arithmetic operations. See Section 7.1.1.2 of [RFC7231] for the definition of the Date header field, and for requirements regarding responses without it.</dd>
-<dt>now</dt><dd>The term "now" means "the current value of the clock at the host performing the calculation". A host ought to use NTP ([RFC5905]) or some similar protocol to synchronize its clocks to Coordinated Universal Time.</dd>
+<dt>age_value</dt><dd>The term "<code>age_value</code>" denotes the value of the <code>Age</code> header field (Section 5.1), in a form appropriate for arithmetic operation; or 0, if not available.</dd>
+<dt>date_value</dt><dd>The term "<code>date_value</code>" denotes the value of the <code>Date</code> header field, in a form appropriate for arithmetic operations. See Section 7.1.1.2 of [RFC7231] for the definition of the <code>Date</code> header field, and for requirements regarding responses without it.</dd>
+<dt>now</dt><dd>The term "<code>now</code>" means "the current value of the clock at the host performing the calculation". A host ought to use NTP ([RFC5905]) or some similar protocol to synchronize its clocks to Coordinated Universal Time.</dd>
 <dt>request_time</dt><dd>The current value of the clock at the host at the time the request resulting in the stored response was made.</dd>
 <dt>response_time</dt><dd>The current value of the clock at the host at the time the response was received.</dd>
 </dl>
@@ -1180,8 +1355,8 @@ A response's age can be calculated in two entirely independent ways:
 </p>
 
 <ol class="org-ol">
-<li>the "apparent_age": response_time minus date_value, if the local clock is reasonably well synchronized to the origin server's clock. If the result is negative, the result is replaced by zero.</li>
-<li>the "corrected_age_value", if all of the caches along the response path implement HTTP/1.1. A cache MUST interpret this value relative to the time the request was initiated, not the time that the response was received.</li>
+<li>the "<code>apparent_age</code>": <code>response_time</code> minus <code>date_value</code>, if the local clock is reasonably well synchronized to the origin server's clock. If the result is negative, the result is replaced by zero.</li>
+<li>the "<code>corrected_age_value</code>", if all of the caches along the response path implement HTTP/1.1. A cache <b>MUST</b> interpret this value relative to the time the request was initiated, not the time that the response was received.</li>
 </ol>
 </blockquote>
 
@@ -1206,13 +1381,13 @@ These are combined as
 
 <blockquote>
 <p>
-unless the cache is confident in the value of the Age header field (e.g., because there are no HTTP/1.0 hops in the Via header field), in which case the corrected_age_value MAY be used as the corrected_initial_age.
+unless the cache is confident in the value of the <code>Age</code> header field (e.g., because there are no HTTP/1.0 hops in the <code>Via</code> header field), in which case the <code>corrected_age_value</code> <b>MAY</b> be used as the <code>corrected_initial_age</code>.
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-The current_age of a stored response can then be calculated by adding the amount of time (in seconds) since the stored response was last validated by the origin server to the corrected_initial_age.
+The <code>current_age</code> of a stored response can then be calculated by adding the amount of time (in seconds) since the stored response was last validated by the origin server to the <code>corrected_initial_age</code>.
 </p>
 </blockquote>
 
@@ -1224,45 +1399,49 @@ current_age = corrected_initial_age + resident_time;
 </div>
 </div>
 
-<div id="outline-container-org39d29de" class="outline-4">
-<h4 id="org39d29de"><a id="ID-630361ae-a4e3-4fec-b337-8eff30325ddf"></a>4.2.4. Serving Stale Responses</h4>
-<div class="outline-text-4" id="text-org39d29de">
+<div id="outline-container-orga71285a" class="outline-4">
+<h4 id="orga71285a"><a id="ID-630361ae-a4e3-4fec-b337-8eff30325ddf"></a>4.2.4. 提供陈旧的响应 / Serving Stale Responses</h4>
+<div class="outline-text-4" id="text-orga71285a">
 <blockquote>
 <p>
-A "stale" response is one that either has explicit expiry information or is allowed to have heuristic expiry calculated, but is not fresh according to the calculations in Section 4.2.
+A "stale" response is one that either has explicit expiry information or is allowed to have heuristic expiry calculated, but is not fresh according to the calculations in <a href="#org85ed084">Section 4.2</a>.
+</p>
+</blockquote>
+
+<p>
+一个 "stale"（陈旧的、不新鲜的）的响应是这样一种响应：或者带有显式的<ruby>过期信息<rt>expiry information</rt></ruby>或者允许去进行启发式的<ruby>过期计算<rt>expiry calculated</rt></ruby>，但根据<a href="#org85ed084">章节 4.2</a> 的计算，已不再<ruby>新鲜<rt>fresh</rt></ruby>。
+</p>
+
+<blockquote>
+<p>
+A cache <b>MUST NOT</b> generate a stale response if it is prohibited by an explicit in-protocol directive (e.g., by a "<code>no-store</code>" or "<code>no-cache</code>" cache directive, a "<code>must-revalidate</code>" cache-response-directive, or an applicable "<code>s-maxage</code>" or "<code>proxy-revalidate</code>" cache-response-directive; see Section 5.2.2).
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-A cache MUST NOT generate a stale response if it is prohibited by an explicit in-protocol directive (e.g., by a "no-store" or "no-cache" cache directive, a "must-revalidate" cache-response-directive, or an applicable "s-maxage" or "proxy-revalidate" cache-response-directive; see Section 5.2.2).
+A cache <code>MUST NOT</code> send stale responses unless it is disconnected (i.e., it cannot contact the origin server or otherwise find a forward path) or doing so is explicitly allowed (e.g., by the <code>max-stale</code> request directive; see Section 5.2.1).
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-A cache MUST NOT send stale responses unless it is disconnected (i.e., it cannot contact the origin server or otherwise find a forward path) or doing so is explicitly allowed (e.g., by the max-stale request directive; see Section 5.2.1).
+A cache <b>SHOULD</b> generate a <code>Warning</code> header field with the <code>110</code> warn-code (see Section 5.5.1) in stale responses. Likewise, a cache <b>SHOULD</b> generate a <code>112</code> warn-code (see Section 5.5.3) in stale responses if the cache is disconnected.
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-A cache SHOULD generate a Warning header field with the 110 warn-code (see Section 5.5.1) in stale responses. Likewise, a cache SHOULD generate a 112 warn-code (see Section 5.5.3) in stale responses if the cache is disconnected.
-</p>
-</blockquote>
-
-<blockquote>
-<p>
-A cache SHOULD NOT generate a new Warning header field when forwarding a response that does not have an Age header field, even if the response is already stale. A cache need not validate a response that merely became stale in transit.
+A cache <b>SHOULD NOT</b> generate a new <code>Warning</code> header field when forwarding a response that does not have an <code>Age</code> header field, even if the response is already stale. A cache need not validate a response that merely became stale in transit.
 </p>
 </blockquote>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5c70daa" class="outline-3">
-<h3 id="org5c70daa"><a id="ID-47a8482e-e33f-435a-8abd-9a82f117f7a0"></a>4.3. Validation</h3>
-<div class="outline-text-3" id="text-org5c70daa">
+<div id="outline-container-org7ccec2c" class="outline-3">
+<h3 id="org7ccec2c"><a id="ID-47a8482e-e33f-435a-8abd-9a82f117f7a0"></a>4.3. 验证 / Validation</h3>
+<div class="outline-text-3" id="text-org7ccec2c">
 <blockquote>
 <p>
 When a cache has one or more stored responses for a requested URI, but cannot serve any of them (e.g., because they are not fresh, or one cannot be selected; see Section 4.1), it can use the conditional request mechanism [RFC7232] in the forwarded request to give the next inbound server an opportunity to select a valid stored response to use, updating the stored metadata in the process, or to replace the stored response(s) with a new response. This process is known as "validating" or "revalidating" the stored response.
@@ -1428,9 +1607,9 @@ If a cache updates a stored response with the metadata provided in a HEAD respon
 </div>
 </div>
 
-<div id="outline-container-org02b7f70" class="outline-3">
-<h3 id="org02b7f70">4.4. Invalidation</h3>
-<div class="outline-text-3" id="text-org02b7f70">
+<div id="outline-container-org305f677" class="outline-3">
+<h3 id="org305f677"><a id="ID-f0828803-68c6-4dae-a418-6a6b4b57189e"></a>4.4. 无效化 / Invalidation</h3>
+<div class="outline-text-3" id="text-org305f677">
 <blockquote>
 <p>
 Because unsafe request methods (Section 4.2.1 of [RFC7231]) such as PUT, POST or DELETE have the potential for changing state on the origin server, intervening caches can use them to keep their contents up to date.
@@ -1556,9 +1735,10 @@ For the cache directives defined below, no argument is defined (nor allowed) unl
 </div>
 
 <div id="outline-container-org5de394c" class="outline-4">
-<h4 id="org5de394c">5.2.1. Request Cache-Control Directives</h4>
+<h4 id="org5de394c"><a id="ID-a586b298-d3ba-44df-ab8f-69ad432b93a2"></a>5.2.1. Request Cache-Control Directives</h4>
 <div class="outline-text-4" id="text-org5de394c">
 </div>
+
 <div id="outline-container-orge31ad97" class="outline-5">
 <h5 id="orge31ad97">5.2.1.1. max-age</h5>
 <div class="outline-text-5" id="text-orge31ad97">
@@ -1701,9 +1881,10 @@ The "only-if-cached" request directive indicates that the client only wishes to 
 </div>
 
 <div id="outline-container-org628b869" class="outline-4">
-<h4 id="org628b869">5.2.2. Response Cache-Control Directives</h4>
+<h4 id="org628b869"><a id="ID-3b667767-3efc-4487-b0a4-5234780e5de2"></a>5.2.2. Response Cache-Control Directives</h4>
 <div class="outline-text-4" id="text-org628b869">
 </div>
+
 <div id="outline-container-org19ae67e" class="outline-5">
 <h5 id="org19ae67e">5.2.2.1. must-revalidate</h5>
 <div class="outline-text-5" id="text-org19ae67e">
@@ -1728,7 +1909,7 @@ The must-revalidate directive ought to be used by servers if and only if failure
 </div>
 
 <div id="outline-container-org6dee7ff" class="outline-5">
-<h5 id="org6dee7ff">5.2.2.2. no-cache</h5>
+<h5 id="org6dee7ff"><a id="ID-9c7307c8-5bc0-4812-ade1-d3080a39bf80"></a>5.2.2.2. no-cache</h5>
 <div class="outline-text-5" id="text-org6dee7ff">
 <blockquote>
 <p>
@@ -1802,7 +1983,7 @@ The "no-transform" response directive indicates that an intermediary (regardless
 </div>
 
 <div id="outline-container-org300811e" class="outline-5">
-<h5 id="org300811e">5.2.2.5. public</h5>
+<h5 id="org300811e"><a id="ID-ad0dea37-836f-4c82-9241-3e6ce0d6fc51"></a>5.2.2.5. public</h5>
 <div class="outline-text-5" id="text-org300811e">
 <blockquote>
 <p>
@@ -1813,7 +1994,7 @@ The "public" response directive indicates that any cache MAY store the response,
 </div>
 
 <div id="outline-container-orgc298f3c" class="outline-5">
-<h5 id="orgc298f3c">5.2.2.6. private</h5>
+<h5 id="orgc298f3c"><a id="ID-f740b5a2-4331-423d-b196-137d9b9e4d02"></a>5.2.2.6. private</h5>
 <div class="outline-text-5" id="text-orgc298f3c">
 <blockquote>
 <p>
@@ -1870,7 +2051,7 @@ The "proxy-revalidate" response directive has the same meaning as the must-reval
 </div>
 
 <div id="outline-container-orgc309465" class="outline-5">
-<h5 id="orgc309465">5.2.2.8. max-age</h5>
+<h5 id="orgc309465"><a id="ID-eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb"></a>5.2.2.8. max-age</h5>
 <div class="outline-text-5" id="text-orgc309465">
 <blockquote>
 <p>
@@ -1898,7 +2079,7 @@ This directive uses the token form of the argument syntax: e.g., 'max-age=5' not
 </div>
 
 <div id="outline-container-orgf601e80" class="outline-5">
-<h5 id="orgf601e80">5.2.2.9. s-maxage</h5>
+<h5 id="orgf601e80"><a id="ID-5296bb87-1709-4827-bef2-69177bbe3544"></a>5.2.2.9. s-maxage</h5>
 <div class="outline-text-5" id="text-orgf601e80">
 <blockquote>
 <p>
@@ -1927,7 +2108,7 @@ This directive uses the token form of the argument syntax: e.g., 's-maxage=10' n
 </div>
 
 <div id="outline-container-orgdc9554b" class="outline-4">
-<h4 id="orgdc9554b">5.2.3. Cache Control Extensions</h4>
+<h4 id="orgdc9554b"><a id="ID-eb7efc79-3c1d-439b-b0b3-d901848ad800"></a>5.2.3. Cache Control Extensions</h4>
 <div class="outline-text-4" id="text-orgdc9554b">
 <blockquote>
 <p>
