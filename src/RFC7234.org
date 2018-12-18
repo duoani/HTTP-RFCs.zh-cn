@@ -176,7 +176,7 @@ If a request target is subject to content negotiation, its cache entry might con
 
 如果请求目标受到[[ruby:content%20negotiation][内容协商]]的影响，那么它的缓存条目可能是由多个已存储的响应来组成的，每一个响应由一个次要的 key 来进行区分，这个次要的 key 的值是原始请求选定的头字段（[[id:352eb301-a424-48e9-9027-3c6633da4b77][章节 4.1]]）。
 
-* 3. 存储响应到缓存 / Storing Responses in Caches
+* 3. 将响应存储到缓存 / Storing Responses in Caches
 :PROPERTIES:
 :ID:       e41d8ccc-5b69-40e3-a8ab-ca27327f15fa
 :END:
@@ -297,84 +297,133 @@ When combining the new response with one or more stored responses, a cache *MUST
 - 保留在已存储的响应里警告码为 =2xx= 的任何 =Warning= 头字段；并且
 - 使用新响应所提供的其他头字段，除以 =Content-Range= 以外，来替换所有在已存储的响应对应的头字段。
 
-* 4. 从缓存构造响应 / Constructing Responses from Caches
+* 4. 从缓存中构造响应 / Constructing Responses from Caches
+:PROPERTIES:
+:ID:       cd0b2da5-6fd4-4ce2-9f59-27ba0d529181
+:END:
 
 #+BEGIN_QUOTE
-When presented with a request, a cache MUST NOT reuse a stored response, unless:
+When presented with a request, a cache *MUST NOT* reuse a stored response, unless:
 
-- The presented effective request URI (Section 5.5 of [RFC7230]) and that of the stored response match, and
+- The presented effective request URI ([[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]) and that of the stored response match, and
 - the request method associated with the stored response allows it to be used for the presented request, and
-- selecting header fields nominated by the stored response (if any) match those presented (see Section 4.1), and
-- the presented request does not contain the no-cache pragma (Section 5.4), nor the no-cache cache directive (Section 5.2.1), unless the stored response is successfully validated (Section 4.3), and
-- the stored response does not contain the no-cache cache directive (Section 5.2.2.2), unless it is successfully validated (Section 4.3), and
+- selecting header fields nominated by the stored response (if any) match those presented (see [[id:352eb301-a424-48e9-9027-3c6633da4b77][Section 4.1]]), and
+- the presented request does not contain the =no-cache= pragma ([[id:8414ec2d-e5b5-4f9c-8160-c354c12b7504][Section 5.4]]), nor the =no-cache= cache directive ([[id:a586b298-d3ba-44df-ab8f-69ad432b93a2][Section 5.2.1]]), unless the stored response is successfully validated ([[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][Section 4.3]]), and
+- the stored response does not contain the =no-cache= cache directive ([[id:9c7307c8-5bc0-4812-ade1-d3080a39bf80][Section 5.2.2.2]]), unless it is successfully validated ([[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][Section 4.3]]), and
 - the stored response is either:
-  - fresh (see Section 4.2), or
-  - allowed to be served stale (see Section 4.2.4), or
-  - successfully validated (see Section 4.3).
+  - fresh (see [[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][Section 4.2]]), or
+  - allowed to be served stale (see [[id:630361ae-a4e3-4fec-b337-8eff30325ddf][Section 4.2.4]]), or
+  - successfully validated (see [[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][Section 4.3]]).
+#+END_QUOTE
+
+当面临一个请求的时候，缓存 *禁止* 复用一个已存储的响应，除非：
+
+- 所面临的[[ruby:effective%20request%20URI][实际请求 URI]]（[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）与已存储的响应所对应的实际请求 URI 相匹配，并且：
+- 已存储的响应所关联的请求方法允许这个响应用于所面临的请求，并且：
+- 由已存储的响应所[[ruby:nominated][指定]]的选择头字段与所面临的请求的头字段相匹配（[[id:352eb301-a424-48e9-9027-3c6633da4b77][章节 4.1]]），并且：
+- 所面临的请求并没有包含一个值为 =no-cache= 的 =Pragma= 头字段（[[id:8414ec2d-e5b5-4f9c-8160-c354c12b7504][章节 5.4]]），也没有包含一个值为 =no-cache= 的缓存指令（[[id:a586b298-d3ba-44df-ab8f-69ad432b93a2][章节 5.2.1]]），除非已存储的响应是[[ruby:successfully%20validated][被成功验证的]]（[[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][章节 4.3]]），并且：
+- 已存储的响应并没有包含一个 =no-cache= 缓存指令（[[id:9c7307c8-5bc0-4812-ade1-d3080a39bf80][章节 5.2.2.2]]），除非它是被成功验证的（[[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][章节 4.3]]），并且：
+- 已存储的响应是以下情况之一：
+  - [[ruby:fresh][新鲜的]]（[[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][章节 4.2]]），或者：
+  - 允许[[ruby:served%20stale][作为陈旧响应来提供]]（[[id:630361ae-a4e3-4fec-b337-8eff30325ddf][章节 4.2.4]]），或者：
+  - 被成功验证的（[[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][章节 4.3]]）。
+
+#+BEGIN_QUOTE
+Note that any of the requirements listed above can be overridden by a cache-control extension; see [[id:eb7efc79-3c1d-439b-b0b3-d901848ad800][Section 5.2.3]].
+#+END_QUOTE
+
+需要注意的是，上述所列出的任何要求都可以被 =cache-control= 扩展所覆盖，见[[id:eb7efc79-3c1d-439b-b0b3-d901848ad800][章节 5.2.3]]。
+
+#+BEGIN_QUOTE
+When a stored response is used to satisfy a request without validation, a cache *MUST* generate an =Age= header field ([[id:0fda7a59-2592-493d-9ce1-01e72543c6c0][Section 5.1]]), replacing any present in the response with a value equal to the stored response's =current_age=; see [[id:80278eea-c1e4-478a-b972-ca42270c1fd0][Section 4.2.3]].
+#+END_QUOTE
+
+在没有[[ruby:validation][验证]]的情况下将一个已存储的响应用于满足一个请求时，缓存 *必须* 生成一个 =Age= 头字段（[[id:0fda7a59-2592-493d-9ce1-01e72543c6c0][章节 5.1]]），其值等于已存储的响应的 =current_age=，来替换掉出现在该响应里的任何 =Age= 字段，见[[id:80278eea-c1e4-478a-b972-ca42270c1fd0][章节 4.2.3]]。
+
+#+BEGIN_QUOTE
+A cache *MUST* write through requests with methods that are unsafe ([[id:2f967e3d-8694-430b-ad06-e748fd39b281][Section 4.2.1]] of [RFC7231]) to the origin server; i.e., a cache is not allowed to generate a reply to such a request before having forwarded the request and having received a corresponding response.
+#+END_QUOTE
+
+如果请求带有对源服务器来说是[[ruby:unsafe%20methods][不安全的方法]]（[[id:2f967e3d-8694-430b-ad06-e748fd39b281][【RFC7231】章节 4.2.1]]），那么，缓存 *必须* 使用[[ruby:write%20through][直写模式]]来写入请求，也就是说，在缓存已经转发这种请求并且已经接收到一个对应的响应之前，不允许缓存生成一个回复到这种请求上。
+
+#+BEGIN_QUOTE
+译注：缓存有两种基础写入策略：[[ruby:Write-through][直写模式]]和[[ruby:Write-back][回写模式]]，详情见 [[https://en.wikipedia.org/wiki/Cache_(computing)#WRITE-THROUGH][Wikipedia: Cache - Writing Policies]]。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-Note that any of the requirements listed above can be overridden by a cache-control extension; see Section 5.2.3.
+Also, note that unsafe requests might invalidate already-stored responses; see [[id:f0828803-68c6-4dae-a418-6a6b4b57189e][Section 4.4]].
 #+END_QUOTE
+
+另外，还需要注意的是，不安全的请求可能会使已经存储的响应置为无效，见[[id:f0828803-68c6-4dae-a418-6a6b4b57189e][章节 4.4]]。
 
 #+BEGIN_QUOTE
-When a stored response is used to satisfy a request without validation, a cache MUST generate an Age header field (Section 5.1), replacing any present in the response with a value equal to the stored response's current_age; see Section 4.2.3.
+When more than one suitable response is stored, a cache *MUST* use the most recent response (as determined by the =Date= header field). It can also forward the request with "=Cache-Control: max-age=0=" or "=Cache-Control: no-cache=" to disambiguate which response to use.
 #+END_QUOTE
+
+当存储了超过一个以上的合适响应，缓存 *必须* 使用时间最近的响应（由 =Date= 头字段的时间来决定）。它还可以在转发这个请求的时候带上 =Cache-Control: max-age=0= 或者 =Cache-Control: no-cache= 以区分使用的是哪一个响应。
 
 #+BEGIN_QUOTE
-A cache MUST write through requests with methods that are unsafe (Section 4.2.1 of [RFC7231]) to the origin server; i.e., a cache is not allowed to generate a reply to such a request before having forwarded the request and having received a corresponding response.
+A cache that does not have a clock available *MUST NOT* use stored responses without revalidating them upon every use.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Also, note that unsafe requests might invalidate already-stored responses; see Section 4.4.
-#+END_QUOTE
+如果缓存不具有一个可用的时钟功能，那么，在每次使用已存储的响应的时候，*禁止* 在没有重新验证的情况下使用它们。
 
-#+BEGIN_QUOTE
-When more than one suitable response is stored, a cache MUST use the most recent response (as determined by the Date header field). It can also forward the request with "Cache-Control: max-age=0" or "Cache-Control: no-cache" to disambiguate which response to use.
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-A cache that does not have a clock available MUST NOT use stored responses without revalidating them upon every use.
-#+END_QUOTE
-
-** 4.1. Calculating Secondary Keys with Vary
+** 4.1. 使用 Vary 来计算次要缓存键 / Calculating Secondary Keys with Vary
 :PROPERTIES:
 :ID:       352eb301-a424-48e9-9027-3c6633da4b77
 :END:
 
 #+BEGIN_QUOTE
-When a cache receives a request that can be satisfied by a stored response that has a Vary header field (Section 7.1.4 of [RFC7231]), it MUST NOT use that response unless all of the selecting header fields nominated by the Vary header field match in both the original request (i.e., that associated with the stored response), and the presented request.
+When a cache receives a request that can be satisfied by a stored response that has a =Vary= header field ([[id:ca7f8781-b183-4563-a90a-b9b7ad4f1032][Section 7.1.4]] of [RFC7231]), it *MUST NOT* use that response unless all of the selecting header fields nominated by the =Vary= header field match in both the original request (i.e., that associated with the stored response), and the presented request.
 #+END_QUOTE
+
+一个缓存，当它接收到一个请求，而这个请求可以通过一个已缓存的带有一个 =Vary= 头字段（[[id:ca7f8781-b183-4563-a90a-b9b7ad4f1032][【RFC7231】章节 7.1.4]]）的响应来满足，那么，它 *禁止* 使用这种响应，除非所有由 =Vary= 头字段所指定的[[ruby:selecting%20header%20fields][选择头字段]]既与原始请求（即这个已存储响应所关联的那个请求）相匹配，也与所面临的请求相匹配。
 
 #+BEGIN_QUOTE
 The selecting header fields from two requests are defined to match if and only if those in the first request can be transformed to those in the second request by applying any of the following:
 
 - adding or removing whitespace, where allowed in the header field's syntax
-- combining multiple header fields with the same field name (see Section 3.2 of [RFC7230])
+- combining multiple header fields with the same field name (see [[id:a6c4dceb-8a19-4799-a39b-b7240755c672][Section 3.2]] of [RFC7230])
 - normalizing both header field values in a way that is known to have identical semantics, according to the header field's specification (e.g., reordering field values when order is not significant; case-normalization, where values are defined to be case-insensitive)
 #+END_QUOTE
+
+来自这两个请求的[[ruby:selecting%20header%20fields][选择头字段]]是定义为相互匹配的，当且仅当在第一个请求的选择头字段，通过应用以下任何方式，能够转换为在第二个请求的选择头字段：
+
+- 在头字段的句法所允许的位置添加或删除空格
+- 合并多个相同字段名称的头字段（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][【RFC7230】章节 3.2]]）
+- 依据头字段的规范，使用已知是具有同等语义的方式，来规范化两者的头字段值（比如，将头字段的值进行[[ruby:reordering][重新排序]]，如果它的顺序并不重要的话；对于值是定义为不区分大小写的地方进行[[ruby:case-normalization][大小写规范化]]）。
 
 #+BEGIN_QUOTE
 If (after any normalization that might take place) a header field is absent from a request, it can only match another request if it is also absent there.
 #+END_QUOTE
 
+如果（在进行过任何规范化操作以后）一个请求缺少某一个头字段，那么，它只能匹配上另一个同样缺少这个头字段的请求。
+
 #+BEGIN_QUOTE
-A Vary header field-value of "*" always fails to match.
+A =Vary= header field-value of "*" always fails to match.
 #+END_QUOTE
+
+值为 "*" 的 =Vary= 头字段总是无法匹配。
 
 #+BEGIN_QUOTE
 The stored response with matching selecting header fields is known as the selected response.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-If multiple selected responses are available (potentially including responses without a Vary header field), the cache will need to choose one to use. When a selecting header field has a known mechanism for doing so (e.g., qvalues on Accept and similar request header fields), that mechanism MAY be used to select preferred responses; of the remainder, the most recent response (as determined by the Date header field) is used, as per Section 4.
-#+END_QUOTE
+带有匹配上的[[ruby:selecting%20header%20fields][选择头字段]]的已存储响应，被称为[[ruby:selected%20response][已选响应]]。
 
 #+BEGIN_QUOTE
-If no selected response is available, the cache cannot satisfy the presented request. Typically, it is forwarded to the origin server in a (possibly conditional; see Section 4.3) request.
+If multiple selected responses are available (potentially including responses without a =Vary= header field), the cache will need to choose one to use. When a selecting header field has a known mechanism for doing so (e.g., qvalues on =Accept= and similar request header fields), that mechanism *MAY* be used to select preferred responses; of the remainder, the most recent response (as determined by the =Date= header field) is used, as per [[id:cd0b2da5-6fd4-4ce2-9f59-27ba0d529181][Section 4]].
 #+END_QUOTE
 
-** 4.2. Freshness
+如果有多个可用的已选响应（可能包括没有 =Vary= 头字段的响应），缓存将需要选择一个来使用。当一个选择头字段有已知的机制用于做这种选择的时候（比如，=Accept= 上的 =qvalue= 以及类似的请求头字段），这种机制 *可以* 被用来选择[[ruby:preferred%20responses][最优响应（可能多个）]]。选择好最优响应以后，使用时间最近的那一个响应，见[[id:cd0b2da5-6fd4-4ce2-9f59-27ba0d529181][章节 4]]。
+
+#+BEGIN_QUOTE
+If no selected response is available, the cache cannot satisfy the presented request. Typically, it is forwarded to the origin server in a (possibly conditional; see [[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][Section 4.3]]) request.
+#+END_QUOTE
+
+如果没有可用的已选响应，那么，缓存无法满足所面临的请求。通常，它会以一个（可能是条件化的，见[[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][章节 4.3]]）请求将其转发到源服务器。
+
+** 4.2. 新鲜度 / Freshness
 :PROPERTIES:
 :ID:       d414d2f7-d865-4b94-9efd-6b2578df86aa
 :END:
@@ -437,6 +486,9 @@ Note that freshness applies only to cache operation; it cannot be used to force 
 #+END_QUOTE
 
 *** 4.2.1. Calculating Freshness Lifetime
+:PROPERTIES:
+:ID:       297b33de-eb1e-4988-b28f-b21e8ecc5ffa
+:END:
 
 #+BEGIN_QUOTE
 A cache can calculate the freshness lifetime (denoted as freshness_lifetime) of a response by using the first match of the following:
@@ -481,17 +533,20 @@ When a heuristic is used to calculate freshness lifetime, a cache SHOULD generat
 #+END_QUOTE
 
 *** 4.2.3. Calculating Age
+:PROPERTIES:
+:ID:       80278eea-c1e4-478a-b972-ca42270c1fd0
+:END:
 
 #+BEGIN_QUOTE
-The Age header field is used to convey an estimated age of the response message when obtained from a cache. The Age field value is the cache's estimate of the number of seconds since the response was generated or validated by the origin server. In essence, the Age value is the sum of the time that the response has been resident in each of the caches along the path from the origin server, plus the amount of time it has been in transit along network paths.
+The =Age= header field is used to convey an estimated age of the response message when obtained from a cache. The =Age= field value is the cache's estimate of the number of seconds since the response was generated or validated by the origin server. In essence, the =Age= value is the sum of the time that the response has been resident in each of the caches along the path from the origin server, plus the amount of time it has been in transit along network paths.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
 The following data is used for the age calculation:
 
-- age_value :: The term "age_value" denotes the value of the Age header field (Section 5.1), in a form appropriate for arithmetic operation; or 0, if not available.
-- date_value :: The term "date_value" denotes the value of the Date header field, in a form appropriate for arithmetic operations. See Section 7.1.1.2 of [RFC7231] for the definition of the Date header field, and for requirements regarding responses without it.
-- now :: The term "now" means "the current value of the clock at the host performing the calculation". A host ought to use NTP ([RFC5905]) or some similar protocol to synchronize its clocks to Coordinated Universal Time.
+- age_value :: The term "=age_value=" denotes the value of the =Age= header field (Section 5.1), in a form appropriate for arithmetic operation; or 0, if not available.
+- date_value :: The term "=date_value=" denotes the value of the =Date= header field, in a form appropriate for arithmetic operations. See Section 7.1.1.2 of [RFC7231] for the definition of the =Date= header field, and for requirements regarding responses without it.
+- now :: The term "=now=" means "the current value of the clock at the host performing the calculation". A host ought to use NTP ([RFC5905]) or some similar protocol to synchronize its clocks to Coordinated Universal Time.
 - request_time :: The current value of the clock at the host at the time the request resulting in the stored response was made.
 - response_time :: The current value of the clock at the host at the time the response was received.
 #+END_QUOTE
@@ -499,8 +554,8 @@ The following data is used for the age calculation:
 #+BEGIN_QUOTE
 A response's age can be calculated in two entirely independent ways:
 
-1. the "apparent_age": response_time minus date_value, if the local clock is reasonably well synchronized to the origin server's clock. If the result is negative, the result is replaced by zero.
-2. the "corrected_age_value", if all of the caches along the response path implement HTTP/1.1. A cache MUST interpret this value relative to the time the request was initiated, not the time that the response was received.
+1. the "=apparent_age=": =response_time= minus =date_value=, if the local clock is reasonably well synchronized to the origin server's clock. If the result is negative, the result is replaced by zero.
+2. the "=corrected_age_value=", if all of the caches along the response path implement HTTP/1.1. A cache *MUST* interpret this value relative to the time the request was initiated, not the time that the response was received.
 #+END_QUOTE
 
 #+BEGIN_SRC text
@@ -519,11 +574,11 @@ These are combined as
 #+END_SRC
 
 #+BEGIN_QUOTE
-unless the cache is confident in the value of the Age header field (e.g., because there are no HTTP/1.0 hops in the Via header field), in which case the corrected_age_value MAY be used as the corrected_initial_age.
+unless the cache is confident in the value of the =Age= header field (e.g., because there are no HTTP/1.0 hops in the =Via= header field), in which case the =corrected_age_value= *MAY* be used as the =corrected_initial_age=.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-The current_age of a stored response can then be calculated by adding the amount of time (in seconds) since the stored response was last validated by the origin server to the corrected_initial_age.
+The =current_age= of a stored response can then be calculated by adding the amount of time (in seconds) since the stored response was last validated by the origin server to the =corrected_initial_age=.
 #+END_QUOTE
 
 #+BEGIN_SRC text
@@ -558,7 +613,7 @@ A cache *SHOULD* generate a =Warning= header field with the =110= warn-code (see
 A cache *SHOULD NOT* generate a new =Warning= header field when forwarding a response that does not have an =Age= header field, even if the response is already stale. A cache need not validate a response that merely became stale in transit.
 #+END_QUOTE
 
-** 4.3. Validation
+** 4.3. 验证 / Validation
 :PROPERTIES:
 :ID:       47a8482e-e33f-435a-8abd-9a82f117f7a0
 :END:
@@ -671,7 +726,10 @@ If a cache updates a stored response with the metadata provided in a HEAD respon
 - use other header fields provided in the HEAD response to replace all instances of the corresponding header fields in the stored response and append new header fields to the stored response's header section unless otherwise restricted by the Cache-Control header field.
 #+END_QUOTE
 
-** 4.4. Invalidation
+** 4.4. 无效化 / Invalidation
+:PROPERTIES:
+:ID:       f0828803-68c6-4dae-a418-6a6b4b57189e
+:END:
 
 #+BEGIN_QUOTE
 Because unsafe request methods (Section 4.2.1 of [RFC7231]) such as PUT, POST or DELETE have the potential for changing state on the origin server, intervening caches can use them to keep their contents up to date.
@@ -760,6 +818,9 @@ For the cache directives defined below, no argument is defined (nor allowed) unl
 #+END_QUOTE
 
 *** 5.2.1. Request Cache-Control Directives
+:PROPERTIES:
+:ID:       a586b298-d3ba-44df-ab8f-69ad432b93a2
+:END:
 
 **** 5.2.1.1. max-age
 
@@ -867,6 +928,9 @@ The must-revalidate directive ought to be used by servers if and only if failure
 #+END_QUOTE
 
 **** 5.2.2.2. no-cache
+:PROPERTIES:
+:ID:       9c7307c8-5bc0-4812-ade1-d3080a39bf80
+:END:
 
 #+BEGIN_QUOTE
 Argument syntax:
