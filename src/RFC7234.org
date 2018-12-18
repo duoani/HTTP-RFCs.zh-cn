@@ -50,10 +50,10 @@ This is an Internet Standards Track document.
 这是一个 Internet Standards Track 文档。
 
 #+BEGIN_QUOTE
-This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in [[ruby:https://tools.ietf.org/html/rfc5741][Section 2]] of RFC 5741.
+This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in [[https://tools.ietf.org/html/rfc5741][Section 2]] of RFC 5741.
 #+END_QUOTE
 
-本文档是[[ruby:Internet%20Engineering%20Task%20Force][互联网工程任务组]]（IETF）的产品。它代表了 IETF 社区的共识。它已经接受公众审核并且已经被[[ruby:Internet%20Engineering%20Steering%20Group][互联网工程指导组]]（IESG）批准发布。有关[[ruby:Internet%20Standards][互联网标准]]的更多信息，请参阅 RFC 5741 [[ruby:https://tools.ietf.org/html/rfc5741][章节 2]]。
+本文档是[[ruby:Internet%20Engineering%20Task%20Force][互联网工程任务组]]（IETF）的产品。它代表了 IETF 社区的共识。它已经接受公众审核并且已经被[[ruby:Internet%20Engineering%20Steering%20Group][互联网工程指导组]]（IESG）批准发布。有关[[ruby:Internet%20Standards][互联网标准]]的更多信息，请参阅 RFC 5741 [[https://tools.ietf.org/html/rfc5741][章节 2]]。
 
 #+BEGIN_QUOTE
 Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at http://www.rfc-editor.org/info/rfc7234.
@@ -123,23 +123,29 @@ This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC52
 
 本规范使用了[[ruby:Augmented%20Backus-Naur%20Form][扩展巴科斯范式]]（ABNF）标记法【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][章节 7]]），允许使用一个 =#= 操作符（类似于 =*= 操作符，指代“重复”）来定义一种以逗号分隔的列表。[[id:dd632d27-1596-43fe-90f8-dba848353e12][附录 B]] 描述了从其他文档中引进的规则。[[id:33ccb99a-6b09-4750-9e71-4cc1e43b49c5][附录 C]] 展示了所有已收集的包含列表扩展规则以及标准 ABNF 标记的语法。
 
-*** 1.2.1. Delta Seconds
+*** 1.2.1. 秒差 / Delta Seconds
 
 #+BEGIN_QUOTE
-The delta-seconds rule specifies a non-negative integer, representing time in seconds.
+The =delta-seconds= rule specifies a non-negative integer, representing time in seconds.
 #+END_QUOTE
+
+=delta-seconds= 规则指定了一个非负整数来以秒数表示时间。
 
 #+BEGIN_SRC text
   delta-seconds  = 1*DIGIT
 #+END_SRC
 
 #+BEGIN_QUOTE
-A recipient parsing a delta-seconds value and converting it to binary form ought to use an arithmetic type of at least 31 bits of non-negative integer range. If a cache receives a delta-seconds value greater than the greatest integer it can represent, or if any of its subsequent calculations overflows, the cache MUST consider the value to be either 2147483648 (231) or the greatest positive integer it can conveniently represent.
+A recipient parsing a =delta-seconds= value and converting it to binary form ought to use an arithmetic type of at least 31 bits of non-negative integer range. If a cache receives a =delta-seconds= value greater than the greatest integer it can represent, or if any of its subsequent calculations overflows, the cache *MUST* consider the value to be either 2147483648 (2^{31}) or the greatest positive integer it can conveniently represent.
 #+END_QUOTE
+
+接收端在解析一个 =delta-seconds= 值并将它转换为[[ruby:binary%20form][二进制形式]]的时候，应该使用一种至少 31 位的非负整数范围的算术类型。如果一个缓存接收到一个 =delta-seconds= 的值大于缓存能够表示的最大整数，或者如果它接下来的任何运算出现数据溢出的情况，那么，缓存 *必须* 将该值视作 2147483648 (2^{31}) 或者视作它能够方便表示的最大正整数。
 
 #+BEGIN_QUOTE
 *Note:* The value 2147483648 is here for historical reasons, effectively represents infinity (over 68 years), and does not need to be stored in binary form; an implementation could produce it as a canned string if any overflow occurs, even if the calculations are performed with an arithmetic type incapable of directly representing that number. What matters here is that an overflow be detected and not treated as a negative value in later calculations.
 #+END_QUOTE
+
+*注意：* 这里的 2147483648 数值是出于历史的原因，有效地表示无限（超过 68 年），并且并不需要存储为二进制形式，也就是说，如果发生了任何溢出，HTTP 实现可以使用预制的字符串来产生这个值，即使执行运算的算术类型无法直接表示这个数值。重要的是检测到了一个数据溢出，并且在后续的运算当中没有将其作为一个负值来对待。
 
 * 2. 缓存操作的概况 / Overview of Cache Operation
 :PROPERTIES:
@@ -150,7 +156,7 @@ A recipient parsing a delta-seconds value and converting it to binary form ought
 Proper cache operation preserves the semantics of HTTP transfers ([RFC7231]) while eliminating the transfer of information already held in the cache. Although caching is an entirely *OPTIONAL* feature of HTTP, it can be assumed that reusing a cached response is desirable and that such reuse is the default behavior when no requirement or local configuration prevents it. Therefore, HTTP cache requirements are focused on preventing a cache from either storing a non-reusable response or reusing a stored response inappropriately, rather than mandating that caches always store and reuse particular responses.
 #+END_QUOTE
 
-恰当的缓存操作可以在消除已存储在缓存中的消息的网络传输的同时还能保持 HTTP 传输的语义。虽然缓存是完全 *可选的* HTTP 功能，但我们可以认为复用一个已缓存的响应是大家想要的，并且这样的复用行为是默认的（如果没有要求或本地配置阻止去缓存的话）。所以，HTTP 缓存的要求主要集中在阻止一个缓存去存储一个不可复用的响应，或者不恰当地复用一个已存储的响应这些方面；而不是在是否准许缓存总是存储并复用具体的响应。
+恰当的缓存操作可以在消除已存储在缓存中的消息的网络传输的同时还能保持 HTTP 传输的语义。虽然缓存是一种完全 *可选的* HTTP 功能，但我们可以认为复用一个已缓存的响应是大家想要的，并且这样的复用行为是默认的（如果没有要求或本地配置阻止去缓存的话）。所以，HTTP 缓存的要求主要集中在阻止一个缓存去存储一个不可复用的响应，或者不恰当地复用一个已存储的响应这些方面；而不是在是否准许缓存总是存储并复用具体的响应。
 
 #+BEGIN_QUOTE
 Each cache entry consists of a cache key and one or more HTTP responses corresponding to prior requests that used the same key. The most common form of cache entry is a successful result of a retrieval request: i.e., a =200 (OK)= response to a GET request, which contains a representation of the resource identified by the request target ([[id:698bab73-07b1-4349-8a03-5a4a89d966d8][Section 4.3.1]] of [RFC7231]). However, it is also possible to cache permanent redirects, negative results (e.g., =404 (Not Found)=), incomplete results (e.g., =206 (Partial Content)=), and responses to methods other than GET if the method's definition allows such caching and defines something suitable for use as a cache key.
@@ -180,67 +186,116 @@ A cache *MUST NOT* store a response to any request, unless:
 
 - The request method is understood by the cache and defined as being cacheable, and
 - the response status code is understood by the cache, and
-- the "no-store" cache directive (see Section 5.2) does not appear in request or response header fields, and
-- the "private" response directive (see Section 5.2.2.6) does not appear in the response, if the cache is shared, and
-- the Authorization header field (see Section 4.2 of [RFC7235]) does not appear in the request, if the cache is shared, unless the response explicitly allows it (see Section 3.2), and
+- the "=no-store=" cache directive (see [[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][Section 5.2]]) does not appear in request or response header fields, and
+- the "=private=" response directive (see [[id:f740b5a2-4331-423d-b196-137d9b9e4d02][Section 5.2.2.6]]) does not appear in the response, if the cache is shared, and
+- the =Authorization= header field (see [[id:14671c8e-e5a4-4f9d-ad1d-6460328ed7f5][Section 4.2]] of [RFC7235]) does not appear in the request, if the cache is shared, unless the response explicitly allows it (see [[id:d6b247ad-fe70-4ddf-9bd3-ebc35ea6ac99][Section 3.2]]), and
 - the response either:
-  - contains an =Expires= header field (see Section 5.3), or
-  - contains a =max-age= response directive (see Section 5.2.2.8), or
-  - contains a =s-maxage= response directive (see Section 5.2.2.9) and the cache is shared, or
-  - contains a Cache Control Extension (see Section 5.2.3) that allows it to be cached, or
-  - has a status code that is defined as cacheable by default (see Section 4.2.2), or
-  - contains a =public= response directive (see Section 5.2.2.5).
+  - contains an =Expires= header field (see [[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][Section 5.3]]), or
+  - contains a =max-age= response directive (see [[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][Section 5.2.2.8]]), or
+  - contains a =s-maxage= response directive (see [[id:5296bb87-1709-4827-bef2-69177bbe3544][Section 5.2.2.9]]) and the cache is shared, or
+  - contains a Cache Control Extension (see [[id:eb7efc79-3c1d-439b-b0b3-d901848ad800][Section 5.2.3]]) that allows it to be cached, or
+  - has a status code that is defined as cacheable by default (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]]), or
+  - contains a =public= response directive (see [[id:ad0dea37-836f-4c82-9241-3e6ce0d6fc51][Section 5.2.2.5]]).
 #+END_QUOTE
 
+除了可以存储回应给以下请求的响应以外，缓存 *禁止* 存储任何响应：
+
+- [[ruby:request%20method][请求方法]]为缓存所理解，并被定义为[[ruby:cacheable][可缓存的]]，并且：
+- [[ruby:response%20status%20code][响应状态码]]为缓存所理解，并且：
+- =no-store= [[ruby:cache%20directive][缓存指令]]（[[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][章节 5.2]]）没有出现在请求或者响应的头字段里，并且：
+- =private= 响应指令（[[id:f740b5a2-4331-423d-b196-137d9b9e4d02][章节 5.2.2.6]]）没有出现在响应里，如果这是个共享缓存的话，并且：
+- =Authorization= 头字段（[[id:14671c8e-e5a4-4f9d-ad1d-6460328ed7f5][【RFC7235】章节 4.2]]）没有出现在请求里，如果这是个共享缓存的话，除非响应显式允许它（[[id:d6b247ad-fe70-4ddf-9bd3-ebc35ea6ac99][章节 3.2]]），并且：
+- 响应符合以下情况之一：
+  - 包含一个 =Expires= 头字段（[[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][章节 5.3]]），或者：
+  - 包含一个 =max-age= 响应指令（[[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][章节 5.2.2.8]]），或者：
+  - 包含一个 =s-maxage= 响应指令（[[id:5296bb87-1709-4827-bef2-69177bbe3544][章节 5.2.2.9]]）并且缓存是共享的，或者：
+  - 包含一个[[ruby:Cache%20Control%20Extension][缓存控制扩展]]（[[id:eb7efc79-3c1d-439b-b0b3-d901848ad800][章节 5.2.3]]），该缓存控制扩展允许缓存这个响应，或者：
+  - 带有一个状态码，该状态码默认是可缓存的（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][章节 4.2.2]]），或者：
+  - 包含一个 =public= 响应指令（[[id:ad0dea37-836f-4c82-9241-3e6ce0d6fc51][章节 5.2.2.5]]）。
+
 #+BEGIN_QUOTE
-Note that any of the requirements listed above can be overridden by a cache-control extension; see Section 5.2.3.
+Note that any of the requirements listed above can be overridden by a =cache-control= extension; see [[id:eb7efc79-3c1d-439b-b0b3-d901848ad800][Section 5.2.3]].
 #+END_QUOTE
+
+需要注意的是，上述所列出的任何要求都可以被 =cache-control= 扩展所覆盖，见[[id:eb7efc79-3c1d-439b-b0b3-d901848ad800][章节 5.2.3]]。
 
 #+BEGIN_QUOTE
 In this context, a cache has "understood" a request method or a response status code if it recognizes it and implements all specified caching-related behavior.
 #+END_QUOTE
 
+在这个场景中，一个缓存已经“理解”一个请求方法或者一个响应状态码，指的是缓存可以识别到它并实现了所有缓存相关的行为。
+
 #+BEGIN_QUOTE
 Note that, in normal operation, some caches will not store a response that has neither a cache validator nor an explicit expiration time, as such responses are not usually useful to store. However, caches are not prohibited from storing such responses.
 #+END_QUOTE
 
+需要注意的是，在常规操作中，如果一个响应既没有[[ruby:cache%20validator][缓存验证器]]也没有一个显式的过期时间，某些缓存将不会存储这种响应，因为存储这种响应通常是没有用处的。但是，缓存不会被禁止存储这种响应。
+
 ** 3.1. 存储不完整的响应 / Storing Incomplete Responses
 
 #+BEGIN_QUOTE
-A response message is considered complete when all of the octets indicated by the message framing ([RFC7230]) are received prior to the connection being closed. If the request method is GET, the response status code is 200 (OK), and the entire response header section has been received, a cache MAY store an incomplete response message body if the cache entry is recorded as incomplete. Likewise, a 206 (Partial Content) response MAY be stored as if it were an incomplete 200 (OK) cache entry. However, a cache MUST NOT store incomplete or partial-content responses if it does not support the Range and Content-Range header fields or if it does not understand the range units used in those fields.
+A response message is considered complete when all of the octets indicated by the message framing ([[[file:RFC7230.org][RFC7230]]]) are received prior to the connection being closed. If the request method is GET, the response status code is =200 (OK)=, and the entire response header section has been received, a cache *MAY* store an incomplete response message body if the cache entry is recorded as incomplete. Likewise, a =206 (Partial Content)= response *MAY* be stored as if it were an incomplete =200 (OK)= cache entry. However, a cache *MUST NOT* store incomplete or partial-content responses if it does not support the =Range= and =Content-Range= header fields or if it does not understand the range units used in those fields.
 #+END_QUOTE
 
+在连接被关闭之前，所有由[[ruby:message%20framing][消息分帧]]（【[[file:RFC7230.org][RFC7230]]】）所表明的[[ruby:octets][字节]]都已被接收到，那么，这个响应消息被认为是[[ruby:complete][完整的]]。如果请求方法是 GET，响应状态码是 =200 (OK)=，并且整个[[ruby:response%20header%20section][响应头部]]都已经被接收到，那么，缓存 *可以* 存储一个[[ruby:incomplete][不完整]]的[[ruby:response%20message%20body][响应消息体]]，如果对应的缓存条目是被记录为不完整的话。同样，一个 =206 (Partial Content)= 响应 *可以* 被缓存作为一个不完整的 =200 (OK)= 的缓存条目。但是，如果缓存并不支持 =Range= 和 =Content-Range= 头字段，或者它并不理解用在这些头字段中的[[ruby:range%20unit][范围单位]]，那么，缓存 *禁止* 存储[[ruby:incomplete][不完整]]的或者[[ruby:partial-content][部分内容]]的响应。
+
 #+BEGIN_QUOTE
-A cache MAY complete a stored incomplete response by making a subsequent range request ([RFC7233]) and combining the successful response with the stored entry, as defined in Section 3.3. A cache MUST NOT use an incomplete response to answer requests unless the response has been made complete or the request is partial and specifies a range that is wholly within the incomplete response. A cache MUST NOT send a partial response to a client without explicitly marking it as such using the 206 (Partial Content) status code.
+A cache *MAY* complete a stored incomplete response by making a subsequent range request ([[[file:RFC7233.org][RFC7233]]]) and combining the successful response with the stored entry, as defined in [[id:f00b0325-c5eb-4b84-8b33-3cc68031d045][Section 3.3]]. A cache *MUST NOT* use an incomplete response to answer requests unless the response has been made complete or the request is partial and specifies a range that is wholly within the incomplete response. A cache *MUST NOT* send a partial response to a client without explicitly marking it as such using the =206 (Partial Content)= status code.
 #+END_QUOTE
 
-** 3.2. Storing Responses to Authenticated Requests
+缓存 *可以* 通过发起后续[[ruby:range%20request][范围请求]]（【[[file:RFC7233.org][RFC7233]]】）并将[[ruby:successful%20response][成功响应]]和已存储的条目进行结合，来使一个已存储的不完整响应补充完整，正如[[id:f00b0325-c5eb-4b84-8b33-3cc68031d045][章节 3.3]] 所定义的。缓存 *禁止* 使用一个不完整响应来回应请求，除非这个响应已被补充完整，或者这个请求是一个[[ruby:partial%20request][部分请求]]并指定了一个范围且这个范围统统在该不完整响应以内。对于没有显式地使用 =206 (Partial Content)= 状态码进行标记的[[ruby:partial%20response][部分响应]]，缓存 *禁止* 发送这种[[ruby:partial%20response][部分响应]]到一个客户端。
+
+** 3.2. 存储回应给认证请求的响应 / Storing Responses to Authenticated Requests
+:PROPERTIES:
+:ID:       d6b247ad-fe70-4ddf-9bd3-ebc35ea6ac99
+:END:
 
 #+BEGIN_QUOTE
-A shared cache MUST NOT use a cached response to a request with an Authorization header field (Section 4.2 of [RFC7235]) to satisfy any subsequent request unless a cache directive that allows such responses to be stored is present in the response.
+A shared cache *MUST NOT* use a cached response to a request with an =Authorization= header field ([[id:14671c8e-e5a4-4f9d-ad1d-6460328ed7f5][Section 4.2]] of [RFC7235]) to satisfy any subsequent request unless a cache directive that allows such responses to be stored is present in the response.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-In this specification, the following Cache-Control response directives (Section 5.2.2) have such an effect: must-revalidate, public, and s-maxage.
-#+END_QUOTE
+如果共享缓存所缓存的一个响应的 key 对应于一个带有 =Authorization= 头字段（[[id:14671c8e-e5a4-4f9d-ad1d-6460328ed7f5][【RFC7235】章节 4.2]]）的请求，那么，共享缓存 *禁止* 使用这个已缓存的响应来满足任何后续的请求，除非这个响应里出现了一个缓存指令，该指令允许这个响应被存储。
 
 #+BEGIN_QUOTE
-Note that cached responses that contain the "must-revalidate" and/or "s-maxage" response directives are not allowed to be served stale (Section 4.2.4) by shared caches. In particular, a response with either "max-age=0, must-revalidate" or "s-maxage=0" cannot be used to satisfy a subsequent request without revalidating it on the origin server.
+In this specification, the following =Cache-Control= response directives ([[id:3b667767-3efc-4487-b0a4-5234780e5de2][Section 5.2.2]]) have such an effect: =must-revalidate=, =public=, and =s-maxage=.
+#+END_QUOTE
+
+在本规范中，以下 =Cache-Control= 响应指令（[[id:3b667767-3efc-4487-b0a4-5234780e5de2][章节 5.2.2]]）有上述这种影响：=must-revalidate=、=public=、以及 =s-maxage=。
+
+#+BEGIN_QUOTE
+Note that cached responses that contain the "=must-revalidate=" and/or "=s-maxage=" response directives are not allowed to be served stale ([[id:630361ae-a4e3-4fec-b337-8eff30325ddf][Section 4.2.4]]) by shared caches. In particular, a response with either "=max-age=0, must-revalidate=" or "=s-maxage=0=" cannot be used to satisfy a subsequent request without revalidating it on the origin server.
+#+END_QUOTE
+
+需要注意的是，如果已缓存的响应包含有 =must-revalidate= 并且/或者 =s-maxage= 响应指令，那么，这些缓存响应是不允许被共享缓存用来[[ruby:serve%20stale][提供陈旧响应]]的（[[id:630361ae-a4e3-4fec-b337-8eff30325ddf][章节 4.2.4]]）。实践中，一个响应，如果它带有 =max-age=0, must-revalidate=，或者带有 =s-maxage=0=，那么，在没有经过源服务器[[ruby:revalidating][重新验证]]的情况下，它是不能用来满足后续请求的。
+
+#+BEGIN_QUOTE
+译注：所谓 "serve stale"，指的是：提供陈旧的缓存响应来作为响应，即使这个已缓存的响应已经过期。对于一个请求，当对应的已缓存的响应已经过期（stale），并且源服务器无响应或者返回一个错误，这时候，缓存服务器返回这个 stale 的响应来作为回应，而不是返回错误。在大多数情况下，与其响应超时或返回其他错误，倒不如返回给用户一个能用的但过期的响应。
 #+END_QUOTE
 
 ** 3.3. 结合部分内容 / Combining Partial Content
+:PROPERTIES:
+:ID:       f00b0325-c5eb-4b84-8b33-3cc68031d045
+:END:
 
 #+BEGIN_QUOTE
-A response might transfer only a partial representation if the connection closed prematurely or if the request used one or more Range specifiers ([RFC7233]). After several such transfers, a cache might have received several ranges of the same representation. A cache MAY combine these ranges into a single stored response, and reuse that response to satisfy later requests, if they all share the same strong validator and the cache complies with the client requirements in Section 4.3 of [RFC7233].
+A response might transfer only a partial representation if the connection closed prematurely or if the request used one or more =Range= specifiers ([[[file:RFC7233.org][RFC7233]]]). After several such transfers, a cache might have received several ranges of the same representation. A cache *MAY* combine these ranges into a single stored response, and reuse that response to satisfy later requests, if they all share the same strong validator and the cache complies with the client requirements in [[id:a995c03a-651b-4bd1-9429-30f97b353acd][Section 4.3]] of [RFC7233].
 #+END_QUOTE
+
+如果连接被过早地关闭了，或者请求使用了一个或多个 Range 规格，那么，一个响应可能只传输一个表示形式的一部分（【[[file:RFC7233.org][RFC7233]]】）。历经多次这样的传输以后，缓存可能已接收到同一个表示形式的许多范围。缓存 *可以* 将这些范围合并为单个已存储的响应，并复用这个响应来满足接下来的请求，如果这些请求都共享同一个强验证器，并且缓存遵从[[id:a995c03a-651b-4bd1-9429-30f97b353acd][【RFC7233】章节 4.3]] 对于客户端方面的要求的话。
 
 #+BEGIN_QUOTE
-When combining the new response with one or more stored responses, a cache MUST:
+When combining the new response with one or more stored responses, a cache *MUST*:
 
-- delete any Warning header fields in the stored response with warn-code 1xx (see Section 5.5);
-- retain any Warning header fields in the stored response with warn-code 2xx; and,
-- use other header fields provided in the new response, aside from Content-Range, to replace all instances of the corresponding header fields in the stored response.
+- delete any =Warning= header fields in the stored response with warn-code =1xx= (see Section 5.5);
+- retain any =Warning= header fields in the stored response with warn-code =2xx=; and,
+- use other header fields provided in the new response, aside from =Content-Range=, to replace all instances of the corresponding header fields in the stored response.
 #+END_QUOTE
+
+当将一个或多个已存储的响应结合成一个新的响应的时候，缓存 *必须* 对这个新响应做如下处理：
+
+- 删除在已存储的响应里警告码为 =1xx= 的任何 =Warning= 头字段（见章节 5.5）；
+- 保留在已存储的响应里警告码为 =2xx= 的任何 =Warning= 头字段；并且
+- 使用新响应所提供的其他头字段，除以 =Content-Range= 以外，来替换所有在已存储的响应对应的头字段。
 
 * 4. 从缓存构造响应 / Constructing Responses from Caches
 
@@ -373,8 +428,8 @@ When calculating freshness, to avoid common problems in date parsing:
 
 - Although all date formats are specified to be case-sensitive, a cache recipient SHOULD match day, week, and time-zone names case-insensitively.
 - If a cache recipient's internal implementation of time has less resolution than the value of an HTTP-date, the recipient MUST internally represent a parsed Expires date as the nearest time equal to or earlier than the received value.
-- A cache recipient MUST NOT allow local time zones to influence the calculation or comparison of an age or expiration time.
-- A cache recipient SHOULD consider a date with a zone abbreviation other than GMT or UTC to be invalid for calculating expiration.
+- A cache recipient *MUST NOT* allow local time zones to influence the calculation or comparison of an age or expiration time.
+- A cache recipient *SHOULD* consider a date with a zone abbreviation other than GMT or UTC to be invalid for calculating expiration.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -476,29 +531,31 @@ The current_age of a stored response can then be calculated by adding the amount
   current_age = corrected_initial_age + resident_time;
 #+END_SRC
 
-*** 4.2.4. Serving Stale Responses
+*** 4.2.4. 提供陈旧的响应 / Serving Stale Responses
 :PROPERTIES:
 :ID:       630361ae-a4e3-4fec-b337-8eff30325ddf
 :END:
 
 #+BEGIN_QUOTE
-A "stale" response is one that either has explicit expiry information or is allowed to have heuristic expiry calculated, but is not fresh according to the calculations in Section 4.2.
+A "stale" response is one that either has explicit expiry information or is allowed to have heuristic expiry calculated, but is not fresh according to the calculations in [[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][Section 4.2]].
+#+END_QUOTE
+
+一个 "stale"（陈旧的、不新鲜的）的响应是这样一种响应：或者带有显式的[[ruby:expiry%20information][过期信息]]或者允许去进行启发式的[[ruby:expiry%20calculated][过期计算]]，但根据[[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][章节 4.2]] 的计算，已不再[[ruby:fresh][新鲜]]。
+
+#+BEGIN_QUOTE
+A cache *MUST NOT* generate a stale response if it is prohibited by an explicit in-protocol directive (e.g., by a "=no-store=" or "=no-cache=" cache directive, a "=must-revalidate=" cache-response-directive, or an applicable "=s-maxage=" or "=proxy-revalidate=" cache-response-directive; see Section 5.2.2).
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-A cache MUST NOT generate a stale response if it is prohibited by an explicit in-protocol directive (e.g., by a "no-store" or "no-cache" cache directive, a "must-revalidate" cache-response-directive, or an applicable "s-maxage" or "proxy-revalidate" cache-response-directive; see Section 5.2.2).
+A cache =MUST NOT= send stale responses unless it is disconnected (i.e., it cannot contact the origin server or otherwise find a forward path) or doing so is explicitly allowed (e.g., by the =max-stale= request directive; see Section 5.2.1).
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-A cache MUST NOT send stale responses unless it is disconnected (i.e., it cannot contact the origin server or otherwise find a forward path) or doing so is explicitly allowed (e.g., by the max-stale request directive; see Section 5.2.1).
+A cache *SHOULD* generate a =Warning= header field with the =110= warn-code (see Section 5.5.1) in stale responses. Likewise, a cache *SHOULD* generate a =112= warn-code (see Section 5.5.3) in stale responses if the cache is disconnected.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-A cache SHOULD generate a Warning header field with the 110 warn-code (see Section 5.5.1) in stale responses. Likewise, a cache SHOULD generate a 112 warn-code (see Section 5.5.3) in stale responses if the cache is disconnected.
-#+END_QUOTE
-
-#+BEGIN_QUOTE
-A cache SHOULD NOT generate a new Warning header field when forwarding a response that does not have an Age header field, even if the response is already stale. A cache need not validate a response that merely became stale in transit.
+A cache *SHOULD NOT* generate a new =Warning= header field when forwarding a response that does not have an =Age= header field, even if the response is already stale. A cache need not validate a response that merely became stale in transit.
 #+END_QUOTE
 
 ** 4.3. Validation
@@ -791,6 +848,9 @@ The "only-if-cached" request directive indicates that the client only wishes to 
 #+END_QUOTE
 
 *** 5.2.2. Response Cache-Control Directives
+:PROPERTIES:
+:ID:       3b667767-3efc-4487-b0a4-5234780e5de2
+:END:
 
 **** 5.2.2.1. must-revalidate
 
@@ -853,12 +913,18 @@ The "no-transform" response directive indicates that an intermediary (regardless
 #+END_QUOTE
 
 **** 5.2.2.5. public
+:PROPERTIES:
+:ID:       ad0dea37-836f-4c82-9241-3e6ce0d6fc51
+:END:
 
 #+BEGIN_QUOTE
 The "public" response directive indicates that any cache MAY store the response, even if the response would normally be non-cacheable or cacheable only within a private cache. (See Section 3.2 for additional details related to the use of public in response to a request containing Authorization, and Section 3 for details of how public affects responses that would normally not be stored, due to their status codes not being defined as cacheable by default; see Section 4.2.2.)
 #+END_QUOTE
 
 **** 5.2.2.6. private
+:PROPERTIES:
+:ID:       f740b5a2-4331-423d-b196-137d9b9e4d02
+:END:
 
 #+BEGIN_QUOTE
 Argument syntax:
@@ -895,6 +961,9 @@ The "proxy-revalidate" response directive has the same meaning as the must-reval
 #+END_QUOTE
 
 **** 5.2.2.8. max-age
+:PROPERTIES:
+:ID:       eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb
+:END:
 
 #+BEGIN_QUOTE
 Argument syntax:
@@ -913,6 +982,9 @@ This directive uses the token form of the argument syntax: e.g., 'max-age=5' not
 #+END_QUOTE
 
 **** 5.2.2.9. s-maxage
+:PROPERTIES:
+:ID:       5296bb87-1709-4827-bef2-69177bbe3544
+:END:
 
 #+BEGIN_QUOTE
 Argument syntax:
@@ -931,6 +1003,9 @@ This directive uses the token form of the argument syntax: e.g., 's-maxage=10' n
 #+END_QUOTE
 
 *** 5.2.3. Cache Control Extensions
+:PROPERTIES:
+:ID:       eb7efc79-3c1d-439b-b0b3-d901848ad800
+:END:
 
 #+BEGIN_QUOTE
 The Cache-Control header field can be extended through the use of one or more cache-extension tokens, each with an optional value. A cache MUST ignore unrecognized cache directives.

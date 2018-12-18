@@ -701,39 +701,42 @@ The following are examples of =Content-Range= values in which the selected repre
     Content-Range: bytes 734-1233/1234
   #+END_EXAMPLE
 
-** 4.3. 重组范围 / Combining Ranges
+** 4.3. 结合范围 / Combining Ranges
+:PROPERTIES:
+:ID:       a995c03a-651b-4bd1-9429-30f97b353acd
+:END:
 
 #+BEGIN_QUOTE
 A response might transfer only a subrange of a representation if the connection closed prematurely or if the request used one or more =Range= specifications. After several such transfers, a client might have received several ranges of the same representation. These ranges can only be safely combined if they all have in common the same strong validator ([[id:d232decc-3720-4edf-bbfa-df942f60aa50][Section 2.1]] of [RFC7232]).
 #+END_QUOTE
 
-如果连接被过早地关闭了，或者请求使用了一个或多个 =Range= 规格，那么，一个响应可能只对一个表示形式的一个[[ruby:subrange][子范围]]进行传输。历经多次这样的传输以后，客户端可能已接收到同一个表示形式的许多范围。这些范围只有在它们都具有同一个[[ruby:strong%20validator][强验证器]]（[[id:d232decc-3720-4edf-bbfa-df942f60aa50][【RFC7232】章节 2.1]]）的时候才能够被安全地[[ruby:combined][重组]]起来。
+如果连接被过早地关闭了，或者请求使用了一个或多个 =Range= 规格，那么，一个响应可能只对一个表示形式的一个[[ruby:subrange][子范围]]进行传输。历经多次这样的传输以后，客户端可能已接收到同一个表示形式的许多范围。这些范围只有在它们都具有同一个[[ruby:strong%20validator][强验证器]]（[[id:d232decc-3720-4edf-bbfa-df942f60aa50][【RFC7232】章节 2.1]]）的时候才能够被安全地[[ruby:combined][结合]]起来。
 
 #+BEGIN_QUOTE
 A client that has received multiple partial responses to GET requests on a target resource *MAY* combine those responses into a larger continuous range if they share the same strong validator.
 #+END_QUOTE
 
-在向一个目标资源发起多次 GET 请求后，客户端接收到多个[[ruby:partial%20responses][部分响应]]，那么，客户端 *可以* 将这些响应重组为一个大的连续的范围，如果它们共享同一个强验证器的话。
+在向一个目标资源发起多次 GET 请求后，客户端接收到多个[[ruby:partial%20responses][部分响应]]，那么，客户端 *可以* 将这些响应结合为一个大的连续的范围，如果它们共享同一个强验证器的话。
 
 #+BEGIN_QUOTE
 If the most recent response is an incomplete =200 (OK)= response, then the header fields of that response are used for any combined response and replace those of the matching stored responses.
 #+END_QUOTE
 
-如果最近一次响应是一个不完整的 =200 (OK)= 响应，那么，这个响应的头字段会被用作任何重组后的响应，并替换掉与已存储的响应相匹配的那些头字段。
+如果最近一次响应是一个不完整的 =200 (OK)= 响应，那么，这个响应的头字段会被用作任何结合后的响应，并替换掉与已存储的响应相匹配的那些头字段。
 
 #+BEGIN_QUOTE
 If the most recent response is a =206 (Partial Content)= response and at least one of the matching stored responses is a =200 (OK)=, then the combined response header fields consist of the most recent =200= response's header fields. If all of the matching stored responses are =206= responses, then the stored response with the most recent header fields is used as the source of header fields for the combined response, except that the client *MUST* use other header fields provided in the new response, aside from =Content-Range=, to replace all instances of the corresponding header fields in the stored response.
 #+END_QUOTE
 
-如果最近一次响应是一个 =206 (Partial Content)= 响应，并且与之匹配的已存储的响应中至少有一个的状态码是 =200 (OK)=，那么，重组后的响应的头字段由最后一次 =200= 响应的那些头字段组成。如果与之匹配的所有已存储的响应都是 =206= 响应，那么，已存储的响应中，以具有最新的头字段的那个响应来作为重组后的响应的头字段的来源，除了以下情况的头字段以外：客户端 *必须* 使用提供自新响应的（除了 =Content-Range= 以外还有）其他的头字段来替换有已存储的响应中所有对应的头字段的实际值。
+如果最近一次响应是一个 =206 (Partial Content)= 响应，并且与之匹配的已存储的响应中至少有一个的状态码是 =200 (OK)=，那么，结合后的响应的头字段由最后一次 =200= 响应的那些头字段组成。如果与之匹配的所有已存储的响应都是 =206= 响应，那么，已存储的响应中，以具有最新的头字段的那个响应来作为结合后的响应的头字段的来源，除了以下情况的头字段以外：客户端 *必须* 使用提供自新响应的（除了 =Content-Range= 以外还有）其他的头字段来替换有已存储的响应中所有对应的头字段的实际值。
 
 #+BEGIN_QUOTE
 The combined response message body consists of the union of partial content ranges in the new response and each of the selected responses. If the union consists of the entire range of the representation, then the client *MUST* process the combined response as if it were a complete =200 (OK)= response, including a =Content-Length= header field that reflects the complete length. Otherwise, the client *MUST* process the set of continuous ranges as one of the following: an incomplete =200 (OK)= response if the combined response is a prefix of the representation, a single =206 (Partial Content)= response containing a multipart/byteranges body, or multiple =206 (Partial Content)= responses, each with one continuous range that is indicated by a =Content-Range= header field.
 #+END_QUOTE
 
-重组后的响应消息体由新响应内的部分内容范围以及选定的响应的每个部分联合组成。如果这个联合是由表示形式的完整范围组成，那么，客户端 *必须* 像处理一个完整的 =200 (OK)= 响应一样来处理这个重组后的响应，包括使用一个 =Content-Length= 头字段来反映完整的长度。否则，客户端 *必须* 按以下的方式之一来处理连续的范围：
+结合后的响应消息体由新响应内的部分内容范围以及选定的响应的每个部分联合组成。如果这个联合是由表示形式的完整范围组成，那么，客户端 *必须* 像处理一个完整的 =200 (OK)= 响应一样来处理这个结合后的响应，包括使用一个 =Content-Length= 头字段来反映完整的长度。否则，客户端 *必须* 按以下的方式之一来处理连续的范围：
 
-- 一个不完整的 =200 (OK)= 响应，如果重组后的响应是表示形式的开头部分
+- 一个不完整的 =200 (OK)= 响应，如果结合后的响应是表示形式的开头部分
 - 一个单个的 =206 (Partial Content)= 响应，包含一个 multipart/byteranges 主体部分
 - 多个 =206 (Partial Content)= 响应，其中每个都是一个连续的范围并且都由一个 =Content-Range= 头字段来指明。
 
