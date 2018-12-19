@@ -204,7 +204,7 @@ A cache *MUST NOT* store a response to any request, unless:
 - [[ruby:response%20status%20code][响应状态码]]为缓存所理解，并且：
 - =no-store= [[ruby:cache%20directive][缓存指令]]（[[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][章节 5.2]]）没有出现在请求或者响应的头字段里，并且：
 - =private= 响应指令（[[id:f740b5a2-4331-423d-b196-137d9b9e4d02][章节 5.2.2.6]]）没有出现在响应里，如果这是个共享缓存的话，并且：
-- =Authorization= 头字段（[[id:14671c8e-e5a4-4f9d-ad1d-6460328ed7f5][【RFC7235】章节 4.2]]）没有出现在请求里，如果这是个共享缓存的话，除非响应显式允许它（[[id:d6b247ad-fe70-4ddf-9bd3-ebc35ea6ac99][章节 3.2]]），并且：
+- =Authorization= 头字段（[[id:14671c8e-e5a4-4f9d-ad1d-6460328ed7f5][【RFC7235】章节 4.2]]）没有出现在请求里，如果这是个共享缓存的话，除非响应明确允许它（[[id:d6b247ad-fe70-4ddf-9bd3-ebc35ea6ac99][章节 3.2]]），并且：
 - 响应符合以下情况之一：
   - 包含一个 =Expires= 头字段（[[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][章节 5.3]]），或者：
   - 包含一个 =max-age= 响应指令（[[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][章节 5.2.2.8]]），或者：
@@ -229,7 +229,7 @@ In this context, a cache has "understood" a request method or a response status 
 Note that, in normal operation, some caches will not store a response that has neither a cache validator nor an explicit expiration time, as such responses are not usually useful to store. However, caches are not prohibited from storing such responses.
 #+END_QUOTE
 
-需要注意的是，在常规操作中，如果一个响应既没有[[ruby:cache%20validator][缓存验证器]]也没有一个显式的过期时间，某些缓存将不会存储这种响应，因为存储这种响应通常是没有用处的。但是，缓存不会被禁止存储这种响应。
+需要注意的是，在常规操作中，如果一个响应既没有[[ruby:cache%20validator][缓存验证器]]也没有一个[[ruby:explicit%20expiration%20time][明确过期时间]]，某些缓存将不会存储这种响应，因为存储这种响应通常是没有用处的。但是，缓存不会被禁止存储这种响应。
 
 ** 3.1. 存储不完整的响应 / Storing Incomplete Responses
 
@@ -243,7 +243,7 @@ A response message is considered complete when all of the octets indicated by th
 A cache *MAY* complete a stored incomplete response by making a subsequent range request ([[[file:RFC7233.org][RFC7233]]]) and combining the successful response with the stored entry, as defined in [[id:f00b0325-c5eb-4b84-8b33-3cc68031d045][Section 3.3]]. A cache *MUST NOT* use an incomplete response to answer requests unless the response has been made complete or the request is partial and specifies a range that is wholly within the incomplete response. A cache *MUST NOT* send a partial response to a client without explicitly marking it as such using the =206 (Partial Content)= status code.
 #+END_QUOTE
 
-缓存 *可以* 通过发起后续[[ruby:range%20request][范围请求]]（【[[file:RFC7233.org][RFC7233]]】）并将[[ruby:successful%20response][成功响应]]和已存储的条目进行结合，来使一个已存储的不完整响应补充完整，正如[[id:f00b0325-c5eb-4b84-8b33-3cc68031d045][章节 3.3]] 所定义的。缓存 *禁止* 使用一个不完整响应来回应请求，除非这个响应已被补充完整，或者这个请求是一个[[ruby:partial%20request][部分请求]]并指定了一个范围且这个范围统统在该不完整响应以内。对于没有显式地使用 =206 (Partial Content)= 状态码进行标记的[[ruby:partial%20response][部分响应]]，缓存 *禁止* 发送这种[[ruby:partial%20response][部分响应]]到一个客户端。
+缓存 *可以* 通过发起后续[[ruby:range%20request][范围请求]]（【[[file:RFC7233.org][RFC7233]]】）并将[[ruby:successful%20response][成功响应]]和已存储的条目进行结合，来使一个已存储的不完整响应补充完整，正如[[id:f00b0325-c5eb-4b84-8b33-3cc68031d045][章节 3.3]] 所定义的。缓存 *禁止* 使用一个不完整响应来回应请求，除非这个响应已被补充完整，或者这个请求是一个[[ruby:partial%20request][部分请求]]并指定了一个范围且这个范围统统在该不完整响应以内。对于没有明确地使用 =206 (Partial Content)= 状态码进行标记的[[ruby:partial%20response][部分响应]]，缓存 *禁止* 发送这种[[ruby:partial%20response][部分响应]]到一个客户端。
 
 ** 3.2. 存储回应给认证请求的响应 / Storing Responses to Authenticated Requests
 :PROPERTIES:
@@ -269,7 +269,7 @@ Note that cached responses that contain the "=must-revalidate=" and/or "=s-maxag
 需要注意的是，如果已缓存的响应包含有 =must-revalidate= 并且/或者 =s-maxage= 响应指令，那么，这些缓存响应是不允许被共享缓存用来[[ruby:serve%20stale][提供陈旧响应]]的（[[id:630361ae-a4e3-4fec-b337-8eff30325ddf][章节 4.2.4]]）。实践中，一个响应，如果它带有 =max-age=0, must-revalidate=，或者带有 =s-maxage=0=，那么，在没有经过源服务器[[ruby:revalidating][重新验证]]的情况下，它是不能用来满足后续请求的。
 
 #+BEGIN_QUOTE
-译注：所谓 "serve stale"，指的是：提供陈旧的缓存响应来作为响应，即使这个已缓存的响应已经过期。对于一个请求，当对应的已缓存的响应已经过期（stale），并且源服务器无响应或者返回一个错误，这时候，缓存服务器返回这个 stale 的响应来作为回应，而不是返回错误。在大多数情况下，与其响应超时或返回其他错误，倒不如返回给用户一个能用的但过期的响应。
+译注：所谓 "serve stale"，指的是：提供陈旧的缓存响应来作为响应，即使这个已缓存的响应已经过期。对于一个请求，当对应的已缓存的响应已经过期（stale），并且源服务器无响应或者响应一个错误，这时候，缓存服务器返回这个 stale 的响应来作为回应，而不是返回错误。在大多数情况下，与其响应超时或返回其他错误，倒不如返回给用户一个能用的但过期的响应。
 #+END_QUOTE
 
 ** 3.3. 结合部分内容 / Combining Partial Content
@@ -438,58 +438,87 @@ A fresh response is one whose age has not yet exceeded its freshness lifetime. C
 A response's freshness lifetime is the length of time between its generation by the origin server and its expiration time. An explicit expiration time is the time at which the origin server intends that a stored response can no longer be used by a cache without further validation, whereas a heuristic expiration time is assigned by a cache when no explicit expiration time is available.
 #+END_QUOTE
 
-响应的[[ruby:freshness%20lifetime][保鲜期]]是从它被源服务器生成开始到它的[[ruby:expiration%20time][过期时间]]之间的时间长度。一个[[ruby:explicit%20expiration%20time][显式的过期时间]]，是源服务器打算让一个已存储的响应，在没有进一步的验证的情况下，不再能够被缓存所使用的那个时间点。与之相对，一个[[ruby:heuristic%20expiration%20time][启发式的过期时间]]，是当没有可用的显式的过期时间的时候，由缓存所分配的。
+响应的[[ruby:freshness%20lifetime][保鲜期]]是从它被源服务器生成开始到它的[[ruby:expiration%20time][过期时间]]之间的时间长度。[[ruby:explicit%20expiration%20time][明确过期时间]]，是源服务器打算让一个已存储的响应，在没有进一步的验证的情况下，不再能够被缓存所使用的那个时间点。与之相对，[[ruby:heuristic%20expiration%20time][启发式过期时间]]，是当没有可用的[[ruby:explicit%20expiration%20time][明确过期时间]]的时候由缓存所分配的过期时间。
+
+#+BEGIN_QUOTE
+译注：[[ruby:explicit%20expiration%20time][明确过期时间]]与[[ruby:heuristic%20expiration%20time][启发式过期时间]]都是专业术语，下文会多次引用这两个术语。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 A response's age is the time that has passed since it was generated by, or successfully validated with, the origin server.
 #+END_QUOTE
 
+一个响应的“年龄”指的是从它被源服务器生成开始，或者从它被源服务器成功验证开始，已经过去了多长时间。
+
 #+BEGIN_QUOTE
 When a response is "fresh" in the cache, it can be used to satisfy subsequent requests without contacting the origin server, thereby improving efficiency.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The primary mechanism for determining freshness is for an origin server to provide an explicit expiration time in the future, using either the Expires header field (Section 5.3) or the max-age response directive (Section 5.2.2.8). Generally, origin servers will assign future explicit expiration times to responses in the belief that the representation is not likely to change in a semantically significant way before the expiration time is reached.
-#+END_QUOTE
+当一个响应在缓存中是“新鲜的”，那么，它能够被用于满足后续的请求，而不需要事先与源服务器取得联系。
 
 #+BEGIN_QUOTE
-If an origin server wishes to force a cache to validate every request, it can assign an explicit expiration time in the past to indicate that the response is already stale. Compliant caches will normally validate a stale cached response before reusing it for subsequent requests (see Section 4.2.4).
+The primary mechanism for determining freshness is for an origin server to provide an explicit expiration time in the future, using either the =Expires= header field ([[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][Section 5.3]]) or the =max-age= response directive ([[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][Section 5.2.2.8]]). Generally, origin servers will assign future explicit expiration times to responses in the belief that the representation is not likely to change in a semantically significant way before the expiration time is reached.
 #+END_QUOTE
 
+测定新鲜度的主要机制是源服务器提供一个未来的[[ruby:explicit%20expiration%20time][明确过期时间]]，可以使用 =Expires= 头字段（[[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][章节 5.3]]）来提供，也可以使用 =max-age= 响应指令（[[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][章节 5.2.2.8]]）来提供。通常，源服务器会为响应分配一个未来的明确过期时间，认为在过期时间来临之前，表示形式不太可能会有语义上的重大变化。
+
 #+BEGIN_QUOTE
-Since origin servers do not always provide explicit expiration times, caches are also allowed to use a heuristic to determine an expiration time under certain circumstances (see Section 4.2.2).
+If an origin server wishes to force a cache to validate every request, it can assign an explicit expiration time in the past to indicate that the response is already stale. Compliant caches will normally validate a stale cached response before reusing it for subsequent requests (see [[id:630361ae-a4e3-4fec-b337-8eff30325ddf][Section 4.2.4]]).
 #+END_QUOTE
+
+如果源服务器希望强制让缓存每一次请求都要向源服务器进行验证，那么，它可以分配一个过去的[[ruby:explicit%20expiration%20time][明确过期时间]]，来表明这个响应已经是[[ruby:stale][陈旧的]]。遵从规范的缓存将会在复用一个陈旧的已缓存的响应来满足后续请求之前，正常地验证它（见[[id:630361ae-a4e3-4fec-b337-8eff30325ddf][章节 4.2.4]]）。
+
+#+BEGIN_QUOTE
+Since origin servers do not always provide explicit expiration times, caches are also allowed to use a heuristic to determine an expiration time under certain circumstances (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]]).
+#+END_QUOTE
+
+因为源服务器并不总是会提供[[ruby:explicit%20expiration%20time][明确过期时间]]的，因此，在某种情况下，规范还允许缓存使用[[ruby:heuristic][启发式方法]]来确定一个过期时间（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][章节 4.2.2]]）。
 
 #+BEGIN_QUOTE
 The calculation to determine if a response is fresh is:
 #+END_QUOTE
+
+确定一个响应是否[[ruby:fresh][新鲜]]的计算方法为：
 
 #+BEGIN_SRC text
   response_is_fresh = (freshness_lifetime > current_age)
 #+END_SRC
 
 #+BEGIN_QUOTE
-freshness_lifetime is defined in Section 4.2.1; current_age is defined in Section 4.2.3.
+=freshness_lifetime= is defined in [[id:297b33de-eb1e-4988-b28f-b21e8ecc5ffa][Section 4.2.1]]; =current_age= is defined in [[id:80278eea-c1e4-478a-b972-ca42270c1fd0][Section 4.2.3]].
 #+END_QUOTE
 
+=freshness_lifetime= 定义在[[id:297b33de-eb1e-4988-b28f-b21e8ecc5ffa][章节 4.2.1]]，=current_age= 定义在[[id:80278eea-c1e4-478a-b972-ca42270c1fd0][章节 4.2.3]]。
+
 #+BEGIN_QUOTE
-Clients can send the max-age or min-fresh cache directives in a request to constrain or relax freshness calculations for the corresponding response (Section 5.2.1).
+Clients can send the =max-age= or =min-fresh= cache directives in a request to constrain or relax freshness calculations for the corresponding response ([[id:a586b298-d3ba-44df-ab8f-69ad432b93a2][Section 5.2.1]]).
 #+END_QUOTE
+
+客户端能够在请求中发送 =max-age= 或者 =min-fresh= 缓存指令来限制或放松对应响应的新鲜度计算（[[id:a586b298-d3ba-44df-ab8f-69ad432b93a2][章节 5.2.1]]）。
 
 #+BEGIN_QUOTE
 When calculating freshness, to avoid common problems in date parsing:
 
-- Although all date formats are specified to be case-sensitive, a cache recipient SHOULD match day, week, and time-zone names case-insensitively.
-- If a cache recipient's internal implementation of time has less resolution than the value of an HTTP-date, the recipient MUST internally represent a parsed Expires date as the nearest time equal to or earlier than the received value.
+- Although all date formats are specified to be case-sensitive, a cache recipient *SHOULD* match day, week, and time-zone names case-insensitively.
+- If a cache recipient's internal implementation of time has less resolution than the value of an =HTTP-date=, the recipient *MUST* internally represent a parsed =Expires= date as the nearest time equal to or earlier than the received value.
 - A cache recipient *MUST NOT* allow local time zones to influence the calculation or comparison of an age or expiration time.
 - A cache recipient *SHOULD* consider a date with a zone abbreviation other than GMT or UTC to be invalid for calculating expiration.
 #+END_QUOTE
 
+当计算新鲜度的时候，为了避免日期解析的常见问题：
+
+- 虽然所有日期格式都被指定为[[ruby:case-sensitive][区分大小写]]，但是，[[ruby:cache%20recipient][缓存接收端]] *应当* 使用[[ruby:case-insensitive][不区分大小写]]的方式来匹配[[ruby:day][日]]、[[ruby:week][周]]、以及[[ruby:time-zone][时区]]的名称。
+- 如果缓存接收端关于时间的内部实现的精度低于 =HTTP-date= 的值的精度，那么，接收端 *必须* 以早于或等于所接收到的值的最接近的时间来内部表示一个解析过的 =Expires=。
+- 缓存接收端 *禁止* 允许本地时区来影响[[ruby:age%20or%20expiration%20time][年龄或过期时间]]的计算或对比。
+- 缓存接收端 *应当* 将一个带有时区缩写不是 GMT 或 UTC 的一个日期视为无效于过期时间计算。
+
 #+BEGIN_QUOTE
-Note that freshness applies only to cache operation; it cannot be used to force a user agent to refresh its display or reload a resource. See Section 6 for an explanation of the difference between caches and history mechanisms.
+Note that freshness applies only to cache operation; it cannot be used to force a user agent to refresh its display or reload a resource. See [[id:0d1aabac-3fc4-409f-b30a-fbc82c359bc9][Section 6]] for an explanation of the difference between caches and history mechanisms.
 #+END_QUOTE
 
-*** 4.2.1. Calculating Freshness Lifetime
+需要注意的是，新鲜度仅适用于缓存操作，它并不能被用于强制一个用户代理去[[ruby:refresh][刷新]]它的展示或者[[ruby:reload][重新加载]]一个资源。关于缓存与历史记录的机制的不同点的解释，见[[id:0d1aabac-3fc4-409f-b30a-fbc82c359bc9][章节 6]]。
+
+*** 4.2.1. 计算保鲜期 / Calculating Freshness Lifetime
 :PROPERTIES:
 :ID:       297b33de-eb1e-4988-b28f-b21e8ecc5ffa
 :END:
@@ -511,7 +540,7 @@ Note that this calculation is not vulnerable to clock skew, since all of the inf
 When there is more than one value present for a given directive (e.g., two Expires header fields, multiple Cache-Control: max-age directives), the directive's value is considered invalid. Caches are encouraged to consider responses that have invalid freshness information to be stale.
 #+END_QUOTE
 
-*** 4.2.2. Calculating Heuristic Freshness
+*** 4.2.2. 计算启发式新鲜度 / Calculating Heuristic Freshness
 :PROPERTIES:
 :ID:       9bcea6ca-bab6-4324-9cdb-cf7855aeba01
 :END:
@@ -536,7 +565,7 @@ When a heuristic is used to calculate freshness lifetime, a cache SHOULD generat
 *Note:* Section 13.9 of [RFC2616] prohibited caches from calculating heuristic freshness for URIs with query components (i.e., those containing '?'). In practice, this has not been widely implemented. Therefore, origin servers are encouraged to send explicit directives (e.g., Cache-Control: no-cache) if they wish to preclude caching.
 #+END_QUOTE
 
-*** 4.2.3. Calculating Age
+*** 4.2.3. 计算年龄 / Calculating Age
 :PROPERTIES:
 :ID:       80278eea-c1e4-478a-b972-ca42270c1fd0
 :END:
@@ -599,7 +628,7 @@ The =current_age= of a stored response can then be calculated by adding the amou
 A "stale" response is one that either has explicit expiry information or is allowed to have heuristic expiry calculated, but is not fresh according to the calculations in [[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][Section 4.2]].
 #+END_QUOTE
 
-一个 "stale"（陈旧的、不新鲜的）的响应是这样一种响应：或者带有显式的[[ruby:expiry%20information][过期信息]]或者允许去进行启发式的[[ruby:expiry%20calculated][过期计算]]，但根据[[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][章节 4.2]] 的计算，已不再[[ruby:fresh][新鲜]]。
+一个 "stale"（陈旧的、不新鲜的）的响应是这样一种响应：或者带有明确的[[ruby:expiry%20information][过期信息]]或者允许去进行启发式的[[ruby:expiry%20calculated][过期计算]]，但根据[[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][章节 4.2]] 的计算，已不再[[ruby:fresh][新鲜]]。
 
 #+BEGIN_QUOTE
 A cache *MUST NOT* generate a stale response if it is prohibited by an explicit in-protocol directive (e.g., by a "=no-store=" or "=no-cache=" cache directive, a "=must-revalidate=" cache-response-directive, or an applicable "=s-maxage=" or "=proxy-revalidate=" cache-response-directive; see Section 5.2.2).
@@ -1299,6 +1328,9 @@ The warning text can include arbitrary information to be presented to a human us
 #+END_QUOTE
 
 * 6. 历史列表 / History Lists
+:PROPERTIES:
+:ID:       0d1aabac-3fc4-409f-b30a-fbc82c359bc9
+:END:
 
 #+BEGIN_QUOTE
 User agents often have history mechanisms, such as "Back" buttons and history lists, that can be used to redisplay a representation retrieved earlier in a session.
