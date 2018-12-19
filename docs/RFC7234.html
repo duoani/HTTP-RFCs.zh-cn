@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-18 Tue 19:13 -->
+<!-- 2018-12-19 Wed 18:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7234: Hypertext Transfer Protocol (HTTP/1.1): Caching</title>
@@ -420,9 +420,9 @@ for the JavaScript code in this tag.
 <li><a href="#org64a44b1">4.1. 使用 Vary 来计算次要缓存键 / Calculating Secondary Keys with Vary</a></li>
 <li><a href="#org85ed084">4.2. 新鲜度 / Freshness</a>
 <ul>
-<li><a href="#org546ba65">4.2.1. Calculating Freshness Lifetime</a></li>
-<li><a href="#orgafe6b84">4.2.2. Calculating Heuristic Freshness</a></li>
-<li><a href="#org8a496e1">4.2.3. Calculating Age</a></li>
+<li><a href="#org4e92c7f">4.2.1. 计算保鲜期 / Calculating Freshness Lifetime</a></li>
+<li><a href="#org4c48fcc">4.2.2. 计算启发式新鲜度 / Calculating Heuristic Freshness</a></li>
+<li><a href="#org3fee265">4.2.3. 计算年龄 / Calculating Age</a></li>
 <li><a href="#orga71285a">4.2.4. 提供陈旧的响应 / Serving Stale Responses</a></li>
 </ul>
 </li>
@@ -808,7 +808,7 @@ A cache <b>MUST NOT</b> store a response to any request, unless:
 <li>contains a <code>max-age</code> response directive (see <a href="#orgc309465">Section 5.2.2.8</a>), or</li>
 <li>contains a <code>s-maxage</code> response directive (see <a href="#orgf601e80">Section 5.2.2.9</a>) and the cache is shared, or</li>
 <li>contains a Cache Control Extension (see <a href="#orgdc9554b">Section 5.2.3</a>) that allows it to be cached, or</li>
-<li>has a status code that is defined as cacheable by default (see <a href="#orgafe6b84">Section 4.2.2</a>), or</li>
+<li>has a status code that is defined as cacheable by default (see <a href="#org4c48fcc">Section 4.2.2</a>), or</li>
 <li>contains a <code>public</code> response directive (see <a href="#org300811e">Section 5.2.2.5</a>).</li>
 </ul></li>
 </ul>
@@ -823,14 +823,14 @@ A cache <b>MUST NOT</b> store a response to any request, unless:
 <li><ruby>响应状态码<rt>response status code</rt></ruby>为缓存所理解，并且：</li>
 <li><code>no-store</code> <ruby>缓存指令<rt>cache directive</rt></ruby>（<a href="#org96b62f3">章节 5.2</a>）没有出现在请求或者响应的头字段里，并且：</li>
 <li><code>private</code> 响应指令（<a href="#orgc298f3c">章节 5.2.2.6</a>）没有出现在响应里，如果这是个共享缓存的话，并且：</li>
-<li><code>Authorization</code> 头字段（<a href="RFC7235.html#ID-14671c8e-e5a4-4f9d-ad1d-6460328ed7f5">【RFC7235】章节 4.2</a>）没有出现在请求里，如果这是个共享缓存的话，除非响应显式允许它（<a href="#orga28b8b1">章节 3.2</a>），并且：</li>
+<li><code>Authorization</code> 头字段（<a href="RFC7235.html#ID-14671c8e-e5a4-4f9d-ad1d-6460328ed7f5">【RFC7235】章节 4.2</a>）没有出现在请求里，如果这是个共享缓存的话，除非响应明确允许它（<a href="#orga28b8b1">章节 3.2</a>），并且：</li>
 <li>响应符合以下情况之一：
 <ul class="org-ul">
 <li>包含一个 <code>Expires</code> 头字段（<a href="#org304d2d1">章节 5.3</a>），或者：</li>
 <li>包含一个 <code>max-age</code> 响应指令（<a href="#orgc309465">章节 5.2.2.8</a>），或者：</li>
 <li>包含一个 <code>s-maxage</code> 响应指令（<a href="#orgf601e80">章节 5.2.2.9</a>）并且缓存是共享的，或者：</li>
 <li>包含一个<ruby>缓存控制扩展<rt>Cache Control Extension</rt></ruby>（<a href="#orgdc9554b">章节 5.2.3</a>），该缓存控制扩展允许缓存这个响应，或者：</li>
-<li>带有一个状态码，该状态码默认是可缓存的（<a href="#orgafe6b84">章节 4.2.2</a>），或者：</li>
+<li>带有一个状态码，该状态码默认是可缓存的（<a href="#org4c48fcc">章节 4.2.2</a>），或者：</li>
 <li>包含一个 <code>public</code> 响应指令（<a href="#org300811e">章节 5.2.2.5</a>）。</li>
 </ul></li>
 </ul>
@@ -862,7 +862,7 @@ Note that, in normal operation, some caches will not store a response that has n
 </blockquote>
 
 <p>
-需要注意的是，在常规操作中，如果一个响应既没有<ruby>缓存验证器<rt>cache validator</rt></ruby>也没有一个显式的过期时间，某些缓存将不会存储这种响应，因为存储这种响应通常是没有用处的。但是，缓存不会被禁止存储这种响应。
+需要注意的是，在常规操作中，如果一个响应既没有<ruby>缓存验证器<rt>cache validator</rt></ruby>也没有一个<ruby>明确过期时间<rt>explicit expiration time</rt></ruby>，某些缓存将不会存储这种响应，因为存储这种响应通常是没有用处的。但是，缓存不会被禁止存储这种响应。
 </p>
 </div>
 
@@ -886,7 +886,7 @@ A cache <b>MAY</b> complete a stored incomplete response by making a subsequent 
 </blockquote>
 
 <p>
-缓存 <b>可以</b> 通过发起后续<ruby>范围请求<rt>range request</rt></ruby>（【<a href="RFC7233.html">RFC7233</a>】）并将<ruby>成功响应<rt>successful response</rt></ruby>和已存储的条目进行结合，来使一个已存储的不完整响应补充完整，正如<a href="#org15206ea">章节 3.3</a> 所定义的。缓存 <b>禁止</b> 使用一个不完整响应来回应请求，除非这个响应已被补充完整，或者这个请求是一个<ruby>部分请求<rt>partial request</rt></ruby>并指定了一个范围且这个范围统统在该不完整响应以内。对于没有显式地使用 <code>206 (Partial Content)</code> 状态码进行标记的<ruby>部分响应<rt>partial response</rt></ruby>，缓存 <b>禁止</b> 发送这种<ruby>部分响应<rt>partial response</rt></ruby>到一个客户端。
+缓存 <b>可以</b> 通过发起后续<ruby>范围请求<rt>range request</rt></ruby>（【<a href="RFC7233.html">RFC7233</a>】）并将<ruby>成功响应<rt>successful response</rt></ruby>和已存储的条目进行结合，来使一个已存储的不完整响应补充完整，正如<a href="#org15206ea">章节 3.3</a> 所定义的。缓存 <b>禁止</b> 使用一个不完整响应来回应请求，除非这个响应已被补充完整，或者这个请求是一个<ruby>部分请求<rt>partial request</rt></ruby>并指定了一个范围且这个范围统统在该不完整响应以内。对于没有明确地使用 <code>206 (Partial Content)</code> 状态码进行标记的<ruby>部分响应<rt>partial response</rt></ruby>，缓存 <b>禁止</b> 发送这种<ruby>部分响应<rt>partial response</rt></ruby>到一个客户端。
 </p>
 </div>
 </div>
@@ -926,7 +926,7 @@ Note that cached responses that contain the "<code>must-revalidate</code>" and/o
 
 <blockquote>
 <p>
-译注：所谓 "serve stale"，指的是：提供陈旧的缓存响应来作为响应，即使这个已缓存的响应已经过期。对于一个请求，当对应的已缓存的响应已经过期（stale），并且源服务器无响应或者返回一个错误，这时候，缓存服务器返回这个 stale 的响应来作为回应，而不是返回错误。在大多数情况下，与其响应超时或返回其他错误，倒不如返回给用户一个能用的但过期的响应。
+译注：所谓 "serve stale"，指的是：提供陈旧的缓存响应来作为响应，即使这个已缓存的响应已经过期。对于一个请求，当对应的已缓存的响应已经过期（stale），并且源服务器无响应或者响应一个错误，这时候，缓存服务器返回这个 stale 的响应来作为回应，而不是返回错误。在大多数情况下，与其响应超时或返回其他错误，倒不如返回给用户一个能用的但过期的响应。
 </p>
 </blockquote>
 </div>
@@ -1023,12 +1023,12 @@ Note that any of the requirements listed above can be overridden by a cache-cont
 
 <blockquote>
 <p>
-When a stored response is used to satisfy a request without validation, a cache <b>MUST</b> generate an <code>Age</code> header field (<a href="#orgb943d27">Section 5.1</a>), replacing any present in the response with a value equal to the stored response's <code>current_age</code>; see <a href="#org8a496e1">Section 4.2.3</a>.
+When a stored response is used to satisfy a request without validation, a cache <b>MUST</b> generate an <code>Age</code> header field (<a href="#orgb943d27">Section 5.1</a>), replacing any present in the response with a value equal to the stored response's <code>current_age</code>; see <a href="#org3fee265">Section 4.2.3</a>.
 </p>
 </blockquote>
 
 <p>
-在没有<ruby>验证<rt>validation</rt></ruby>的情况下将一个已存储的响应用于满足一个请求时，缓存 <b>必须</b> 生成一个 <code>Age</code> 头字段（<a href="#orgb943d27">章节 5.1</a>），其值等于已存储的响应的 <code>current_age</code>，来替换掉出现在该响应里的任何 <code>Age</code> 字段，见<a href="#org8a496e1">章节 4.2.3</a>。
+在没有<ruby>验证<rt>validation</rt></ruby>的情况下将一个已存储的响应用于满足一个请求时，缓存 <b>必须</b> 生成一个 <code>Age</code> 头字段（<a href="#orgb943d27">章节 5.1</a>），其值等于已存储的响应的 <code>current_age</code>，来替换掉出现在该响应里的任何 <code>Age</code> 字段，见<a href="#org3fee265">章节 4.2.3</a>。
 </p>
 
 <blockquote>
@@ -1185,8 +1185,14 @@ A response's freshness lifetime is the length of time between its generation by 
 </blockquote>
 
 <p>
-响应的<ruby>保鲜期<rt>freshness lifetime</rt></ruby>是从它被源服务器生成开始到它的<ruby>过期时间<rt>expiration time</rt></ruby>之间的时间长度。一个<ruby>显式的过期时间<rt>explicit expiration time</rt></ruby>，是源服务器打算让一个已存储的响应，在没有进一步的验证的情况下，不再能够被缓存所使用的那个时间点。与之相对，一个<ruby>启发式的过期时间<rt>heuristic expiration time</rt></ruby>，是当没有可用的显式的过期时间的时候，由缓存所分配的。
+响应的<ruby>保鲜期<rt>freshness lifetime</rt></ruby>是从它被源服务器生成开始到它的<ruby>过期时间<rt>expiration time</rt></ruby>之间的时间长度。<ruby>明确过期时间<rt>explicit expiration time</rt></ruby>，是源服务器打算让一个已存储的响应，在没有进一步的验证的情况下，不再能够被缓存所使用的那个时间点。与之相对，<ruby>启发式过期时间<rt>heuristic expiration time</rt></ruby>，是当没有可用的<ruby>明确过期时间<rt>explicit expiration time</rt></ruby>的时候由缓存所分配的过期时间。
 </p>
+
+<blockquote>
+<p>
+译注：<ruby>明确过期时间<rt>explicit expiration time</rt></ruby>与<ruby>启发式过期时间<rt>heuristic expiration time</rt></ruby>都是专业术语，下文会多次引用这两个术语。
+</p>
+</blockquote>
 
 <blockquote>
 <p>
@@ -1194,35 +1200,59 @@ A response's age is the time that has passed since it was generated by, or succe
 </p>
 </blockquote>
 
+<p>
+一个响应的“年龄”指的是从它被源服务器生成开始，或者从它被源服务器成功验证开始，已经过去了多长时间。
+</p>
+
 <blockquote>
 <p>
 When a response is "fresh" in the cache, it can be used to satisfy subsequent requests without contacting the origin server, thereby improving efficiency.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The primary mechanism for determining freshness is for an origin server to provide an explicit expiration time in the future, using either the Expires header field (Section 5.3) or the max-age response directive (Section 5.2.2.8). Generally, origin servers will assign future explicit expiration times to responses in the belief that the representation is not likely to change in a semantically significant way before the expiration time is reached.
+当一个响应在缓存中是“新鲜的”，那么，它能够被用于满足后续的请求，而不需要事先与源服务器取得联系。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-If an origin server wishes to force a cache to validate every request, it can assign an explicit expiration time in the past to indicate that the response is already stale. Compliant caches will normally validate a stale cached response before reusing it for subsequent requests (see Section 4.2.4).
+The primary mechanism for determining freshness is for an origin server to provide an explicit expiration time in the future, using either the <code>Expires</code> header field (<a href="#org304d2d1">Section 5.3</a>) or the <code>max-age</code> response directive (<a href="#orgc309465">Section 5.2.2.8</a>). Generally, origin servers will assign future explicit expiration times to responses in the belief that the representation is not likely to change in a semantically significant way before the expiration time is reached.
 </p>
 </blockquote>
 
+<p>
+测定新鲜度的主要机制是源服务器提供一个未来的<ruby>明确过期时间<rt>explicit expiration time</rt></ruby>，可以使用 <code>Expires</code> 头字段（<a href="#org304d2d1">章节 5.3</a>）来提供，也可以使用 <code>max-age</code> 响应指令（<a href="#orgc309465">章节 5.2.2.8</a>）来提供。通常，源服务器会为响应分配一个未来的明确过期时间，认为在过期时间来临之前，表示形式不太可能会有语义上的重大变化。
+</p>
+
 <blockquote>
 <p>
-Since origin servers do not always provide explicit expiration times, caches are also allowed to use a heuristic to determine an expiration time under certain circumstances (see Section 4.2.2).
+If an origin server wishes to force a cache to validate every request, it can assign an explicit expiration time in the past to indicate that the response is already stale. Compliant caches will normally validate a stale cached response before reusing it for subsequent requests (see <a href="#orga71285a">Section 4.2.4</a>).
 </p>
 </blockquote>
+
+<p>
+如果源服务器希望强制让缓存每一次请求都要向源服务器进行验证，那么，它可以分配一个过去的<ruby>明确过期时间<rt>explicit expiration time</rt></ruby>，来表明这个响应已经是<ruby>陈旧的<rt>stale</rt></ruby>。遵从规范的缓存将会在复用一个陈旧的已缓存的响应来满足后续请求之前，正常地验证它（见<a href="#orga71285a">章节 4.2.4</a>）。
+</p>
+
+<blockquote>
+<p>
+Since origin servers do not always provide explicit expiration times, caches are also allowed to use a heuristic to determine an expiration time under certain circumstances (see <a href="#org4c48fcc">Section 4.2.2</a>).
+</p>
+</blockquote>
+
+<p>
+因为源服务器并不总是会提供<ruby>明确过期时间<rt>explicit expiration time</rt></ruby>的，因此，在某种情况下，规范还允许缓存使用<ruby>启发式方法<rt>heuristic</rt></ruby>来确定一个过期时间（<a href="#org4c48fcc">章节 4.2.2</a>）。
+</p>
 
 <blockquote>
 <p>
 The calculation to determine if a response is fresh is:
 </p>
 </blockquote>
+
+<p>
+确定一个响应是否<ruby>新鲜<rt>fresh</rt></ruby>的计算方法为：
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">response_is_fresh = (freshness_lifetime &gt; current_age)
@@ -1231,15 +1261,23 @@ The calculation to determine if a response is fresh is:
 
 <blockquote>
 <p>
-freshness_lifetime is defined in Section 4.2.1; current_age is defined in Section 4.2.3.
+<code>freshness_lifetime</code> is defined in <a href="#org4e92c7f">Section 4.2.1</a>; <code>current_age</code> is defined in <a href="#org3fee265">Section 4.2.3</a>.
 </p>
 </blockquote>
 
+<p>
+<code>freshness_lifetime</code> 定义在<a href="#org4e92c7f">章节 4.2.1</a>，<code>current_age</code> 定义在<a href="#org3fee265">章节 4.2.3</a>。
+</p>
+
 <blockquote>
 <p>
-Clients can send the max-age or min-fresh cache directives in a request to constrain or relax freshness calculations for the corresponding response (Section 5.2.1).
+Clients can send the <code>max-age</code> or <code>min-fresh</code> cache directives in a request to constrain or relax freshness calculations for the corresponding response (<a href="#org5de394c">Section 5.2.1</a>).
 </p>
 </blockquote>
+
+<p>
+客户端能够在请求中发送 <code>max-age</code> 或者 <code>min-fresh</code> 缓存指令来限制或放松对应响应的新鲜度计算（<a href="#org5de394c">章节 5.2.1</a>）。
+</p>
 
 <blockquote>
 <p>
@@ -1247,23 +1285,38 @@ When calculating freshness, to avoid common problems in date parsing:
 </p>
 
 <ul class="org-ul">
-<li>Although all date formats are specified to be case-sensitive, a cache recipient SHOULD match day, week, and time-zone names case-insensitively.</li>
-<li>If a cache recipient's internal implementation of time has less resolution than the value of an HTTP-date, the recipient MUST internally represent a parsed Expires date as the nearest time equal to or earlier than the received value.</li>
+<li>Although all date formats are specified to be case-sensitive, a cache recipient <b>SHOULD</b> match day, week, and time-zone names case-insensitively.</li>
+<li>If a cache recipient's internal implementation of time has less resolution than the value of an <code>HTTP-date</code>, the recipient <b>MUST</b> internally represent a parsed <code>Expires</code> date as the nearest time equal to or earlier than the received value.</li>
 <li>A cache recipient <b>MUST NOT</b> allow local time zones to influence the calculation or comparison of an age or expiration time.</li>
 <li>A cache recipient <b>SHOULD</b> consider a date with a zone abbreviation other than GMT or UTC to be invalid for calculating expiration.</li>
 </ul>
 </blockquote>
 
+<p>
+当计算新鲜度的时候，为了避免日期解析的常见问题：
+</p>
+
+<ul class="org-ul">
+<li>虽然所有日期格式都被指定为<ruby>区分大小写<rt>case-sensitive</rt></ruby>，但是，<ruby>缓存接收端<rt>cache recipient</rt></ruby> <b>应当</b> 使用<ruby>不区分大小写<rt>case-insensitive</rt></ruby>的方式来匹配<ruby>日<rt>day</rt></ruby>、<ruby>周<rt>week</rt></ruby>、以及<ruby>时区<rt>time-zone</rt></ruby>的名称。</li>
+<li>如果缓存接收端关于时间的内部实现的精度低于 <code>HTTP-date</code> 的值的精度，那么，接收端 <b>必须</b> 以早于或等于所接收到的值的最接近的时间来内部表示一个解析过的 <code>Expires</code>。</li>
+<li>缓存接收端 <b>禁止</b> 允许本地时区来影响<ruby>年龄或过期时间<rt>age or expiration time</rt></ruby>的计算或对比。</li>
+<li>缓存接收端 <b>应当</b> 将一个带有时区缩写不是 GMT 或 UTC 的一个日期视为无效于过期时间计算。</li>
+</ul>
+
 <blockquote>
 <p>
-Note that freshness applies only to cache operation; it cannot be used to force a user agent to refresh its display or reload a resource. See Section 6 for an explanation of the difference between caches and history mechanisms.
+Note that freshness applies only to cache operation; it cannot be used to force a user agent to refresh its display or reload a resource. See <a href="#orgace9974">Section 6</a> for an explanation of the difference between caches and history mechanisms.
 </p>
 </blockquote>
+
+<p>
+需要注意的是，新鲜度仅适用于缓存操作，它并不能被用于强制一个用户代理去<ruby>刷新<rt>refresh</rt></ruby>它的展示或者<ruby>重新加载<rt>reload</rt></ruby>一个资源。关于缓存与历史记录的机制的不同点的解释，见<a href="#orgace9974">章节 6</a>。
+</p>
 </div>
 
-<div id="outline-container-org546ba65" class="outline-4">
-<h4 id="org546ba65"><a id="ID-297b33de-eb1e-4988-b28f-b21e8ecc5ffa"></a>4.2.1. Calculating Freshness Lifetime</h4>
-<div class="outline-text-4" id="text-org546ba65">
+<div id="outline-container-org4e92c7f" class="outline-4">
+<h4 id="org4e92c7f"><a id="ID-297b33de-eb1e-4988-b28f-b21e8ecc5ffa"></a>4.2.1. 计算保鲜期 / Calculating Freshness Lifetime</h4>
+<div class="outline-text-4" id="text-org4e92c7f">
 <blockquote>
 <p>
 A cache can calculate the freshness lifetime (denoted as freshness_lifetime) of a response by using the first match of the following:
@@ -1291,9 +1344,9 @@ When there is more than one value present for a given directive (e.g., two Expir
 </div>
 </div>
 
-<div id="outline-container-orgafe6b84" class="outline-4">
-<h4 id="orgafe6b84"><a id="ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01"></a>4.2.2. Calculating Heuristic Freshness</h4>
-<div class="outline-text-4" id="text-orgafe6b84">
+<div id="outline-container-org4c48fcc" class="outline-4">
+<h4 id="org4c48fcc"><a id="ID-9bcea6ca-bab6-4324-9cdb-cf7855aeba01"></a>4.2.2. 计算启发式新鲜度 / Calculating Heuristic Freshness</h4>
+<div class="outline-text-4" id="text-org4c48fcc">
 <blockquote>
 <p>
 Since origin servers do not always provide explicit expiration times, a cache MAY assign a heuristic expiration time when an explicit time is not specified, employing algorithms that use other header field values (such as the Last-Modified time) to estimate a plausible expiration time. This specification does not provide specific algorithms, but does impose worst-case constraints on their results.
@@ -1326,9 +1379,9 @@ When a heuristic is used to calculate freshness lifetime, a cache SHOULD generat
 </div>
 </div>
 
-<div id="outline-container-org8a496e1" class="outline-4">
-<h4 id="org8a496e1"><a id="ID-80278eea-c1e4-478a-b972-ca42270c1fd0"></a>4.2.3. Calculating Age</h4>
-<div class="outline-text-4" id="text-org8a496e1">
+<div id="outline-container-org3fee265" class="outline-4">
+<h4 id="org3fee265"><a id="ID-80278eea-c1e4-478a-b972-ca42270c1fd0"></a>4.2.3. 计算年龄 / Calculating Age</h4>
+<div class="outline-text-4" id="text-org3fee265">
 <blockquote>
 <p>
 The <code>Age</code> header field is used to convey an estimated age of the response message when obtained from a cache. The <code>Age</code> field value is the cache's estimate of the number of seconds since the response was generated or validated by the origin server. In essence, the <code>Age</code> value is the sum of the time that the response has been resident in each of the caches along the path from the origin server, plus the amount of time it has been in transit along network paths.
@@ -1409,7 +1462,7 @@ A "stale" response is one that either has explicit expiry information or is allo
 </blockquote>
 
 <p>
-一个 "stale"（陈旧的、不新鲜的）的响应是这样一种响应：或者带有显式的<ruby>过期信息<rt>expiry information</rt></ruby>或者允许去进行启发式的<ruby>过期计算<rt>expiry calculated</rt></ruby>，但根据<a href="#org85ed084">章节 4.2</a> 的计算，已不再<ruby>新鲜<rt>fresh</rt></ruby>。
+一个 "stale"（陈旧的、不新鲜的）的响应是这样一种响应：或者带有明确的<ruby>过期信息<rt>expiry information</rt></ruby>或者允许去进行启发式的<ruby>过期计算<rt>expiry calculated</rt></ruby>，但根据<a href="#org85ed084">章节 4.2</a> 的计算，已不再<ruby>新鲜<rt>fresh</rt></ruby>。
 </p>
 
 <blockquote>
@@ -2436,7 +2489,7 @@ The warning text can include arbitrary information to be presented to a human us
 </div>
 
 <div id="outline-container-orgace9974" class="outline-2">
-<h2 id="orgace9974">6. 历史列表 / History Lists</h2>
+<h2 id="orgace9974"><a id="ID-0d1aabac-3fc4-409f-b30a-fbc82c359bc9"></a>6. 历史列表 / History Lists</h2>
 <div class="outline-text-2" id="text-orgace9974">
 <blockquote>
 <p>
