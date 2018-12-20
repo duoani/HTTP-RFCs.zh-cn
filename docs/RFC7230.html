@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-14 Fri 18:00 -->
+<!-- 2018-12-20 Thu 19:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -828,7 +828,7 @@ The terms "client" and "server" refer only to the roles that these programs perf
 </blockquote>
 
 <p>
-术语“<ruby>客户端<rt></rt></ruby>”和“<ruby>服务器<rt></rt></ruby>”特指在一个具体<ruby>连接<rt>connection</rt></ruby>中的相关程序所充当的角色。同一个程序可能在某些连接中充当一个客户端，而在其他连接中充当的是一个服务器。术语“<ruby>用户代理<rt>user agent</rt></ruby>”指的是任何发起请求的各种客户端程序，包括（但不限于）浏览器、爬虫（基于网络的机器人）、命令行工具、定制应用和移动应用。术语“<ruby>源服务器<rt>origin server</rt></ruby>”指的是任何为一个给定目标资源产生<ruby>权威响应<rt>authoritative response</rt></ruby>（<a href="#org626caed">章节 9.1</a>）的程序。术语“<ruby>发送端<rt>sender</rt></ruby>”和“<ruby>接收端<rt>recipient</rt></ruby>”分别指的是任何发送或者接收一个给定消息的<ruby>实现<rt>implementation</rt></ruby>。
+术语“<ruby>客户端<rt></rt></ruby>”和“<ruby>服务器<rt></rt></ruby>”特指在一个具体<ruby>连接<rt>connection</rt></ruby>中的相关程序所充当的角色。同一个程序可能在某些连接中充当一个客户端，而在其他连接中充当的是一个服务器。术语“<ruby>用户代理<rt>user agent</rt></ruby>”指的是任何发起请求的各种客户端程序，包括（但不限于）浏览器、爬虫（基于网络的机器人）、命令行工具、定制应用和移动应用。术语“<ruby>源服务器<rt>origin server</rt></ruby>”指的是任何为一个给定目标资源创建<ruby>权威响应<rt>authoritative response</rt></ruby>（<a href="#org626caed">章节 9.1</a>）的程序。术语“<ruby>发送端<rt>sender</rt></ruby>”和“<ruby>接收端<rt>recipient</rt></ruby>”分别指的是任何发送或者接收一个给定消息的<ruby>实现<rt>implementation</rt></ruby>。
 </p>
 
 <blockquote>
@@ -2084,7 +2084,7 @@ The <code>field-name</code> token labels the corresponding <code>field-value</co
 </blockquote>
 
 <p>
-头字段名称 <code>field-name</code> 将其对应的头字段值 <code>field-value</code> 算作这个消息带有相应头字段的语义。例如，定义在<a href="RFC7231.html#ID-5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1">【RFC7231】章节 7.1.1.2</a> 的 <code>Date</code> 头字段的出现表明包含了这个消息的创始时间戳。
+头字段名称 <code>field-name</code> 将其对应的头字段值 <code>field-value</code> 算作这个消息带有相应头字段的语义。例如，定义在<a href="RFC7231.html#ID-5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1">【RFC7231】章节 7.1.1.2</a> 的 <code>Date</code> 头字段的出现表明包含了这个消息诞生的时间戳。
 </p>
 </div>
 
@@ -5770,7 +5770,7 @@ HTTP relies on the notion of an authoritative response: a response that has been
 </blockquote>
 
 <p>
-HTTP 提出了一个“<ruby>权威响应<rt>authoritative response</rt></ruby>”的概念——由目标 URI 所表明的 <code>authority</code> （权威机构、官方机构）所决定（或指导）的最合适于这个请求的一种响应。它给出了创建响应消息那时候的目标资源状态。提供自一个<ruby>非权威来源<rt>non-authoritative source</rt></ruby>——例如一个共享缓存——的响应，一般对于提升性能和可用性有很大作用，但是仅在该来源是受信任的或者该不受信任的响应可以被安全地使用的情况。
+HTTP 提出了一个“<ruby>权威响应<rt>authoritative response</rt></ruby>”的概念——由目标 URI 所表明的 <code>authority</code> （权威机构、官方机构）所决定（或指导）的最合适于这个请求的一种响应。它给出了诞生响应消息那时候的目标资源状态。提供自一个<ruby>非权威来源<rt>non-authoritative source</rt></ruby>——例如一个共享缓存——的响应，一般对于提升性能和可用性有很大作用，但是仅在该来源是受信任的或者该不受信任的响应可以被安全地使用的情况。
 </p>
 
 <blockquote>

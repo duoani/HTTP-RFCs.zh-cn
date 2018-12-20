@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-13 Thu 19:15 -->
+<!-- 2018-12-20 Thu 19:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7232: Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests</title>
@@ -836,7 +836,7 @@ An origin server with a clock <b>MUST NOT</b> send a <code>Last-Modified</code> 
 </blockquote>
 
 <p>
-具备时钟功能的源服务器 <b>禁止</b> 发送一个比消息<ruby>创建<rt>origination</rt></ruby>的服务器时间（<code>Date</code>）还要晚的 <code>Last-Modified</code> 日期（译注：也就是说，响应里的 <code>Last-Modified</code> 字段的时间必须早于或等于 <code>Date</code> 字段的时间）。如果这个表示形式的最近修改的时间是源自<ruby>实现专用<rt>implementation-specific</rt></ruby>的元数据，而这些元数据依据源服务器的时钟计算得出最近修改时间是在将来某个时间，那么源服务器 <b>必须</b> 使用<ruby>消息的创建日期<rt>message origination date</rt></ruby>来替换这个值。这样做避免了一个将来的修改日期对缓存的验证的不利影响。
+具备时钟功能的源服务器 <b>禁止</b> 发送一个比消息<ruby>诞生<rt>origination</rt></ruby>的服务器时间（<code>Date</code>）还要晚的 <code>Last-Modified</code> 日期（译注：也就是说，响应里的 <code>Last-Modified</code> 字段的时间必须早于或等于 <code>Date</code> 字段的时间）。如果这个表示形式的最近修改的时间是源自<ruby>实现专用<rt>implementation-specific</rt></ruby>的元数据，而这些元数据依据源服务器的时钟计算得出最近修改时间是在将来某个时间，那么源服务器 <b>必须</b> 使用<ruby>消息诞生日期<rt>message origination date</rt></ruby>来替换这个值。这样做避免了一个将来的修改日期对缓存的验证的不利影响。
 </p>
 
 <blockquote>

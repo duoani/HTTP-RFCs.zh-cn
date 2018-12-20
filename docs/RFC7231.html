@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-13 Thu 19:15 -->
+<!-- 2018-12-20 Thu 19:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -564,7 +564,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org4701af2">7.1. 控制数据 / Control Data</a>
 <ul>
-<li><a href="#org17ba3e1">7.1.1. 创始日期 / Origination Date</a>
+<li><a href="#orgfb11d57">7.1.1. 诞生日期 / Origination Date</a>
 <ul>
 <li><a href="#orga646986">7.1.1.1. 日期时间格式 / Date/Time Formats</a></li>
 <li><a href="#org4fb7697">7.1.1.2. Date</a></li>
@@ -1609,7 +1609,7 @@ If <code>Content-Location</code> is included in a <code>2xx (Successful)</code> 
 </blockquote>
 
 <p>
-如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应消息里，且它的值指向于（在转换为<ruby>绝对形式<rt>absolute form</rt></ruby>之后）一个与实际请求 URI 相同的 URI，那么，接收端 <b>可以</b> 将该有效载荷认为是对应资源在特定时间里的<ruby>当前表示形式<rt>current representation</rt></ruby>，所述“特定时间”是指由<ruby>消息创始日期<rt>message origination date</rt></ruby>所指定的时间。对于 GET（<a href="#org479e86d">章节 4.3.1</a>）或者 HEAD（<a href="#org607980d">章节 4.3.2</a>）请求来说，这与在服务器没有提供 <code>Content-Location</code> 头字段的情况下的默认语义相一致。对于类似 PUT（<a href="#org2e14fb1">章节 4.3.4</a>）或者 POST（<a href="#org24c5a01">章节 4.3.3</a>）这些会<ruby>改变资源状态<rt>state-changing</rt></ruby>的请求来说，这意味着服务器的响应包含了这个资源的新的<ruby>表示形式<rt>representation</rt></ruby>，由此与那些只报告动作方面的信息（例如，“<ruby>它生效了！<rt>It worked!</rt></ruby>”）的<ruby>表示形式<rt>representations</rt></ruby>作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
+如果 <code>Content-Location</code> 被包含在一个 <code>2xx (Successful)</code> 响应消息里，且它的值指向于（在转换为<ruby>绝对形式<rt>absolute form</rt></ruby>之后）一个与实际请求 URI 相同的 URI，那么，接收端 <b>可以</b> 将该有效载荷认为是对应资源在特定时间里的<ruby>当前表示形式<rt>current representation</rt></ruby>，所述“特定时间”是指由<ruby>消息诞生日期<rt>message origination date</rt></ruby>所指定的时间。对于 GET（<a href="#org479e86d">章节 4.3.1</a>）或者 HEAD（<a href="#org607980d">章节 4.3.2</a>）请求来说，这与在服务器没有提供 <code>Content-Location</code> 头字段的情况下的默认语义相一致。对于类似 PUT（<a href="#org2e14fb1">章节 4.3.4</a>）或者 POST（<a href="#org24c5a01">章节 4.3.3</a>）这些会<ruby>改变资源状态<rt>state-changing</rt></ruby>的请求来说，这意味着服务器的响应包含了这个资源的新的<ruby>表示形式<rt>representation</rt></ruby>，由此与那些只报告动作方面的信息（例如，“<ruby>它生效了！<rt>It worked!</rt></ruby>”）的<ruby>表示形式<rt>representations</rt></ruby>作区分。让编辑程序能够在不需要再次发起 GET 请求就可以更新它们的本地副本。
 </p>
 
 <blockquote>
@@ -1726,7 +1726,7 @@ In a response, the payload's purpose is defined by both the request method and t
 </blockquote>
 
 <p>
-在一个响应消息里，有效载荷的目的是由<ruby>请求方法<rt>request method</rt></ruby>和<ruby>响应状态码<rt>reponse status code</rt></ruby>两者共同来定义的。例如，一个回应给 GET 请求（<a href="#org479e86d">章节 4.3.1</a>）的 <code>200 (OK)</code> 响应消息表示在<ruby>消息创始日期<rt>message origination date</rt></ruby>（<a href="#org4fb7697">章节 7.1.1.2</a>）所观察到的<ruby>目标资源<rt>target resource</rt></ruby>的目前状态。而一个回应给 POST 请求的 <code>200 (OK)</code> 响应消息可能表示：或者是在应用该请求以后的处理结果，或者是在应用该请求以后目标资源的新状态。带有一个错误状态码的响应消息通常会包含一个表示该错误条件的有效载荷，以描述错误状态以及如何解决错误的下一步建议。
+在一个响应消息里，有效载荷的目的是由<ruby>请求方法<rt>request method</rt></ruby>和<ruby>响应状态码<rt>reponse status code</rt></ruby>两者共同来定义的。例如，一个回应给 GET 请求（<a href="#org479e86d">章节 4.3.1</a>）的 <code>200 (OK)</code> 响应消息表示在<ruby>消息诞生日期<rt>message origination date</rt></ruby>（<a href="#org4fb7697">章节 7.1.1.2</a>）所观察到的<ruby>目标资源<rt>target resource</rt></ruby>的目前状态。而一个回应给 POST 请求的 <code>200 (OK)</code> 响应消息可能表示：或者是在应用该请求以后的处理结果，或者是在应用该请求以后目标资源的新状态。带有一个错误状态码的响应消息通常会包含一个表示该错误条件的有效载荷，以描述错误状态以及如何解决错误的下一步建议。
 </p>
 
 <blockquote>
@@ -4437,7 +4437,7 @@ The first digit of the status-code defines the class of response. The last two d
 </div>
 
 <div id="outline-container-org5d42953" class="outline-3">
-<h3 id="org5d42953">6.1. 状态码概况 / Overview of Status Codes</h3>
+<h3 id="org5d42953"><a id="ID-8c218f07-c0c7-450c-bb2f-7af73aac3c39"></a>6.1. 状态码概况 / Overview of Status Codes</h3>
 <div class="outline-text-3" id="text-org5d42953">
 <blockquote>
 <p>
@@ -6016,9 +6016,9 @@ Response header fields can supply control data that supplements the status code,
 </table>
 </div>
 
-<div id="outline-container-org17ba3e1" class="outline-4">
-<h4 id="org17ba3e1"><a id="ID-55ac9b0f-69ca-4634-9720-f681878f259f"></a>7.1.1. 创始日期 / Origination Date</h4>
-<div class="outline-text-4" id="text-org17ba3e1">
+<div id="outline-container-orgfb11d57" class="outline-4">
+<h4 id="orgfb11d57"><a id="ID-55ac9b0f-69ca-4634-9720-f681878f259f"></a>7.1.1. 诞生日期 / Origination Date</h4>
+<div class="outline-text-4" id="text-orgfb11d57">
 </div>
 
 <div id="outline-container-orga646986" class="outline-5">
@@ -6406,7 +6406,7 @@ The "Date" header field represents the date and time at which the message was or
 </blockquote>
 
 <p>
-<code>Date</code> 头字段表示在消息<ruby>创始<rt>originated</rt></ruby>的日期和时间，与定义在<a href="https://tools.ietf.org/html/rfc5322#section-3.6.1">【RFC5322】章节 3.6.1</a> 里的<ruby>创始日期字段<rt>Origination Date Field</rt></ruby>（<code>orig-date</code>）具有相同的语义。它的字段值是一个 <code>HTTP-date</code>，正如<a href="#orga646986">章节 7.1.1.1</a> 所定义。
+<code>Date</code> 头字段表示消息<ruby>诞生<rt>originated</rt></ruby>的所有日期和时间，与定义在<a href="https://tools.ietf.org/html/rfc5322#section-3.6.1">【RFC5322】章节 3.6.1</a> 里的<ruby>诞生日期字段<rt>Origination Date Field</rt></ruby>（<code>orig-date</code>）具有相同的语义。它的字段值是一个 <code>HTTP-date</code>，正如<a href="#orga646986">章节 7.1.1.1</a> 所定义。
 </p>
 
 <div class="org-src-container">
@@ -6435,7 +6435,7 @@ When a <code>Date</code> header field is generated, the sender <b>SHOULD</b> gen
 </blockquote>
 
 <p>
-当生成一个 <code>Date</code> 头字段的时候，发送端 <b>应当</b> 将它的值生成为最接近消息生成的时间。理论上，该时间应该代表有效载荷就要生成好之前的时候。实践过程中，该时间可以生成为消息创始过程中的任意时候。
+当生成一个 <code>Date</code> 头字段的时候，发送端 <b>应当</b> 将它的值生成为最接近消息生成的时间。理论上，该时间应该代表有效载荷就要生成好之前的时候。实践过程中，该时间可以生成为消息诞生过程中的任意时候。
 </p>
 
 <blockquote>
@@ -6465,7 +6465,7 @@ A user agent <b>MAY</b> send a <code>Date</code> header field in a request, thou
 </blockquote>
 
 <p>
-用户代理 <b>可以</b> 在请求里带有一个 <code>Date</code> 头字段，虽然一般不会这么做，除非认为它运载了有用的信息给到服务器。例如，某些 HTTP 的客户应用程序可能会传达一个 <code>Date</code> 如果服务器期望用它基于用户代理与服务器时间上的不同来调整对用户请求的<ruby>解释<rt>interpretation</rt></ruby>。
+用户代理 <b>可以</b> 在请求里带有一个 <code>Date</code> 头字段，虽然一般不会这么做，除非认为它运载了有用的信息给到服务器。例如，某些 HTTP 的客户应用程序可能会运载一个 <code>Date</code>， 如果服务器期望通过它，基于用户代理与服务器时间上的不同，来调整对用户请求的<ruby>解释<rt>interpretation</rt></ruby>的话。
 </p>
 </div>
 </div>
@@ -8751,12 +8751,12 @@ The <code>426 (Upgrade Required)</code> status code has been incorporated from [
 
 <blockquote>
 <p>
-The target of requirements on <code>HTTP-date</code> and the <code>Date</code> header field have been reduced to those systems generating the date, rather than all systems sending a date. (<a href="#org17ba3e1">Section 7.1.1</a>)
+The target of requirements on <code>HTTP-date</code> and the <code>Date</code> header field have been reduced to those systems generating the date, rather than all systems sending a date. (<a href="#orgfb11d57">Section 7.1.1</a>)
 </p>
 </blockquote>
 
 <p>
-对于 <code>HTTP-date</code> 以及头字段 <code>Date</code> 所要求的目标已经降低为那些系统所<ruby>生成<rt>generating</rt></ruby>的日期，而不是所有系统所<ruby>发送<rt>sending</rt></ruby>的日期。（<a href="#org17ba3e1">章节 7.1.1</a>）
+对于 <code>HTTP-date</code> 以及头字段 <code>Date</code> 所要求的目标已经降低为那些系统所<ruby>生成<rt>generating</rt></ruby>的日期，而不是所有系统所<ruby>发送<rt>sending</rt></ruby>的日期。（<a href="#orgfb11d57">章节 7.1.1</a>）
 </p>
 
 <blockquote>
