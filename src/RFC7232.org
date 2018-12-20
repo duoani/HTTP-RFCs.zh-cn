@@ -247,7 +247,7 @@ An origin server *SHOULD* obtain the =Last-Modified= value of the representation
 An origin server with a clock *MUST NOT* send a =Last-Modified= date that is later than the server's time of message origination (=Date=). If the last modification time is derived from implementation-specific metadata that evaluates to some time in the future, according to the origin server's clock, then the origin server *MUST* replace that value with the message origination date. This prevents a future modification date from having an adverse impact on cache validation.
 #+END_QUOTE
 
-具备时钟功能的源服务器 *禁止* 发送一个比消息[[ruby:origination][创建]]的服务器时间（=Date=）还要晚的 =Last-Modified= 日期（译注：也就是说，响应里的 =Last-Modified= 字段的时间必须早于或等于 =Date= 字段的时间）。如果这个表示形式的最近修改的时间是源自[[ruby:implementation-specific][实现专用]]的元数据，而这些元数据依据源服务器的时钟计算得出最近修改时间是在将来某个时间，那么源服务器 *必须* 使用[[ruby:message%20origination%20date][消息的创建日期]]来替换这个值。这样做避免了一个将来的修改日期对缓存的验证的不利影响。
+具备时钟功能的源服务器 *禁止* 发送一个比消息[[ruby:origination][诞生]]的服务器时间（=Date=）还要晚的 =Last-Modified= 日期（译注：也就是说，响应里的 =Last-Modified= 字段的时间必须早于或等于 =Date= 字段的时间）。如果这个表示形式的最近修改的时间是源自[[ruby:implementation-specific][实现专用]]的元数据，而这些元数据依据源服务器的时钟计算得出最近修改时间是在将来某个时间，那么源服务器 *必须* 使用[[ruby:message%20origination%20date][消息诞生日期]]来替换这个值。这样做避免了一个将来的修改日期对缓存的验证的不利影响。
 
 #+BEGIN_QUOTE
 An origin server without a clock *MUST NOT* assign =Last-Modified= values to a response unless these values were associated with the resource by some other system or user with a reliable clock.

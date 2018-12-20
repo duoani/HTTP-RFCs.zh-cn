@@ -101,6 +101,10 @@ The goal of caching in HTTP/1.1 is to significantly improve performance by reusi
 
 在 HTTP/1.1 中，缓存通过复用一个之前的响应消息来满足当前的请求，其目的是显著提升性能。一个已存储的响应，如果它在不需要“验证”的情况就可以用来复用，那么，它被认为是“[[ruby:fresh][新鲜的]]”（[[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][章节 4.2]]）。所谓“[[ruby:validation][验证]]”，是指和源服务器一起检查，看看这个已存储的响应是否仍然有效于这个请求。因此，每一次复用一个新鲜的响应的时候，都可以减少双方的延迟以及网络开销。当一个已存储的响应不再新鲜，它可能仍旧可以获得复用，如果它可以通过验证（[[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][章节 4.3]]）而[[ruby:freshened][唤发新鲜]]，或者原始的已不可用（[[id:630361ae-a4e3-4fec-b337-8eff30325ddf][章节 4.2.4]]）。
 
+#+BEGIN_QUOTE
+译注：本文所述的“验证”指的是“新鲜度验证”，也可以叫作“过期时间验证”。
+#+END_QUOTE
+
 ** 1.1. 一致性和错误处理 / Conformance and Error Handling
 
 #+BEGIN_QUOTE
@@ -329,6 +333,10 @@ When presented with a request, a cache *MUST NOT* reuse a stored response, unles
   - 被成功验证的（[[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][章节 4.3]]）。
 
 #+BEGIN_QUOTE
+译注：所谓“[[ruby:successfully%20validated][成功验证]]”，指的是源服务器确认了这个被缓存所存储的响应的仍然新鲜，可以继续用于响应请求。
+#+END_QUOTE
+
+#+BEGIN_QUOTE
 Note that any of the requirements listed above can be overridden by a cache-control extension; see [[id:eb7efc79-3c1d-439b-b0b3-d901848ad800][Section 5.2.3]].
 #+END_QUOTE
 
@@ -438,7 +446,7 @@ A fresh response is one whose age has not yet exceeded its freshness lifetime. C
 A response's freshness lifetime is the length of time between its generation by the origin server and its expiration time. An explicit expiration time is the time at which the origin server intends that a stored response can no longer be used by a cache without further validation, whereas a heuristic expiration time is assigned by a cache when no explicit expiration time is available.
 #+END_QUOTE
 
-响应的[[ruby:freshness%20lifetime][保鲜期]]是从它被源服务器生成开始到它的[[ruby:expiration%20time][过期时间]]之间的时间长度。[[ruby:explicit%20expiration%20time][明确过期时间]]，是源服务器打算让一个已存储的响应，在没有进一步的验证的情况下，不再能够被缓存所使用的那个时间点。与之相对，[[ruby:heuristic%20expiration%20time][启发式过期时间]]，是当没有可用的[[ruby:explicit%20expiration%20time][明确过期时间]]的时候由缓存所分配的过期时间。
+响应的[[ruby:freshness%20lifetime][保鲜期]]是从它被源服务器生成开始到它的[[ruby:expiration%20time][过期时间]]之间的时间长度。[[ruby:explicit%20expiration%20time][明确过期时间]]，是源服务器打算让一个已存储的响应，在没有进一步的验证的情况下，不再能够被缓存所使用的那个时间点。与之相对，[[ruby:heuristic%20expiration%20time][启发式过期时间]]，是当没有可用的[[ruby:explicit%20expiration%20time][明确过期时间]]的时候由缓存所指派的过期时间。
 
 #+BEGIN_QUOTE
 译注：[[ruby:explicit%20expiration%20time][明确过期时间]]与[[ruby:heuristic%20expiration%20time][启发式过期时间]]都是专业术语，下文会多次引用这两个术语。
@@ -460,13 +468,13 @@ When a response is "fresh" in the cache, it can be used to satisfy subsequent re
 The primary mechanism for determining freshness is for an origin server to provide an explicit expiration time in the future, using either the =Expires= header field ([[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][Section 5.3]]) or the =max-age= response directive ([[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][Section 5.2.2.8]]). Generally, origin servers will assign future explicit expiration times to responses in the belief that the representation is not likely to change in a semantically significant way before the expiration time is reached.
 #+END_QUOTE
 
-测定新鲜度的主要机制是源服务器提供一个未来的[[ruby:explicit%20expiration%20time][明确过期时间]]，可以使用 =Expires= 头字段（[[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][章节 5.3]]）来提供，也可以使用 =max-age= 响应指令（[[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][章节 5.2.2.8]]）来提供。通常，源服务器会为响应分配一个未来的明确过期时间，认为在过期时间来临之前，表示形式不太可能会有语义上的重大变化。
+确定新鲜度的主要机制是源服务器提供一个未来的[[ruby:explicit%20expiration%20time][明确过期时间]]，可以使用 =Expires= 头字段（[[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][章节 5.3]]）来提供，也可以使用 =max-age= 响应指令（[[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][章节 5.2.2.8]]）来提供。通常，源服务器会为响应指派一个未来的明确过期时间，认为在过期时间来临之前，表示形式不太可能会有语义上的重大变化。
 
 #+BEGIN_QUOTE
 If an origin server wishes to force a cache to validate every request, it can assign an explicit expiration time in the past to indicate that the response is already stale. Compliant caches will normally validate a stale cached response before reusing it for subsequent requests (see [[id:630361ae-a4e3-4fec-b337-8eff30325ddf][Section 4.2.4]]).
 #+END_QUOTE
 
-如果源服务器希望强制让缓存每一次请求都要向源服务器进行验证，那么，它可以分配一个过去的[[ruby:explicit%20expiration%20time][明确过期时间]]，来表明这个响应已经是[[ruby:stale][陈旧的]]。遵从规范的缓存将会在复用一个陈旧的已缓存的响应来满足后续请求之前，正常地验证它（见[[id:630361ae-a4e3-4fec-b337-8eff30325ddf][章节 4.2.4]]）。
+如果源服务器希望强制让缓存每一次请求都要向源服务器进行验证，那么，它可以指派一个过去的[[ruby:explicit%20expiration%20time][明确过期时间]]，来表明这个响应已经是[[ruby:stale][陈旧的]]。遵从规范的缓存将会在复用一个陈旧的已缓存的响应来满足后续请求之前，正常地验证它（见[[id:630361ae-a4e3-4fec-b337-8eff30325ddf][章节 4.2.4]]）。
 
 #+BEGIN_QUOTE
 Since origin servers do not always provide explicit expiration times, caches are also allowed to use a heuristic to determine an expiration time under certain circumstances (see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]]).
@@ -524,21 +532,32 @@ Note that freshness applies only to cache operation; it cannot be used to force 
 :END:
 
 #+BEGIN_QUOTE
-A cache can calculate the freshness lifetime (denoted as freshness_lifetime) of a response by using the first match of the following:
+A cache can calculate the freshness lifetime (denoted as =freshness_lifetime=) of a response by using the first match of the following:
 
-- If the cache is shared and the s-maxage response directive (Section 5.2.2.9) is present, use its value, or
-- If the max-age response directive (Section 5.2.2.8) is present, use its value, or
-- If the Expires response header field (Section 5.3) is present, use its value minus the value of the Date response header field, or
-- Otherwise, no explicit expiration time is present in the response. A heuristic freshness lifetime might be applicable; see Section 4.2.2.
+- If the cache is shared and the =s-maxage= response directive ([[id:5296bb87-1709-4827-bef2-69177bbe3544][Section 5.2.2.9]]) is present, use its value, or
+- If the =max-age= response directive ([[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][Section 5.2.2.8]]) is present, use its value, or
+- If the =Expires= response header field ([[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][Section 5.3]]) is present, use its value minus the value of the =Date= response header field, or
+- Otherwise, no explicit expiration time is present in the response. A heuristic freshness lifetime might be applicable; see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]].
 #+END_QUOTE
+
+缓存能够计算一个响应的保鲜期（表示为 =freshness_lifetime=），通过使用以列第一个匹配上的方式：
+
+- 如果缓存是共享的，并且响应中出现了 =s-maxage= 响应指令（[[id:5296bb87-1709-4827-bef2-69177bbe3544][章节 5.2.2.9]]），那么，使用这个指令的值，或者：
+- 如果响应中出现了 =max-age= 响应指令（[[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][章节 5.2.2.8]]），那么，使用这个指令的值，或者：
+- 如果响应中出现了 =Expires= 响应头字段（[[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][章节 5.3]]），那么，使用它的值减去 =Date= 响应头字段的值，或者：
+- 否则，响应中没有出现[[ruby:explicit%20expiration%20time][明确过期时间]]。可能适用于一个启发式保鲜期，见[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][章节 4.2.2]]。
 
 #+BEGIN_QUOTE
 Note that this calculation is not vulnerable to clock skew, since all of the information comes from the origin server.
 #+END_QUOTE
 
+需要注意的是，这种计算是不会受到[[ruby:clock%20skew][时钟偏差]]的影响的，这是因为所有的信息都是来自源服务器的。
+
 #+BEGIN_QUOTE
-When there is more than one value present for a given directive (e.g., two Expires header fields, multiple Cache-Control: max-age directives), the directive's value is considered invalid. Caches are encouraged to consider responses that have invalid freshness information to be stale.
+When there is more than one value present for a given directive (e.g., two =Expires= header fields, multiple =Cache-Control: max-age= directives), the directive's value is considered invalid. Caches are encouraged to consider responses that have invalid freshness information to be stale.
 #+END_QUOTE
+
+当一个给定的指令中出现超过一个以上的值（比如，有两个 =Expires= 头字段、多个 =Cache-Control= 指令等），那么，这个指令的值被视为无效的。规范鼓励缓存把带有无效的新鲜度信息的那种响应视为是[[ruby:stale][陈旧的]]。
 
 *** 4.2.2. 计算启发式新鲜度 / Calculating Heuristic Freshness
 :PROPERTIES:
@@ -546,24 +565,37 @@ When there is more than one value present for a given directive (e.g., two Expir
 :END:
 
 #+BEGIN_QUOTE
-Since origin servers do not always provide explicit expiration times, a cache MAY assign a heuristic expiration time when an explicit time is not specified, employing algorithms that use other header field values (such as the Last-Modified time) to estimate a plausible expiration time. This specification does not provide specific algorithms, but does impose worst-case constraints on their results.
+Since origin servers do not always provide explicit expiration times, a cache *MAY* assign a heuristic expiration time when an explicit time is not specified, employing algorithms that use other header field values (such as the =Last-Modified= time) to estimate a plausible expiration time. This specification does not provide specific algorithms, but does impose worst-case constraints on their results.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A cache MUST NOT use heuristics to determine freshness when an explicit expiration time is present in the stored response. Because of the requirements in Section 3, this means that, effectively, heuristics can only be used on responses without explicit freshness whose status codes are defined as cacheable by default (see Section 6.1 of [RFC7231]), and those responses without explicit freshness that have been marked as explicitly cacheable (e.g., with a "public" response directive).
-#+END_QUOTE
+因为源服务器并不总是会提供[[ruby:explicit%20expiration%20time][明确过期时间]]的，因此，当它没有指定一个过期时间的时候，缓存可以指派一个[[ruby:heuristic%20expiration%20time][启发式过期时间]]，原理是利用一种使用其他头字段值来估算出一个看似合理的过期时间的算法。本规范并没有提供具体的算法，但是对它们的计算结果的最差情况实施了约束。
 
 #+BEGIN_QUOTE
-If the response has a Last-Modified header field (Section 2.2 of [RFC7232]), caches are encouraged to use a heuristic expiration value that is no more than some fraction of the interval since that time. A typical setting of this fraction might be 10%.
+A cache *MUST NOT* use heuristics to determine freshness when an explicit expiration time is present in the stored response. Because of the requirements in [[id:e41d8ccc-5b69-40e3-a8ab-ca27327f15fa][Section 3]], this means that, effectively, heuristics can only be used on responses without explicit freshness whose status codes are defined as cacheable by default (see [[id:8c218f07-c0c7-450c-bb2f-7af73aac3c39][Section 6.1]] of [RFC7231]), and those responses without explicit freshness that have been marked as explicitly cacheable (e.g., with a "=public=" response directive).
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-When a heuristic is used to calculate freshness lifetime, a cache SHOULD generate a Warning header field with a 113 warn-code (see Section 5.5.4) in the response if its current_age is more than 24 hours and such a warning is not already present.
-#+END_QUOTE
+当一个已存储的响应中出现了一个[[ruby:explicit%20expiration%20time][明确过期时间]]的时候，缓存 *禁止* 使用启发式来确定新鲜度。由于[[id:e41d8ccc-5b69-40e3-a8ab-ca27327f15fa][章节 3]] 中的要求，这意味着，实际上，启发式仅能用于没有明确新鲜度的响应，并且要求以下情况之一：
+
+- 这些响应的状态码被定义为默认是可缓存的（见[[id:8c218f07-c0c7-450c-bb2f-7af73aac3c39][【RFC7231】章节 6.1]]）；
+- 这些响应被明确标记为可缓存的（比如，带有一个 =public= 响应指定）。
 
 #+BEGIN_QUOTE
-*Note:* Section 13.9 of [RFC2616] prohibited caches from calculating heuristic freshness for URIs with query components (i.e., those containing '?'). In practice, this has not been widely implemented. Therefore, origin servers are encouraged to send explicit directives (e.g., Cache-Control: no-cache) if they wish to preclude caching.
+If the response has a =Last-Modified= header field ([[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][Section 2.2]] of [RFC7232]), caches are encouraged to use a heuristic expiration value that is no more than some fraction of the interval since that time. A typical setting of this fraction might be 10%.
 #+END_QUOTE
+
+如果响应带有一个 =Last-Modified= 头字段（[[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][【RFC7232】章节 2.2]]），规范鼓励缓存所使用的启发式过期时间的值不超过那个头字段的时间以后的某个比例，通常这个比例会设置为 10%。 
+
+#+BEGIN_QUOTE
+When a heuristic is used to calculate freshness lifetime, a cache *SHOULD* generate a =Warning= header field with a =113= warn-code (see Section 5.5.4) in the response if its =current_age= is more than 24 hours and such a warning is not already present.
+#+END_QUOTE
+
+当使用启发式来计算[[ruby:freshness%20lifetime][保鲜期]]的时候，缓存 *应当* 在响应里生成一个 =Warning= 头字段，其值带有一个 =113= 警告码（见章节 5.5.4），如果这个响应的 =current_age= 大于 24 小时而且响应中还没有出现这种警告的话。
+
+#+BEGIN_QUOTE
+*Note:* Section 13.9 of [RFC2616] prohibited caches from calculating heuristic freshness for URIs with =query= components (i.e., those containing '?'). In practice, this has not been widely implemented. Therefore, origin servers are encouraged to send explicit directives (e.g., =Cache-Control: no-cache=) if they wish to preclude caching.
+#+END_QUOTE
+
+*注意：* 对于带有 =query= 组件的 URI（也就是说，包含有 "?" 的 URI），【RFC2616】章节 13.9 禁止缓存对这种 URI 计算启发式新鲜度。实践中，这项要求并未被广泛实现。因此，规范鼓励源服务器去发送明确的指令（比如，=Cache-Control: no-cache=），如果它们希望阻止缓存的话。
 
 *** 4.2.3. 计算年龄 / Calculating Age
 :PROPERTIES:
@@ -574,14 +606,41 @@ When a heuristic is used to calculate freshness lifetime, a cache SHOULD generat
 The =Age= header field is used to convey an estimated age of the response message when obtained from a cache. The =Age= field value is the cache's estimate of the number of seconds since the response was generated or validated by the origin server. In essence, the =Age= value is the sum of the time that the response has been resident in each of the caches along the path from the origin server, plus the amount of time it has been in transit along network paths.
 #+END_QUOTE
 
+=Age= 头字段被用于运载一个估算的年龄，这个年龄表示从一个缓存中获得这个响应消息时，这个响应消息的年龄。=Age= 字段的值是从这个响应被源服务器所生成或所验证的那一时刻开始，直到缓存使用这个响应来满足请求为止，所经历的时间秒数的估算值。本质上，=Age= 的值是由下列时间构成：
+
+- 从源服务器开始，沿着响应消息的路径，响应消息驻留在每一个缓存节点里的时间之和，加上：
+- 响应消息沿着网络路径在各个节点间进行传输的总耗时。
+
+#+BEGIN_QUOTE
+译注：实际上，=Age= 值的计算并不是使用上述这些数据来生成，因为如果这样计算，就需要把响应在当前缓存节点的驻留时间加上所有上游缓存节点的驻留时间，还要加上各相相信节点间的传输时间，非常麻烦。
+#+END_QUOTE
+
 #+BEGIN_QUOTE
 The following data is used for the age calculation:
 
-- age_value :: The term "=age_value=" denotes the value of the =Age= header field (Section 5.1), in a form appropriate for arithmetic operation; or 0, if not available.
-- date_value :: The term "=date_value=" denotes the value of the =Date= header field, in a form appropriate for arithmetic operations. See Section 7.1.1.2 of [RFC7231] for the definition of the =Date= header field, and for requirements regarding responses without it.
-- now :: The term "=now=" means "the current value of the clock at the host performing the calculation". A host ought to use NTP ([RFC5905]) or some similar protocol to synchronize its clocks to Coordinated Universal Time.
+- age_value :: The term "=age_value=" denotes the value of the =Age= header field ([[id:0fda7a59-2592-493d-9ce1-01e72543c6c0][Section 5.1]]), in a form appropriate for arithmetic operation; or 0, if not available.
+- date_value :: The term "=date_value=" denotes the value of the =Date= header field, in a form appropriate for arithmetic operations. See [[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][Section 7.1.1.2]] of [RFC7231] for the definition of the =Date= header field, and for requirements regarding responses without it.
+- now :: The term "=now=" means "the current value of the clock at the host performing the calculation". A host ought to use NTP ([[[https://tools.ietf.org/html/rfc5905][RFC5905]]]) or some similar protocol to synchronize its clocks to Coordinated Universal Time.
 - request_time :: The current value of the clock at the host at the time the request resulting in the stored response was made.
 - response_time :: The current value of the clock at the host at the time the response was received.
+#+END_QUOTE
+
+以下数据用于计算年龄：
+
+- age_value :: 术语 =age_value= 表示 =Age= 头字段（[[id:0fda7a59-2592-493d-9ce1-01e72543c6c0][章节 5.1]]）的值，以一种适合算术运算的形式来表示，其中，0 代表不可用。
+- date_value :: 术语 =date_value= 表示 =Date= 头字段的值，以一种适合算术运算的形式来表示。=Date= 头字段的定义，以及响应不带有这个字段时的相关要求，见[[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][【RFC7231】章节 7.1.1.2]]。
+- now :: 术语 =now= 的含义是：在执行计算的时候，主机时钟的当前时间值。主机应该使用 NTP（【[[https://tools.ietf.org/html/rfc5905][RFC5905]]】）或者某些类似的协议来同步它的时钟为 UTC 时间。
+- request_time ::  请求的发起时，主机时钟的当前时间值，这个请求会导致产生一个已存储的响应。
+- response_time :: 接收到响应时，主机时钟的当前时间值。
+                   
+#+BEGIN_QUOTE
+译注：
+- =Date=：表示响应消息在源服务器中诞生的时间，其值是一个 =HTTP-date= （[[id:5a5ac74d-bb4e-4564-bd10-3c8e580d6ff1][【RFC7231】章节 7.1.1.2]]）。
+- =Age=：表示已缓存的响应的年龄，即，从这个响应被源服务器所生成或所验证的那一时刻开始，直到缓存使用这个响应来满足请求为止，所经历的时间秒数的估算值，其值是一个秒数。
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+译注：=now=、=request_time=、以及 =response_time= 都是本地时间，虽然上述的“主机”指的是同一个缓存所在的主机，但由于 =Date= 是由服务器时间生成的，并且消息链路中可能出现多个缓存主机，这样就涉及到多个主机间的时钟可能不同步的问题，即[[ruby:clock%20skew][时钟偏差]]，因此才需要使用 NTP 协议来同步时钟。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -590,6 +649,11 @@ A response's age can be calculated in two entirely independent ways:
 1. the "=apparent_age=": =response_time= minus =date_value=, if the local clock is reasonably well synchronized to the origin server's clock. If the result is negative, the result is replaced by zero.
 2. the "=corrected_age_value=", if all of the caches along the response path implement HTTP/1.1. A cache *MUST* interpret this value relative to the time the request was initiated, not the time that the response was received.
 #+END_QUOTE
+
+一个响应的年龄可以使用两种完全独立的方式来计算出来：
+
+1. =apparent_age=：=response_time= 减去 =date_value=，如果本地时钟与源服务器的时候同步得相当好的话。如果计算结果为负数，则将其改为 0。
+2. =corrected_age_value=：如果响应消息沿路的所有缓存都实现了 HTTP/1.1，才适用这种方式。缓存 *必须* 相对于发起请求的时刻来解释这个值，而不是相对于接收到响应的时刻。 
 
 #+BEGIN_SRC text
   apparent_age = max(0, response_time - date_value);
@@ -602,6 +666,8 @@ A response's age can be calculated in two entirely independent ways:
 These are combined as
 #+END_QUOTE
 
+两种方式合并为：
+
 #+BEGIN_SRC text
   corrected_initial_age = max(apparent_age, corrected_age_value);
 #+END_SRC
@@ -610,9 +676,13 @@ These are combined as
 unless the cache is confident in the value of the =Age= header field (e.g., because there are no HTTP/1.0 hops in the =Via= header field), in which case the =corrected_age_value= *MAY* be used as the =corrected_initial_age=.
 #+END_QUOTE
 
+除非缓存确信
+
 #+BEGIN_QUOTE
 The =current_age= of a stored response can then be calculated by adding the amount of time (in seconds) since the stored response was last validated by the origin server to the =corrected_initial_age=.
 #+END_QUOTE
+
+然后，已存储的响应就可以计算出 =current_age= 了：通过把从这个已存储的响应最后一次被源服务器验证的时刻开始到现在为止所经历的总时长（秒），加入到 =corrected_initial_age= 上。
 
 #+BEGIN_SRC text
   resident_time = now - response_time;
@@ -631,20 +701,28 @@ A "stale" response is one that either has explicit expiry information or is allo
 一个 "stale"（陈旧的、不新鲜的）的响应是这样一种响应：或者带有明确的[[ruby:expiry%20information][过期信息]]或者允许去进行启发式的[[ruby:expiry%20calculated][过期计算]]，但根据[[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][章节 4.2]] 的计算，已不再[[ruby:fresh][新鲜]]。
 
 #+BEGIN_QUOTE
-A cache *MUST NOT* generate a stale response if it is prohibited by an explicit in-protocol directive (e.g., by a "=no-store=" or "=no-cache=" cache directive, a "=must-revalidate=" cache-response-directive, or an applicable "=s-maxage=" or "=proxy-revalidate=" cache-response-directive; see Section 5.2.2).
+A cache *MUST NOT* generate a stale response if it is prohibited by an explicit in-protocol directive (e.g., by a "=no-store=" or "=no-cache=" cache directive, a "=must-revalidate=" cache-response-directive, or an applicable "=s-maxage=" or "=proxy-revalidate=" cache-response-directive; see [[id:3b667767-3efc-4487-b0a4-5234780e5de2][Section 5.2.2]]).
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A cache =MUST NOT= send stale responses unless it is disconnected (i.e., it cannot contact the origin server or otherwise find a forward path) or doing so is explicitly allowed (e.g., by the =max-stale= request directive; see Section 5.2.1).
-#+END_QUOTE
+缓存 *禁止* 生成一个[[ruby:stale%20response][陈旧的响应]]，如果它被一个明确的协议内的指令（比如，被一个 =no-store= 或者 =no-cache= [[ruby:cache%20directive][缓存指令]]、一个 =must-revalidate= [[ruby:cache-response-directive][缓存响应指令]]、或者一个适用的 =s-maxage= 或者 =proxy-revalidate= 缓存响应指令，见[[id:3b667767-3efc-4487-b0a4-5234780e5de2][章节 5.2.2]]）所禁止的话。
 
 #+BEGIN_QUOTE
-A cache *SHOULD* generate a =Warning= header field with the =110= warn-code (see Section 5.5.1) in stale responses. Likewise, a cache *SHOULD* generate a =112= warn-code (see Section 5.5.3) in stale responses if the cache is disconnected.
+A cache *MUST NOT* send stale responses unless it is disconnected (i.e., it cannot contact the origin server or otherwise find a forward path) or doing so is explicitly allowed (e.g., by the =max-stale= request directive; see [[id:a586b298-d3ba-44df-ab8f-69ad432b93a2][Section 5.2.1]]).
 #+END_QUOTE
+
+缓存 *禁止* 发送陈旧的响应，除非它的连接被中断（也就是说，它不能够联系到源服务器或者找不到一个转发路径），或者被明确允许这样做（比如，通过 =max-stale= 请求指令，见[[id:a586b298-d3ba-44df-ab8f-69ad432b93a2][章节 5.2.1]]）。
+
+#+BEGIN_QUOTE
+A cache *SHOULD* generate a =Warning= header field with the =110= warn-code (see [[id:de825a8a-6078-407b-b9f5-04547f6aa999][Section 5.5.1]]) in stale responses. Likewise, a cache *SHOULD* generate a =112= warn-code (see [[id:92abeb74-8480-43e6-9313-a585f36847de][Section 5.5.3]]) in stale responses if the cache is disconnected.
+#+END_QUOTE
+
+缓存 *应当* 在[[ruby:stale%20responses][陈旧的响应]]中生成一个 =Warning= 头字段，其值带有一个 =110= 警告码（见[[id:de825a8a-6078-407b-b9f5-04547f6aa999][章节 5.5.1]]）。同样，缓存 *应当* 在陈旧的响应中生成一个 =112= 警告码（见[[id:92abeb74-8480-43e6-9313-a585f36847de][章节 5.5.3]]），如果缓存的连接被中断的话。
 
 #+BEGIN_QUOTE
 A cache *SHOULD NOT* generate a new =Warning= header field when forwarding a response that does not have an =Age= header field, even if the response is already stale. A cache need not validate a response that merely became stale in transit.
 #+END_QUOTE
+
+当缓存转发一个响应，但这个响应并没有一个 =Age= 头字段的时候，缓存 *不应当* 生成一个新的 =Warning= 头字段，即使这个响应已经是陈旧的。一个响应只在在传输过程中变成陈旧的，那么，缓存不需要验证这个响应。
 
 ** 4.3. 验证 / Validation
 :PROPERTIES:
@@ -800,7 +878,7 @@ This section defines the syntax and semantics of HTTP/1.1 header fields related 
 :END:
 
 #+BEGIN_QUOTE
-The "Age" header field conveys the sender's estimate of the amount of time since the response was generated or successfully validated at the origin server. Age values are calculated as specified in Section 4.2.3.
+The "=Age=" header field conveys the sender's estimate of the amount of time since the response was generated or successfully validated at the origin server. =Age= values are calculated as specified in Section 4.2.3.
 #+END_QUOTE
 
 #+BEGIN_SRC text
@@ -808,11 +886,11 @@ The "Age" header field conveys the sender's estimate of the amount of time since
 #+END_SRC
 
 #+BEGIN_QUOTE
-The Age field-value is a non-negative integer, representing time in seconds (see Section 1.2.1).
+The =Age= field-value is a non-negative integer, representing time in seconds (see Section 1.2.1).
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-The presence of an Age header field implies that the response was not generated or validated by the origin server for this request. However, lack of an Age header field does not imply the origin was contacted, since the response might have been received from an HTTP/1.0 cache that does not implement Age.
+The presence of an =Age= header field implies that the response was not generated or validated by the origin server for this request. However, lack of an =Age= header field does not imply the origin was contacted, since the response might have been received from an HTTP/1.0 cache that does not implement Age.
 #+END_QUOTE
 
 ** 5.2. Cache-Control
@@ -1286,6 +1364,9 @@ The following warn-codes are defined by this specification, each with a recommen
 #+END_QUOTE
 
 *** 5.5.1. Warning: 110 - "Response is Stale"
+:PROPERTIES:
+:ID:       de825a8a-6078-407b-b9f5-04547f6aa999
+:END:
 
 #+BEGIN_QUOTE
 A cache SHOULD generate this whenever the sent response is stale.
@@ -1298,6 +1379,9 @@ A cache SHOULD generate this when sending a stale response because an attempt to
 #+END_QUOTE
 
 *** 5.5.3. Warning: 112 - "Disconnected Operation"
+:PROPERTIES:
+:ID:       92abeb74-8480-43e6-9313-a585f36847de
+:END:
 
 #+BEGIN_QUOTE
 A cache SHOULD generate this if it is intentionally disconnected from the rest of the network for a period of time.
