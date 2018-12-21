@@ -875,20 +875,22 @@ If a stored response is selected for update, the cache *MUST*:
 A response to the HEAD method is identical to what an equivalent request made with a GET would have been, except it lacks a body. This property of HEAD responses can be used to invalidate or update a cached GET response if the more efficient conditional GET request mechanism is not available (due to no validators being present in the stored response) or if transmission of the representation body is not desired even if it has changed.
 #+END_QUOTE
 
+回应给 HEAD 方法的响应与回应给一个等价的 GET 方法的响应相同，
+
 #+BEGIN_QUOTE
-When a cache makes an inbound HEAD request for a given request target and receives a 200 (OK) response, the cache SHOULD update or invalidate each of its stored GET responses that could have been selected for that request (see Section 4.1).
+When a cache makes an inbound HEAD request for a given request target and receives a =200 (OK)= response, the cache *SHOULD* update or invalidate each of its stored GET responses that could have been selected for that request (see Section 4.1).
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-For each of the stored responses that could have been selected, if the stored response and HEAD response have matching values for any received validator fields (ETag and Last-Modified) and, if the HEAD response has a Content-Length header field, the value of Content-Length matches that of the stored response, the cache SHOULD update the stored response as described below; otherwise, the cache SHOULD consider the stored response to be stale.
+For each of the stored responses that could have been selected, if the stored response and HEAD response have matching values for any received validator fields (=ETag= and =Last-Modified=) and, if the HEAD response has a =Content-Length= header field, the value of =Content-Length= matches that of the stored response, the cache *SHOULD* update the stored response as described below; otherwise, the cache *SHOULD* consider the stored response to be stale.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-If a cache updates a stored response with the metadata provided in a HEAD response, the cache MUST:
+If a cache updates a stored response with the metadata provided in a HEAD response, the cache *MUST*:
 
-- delete any Warning header fields in the stored response with warn-code 1xx (see Section 5.5);
-- retain any Warning header fields in the stored response with warn-code 2xx; and,
-- use other header fields provided in the HEAD response to replace all instances of the corresponding header fields in the stored response and append new header fields to the stored response's header section unless otherwise restricted by the Cache-Control header field.
+- delete any =Warning= header fields in the stored response with warn-code =1xx= (see Section 5.5);
+- retain any =Warning= header fields in the stored response with warn-code =2xx=; and,
+- use other header fields provided in the HEAD response to replace all instances of the corresponding header fields in the stored response and append new header fields to the stored response's header section unless otherwise restricted by the =Cache-Control= header field.
 #+END_QUOTE
 
 ** 4.4. 无效化 / Invalidation
