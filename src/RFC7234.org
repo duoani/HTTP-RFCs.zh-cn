@@ -299,7 +299,7 @@ When combining the new response with one or more stored responses, a cache *MUST
 
 - 删除在已存储的响应里警告码为 =1xx= 的任何 =Warning= 头字段（见章节 5.5）；
 - 保留在已存储的响应里警告码为 =2xx= 的任何 =Warning= 头字段；并且
-- 使用新响应所提供的其他头字段，除以 =Content-Range= 以外，来替换所有在已存储的响应对应的头字段。
+- 使用新响应所提供的其他头字段，除以 =Content-Range= 以外，来替换所有在已存储的响应中对应的头字段。
 
 * 4. 从缓存中构造响应 / Constructing Responses from Caches
 :PROPERTIES:
@@ -540,7 +540,7 @@ A cache can calculate the freshness lifetime (denoted as =freshness_lifetime=) o
 - Otherwise, no explicit expiration time is present in the response. A heuristic freshness lifetime might be applicable; see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]].
 #+END_QUOTE
 
-缓存能够计算一个响应的保鲜期（表示为 =freshness_lifetime=），通过使用以列第一个匹配上的方式：
+缓存能够计算一个响应的保鲜期（表示为 =freshness_lifetime=），通过使用下列第一个能够匹配上的方式：
 
 - 如果缓存是共享的，并且响应中出现了 =s-maxage= 响应指令（[[id:5296bb87-1709-4827-bef2-69177bbe3544][章节 5.2.2.9]]），那么，使用这个指令的值，或者：
 - 如果响应中出现了 =max-age= 响应指令（[[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][章节 5.2.2.8]]），那么，使用这个指令的值，或者：
@@ -580,22 +580,22 @@ A cache *MUST NOT* use heuristics to determine freshness when an explicit expira
 - 这些响应被明确标记为可缓存的（比如，带有一个 =public= 响应指定）。
 
 #+BEGIN_QUOTE
-If the response has a =Last-Modified= header field ([[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][Section 2.2]] of [RFC7232]), caches are encouraged to use a heuristic expiration value that is no more than some fraction of the interval since that time. A typical setting of this fraction might be 10%.
+If the response has a =Last-Modified= header field ([[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][Section 2.2]] of [RFC7232]), caches are encouraged to use a heuristic expiration value that is no more than some fraction of the interval since that time. A typical setting of this fraction might be *10%*.
 #+END_QUOTE
 
-如果响应带有一个 =Last-Modified= 头字段（[[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][【RFC7232】章节 2.2]]），规范鼓励缓存所使用的启发式过期时间的值不超过那个头字段的时间以后的某个比例，通常这个比例会设置为 10%。 
+如果响应带有一个 =Last-Modified= 头字段（[[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][【RFC7232】章节 2.2]]），规范鼓励缓存所使用的启发式过期时间的值不超过那个头字段的时间以后的某个比例，通常这个比例会设置为 *10%*。 
 
 #+BEGIN_QUOTE
-When a heuristic is used to calculate freshness lifetime, a cache *SHOULD* generate a =Warning= header field with a =113= warn-code (see Section 5.5.4) in the response if its =current_age= is more than 24 hours and such a warning is not already present.
+When a heuristic is used to calculate freshness lifetime, a cache *SHOULD* generate a =Warning= header field with a =113= warn-code (see [[id:cc9f6df6-f45c-43c5-bd4f-d7fc929df890][Section 5.5.4]]) in the response if its =current_age= is more than 24 hours and such a warning is not already present.
 #+END_QUOTE
 
-当使用启发式来计算[[ruby:freshness%20lifetime][保鲜期]]的时候，缓存 *应当* 在响应里生成一个 =Warning= 头字段，其值带有一个 =113= 警告码（见章节 5.5.4），如果这个响应的 =current_age= 大于 24 小时而且响应中还没有出现这种警告的话。
+当使用启发式来计算[[ruby:freshness%20lifetime][保鲜期]]的时候，缓存 *应当* 在响应里生成一个 =Warning= 头字段，其值带有一个 =113= 警告码（见[[id:cc9f6df6-f45c-43c5-bd4f-d7fc929df890][章节 5.5.4]]），如果这个响应的 =current_age= 大于 24 小时而且响应中还没有出现这种警告的话。
 
 #+BEGIN_QUOTE
-*Note:* Section 13.9 of [RFC2616] prohibited caches from calculating heuristic freshness for URIs with =query= components (i.e., those containing '?'). In practice, this has not been widely implemented. Therefore, origin servers are encouraged to send explicit directives (e.g., =Cache-Control: no-cache=) if they wish to preclude caching.
+*Note:* [[https://tools.ietf.org/html/rfc2616#section-13.9][Section 13.9]] of [RFC2616] prohibited caches from calculating heuristic freshness for URIs with =query= components (i.e., those containing '?'). In practice, this has not been widely implemented. Therefore, origin servers are encouraged to send explicit directives (e.g., =Cache-Control: no-cache=) if they wish to preclude caching.
 #+END_QUOTE
 
-*注意：* 对于带有 =query= 组件的 URI（也就是说，包含有 "?" 的 URI），【RFC2616】章节 13.9 禁止缓存对这种 URI 计算启发式新鲜度。实践中，这项要求并未被广泛实现。因此，规范鼓励源服务器去发送明确的指令（比如，=Cache-Control: no-cache=），如果它们希望阻止缓存的话。
+*注意：* 对于带有 =query= 组件的 URI（也就是说，包含有 "?" 的 URI），[[https://tools.ietf.org/html/rfc2616#section-13.9][【RFC2616】章节 13.9]] 禁止缓存对这种 URI 计算启发式新鲜度。实践中，这项要求并未被广泛实现。因此，规范鼓励源服务器去发送明确的指令（比如，=Cache-Control: no-cache=），如果它们希望阻止缓存的话。
 
 *** 4.2.3. 计算年龄 / Calculating Age
 :PROPERTIES:
@@ -612,7 +612,7 @@ The =Age= header field is used to convey an estimated age of the response messag
 - 响应消息沿着网络路径在各个节点间进行传输的总耗时。
 
 #+BEGIN_QUOTE
-译注：实际上，=Age= 值的计算并不是使用上述这些数据来生成，因为如果这样计算，就需要把响应在当前缓存节点的驻留时间加上所有上游缓存节点的驻留时间，还要加上各相相信节点间的传输时间，非常麻烦。
+译注：实际上，=Age= 值的计算并不是使用上述这些数据来生成，因为如果这样计算，就需要把响应在当前缓存节点的驻留时间加上所有上游缓存节点的驻留时间，还要加上各个节点间的传输时间，非常麻烦。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -676,7 +676,7 @@ These are combined as
 unless the cache is confident in the value of the =Age= header field (e.g., because there are no HTTP/1.0 hops in the =Via= header field), in which case the =corrected_age_value= *MAY* be used as the =corrected_initial_age=.
 #+END_QUOTE
 
-除非缓存确信
+除非缓存确信 =Age= 头字段的值（比如，因为 =Via= 头字段里没有任何 HTTP/1.0 的节点），在这种情况下，=corrected_age_value= *可以* 作为 =corrected_initial_age= 来使用。
 
 #+BEGIN_QUOTE
 The =current_age= of a stored response can then be calculated by adding the amount of time (in seconds) since the stored response was last validated by the origin server to the =corrected_initial_age=.
@@ -730,24 +730,36 @@ A cache *SHOULD NOT* generate a new =Warning= header field when forwarding a res
 :END:
 
 #+BEGIN_QUOTE
-When a cache has one or more stored responses for a requested URI, but cannot serve any of them (e.g., because they are not fresh, or one cannot be selected; see Section 4.1), it can use the conditional request mechanism [RFC7232] in the forwarded request to give the next inbound server an opportunity to select a valid stored response to use, updating the stored metadata in the process, or to replace the stored response(s) with a new response. This process is known as "validating" or "revalidating" the stored response.
+When a cache has one or more stored responses for a requested URI, but cannot serve any of them (e.g., because they are not fresh, or one cannot be selected; see [[id:352eb301-a424-48e9-9027-3c6633da4b77][Section 4.1]]), it can use the conditional request mechanism [RFC7232] in the forwarded request to give the next inbound server an opportunity to select a valid stored response to use, updating the stored metadata in the process, or to replace the stored response(s) with a new response. This process is known as "validating" or "revalidating" the stored response.
 #+END_QUOTE
 
-*** 4.3.1. Sending a Validation Request
+对于所请求的一个 URI，当缓存已经存储了这个 URI 对应的一个或多个响应，但缓存却不能使用它们之中的任何一个来满足这个请求（比如，因为它们都不再新鲜，或者没有一个可以选择的，见[[id:352eb301-a424-48e9-9027-3c6633da4b77][章节 4.1]]），这时候，缓存在转发这个请求时可以应用[[ruby:conditional%20request][条件请求]]的机制【RFC7232】，给下一个[[ruby:inbound%20server][入站服务器]]一个机会来选择一个有效的已存储的响应来使用，在这个过程中会更新已存储的元数据；或者使用一个新的响应到替换（可能是多个）已存储的响应。这个过程称为对已存储的响应进行“[[ruby:validating][验证]]”或者“[[ruby:revalidating][重新验证]]”。
+
+#+BEGIN_QUOTE
+译注：所谓“入站”，即数据流朝向源服务器流动，见[[id:e2d9bed8-d6ca-4b5d-ab4a-6b2b2576393e][【RFC7230】章节 2.3]]。
+#+END_QUOTE
+
+*** 4.3.1. 发送验证请求 / Sending a Validation Request
 
 #+BEGIN_QUOTE
 When sending a conditional request for cache validation, a cache sends one or more precondition header fields containing validator metadata from its stored response(s), which is then compared by recipients to determine whether a stored response is equivalent to a current representation of the resource.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-One such validator is the timestamp given in a Last-Modified header field (Section 2.2 of [RFC7232]), which can be used in an If-Modified-Since header field for response validation, or in an If-Unmodified-Since or If-Range header field for representation selection (i.e., the client is referring specifically to a previously obtained representation with that timestamp).
-#+END_QUOTE
+当发送一个条件请求来进行缓存验证的时候，缓存发送一个或多个前提条件头字段来包含[[ruby:validator%20metadata][验证器元数据]]，这些元数据来自（可能是多个）已存储的响应，然后，接收端会对比这些验证器，确定是否有一个已存储的响应等价于资源的一个当前表示形式。
 
 #+BEGIN_QUOTE
-Another validator is the entity-tag given in an ETag header field (Section 2.3 of [RFC7232]). One or more entity-tags, indicating one or more stored responses, can be used in an If-None-Match header field for response validation, or in an If-Match or If-Range header field for representation selection (i.e., the client is referring specifically to one or more previously obtained representations with the listed entity-tags).
+One such validator is the timestamp given in a =Last-Modified= header field ([[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][Section 2.2]] of [RFC7232]), which can be used in an =If-Modified-Since= header field for response validation, or in an =If-Unmodified-Since= or =If-Range= header field for representation selection (i.e., the client is referring specifically to a previously obtained representation with that timestamp).
 #+END_QUOTE
 
-*** 4.3.2. Handling a Received Validation Request
+=Last-Modified= 头字段（[[id:9c92bfe5-3e6e-4b70-9cf5-9a5fd8810840][【RFC7232】章节 2.2]]）里给出的[[ruby:timestamp][时间戳]]就是上述这些验证器中的一个，这个时间戳能够被用在 =If-Modified-Since= 头字段来验证响应，或者被用在 =If-Unmodified-Since= 或 =If-Range= 头字段来选择表示形式（也就是说，客户端特指之前所获取到的带有那个时间戳的那一个表示形式）。
+
+#+BEGIN_QUOTE
+Another validator is the entity-tag given in an =ETag= header field ([[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][Section 2.3]] of [RFC7232]). One or more entity-tags, indicating one or more stored responses, can be used in an =If-None-Match= header field for response validation, or in an =If-Match= or =If-Range= header field for representation selection (i.e., the client is referring specifically to one or more previously obtained representations with the listed entity-tags).
+#+END_QUOTE
+
+另一个验证器是 =ETag= 头字段（[[id:0244a602-2c4a-46aa-96c4-3bd14c3eb244][【RFC7232】章节 2.3]]）里给出的[[ruby:entity-tag][实体标签]]。一个或多个实体标签，表明一个或多个已存储的响应，能够被用在 =If-None-Match= 头字段来验证响应，或者被用在 =If-Match= 或 =If-Range= 头字段来选择表示形式（也就是说，客户端特指之前所获取到的带有这些实体标签的那一个或多个表示形式）。
+
+*** 4.3.2. 处理接收到的验证请求 / Handling a Received Validation Request
 :PROPERTIES:
 :ID:       A500DFDD-0DD6-454E-A94A-EDBC8D38946E
 :END:
@@ -756,66 +768,108 @@ Another validator is the entity-tag given in an ETag header field (Section 2.3 o
 Each client in the request chain may have its own cache, so it is common for a cache at an intermediary to receive conditional requests from other (outbound) caches. Likewise, some user agents make use of conditional requests to limit data transfers to recently modified representations or to complete the transfer of a partially retrieved representation.
 #+END_QUOTE
 
+在请求链路中的每一个客户端都可能有自己的缓存，所以，一个中间人缓存接收到来自其他的（[[ruby:outbound][出站]]）缓存的[[ruby:conditional%20requests][条件请求]]是很常见的。同样，某些用户代理利用条件请求来对数据传输限制为最近修改过的表示形式，或者限制为完成一个只接收到部分的表示形式的传输。
+
 #+BEGIN_QUOTE
-If a cache receives a request that can be satisfied by reusing one of its stored 200 (OK) or 206 (Partial Content) responses, the cache SHOULD evaluate any applicable conditional header field preconditions received in that request with respect to the corresponding validators contained within the selected response. A cache MUST NOT evaluate conditional header fields that are only applicable to an origin server, found in a request with semantics that cannot be satisfied with a cached response, or applied to a target resource for which it has no stored responses; such preconditions are likely intended for some other (inbound) server.
+译注：所谓“出站”，即数据流朝向客户端流动，见[[id:e2d9bed8-d6ca-4b5d-ab4a-6b2b2576393e][【RFC7230】章节 2.3]]。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-The proper evaluation of conditional requests by a cache depends on the received precondition header fields and their precedence, as defined in Section 6 of [RFC7232]. The If-Match and If-Unmodified-Since conditional header fields are not applicable to a cache.
+If a cache receives a request that can be satisfied by reusing one of its stored =200 (OK)= or =206 (Partial Content)= responses, the cache *SHOULD* evaluate any applicable conditional header field preconditions received in that request with respect to the corresponding validators contained within the selected response. A cache *MUST NOT* evaluate conditional header fields that are only applicable to an origin server, found in a request with semantics that cannot be satisfied with a cached response, or applied to a target resource for which it has no stored responses; such preconditions are likely intended for some other (inbound) server.
 #+END_QUOTE
+
+如果一个缓存接收到一个请求，而它能够通过复用它已存储的其中一个 =200 (OK)= 或 =206 (Partial Content)= 响应来满足这个请求，那么，这个缓存 *应当* 在包含在[[ruby:selected%20response][已选响应]]（[[id:352eb301-a424-48e9-9027-3c6633da4b77][章节 4.1]]）中的验证器方面，对接收自那个请求中的对应的任何适用的[[ruby:conditional%20header%20field][条件请求头字段]]的前提条件进行[[ruby:evaluate][求值]]。缓存 *禁止* 对以下条件头字段进行求值：只适用于源服务器的头字段；在请求中找到的，但语义不能使用一个已缓存的响应来满足的头字段；或者应用于目标资源的头字段，因为这个缓存没有已存储的响应——上述这些前提条件可能是用于某些其他（[[ruby:inbound][入站]]）服务器的。
 
 #+BEGIN_QUOTE
-A request containing an If-None-Match header field (Section 3.2 of [RFC7232]) indicates that the client wants to validate one or more of its own stored responses in comparison to whichever stored response is selected by the cache. If the field-value is "*", or if the field-value is a list of entity-tags and at least one of them matches the entity-tag of the selected stored response, a cache recipient SHOULD generate a 304 (Not Modified) response (using the metadata of the selected stored response) instead of sending that stored response.
+The proper evaluation of conditional requests by a cache depends on the received precondition header fields and their precedence, as defined in [[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][Section 6]] of [RFC7232]. The =If-Match= and =If-Unmodified-Since= conditional header fields are not applicable to a cache.
 #+END_QUOTE
+
+缓存如何正确对条件请求进行[[ruby:evaluation][求值]]，依赖于其接收到的前提条件头字段以及它们的优先级，正如[[id:a8107f7c-c07e-4a0b-a0e5-fc41064ca2b2][【RFC7232】章节 6]] 所定义的。=If-Match= 和 =If-Unmodified-Since= 条件头字段并不适用于缓存。
 
 #+BEGIN_QUOTE
-When a cache decides to revalidate its own stored responses for a request that contains an If-None-Match list of entity-tags, the cache MAY combine the received list with a list of entity-tags from its own stored set of responses (fresh or stale) and send the union of the two lists as a replacement If-None-Match header field value in the forwarded request. If a stored response contains only partial content, the cache MUST NOT include its entity-tag in the union unless the request is for a range that would be fully satisfied by that partial stored response. If the response to the forwarded request is 304 (Not Modified) and has an ETag header field value with an entity-tag that is not in the client's list, the cache MUST generate a 200 (OK) response for the client by reusing its corresponding stored response, as updated by the 304 response metadata (Section 4.3.4).
+A request containing an =If-None-Match= header field ([[id:30878863-9a64-4efe-bc9b-07386eae0ed7][Section 3.2]] of [RFC7232]) indicates that the client wants to validate one or more of its own stored responses in comparison to whichever stored response is selected by the cache. If the field-value is "*", or if the field-value is a list of entity-tags and at least one of them matches the entity-tag of the selected stored response, a cache recipient *SHOULD* generate a =304 (Not Modified)= response (using the metadata of the selected stored response) instead of sending that stored response.
 #+END_QUOTE
+
+一个请求，如果它包含有一个 =If-None-Match= 头字段（[[id:30878863-9a64-4efe-bc9b-07386eae0ed7][【RFC7232】章节 3.2]]），则表明：客户端想通过与缓存选定的任何已存储的响应相比较的方式，来验证客户端所拥有的一个或多个已存储的响应。如果它的字段值是 "*"，或者它的字段值是一个实体标签列表并且至少其中之一个与[[ruby:selected%20stored%20response][已选的已存储的响应]]相匹配，那么，缓存接收端 *应当* 生成一个 =304 (Not Modified)= 响应（使用那个已选的已存储的响应的元数据），而不是发送那个已存储的响应。
 
 #+BEGIN_QUOTE
-If an If-None-Match header field is not present, a request containing an If-Modified-Since header field (Section 3.3 of [RFC7232]) indicates that the client wants to validate one or more of its own stored responses by modification date. A cache recipient SHOULD generate a 304 (Not Modified) response (using the metadata of the selected stored response) if one of the following cases is true: 1) the selected stored response has a Last-Modified field-value that is earlier than or equal to the conditional timestamp; 2) no Last-Modified field is present in the selected stored response, but it has a Date field-value that is earlier than or equal to the conditional timestamp; or, 3) neither Last-Modified nor Date is present in the selected stored response, but the cache recorded it as having been received at a time earlier than or equal to the conditional timestamp.
+When a cache decides to revalidate its own stored responses for a request that contains an =If-None-Match= list of entity-tags, the cache *MAY* combine the received list with a list of entity-tags from its own stored set of responses (fresh or stale) and send the union of the two lists as a replacement =If-None-Match= header field value in the forwarded request. If a stored response contains only partial content, the cache *MUST NOT* include its entity-tag in the union unless the request is for a range that would be fully satisfied by that partial stored response. If the response to the forwarded request is =304 (Not Modified)= and has an =ETag= header field value with an entity-tag that is not in the client's list, the cache *MUST* generate a =200 (OK)= response for the client by reusing its corresponding stored response, as updated by the =304= response metadata ([[id:eb92f86f-35bf-4b7a-b1ae-579da32c29a5][Section 4.3.4]]).
 #+END_QUOTE
+
+一个请求，其包含有一个 =If-None-Match= 头字段，字段值是实体标签的一个列表，当一个缓存决定为这个请求重新验证它所拥有的已存储的响应的时候，缓存 *可以* 将所接收到的列表与它所拥有的已存储的响应集合（新鲜的或陈旧的）的实体标签列表合并成一个列表，然后将这个联合列表代替到将要转发的请求的 =If-None-Match= 头字段值进行发送。如果某个已存储的响应包含的仅为表示形式的一[[ruby:partial%20content][部分内容]]，那么，缓存 *禁止* 将这个响应的实体标签包含进联合列表中，除非这个请求是一个范围请求且请求的范围可以被那个已存储的部分响应完全满足。如果转发请求后返回的是一个 =304 (Not Modified)= 响应，并且这个响应有一个 =ETag= 头字段值，字段值有一个实体标签没有出现在客户端所请求的实体标签列表中，那么，客户端 *必须* 通过复用这个实体标签所对应的已存储的响应来为这个客户生成一个 =200 (OK)= 响应，同时将刚才返回的那个 =304= 响应的元数据更新到这个 =200= 响应中去（[[id:eb92f86f-35bf-4b7a-b1ae-579da32c29a5][章节 4.3.4]]）。
 
 #+BEGIN_QUOTE
-A cache that implements partial responses to range requests, as defined in [RFC7233], also needs to evaluate a received If-Range header field (Section 3.2 of [RFC7233]) with respect to its selected stored response.
+If an =If-None-Match= header field is not present, a request containing an =If-Modified-Since= header field ([[id:e71fa098-728a-46bf-b792-2388946ea0ee][Section 3.3]] of [RFC7232]) indicates that the client wants to validate one or more of its own stored responses by modification date. A cache recipient *SHOULD* generate a =304 (Not Modified)= response (using the metadata of the selected stored response) if one of the following cases is true: 1) the selected stored response has a =Last-Modified= field-value that is earlier than or equal to the conditional timestamp; 2) no =Last-Modified= field is present in the selected stored response, but it has a =Date= field-value that is earlier than or equal to the conditional timestamp; or, 3) neither =Last-Modified= nor =Date= is present in the selected stored response, but the cache recorded it as having been received at a time earlier than or equal to the conditional timestamp.
 #+END_QUOTE
 
-*** 4.3.3. Handling a Validation Response
+一个请求，如果没有出现 =If-None-Match= 头字段，而是包含有一个 =If-Modified-Since= 头字段（[[id:e71fa098-728a-46bf-b792-2388946ea0ee][【RFC7232】章节 3.3]]），则表明：客户端想通过[[ruby:modification%20date][修改日期]]来验证客户端所拥有的一个或多个已存储的响应。缓存接收端 *应当* 生成一个 =304 (Not Modified)= 响应（使用那个已选的已存储的响应的元数据），如果以下其中一种情况为真的话：
+
+1. 已选的已存储的响应有一个 =Last-Modified= 头字段，其值早于或等于条件式（即 =If-Modified-Since=）的时间戳。
+2. 已选的已存储的响应没有出现 =Last-Modified= 头字段，但它有一个 =Date= 头字段，其值早于或等于条件式的时间戳。
+3. 已选的已存储的响应既没有出现 =Last-Modified= 头字段，也没有出现 =Date= 头字段，但缓存记录到接收到这个响应的时间早于或等于条件式的时间戳。
+
+#+BEGIN_QUOTE
+A cache that implements partial responses to range requests, as defined in [[[file:RFC7233.org][RFC7233]]], also needs to evaluate a received =If-Range= header field ([[id:2859ef1f-8309-4b7d-9e22-963391b5822a][Section 3.2]] of [RFC7233]) with respect to its selected stored response.
+#+END_QUOTE
+
+一个缓存，如果它还实现了对于范围请求的部分响应，正如【[[file:RFC7233.org][RFC7233]]】所定义的，还需要在它的已选的已存储的响应方面，对所接收到的 =If-Range= 头字段（[[id:2859ef1f-8309-4b7d-9e22-963391b5822a][【RFC7233】章节 3.2]]）进行求值。
+
+*** 4.3.3. 处理验证响应 / Handling a Validation Response
 
 #+BEGIN_QUOTE
 Cache handling of a response to a conditional request is dependent upon its status code:
 
-- A 304 (Not Modified) response status code indicates that the stored response can be updated and reused; see Section 4.3.4.
-- A full response (i.e., one with a payload body) indicates that none of the stored responses nominated in the conditional request is suitable. Instead, the cache MUST use the full response to satisfy the request and MAY replace the stored response(s).
-- However, if a cache receives a 5xx (Server Error) response while attempting to validate a response, it can either forward this response to the requesting client, or act as if the server failed to respond. In the latter case, the cache MAY send a previously stored response (see Section 4.2.4).
+- A =304 (Not Modified)= response status code indicates that the stored response can be updated and reused; see [[id:eb92f86f-35bf-4b7a-b1ae-579da32c29a5][Section 4.3.4]].
+- A full response (i.e., one with a payload body) indicates that none of the stored responses nominated in the conditional request is suitable. Instead, the cache *MUST* use the full response to satisfy the request and *MAY* replace the stored response(s).
+- However, if a cache receives a =5xx (Server Error)= response while attempting to validate a response, it can either forward this response to the requesting client, or act as if the server failed to respond. In the latter case, the cache *MAY* send a previously stored response (see [[id:630361ae-a4e3-4fec-b337-8eff30325ddf][Section 4.2.4]]).
 #+END_QUOTE
 
-*** 4.3.4. Freshening Stored Responses upon Validation
+对于回应给条件请求的响应，缓存依据响应的状态码来进行处理：
+
+- 一个 =304 (Not Modified)= 响应状态码表明：缓存可以更新及复用这个已缓存的响应，见[[id:eb92f86f-35bf-4b7a-b1ae-579da32c29a5][章节 4.3.4]]。
+- 一个[[ruby:full%20response][完全的响应]]（即，一个带有[[ruby:payload%20body][有效载荷]]的响应）表明：没有任何一个已存储的响应适用于回应这个条件请求。而是，缓存 *必须* 使用这个完全的响应来满足这个请求，并且 *可以* 将（可能是多个）已存储的响应替换为这个完全的响应。
+- 然而，如果缓存在试图去验证响应的时候，接收到一个 =5xx (Server Error)= 响应，那么，它既可以转发这个响应给客户端，也可以将这种情况当作服务器[[ruby:failed%20to%20respond][响应出错]]来处理。对于后者，缓存 *可以* 发送一个之前已存储的响应（见[[id:630361ae-a4e3-4fec-b337-8eff30325ddf][章节 4.2.4]]）。
+
+*** 4.3.4. 依据验证结果使已存储的响应唤发新鲜 / Freshening Stored Responses upon Validation
 :PROPERTIES:
 :ID:       eb92f86f-35bf-4b7a-b1ae-579da32c29a5
 :END:
 
 #+BEGIN_QUOTE
-When a cache receives a 304 (Not Modified) response and already has one or more stored 200 (OK) responses for the same cache key, the cache needs to identify which of the stored responses are updated by this new response and then update the stored response(s) with the new information provided in the 304 response.
+When a cache receives a =304 (Not Modified)= response and already has one or more stored =200 (OK)= responses for the same cache key, the cache needs to identify which of the stored responses are updated by this new response and then update the stored response(s) with the new information provided in the =304= response.
 #+END_QUOTE
+
+当一个缓存接收到一个 =304 (Not Modified)= 响应，并且对于这个响应所对应的缓存 key，缓存已经有一个或多个已存储的 =200 (OK)= 响应，那么，这个缓存需要去标识出哪些已缓存的响应需要被这个新响应所更新，然后使用提供自 =304= 响应的新信息更新它们。
 
 #+BEGIN_QUOTE
 The stored response to update is identified by using the first match (if any) of the following:
 
-- If the new response contains a strong validator (see Section 2.1 of [RFC7232]), then that strong validator identifies the selected representation for update. All of the stored responses with the same strong validator are selected. If none of the stored responses contain the same strong validator, then the cache MUST NOT use the new response to update any stored responses.
+- If the new response contains a strong validator (see Section 2.1 of [RFC7232]), then that strong validator identifies the selected representation for update. All of the stored responses with the same strong validator are selected. If none of the stored responses contain the same strong validator, then the cache *MUST NOT* use the new response to update any stored responses.
 - If the new response contains a weak validator and that validator corresponds to one of the cache's stored responses, then the most recent of those matching stored responses is selected for update.
-- If the new response does not include any form of validator (such as in the case where a client generates an If-Modified-Since request from a source other than the Last-Modified response header field), and there is only one stored response, and that stored response also lacks a validator, then that stored response is selected for update.
+- If the new response does not include any form of validator (such as in the case where a client generates an =If-Modified-Since= request from a source other than the =Last-Modified= response header field), and there is only one stored response, and that stored response also lacks a validator, then that stored response is selected for update.
 #+END_QUOTE
+
+通过使用下列第一个能够匹配上（如果能的话）的方式，来标识出哪些已存储的响应需要被更新：
+
+- 如果新响应包含有一个[[ruby:strong%20validator][强验证器]]（【RFC7232】章节 2.1），那么，那个强验证器标识了用于更新的已选表示形式。带有同一个强验证器的所有已存储的响应都被选中。如果已缓存的响应没有一个包含同一个强验证器，那么，缓存 *禁止* 使用新响应去更新任何一个已存储的响应。
+- 如果新响应包含有一个[[ruby:weak%20validator][弱验证器]]对应上缓存的已存储的响应中的某一个验证器，那么，这些匹配上的已存储的响应中时间最新近的那一个会被选中用于更新。
+- 如果新响应并没有包含任何形式的验证器（比如一个客户端生成了一个 =If-Modified-Since= 请求，但生成来源并不是 =Last-Modified= 响应头字段这种情况），并且缓存只有一个已存储的响应，并且那个已存储的响应同样缺少验证器，那么，这个已存储的响应被选中用于更新。
 
 #+BEGIN_QUOTE
-If a stored response is selected for update, the cache MUST:
+If a stored response is selected for update, the cache *MUST*:
 
-- delete any Warning header fields in the stored response with warn-code 1xx (see Section 5.5);
-- retain any Warning header fields in the stored response with warn-code 2xx; and,
-- use other header fields provided in the 304 (Not Modified) response to replace all instances of the corresponding header fields in the stored response.
+- delete any =Warning= header fields in the stored response with warn-code =1xx= (see Section 5.5);
+- retain any =Warning= header fields in the stored response with warn-code =2xx=; and,
+- use other header fields provided in the =304 (Not Modified)= response to replace all instances of the corresponding header fields in the stored response.
 #+END_QUOTE
 
-*** 4.3.5. Freshening Responses via HEAD
+如果一个已存储的响应被选中用于更新，缓存 *必须*：
+
+- 删除已存储的响应中的任何带有警告码为 =1xx= 的 =Warning= 头字段（见章节 5.5）；
+- 保留已存储的响应中的任何带有警告码为 =2xx= 的 =Warning= 头字段；并且：
+- 使用 =304 (Not Modified)= 响应所提供的其他头字段，来替换所有在已存储的响应中对应的头字段。
+
+*** 4.3.5. 经由 HEAD 请求使用响应唤发新鲜 / Freshening Responses via HEAD
 
 #+BEGIN_QUOTE
 A response to the HEAD method is identical to what an equivalent request made with a GET would have been, except it lacks a body. This property of HEAD responses can be used to invalidate or update a cached GET response if the more efficient conditional GET request mechanism is not available (due to no validators being present in the stored response) or if transmission of the representation body is not desired even if it has changed.
@@ -1388,6 +1442,9 @@ A cache SHOULD generate this if it is intentionally disconnected from the rest o
 #+END_QUOTE
 
 *** 5.5.4. Warning: 113 - "Heuristic Expiration"
+:PROPERTIES:
+:ID:       cc9f6df6-f45c-43c5-bd4f-d7fc929df890
+:END:
 
 #+BEGIN_QUOTE
 A cache SHOULD generate this if it heuristically chose a freshness lifetime greater than 24 hours and the response's age is greater than 24 hours.

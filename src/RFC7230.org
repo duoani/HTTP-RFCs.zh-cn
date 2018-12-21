@@ -311,7 +311,7 @@ The figure above shows three intermediaries (A, B, and C) between the user agent
 The terms "upstream" and "downstream" are used to describe directional requirements in relation to the message flow: all messages flow from upstream to downstream. The terms "inbound" and "outbound" are used to describe directional requirements in relation to the request route: "inbound" means toward the origin server and "outbound" means toward the user agent.
 #+END_QUOTE
 
-术语“[[ruby:upstream][上游]]”和“[[ruby:downstream][下游]]”用于描述消息流的方向：所有的消息都从上游流到下游。术语“[[ruby:inbound][入站]]”和“[[ruby:outbound][出站]]”用于描述请求经过路由的方向：“入站”意为经过路由器的数据流向源服务器流动，而“出站”意为经过路由器的数据流向用户代理流动。 
+术语“[[ruby:upstream][上游]]”和“[[ruby:downstream][下游]]”用于描述消息流的方向：所有的消息都从上游流到下游。术语“[[ruby:inbound][入站]]”和“[[ruby:outbound][出站]]”用于描述请求的路由方向：“入站”意为数据流朝向源服务器流动，而“出站”意为数据流朝向用户代理流动。 
 
 #+BEGIN_QUOTE
 译注：上游与下游，拿刚才公交车的例子，在公交车上行时（从 A 到往 Z）：A 是 B、C、……Z 的上游；B 是 A 的下游，是 C……Z 的上游。在公交车下行时（从 Z 到往 A）刚好相反，Z 是 Y、X、……A 的上游。只要记住，是按公交车（水）的行驶（流动）方向来区分上下游的，它总是从上游开往（流行）下游。
