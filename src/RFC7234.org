@@ -858,14 +858,14 @@ The stored response to update is identified by using the first match (if any) of
 #+BEGIN_QUOTE
 If a stored response is selected for update, the cache *MUST*:
 
-- delete any =Warning= header fields in the stored response with warn-code =1xx= (see Section 5.5);
+- delete any =Warning= header fields in the stored response with warn-code =1xx= (see [[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][Section 5.5]]);
 - retain any =Warning= header fields in the stored response with warn-code =2xx=; and,
 - use other header fields provided in the =304 (Not Modified)= response to replace all instances of the corresponding header fields in the stored response.
 #+END_QUOTE
 
 如果一个已存储的响应被选中用于更新，缓存 *必须*：
 
-- 删除已存储的响应中的任何带有警告码为 =1xx= 的 =Warning= 头字段（见章节 5.5）；
+- 删除已存储的响应中的任何带有警告码为 =1xx= 的 =Warning= 头字段（见[[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][章节 5.5]]）；
 - 保留已存储的响应中的任何带有警告码为 =2xx= 的 =Warning= 头字段；并且：
 - 使用 =304 (Not Modified)= 响应所提供的其他头字段，来替换所有在已存储的响应中对应的头字段。
 
@@ -875,52 +875,74 @@ If a stored response is selected for update, the cache *MUST*:
 A response to the HEAD method is identical to what an equivalent request made with a GET would have been, except it lacks a body. This property of HEAD responses can be used to invalidate or update a cached GET response if the more efficient conditional GET request mechanism is not available (due to no validators being present in the stored response) or if transmission of the representation body is not desired even if it has changed.
 #+END_QUOTE
 
-回应给 HEAD 方法的响应与回应给一个等价的 GET 方法的响应相同，
+回应给 HEAD 方法的响应与回应给一个等价的 GET 方法的响应是相同的，除了它缺少一个消息体以外。HEAD 响应的这种性质能够用来失效或更新一个已缓存的 GET 响应，如果更高效的条件 GET 请求机制不可用的话（由于没有验证器出现在已存储的响应），或者如果不期望传输带有表示形式的消息体（即使它已经改变）。
 
 #+BEGIN_QUOTE
-When a cache makes an inbound HEAD request for a given request target and receives a =200 (OK)= response, the cache *SHOULD* update or invalidate each of its stored GET responses that could have been selected for that request (see Section 4.1).
+When a cache makes an inbound HEAD request for a given request target and receives a =200 (OK)= response, the cache *SHOULD* update or invalidate each of its stored GET responses that could have been selected for that request (see [[id:352eb301-a424-48e9-9027-3c6633da4b77][Section 4.1]]).
 #+END_QUOTE
+
+当一个缓存对一个给定的请求目标发起一个[[ruby:inbound][入站]] HEAD 请求，并接收到一个 =200 (OK)= 响应，那么，这个缓存 *应当* 更新或失效它所存储的每一个原本可以被那个请求选择的 GET 响应（见[[id:352eb301-a424-48e9-9027-3c6633da4b77][章节 4.1]]）。
 
 #+BEGIN_QUOTE
 For each of the stored responses that could have been selected, if the stored response and HEAD response have matching values for any received validator fields (=ETag= and =Last-Modified=) and, if the HEAD response has a =Content-Length= header field, the value of =Content-Length= matches that of the stored response, the cache *SHOULD* update the stored response as described below; otherwise, the cache *SHOULD* consider the stored response to be stale.
 #+END_QUOTE
 
+对于每一个原本可以被选择的已存储的响应来说，如果已存储的响应与 HEAD 响应的任何接收到的[[ruby:validator%20header%20fields][验证器头字段]]（=ETag= 和 =Last-Modified=）的值都已经相互匹配上，并且，如果 HEAD 响应带有一个 =Content-Length= 头字段，其字段值与已存储的响应的 =Content-Length= 头字段的值相匹配，那么，缓存 *应当* 像上述那样更新那个已存储的响应；否则，缓存 *应当* 将那个已存储的响应视为[[ruby:stale][陈旧的]]。
+
 #+BEGIN_QUOTE
 If a cache updates a stored response with the metadata provided in a HEAD response, the cache *MUST*:
 
-- delete any =Warning= header fields in the stored response with warn-code =1xx= (see Section 5.5);
+- delete any =Warning= header fields in the stored response with warn-code =1xx= (see [[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][Section 5.5]]);
 - retain any =Warning= header fields in the stored response with warn-code =2xx=; and,
 - use other header fields provided in the HEAD response to replace all instances of the corresponding header fields in the stored response and append new header fields to the stored response's header section unless otherwise restricted by the =Cache-Control= header field.
 #+END_QUOTE
 
-** 4.4. 无效化 / Invalidation
+如果一个缓存使用 HEAD 响应所提供的元数据来更新一个已存储的响应的话，缓存 *必须*：
+
+- 删除已存储的响应中的任何带有警告码为 =1xx= 的 =Warning= 头字段（见[[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][章节 5.5]]）；
+- 保留已存储的响应中的任何带有警告码为 =2xx= 的 =Warning= 头字段；并且：
+- 使用 HEAD 响应所提供的其他头字段，来替换所有在已存储的响应中对应的头字段，并将新的头字段附加到已存储的响应的头部中去，除非 =Cache-Control= 头字段另有限制。
+
+** 4.4. 失效 / Invalidation
 :PROPERTIES:
 :ID:       f0828803-68c6-4dae-a418-6a6b4b57189e
 :END:
 
 #+BEGIN_QUOTE
-Because unsafe request methods (Section 4.2.1 of [RFC7231]) such as PUT, POST or DELETE have the potential for changing state on the origin server, intervening caches can use them to keep their contents up to date.
+Because unsafe request methods ([[id:2f967e3d-8694-430b-ad06-e748fd39b281][Section 4.2.1]] of [RFC7231]) such as PUT, POST or DELETE have the potential for changing state on the origin server, intervening caches can use them to keep their contents up to date.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A cache MUST invalidate the effective Request URI (Section 5.5 of [RFC7230]) as well as the URI(s) in the Location and Content-Location response header fields (if present) when a non-error status code is received in response to an unsafe request method.
-#+END_QUOTE
+因为像 PUT、POST、DELETE 等这些不安全的请求方法（[[id:2f967e3d-8694-430b-ad06-e748fd39b281][【RFC7231】章节 4.2.1]]）可能会改变源服务器上的资源的状态，链路之间的缓存可以使用它们来保持它们的内容为最新。
 
 #+BEGIN_QUOTE
-However, a cache MUST NOT invalidate a URI from a Location or Content-Location response header field if the host part of that URI differs from the host part in the effective request URI (Section 5.5 of [RFC7230]). This helps prevent denial-of-service attacks.
+A cache *MUST* invalidate the effective Request URI ([[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]) as well as the URI(s) in the =Location= and =Content-Location= response header fields (if present) when a non-error status code is received in response to an unsafe request method.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-A cache MUST invalidate the effective request URI (Section 5.5 of [RFC7230]) when it receives a non-error response to a request with a method whose safety is unknown.
-#+END_QUOTE
+当响应中带有一个[[ruby:non-error%20status%20code][非错误的状态码]]，而这个响应是回应给一个不安全的请求方法的，那么，缓存 *必须* [[ruby:invalidate][失效]][[ruby:effective%20Request%20URI][实际请求 URI]]（[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）以及在 =Location= 和 =Content-Location= 响应头字段（如果有出现的话）中的 URI。
 
 #+BEGIN_QUOTE
-Here, a "non-error response" is one with a 2xx (Successful) or 3xx (Redirection) status code. "Invalidate" means that the cache will either remove all stored responses related to the effective request URI or will mark these as "invalid" and in need of a mandatory validation before they can be sent in response to a subsequent request.
+However, a cache *MUST NOT* invalidate a URI from a =Location= or =Content-Location= response header field if the =host= part of that URI differs from the =host= part in the effective request URI ([[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]). This helps prevent denial-of-service attacks.
 #+END_QUOTE
+
+但是，如果 =Location= 或者 =Content-Location= 响应头字段中的 URI 的 =host= 部分不同于有效请求 URI（[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）中的 =host= 部分的话，缓存 *禁止* 失效这种 URI。这样做有助于避免[[ruby:denial-of-service%20attacks][拒绝服务攻击]]。
+
+#+BEGIN_QUOTE
+A cache *MUST* invalidate the effective request URI ([[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]) when it receives a non-error response to a request with a method whose safety is unknown.
+#+END_QUOTE
+
+当缓存接收到一个[[ruby:non-error%20response][非错误的回应]]，而这个响应是回应给一个请求方法的安全性是未知的请求的，那么，缓存 *必须* 失效有效请求 URI（[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]）。
+
+#+BEGIN_QUOTE
+Here, a "non-error response" is one with a =2xx (Successful)= or =3xx (Redirection)= status code. "Invalidate" means that the cache will either remove all stored responses related to the effective request URI or will mark these as "invalid" and in need of a mandatory validation before they can be sent in response to a subsequent request.
+#+END_QUOTE
+
+所述“非错误的响应”，指的是带有状态码为 =2xx (Successful)= 或 =3xx (Redirection)= 的响应。所述“[[ruby:invalidate][失效]]”，意味着缓存将会这样做：要么移除该有效请求 URI 相关的所有已存储的响应，要么将这些已存储的响应标记为“[[ruby:invalid][无效]]”并且在它们可以用来响应给后续请求之前需要[[ruby:mandatory%20validation][强制的验证]]。
 
 #+BEGIN_QUOTE
 Note that this does not guarantee that all appropriate responses are invalidated. For example, a state-changing request might invalidate responses in the caches it travels through, but relevant responses still might be stored in other caches that it has not.
 #+END_QUOTE
+
+需要注意的是这样做并不保证所有合适的响应都会被失效。例如，一个会改变状态的请求可能会将它所途经的缓存中的响应置为失效，但存储在其他缓存中的相关响应仍然未被失效。
 
 * 5. 头字段定义 / Header Field Definitions
 
