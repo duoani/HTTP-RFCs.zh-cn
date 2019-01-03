@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-26 Wed 11:24 -->
+<!-- 2019-01-03 Thu 14:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7234: Hypertext Transfer Protocol (HTTP/1.1): Caching</title>
@@ -443,7 +443,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgb943d27">5.1. Age</a></li>
 <li><a href="#org96b62f3">5.2. Cache-Control</a>
 <ul>
-<li><a href="#org5de394c">5.2.1. Request Cache-Control Directives</a>
+<li><a href="#org8707cd3">5.2.1. 请求消息中的缓存控制指令 / Request Cache-Control Directives</a>
 <ul>
 <li><a href="#orge31ad97">5.2.1.1. max-age</a></li>
 <li><a href="#org2366c46">5.2.1.2. max-stale</a></li>
@@ -454,7 +454,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgdb45a14">5.2.1.7. only-if-cached</a></li>
 </ul>
 </li>
-<li><a href="#org628b869">5.2.2. Response Cache-Control Directives</a>
+<li><a href="#org1336445">5.2.2. 响应消息中的缓存控制指令 / Response Cache-Control Directives</a>
 <ul>
 <li><a href="#org19ae67e">5.2.2.1. must-revalidate</a></li>
 <li><a href="#org6dee7ff">5.2.2.2. no-cache</a></li>
@@ -467,7 +467,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgf601e80">5.2.2.9. s-maxage</a></li>
 </ul>
 </li>
-<li><a href="#orgdc9554b">5.2.3. Cache Control Extensions</a></li>
+<li><a href="#orgd8f8d17">5.2.3. 缓存控制扩展 / Cache Control Extensions</a></li>
 </ul>
 </li>
 <li><a href="#org304d2d1">5.3. Expires</a></li>
@@ -619,7 +619,7 @@ This document may contain material from IETF Documents or IETF Contributions pub
 </div>
 
 <div id="outline-container-org3548e07" class="outline-2">
-<h2 id="org3548e07">1. 引言 / Introduction</h2>
+<h2 id="org3548e07"><a id="ID-74ce75cf-fa87-485a-9d0c-406cca46608b"></a>1. 引言 / Introduction</h2>
 <div class="outline-text-2" id="text-org3548e07">
 <blockquote>
 <p>
@@ -708,7 +708,7 @@ This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC52
 </div>
 
 <div id="outline-container-orgd2ac10d" class="outline-4">
-<h4 id="orgd2ac10d">1.2.1. 秒差 / Delta Seconds</h4>
+<h4 id="orgd2ac10d"><a id="ID-26b0d760-fc0b-4d1e-b9be-e38abdb549e6"></a>1.2.1. 秒差 / Delta Seconds</h4>
 <div class="outline-text-4" id="text-orgd2ac10d">
 <blockquote>
 <p>
@@ -813,7 +813,7 @@ A cache <b>MUST NOT</b> store a response to any request, unless:
 <li>contains an <code>Expires</code> header field (see <a href="#org304d2d1">Section 5.3</a>), or</li>
 <li>contains a <code>max-age</code> response directive (see <a href="#orgc309465">Section 5.2.2.8</a>), or</li>
 <li>contains a <code>s-maxage</code> response directive (see <a href="#orgf601e80">Section 5.2.2.9</a>) and the cache is shared, or</li>
-<li>contains a Cache Control Extension (see <a href="#orgdc9554b">Section 5.2.3</a>) that allows it to be cached, or</li>
+<li>contains a Cache Control Extension (see <a href="#orgd8f8d17">Section 5.2.3</a>) that allows it to be cached, or</li>
 <li>has a status code that is defined as cacheable by default (see <a href="#org4c48fcc">Section 4.2.2</a>), or</li>
 <li>contains a <code>public</code> response directive (see <a href="#org300811e">Section 5.2.2.5</a>).</li>
 </ul></li>
@@ -835,7 +835,7 @@ A cache <b>MUST NOT</b> store a response to any request, unless:
 <li>包含一个 <code>Expires</code> 头字段（<a href="#org304d2d1">章节 5.3</a>），或者：</li>
 <li>包含一个 <code>max-age</code> 响应指令（<a href="#orgc309465">章节 5.2.2.8</a>），或者：</li>
 <li>包含一个 <code>s-maxage</code> 响应指令（<a href="#orgf601e80">章节 5.2.2.9</a>）并且缓存是共享的，或者：</li>
-<li>包含一个<ruby>缓存控制扩展<rt>Cache Control Extension</rt></ruby>（<a href="#orgdc9554b">章节 5.2.3</a>），该缓存控制扩展允许缓存这个响应，或者：</li>
+<li>包含一个<ruby>缓存控制扩展<rt>Cache Control Extension</rt></ruby>（<a href="#orgd8f8d17">章节 5.2.3</a>），该缓存控制扩展允许缓存这个响应，或者：</li>
 <li>带有一个状态码，该状态码默认是可缓存的（<a href="#org4c48fcc">章节 4.2.2</a>），或者：</li>
 <li>包含一个 <code>public</code> 响应指令（<a href="#org300811e">章节 5.2.2.5</a>）。</li>
 </ul></li>
@@ -843,12 +843,12 @@ A cache <b>MUST NOT</b> store a response to any request, unless:
 
 <blockquote>
 <p>
-Note that any of the requirements listed above can be overridden by a <code>cache-control</code> extension; see <a href="#orgdc9554b">Section 5.2.3</a>.
+Note that any of the requirements listed above can be overridden by a <code>cache-control</code> extension; see <a href="#orgd8f8d17">Section 5.2.3</a>.
 </p>
 </blockquote>
 
 <p>
-需要注意的是，上述所列出的任何要求都可以被 <code>cache-control</code> 扩展所覆盖，见<a href="#orgdc9554b">章节 5.2.3</a>。
+需要注意的是，上述所列出的任何要求都可以被 <code>cache-control</code> 扩展所覆盖，见<a href="#orgd8f8d17">章节 5.2.3</a>。
 </p>
 
 <blockquote>
@@ -912,12 +912,12 @@ A shared cache <b>MUST NOT</b> use a cached response to a request with an <code>
 
 <blockquote>
 <p>
-In this specification, the following <code>Cache-Control</code> response directives (<a href="#org628b869">Section 5.2.2</a>) have such an effect: <code>must-revalidate</code>, <code>public</code>, and <code>s-maxage</code>.
+In this specification, the following <code>Cache-Control</code> response directives (<a href="#org1336445">Section 5.2.2</a>) have such an effect: <code>must-revalidate</code>, <code>public</code>, and <code>s-maxage</code>.
 </p>
 </blockquote>
 
 <p>
-在本规范中，以下 <code>Cache-Control</code> 响应指令（<a href="#org628b869">章节 5.2.2</a>）有上述这种影响：<code>must-revalidate</code>、<code>public</code>、以及 <code>s-maxage</code>。
+在本规范中，以下 <code>Cache-Control</code> 响应指令（<a href="#org1336445">章节 5.2.2</a>）有上述这种影响：<code>must-revalidate</code>、<code>public</code>、以及 <code>s-maxage</code>。
 </p>
 
 <blockquote>
@@ -988,7 +988,7 @@ When presented with a request, a cache <b>MUST NOT</b> reuse a stored response, 
 <li>The presented effective request URI (<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">Section 5.5</a> of [RFC7230]) and that of the stored response match, and</li>
 <li>the request method associated with the stored response allows it to be used for the presented request, and</li>
 <li>selecting header fields nominated by the stored response (if any) match those presented (see <a href="#org64a44b1">Section 4.1</a>), and</li>
-<li>the presented request does not contain the <code>no-cache</code> pragma (<a href="#orga139761">Section 5.4</a>), nor the <code>no-cache</code> cache directive (<a href="#org5de394c">Section 5.2.1</a>), unless the stored response is successfully validated (<a href="#org7ccec2c">Section 4.3</a>), and</li>
+<li>the presented request does not contain the <code>no-cache</code> pragma (<a href="#orga139761">Section 5.4</a>), nor the <code>no-cache</code> cache directive (<a href="#org8707cd3">Section 5.2.1</a>), unless the stored response is successfully validated (<a href="#org7ccec2c">Section 4.3</a>), and</li>
 <li>the stored response does not contain the <code>no-cache</code> cache directive (<a href="#org6dee7ff">Section 5.2.2.2</a>), unless it is successfully validated (<a href="#org7ccec2c">Section 4.3</a>), and</li>
 <li>the stored response is either:
 <ul class="org-ul">
@@ -1007,7 +1007,7 @@ When presented with a request, a cache <b>MUST NOT</b> reuse a stored response, 
 <li>所面临的<ruby>实际请求 URI<rt>effective request URI</rt></ruby>（<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）与已存储的响应所对应的实际请求 URI 相匹配，并且：</li>
 <li>已存储的响应所关联的请求方法允许这个响应用于所面临的请求，并且：</li>
 <li>由已存储的响应所<ruby>指定<rt>nominated</rt></ruby>的选择头字段与所面临的请求的头字段相匹配（<a href="#org64a44b1">章节 4.1</a>），并且：</li>
-<li>所面临的请求并没有包含一个值为 <code>no-cache</code> 的 <code>Pragma</code> 头字段（<a href="#orga139761">章节 5.4</a>），也没有包含一个值为 <code>no-cache</code> 的缓存指令（<a href="#org5de394c">章节 5.2.1</a>），除非已存储的响应是<ruby>被成功验证的<rt>successfully validated</rt></ruby>（<a href="#org7ccec2c">章节 4.3</a>），并且：</li>
+<li>所面临的请求并没有包含一个值为 <code>no-cache</code> 的 <code>Pragma</code> 头字段（<a href="#orga139761">章节 5.4</a>），也没有包含一个值为 <code>no-cache</code> 的缓存指令（<a href="#org8707cd3">章节 5.2.1</a>），除非已存储的响应是<ruby>被成功验证的<rt>successfully validated</rt></ruby>（<a href="#org7ccec2c">章节 4.3</a>），并且：</li>
 <li>已存储的响应并没有包含一个 <code>no-cache</code> 缓存指令（<a href="#org6dee7ff">章节 5.2.2.2</a>），除非它是被成功验证的（<a href="#org7ccec2c">章节 4.3</a>），并且：</li>
 <li>已存储的响应是以下情况之一：
 <ul class="org-ul">
@@ -1025,12 +1025,12 @@ When presented with a request, a cache <b>MUST NOT</b> reuse a stored response, 
 
 <blockquote>
 <p>
-Note that any of the requirements listed above can be overridden by a cache-control extension; see <a href="#orgdc9554b">Section 5.2.3</a>.
+Note that any of the requirements listed above can be overridden by a cache-control extension; see <a href="#orgd8f8d17">Section 5.2.3</a>.
 </p>
 </blockquote>
 
 <p>
-需要注意的是，上述所列出的任何要求都可以被 <code>cache-control</code> 扩展所覆盖，见<a href="#orgdc9554b">章节 5.2.3</a>。
+需要注意的是，上述所列出的任何要求都可以被 <code>cache-control</code> 扩展所覆盖，见<a href="#orgd8f8d17">章节 5.2.3</a>。
 </p>
 
 <blockquote>
@@ -1283,12 +1283,12 @@ The calculation to determine if a response is fresh is:
 
 <blockquote>
 <p>
-Clients can send the <code>max-age</code> or <code>min-fresh</code> cache directives in a request to constrain or relax freshness calculations for the corresponding response (<a href="#org5de394c">Section 5.2.1</a>).
+Clients can send the <code>max-age</code> or <code>min-fresh</code> cache directives in a request to constrain or relax freshness calculations for the corresponding response (<a href="#org8707cd3">Section 5.2.1</a>).
 </p>
 </blockquote>
 
 <p>
-客户端能够在请求中发送 <code>max-age</code> 或者 <code>min-fresh</code> 缓存指令来限制或放松对应响应的新鲜度计算（<a href="#org5de394c">章节 5.2.1</a>）。
+客户端能够在请求中发送 <code>max-age</code> 或者 <code>min-fresh</code> 缓存指令来限制或放松对应响应的新鲜度计算（<a href="#org8707cd3">章节 5.2.1</a>）。
 </p>
 
 <blockquote>
@@ -1587,22 +1587,22 @@ A "stale" response is one that either has explicit expiry information or is allo
 
 <blockquote>
 <p>
-A cache <b>MUST NOT</b> generate a stale response if it is prohibited by an explicit in-protocol directive (e.g., by a "<code>no-store</code>" or "<code>no-cache</code>" cache directive, a "<code>must-revalidate</code>" cache-response-directive, or an applicable "<code>s-maxage</code>" or "<code>proxy-revalidate</code>" cache-response-directive; see <a href="#org628b869">Section 5.2.2</a>).
+A cache <b>MUST NOT</b> generate a stale response if it is prohibited by an explicit in-protocol directive (e.g., by a "<code>no-store</code>" or "<code>no-cache</code>" cache directive, a "<code>must-revalidate</code>" cache-response-directive, or an applicable "<code>s-maxage</code>" or "<code>proxy-revalidate</code>" cache-response-directive; see <a href="#org1336445">Section 5.2.2</a>).
 </p>
 </blockquote>
 
 <p>
-缓存 <b>禁止</b> 生成一个<ruby>陈旧的响应<rt>stale response</rt></ruby>，如果它被一个明确的协议内的指令（比如，被一个 <code>no-store</code> 或者 <code>no-cache</code> <ruby>缓存指令<rt>cache directive</rt></ruby>、一个 <code>must-revalidate</code> <ruby>缓存响应指令<rt>cache-response-directive</rt></ruby>、或者一个适用的 <code>s-maxage</code> 或者 <code>proxy-revalidate</code> 缓存响应指令，见<a href="#org628b869">章节 5.2.2</a>）所禁止的话。
+缓存 <b>禁止</b> 生成一个<ruby>陈旧的响应<rt>stale response</rt></ruby>，如果它被一个明确的协议内的指令（比如，被一个 <code>no-store</code> 或者 <code>no-cache</code> <ruby>缓存指令<rt>cache directive</rt></ruby>、一个 <code>must-revalidate</code> <ruby>缓存响应指令<rt>cache-response-directive</rt></ruby>、或者一个适用的 <code>s-maxage</code> 或者 <code>proxy-revalidate</code> 缓存响应指令，见<a href="#org1336445">章节 5.2.2</a>）所禁止的话。
 </p>
 
 <blockquote>
 <p>
-A cache <b>MUST NOT</b> send stale responses unless it is disconnected (i.e., it cannot contact the origin server or otherwise find a forward path) or doing so is explicitly allowed (e.g., by the <code>max-stale</code> request directive; see <a href="#org5de394c">Section 5.2.1</a>).
+A cache <b>MUST NOT</b> send stale responses unless it is disconnected (i.e., it cannot contact the origin server or otherwise find a forward path) or doing so is explicitly allowed (e.g., by the <code>max-stale</code> request directive; see <a href="#org8707cd3">Section 5.2.1</a>).
 </p>
 </blockquote>
 
 <p>
-缓存 <b>禁止</b> 发送陈旧的响应，除非它的连接被中断（也就是说，它不能够联系到源服务器或者找不到一个转发路径），或者被明确允许这样做（比如，通过 <code>max-stale</code> 请求指令，见<a href="#org5de394c">章节 5.2.1</a>）。
+缓存 <b>禁止</b> 发送陈旧的响应，除非它的连接被中断（也就是说，它不能够联系到源服务器或者找不到一个转发路径），或者被明确允许这样做（比如，通过 <code>max-stale</code> 请求指令，见<a href="#org8707cd3">章节 5.2.1</a>）。
 </p>
 
 <blockquote>
@@ -1988,6 +1988,10 @@ Note that this does not guarantee that all appropriate responses are invalidated
 This section defines the syntax and semantics of HTTP/1.1 header fields related to caching.
 </p>
 </blockquote>
+
+<p>
+本章节定义了缓存相关的 HTTP/1.1 头字段的句法与语义。
+</p>
 </div>
 
 <div id="outline-container-orgb943d27" class="outline-3">
@@ -1995,9 +1999,13 @@ This section defines the syntax and semantics of HTTP/1.1 header fields related 
 <div class="outline-text-3" id="text-orgb943d27">
 <blockquote>
 <p>
-The "<code>Age</code>" header field conveys the sender's estimate of the amount of time since the response was generated or successfully validated at the origin server. <code>Age</code> values are calculated as specified in Section 4.2.3.
+The "<code>Age</code>" header field conveys the sender's estimate of the amount of time since the response was generated or successfully validated at the origin server. <code>Age</code> values are calculated as specified in <a href="#org3fee265">Section 4.2.3</a>.
 </p>
 </blockquote>
+
+<p>
+<code>Age</code> 头字段运载了发送端的估算时长，该估算时长是从该响应被源服务器<ruby>生成<rt>generated</rt></ruby>或<ruby>成功验证<rt>successfully validated</rt></ruby>到现在所持续的时长。<a href="#org3fee265">章节 4.2.3</a> 指出了 <code>Age</code> 字段值的计算方法。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Age = delta-seconds
@@ -2006,15 +2014,23 @@ The "<code>Age</code>" header field conveys the sender's estimate of the amount 
 
 <blockquote>
 <p>
-The <code>Age</code> field-value is a non-negative integer, representing time in seconds (see Section 1.2.1).
+The <code>Age</code> field-value is a non-negative integer, representing time in seconds (see <a href="#orgd2ac10d">Section 1.2.1</a>).
 </p>
 </blockquote>
 
+<p>
+<code>Age</code> 的字段值是一个非负整数，以秒为单位来表示时间（<a href="#orgd2ac10d">章节 1.2.1</a>）。
+</p>
+
 <blockquote>
 <p>
-The presence of an <code>Age</code> header field implies that the response was not generated or validated by the origin server for this request. However, lack of an <code>Age</code> header field does not imply the origin was contacted, since the response might have been received from an HTTP/1.0 cache that does not implement Age.
+The presence of an <code>Age</code> header field implies that the response was not generated or validated by the origin server for this request. However, lack of an <code>Age</code> header field does not imply the origin was contacted, since the response might have been received from an HTTP/1.0 cache that does not implement <code>Age</code>.
 </p>
 </blockquote>
+
+<p>
+<code>Age</code> 头字段的出现意味着这个响应并不是由源服务器生成的或验证的。但是，缺少 <code>Age</code> 头字段并不意味着缓存已与源服务器取得联系，因为这个响应也可能是接收自一个 HTTP/1.0 缓存，而 HTTP/1.0 缓存并没有实现 <code>Age</code>。
+</p>
 </div>
 </div>
 
@@ -2023,33 +2039,53 @@ The presence of an <code>Age</code> header field implies that the response was n
 <div class="outline-text-3" id="text-org96b62f3">
 <blockquote>
 <p>
-The "Cache-Control" header field is used to specify directives for caches along the request/response chain. Such cache directives are unidirectional in that the presence of a directive in a request does not imply that the same directive is to be given in the response.
+The "<code>Cache-Control</code>" header field is used to specify directives for caches along the request/response chain. Such cache directives are unidirectional in that the presence of a directive in a request does not imply that the same directive is to be given in the response.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A cache MUST obey the requirements of the Cache-Control directives defined in this section. See Section 5.2.3 for information about how Cache-Control directives defined elsewhere are handled.
+<code>Cache-Control</code> 头字段用于指定请求/响应链路中所使用的缓存指令。这些缓存指令是意向的，即请求中出现一个指令并不意味着响应中将会出现同一个指令。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-<b>Note:</b> Some HTTP/1.0 caches might not implement Cache-Control.
+A cache <b>MUST</b> obey the requirements of the <code>Cache-Control</code> directives defined in this section. See <a href="#orgd8f8d17">Section 5.2.3</a> for information about how <code>Cache-Control</code> directives defined elsewhere are handled.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-A proxy, whether or not it implements a cache, MUST pass cache directives through in forwarded messages, regardless of their significance to that application, since the directives might be applicable to all recipients along the request/response chain. It is not possible to target a directive to a specific cache.
+缓存 <b>必须</b> 遵守本章节所定义的 <code>Cache-Control</code> 指令的要求。关于如何处理在别处（非本规范）定义的 <code>Cache-Control</code> 指令，见<a href="#orgd8f8d17">章节 5.2.3</a>。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-Cache directives are identified by a token, to be compared case-insensitively, and have an optional argument, that can use both token and quoted-string syntax. For the directives defined below that define arguments, recipients ought to accept both forms, even if one is documented to be preferred. For any directive not defined by this specification, a recipient MUST accept both forms.
+<b>Note:</b> Some HTTP/1.0 caches might not implement <code>Cache-Control</code>.
 </p>
 </blockquote>
+
+<p>
+<b>注意：</b> 某些 HTTP/1.0 缓存可能没有实现 <code>Cache-Control</code>。
+</p>
+
+<blockquote>
+<p>
+A proxy, whether or not it implements a cache, <b>MUST</b> pass cache directives through in forwarded messages, regardless of their significance to that application, since the directives might be applicable to all recipients along the request/response chain. It is not possible to target a directive to a specific cache.
+</p>
+</blockquote>
+
+<p>
+一个代理，无论它是否有实现了缓存功能，<b>必须</b> 在转发消息的同时放行缓存指令的转发，无论这些指令对那个应用程序是否有意义，这是因为这些指令可能会应用于请求/响应链路中的所有接收端。发送一个指令以某一个具体的缓存为目标是不可能的。
+</p>
+
+<blockquote>
+<p>
+Cache directives are identified by a <code>token</code>, to be compared case-insensitively, and have an optional argument, that can use both <code>token</code> and <code>quoted-string</code> syntax. For the directives defined below that define arguments, recipients ought to accept both forms, even if one is documented to be preferred. For any directive not defined by this specification, a recipient <b>MUST</b> accept both forms.
+</p>
+</blockquote>
+
+<p>
+缓存指令由一个 <code>token</code> 所标识，不区分大小写，它可以带有一个可选的<ruby>实参<rt>argument</rt></ruby>，这个实参既可以使用 <code>token</code> 句法来表示，也可以使用 <code>quoted-string</code> 来表示。对于下文所定义的指令中有定义实参的，接收端应该能够同时接受这两种实参形式，即使其中一种形式是被注明为首选的。对于其他任何非本规范所定义的指令，接收端 <b>必须</b> 能够同时接受这两种实参形式。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Cache-Control   = 1#cache-directive
@@ -2063,11 +2099,15 @@ cache-directive = token [ "=" ( token / quoted-string ) ]
 For the cache directives defined below, no argument is defined (nor allowed) unless stated otherwise.
 </p>
 </blockquote>
+
+<p>
+对于下文所定义的指令中，除非另有说明，没有定义（也不允许有）实参。
+</p>
 </div>
 
-<div id="outline-container-org5de394c" class="outline-4">
-<h4 id="org5de394c"><a id="ID-a586b298-d3ba-44df-ab8f-69ad432b93a2"></a>5.2.1. Request Cache-Control Directives</h4>
-<div class="outline-text-4" id="text-org5de394c">
+<div id="outline-container-org8707cd3" class="outline-4">
+<h4 id="org8707cd3"><a id="ID-a586b298-d3ba-44df-ab8f-69ad432b93a2"></a>5.2.1. 请求消息中的缓存控制指令 / Request Cache-Control Directives</h4>
+<div class="outline-text-4" id="text-org8707cd3">
 </div>
 
 <div id="outline-container-orge31ad97" class="outline-5">
@@ -2079,6 +2119,10 @@ Argument syntax:
 </p>
 </blockquote>
 
+<p>
+实参句法：
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">delta-seconds (see Section 1.2.1)
 </pre>
@@ -2086,15 +2130,29 @@ Argument syntax:
 
 <blockquote>
 <p>
-The "max-age" request directive indicates that the client is unwilling to accept a response whose age is greater than the specified number of seconds. Unless the max-stale request directive is also present, the client is not willing to accept a stale response.
+The "<code>max-age</code>" request directive indicates that the client is unwilling to accept a response whose age is greater than the specified number of seconds. Unless the <code>max-stale</code> request directive is also present, the client is not willing to accept a stale response.
+</p>
+</blockquote>
+
+<p>
+<code>max-age</code> 请求指令表明，客户端不愿意去接受这一种响应：其年龄大于指令所指定的秒数值。除非也出现了 <code>max-stale</code> 请求指令，否则客户端不愿意接受一个<ruby>陈旧的响应<rt>stale response</rt></ruby>。
+</p>
+
+<blockquote>
+<p>
+译注：响应的<ruby>年龄<rt>age</rt></ruby>，见<a href="#org4e92c7f">章节 4.2.3</a>。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-This directive uses the token form of the argument syntax: e.g., 'max-age=5' not 'max-age="5"'. A sender SHOULD NOT generate the quoted-string form.
+This directive uses the <code>token</code> form of the argument syntax: e.g., 'max-age=5' not 'max-age="5"'. A sender <b>SHOULD NOT</b> generate the <code>quoted-string</code> form.
 </p>
 </blockquote>
+
+<p>
+本指令的实参使用的是 <code>token</code> 形式的句法，比如：max-age=5，而不是 max-age="5"。发送端 <b>不应当</b> 将本指令生成为 <code>quoted-string</code> 的形式。
+</p>
 </div>
 </div>
 
@@ -2107,6 +2165,10 @@ Argument syntax:
 </p>
 </blockquote>
 
+<p>
+实参句法：
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">delta-seconds (see Section 1.2.1)
 </pre>
@@ -2114,15 +2176,29 @@ Argument syntax:
 
 <blockquote>
 <p>
-The "max-stale" request directive indicates that the client is willing to accept a response that has exceeded its freshness lifetime. If max-stale is assigned a value, then the client is willing to accept a response that has exceeded its freshness lifetime by no more than the specified number of seconds. If no value is assigned to max-stale, then the client is willing to accept a stale response of any age.
+The "<code>max-stale</code>" request directive indicates that the client is willing to accept a response that has exceeded its freshness lifetime. If <code>max-stale</code> is assigned a value, then the client is willing to accept a response that has exceeded its freshness lifetime by no more than the specified number of seconds. If no value is assigned to <code>max-stale</code>, then the client is willing to accept a stale response of any age.
+</p>
+</blockquote>
+
+<p>
+<code>max-stale</code> 请求指令表明，客户端愿意去接受这一种响应：已经超出了保鲜期的，即<ruby>陈旧的响应<rt>stale response</rt></ruby>。如果 <code>max-stale</code> 已被赋值，那么，客户端愿意去接受这一种响应：已经超出了保鲜期的，但超出的时长不大于本指令所指定的秒数值。如果 <code>max-stale</code> 还未被赋值，那么，客户端愿意去接受 <b>任意年龄</b> 的陈旧响应。
+</p>
+
+<blockquote>
+<p>
+译注：<ruby>陈旧的响应<rt>stale response</rt></ruby>，见<a href="#orga71285a">章节 4.2.4</a>。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-This directive uses the token form of the argument syntax: e.g., 'max-stale=10' not 'max-stale="10"'. A sender SHOULD NOT generate the quoted-string form.
+This directive uses the <code>token</code> form of the argument syntax: e.g., 'max-stale=10' not 'max-stale="10"'. A sender <b>SHOULD NOT</b> generate the <code>quoted-string</code> form.
 </p>
 </blockquote>
+
+<p>
+本指令的实参使用的是 <code>token</code> 形式的句法，比如：max-stale=10，而不是 max-stale="10"。发送端 <b>不应当</b> 将本指令生成为 <code>quoted-string</code> 的形式。
+</p>
 </div>
 </div>
 
@@ -2135,6 +2211,10 @@ Argument syntax:
 </p>
 </blockquote>
 
+<p>
+实参句法：
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">delta-seconds (see Section 1.2.1)
 </pre>
@@ -2142,15 +2222,29 @@ Argument syntax:
 
 <blockquote>
 <p>
-The "min-fresh" request directive indicates that the client is willing to accept a response whose freshness lifetime is no less than its current age plus the specified time in seconds. That is, the client wants a response that will still be fresh for at least the specified number of seconds.
+The "<code>min-fresh</code>" request directive indicates that the client is willing to accept a response whose freshness lifetime is no less than its current age plus the specified time in seconds. That is, the client wants a response that will still be fresh for at least the specified number of seconds.
+</p>
+</blockquote>
+
+<p>
+<code>min-fresh</code> 请求指令表明，客户端愿意去接受这一种响应：它的<ruby>保鲜期<rt>freshness lifetime</rt></ruby>不少于它的当前<ruby>年龄<rt>age</rt></ruby>加上本指令所指定的秒数时间。也就是说，客户端想要这样的一种响应：至少在指定的秒数值之内仍然是新鲜的。
+</p>
+
+<blockquote>
+<p>
+译注：<ruby>保鲜期<rt>freshness lifetime</rt></ruby>是一个秒数值，而不是一个绝对时间点，其定义见<a href="#org85ed084">章节 4.2</a>。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-This directive uses the token form of the argument syntax: e.g., 'min-fresh=20' not 'min-fresh="20"'. A sender SHOULD NOT generate the quoted-string form.
+This directive uses the <code>token</code> form of the argument syntax: e.g., 'min-fresh=20' not 'min-fresh="20"'. A sender <b>SHOULD NOT</b> generate the <code>quoted-string</code> form.
 </p>
 </blockquote>
+
+<p>
+本指令的实参使用的是 <code>token</code> 形式的句法，比如：max-fresh=20，而不是 max-fresh="20"。发送端 <b>不应当</b> 将本指令生成为 <code>quoted-string</code> 的形式。
+</p>
 </div>
 </div>
 
@@ -2159,9 +2253,13 @@ This directive uses the token form of the argument syntax: e.g., 'min-fresh=20' 
 <div class="outline-text-5" id="text-orga64526f">
 <blockquote>
 <p>
-The "no-cache" request directive indicates that a cache MUST NOT use a stored response to satisfy the request without successful validation on the origin server.
+The "<code>no-cache</code>" request directive indicates that a cache <b>MUST NOT</b> use a stored response to satisfy the request without successful validation on the origin server.
 </p>
 </blockquote>
+
+<p>
+<code>no-cache</code> 请求指令表明，缓存在没有经源服务器成功验证的情况下，<b>禁止</b> 使用一个已存储的响应来满足这个请求。
+</p>
 </div>
 </div>
 
@@ -2170,19 +2268,49 @@ The "no-cache" request directive indicates that a cache MUST NOT use a stored re
 <div class="outline-text-5" id="text-orgeead007">
 <blockquote>
 <p>
-The "no-store" request directive indicates that a cache MUST NOT store any part of either this request or any response to it. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache MUST NOT intentionally store the information in non-volatile storage, and MUST make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
+The "<code>no-store</code>" request directive indicates that a cache <b>MUST NOT</b> store any part of either this request or any response to it. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache <b>MUST NOT</b> intentionally store the information in non-volatile storage, and <b>MUST</b> make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
+</p>
+</blockquote>
+
+<p>
+<code>no-store</code> 请求指令表明，缓存 <b>禁止</b> 存储这次请求以及对应的所有响应的任何部分。本指令既适用于<ruby>私有缓存<rt>private caches</rt></ruby>，也适用于<ruby>共享缓存<rt>shared caches</rt></ruby>。这里的“禁止存储”意思是缓存 <b>禁止</b> 在<ruby>非易失性存储器<rt>non-volatile storage</rt></ruby>中刻意存储信息，而且 <b>必须</b> 在转发这些信息以后，立刻、尽最大努力地去尝试从<ruby>易失性存储器<rt>volatile storage</rt></ruby>中移除它们。
+</p>
+
+<blockquote>
+<p>
+译注：私有缓存和共享缓存的描述，见<a href="#org3548e07">章节 1</a>。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-This directive is NOT a reliable or sufficient mechanism for ensuring privacy. In particular, malicious or compromised caches might not recognize or obey this directive, and communications networks might be vulnerable to eavesdropping.
+译注：上述“信息”指的是这次请求以及对应的所有响应的任何部分。
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-Note that if a request containing this directive is satisfied from a cache, the no-store request directive does not apply to the already stored response.
+This directive is <b>NOT</b> a reliable or sufficient mechanism for ensuring privacy. In particular, malicious or compromised caches might not recognize or obey this directive, and communications networks might be vulnerable to eavesdropping.
+</p>
+</blockquote>
+
+<p>
+本指令并不是一个可靠的或者充分的机制来保证私密性。特别是，恶意的或者折衷的缓存可能不<ruby>服从<rt>obey</rt></ruby>或者无法<ruby>识别<rt>recognize</rt></ruby>本指令，从而通信网络可能会遭到窃听。
+</p>
+
+<blockquote>
+<p>
+Note that if a request containing this directive is satisfied from a cache, the <code>no-store</code> request directive does not apply to the already stored response.
+</p>
+</blockquote>
+
+<p>
+需要注意的是，如果包含本指令的一个请求被一个缓存所满足，那么，<code>no-store</code> 请求指令并不适用于已经存储的响应。
+</p>
+
+<blockquote>
+<p>
+译注：<code>no-store</code> 是告诉缓存，不要存储本次请求及其回应给这个请求的响应，它是不会影响到早已存储在缓存中的响应的。
 </p>
 </blockquote>
 </div>
@@ -2193,9 +2321,13 @@ Note that if a request containing this directive is satisfied from a cache, the 
 <div class="outline-text-5" id="text-orge5b428d">
 <blockquote>
 <p>
-The "no-transform" request directive indicates that an intermediary (whether or not it implements a cache) MUST NOT transform the payload, as defined in Section 5.7.2 of [RFC7230].
+The "<code>no-transform</code>" request directive indicates that an intermediary (whether or not it implements a cache) <b>MUST NOT</b> transform the payload, as defined in <a href="RFC7230.html#ID-b6641b58-3ac6-4fce-9c44-a3715ffdc8a0">Section 5.7.2</a> of [RFC7230].
 </p>
 </blockquote>
+
+<p>
+<code>no-transform</code> 请求指令表明，<ruby>中间人<rt>intermediary</rt></ruby>（无论是否有实现缓存） <b>禁止</b> 转换<ruby>有效载荷<rt>payload</rt></ruby>，正如<a href="RFC7230.html#ID-b6641b58-3ac6-4fce-9c44-a3715ffdc8a0">【RFC7230】章节 5.7.2</a> 所定义的。
+</p>
 </div>
 </div>
 
@@ -2204,16 +2336,20 @@ The "no-transform" request directive indicates that an intermediary (whether or 
 <div class="outline-text-5" id="text-orgdb45a14">
 <blockquote>
 <p>
-The "only-if-cached" request directive indicates that the client only wishes to obtain a stored response. If it receives this directive, a cache SHOULD either respond using a stored response that is consistent with the other constraints of the request, or respond with a 504 (Gateway Timeout) status code. If a group of caches is being operated as a unified system with good internal connectivity, a member cache MAY forward such a request within that group of caches.
+The "<code>only-if-cached</code>" request directive indicates that the client only wishes to obtain a stored response. If it receives this directive, a cache <b>SHOULD</b> either respond using a stored response that is consistent with the other constraints of the request, or respond with a <code>504 (Gateway Timeout)</code> status code. If a group of caches is being operated as a unified system with good internal connectivity, a member cache <b>MAY</b> forward such a request within that group of caches.
 </p>
 </blockquote>
+
+<p>
+<code>only-if-cached</code> 请求指令表明，客户端只希望获取一个已存储的响应。如果一个缓存接收到本指令，那么，它 <b>应当</b> 要么回应一个符合请求的其他约束的已存储的响应，要么回应一个 <code>504 (Gateway Timeout)</code> 状态码。如果一组缓存作为一个统一的系统来运作，它们之间具有良好的内部连通性，那么，组内的成员缓存 <b>可以</b> 在组内的缓存之间转发这种请求。
+</p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org628b869" class="outline-4">
-<h4 id="org628b869"><a id="ID-3b667767-3efc-4487-b0a4-5234780e5de2"></a>5.2.2. Response Cache-Control Directives</h4>
-<div class="outline-text-4" id="text-org628b869">
+<div id="outline-container-org1336445" class="outline-4">
+<h4 id="org1336445"><a id="ID-3b667767-3efc-4487-b0a4-5234780e5de2"></a>5.2.2. 响应消息中的缓存控制指令 / Response Cache-Control Directives</h4>
+<div class="outline-text-4" id="text-org1336445">
 </div>
 
 <div id="outline-container-org19ae67e" class="outline-5">
@@ -2438,9 +2574,9 @@ This directive uses the token form of the argument syntax: e.g., 's-maxage=10' n
 </div>
 </div>
 
-<div id="outline-container-orgdc9554b" class="outline-4">
-<h4 id="orgdc9554b"><a id="ID-eb7efc79-3c1d-439b-b0b3-d901848ad800"></a>5.2.3. Cache Control Extensions</h4>
-<div class="outline-text-4" id="text-orgdc9554b">
+<div id="outline-container-orgd8f8d17" class="outline-4">
+<h4 id="orgd8f8d17"><a id="ID-eb7efc79-3c1d-439b-b0b3-d901848ad800"></a>5.2.3. 缓存控制扩展 / Cache Control Extensions</h4>
+<div class="outline-text-4" id="text-orgd8f8d17">
 <blockquote>
 <p>
 The Cache-Control header field can be extended through the use of one or more cache-extension tokens, each with an optional value. A cache MUST ignore unrecognized cache directives.
