@@ -76,6 +76,9 @@ This document may contain material from IETF Documents or IETF Contributions pub
 #+END_QUOTE
 
 * 1. 引言 / Introduction
+:PROPERTIES:
+:ID:       74ce75cf-fa87-485a-9d0c-406cca46608b
+:END:
 
 #+BEGIN_QUOTE
 HTTP is typically used for distributed information systems, where performance can be improved by the use of response caches. This document defines aspects of HTTP/1.1 related to caching and reusing response messages.
@@ -1040,17 +1043,27 @@ For the cache directives defined below, no argument is defined (nor allowed) unl
 Argument syntax:
 #+END_QUOTE
 
+实参句法：
+
 #+BEGIN_SRC text
   delta-seconds (see Section 1.2.1)
 #+END_SRC
 
 #+BEGIN_QUOTE
-The "max-age" request directive indicates that the client is unwilling to accept a response whose age is greater than the specified number of seconds. Unless the max-stale request directive is also present, the client is not willing to accept a stale response.
+The "=max-age=" request directive indicates that the client is unwilling to accept a response whose age is greater than the specified number of seconds. Unless the =max-stale= request directive is also present, the client is not willing to accept a stale response.
+#+END_QUOTE
+
+=max-age= 请求指令表明，客户端不愿意去接受这一种响应：其年龄大于指令所指定的秒数值。除非也出现了 =max-stale= 请求指令，否则客户端不愿意接受一个[[ruby:stale%20response][陈旧的响应]]。
+
+#+BEGIN_QUOTE
+译注：响应的[[ruby:age][年龄]]，见[[id:297b33de-eb1e-4988-b28f-b21e8ecc5ffa][章节 4.2.3]]。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-This directive uses the token form of the argument syntax: e.g., 'max-age=5' not 'max-age="5"'. A sender SHOULD NOT generate the quoted-string form.
+This directive uses the =token= form of the argument syntax: e.g., 'max-age=5' not 'max-age="5"'. A sender *SHOULD NOT* generate the =quoted-string= form.
 #+END_QUOTE
+
+本指令的实参使用的是 =token= 形式的句法，比如：max-age=5，而不是 max-age="5"。发送端 *不应当* 将本指令生成为 =quoted-string= 的形式。
 
 **** 5.2.1.2. max-stale
 
@@ -1058,17 +1071,27 @@ This directive uses the token form of the argument syntax: e.g., 'max-age=5' not
 Argument syntax:
 #+END_QUOTE
 
+实参句法：
+
 #+BEGIN_SRC text
   delta-seconds (see Section 1.2.1)
 #+END_SRC
 
 #+BEGIN_QUOTE
-The "max-stale" request directive indicates that the client is willing to accept a response that has exceeded its freshness lifetime. If max-stale is assigned a value, then the client is willing to accept a response that has exceeded its freshness lifetime by no more than the specified number of seconds. If no value is assigned to max-stale, then the client is willing to accept a stale response of any age.
+The "=max-stale=" request directive indicates that the client is willing to accept a response that has exceeded its freshness lifetime. If =max-stale= is assigned a value, then the client is willing to accept a response that has exceeded its freshness lifetime by no more than the specified number of seconds. If no value is assigned to =max-stale=, then the client is willing to accept a stale response of any age.
+#+END_QUOTE
+
+=max-stale= 请求指令表明，客户端愿意去接受这一种响应：已经超出了保鲜期的，即[[ruby:stale%20response][陈旧的响应]]。如果 =max-stale= 已被赋值，那么，客户端愿意去接受这一种响应：已经超出了保鲜期的，但超出的时长不大于本指令所指定的秒数值。如果 =max-stale= 还未被赋值，那么，客户端愿意去接受 *任意年龄* 的陈旧响应。
+
+#+BEGIN_QUOTE
+译注：[[ruby:stale%20response][陈旧的响应]]，见[[id:630361ae-a4e3-4fec-b337-8eff30325ddf][章节 4.2.4]]。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-This directive uses the token form of the argument syntax: e.g., 'max-stale=10' not 'max-stale="10"'. A sender SHOULD NOT generate the quoted-string form.
+This directive uses the =token= form of the argument syntax: e.g., 'max-stale=10' not 'max-stale="10"'. A sender *SHOULD NOT* generate the =quoted-string= form.
 #+END_QUOTE
+
+本指令的实参使用的是 =token= 形式的句法，比如：max-stale=10，而不是 max-stale="10"。发送端 *不应当* 将本指令生成为 =quoted-string= 的形式。
 
 **** 5.2.1.3. min-fresh
 
@@ -1076,49 +1099,83 @@ This directive uses the token form of the argument syntax: e.g., 'max-stale=10' 
 Argument syntax:
 #+END_QUOTE
 
+实参句法：
+
 #+BEGIN_SRC text
   delta-seconds (see Section 1.2.1)
 #+END_SRC
 
 #+BEGIN_QUOTE
-The "min-fresh" request directive indicates that the client is willing to accept a response whose freshness lifetime is no less than its current age plus the specified time in seconds. That is, the client wants a response that will still be fresh for at least the specified number of seconds.
+The "=min-fresh=" request directive indicates that the client is willing to accept a response whose freshness lifetime is no less than its current age plus the specified time in seconds. That is, the client wants a response that will still be fresh for at least the specified number of seconds.
+#+END_QUOTE
+
+=min-fresh= 请求指令表明，客户端愿意去接受这一种响应：它的[[ruby:freshness%20lifetime][保鲜期]]不少于它的当前[[ruby:age][年龄]]加上本指令所指定的秒数时间。也就是说，客户端想要这样的一种响应：至少在指定的秒数值之内仍然是新鲜的。
+
+#+BEGIN_QUOTE
+译注：[[ruby:freshness%20lifetime][保鲜期]]是一个秒数值，而不是一个绝对时间点，其定义见[[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][章节 4.2]]。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-This directive uses the token form of the argument syntax: e.g., 'min-fresh=20' not 'min-fresh="20"'. A sender SHOULD NOT generate the quoted-string form.
+This directive uses the =token= form of the argument syntax: e.g., 'min-fresh=20' not 'min-fresh="20"'. A sender *SHOULD NOT* generate the =quoted-string= form.
 #+END_QUOTE
+
+本指令的实参使用的是 =token= 形式的句法，比如：max-fresh=20，而不是 max-fresh="20"。发送端 *不应当* 将本指令生成为 =quoted-string= 的形式。
 
 **** 5.2.1.4. no-cache
 
 #+BEGIN_QUOTE
-The "no-cache" request directive indicates that a cache MUST NOT use a stored response to satisfy the request without successful validation on the origin server.
+The "=no-cache=" request directive indicates that a cache *MUST NOT* use a stored response to satisfy the request without successful validation on the origin server.
 #+END_QUOTE
+
+=no-cache= 请求指令表明，缓存在没有经源服务器成功验证的情况下，*禁止* 使用一个已存储的响应来满足这个请求。
 
 **** 5.2.1.5. no-store
 
 #+BEGIN_QUOTE
-The "no-store" request directive indicates that a cache MUST NOT store any part of either this request or any response to it. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache MUST NOT intentionally store the information in non-volatile storage, and MUST make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
+The "=no-store=" request directive indicates that a cache *MUST NOT* store any part of either this request or any response to it. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache *MUST NOT* intentionally store the information in non-volatile storage, and *MUST* make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
+#+END_QUOTE
+
+=no-store= 请求指令表明，缓存 *禁止* 存储这次请求以及对应的所有响应的任何部分。本指令既适用于[[ruby:private%20caches][私有缓存]]，也适用于[[ruby:shared%20caches][共享缓存]]。这里的“禁止存储”意思是缓存 *禁止* 在[[ruby:non-volatile%20storage][非易失性存储器]]中刻意存储信息，而且 *必须* 在转发这些信息以后，立刻、尽最大努力地去尝试从[[ruby:volatile%20storage][易失性存储器]]中移除它们。
+
+#+BEGIN_QUOTE
+译注：私有缓存和共享缓存的描述，见[[id:74ce75cf-fa87-485a-9d0c-406cca46608b][章节 1]]。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-This directive is NOT a reliable or sufficient mechanism for ensuring privacy. In particular, malicious or compromised caches might not recognize or obey this directive, and communications networks might be vulnerable to eavesdropping.
+译注：上述“信息”指的是这次请求以及对应的所有响应的任何部分。
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-Note that if a request containing this directive is satisfied from a cache, the no-store request directive does not apply to the already stored response.
+This directive is *NOT* a reliable or sufficient mechanism for ensuring privacy. In particular, malicious or compromised caches might not recognize or obey this directive, and communications networks might be vulnerable to eavesdropping.
+#+END_QUOTE
+
+本指令并不是一个可靠的或者充分的机制来保证私密性。特别是，恶意的或者折衷的缓存可能不[[ruby:obey][服从]]或者无法[[ruby:recognize][识别]]本指令，从而通信网络可能会遭到窃听。
+
+#+BEGIN_QUOTE
+Note that if a request containing this directive is satisfied from a cache, the =no-store= request directive does not apply to the already stored response.
+#+END_QUOTE
+
+需要注意的是，如果包含本指令的一个请求被一个缓存所满足，那么，=no-store= 请求指令并不适用于已经存储的响应。
+
+#+BEGIN_QUOTE
+译注：=no-store= 是告诉缓存，不要存储本次请求及其回应给这个请求的响应，它是不会影响到早已存储在缓存中的响应的。
 #+END_QUOTE
 
 **** 5.2.1.6. no-transform
 
 #+BEGIN_QUOTE
-The "no-transform" request directive indicates that an intermediary (whether or not it implements a cache) MUST NOT transform the payload, as defined in Section 5.7.2 of [RFC7230].
+The "=no-transform=" request directive indicates that an intermediary (whether or not it implements a cache) *MUST NOT* transform the payload, as defined in [[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Section 5.7.2]] of [RFC7230].
 #+END_QUOTE
+
+=no-transform= 请求指令表明，[[ruby:intermediary][中间人]]（无论是否有实现缓存） *禁止* 转换[[ruby:payload][有效载荷]]，正如[[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][【RFC7230】章节 5.7.2]] 所定义的。
 
 **** 5.2.1.7. only-if-cached
 
 #+BEGIN_QUOTE
-The "only-if-cached" request directive indicates that the client only wishes to obtain a stored response. If it receives this directive, a cache SHOULD either respond using a stored response that is consistent with the other constraints of the request, or respond with a 504 (Gateway Timeout) status code. If a group of caches is being operated as a unified system with good internal connectivity, a member cache MAY forward such a request within that group of caches.
+The "=only-if-cached=" request directive indicates that the client only wishes to obtain a stored response. If it receives this directive, a cache *SHOULD* either respond using a stored response that is consistent with the other constraints of the request, or respond with a =504 (Gateway Timeout)= status code. If a group of caches is being operated as a unified system with good internal connectivity, a member cache *MAY* forward such a request within that group of caches.
 #+END_QUOTE
+
+=only-if-cached= 请求指令表明，客户端只希望获取一个已存储的响应。如果一个缓存接收到本指令，那么，它 *应当* 要么回应一个符合请求的其他约束的已存储的响应，要么回应一个 =504 (Gateway Timeout)= 状态码。如果一组缓存作为一个统一的系统来运作，它们之间具有良好的内部连通性，那么，组内的成员缓存 *可以* 在组内的缓存之间转发这种请求。
 
 *** 5.2.2. 响应消息中的缓存控制指令 / Response Cache-Control Directives
 :PROPERTIES:
