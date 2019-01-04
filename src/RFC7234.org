@@ -1185,16 +1185,22 @@ The "=only-if-cached=" request directive indicates that the client only wishes t
 **** 5.2.2.1. must-revalidate
 
 #+BEGIN_QUOTE
-The "must-revalidate" response directive indicates that once it has become stale, a cache MUST NOT use the response to satisfy subsequent requests without successful validation on the origin server.
+The "=must-revalidate=" response directive indicates that once it has become stale, a cache *MUST NOT* use the response to satisfy subsequent requests without successful validation on the origin server.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The must-revalidate directive is necessary to support reliable operation for certain protocol features. In all circumstances a cache MUST obey the must-revalidate directive; in particular, if a cache cannot reach the origin server for any reason, it MUST generate a 504 (Gateway Timeout) response.
-#+END_QUOTE
+=must-revalidate= 响应指令表明：一旦这个响应消息变得陈旧，那么，缓存 *禁止* 在没有经过源服务器成功验证的情况下，使用这个响应来满足后续的请求。
 
 #+BEGIN_QUOTE
-The must-revalidate directive ought to be used by servers if and only if failure to validate a request on the representation could result in incorrect operation, such as a silently unexecuted financial transaction.
+The =must-revalidate= directive is necessary to support reliable operation for certain protocol features. In all circumstances a cache *MUST* obey the =must-revalidate= directive; in particular, if a cache cannot reach the origin server for any reason, it *MUST* generate a =504 (Gateway Timeout)= response.
 #+END_QUOTE
+
+为支持某些协议功能的可靠操作，=must-revalidat= 指令是很有必要的。在任何情况下，缓存 *必须* 服从 =must-revalidate= 指令。特别是如果一个缓存出于任何原因而不能访问源服务器的情况下，它 *必须* 生成一个 =504 (Gateway Timeout)= 响应。
+
+#+BEGIN_QUOTE
+The =must-revalidate= directive ought to be used by servers if and only if failure to validate a request on the representation could result in incorrect operation, such as a silently unexecuted financial transaction.
+#+END_QUOTE
+
+服务器应该使用 =must-revalidate= 指令，当且仅当在表示形式上验证一个请求失败时可能会导致不正确的操作，比如一个静默未执行的财务交易。
 
 **** 5.2.2.2. no-cache
 :PROPERTIES:
@@ -1205,28 +1211,34 @@ The must-revalidate directive ought to be used by servers if and only if failure
 Argument syntax:
 #+END_QUOTE
 
+实参句法：
+
 #+BEGIN_SRC text
   #field-name
 #+END_SRC
 
 #+BEGIN_QUOTE
-The "no-cache" response directive indicates that the response MUST NOT be used to satisfy a subsequent request without successful validation on the origin server. This allows an origin server to prevent a cache from using it to satisfy a request without contacting it, even by caches that have been configured to send stale responses.
+The "=no-cache=" response directive indicates that the response *MUST NOT* be used to satisfy a subsequent request without successful validation on the origin server. This allows an origin server to prevent a cache from using it to satisfy a request without contacting it, even by caches that have been configured to send stale responses.
 #+END_QUOTE
 
+=no-cache= 响应指令表明：这个响应在没有经过源服务器的成功验证的情况下，*禁止* 被用来满足后续的请求。这样使得源服务器可以阻止缓存在不联系源服务器的情况下使用这个响应来满足某个请求，即使这些缓存已被配置为可以发送陈旧响应。
+
 #+BEGIN_QUOTE
-If the no-cache response directive specifies one or more field-names, then a cache MAY use the response to satisfy a subsequent request, subject to any other restrictions on caching. However, any header fields in the response that have the field-name(s) listed MUST NOT be sent in the response to a subsequent request without successful revalidation with the origin server. This allows an origin server to prevent the re-use of certain header fields in a response, while still allowing caching of the rest of the response.
+If the =no-cache= response directive specifies one or more field-names, then a cache *MAY* use the response to satisfy a subsequent request, subject to any other restrictions on caching. However, any header fields in the response that have the field-name(s) listed *MUST NOT* be sent in the response to a subsequent request without successful revalidation with the origin server. This allows an origin server to prevent the re-use of certain header fields in a response, while still allowing caching of the rest of the response.
 #+END_QUOTE
+
+如果 no-cache 响应指令指定了一个或多个字段名，那么，缓存 *可以* 使用
 
 #+BEGIN_QUOTE
 The field-names given are not limited to the set of header fields defined by this specification. Field names are case-insensitive.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-This directive uses the quoted-string form of the argument syntax. A sender SHOULD NOT generate the token form (even if quoting appears not to be needed for single-entry lists).
+This directive uses the =quoted-string= form of the argument syntax. A sender *SHOULD NOT* generate the =token= form (even if quoting appears not to be needed for single-entry lists).
 #+END_QUOTE
 
 #+BEGIN_QUOTE
-*Note:* Although it has been back-ported to many implementations, some HTTP/1.0 caches will not recognize or obey this directive. Also, no-cache response directives with field-names are often handled by caches as if an unqualified no-cache directive was received; i.e., the special handling for the qualified form is not widely implemented.
+*Note:* Although it has been back-ported to many implementations, some HTTP/1.0 caches will not recognize or obey this directive. Also, =no-cache= response directives with field-names are often handled by caches as if an unqualified =no-cache= directive was received; i.e., the special handling for the qualified form is not widely implemented.
 #+END_QUOTE
 
 **** 5.2.2.3. no-store
