@@ -1135,7 +1135,7 @@ The "=no-cache=" request directive indicates that a cache *MUST NOT* use a store
 The "=no-store=" request directive indicates that a cache *MUST NOT* store any part of either this request or any response to it. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache *MUST NOT* intentionally store the information in non-volatile storage, and *MUST* make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
 #+END_QUOTE
 
-=no-store= 请求指令表明，缓存 *禁止* 存储这次请求以及对应的所有响应的任何部分。本指令既适用于[[ruby:private%20caches][私有缓存]]，也适用于[[ruby:shared%20caches][共享缓存]]。这里的“禁止存储”意思是缓存 *禁止* 在[[ruby:non-volatile%20storage][非易失性存储器]]中刻意存储信息，而且 *必须* 在转发这些信息以后，立刻、尽最大努力地去尝试从[[ruby:volatile%20storage][易失性存储器]]中移除它们。
+=no-store= 请求指令表明，缓存 *禁止* 存储这次请求及其对应的任何响应的任何部分。本指令既适用于[[ruby:private%20caches][私有缓存]]，也适用于[[ruby:shared%20caches][共享缓存]]。这里“禁止存储”的意思是缓存 *禁止* 在[[ruby:non-volatile%20storage][非易失性存储器]]中刻意存储信息，而且 *必须* 在转发这些信息以后，立刻、尽最大努力地去尝试从[[ruby:volatile%20storage][易失性存储器]]中移除它们。
 
 #+BEGIN_QUOTE
 译注：私有缓存和共享缓存的描述，见[[id:74ce75cf-fa87-485a-9d0c-406cca46608b][章节 1]]。
@@ -1227,35 +1227,48 @@ The "=no-cache=" response directive indicates that the response *MUST NOT* be us
 If the =no-cache= response directive specifies one or more field-names, then a cache *MAY* use the response to satisfy a subsequent request, subject to any other restrictions on caching. However, any header fields in the response that have the field-name(s) listed *MUST NOT* be sent in the response to a subsequent request without successful revalidation with the origin server. This allows an origin server to prevent the re-use of certain header fields in a response, while still allowing caching of the rest of the response.
 #+END_QUOTE
 
-如果 no-cache 响应指令指定了一个或多个字段名，那么，缓存 *可以* 使用
+如果 =no-cache= 响应指令指定了一个或多个[[ruby:field-names][字段名]]，那么，缓存 *可以* 使用这个响应来满足一个后续的请求，但会受到任何其他关于缓存方面的约束。然而，响应消息的 =no-cache= 指令中所列出的任何字段名 *禁止* 在没有经过源服务器成功验证的情况下，出现在回应给一个后续请求的响应中。这样使得源服务器可以阻止某些头字段在一个响应中被复用，但仍然允许缓存响应的剩余部分。
 
 #+BEGIN_QUOTE
 The field-names given are not limited to the set of header fields defined by this specification. Field names are case-insensitive.
 #+END_QUOTE
 
+这里所说的[[ruby:field-names][字段名]]并不限于由本规范所定义的头字段集。字段名是不区分大小写的。
+
 #+BEGIN_QUOTE
 This directive uses the =quoted-string= form of the argument syntax. A sender *SHOULD NOT* generate the =token= form (even if quoting appears not to be needed for single-entry lists).
 #+END_QUOTE
+
+本指令的实参使用的是 =quoted-string= 形式的句法。发送端 *不应当* 将本指令生成为 =token= 的形式（即使在只有单一条目的列表中看起来并不需要引号）。
 
 #+BEGIN_QUOTE
 *Note:* Although it has been back-ported to many implementations, some HTTP/1.0 caches will not recognize or obey this directive. Also, =no-cache= response directives with field-names are often handled by caches as if an unqualified =no-cache= directive was received; i.e., the special handling for the qualified form is not widely implemented.
 #+END_QUOTE
 
+*注意：* 虽然本指令已被移植到许多实现上，但是，某些 HTTP/1.0 缓存将不会识别或者不会服从它。另外，带有字段名的 =no-cache= 响应指令常常被缓存当作[[ruby:unqualified][未经限定的]] =no-cache= 来处理，也就是说，对于限定形式的特殊处理并没有得到广泛的实现。
+
 **** 5.2.2.3. no-store
 
 #+BEGIN_QUOTE
-The "no-store" response directive indicates that a cache MUST NOT store any part of either the immediate request or response. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache MUST NOT intentionally store the information in non-volatile storage, and MUST make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
+The "=no-store=" response directive indicates that a cache *MUST NOT* store any part of either the immediate request or response. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache *MUST NOT* intentionally store the information in non-volatile storage, and *MUST* make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
 #+END_QUOTE
 
+=no-store= 响应指令表明，缓存 *禁止* 存储这个响应及其引起这个响应的请求的任何部分。本指令既适用于私有缓存，也适用于共享缓存。这里“禁止存储”的意思是缓存 *禁止*
+ 在[[ruby:non-volatile%20storage][非易失性存储器]]中刻意存储信息，而且 *必须* 在转发这些信息以后，立刻、尽最大努力地去尝试从[[ruby:volatile%20storage][易失性存储器]]中移除它们。
+
 #+BEGIN_QUOTE
-This directive is NOT a reliable or sufficient mechanism for ensuring privacy. In particular, malicious or compromised caches might not recognize or obey this directive, and communications networks might be vulnerable to eavesdropping.
+This directive is *NOT* a reliable or sufficient mechanism for ensuring privacy. In particular, malicious or compromised caches might not recognize or obey this directive, and communications networks might be vulnerable to eavesdropping.
 #+END_QUOTE
+
+本指令并不是一个可靠的或者充分的机制来保证私密性。特别是，恶意的或者折衷的缓存可能不[[ruby:obey][服从]]或者无法[[ruby:recognize][识别]]本指令，从而通信网络可能会遭到窃听。
 
 **** 5.2.2.4. no-transform
 
 #+BEGIN_QUOTE
-The "no-transform" response directive indicates that an intermediary (regardless of whether it implements a cache) MUST NOT transform the payload, as defined in Section 5.7.2 of [RFC7230].
+The "=no-transform=" response directive indicates that an intermediary (regardless of whether it implements a cache) *MUST NOT* transform the payload, as defined in [[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Section 5.7.2]] of [RFC7230].
 #+END_QUOTE
+
+=no-transform= 响应指令表明，中间人（无论它是否有实现了缓存功能） *禁止* 转换有效载荷，其定义见[[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][【RFC7230】章节 5.7.2]]。
 
 **** 5.2.2.5. public
 :PROPERTIES:
@@ -1263,8 +1276,10 @@ The "no-transform" response directive indicates that an intermediary (regardless
 :END:
 
 #+BEGIN_QUOTE
-The "public" response directive indicates that any cache MAY store the response, even if the response would normally be non-cacheable or cacheable only within a private cache. (See Section 3.2 for additional details related to the use of public in response to a request containing Authorization, and Section 3 for details of how public affects responses that would normally not be stored, due to their status codes not being defined as cacheable by default; see Section 4.2.2.)
+The "=public=" response directive indicates that any cache *MAY* store the response, even if the response would normally be non-cacheable or cacheable only within a private cache. (See [[id:d6b247ad-fe70-4ddf-9bd3-ebc35ea6ac99][Section 3.2]] for additional details related to the use of =public= in response to a request containing =Authorization=, and [[id:e41d8ccc-5b69-40e3-a8ab-ca27327f15fa][Section 3]] for details of how =public= affects responses that would normally not be stored, due to their status codes not being defined as cacheable by default; see [[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]].)
 #+END_QUOTE
+
+=public= 响应指令表明，任何缓存都 *可以* 存储这个响应，即使在正常情况下这个响应是不可缓存的或者仅可缓存于某个私有缓存中。（在回应给带有 =Authorization= 的请求的这种响应里使用 =public= 的更多详细信息，见[[id:d6b247ad-fe70-4ddf-9bd3-ebc35ea6ac99][章节 3.2]]；以及 =public= 如何影响正常情况下是不可存储的响应（由于它们的状态码没有定义为默认是可缓存的，见[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][章节 4.2.2]]）的细节，见[[id:e41d8ccc-5b69-40e3-a8ab-ca27327f15fa][章节 3]]；）
 
 **** 5.2.2.6. private
 :PROPERTIES:
@@ -1275,35 +1290,49 @@ The "public" response directive indicates that any cache MAY store the response,
 Argument syntax:
 #+END_QUOTE
 
+实参句法：
+
 #+BEGIN_SRC text
   #field-name
 #+END_SRC
 
 #+BEGIN_QUOTE
-The "private" response directive indicates that the response message is intended for a single user and MUST NOT be stored by a shared cache. A private cache MAY store the response and reuse it for later requests, even if the response would normally be non-cacheable.
+The "=private=" response directive indicates that the response message is intended for a single user and *MUST NOT* be stored by a shared cache. A private cache *MAY* store the response and reuse it for later requests, even if the response would normally be non-cacheable.
 #+END_QUOTE
 
+=private= 响应指令表明，这个响应消息是打算给某个单一用户使用的，并且 *禁止* 被共享缓存所存储。隐私缓存 *可以* 存储这个响应和在接下来的请求中复用这个响应，即使这个响应在正常情况下是不可缓存的。
+
 #+BEGIN_QUOTE
-If the private response directive specifies one or more field-names, this requirement is limited to the field-values associated with the listed response header fields. That is, a shared cache MUST NOT store the specified field-names(s), whereas it MAY store the remainder of the response message.
+If the =private= response directive specifies one or more field-names, this requirement is limited to the field-values associated with the listed response header fields. That is, a shared cache *MUST NOT* store the specified field-names(s), whereas it *MAY* store the remainder of the response message.
 #+END_QUOTE
+
+如果 =private= 响应指令指定了一个或多个字段名称，那么，这个要求仅限于所列出的响应头字段所关联的字段值。也就是说，共享缓存 *禁止* 存储 =private= 所指定的字段名，但它 *可以* 存储响应消息的剩余部分。
 
 #+BEGIN_QUOTE
 The field-names given are not limited to the set of header fields defined by this specification. Field names are case-insensitive.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-This directive uses the quoted-string form of the argument syntax. A sender SHOULD NOT generate the token form (even if quoting appears not to be needed for single-entry lists).
-#+END_QUOTE
+这里所说的[[ruby:field-names][字段名]]并不限于由本规范所定义的头字段集。字段名是不区分大小写的。
 
 #+BEGIN_QUOTE
-*Note:* This usage of the word "private" only controls where the response can be stored; it cannot ensure the privacy of the message content. Also, private response directives with field-names are often handled by caches as if an unqualified private directive was received; i.e., the special handling for the qualified form is not widely implemented.
+This directive uses the =quoted-string= form of the argument syntax. A sender *SHOULD NOT* generate the =token= form (even if quoting appears not to be needed for single-entry lists).
 #+END_QUOTE
+
+本指令的实参使用的是 =quoted-string= 形式的句法。发送端 *不应当* 将本指令生成为 =token= 的形式（即使在只有单一条目的列表中看起来并不需要引号）。
+
+#+BEGIN_QUOTE
+*Note:* This usage of the word "private" only controls where the response can be stored; it cannot ensure the privacy of the message content. Also, =private= response directives with field-names are often handled by caches as if an unqualified =private= directive was received; i.e., the special handling for the qualified form is not widely implemented.
+#+END_QUOTE
+
+*注意：* 这里所使用的术语“private”（私有）仅控制响应能够存储在哪个地方，它并不能保证消息内容的隐私性。另外，带有字段名称的 =private= 响应指令常常被缓存当作[[ruby:unqualified][未经限定的]] =private= 来处理，也就是说，对于限定形式的特殊处理并没有得到广泛的实现。
 
 **** 5.2.2.7. proxy-revalidate
 
 #+BEGIN_QUOTE
-The "proxy-revalidate" response directive has the same meaning as the must-revalidate response directive, except that it does not apply to private caches.
+The "=proxy-revalidate=" response directive has the same meaning as the =must-revalidate= response directive, except that it does not apply to private caches.
 #+END_QUOTE
+
+=proxy-revalidate= 响应指令与 =must-revalidate= 响应指令具有同样的含义，除了它并不能适用于私有缓存以外。
 
 **** 5.2.2.8. max-age
 :PROPERTIES:
@@ -1314,17 +1343,23 @@ The "proxy-revalidate" response directive has the same meaning as the must-reval
 Argument syntax:
 #+END_QUOTE
 
+实参句法：
+
 #+BEGIN_SRC text
   delta-seconds (see Section 1.2.1)
 #+END_SRC
 
 #+BEGIN_QUOTE
-The "max-age" response directive indicates that the response is to be considered stale after its age is greater than the specified number of seconds.
+The "=max-age=" response directive indicates that the response is to be considered stale after its age is greater than the specified number of seconds.
 #+END_QUOTE
 
+=max-age= 响应指令表明，在响应的年龄大于这个指令所指定的秒数以后，这个响应就被视为是[[ruby:stale][陈旧的]]。
+
 #+BEGIN_QUOTE
-This directive uses the token form of the argument syntax: e.g., 'max-age=5' not 'max-age="5"'. A sender SHOULD NOT generate the quoted-string form.
+This directive uses the =token= form of the argument syntax: e.g., 'max-age=5' not 'max-age="5"'. A sender *SHOULD NOT* generate the =quoted-string= form.
 #+END_QUOTE
+
+本指令的实参使用的是 =token= 形式的句法，比如：max-age=5，而不是 max-age="5"。发送端 *不应当* 将本指令生成为 =quoted-string= 的形式。
 
 **** 5.2.2.9. s-maxage
 :PROPERTIES:
@@ -1335,17 +1370,23 @@ This directive uses the token form of the argument syntax: e.g., 'max-age=5' not
 Argument syntax:
 #+END_QUOTE
 
+实参句法：
+
 #+BEGIN_SRC text
   delta-seconds (see Section 1.2.1)
 #+END_SRC
 
 #+BEGIN_QUOTE
-The "s-maxage" response directive indicates that, in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the max-age directive or the Expires header field. The s-maxage directive also implies the semantics of the proxy-revalidate response directive.
+The "=s-maxage=" response directive indicates that, in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the =max-age= directive or the =Expires= header field. The =s-maxage= directive also implies the semantics of the =proxy-revalidate= response directive.
 #+END_QUOTE
 
+=s-maxage= 响应指令表明，在共享缓存中，由本指令所指定的最大年龄值覆盖了 =max-age= 指令或者 =Expires= 头字段所指定的最大年龄值。=s-maxage= 指令还意味着 =proxy-revalidate= 响应指令的语义。
+
 #+BEGIN_QUOTE
-This directive uses the token form of the argument syntax: e.g., 's-maxage=10' not 's-maxage="10"'. A sender SHOULD NOT generate the quoted-string form.
+This directive uses the =token= form of the argument syntax: e.g., 's-maxage=10' not 's-maxage="10"'. A sender *SHOULD NOT* generate the =quoted-string= form.
 #+END_QUOTE
+
+本指令的实参使用的是 =token= 形式的句法，比如：s-maxage=10，而不是 s-maxage="10"。发送端 *不应当* 将本指令生成为 =quoted-string= 的形式。
 
 *** 5.2.3. 缓存控制扩展 / Cache Control Extensions
 :PROPERTIES:
@@ -1353,7 +1394,7 @@ This directive uses the token form of the argument syntax: e.g., 's-maxage=10' n
 :END:
 
 #+BEGIN_QUOTE
-The Cache-Control header field can be extended through the use of one or more cache-extension tokens, each with an optional value. A cache MUST ignore unrecognized cache directives.
+The =Cache-Control= header field can be extended through the use of one or more =cache-extension= tokens, each with an optional value. A cache *MUST* ignore unrecognized cache directives.
 #+END_QUOTE
 
 #+BEGIN_QUOTE
@@ -1373,7 +1414,7 @@ For example, consider a hypothetical new response directive called "community" t
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-A cache that recognizes such a community cache-extension could broaden its behavior in accordance with that extension. A cache that does not recognize the community cache-extension would ignore it and adhere to the private directive.
+A cache that recognizes such a community cache-extension could broaden its behavior in accordance with that extension. A cache that does not recognize the community =cache-extension= would ignore it and adhere to the =private= directive.
 #+END_QUOTE
 
 ** 5.3. Expires
