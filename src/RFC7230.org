@@ -144,9 +144,11 @@ This specification uses the Augmented Backus-Naur Form (ABNF) notation of [[[htt
 The following core rules are included by reference, as defined in [RFC5234], Appendix B.1: =ALPHA= (letters), =CR= (carriage return), =CRLF= (CR LF), =CTL= (controls), =DbbIGIT= (decimal 0-9), =DQUOTE= (double quote), =HEXDIG= (hexadecimal 0-9/A-F/a-f), =HTAB= (horizontal tab), =LF= (line feed), =OCTET= (any 8-bit sequence of data), =SP= (space), and =VCHAR= (any visible [USASCII] character).
 #+END_QUOTE
 
-本规范引用了以下定义在[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：=ALPHA= （字母）、=CR= （回车符）、=CRLF= （回车换行符）、=CTL= （控制字符）、=DIGIT= （十进制数字 0-9）、=DQUOTE= （双引号）、=HEXDIG= （十六进制数字 0-9/A-F/a-f）、=HTAB= （水平制表符）、=LF= （换行符）、=OCTET= （八位组字节）、=SP= （空格）以及 =VCHAR= （【USASCII】可见字符）。
+本规范引用了以下定义在[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：=ALPHA= （字母）、=CR= （回车符）、=CRLF= （回车换行符）、=CTL= （控制字符）、=DIGIT= （十进制数字 0-9）、=DQUOTE= （双引号）、=HEXDIG= （十六进制数字 0-9/A-F/a-f）、=HTAB= （水平制表符）、=LF= （换行符）、=OCTET= （八位组字节）、=SP= （空白）以及 =VCHAR= （【USASCII】可见字符）。
 
-（译注：除非特别说明，本译文所述的“字节”皆为 Octet，而不是 Byte。）
+#+BEGIN_QUOTE
+译注：除非特别说明，本译文所述的“字节”皆为 Octet，而不是 Byte。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 As a convention, ABNF rule names prefixed with "=obs-=" denote "obsolete" grammar rules that appear for historical reasons.
@@ -833,13 +835,13 @@ HTTP 消息能够[[ruby:parse][解析]]为用于[[ruby:incremental%20processing]
 A sender *MUST NOT* send whitespace between the start-line and the first header field. A recipient that receives whitespace between the start-line and the first header field *MUST* either reject the message as invalid or consume each whitespace-preceded line without further processing of it (i.e., ignore the entire line, along with any subsequent lines preceded by whitespace, until a properly formed header field is received or the header section is terminated).
 #+END_QUOTE
 
-发送端所发送的消息里，[[ruby:start%20line][起始行]]和第一个[[ruby:header%20field][头字段]]之间 *禁止* 带有空格。当接收端发现它所接收到的消息起始行与第一个头字段之间带有空格时，*必须* 拒绝处理整个不合法的消息，或者仅忽略这种以空格开头的行（例如，忽略整行，连同后续所有以空格开头的行，直到遇到一个格式正确的头字段或者到达消息头部的结尾为止）。
+发送端所发送的消息里，[[ruby:start%20line][起始行]]和第一个[[ruby:header%20field][头字段]]之间 *禁止* 带有空白。当接收端发现它所接收到的消息起始行与第一个头字段之间带有空白时，*必须* 拒绝处理整个不合法的消息，或者仅忽略这种以空白开头的行（例如，忽略整行，连同后续所有以空白开头的行，直到遇到一个格式正确的头字段或者到达消息头部的结尾为止）。
 
 #+BEGIN_QUOTE
 The presence of such whitespace in a request might be an attempt to trick a server into ignoring that field or processing the line after it as a new request, either of which might result in a security vulnerability if other implementations within the request chain interpret the same message differently. Likewise, the presence of such whitespace in a response might be ignored by some clients or cause others to cease parsing.
 #+END_QUOTE
 
-在一个请求消息中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些头字段或忽略处理某些行，欺骗服务器使其认为这个请求是一个[[ruby:new%20request][新请求]]。如果在请求链路中其他[[ruby:implementation][实现]]对这种带有非法空格的消息的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应消息中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端[[ruby:cease%20parsing][终止解析]]。
+在一个请求消息中如果出现上述非法空白，可能其目的是试图让服务器去忽略某些头字段或忽略处理某些行，欺骗服务器使其认为这个请求是一个[[ruby:new%20request][新请求]]。如果在请求链路中其他[[ruby:implementation][实现]]对这种带有非法空白的消息的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应消息中出现这种非法空白，可能会被某些客户端所忽略，或者导致客户端[[ruby:cease%20parsing][终止解析]]。
 
 ** 3.1. 起始行 / Start Line
 #+BEGIN_QUOTE
@@ -868,7 +870,7 @@ start-line     = request-line / status-line
 A =request-line= begins with a method token, followed by a single space (SP), the request-target, another single space (SP), the protocol version, and ends with CRLF.
 #+END_QUOTE
 
-请求行 =request-line=，开始于一个方法标识 =method=，紧接着一个空格 =SP=，然后是请求目标 =request-target=，另一个空格 =SP=，之后是协议版本 =HTTP-version=，最后是回车换行符 =CRLF=。
+请求行 =request-line=，开始于一个方法标识 =method=，紧接着一个空白 =SP=，然后是请求目标 =request-target=，另一个空白 =SP=，之后是协议版本 =HTTP-version=，最后是回车换行符 =CRLF=。
 
 #+BEGIN_SRC text
 request-line   = method SP request-target SP HTTP-version CRLF
@@ -900,7 +902,7 @@ The =request-target= identifies the target resource upon which to apply the requ
 Recipients typically parse the =request-line= into its component parts by splitting on whitespace (see [[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][Section 3.5]]), since no whitespace is allowed in the three components. Unfortunately, some user agents fail to properly encode or exclude whitespace found in [[https://en.wikipedia.org/wiki/Hyperlink][hypertext references]], resulting in those disallowed characters being sent in a =request-target=.
 #+END_QUOTE
 
-接收端在解析[[ruby:request-line][请求行]]的过程中，通过以空格分割出请求行的各个组件（共有三个组件，分别为方法标识、请求目标以及协议版本），因此，以上三个组件的内容不能带有空格（[[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][章节 3.5]]）。不幸的是，某些用户代理不能对超文本引用（[[https://en.wikipedia.org/wiki/Hyperlink][hypertext references]]，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求消息中的[[ruby:request-target][请求目标]]包含了那些不被允许出现的[[ruby:character][字符]]。
+接收端在解析[[ruby:request-line][请求行]]的过程中，通过以空白分割出请求行的各个组件（共有三个组件，分别为方法标识、请求目标以及协议版本），因此，以上三个组件的内容不能带有空白（[[id:A2AAEFDC-30CB-4177-BDAC-BFE61A4D5517][章节 3.5]]）。不幸的是，某些用户代理不能对超文本引用（[[https://en.wikipedia.org/wiki/Hyperlink][hypertext references]]，即超链接）里的空白进行正确的编码或者排除，导致用户代理所发送的请求消息中的[[ruby:request-target][请求目标]]包含了那些不被允许出现的[[ruby:character][字符]]。
 
 #+BEGIN_QUOTE
 Recipients of an invalid =request-line= *SHOULD* respond with either a =400 (Bad Request)= error or a =301 (Moved Permanently)= redirect with the =request-target= properly encoded. A recipient *SHOULD NOT* attempt to autocorrect and then process the request without a redirect, since the invalid =request-line= might be deliberately crafted to bypass security filters along the request chain.
@@ -932,7 +934,7 @@ Various [[https://en.wikipedia.org/wiki/Wireless_ad_hoc_network][ad hoc]] limita
 The first line of a response message is the =status-line=, consisting of the protocol version, a space (SP), the status code, another space, a possibly empty textual phrase describing the status code, and ending with CRLF.
 #+END_QUOTE
 
-响应消息的第一行称为[[ruby:status-line][状态行]]，包含协议版本 =HTTP-version=，一个空格 =SP=，状态码 =status-code=，另一个空格 =SP=，一个可能为空的文本短语 =reason-phrase= 来描述该状态码，最后是回车换行符 =CRLF=。
+响应消息的第一行称为[[ruby:status-line][状态行]]，包含协议版本 =HTTP-version=，一个空白 =SP=，状态码 =status-code=，另一个空白 =SP=，一个可能为空的文本短语 =reason-phrase= 来描述该状态码，最后是回车换行符 =CRLF=。
 
 #+BEGIN_SRC text
 status-line = HTTP-version SP status-code SP reason-phrase CRLF
@@ -966,7 +968,7 @@ reason-phrase  = *( HTAB / SP / VCHAR / obs-text )
 Each header field consists of a case-insensitive field name followed by a colon (":"), optional leading whitespace, the field value, and optional trailing whitespace.
 #+END_QUOTE
 
-每一个[[ruby:header%20field][头字段]]都由一个[[ruby:field%20name][字段名]]及随后的一个分号（":"）、可选的前置空格、一个[[ruby:field%20value][字段值]]、一个可选的结尾空格组成。
+每一个[[ruby:header%20field][头字段]]都由一个[[ruby:field%20name][字段名]]及随后的一个分号（":"）、可选的前置空白、一个[[ruby:field%20value][字段值]]、一个可选的结尾空白组成。
 
 #+BEGIN_SRC text
 header-field   = field-name ":" OWS field-value OWS
@@ -1047,7 +1049,7 @@ A recipient *MAY* combine multiple header fields with the same field name into o
 
 *注意：* 在实践中，头字段 =Set-Cookie= （见【[[https://tools.ietf.org/html/rfc6265][RFC6265]]】）在一个响应消息中通常会出现多次，并且不是以列表的句法形式，违背了以上关于多个相同名称的头字段的要求。这是因为它不能组合成一个单一的字段值，因此，当处理头字段的时候，接收端应该将 =Set-cookie= 作为特殊情况。（详情见【Kri2001】的附件 A.2.3。）
 
-*** 3.2.3. 空格 / Whitespace
+*** 3.2.3. 空白 / Whitespace
 :PROPERTIES:
 :ID:       f26527b6-d15c-4967-97e3-acc669609481
 :END:
@@ -1056,28 +1058,32 @@ A recipient *MAY* combine multiple header fields with the same field name into o
 This specification uses three rules to denote the use of linear whitespace: =OWS= (optional whitespace), =RWS= (required whitespace), and =BWS= ("bad" whitespace).
 #+END_QUOTE
 
-本规范使用 3 个（ABNF）规则来表示连续空格的使用。
-- =OWS=，Optional Whitespace，可选的空格；
-- =RWS=，Required Whitespace，必要的空格；
-- =BWS=，Bad Whitespace，不可取的空格。
+本规范使用 3 个（ABNF）规则来表示连续空白的使用。
+- =OWS=，Optional Whitespace，可选的空白；
+- =RWS=，Required Whitespace，必要的空白；
+- =BWS=，Bad Whitespace，不可取的空白。
+
+#+BEGIN_QUOTE
+译注：Whitespace 译为“空白”而不是“空格”，这是因为 Whitespace character 不仅包括 U+0020 SPACE，通常还包括 U+0009 CHARACTER TABULATION (tab) 等许多字符，详见 Wikipedia 的 [[https://en.wikipedia.org/wiki/Whitespace_character][Whitespace character]]。
+#+END_QUOTE
 
 #+BEGIN_QUOTE
 The =OWS= rule is used where zero or more linear whitespace octets might appear. For protocol elements where optional whitespace is preferred to improve readability, a sender *SHOULD* generate the optional whitespace as a single =SP=; otherwise, a sender *SHOULD NOT* generate optional whitespace except as needed to white out invalid or unwanted protocol elements during in-place message filtering.
 #+END_QUOTE
 
-=OWS= 规则是用在可能出现零个或多个[[ruby:linear%20whitespace%20octets][连续空格字节]]的位置上的。对于协议元素来说，可选空格的使用有助于提交可读性。发送端 *应当* 将可选空格生成为一个单一的 =SP=；接收端除了在[[ruby:in-place%20message%20filtering][消息就地过滤]]期间因为修正非法或多余的协议元素的需要而生成可选空格以外，接收端 *不应当* 生成可选空格。
+=OWS= 规则是用在可能出现零个或多个[[ruby:linear%20whitespace%20octets][连续空白字节]]的位置上的。对于协议元素来说，可选空白的使用有助于提交可读性。发送端 *应当* 将可选空白生成为一个单一的 =SP=；接收端除了在[[ruby:in-place%20message%20filtering][消息就地过滤]]期间因为修正非法或多余的协议元素的需要而生成可选空白以外，接收端 *不应当* 生成可选空白。
 
 #+BEGIN_QUOTE
 The =RWS= rule is used when at least one linear whitespace octet is required to separate field tokens. A sender *SHOULD* generate =RWS= as a single =SP=.
 #+END_QUOTE
 
-=RWS= 规则是用于当要求有至少一个[[ruby:linear%20whitespace%20octet][连续空格]]来分隔[[ruby:field%20tokens][字段标记]]的时候。发送端 *应当* 将 =RWS= 生成为一个单一的 =SP=。
+=RWS= 规则是用于当要求有至少一个[[ruby:linear%20whitespace%20octet][连续空白]]来分隔[[ruby:field%20tokens][字段标记]]的时候。发送端 *应当* 将 =RWS= 生成为一个单一的 =SP=。
 
 #+BEGIN_QUOTE
 The =BWS= rule is used where the grammar allows optional whitespace only for historical reasons. A sender *MUST NOT* generate =BWS= in messages. A recipient *MUST* parse for such bad whitespace and remove it before interpreting the protocol element.
 #+END_QUOTE
 
-=BWS= 规则是用在由于历史遗留因素才在语法上允许可选空格的位置上。发送端 *禁止* 在消息中生成 =BWS=。接收端 *必须* 在[[ruby:interpret][解释]]协议元素之前对这些不可取的空格进行[[ruby:parse][解析]]并且移除它们。
+=BWS= 规则是用在由于历史遗留因素才在语法上允许可选空白的位置上。发送端 *禁止* 在消息中生成 =BWS=。接收端 *必须* 在[[ruby:interpret][解释]]协议元素之前对这些不可取的空白进行[[ruby:parse][解析]]并且移除它们。
 
 #+BEGIN_SRC text
 OWS            = *( SP / HTAB )
@@ -1102,19 +1108,19 @@ Messages are parsed using a generic algorithm, independent of the individual hea
 No whitespace is allowed between the header =field-name= and colon. In the past, differences in the handling of such whitespace have led to security vulnerabilities in request routing and response handling. A server *MUST* reject any received request message that contains whitespace between a header =field-name= and colon with a response code of =400 (Bad Request)=. A proxy *MUST* remove any such whitespace from a response message before forwarding the message downstream.
 #+END_QUOTE
 
-头字段的名字和冒号之间不允许带有空格。在过去，对于这些空格的各不相同的处理方式已经导致请求路由和响应处理方面的安全隐患。服务器 *必须* 拒绝这种在头字段名和冒号之间包含空格请求消息，并响应一个 =400 (Bad Request)= 的状态码。代理 *必须* 在转发到下游之前从响应消息中移除所有上述空格。
+头字段的名字和冒号之间不允许带有空白。在过去，对于这些空白的各不相同的处理方式已经导致请求路由和响应处理方面的安全隐患。服务器 *必须* 拒绝这种在头字段名和冒号之间包含空白请求消息，并响应一个 =400 (Bad Request)= 的状态码。代理 *必须* 在转发到下游之前从响应消息中移除所有上述空白。
 
 #+BEGIN_QUOTE
 A field value might be preceded and/or followed by optional whitespace (=OWS=); a single =SP= preceding the =field-value= is preferred for consistent readability by humans. The field value does not include any leading or trailing whitespace: =OWS= occurring before the first non-whitespace octet of the field value or after the last non-whitespace octet of the field value ought to be excluded by parsers when extracting the field value from a header field.
 #+END_QUOTE
 
-在头字段值之前并且（或者）之后可能带有可选空格（=OWS=）；为了遵循人类可读性，在 =field-value= 之前推荐带有一个单一的空格 =SP=。头字段值并不包含任何前置或后置的空格：当从一个头字段中抽出头字段值的时候，出现在头字段值的第一个非空格字节之前或者最后一个非空格字节之后的可选空格 =OWS= 应该被解析器所排除。
+在头字段值之前并且（或者）之后可能带有可选空白（=OWS=）；为了遵循人类可读性，在 =field-value= 之前推荐带有一个单一的空白 =SP=。头字段值并不包含任何前置或后置的空白：当从一个头字段中抽出头字段值的时候，出现在头字段值的第一个非空白字节之前或者最后一个非空白字节之后的可选空白 =OWS= 应该被解析器所排除。
 
 #+BEGIN_QUOTE
 Historically, HTTP header field values could be extended over multiple lines by preceding each extra line with at least one space or horizontal tab (=obs-fold=). This specification deprecates such line folding except within the message/http media type ([[id:44492A0E-8B7F-46EC-890D-317BC32E2228][Section 8.3.1]]). A sender *MUST NOT* generate a message that includes line folding (i.e., that has any =field-value= that contains a match to the =obs-fold= rule) unless the message is intended for packaging within the message/http media type.
 #+END_QUOTE
 
-历史上，HTTP 头字段值能被扩展为多行，通过在每个额外行之前添加至少一个空格或水平制表符（=obs-fold=）来实现。本规范废弃了这种[[ruby:line%20folding][折叠行]]，除了在[[ruby:media%20type][媒体类型]] "message/http"（见[[id:44492A0E-8B7F-46EC-890D-317BC32E2228][章节 8.3.1]]）之内的。发送端 *禁止* 生成一个包含行折叠（也就是说，带有任何包含能够匹配 =obs-fold= 规则的头字段值 =field-value=）的消息，除非消息是用于封装媒体类型 "message/http" 的内容。
+历史上，HTTP 头字段值能被扩展为多行，通过在每个额外行之前添加至少一个空白或水平制表符（=obs-fold=）来实现。本规范废弃了这种[[ruby:line%20folding][折叠行]]，除了在[[ruby:media%20type][媒体类型]] "message/http"（见[[id:44492A0E-8B7F-46EC-890D-317BC32E2228][章节 8.3.1]]）之内的。发送端 *禁止* 生成一个包含行折叠（也就是说，带有任何包含能够匹配 =obs-fold= 规则的头字段值 =field-value=）的消息，除非消息是用于封装媒体类型 "message/http" 的内容。
 
 #+BEGIN_QUOTE
 A server that receives an =obs-fold= in a request message that is not within a message/http container *MUST* either reject the message by sending a =400 (Bad Request)=, preferably with a representation explaining that obsolete line folding is unacceptable, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
@@ -1123,7 +1129,7 @@ A server that receives an =obs-fold= in a request message that is not within a m
 如果服务端在请求消息里接收到一个 =obs-fold=，但它并不在媒体类型 "message/http" 的容器内，服务端 *必须* 选择以下的处理方式之一：
 
 - 拒绝这种消息并响应一个 =400 (Bad Request)= 状态码，更好的方式是在响应消息中带有一种[[ruby:representation][表示形式]]来解释这种已经废弃的[[ruby:line%20folding][折叠行]]是不再允许出现在消息中的；
-- 在[[ruby:interpret][解释]]头字段值（或转发消息到下游）之前，使用一个或多个空格 =SP= 来替换掉所有接收到的 =obs-fold=。
+- 在[[ruby:interpret][解释]]头字段值（或转发消息到下游）之前，使用一个或多个空白 =SP= 来替换掉所有接收到的 =obs-fold=。
 
 #+BEGIN_QUOTE
 A proxy or gateway that receives an =obs-fold= in a response message that is not within a message/http container *MUST* either discard the message and replace it with a =502 (Bad Gateway)= response, preferably with a representation explaining that unacceptable line folding was received, or replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value or forwarding the message downstream.
@@ -1132,13 +1138,13 @@ A proxy or gateway that receives an =obs-fold= in a response message that is not
 如果[[ruby:proxy][代理]]或[[ruby:gateway][网关]]在一个响应消息里接收到 =obs-fold=，但它并不在媒体类型 "message/http" 的容器内，这些中间人 *必须* 选择以下的处理方式这一：
 
 - 丢弃这个消息改由响应一个 =502 (Bad Gateway)= 状态码，更好的方式是在响应消息中带有一种[[ruby:representation][表示形式]]来解释之所以出现这种状况是因为接收到那种不被允许的[[ruby:line%20folding][折叠行]]；
-- 在[[ruby:interpret][解释]]头字段值（或转发消息到下游）之前使用一个或多个空格 =SP= 来替换掉所有接收到的 =obs-fold=。
+- 在[[ruby:interpret][解释]]头字段值（或转发消息到下游）之前使用一个或多个空白 =SP= 来替换掉所有接收到的 =obs-fold=。
 
 #+BEGIN_QUOTE
 A user agent that receives an =obs-fold= in a response message that is not within a message/http container *MUST* replace each received =obs-fold= with one or more =SP= octets prior to interpreting the field value.
 #+END_QUOTE
 
-如果[[ruby:user%20agent][用户代理]]接收到一个响应消息里的 =obs-fold=，但它并不在媒体类型 "message/http" 的容器内，用户代理 *必须* 在解释头字段值之前使用一个或多个空格 =SP= 来替换掉所有接收到的分行 =obs-fold=。
+如果[[ruby:user%20agent][用户代理]]接收到一个响应消息里的 =obs-fold=，但它并不在媒体类型 "message/http" 的容器内，用户代理 *必须* 在解释头字段值之前使用一个或多个空白 =SP= 来替换掉所有接收到的分行 =obs-fold=。
 
 #+BEGIN_QUOTE
 Historically, HTTP has allowed field content with text in the ISO‑8859‑1 charset [ISO-8859-1], supporting other charsets only through use of [[[https://tools.ietf.org/html/rfc2047][RFC2047]]] encoding. In practice, most HTTP header field values use only a subset of the US-ASCII charset [USASCII]. Newly defined header fields *SHOULD* limit their field values to US‑ASCII octets. A recipient *SHOULD* treat other octets in field content (=obs‑text=) as [[https://en.wikipedia.org/wiki/Opaque_data_type][opaque data]].
@@ -1182,7 +1188,7 @@ A client *MAY* discard or truncate received header fields that are larger than t
 Most HTTP header field values are defined using common syntax components (token, quoted-string, and comment) separated by whitespace or specific delimiting characters. Delimiters are chosen from the set of US-ASCII visual characters not allowed in a token (DQUOTE and "(),/:;<=>?@[\]{}").
 #+END_QUOTE
 
-大多数 HTTP 头字段值使用[[ruby:common%20syntax%20components][通用句法组件]]（包括标记 =token=、字符串 =quoted-string=、注释 =comment= ）来进行定义。这些通用句法组件以空格或者特定的[[ruby:delimiting%20characters][定界符]]来分隔。定界符选取自 US-ASCII 字符集中的[[ruby:visual%20characters][可见字符]]，并且这些可见字符是不允许出现在[[ruby:token][标记]]上的（包括 =DQUOTE= 和 "=(),/:;<=>?@[\]{}="）。
+大多数 HTTP 头字段值使用[[ruby:common%20syntax%20components][通用句法组件]]（包括标记 =token=、字符串 =quoted-string=、注释 =comment= ）来进行定义。这些通用句法组件以空白或者特定的[[ruby:delimiting%20characters][定界符]]来分隔。定界符选取自 US-ASCII 字符集中的[[ruby:visual%20characters][可见字符]]，并且这些可见字符是不允许出现在[[ruby:token][标记]]上的（包括 =DQUOTE= 和 "=(),/:;<=>?@[\]{}="）。
 
 #+BEGIN_SRC text
 token          = 1*tchar
@@ -1548,7 +1554,7 @@ Although the line terminator for the =start-line= and header fields is the seque
 Although the =request-line= and =status-line= grammar rules require that each of the component elements be separated by a single =SP= octet, recipients *MAY* instead parse on whitespace-delimited word boundaries and, aside from the =CRLF= terminator, treat any form of whitespace as the =SP= separator while ignoring preceding or trailing whitespace; such whitespace includes one or more of the following octets: =SP=, =HTAB=, =VT= (%x0B), =FF= (%x0C), or bare =CR=. However, lenient parsing can result in security vulnerabilities if there are multiple recipients of the message and each has its own unique interpretation of robustness (see [[id:04030107-7AF1-4D23-900E-75FEEB04925C][Section 9.5]]).
 #+END_QUOTE
 
-虽然[[ruby:request%20line][请求行]]和[[ruby:status%20line][状态行]]的语法规则要求每一个组件元素需要以一个空格（8位字节） =SP= 分隔，但是接收端 *可以* 改由使用除 =CRLF= 结束符以外的更宽泛的[[ruby:whitespace-delimited%20word][空格限定符]]替代 =SP= 来进行解析，从而将任何形式的空格作为 =SP= 分隔符来对待，在忽略前置或后置空格的时候。空格限定符由包括一个或多个以下的字节：=SP=、=HTAB=、=VT= (%x0B)、=FF= (&x0C) 或者单独由 =CR=。但是，如果消息有多个接收端，而且这些接收端都有自己独特的健壮性的解释，那么，这种[[ruby:lenient%20parsing][宽泛解析]]的方式会引起安全隐患（见[[id:04030107-7AF1-4D23-900E-75FEEB04925C][章节 9.5]]）。
+虽然[[ruby:request%20line][请求行]]和[[ruby:status%20line][状态行]]的语法规则要求每一个组件元素需要以一个空白（8位字节） =SP= 分隔，但是接收端 *可以* 改由使用除 =CRLF= 结束符以外的更宽泛的[[ruby:whitespace-delimited%20word][空白限定符]]替代 =SP= 来进行解析，从而将任何形式的空白作为 =SP= 分隔符来对待，在忽略前置或后置空白的时候。空白限定符由包括一个或多个以下的字节：=SP=、=HTAB=、=VT= (%x0B)、=FF= (&x0C) 或者单独由 =CR=。但是，如果消息有多个接收端，而且这些接收端都有自己独特的健壮性的解释，那么，这种[[ruby:lenient%20parsing][宽泛解析]]的方式会引起安全隐患（见[[id:04030107-7AF1-4D23-900E-75FEEB04925C][章节 9.5]]）。
 
 #+BEGIN_QUOTE
 When a server listening only for HTTP request messages, or processing what appears from the =start-line= to be an HTTP request message, receives a sequence of octets that does not match the HTTP-message grammar aside from the robustness exceptions listed above, the server *SHOULD* respond with a =400 (Bad Request)= response.
@@ -2909,7 +2915,7 @@ A =#rule= extension to the ABNF rules of [[[https://tools.ietf.org/html/rfc5234]
 A construct "#" is defined, similar to "*", for defining comma-delimited lists of elements. The full form is "<n>#<m>element" indicating at least <n> and at most <m> elements, each separated by a single comma (",") and optional whitespace (=OWS=).
 #+END_QUOTE
 
-定义了一个 =#= 结构，类似于 =*=，用于定义以英文逗号分隔的元素列表。完整的形式是 =<n>#<m>element=，表明至少 =<n>= 个，至多 =<m>= 个 =element=，每个 =element= 以单个逗号（","）以及可选的空格（=OWS=）分隔。
+定义了一个 =#= 结构，类似于 =*=，用于定义以英文逗号分隔的元素列表。完整的形式是 =<n>#<m>element=，表明至少 =<n>= 个，至多 =<m>= 个 =element=，每个 =element= 以单个逗号（","）以及可选的空白（=OWS=）分隔。
 
 #+BEGIN_QUOTE
 In any production that uses the list construct, a sender *MUST NOT* generate empty list elements. In other words, a sender *MUST* generate lists that satisfy the following syntax:
@@ -3603,7 +3609,7 @@ HTTP 消息能够（而且通常会）被[[ruby:buffer][缓冲]]，尽管它有�
 Invalid whitespace around field-names is now required to be rejected, because accepting it represents a security vulnerability. The ABNF productions defining header fields now only list the field value. ([[id:a6c4dceb-8a19-4799-a39b-b7240755c672][Section 3.2]])
 #+END_QUOTE
 
-现在，[[ruby:field-names][字段名称]]两端不能出现非法的空格字符，这是因为允许它们就意味着安全隐患。现在，定义头字段的 ABNF 规则 =header-field= 只列出了 =field-value=。（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）
+现在，[[ruby:field-names][字段名称]]两端不能出现非法的空白字符，这是因为允许它们就意味着安全隐患。现在，定义头字段的 ABNF 规则 =header-field= 只列出了 =field-value=。（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][章节 3.2]]）
 
 #+BEGIN_QUOTE
 译注：【RFC2616】对消息字段的 ABNF [[https://tools.ietf.org/html/rfc2616#section-4.2][定义在这里（message-header）]]；【RFC7231】对头字段的 ABNF [[id:a6c4dceb-8a19-4799-a39b-b7240755c672][定义在这里（header-field）]]。
@@ -3613,7 +3619,7 @@ Invalid whitespace around field-names is now required to be rejected, because ac
 Rules about implicit linear whitespace between certain grammar productions have been removed; now whitespace is only allowed where specifically defined in the ABNF. ([[id:f26527b6-d15c-4967-97e3-acc669609481][Section 3.2.3]])
 #+END_QUOTE
 
-移除了某些暗示连续空格的相关语法规则，现在，空格只允许在 ABNF 中有明确定义的地方。（[[id:f26527b6-d15c-4967-97e3-acc669609481][章节 3.2.3]]）
+移除了某些暗示连续空白的相关语法规则，现在，空白只允许在 ABNF 中有明确定义的地方。（[[id:f26527b6-d15c-4967-97e3-acc669609481][章节 3.2.3]]）
 
 #+BEGIN_QUOTE
 Header fields that span multiple lines ("line folding") are deprecated. ([[id:1bd50237-cd26-4e74-8c0c-7af8d2d6b25f][Section 3.2.4]])

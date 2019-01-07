@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-03 Thu 14:12 -->
+<!-- 2019-01-07 Mon 12:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7234: Hypertext Transfer Protocol (HTTP/1.1): Caching</title>
@@ -1120,7 +1120,7 @@ The selecting header fields from two requests are defined to match if and only i
 </p>
 
 <ul class="org-ul">
-<li>在头字段的句法所允许的位置添加或删除空格</li>
+<li>在头字段的句法所允许的位置添加或删除空白</li>
 <li>合并多个相同字段名称的头字段（<a href="RFC7230.html#ID-a6c4dceb-8a19-4799-a39b-b7240755c672">【RFC7230】章节 3.2</a>）</li>
 <li>依据头字段的规范，使用已知是具有同等语义的方式，来规范化两者的头字段值（比如，将头字段的值进行<ruby>重新排序<rt>reordering</rt></ruby>，如果它的顺序并不重要的话；对于值是定义为不区分大小写的地方进行<ruby>大小写规范化<rt>case-normalization</rt></ruby>）。</li>
 </ul>
@@ -2357,21 +2357,33 @@ The "<code>only-if-cached</code>" request directive indicates that the client on
 <div class="outline-text-5" id="text-org19ae67e">
 <blockquote>
 <p>
-The "must-revalidate" response directive indicates that once it has become stale, a cache MUST NOT use the response to satisfy subsequent requests without successful validation on the origin server.
+The "<code>must-revalidate</code>" response directive indicates that once it has become stale, a cache <b>MUST NOT</b> use the response to satisfy subsequent requests without successful validation on the origin server.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The must-revalidate directive is necessary to support reliable operation for certain protocol features. In all circumstances a cache MUST obey the must-revalidate directive; in particular, if a cache cannot reach the origin server for any reason, it MUST generate a 504 (Gateway Timeout) response.
+<code>must-revalidate</code> 响应指令表明：一旦这个响应消息变得陈旧，那么，缓存 <b>禁止</b> 在没有经过源服务器成功验证的情况下，使用这个响应来满足后续的请求。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The must-revalidate directive ought to be used by servers if and only if failure to validate a request on the representation could result in incorrect operation, such as a silently unexecuted financial transaction.
+The <code>must-revalidate</code> directive is necessary to support reliable operation for certain protocol features. In all circumstances a cache <b>MUST</b> obey the <code>must-revalidate</code> directive; in particular, if a cache cannot reach the origin server for any reason, it <b>MUST</b> generate a <code>504 (Gateway Timeout)</code> response.
 </p>
 </blockquote>
+
+<p>
+为支持某些协议功能的可靠操作，<code>must-revalidat</code> 指令是很有必要的。在任何情况下，缓存 <b>必须</b> 服从 <code>must-revalidate</code> 指令。特别是如果一个缓存出于任何原因而不能访问源服务器的情况下，它 <b>必须</b> 生成一个 <code>504 (Gateway Timeout)</code> 响应。
+</p>
+
+<blockquote>
+<p>
+The <code>must-revalidate</code> directive ought to be used by servers if and only if failure to validate a request on the representation could result in incorrect operation, such as a silently unexecuted financial transaction.
+</p>
+</blockquote>
+
+<p>
+服务器应该使用 <code>must-revalidate</code> 指令，当且仅当在表示形式上验证一个请求失败时可能会导致不正确的操作，比如一个静默未执行的财务交易。
+</p>
 </div>
 </div>
 
@@ -2384,6 +2396,10 @@ Argument syntax:
 </p>
 </blockquote>
 
+<p>
+实参句法：
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">#field-name
 </pre>
@@ -2391,15 +2407,23 @@ Argument syntax:
 
 <blockquote>
 <p>
-The "no-cache" response directive indicates that the response MUST NOT be used to satisfy a subsequent request without successful validation on the origin server. This allows an origin server to prevent a cache from using it to satisfy a request without contacting it, even by caches that have been configured to send stale responses.
+The "<code>no-cache</code>" response directive indicates that the response <b>MUST NOT</b> be used to satisfy a subsequent request without successful validation on the origin server. This allows an origin server to prevent a cache from using it to satisfy a request without contacting it, even by caches that have been configured to send stale responses.
 </p>
 </blockquote>
 
+<p>
+<code>no-cache</code> 响应指令表明：这个响应在没有经过源服务器的成功验证的情况下，<b>禁止</b> 被用来满足后续的请求。这样使得源服务器可以阻止缓存在不联系源服务器的情况下使用这个响应来满足某个请求，即使这些缓存已被配置为可以发送陈旧响应。
+</p>
+
 <blockquote>
 <p>
-If the no-cache response directive specifies one or more field-names, then a cache MAY use the response to satisfy a subsequent request, subject to any other restrictions on caching. However, any header fields in the response that have the field-name(s) listed MUST NOT be sent in the response to a subsequent request without successful revalidation with the origin server. This allows an origin server to prevent the re-use of certain header fields in a response, while still allowing caching of the rest of the response.
+If the <code>no-cache</code> response directive specifies one or more field-names, then a cache <b>MAY</b> use the response to satisfy a subsequent request, subject to any other restrictions on caching. However, any header fields in the response that have the field-name(s) listed <b>MUST NOT</b> be sent in the response to a subsequent request without successful revalidation with the origin server. This allows an origin server to prevent the re-use of certain header fields in a response, while still allowing caching of the rest of the response.
 </p>
 </blockquote>
+
+<p>
+如果 no-cache 响应指令指定了一个或多个字段名，那么，缓存 <b>可以</b> 使用
+</p>
 
 <blockquote>
 <p>
@@ -2409,13 +2433,13 @@ The field-names given are not limited to the set of header fields defined by thi
 
 <blockquote>
 <p>
-This directive uses the quoted-string form of the argument syntax. A sender SHOULD NOT generate the token form (even if quoting appears not to be needed for single-entry lists).
+This directive uses the <code>quoted-string</code> form of the argument syntax. A sender <b>SHOULD NOT</b> generate the <code>token</code> form (even if quoting appears not to be needed for single-entry lists).
 </p>
 </blockquote>
 
 <blockquote>
 <p>
-<b>Note:</b> Although it has been back-ported to many implementations, some HTTP/1.0 caches will not recognize or obey this directive. Also, no-cache response directives with field-names are often handled by caches as if an unqualified no-cache directive was received; i.e., the special handling for the qualified form is not widely implemented.
+<b>Note:</b> Although it has been back-ported to many implementations, some HTTP/1.0 caches will not recognize or obey this directive. Also, <code>no-cache</code> response directives with field-names are often handled by caches as if an unqualified <code>no-cache</code> directive was received; i.e., the special handling for the qualified form is not widely implemented.
 </p>
 </blockquote>
 </div>

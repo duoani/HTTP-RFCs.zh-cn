@@ -249,7 +249,7 @@ Internet media types ought to be registered with IANA according to the procedure
 *Note:* Unlike some similar constructs in other header fields, media type parameters do not allow whitespace (even "bad" whitespace) around the "=" character.
 #+END_QUOTE
 
-*注意：* 不像其他头字段里的某些类似结构，媒体类型的参数不允许在等号（"="）两边带有空格（即使是 [[id:f26527b6-d15c-4967-97e3-acc669609481][BWS]] 也不允许）。
+*注意：* 不像其他头字段里的某些类似结构，媒体类型的参数不允许在等号（"="）两边带有空白（即使是 [[id:f26527b6-d15c-4967-97e3-acc669609481][BWS]] 也不允许）。
 
 **** 3.1.1.2. 字符集 / Charset
 :PROPERTIES:
@@ -464,7 +464,7 @@ HTTP 在 =Accept-Language= 和 =Content-Language= 头字段里使用语言标签
 A language tag is a sequence of one or more case-insensitive subtags, each separated by a hyphen character ("-", %x2D). In most cases, a language tag consists of a primary language subtag that identifies a broad family of related languages (e.g., "en" = English), which is optionally followed by a series of subtags that refine or narrow that language's range (e.g., "en-CA" = the variety of English as communicated in Canada). Whitespace is not allowed within a language tag. Example tags include:
 #+END_QUOTE
 
-一个[[ruby:language%20tag][语言标签]]是由一个或多个不区分大小写的子标签组成的，每个子标签之间使用连接符（"-"，"%x2D"）分隔。大多数情况下，一个语言标签包含一个标识了某种关联语系的[[ruby:primary%20language%20subtag][主要语言子标签]]（例如，"en" 代表[[ruby:English][英语]]），另外还可以选择性地在其后面附加一连串的子标签来优化或缩小语言范围（例如，"en-CA" 代表一种[[ruby:Canada][加拿大]]英语）。语言标签里不允许存在空格。语言标签的几个例子如下：
+一个[[ruby:language%20tag][语言标签]]是由一个或多个不区分大小写的子标签组成的，每个子标签之间使用连接符（"-"，"%x2D"）分隔。大多数情况下，一个语言标签包含一个标识了某种关联语系的[[ruby:primary%20language%20subtag][主要语言子标签]]（例如，"en" 代表[[ruby:English][英语]]），另外还可以选择性地在其后面附加一连串的子标签来优化或缩小语言范围（例如，"en-CA" 代表一种[[ruby:Canada][加拿大]]英语）。语言标签里不允许存在空白。语言标签的几个例子如下：
 
 #+BEGIN_EXAMPLE
   fr, en-US, es-419, az-Arab, x-pig-latin, man-Nkoo-GN
@@ -3289,7 +3289,7 @@ Obsolete formats:
 =HTTP-date= is case sensitive. A sender *MUST NOT* generate additional whitespace in an =HTTP-date= beyond that specifically included as =SP= in the grammar. The semantics of =day-name=, =day=, =month=, =year=, and =time-of-day= are the same as those defined for the Internet Message Format constructs with the corresponding name ([RFC5322], [[https://tools.ietf.org/html/rfc5322#section-3.3][Section 3.3]]).
 #+END_QUOTE
 
-=HTTP-date= 是区分大小写的。发送端 *禁止* 在一个 =HTTP-date= 里生成除在语法中明确添加了 =SP= 以外的额外空格。=day-name=、=day=、=month=、=year= 以及 =time-of-day= 的语义与[[ruby:Internet%20Message%20Format][互联网消息格式]]里所定义同名结构的语义相一致（[[https://tools.ietf.org/html/rfc5322#section-3.3][【RFC5322】章节 3.3]]）。
+=HTTP-date= 是区分大小写的。发送端 *禁止* 在一个 =HTTP-date= 里生成除在语法中明确添加了 =SP= 以外的额外空白。=day-name=、=day=、=month=、=year= 以及 =time-of-day= 的语义与[[ruby:Internet%20Message%20Format][互联网消息格式]]里所定义同名结构的语义相一致（[[https://tools.ietf.org/html/rfc5322#section-3.3][【RFC5322】章节 3.3]]）。
 
 #+BEGIN_QUOTE
 Recipients of a timestamp value in =rfc850-date= format, which uses a two-digit year, *MUST* interpret a timestamp that appears to be more than 50 years in the future as representing the most recent year in the past that had the same last two digits.
@@ -3958,7 +3958,7 @@ New header field values typically have their syntax defined using ABNF ([[[https
 Leading and trailing whitespace in raw field values is removed upon field parsing ([[id:1bd50237-cd26-4e74-8c0c-7af8d2d6b25f][Section 3.2.4]] of [RFC7230]). Field definitions where leading or trailing whitespace in values is significant will have to use a container syntax such as =quoted-string= ([[id:d0012483-93a3-44cf-b019-29e12725d94a][Section 3.2.6]] of [RFC7230]).
 #+END_QUOTE
 
-头字段的原始值里的所有[[ruby:leading][前置]]空格或[[ruby:trailing][后置]]空格将会在[[ruby:parsing][解析]]时被移除（[[id:1bd50237-cd26-4e74-8c0c-7af8d2d6b25f][【RFC7230】章节 3.2.4]]）。对于字段值里“哪里会有前置或后置空格”的定义是非常重要的，必须使用一种[[ruby:container%20syntax][容器句法]]包裹起来，比如 =quoted-string= （[[id:d0012483-93a3-44cf-b019-29e12725d94a][【RFC7230】章节 3.2.6]]）。
+头字段的原始值里的所有[[ruby:leading][前置]]空白或[[ruby:trailing][后置]]空白将会在[[ruby:parsing][解析]]时被移除（[[id:1bd50237-cd26-4e74-8c0c-7af8d2d6b25f][【RFC7230】章节 3.2.4]]）。对于字段值里“哪里会有前置或后置空白”的定义是非常重要的，必须使用一种[[ruby:container%20syntax][容器句法]]包裹起来，比如 =quoted-string= （[[id:d0012483-93a3-44cf-b019-29e12725d94a][【RFC7230】章节 3.2.6]]）。
 
 #+BEGIN_QUOTE
 Because commas (",") are used as a generic delimiter between field-values, they need to be treated with care if they are allowed in the field-value. Typically, components that might contain a comma are protected with double-quotes using the =quoted-string= ABNF production.
@@ -4618,7 +4618,7 @@ The =Content-MD5= header field has been removed because it was inconsistently im
 The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), HTAB (horizontal tab), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
 #+END_QUOTE
 
-本规范引用了以下定义在[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：=ALPHA= （字母）、=CR= （回车符）、=CRLF= （回车换行符）、=CTL= （控制字符）、=DIGIT= （十进制数字 0-9）、=DQUOTE= （双引号）、=HEXDIG= （十六进制数字 0-9/A-F/a-f）、=HTAB= （水平制表符）、=LF= （换行符）、=OCTET= （八位组字节）、=SP= （空格）以及 =VCHAR= （【USASCII】可见字符）。
+本规范引用了以下定义在[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：=ALPHA= （字母）、=CR= （回车符）、=CRLF= （回车换行符）、=CTL= （控制字符）、=DIGIT= （十进制数字 0-9）、=DQUOTE= （双引号）、=HEXDIG= （十六进制数字 0-9/A-F/a-f）、=HTAB= （水平制表符）、=LF= （换行符）、=OCTET= （八位组字节）、=SP= （空白）以及 =VCHAR= （【USASCII】可见字符）。
 
 （译注：除非特别说明，本译文所述的“字节”皆为 Octet，而不是 Byte。）
 

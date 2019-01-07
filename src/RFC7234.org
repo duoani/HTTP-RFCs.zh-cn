@@ -403,7 +403,7 @@ The selecting header fields from two requests are defined to match if and only i
 
 来自这两个请求的[[ruby:selecting%20header%20fields][选择头字段]]是定义为相互匹配的，当且仅当在第一个请求的选择头字段，通过应用以下任何方式，能够转换为在第二个请求的选择头字段：
 
-- 在头字段的句法所允许的位置添加或删除空格
+- 在头字段的句法所允许的位置添加或删除空白
 - 合并多个相同字段名称的头字段（[[id:a6c4dceb-8a19-4799-a39b-b7240755c672][【RFC7230】章节 3.2]]）
 - 依据头字段的规范，使用已知是具有同等语义的方式，来规范化两者的头字段值（比如，将头字段的值进行[[ruby:reordering][重新排序]]，如果它的顺序并不重要的话；对于值是定义为不区分大小写的地方进行[[ruby:case-normalization][大小写规范化]]）。
 

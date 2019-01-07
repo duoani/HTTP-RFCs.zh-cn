@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-20 Thu 19:19 -->
+<!-- 2019-01-07 Mon 12:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7231: Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
@@ -1070,7 +1070,7 @@ Internet media types ought to be registered with IANA according to the procedure
 </blockquote>
 
 <p>
-<b>注意：</b> 不像其他头字段里的某些类似结构，媒体类型的参数不允许在等号（"="）两边带有空格（即使是 <a href="RFC7230.html#ID-f26527b6-d15c-4967-97e3-acc669609481">BWS</a> 也不允许）。
+<b>注意：</b> 不像其他头字段里的某些类似结构，媒体类型的参数不允许在等号（"="）两边带有空白（即使是 <a href="RFC7230.html#ID-f26527b6-d15c-4967-97e3-acc669609481">BWS</a> 也不允许）。
 </p>
 </div>
 </div>
@@ -1415,7 +1415,7 @@ A language tag is a sequence of one or more case-insensitive subtags, each separ
 </blockquote>
 
 <p>
-一个<ruby>语言标签<rt>language tag</rt></ruby>是由一个或多个不区分大小写的子标签组成的，每个子标签之间使用连接符（"-"，"%x2D"）分隔。大多数情况下，一个语言标签包含一个标识了某种关联语系的<ruby>主要语言子标签<rt>primary language subtag</rt></ruby>（例如，"en" 代表<ruby>英语<rt>English</rt></ruby>），另外还可以选择性地在其后面附加一连串的子标签来优化或缩小语言范围（例如，"en-CA" 代表一种<ruby>加拿大<rt>Canada</rt></ruby>英语）。语言标签里不允许存在空格。语言标签的几个例子如下：
+一个<ruby>语言标签<rt>language tag</rt></ruby>是由一个或多个不区分大小写的子标签组成的，每个子标签之间使用连接符（"-"，"%x2D"）分隔。大多数情况下，一个语言标签包含一个标识了某种关联语系的<ruby>主要语言子标签<rt>primary language subtag</rt></ruby>（例如，"en" 代表<ruby>英语<rt>English</rt></ruby>），另外还可以选择性地在其后面附加一连串的子标签来优化或缩小语言范围（例如，"en-CA" 代表一种<ruby>加拿大<rt>Canada</rt></ruby>英语）。语言标签里不允许存在空白。语言标签的几个例子如下：
 </p>
 
 <pre class="example">
@@ -6183,7 +6183,7 @@ date3        = month SP ( 2DIGIT / ( SP 1DIGIT ))
 </blockquote>
 
 <p>
-<code>HTTP-date</code> 是区分大小写的。发送端 <b>禁止</b> 在一个 <code>HTTP-date</code> 里生成除在语法中明确添加了 <code>SP</code> 以外的额外空格。<code>day-name</code>、<code>day</code>、<code>month</code>、<code>year</code> 以及 <code>time-of-day</code> 的语义与<ruby>互联网消息格式<rt>Internet Message Format</rt></ruby>里所定义同名结构的语义相一致（<a href="https://tools.ietf.org/html/rfc5322#section-3.3">【RFC5322】章节 3.3</a>）。
+<code>HTTP-date</code> 是区分大小写的。发送端 <b>禁止</b> 在一个 <code>HTTP-date</code> 里生成除在语法中明确添加了 <code>SP</code> 以外的额外空白。<code>day-name</code>、<code>day</code>、<code>month</code>、<code>year</code> 以及 <code>time-of-day</code> 的语义与<ruby>互联网消息格式<rt>Internet Message Format</rt></ruby>里所定义同名结构的语义相一致（<a href="https://tools.ietf.org/html/rfc5322#section-3.3">【RFC5322】章节 3.3</a>）。
 </p>
 
 <blockquote>
@@ -7645,7 +7645,7 @@ Leading and trailing whitespace in raw field values is removed upon field parsin
 </blockquote>
 
 <p>
-头字段的原始值里的所有<ruby>前置<rt>leading</rt></ruby>空格或<ruby>后置<rt>trailing</rt></ruby>空格将会在<ruby>解析<rt>parsing</rt></ruby>时被移除（<a href="RFC7230.html#ID-1bd50237-cd26-4e74-8c0c-7af8d2d6b25f">【RFC7230】章节 3.2.4</a>）。对于字段值里“哪里会有前置或后置空格”的定义是非常重要的，必须使用一种<ruby>容器句法<rt>container syntax</rt></ruby>包裹起来，比如 <code>quoted-string</code> （<a href="RFC7230.html#ID-d0012483-93a3-44cf-b019-29e12725d94a">【RFC7230】章节 3.2.6</a>）。
+头字段的原始值里的所有<ruby>前置<rt>leading</rt></ruby>空白或<ruby>后置<rt>trailing</rt></ruby>空白将会在<ruby>解析<rt>parsing</rt></ruby>时被移除（<a href="RFC7230.html#ID-1bd50237-cd26-4e74-8c0c-7af8d2d6b25f">【RFC7230】章节 3.2.4</a>）。对于字段值里“哪里会有前置或后置空白”的定义是非常重要的，必须使用一种<ruby>容器句法<rt>container syntax</rt></ruby>包裹起来，比如 <code>quoted-string</code> （<a href="RFC7230.html#ID-d0012483-93a3-44cf-b019-29e12725d94a">【RFC7230】章节 3.2.6</a>）。
 </p>
 
 <blockquote>
@@ -8847,7 +8847,7 @@ The following core rules are included by reference, as defined in Appendix B.1 o
 </blockquote>
 
 <p>
-本规范引用了以下定义在<a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">【RFC5234】附录 B.1</a> 中的核心规则：<code>ALPHA</code> （字母）、<code>CR</code> （回车符）、<code>CRLF</code> （回车换行符）、<code>CTL</code> （控制字符）、<code>DIGIT</code> （十进制数字 0-9）、<code>DQUOTE</code> （双引号）、<code>HEXDIG</code> （十六进制数字 0-9/A-F/a-f）、<code>HTAB</code> （水平制表符）、<code>LF</code> （换行符）、<code>OCTET</code> （八位组字节）、<code>SP</code> （空格）以及 <code>VCHAR</code> （【USASCII】可见字符）。
+本规范引用了以下定义在<a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">【RFC5234】附录 B.1</a> 中的核心规则：<code>ALPHA</code> （字母）、<code>CR</code> （回车符）、<code>CRLF</code> （回车换行符）、<code>CTL</code> （控制字符）、<code>DIGIT</code> （十进制数字 0-9）、<code>DQUOTE</code> （双引号）、<code>HEXDIG</code> （十六进制数字 0-9/A-F/a-f）、<code>HTAB</code> （水平制表符）、<code>LF</code> （换行符）、<code>OCTET</code> （八位组字节）、<code>SP</code> （空白）以及 <code>VCHAR</code> （【USASCII】可见字符）。
 </p>
 
 <p>

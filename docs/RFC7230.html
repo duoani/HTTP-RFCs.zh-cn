@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-21 Fri 19:09 -->
+<!-- 2019-01-07 Mon 12:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7230: Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
@@ -431,7 +431,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orgcb1dfcc">3.2.1. 字段的可扩展性 / Field Extensibility</a></li>
 <li><a href="#orgb0e9fd2">3.2.2. 字段的顺序 / Field Order</a></li>
-<li><a href="#org854c2ff">3.2.3. 空格 / Whitespace</a></li>
+<li><a href="#orgf3d3f18">3.2.3. 空白 / Whitespace</a></li>
 <li><a href="#org6dc2928">3.2.4. 字段解析 / Field Parsing</a></li>
 <li><a href="#orgfc817b8">3.2.5. 字段限制 / Field Limits</a></li>
 <li><a href="#org0342654">3.2.6. 字段值的组成 / Field Value Components</a></li>
@@ -767,12 +767,14 @@ The following core rules are included by reference, as defined in [RFC5234], App
 </blockquote>
 
 <p>
-本规范引用了以下定义在<a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">【RFC5234】附录 B.1</a> 中的核心规则：<code>ALPHA</code> （字母）、<code>CR</code> （回车符）、<code>CRLF</code> （回车换行符）、<code>CTL</code> （控制字符）、<code>DIGIT</code> （十进制数字 0-9）、<code>DQUOTE</code> （双引号）、<code>HEXDIG</code> （十六进制数字 0-9/A-F/a-f）、<code>HTAB</code> （水平制表符）、<code>LF</code> （换行符）、<code>OCTET</code> （八位组字节）、<code>SP</code> （空格）以及 <code>VCHAR</code> （【USASCII】可见字符）。
+本规范引用了以下定义在<a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">【RFC5234】附录 B.1</a> 中的核心规则：<code>ALPHA</code> （字母）、<code>CR</code> （回车符）、<code>CRLF</code> （回车换行符）、<code>CTL</code> （控制字符）、<code>DIGIT</code> （十进制数字 0-9）、<code>DQUOTE</code> （双引号）、<code>HEXDIG</code> （十六进制数字 0-9/A-F/a-f）、<code>HTAB</code> （水平制表符）、<code>LF</code> （换行符）、<code>OCTET</code> （八位组字节）、<code>SP</code> （空白）以及 <code>VCHAR</code> （【USASCII】可见字符）。
 </p>
 
+<blockquote>
 <p>
-（译注：除非特别说明，本译文所述的“字节”皆为 Octet，而不是 Byte。）
+译注：除非特别说明，本译文所述的“字节”皆为 Octet，而不是 Byte。
 </p>
+</blockquote>
 
 <blockquote>
 <p>
@@ -1851,7 +1853,7 @@ A sender <b>MUST NOT</b> send whitespace between the start-line and the first he
 </blockquote>
 
 <p>
-发送端所发送的消息里，<ruby>起始行<rt>start line</rt></ruby>和第一个<ruby>头字段<rt>header field</rt></ruby>之间 <b>禁止</b> 带有空格。当接收端发现它所接收到的消息起始行与第一个头字段之间带有空格时，<b>必须</b> 拒绝处理整个不合法的消息，或者仅忽略这种以空格开头的行（例如，忽略整行，连同后续所有以空格开头的行，直到遇到一个格式正确的头字段或者到达消息头部的结尾为止）。
+发送端所发送的消息里，<ruby>起始行<rt>start line</rt></ruby>和第一个<ruby>头字段<rt>header field</rt></ruby>之间 <b>禁止</b> 带有空白。当接收端发现它所接收到的消息起始行与第一个头字段之间带有空白时，<b>必须</b> 拒绝处理整个不合法的消息，或者仅忽略这种以空白开头的行（例如，忽略整行，连同后续所有以空白开头的行，直到遇到一个格式正确的头字段或者到达消息头部的结尾为止）。
 </p>
 
 <blockquote>
@@ -1861,7 +1863,7 @@ The presence of such whitespace in a request might be an attempt to trick a serv
 </blockquote>
 
 <p>
-在一个请求消息中如果出现上述非法空格，可能其目的是试图让服务器去忽略某些头字段或忽略处理某些行，欺骗服务器使其认为这个请求是一个<ruby>新请求<rt>new request</rt></ruby>。如果在请求链路中其他<ruby>实现<rt>implementation</rt></ruby>对这种带有非法空格的消息的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应消息中出现这种非法空格，可能会被某些客户端所忽略，或者导致客户端<ruby>终止解析<rt>cease parsing</rt></ruby>。
+在一个请求消息中如果出现上述非法空白，可能其目的是试图让服务器去忽略某些头字段或忽略处理某些行，欺骗服务器使其认为这个请求是一个<ruby>新请求<rt>new request</rt></ruby>。如果在请求链路中其他<ruby>实现<rt>implementation</rt></ruby>对这种带有非法空白的消息的有不同的处理方式的话，随便哪一种方式都可能导致安全隐患。同样，在一个响应消息中出现这种非法空白，可能会被某些客户端所忽略，或者导致客户端<ruby>终止解析<rt>cease parsing</rt></ruby>。
 </p>
 </div>
 
@@ -1908,7 +1910,7 @@ A <code>request-line</code> begins with a method token, followed by a single spa
 </blockquote>
 
 <p>
-请求行 <code>request-line</code>，开始于一个方法标识 <code>method</code>，紧接着一个空格 <code>SP</code>，然后是请求目标 <code>request-target</code>，另一个空格 <code>SP</code>，之后是协议版本 <code>HTTP-version</code>，最后是回车换行符 <code>CRLF</code>。
+请求行 <code>request-line</code>，开始于一个方法标识 <code>method</code>，紧接着一个空白 <code>SP</code>，然后是请求目标 <code>request-target</code>，另一个空白 <code>SP</code>，之后是协议版本 <code>HTTP-version</code>，最后是回车换行符 <code>CRLF</code>。
 </p>
 
 <div class="org-src-container">
@@ -1958,7 +1960,7 @@ Recipients typically parse the <code>request-line</code> into its component part
 </blockquote>
 
 <p>
-接收端在解析<ruby>请求行<rt>request-line</rt></ruby>的过程中，通过以空格分割出请求行的各个组件（共有三个组件，分别为方法标识、请求目标以及协议版本），因此，以上三个组件的内容不能带有空格（<a href="#orgf665892">章节 3.5</a>）。不幸的是，某些用户代理不能对超文本引用（<a href="https://en.wikipedia.org/wiki/Hyperlink">hypertext references</a>，即超链接）里的空格进行正确的编码或者排除，导致用户代理所发送的请求消息中的<ruby>请求目标<rt>request-target</rt></ruby>包含了那些不被允许出现的<ruby>字符<rt>character</rt></ruby>。
+接收端在解析<ruby>请求行<rt>request-line</rt></ruby>的过程中，通过以空白分割出请求行的各个组件（共有三个组件，分别为方法标识、请求目标以及协议版本），因此，以上三个组件的内容不能带有空白（<a href="#orgf665892">章节 3.5</a>）。不幸的是，某些用户代理不能对超文本引用（<a href="https://en.wikipedia.org/wiki/Hyperlink">hypertext references</a>，即超链接）里的空白进行正确的编码或者排除，导致用户代理所发送的请求消息中的<ruby>请求目标<rt>request-target</rt></ruby>包含了那些不被允许出现的<ruby>字符<rt>character</rt></ruby>。
 </p>
 
 <blockquote>
@@ -2009,7 +2011,7 @@ The first line of a response message is the <code>status-line</code>, consisting
 </blockquote>
 
 <p>
-响应消息的第一行称为<ruby>状态行<rt>status-line</rt></ruby>，包含协议版本 <code>HTTP-version</code>，一个空格 <code>SP</code>，状态码 <code>status-code</code>，另一个空格 <code>SP</code>，一个可能为空的文本短语 <code>reason-phrase</code> 来描述该状态码，最后是回车换行符 <code>CRLF</code>。
+响应消息的第一行称为<ruby>状态行<rt>status-line</rt></ruby>，包含协议版本 <code>HTTP-version</code>，一个空白 <code>SP</code>，状态码 <code>status-code</code>，另一个空白 <code>SP</code>，一个可能为空的文本短语 <code>reason-phrase</code> 来描述该状态码，最后是回车换行符 <code>CRLF</code>。
 </p>
 
 <div class="org-src-container">
@@ -2060,7 +2062,7 @@ Each header field consists of a case-insensitive field name followed by a colon 
 </blockquote>
 
 <p>
-每一个<ruby>头字段<rt>header field</rt></ruby>都由一个<ruby>字段名<rt>field name</rt></ruby>及随后的一个分号（":"）、可选的前置空格、一个<ruby>字段值<rt>field value</rt></ruby>、一个可选的结尾空格组成。
+每一个<ruby>头字段<rt>header field</rt></ruby>都由一个<ruby>字段名<rt>field name</rt></ruby>及随后的一个分号（":"）、可选的前置空白、一个<ruby>字段值<rt>field value</rt></ruby>、一个可选的结尾空白组成。
 </p>
 
 <div class="org-src-container">
@@ -2184,9 +2186,9 @@ A recipient <b>MAY</b> combine multiple header fields with the same field name i
 </div>
 </div>
 
-<div id="outline-container-org854c2ff" class="outline-4">
-<h4 id="org854c2ff"><a id="ID-f26527b6-d15c-4967-97e3-acc669609481"></a>3.2.3. 空格 / Whitespace</h4>
-<div class="outline-text-4" id="text-org854c2ff">
+<div id="outline-container-orgf3d3f18" class="outline-4">
+<h4 id="orgf3d3f18"><a id="ID-f26527b6-d15c-4967-97e3-acc669609481"></a>3.2.3. 空白 / Whitespace</h4>
+<div class="outline-text-4" id="text-orgf3d3f18">
 <blockquote>
 <p>
 This specification uses three rules to denote the use of linear whitespace: <code>OWS</code> (optional whitespace), <code>RWS</code> (required whitespace), and <code>BWS</code> ("bad" whitespace).
@@ -2194,13 +2196,19 @@ This specification uses three rules to denote the use of linear whitespace: <cod
 </blockquote>
 
 <p>
-本规范使用 3 个（ABNF）规则来表示连续空格的使用。
+本规范使用 3 个（ABNF）规则来表示连续空白的使用。
 </p>
 <ul class="org-ul">
-<li><code>OWS</code>，Optional Whitespace，可选的空格；</li>
-<li><code>RWS</code>，Required Whitespace，必要的空格；</li>
-<li><code>BWS</code>，Bad Whitespace，不可取的空格。</li>
+<li><code>OWS</code>，Optional Whitespace，可选的空白；</li>
+<li><code>RWS</code>，Required Whitespace，必要的空白；</li>
+<li><code>BWS</code>，Bad Whitespace，不可取的空白。</li>
 </ul>
+
+<blockquote>
+<p>
+译注：Whitespace 译为“空白”而不是“空格”，这是因为 Whitespace character 不仅包括 U+0020 SPACE，通常还包括 U+0009 CHARACTER TABULATION (tab) 等许多字符，详见 Wikipedia 的 <a href="https://en.wikipedia.org/wiki/Whitespace_character">Whitespace character</a>。
+</p>
+</blockquote>
 
 <blockquote>
 <p>
@@ -2209,7 +2217,7 @@ The <code>OWS</code> rule is used where zero or more linear whitespace octets mi
 </blockquote>
 
 <p>
-<code>OWS</code> 规则是用在可能出现零个或多个<ruby>连续空格字节<rt>linear whitespace octets</rt></ruby>的位置上的。对于协议元素来说，可选空格的使用有助于提交可读性。发送端 <b>应当</b> 将可选空格生成为一个单一的 <code>SP</code>；接收端除了在<ruby>消息就地过滤<rt>in-place message filtering</rt></ruby>期间因为修正非法或多余的协议元素的需要而生成可选空格以外，接收端 <b>不应当</b> 生成可选空格。
+<code>OWS</code> 规则是用在可能出现零个或多个<ruby>连续空白字节<rt>linear whitespace octets</rt></ruby>的位置上的。对于协议元素来说，可选空白的使用有助于提交可读性。发送端 <b>应当</b> 将可选空白生成为一个单一的 <code>SP</code>；接收端除了在<ruby>消息就地过滤<rt>in-place message filtering</rt></ruby>期间因为修正非法或多余的协议元素的需要而生成可选空白以外，接收端 <b>不应当</b> 生成可选空白。
 </p>
 
 <blockquote>
@@ -2219,7 +2227,7 @@ The <code>RWS</code> rule is used when at least one linear whitespace octet is r
 </blockquote>
 
 <p>
-<code>RWS</code> 规则是用于当要求有至少一个<ruby>连续空格<rt>linear whitespace octet</rt></ruby>来分隔<ruby>字段标记<rt>field tokens</rt></ruby>的时候。发送端 <b>应当</b> 将 <code>RWS</code> 生成为一个单一的 <code>SP</code>。
+<code>RWS</code> 规则是用于当要求有至少一个<ruby>连续空白<rt>linear whitespace octet</rt></ruby>来分隔<ruby>字段标记<rt>field tokens</rt></ruby>的时候。发送端 <b>应当</b> 将 <code>RWS</code> 生成为一个单一的 <code>SP</code>。
 </p>
 
 <blockquote>
@@ -2229,7 +2237,7 @@ The <code>BWS</code> rule is used where the grammar allows optional whitespace o
 </blockquote>
 
 <p>
-<code>BWS</code> 规则是用在由于历史遗留因素才在语法上允许可选空格的位置上。发送端 <b>禁止</b> 在消息中生成 <code>BWS</code>。接收端 <b>必须</b> 在<ruby>解释<rt>interpret</rt></ruby>协议元素之前对这些不可取的空格进行<ruby>解析<rt>parse</rt></ruby>并且移除它们。
+<code>BWS</code> 规则是用在由于历史遗留因素才在语法上允许可选空白的位置上。发送端 <b>禁止</b> 在消息中生成 <code>BWS</code>。接收端 <b>必须</b> 在<ruby>解释<rt>interpret</rt></ruby>协议元素之前对这些不可取的空白进行<ruby>解析<rt>parse</rt></ruby>并且移除它们。
 </p>
 
 <div class="org-src-container">
@@ -2264,7 +2272,7 @@ No whitespace is allowed between the header <code>field-name</code> and colon. I
 </blockquote>
 
 <p>
-头字段的名字和冒号之间不允许带有空格。在过去，对于这些空格的各不相同的处理方式已经导致请求路由和响应处理方面的安全隐患。服务器 <b>必须</b> 拒绝这种在头字段名和冒号之间包含空格请求消息，并响应一个 <code>400 (Bad Request)</code> 的状态码。代理 <b>必须</b> 在转发到下游之前从响应消息中移除所有上述空格。
+头字段的名字和冒号之间不允许带有空白。在过去，对于这些空白的各不相同的处理方式已经导致请求路由和响应处理方面的安全隐患。服务器 <b>必须</b> 拒绝这种在头字段名和冒号之间包含空白请求消息，并响应一个 <code>400 (Bad Request)</code> 的状态码。代理 <b>必须</b> 在转发到下游之前从响应消息中移除所有上述空白。
 </p>
 
 <blockquote>
@@ -2274,7 +2282,7 @@ A field value might be preceded and/or followed by optional whitespace (<code>OW
 </blockquote>
 
 <p>
-在头字段值之前并且（或者）之后可能带有可选空格（<code>OWS</code>）；为了遵循人类可读性，在 <code>field-value</code> 之前推荐带有一个单一的空格 <code>SP</code>。头字段值并不包含任何前置或后置的空格：当从一个头字段中抽出头字段值的时候，出现在头字段值的第一个非空格字节之前或者最后一个非空格字节之后的可选空格 <code>OWS</code> 应该被解析器所排除。
+在头字段值之前并且（或者）之后可能带有可选空白（<code>OWS</code>）；为了遵循人类可读性，在 <code>field-value</code> 之前推荐带有一个单一的空白 <code>SP</code>。头字段值并不包含任何前置或后置的空白：当从一个头字段中抽出头字段值的时候，出现在头字段值的第一个非空白字节之前或者最后一个非空白字节之后的可选空白 <code>OWS</code> 应该被解析器所排除。
 </p>
 
 <blockquote>
@@ -2284,7 +2292,7 @@ Historically, HTTP header field values could be extended over multiple lines by 
 </blockquote>
 
 <p>
-历史上，HTTP 头字段值能被扩展为多行，通过在每个额外行之前添加至少一个空格或水平制表符（<code>obs-fold</code>）来实现。本规范废弃了这种<ruby>折叠行<rt>line folding</rt></ruby>，除了在<ruby>媒体类型<rt>media type</rt></ruby> "message/http"（见<a href="#orgd8838e8">章节 8.3.1</a>）之内的。发送端 <b>禁止</b> 生成一个包含行折叠（也就是说，带有任何包含能够匹配 <code>obs-fold</code> 规则的头字段值 <code>field-value</code>）的消息，除非消息是用于封装媒体类型 "message/http" 的内容。
+历史上，HTTP 头字段值能被扩展为多行，通过在每个额外行之前添加至少一个空白或水平制表符（<code>obs-fold</code>）来实现。本规范废弃了这种<ruby>折叠行<rt>line folding</rt></ruby>，除了在<ruby>媒体类型<rt>media type</rt></ruby> "message/http"（见<a href="#orgd8838e8">章节 8.3.1</a>）之内的。发送端 <b>禁止</b> 生成一个包含行折叠（也就是说，带有任何包含能够匹配 <code>obs-fold</code> 规则的头字段值 <code>field-value</code>）的消息，除非消息是用于封装媒体类型 "message/http" 的内容。
 </p>
 
 <blockquote>
@@ -2299,7 +2307,7 @@ A server that receives an <code>obs-fold</code> in a request message that is not
 
 <ul class="org-ul">
 <li>拒绝这种消息并响应一个 <code>400 (Bad Request)</code> 状态码，更好的方式是在响应消息中带有一种<ruby>表示形式<rt>representation</rt></ruby>来解释这种已经废弃的<ruby>折叠行<rt>line folding</rt></ruby>是不再允许出现在消息中的；</li>
-<li>在<ruby>解释<rt>interpret</rt></ruby>头字段值（或转发消息到下游）之前，使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的 <code>obs-fold</code>。</li>
+<li>在<ruby>解释<rt>interpret</rt></ruby>头字段值（或转发消息到下游）之前，使用一个或多个空白 <code>SP</code> 来替换掉所有接收到的 <code>obs-fold</code>。</li>
 </ul>
 
 <blockquote>
@@ -2314,7 +2322,7 @@ A proxy or gateway that receives an <code>obs-fold</code> in a response message 
 
 <ul class="org-ul">
 <li>丢弃这个消息改由响应一个 <code>502 (Bad Gateway)</code> 状态码，更好的方式是在响应消息中带有一种<ruby>表示形式<rt>representation</rt></ruby>来解释之所以出现这种状况是因为接收到那种不被允许的<ruby>折叠行<rt>line folding</rt></ruby>；</li>
-<li>在<ruby>解释<rt>interpret</rt></ruby>头字段值（或转发消息到下游）之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的 <code>obs-fold</code>。</li>
+<li>在<ruby>解释<rt>interpret</rt></ruby>头字段值（或转发消息到下游）之前使用一个或多个空白 <code>SP</code> 来替换掉所有接收到的 <code>obs-fold</code>。</li>
 </ul>
 
 <blockquote>
@@ -2324,7 +2332,7 @@ A user agent that receives an <code>obs-fold</code> in a response message that i
 </blockquote>
 
 <p>
-如果<ruby>用户代理<rt>user agent</rt></ruby>接收到一个响应消息里的 <code>obs-fold</code>，但它并不在媒体类型 "message/http" 的容器内，用户代理 <b>必须</b> 在解释头字段值之前使用一个或多个空格 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
+如果<ruby>用户代理<rt>user agent</rt></ruby>接收到一个响应消息里的 <code>obs-fold</code>，但它并不在媒体类型 "message/http" 的容器内，用户代理 <b>必须</b> 在解释头字段值之前使用一个或多个空白 <code>SP</code> 来替换掉所有接收到的分行 <code>obs-fold</code>。
 </p>
 
 <blockquote>
@@ -2397,7 +2405,7 @@ Most HTTP header field values are defined using common syntax components (token,
 </blockquote>
 
 <p>
-大多数 HTTP 头字段值使用<ruby>通用句法组件<rt>common syntax components</rt></ruby>（包括标记 <code>token</code>、字符串 <code>quoted-string</code>、注释 <code>comment</code> ）来进行定义。这些通用句法组件以空格或者特定的<ruby>定界符<rt>delimiting characters</rt></ruby>来分隔。定界符选取自 US-ASCII 字符集中的<ruby>可见字符<rt>visual characters</rt></ruby>，并且这些可见字符是不允许出现在<ruby>标记<rt>token</rt></ruby>上的（包括 <code>DQUOTE</code> 和 "<code>(),/:;&lt;=&gt;?@[\]{}</code>"）。
+大多数 HTTP 头字段值使用<ruby>通用句法组件<rt>common syntax components</rt></ruby>（包括标记 <code>token</code>、字符串 <code>quoted-string</code>、注释 <code>comment</code> ）来进行定义。这些通用句法组件以空白或者特定的<ruby>定界符<rt>delimiting characters</rt></ruby>来分隔。定界符选取自 US-ASCII 字符集中的<ruby>可见字符<rt>visual characters</rt></ruby>，并且这些可见字符是不允许出现在<ruby>标记<rt>token</rt></ruby>上的（包括 <code>DQUOTE</code> 和 "<code>(),/:;&lt;=&gt;?@[\]{}</code>"）。
 </p>
 
 <div class="org-src-container">
@@ -2965,7 +2973,7 @@ Although the <code>request-line</code> and <code>status-line</code> grammar rule
 </blockquote>
 
 <p>
-虽然<ruby>请求行<rt>request line</rt></ruby>和<ruby>状态行<rt>status line</rt></ruby>的语法规则要求每一个组件元素需要以一个空格（8位字节） <code>SP</code> 分隔，但是接收端 <b>可以</b> 改由使用除 <code>CRLF</code> 结束符以外的更宽泛的<ruby>空格限定符<rt>whitespace-delimited word</rt></ruby>替代 <code>SP</code> 来进行解析，从而将任何形式的空格作为 <code>SP</code> 分隔符来对待，在忽略前置或后置空格的时候。空格限定符由包括一个或多个以下的字节：<code>SP</code>、<code>HTAB</code>、<code>VT</code> (%x0B)、<code>FF</code> (&amp;x0C) 或者单独由 <code>CR</code>。但是，如果消息有多个接收端，而且这些接收端都有自己独特的健壮性的解释，那么，这种<ruby>宽泛解析<rt>lenient parsing</rt></ruby>的方式会引起安全隐患（见<a href="#org335da74">章节 9.5</a>）。
+虽然<ruby>请求行<rt>request line</rt></ruby>和<ruby>状态行<rt>status line</rt></ruby>的语法规则要求每一个组件元素需要以一个空白（8位字节） <code>SP</code> 分隔，但是接收端 <b>可以</b> 改由使用除 <code>CRLF</code> 结束符以外的更宽泛的<ruby>空白限定符<rt>whitespace-delimited word</rt></ruby>替代 <code>SP</code> 来进行解析，从而将任何形式的空白作为 <code>SP</code> 分隔符来对待，在忽略前置或后置空白的时候。空白限定符由包括一个或多个以下的字节：<code>SP</code>、<code>HTAB</code>、<code>VT</code> (%x0B)、<code>FF</code> (&amp;x0C) 或者单独由 <code>CR</code>。但是，如果消息有多个接收端，而且这些接收端都有自己独特的健壮性的解释，那么，这种<ruby>宽泛解析<rt>lenient parsing</rt></ruby>的方式会引起安全隐患（见<a href="#org335da74">章节 9.5</a>）。
 </p>
 
 <blockquote>
@@ -5070,7 +5078,7 @@ A construct "#" is defined, similar to "*", for defining comma-delimited lists o
 </blockquote>
 
 <p>
-定义了一个 <code>#</code> 结构，类似于 <code>*</code>，用于定义以英文逗号分隔的元素列表。完整的形式是 <code>&lt;n&gt;#&lt;m&gt;element</code>，表明至少 <code>&lt;n&gt;</code> 个，至多 <code>&lt;m&gt;</code> 个 <code>element</code>，每个 <code>element</code> 以单个逗号（","）以及可选的空格（<code>OWS</code>）分隔。
+定义了一个 <code>#</code> 结构，类似于 <code>*</code>，用于定义以英文逗号分隔的元素列表。完整的形式是 <code>&lt;n&gt;#&lt;m&gt;element</code>，表明至少 <code>&lt;n&gt;</code> 个，至多 <code>&lt;m&gt;</code> 个 <code>element</code>，每个 <code>element</code> 以单个逗号（","）以及可选的空白（<code>OWS</code>）分隔。
 </p>
 
 <blockquote>
@@ -6378,7 +6386,7 @@ Invalid whitespace around field-names is now required to be rejected, because ac
 </blockquote>
 
 <p>
-现在，<ruby>字段名称<rt>field-names</rt></ruby>两端不能出现非法的空格字符，这是因为允许它们就意味着安全隐患。现在，定义头字段的 ABNF 规则 <code>header-field</code> 只列出了 <code>field-value</code>。（<a href="#org95ce2ff">章节 3.2</a>）
+现在，<ruby>字段名称<rt>field-names</rt></ruby>两端不能出现非法的空白字符，这是因为允许它们就意味着安全隐患。现在，定义头字段的 ABNF 规则 <code>header-field</code> 只列出了 <code>field-value</code>。（<a href="#org95ce2ff">章节 3.2</a>）
 </p>
 
 <blockquote>
@@ -6389,12 +6397,12 @@ Invalid whitespace around field-names is now required to be rejected, because ac
 
 <blockquote>
 <p>
-Rules about implicit linear whitespace between certain grammar productions have been removed; now whitespace is only allowed where specifically defined in the ABNF. (<a href="#org854c2ff">Section 3.2.3</a>)
+Rules about implicit linear whitespace between certain grammar productions have been removed; now whitespace is only allowed where specifically defined in the ABNF. (<a href="#orgf3d3f18">Section 3.2.3</a>)
 </p>
 </blockquote>
 
 <p>
-移除了某些暗示连续空格的相关语法规则，现在，空格只允许在 ABNF 中有明确定义的地方。（<a href="#org854c2ff">章节 3.2.3</a>）
+移除了某些暗示连续空白的相关语法规则，现在，空白只允许在 ABNF 中有明确定义的地方。（<a href="#orgf3d3f18">章节 3.2.3</a>）
 </p>
 
 <blockquote>
