@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-07 Mon 12:10 -->
+<!-- 2019-01-07 Mon 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7234: Hypertext Transfer Protocol (HTTP/1.1): Caching</title>
@@ -2273,7 +2273,7 @@ The "<code>no-store</code>" request directive indicates that a cache <b>MUST NOT
 </blockquote>
 
 <p>
-<code>no-store</code> 请求指令表明，缓存 <b>禁止</b> 存储这次请求以及对应的所有响应的任何部分。本指令既适用于<ruby>私有缓存<rt>private caches</rt></ruby>，也适用于<ruby>共享缓存<rt>shared caches</rt></ruby>。这里的“禁止存储”意思是缓存 <b>禁止</b> 在<ruby>非易失性存储器<rt>non-volatile storage</rt></ruby>中刻意存储信息，而且 <b>必须</b> 在转发这些信息以后，立刻、尽最大努力地去尝试从<ruby>易失性存储器<rt>volatile storage</rt></ruby>中移除它们。
+<code>no-store</code> 请求指令表明，缓存 <b>禁止</b> 存储这次请求及其对应的任何响应的任何部分。本指令既适用于<ruby>私有缓存<rt>private caches</rt></ruby>，也适用于<ruby>共享缓存<rt>shared caches</rt></ruby>。这里“禁止存储”的意思是缓存 <b>禁止</b> 在<ruby>非易失性存储器<rt>non-volatile storage</rt></ruby>中刻意存储信息，而且 <b>必须</b> 在转发这些信息以后，立刻、尽最大努力地去尝试从<ruby>易失性存储器<rt>volatile storage</rt></ruby>中移除它们。
 </p>
 
 <blockquote>
@@ -2422,7 +2422,7 @@ If the <code>no-cache</code> response directive specifies one or more field-name
 </blockquote>
 
 <p>
-如果 no-cache 响应指令指定了一个或多个字段名，那么，缓存 <b>可以</b> 使用
+如果 <code>no-cache</code> 响应指令指定了一个或多个<ruby>字段名<rt>field-names</rt></ruby>，那么，缓存 <b>可以</b> 使用这个响应来满足一个后续的请求，但会受到任何其他关于缓存方面的约束。然而，响应消息的 <code>no-cache</code> 指令中所列出的任何字段名 <b>禁止</b> 在没有经过源服务器成功验证的情况下，出现在回应给一个后续请求的响应中。这样使得源服务器可以阻止某些头字段在一个响应中被复用，但仍然允许缓存响应的剩余部分。
 </p>
 
 <blockquote>
@@ -2431,17 +2431,29 @@ The field-names given are not limited to the set of header fields defined by thi
 </p>
 </blockquote>
 
+<p>
+这里所说的<ruby>字段名<rt>field-names</rt></ruby>并不限于由本规范所定义的头字段集。字段名是不区分大小写的。
+</p>
+
 <blockquote>
 <p>
 This directive uses the <code>quoted-string</code> form of the argument syntax. A sender <b>SHOULD NOT</b> generate the <code>token</code> form (even if quoting appears not to be needed for single-entry lists).
 </p>
 </blockquote>
 
+<p>
+本指令的实参使用的是 <code>quoted-string</code> 形式的句法。发送端 <b>不应当</b> 将本指令生成为 <code>token</code> 的形式（即使在只有单一条目的列表中看起来并不需要引号）。
+</p>
+
 <blockquote>
 <p>
 <b>Note:</b> Although it has been back-ported to many implementations, some HTTP/1.0 caches will not recognize or obey this directive. Also, <code>no-cache</code> response directives with field-names are often handled by caches as if an unqualified <code>no-cache</code> directive was received; i.e., the special handling for the qualified form is not widely implemented.
 </p>
 </blockquote>
+
+<p>
+<b>注意：</b> 虽然本指令已被移植到许多实现上，但是，某些 HTTP/1.0 缓存将不会识别或者不会服从它。另外，带有字段名的 <code>no-cache</code> 响应指令常常被缓存当作<ruby>未经限定的<rt>unqualified</rt></ruby> <code>no-cache</code> 来处理，也就是说，对于限定形式的特殊处理并没有得到广泛的实现。
+</p>
 </div>
 </div>
 
@@ -2450,15 +2462,24 @@ This directive uses the <code>quoted-string</code> form of the argument syntax. 
 <div class="outline-text-5" id="text-org15305e1">
 <blockquote>
 <p>
-The "no-store" response directive indicates that a cache MUST NOT store any part of either the immediate request or response. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache MUST NOT intentionally store the information in non-volatile storage, and MUST make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
+The "<code>no-store</code>" response directive indicates that a cache <b>MUST NOT</b> store any part of either the immediate request or response. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache <b>MUST NOT</b> intentionally store the information in non-volatile storage, and <b>MUST</b> make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
 </p>
 </blockquote>
 
+<p>
+<code>no-store</code> 响应指令表明，缓存 <b>禁止</b> 存储这个响应及其引起这个响应的请求的任何部分。本指令既适用于私有缓存，也适用于共享缓存。这里“禁止存储”的意思是缓存 <b>禁止</b>
+ 在<ruby>非易失性存储器<rt>non-volatile storage</rt></ruby>中刻意存储信息，而且 <b>必须</b> 在转发这些信息以后，立刻、尽最大努力地去尝试从<ruby>易失性存储器<rt>volatile storage</rt></ruby>中移除它们。
+</p>
+
 <blockquote>
 <p>
-This directive is NOT a reliable or sufficient mechanism for ensuring privacy. In particular, malicious or compromised caches might not recognize or obey this directive, and communications networks might be vulnerable to eavesdropping.
+This directive is <b>NOT</b> a reliable or sufficient mechanism for ensuring privacy. In particular, malicious or compromised caches might not recognize or obey this directive, and communications networks might be vulnerable to eavesdropping.
 </p>
 </blockquote>
+
+<p>
+本指令并不是一个可靠的或者充分的机制来保证私密性。特别是，恶意的或者折衷的缓存可能不<ruby>服从<rt>obey</rt></ruby>或者无法<ruby>识别<rt>recognize</rt></ruby>本指令，从而通信网络可能会遭到窃听。
+</p>
 </div>
 </div>
 
@@ -2467,9 +2488,13 @@ This directive is NOT a reliable or sufficient mechanism for ensuring privacy. I
 <div class="outline-text-5" id="text-org453b87f">
 <blockquote>
 <p>
-The "no-transform" response directive indicates that an intermediary (regardless of whether it implements a cache) MUST NOT transform the payload, as defined in Section 5.7.2 of [RFC7230].
+The "<code>no-transform</code>" response directive indicates that an intermediary (regardless of whether it implements a cache) <b>MUST NOT</b> transform the payload, as defined in <a href="RFC7230.html#ID-b6641b58-3ac6-4fce-9c44-a3715ffdc8a0">Section 5.7.2</a> of [RFC7230].
 </p>
 </blockquote>
+
+<p>
+<code>no-transform</code> 响应指令表明，中间人（无论它是否有实现了缓存功能） <b>禁止</b> 转换有效载荷，其定义见<a href="RFC7230.html#ID-b6641b58-3ac6-4fce-9c44-a3715ffdc8a0">【RFC7230】章节 5.7.2</a>。
+</p>
 </div>
 </div>
 
@@ -2478,9 +2503,13 @@ The "no-transform" response directive indicates that an intermediary (regardless
 <div class="outline-text-5" id="text-org300811e">
 <blockquote>
 <p>
-The "public" response directive indicates that any cache MAY store the response, even if the response would normally be non-cacheable or cacheable only within a private cache. (See Section 3.2 for additional details related to the use of public in response to a request containing Authorization, and Section 3 for details of how public affects responses that would normally not be stored, due to their status codes not being defined as cacheable by default; see Section 4.2.2.)
+The "<code>public</code>" response directive indicates that any cache <b>MAY</b> store the response, even if the response would normally be non-cacheable or cacheable only within a private cache. (See <a href="#orga28b8b1">Section 3.2</a> for additional details related to the use of <code>public</code> in response to a request containing <code>Authorization</code>, and <a href="#orga05eb41">Section 3</a> for details of how <code>public</code> affects responses that would normally not be stored, due to their status codes not being defined as cacheable by default; see <a href="#org4c48fcc">Section 4.2.2</a>.)
 </p>
 </blockquote>
+
+<p>
+<code>public</code> 响应指令表明，任何缓存都 <b>可以</b> 存储这个响应，即使在正常情况下这个响应是不可缓存的或者仅可缓存于某个私有缓存中。（在回应给带有 <code>Authorization</code> 的请求的这种响应里使用 <code>public</code> 的更多详细信息，见<a href="#orga28b8b1">章节 3.2</a>；以及 <code>public</code> 如何影响正常情况下是不可存储的响应（由于它们的状态码没有定义为默认是可缓存的，见<a href="#org4c48fcc">章节 4.2.2</a>）的细节，见<a href="#orga05eb41">章节 3</a>；）
+</p>
 </div>
 </div>
 
@@ -2493,6 +2522,10 @@ Argument syntax:
 </p>
 </blockquote>
 
+<p>
+实参句法：
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">#field-name
 </pre>
@@ -2500,15 +2533,23 @@ Argument syntax:
 
 <blockquote>
 <p>
-The "private" response directive indicates that the response message is intended for a single user and MUST NOT be stored by a shared cache. A private cache MAY store the response and reuse it for later requests, even if the response would normally be non-cacheable.
+The "<code>private</code>" response directive indicates that the response message is intended for a single user and <b>MUST NOT</b> be stored by a shared cache. A private cache <b>MAY</b> store the response and reuse it for later requests, even if the response would normally be non-cacheable.
 </p>
 </blockquote>
 
+<p>
+<code>private</code> 响应指令表明，这个响应消息是打算给某个单一用户使用的，并且 <b>禁止</b> 被共享缓存所存储。隐私缓存 <b>可以</b> 存储这个响应和在接下来的请求中复用这个响应，即使这个响应在正常情况下是不可缓存的。
+</p>
+
 <blockquote>
 <p>
-If the private response directive specifies one or more field-names, this requirement is limited to the field-values associated with the listed response header fields. That is, a shared cache MUST NOT store the specified field-names(s), whereas it MAY store the remainder of the response message.
+If the <code>private</code> response directive specifies one or more field-names, this requirement is limited to the field-values associated with the listed response header fields. That is, a shared cache <b>MUST NOT</b> store the specified field-names(s), whereas it <b>MAY</b> store the remainder of the response message.
 </p>
 </blockquote>
+
+<p>
+如果 <code>private</code> 响应指令指定了一个或多个字段名称，那么，这个要求仅限于所列出的响应头字段所关联的字段值。也就是说，共享缓存 <b>禁止</b> 存储 <code>private</code> 所指定的字段名，但它 <b>可以</b> 存储响应消息的剩余部分。
+</p>
 
 <blockquote>
 <p>
@@ -2516,17 +2557,29 @@ The field-names given are not limited to the set of header fields defined by thi
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-This directive uses the quoted-string form of the argument syntax. A sender SHOULD NOT generate the token form (even if quoting appears not to be needed for single-entry lists).
+这里所说的<ruby>字段名<rt>field-names</rt></ruby>并不限于由本规范所定义的头字段集。字段名是不区分大小写的。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-<b>Note:</b> This usage of the word "private" only controls where the response can be stored; it cannot ensure the privacy of the message content. Also, private response directives with field-names are often handled by caches as if an unqualified private directive was received; i.e., the special handling for the qualified form is not widely implemented.
+This directive uses the <code>quoted-string</code> form of the argument syntax. A sender <b>SHOULD NOT</b> generate the <code>token</code> form (even if quoting appears not to be needed for single-entry lists).
 </p>
 </blockquote>
+
+<p>
+本指令的实参使用的是 <code>quoted-string</code> 形式的句法。发送端 <b>不应当</b> 将本指令生成为 <code>token</code> 的形式（即使在只有单一条目的列表中看起来并不需要引号）。
+</p>
+
+<blockquote>
+<p>
+<b>Note:</b> This usage of the word "private" only controls where the response can be stored; it cannot ensure the privacy of the message content. Also, <code>private</code> response directives with field-names are often handled by caches as if an unqualified <code>private</code> directive was received; i.e., the special handling for the qualified form is not widely implemented.
+</p>
+</blockquote>
+
+<p>
+<b>注意：</b> 这里所使用的术语“private”（私有）仅控制响应能够存储在哪个地方，它并不能保证消息内容的隐私性。另外，带有字段名称的 <code>private</code> 响应指令常常被缓存当作<ruby>未经限定的<rt>unqualified</rt></ruby> <code>private</code> 来处理，也就是说，对于限定形式的特殊处理并没有得到广泛的实现。
+</p>
 </div>
 </div>
 
@@ -2535,9 +2588,13 @@ This directive uses the quoted-string form of the argument syntax. A sender SHOU
 <div class="outline-text-5" id="text-orge47f656">
 <blockquote>
 <p>
-The "proxy-revalidate" response directive has the same meaning as the must-revalidate response directive, except that it does not apply to private caches.
+The "<code>proxy-revalidate</code>" response directive has the same meaning as the <code>must-revalidate</code> response directive, except that it does not apply to private caches.
 </p>
 </blockquote>
+
+<p>
+<code>proxy-revalidate</code> 响应指令与 <code>must-revalidate</code> 响应指令具有同样的含义，除了它并不能适用于私有缓存以外。
+</p>
 </div>
 </div>
 
@@ -2550,6 +2607,10 @@ Argument syntax:
 </p>
 </blockquote>
 
+<p>
+实参句法：
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">delta-seconds (see Section 1.2.1)
 </pre>
@@ -2557,15 +2618,23 @@ Argument syntax:
 
 <blockquote>
 <p>
-The "max-age" response directive indicates that the response is to be considered stale after its age is greater than the specified number of seconds.
+The "<code>max-age</code>" response directive indicates that the response is to be considered stale after its age is greater than the specified number of seconds.
 </p>
 </blockquote>
 
+<p>
+<code>max-age</code> 响应指令表明，在响应的年龄大于这个指令所指定的秒数以后，这个响应就被视为是<ruby>陈旧的<rt>stale</rt></ruby>。
+</p>
+
 <blockquote>
 <p>
-This directive uses the token form of the argument syntax: e.g., 'max-age=5' not 'max-age="5"'. A sender SHOULD NOT generate the quoted-string form.
+This directive uses the <code>token</code> form of the argument syntax: e.g., 'max-age=5' not 'max-age="5"'. A sender <b>SHOULD NOT</b> generate the <code>quoted-string</code> form.
 </p>
 </blockquote>
+
+<p>
+本指令的实参使用的是 <code>token</code> 形式的句法，比如：max-age=5，而不是 max-age="5"。发送端 <b>不应当</b> 将本指令生成为 <code>quoted-string</code> 的形式。
+</p>
 </div>
 </div>
 
@@ -2578,6 +2647,10 @@ Argument syntax:
 </p>
 </blockquote>
 
+<p>
+实参句法：
+</p>
+
 <div class="org-src-container">
 <pre class="src src-text">delta-seconds (see Section 1.2.1)
 </pre>
@@ -2585,15 +2658,23 @@ Argument syntax:
 
 <blockquote>
 <p>
-The "s-maxage" response directive indicates that, in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the max-age directive or the Expires header field. The s-maxage directive also implies the semantics of the proxy-revalidate response directive.
+The "<code>s-maxage</code>" response directive indicates that, in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the <code>max-age</code> directive or the <code>Expires</code> header field. The <code>s-maxage</code> directive also implies the semantics of the <code>proxy-revalidate</code> response directive.
 </p>
 </blockquote>
 
+<p>
+<code>s-maxage</code> 响应指令表明，在共享缓存中，由本指令所指定的最大年龄值覆盖了 <code>max-age</code> 指令或者 <code>Expires</code> 头字段所指定的最大年龄值。<code>s-maxage</code> 指令还意味着 <code>proxy-revalidate</code> 响应指令的语义。
+</p>
+
 <blockquote>
 <p>
-This directive uses the token form of the argument syntax: e.g., 's-maxage=10' not 's-maxage="10"'. A sender SHOULD NOT generate the quoted-string form.
+This directive uses the <code>token</code> form of the argument syntax: e.g., 's-maxage=10' not 's-maxage="10"'. A sender <b>SHOULD NOT</b> generate the <code>quoted-string</code> form.
 </p>
 </blockquote>
+
+<p>
+本指令的实参使用的是 <code>token</code> 形式的句法，比如：s-maxage=10，而不是 s-maxage="10"。发送端 <b>不应当</b> 将本指令生成为 <code>quoted-string</code> 的形式。
+</p>
 </div>
 </div>
 </div>
@@ -2603,9 +2684,13 @@ This directive uses the token form of the argument syntax: e.g., 's-maxage=10' n
 <div class="outline-text-4" id="text-orgd8f8d17">
 <blockquote>
 <p>
-The Cache-Control header field can be extended through the use of one or more cache-extension tokens, each with an optional value. A cache MUST ignore unrecognized cache directives.
+The <code>Cache-Control</code> header field can be extended through the use of one or more cache-extension tokens, each with an optional value. A cache <b>MUST</b> ignore unrecognized cache directives.
 </p>
 </blockquote>
+
+<p>
+可以通过使用一个或多个<ruby>缓存扩展标记<rt>cache-extension tokens</rt></ruby>来扩展 <code>Cache-Control</code> 头字段，每个缓存扩展都有一个可选的值。缓存 <b>必须</b> 忽略不能识别的缓存指令。
+</p>
 
 <blockquote>
 <p>
@@ -2613,17 +2698,29 @@ Informational extensions (those that do not require a change in cache behavior) 
 </p>
 </blockquote>
 
+<p>
+<ruby>信息性的扩展<rt>Informational extensions</rt></ruby>（指的是并不要求改变缓存行为的那种扩展）能够被添加而不会改变其他指令的语义。
+</p>
+
 <blockquote>
 <p>
 Behavioral extensions are designed to work by acting as modifiers to the existing base of cache directives. Both the new directive and the old directive are supplied, such that applications that do not understand the new directive will default to the behavior specified by the old directive, and those that understand the new directive will recognize it as modifying the requirements associated with the old directive. In this way, extensions to the existing cache-control directives can be made without breaking deployed caches.
 </p>
 </blockquote>
 
+<p>
+<ruby>行为扩展<rt>Behavioral extensions</rt></ruby>是为在现有的缓存指令的基础上充当修饰符而设计的。既支持新指令，也支持旧指令，以便于不理解新指令的应用程序可以进行由旧指令所指定的默认行为，而理解新指令的应用程序则会将它认为是对旧指令的相关要求进行修改。这样就能够制定对现有的缓存控制指令的扩展而不会破坏已部署好的缓存。
+</p>
+
 <blockquote>
 <p>
-For example, consider a hypothetical new response directive called "community" that acts as a modifier to the private directive: in addition to private caches, any cache that is shared only by members of the named community is allowed to cache the response. An origin server wishing to allow the UCI community to use an otherwise private response in their shared cache(s) could do so by including
+For example, consider a hypothetical new response directive called "community" that acts as a modifier to the <code>private</code> directive: in addition to private caches, any cache that is shared only by members of the named community is allowed to cache the response. An origin server wishing to allow the UCI community to use an otherwise private response in their shared cache(s) could do so by including
 </p>
 </blockquote>
+
+<p>
+例如，假设有一个新的响应指令称为 "community"，充当 <code>private</code> 指令的修饰符：除了私有缓存以外，任何仅共享于 <code>community</code> 指令所指定的名称的团体的缓存也允许缓存这个响应。源服务器希望让 UCI 团体可以使用在它们的共享缓存中的另外一个私有响应来满足请求，可以在响应中包含以下内容：
+</p>
 
 <pre class="example">
 Cache-Control: private, community="UCI"
@@ -2631,9 +2728,13 @@ Cache-Control: private, community="UCI"
 
 <blockquote>
 <p>
-A cache that recognizes such a community cache-extension could broaden its behavior in accordance with that extension. A cache that does not recognize the community cache-extension would ignore it and adhere to the private directive.
+A cache that recognizes such a <code>community</code> cache-extension could broaden its behavior in accordance with that extension. A cache that does not recognize the <code>community</code> cache-extension would ignore it and adhere to the <code>private</code> directive.
 </p>
 </blockquote>
+
+<p>
+能够识别这个 <code>community</code> 缓存扩展的一类缓存，可以依照这个扩展的定义来拓宽它的行为。而不能识别这个 <code>community</code> 缓存扩展的一类缓存，可以忽略它而去遵守 <code>private</code> 指令。
+</p>
 </div>
 </div>
 </div>
@@ -2643,21 +2744,33 @@ A cache that recognizes such a community cache-extension could broaden its behav
 <div class="outline-text-3" id="text-org304d2d1">
 <blockquote>
 <p>
-The "Expires" header field gives the date/time after which the response is considered stale. See Section 4.2 for further discussion of the freshness model.
+The "<code>Expires</code>" header field gives the date/time after which the response is considered stale. See <a href="#org85ed084">Section 4.2</a> for further discussion of the freshness model.
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The presence of an Expires field does not imply that the original resource will change or cease to exist at, before, or after that time.
+<code>Expires</code> 头字段所给出的日期/时间，意思是在这个时间点以后，响应会被视为是陈旧的。对于新鲜度模型的进一步讨论，见<a href="#org85ed084">章节 4.2</a>。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The Expires value is an HTTP-date timestamp, as defined in Section 7.1.1.1 of [RFC7231].
+The presence of an <code>Expires</code> field does not imply that the original resource will change or cease to exist at, before, or after that time.
 </p>
 </blockquote>
+
+<p>
+<code>Expires</code> 头字段的出现并不意味着在那个时间点、之前、或者之后，原始资源将会出现变化或者不复存在。
+</p>
+
+<blockquote>
+<p>
+The <code>Expires</code> value is an <code>HTTP-date</code> timestamp, as defined in <a href="RFC7231.html#ID-2091e4af-684f-4511-aaa1-8094dc7dcb21">Section 7.1.1.1</a> of [RFC7231].
+</p>
+</blockquote>
+
+<p>
+<code>Expires</code> 的值是一个 <code>HTTP-date</code> 时间戳，其定义见<a href="RFC7231.html#ID-2091e4af-684f-4511-aaa1-8094dc7dcb21">【RFC7231】章节 7.1.1.1</a>。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Expires = HTTP-date
@@ -2670,33 +2783,53 @@ For example
 </p>
 </blockquote>
 
+<p>
+例如：
+</p>
+
 <pre class="example">
 Expires: Thu, 01 Dec 1994 16:00:00 GMT
 </pre>
 
 <blockquote>
 <p>
-A cache recipient MUST interpret invalid date formats, especially the value "0", as representing a time in the past (i.e., "already expired").
+A cache recipient <b>MUST</b> interpret invalid date formats, especially the value "0", as representing a time in the past (i.e., "already expired").
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-If a response includes a Cache-Control field with the max-age directive (Section 5.2.2.8), a recipient MUST ignore the Expires field. Likewise, if a response includes the s-maxage directive (Section 5.2.2.9), a shared cache recipient MUST ignore the Expires field. In both these cases, the value in Expires is only intended for recipients that have not yet implemented the Cache-Control field.
+缓存接收端 <b>必须</b> 解释无效的日期格式，特别是值为 "0"，代替过去的时间（也就是说，已经过期）。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-An origin server without a clock MUST NOT generate an Expires field unless its value represents a fixed time in the past (always expired) or its value has been associated with the resource by a system or user with a reliable clock.
+If a response includes a <code>Cache-Control</code> field with the <code>max-age</code> directive (<a href="#orgc309465">Section 5.2.2.8</a>), a recipient <b>MUST</b> ignore the <code>Expires</code> field. Likewise, if a response includes the <code>s-maxage</code> directive (<a href="#orgf601e80">Section 5.2.2.9</a>), a shared cache recipient <b>MUST</b> ignore the <code>Expires</code> field. In both these cases, the value in <code>Expires</code> is only intended for recipients that have not yet implemented the <code>Cache-Control</code> field.
 </p>
 </blockquote>
 
+<p>
+如果响应包含有一个 <code>Cache-Control</code> 字段，这个字段带有一个 <code>max-age</code> 指令（<a href="#orgc309465">章节 5.2.2.8</a>），那么，接收端 <b>必须</b> 忽略 <code>Expires</code> 字段。同样，如果响应包含有一个 <code>s-maxage</code> 指令（<a href="#orgf601e80">章节 5.2.2.9</a>），那么，共享缓存接收端 <b>必须</b> 忽略 <code>Expires</code> 字段。在上述两种情况中，<code>Expires</code> 里的值是仅为还未实现 <code>Cache-Control</code> 字段的那些接收端而设的。
+</p>
+
 <blockquote>
 <p>
-Historically, HTTP required the Expires field-value to be no more than a year in the future. While longer freshness lifetimes are no longer prohibited, extremely large values have been demonstrated to cause problems (e.g., clock overflows due to use of 32-bit integers for time values), and many caches will evict a response far sooner than that.
+An origin server without a clock <b>MUST NOT</b> generate an <code>Expires</code> field unless its value represents a fixed time in the past (always expired) or its value has been associated with the resource by a system or user with a reliable clock.
 </p>
 </blockquote>
+
+<p>
+不具有时钟功能的源服务器 <b>禁止</b> 生成一个 <code>Expires</code> 字段，除非它的值代表着一个过去的固定时间（总是过期的）或者它的值是由某些具有可靠时钟功能的其他系统或用户关联到资源上的。
+</p>
+
+<blockquote>
+<p>
+Historically, HTTP required the <code>Expires</code> field-value to be no more than a year in the future. While longer freshness lifetimes are no longer prohibited, extremely large values have been demonstrated to cause problems (e.g., clock overflows due to use of 32-bit integers for time values), and many caches will evict a response far sooner than that.
+</p>
+</blockquote>
+
+<p>
+历史上，HTTP 要求 <code>Expires</code> 的字段值不能超过未来一年的时间。虽然现在已经不再禁止更长的保鲜期，但极端大的值已被证明会引发问题（比如，由于使用了 32 位整数作为时间值而导致的时钟溢出），而且许多缓存会将远早于响应的过期时间的那些响应逐出缓存。
+</p>
 </div>
 </div>
 
@@ -2705,13 +2838,28 @@ Historically, HTTP required the Expires field-value to be no more than a year in
 <div class="outline-text-3" id="text-orga139761">
 <blockquote>
 <p>
-The "Pragma" header field allows backwards compatibility with HTTP/1.0 caches, so that clients can specify a "no-cache" request that they will understand (as Cache-Control was not defined until HTTP/1.1). When the Cache-Control header field is also present and understood in a request, Pragma is ignored.
+The "<code>Pragma</code>" header field allows backwards compatibility with HTTP/1.0 caches, so that clients can specify a "no-cache" request that they will understand (as <code>Cache-Control</code> was not defined until HTTP/1.1). When the <code>Cache-Control</code> header field is also present and understood in a request, <code>Pragma</code> is ignored.
 </p>
 </blockquote>
 
+<p>
+<code>Pragma</code> 头字段使得可以与 HTTP/1.0 的缓存保持向后兼容，以便客户端能够指定一个它们能够理解的 "no-cache" 请求（因为直到 HTTP/1.1 <code>Cache-Control</code> 才被定义出来）。当请求中还出现了 <code>Cache-Control</code> 头字段且被接收端所理解，那么，<code>Pragma</code> 会被忽略。
+</p>
+
+
 <blockquote>
 <p>
-In HTTP/1.0, Pragma was defined as an extensible field for implementation-specified directives for recipients. This specification deprecates such extensions to improve interoperability.
+In HTTP/1.0, <code>Pragma</code> was defined as an extensible field for implementation-specified directives for recipients. This specification deprecates such extensions to improve interoperability.
+</p>
+</blockquote>
+
+<p>
+在 HTTP/1.0 中，<code>Pragma</code> 被定义为是一个可扩展的字段，它的含义依据接收端实现所指定。为提升互操作性，本规范废弃了这种扩展。
+</p>
+
+<blockquote>
+<p>
+译注：也就是说，<code>Pragma</code> 是一个没有确定语义的字段，在不同的实现中可能有所不同。
 </p>
 </blockquote>
 
@@ -2724,15 +2872,23 @@ extension-pragma = token [ "=" ( token / quoted-string ) ]
 
 <blockquote>
 <p>
-When the Cache-Control header field is not present in a request, caches MUST consider the no-cache request pragma-directive as having the same effect as if "Cache-Control: no-cache" were present (see Section 5.2.1).
+When the <code>Cache-Control</code> header field is not present in a request, caches <b>MUST</b> consider the <code>no-cache</code> request pragma-directive as having the same effect as if "Cache-Control: no-cache" were present (see <a href="#org8707cd3">Section 5.2.1</a>).
 </p>
 </blockquote>
 
+<p>
+当请求中没有出现 <code>Cache-Control</code> 头字段，那么，缓存 <b>必须</b> 将 <code>Pragma</code> 的 <code>no-cache</code> 指令的效果视同为与 "Cache-Control: no-cache" 一致（见<a href="#org8707cd3">章节 5.2.1</a>）。
+</p>
+
 <blockquote>
 <p>
-When sending a no-cache request, a client ought to include both the pragma and cache-control directives, unless Cache-Control: no-cache is purposefully omitted to target other Cache-Control response directives at HTTP/1.1 caches. For example:
+When sending a <code>no-cache</code> request, a client ought to include both the pragma and cache-control directives, unless <code>Cache-Control: no-cache</code> is purposefully omitted to target other <code>Cache-Control</code> response directives at HTTP/1.1 caches. For example:
 </p>
 </blockquote>
+
+<p>
+当发送一个 <code>no-cache</code> 请求，客户端应该既包含 <code>Pragma</code> 也包含 <code>Cache-Control</code> 指令，除非有意忽略 <code>Cache-Control: no-cache</code> 而对 HTTP/1.1 缓存使用其他 <code>Cache-Control</code> 响应指令。例如：
+</p>
 
 <pre class="example">
 GET / HTTP/1.1
@@ -2743,15 +2899,23 @@ Pragma: no-cache
 
 <blockquote>
 <p>
-will constrain HTTP/1.1 caches to serve a response no older than 30 seconds, while precluding implementations that do not understand Cache-Control from serving a cached response.
+will constrain HTTP/1.1 caches to serve a response no older than 30 seconds, while precluding implementations that do not understand <code>Cache-Control</code> from serving a cached response.
 </p>
 </blockquote>
+
+<p>
+上面例子将会迫使 HTTP/1.1 缓存去供应一个年龄不超过 30 秒的响应，而阻止并不理解 <code>Cache-Control</code> 的实现去供应一个已缓存的响应。
+</p>
 
 <blockquote>
 <p>
 <b>Note:</b> Because the meaning of "Pragma: no-cache" in responses is not specified, it does not provide a reliable replacement for "Cache-Control: no-cache" in them.
 </p>
 </blockquote>
+
+<p>
+<b>注意：</b> 因为响应中 "Pragma: no-cache" 的含义并不是明确的，因此，它并不能可靠地替代 "Cache-Control: no-cache"。
+</p>
 </div>
 </div>
 
