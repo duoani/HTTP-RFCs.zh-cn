@@ -1394,28 +1394,38 @@ This directive uses the =token= form of the argument syntax: e.g., 's-maxage=10'
 :END:
 
 #+BEGIN_QUOTE
-The =Cache-Control= header field can be extended through the use of one or more =cache-extension= tokens, each with an optional value. A cache *MUST* ignore unrecognized cache directives.
+The =Cache-Control= header field can be extended through the use of one or more cache-extension tokens, each with an optional value. A cache *MUST* ignore unrecognized cache directives.
 #+END_QUOTE
+
+可以通过使用一个或多个[[ruby:cache-extension%20tokens][缓存扩展标记]]来扩展 =Cache-Control= 头字段，每个缓存扩展都有一个可选的值。缓存 *必须* 忽略不能识别的缓存指令。
 
 #+BEGIN_QUOTE
 Informational extensions (those that do not require a change in cache behavior) can be added without changing the semantics of other directives.
 #+END_QUOTE
 
+[[ruby:Informational%20extensions][信息性的扩展]]（指的是并不要求改变缓存行为的那种扩展）能够被添加而不会改变其他指令的语义。
+
 #+BEGIN_QUOTE
 Behavioral extensions are designed to work by acting as modifiers to the existing base of cache directives. Both the new directive and the old directive are supplied, such that applications that do not understand the new directive will default to the behavior specified by the old directive, and those that understand the new directive will recognize it as modifying the requirements associated with the old directive. In this way, extensions to the existing cache-control directives can be made without breaking deployed caches.
 #+END_QUOTE
 
+[[ruby:Behavioral%20extensions][行为扩展]]是为在现有的缓存指令的基础上充当修饰符而设计的。既支持新指令，也支持旧指令，以便于不理解新指令的应用程序可以进行由旧指令所指定的默认行为，而理解新指令的应用程序则会将它认为是对旧指令的相关要求进行修改。这样就能够制定对现有的缓存控制指令的扩展而不会破坏已部署好的缓存。
+
 #+BEGIN_QUOTE
-For example, consider a hypothetical new response directive called "community" that acts as a modifier to the private directive: in addition to private caches, any cache that is shared only by members of the named community is allowed to cache the response. An origin server wishing to allow the UCI community to use an otherwise private response in their shared cache(s) could do so by including
+For example, consider a hypothetical new response directive called "community" that acts as a modifier to the =private= directive: in addition to private caches, any cache that is shared only by members of the named community is allowed to cache the response. An origin server wishing to allow the UCI community to use an otherwise private response in their shared cache(s) could do so by including
 #+END_QUOTE
+
+例如，假设有一个新的响应指令称为 "community"，充当 =private= 指令的修饰符：除了私有缓存以外，任何仅共享于 =community= 指令所指定的名称的团体的缓存也允许缓存这个响应。源服务器希望让 UCI 团体可以使用在它们的共享缓存中的另外一个私有响应来满足请求，可以在响应中包含以下内容：
 
 #+BEGIN_EXAMPLE
   Cache-Control: private, community="UCI"
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-A cache that recognizes such a community cache-extension could broaden its behavior in accordance with that extension. A cache that does not recognize the community =cache-extension= would ignore it and adhere to the =private= directive.
+A cache that recognizes such a =community= cache-extension could broaden its behavior in accordance with that extension. A cache that does not recognize the =community= cache-extension would ignore it and adhere to the =private= directive.
 #+END_QUOTE
+
+能够识别这个 =community= 缓存扩展的一类缓存，可以依照这个扩展的定义来拓宽它的行为。而不能识别这个 =community= 缓存扩展的一类缓存，可以忽略它而去遵守 =private= 指令。
 
 ** 5.3. Expires
 :PROPERTIES:
@@ -1423,16 +1433,22 @@ A cache that recognizes such a community cache-extension could broaden its behav
 :END:
 
 #+BEGIN_QUOTE
-The "Expires" header field gives the date/time after which the response is considered stale. See Section 4.2 for further discussion of the freshness model.
+The "=Expires=" header field gives the date/time after which the response is considered stale. See [[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][Section 4.2]] for further discussion of the freshness model.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The presence of an Expires field does not imply that the original resource will change or cease to exist at, before, or after that time.
-#+END_QUOTE
+=Expires= 头字段所给出的日期/时间，意思是在这个时间点以后，响应会被视为是陈旧的。对于新鲜度模型的进一步讨论，见[[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][章节 4.2]]。
 
 #+BEGIN_QUOTE
-The Expires value is an HTTP-date timestamp, as defined in Section 7.1.1.1 of [RFC7231].
+The presence of an =Expires= field does not imply that the original resource will change or cease to exist at, before, or after that time.
 #+END_QUOTE
+
+=Expires= 头字段的出现并不意味着在那个时间点、之前、或者之后，原始资源将会出现变化或者不复存在。
+
+#+BEGIN_QUOTE
+The =Expires= value is an =HTTP-date= timestamp, as defined in [[id:2091e4af-684f-4511-aaa1-8094dc7dcb21][Section 7.1.1.1]] of [RFC7231].
+#+END_QUOTE
+
+=Expires= 的值是一个 =HTTP-date= 时间戳，其定义见[[id:2091e4af-684f-4511-aaa1-8094dc7dcb21][【RFC7231】章节 7.1.1.1]]。
 
 #+BEGIN_SRC text
   Expires = HTTP-date
@@ -1442,25 +1458,35 @@ The Expires value is an HTTP-date timestamp, as defined in Section 7.1.1.1 of [R
 For example
 #+END_QUOTE
 
+例如：
+
 #+BEGIN_EXAMPLE
   Expires: Thu, 01 Dec 1994 16:00:00 GMT
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-A cache recipient MUST interpret invalid date formats, especially the value "0", as representing a time in the past (i.e., "already expired").
+A cache recipient *MUST* interpret invalid date formats, especially the value "0", as representing a time in the past (i.e., "already expired").
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-If a response includes a Cache-Control field with the max-age directive (Section 5.2.2.8), a recipient MUST ignore the Expires field. Likewise, if a response includes the s-maxage directive (Section 5.2.2.9), a shared cache recipient MUST ignore the Expires field. In both these cases, the value in Expires is only intended for recipients that have not yet implemented the Cache-Control field.
-#+END_QUOTE
+缓存接收端 *必须* 解释无效的日期格式，特别是值为 "0"，代替过去的时间（也就是说，已经过期）。
 
 #+BEGIN_QUOTE
-An origin server without a clock MUST NOT generate an Expires field unless its value represents a fixed time in the past (always expired) or its value has been associated with the resource by a system or user with a reliable clock.
+If a response includes a =Cache-Control= field with the =max-age= directive ([[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][Section 5.2.2.8]]), a recipient *MUST* ignore the =Expires= field. Likewise, if a response includes the =s-maxage= directive ([[id:5296bb87-1709-4827-bef2-69177bbe3544][Section 5.2.2.9]]), a shared cache recipient *MUST* ignore the =Expires= field. In both these cases, the value in =Expires= is only intended for recipients that have not yet implemented the =Cache-Control= field.
 #+END_QUOTE
 
+如果响应包含有一个 =Cache-Control= 字段，这个字段带有一个 =max-age= 指令（[[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][章节 5.2.2.8]]），那么，接收端 *必须* 忽略 =Expires= 字段。同样，如果响应包含有一个 =s-maxage= 指令（[[id:5296bb87-1709-4827-bef2-69177bbe3544][章节 5.2.2.9]]），那么，共享缓存接收端 *必须* 忽略 =Expires= 字段。在上述两种情况中，=Expires= 里的值是仅为还未实现 =Cache-Control= 字段的那些接收端而设的。
+
 #+BEGIN_QUOTE
-Historically, HTTP required the Expires field-value to be no more than a year in the future. While longer freshness lifetimes are no longer prohibited, extremely large values have been demonstrated to cause problems (e.g., clock overflows due to use of 32-bit integers for time values), and many caches will evict a response far sooner than that.
+An origin server without a clock *MUST NOT* generate an =Expires= field unless its value represents a fixed time in the past (always expired) or its value has been associated with the resource by a system or user with a reliable clock.
 #+END_QUOTE
+
+不具有时钟功能的源服务器 *禁止* 生成一个 =Expires= 字段，除非它的值代表着一个过去的固定时间（总是过期的）或者它的值是由某些具有可靠时钟功能的其他系统或用户关联到资源上的。
+
+#+BEGIN_QUOTE
+Historically, HTTP required the =Expires= field-value to be no more than a year in the future. While longer freshness lifetimes are no longer prohibited, extremely large values have been demonstrated to cause problems (e.g., clock overflows due to use of 32-bit integers for time values), and many caches will evict a response far sooner than that.
+#+END_QUOTE
+
+历史上，HTTP 要求 =Expires= 的字段值不能超过未来一年的时间。虽然现在已经不再禁止更长的保鲜期，但极端大的值已被证明会引发问题（比如，由于使用了 32 位整数作为时间值而导致的时钟溢出），而且许多缓存会将远早于响应的过期时间的那些响应逐出缓存。
 
 ** 5.4. Pragma
 :PROPERTIES:
@@ -1468,11 +1494,20 @@ Historically, HTTP required the Expires field-value to be no more than a year in
 :END:
 
 #+BEGIN_QUOTE
-The "Pragma" header field allows backwards compatibility with HTTP/1.0 caches, so that clients can specify a "no-cache" request that they will understand (as Cache-Control was not defined until HTTP/1.1). When the Cache-Control header field is also present and understood in a request, Pragma is ignored.
+The "=Pragma=" header field allows backwards compatibility with HTTP/1.0 caches, so that clients can specify a "no-cache" request that they will understand (as =Cache-Control= was not defined until HTTP/1.1). When the =Cache-Control= header field is also present and understood in a request, =Pragma= is ignored.
 #+END_QUOTE
 
+=Pragma= 头字段使得可以与 HTTP/1.0 的缓存保持向后兼容，以便客户端能够指定一个它们能够理解的 "no-cache" 请求（因为直到 HTTP/1.1 =Cache-Control= 才被定义出来）。当请求中还出现了 =Cache-Control= 头字段且被接收端所理解，那么，=Pragma= 会被忽略。
+
+
 #+BEGIN_QUOTE
-In HTTP/1.0, Pragma was defined as an extensible field for implementation-specified directives for recipients. This specification deprecates such extensions to improve interoperability.
+In HTTP/1.0, =Pragma= was defined as an extensible field for implementation-specified directives for recipients. This specification deprecates such extensions to improve interoperability.
+#+END_QUOTE
+
+在 HTTP/1.0 中，=Pragma= 被定义为是一个可扩展的字段，它的含义依据接收端实现所指定。为提升互操作性，本规范废弃了这种扩展。
+
+#+BEGIN_QUOTE
+译注：也就是说，=Pragma= 是一个没有确定语义的字段，在不同的实现中可能有所不同。
 #+END_QUOTE
 
 #+BEGIN_SRC text
@@ -1482,12 +1517,16 @@ In HTTP/1.0, Pragma was defined as an extensible field for implementation-specif
 #+END_SRC
 
 #+BEGIN_QUOTE
-When the Cache-Control header field is not present in a request, caches MUST consider the no-cache request pragma-directive as having the same effect as if "Cache-Control: no-cache" were present (see Section 5.2.1).
+When the =Cache-Control= header field is not present in a request, caches *MUST* consider the =no-cache= request pragma-directive as having the same effect as if "Cache-Control: no-cache" were present (see [[id:a586b298-d3ba-44df-ab8f-69ad432b93a2][Section 5.2.1]]).
 #+END_QUOTE
 
+当请求中没有出现 =Cache-Control= 头字段，那么，缓存 *必须* 将 =Pragma= 的 =no-cache= 指令的效果视同为与 "Cache-Control: no-cache" 一致（见[[id:a586b298-d3ba-44df-ab8f-69ad432b93a2][章节 5.2.1]]）。
+
 #+BEGIN_QUOTE
-When sending a no-cache request, a client ought to include both the pragma and cache-control directives, unless Cache-Control: no-cache is purposefully omitted to target other Cache-Control response directives at HTTP/1.1 caches. For example:
+When sending a =no-cache= request, a client ought to include both the pragma and cache-control directives, unless =Cache-Control: no-cache= is purposefully omitted to target other =Cache-Control= response directives at HTTP/1.1 caches. For example:
 #+END_QUOTE
+
+当发送一个 =no-cache= 请求，客户端应该既包含 =Pragma= 也包含 =Cache-Control= 指令，除非有意忽略 =Cache-Control: no-cache= 而对 HTTP/1.1 缓存使用其他 =Cache-Control= 响应指令。例如：
 
 #+BEGIN_EXAMPLE
   GET / HTTP/1.1
@@ -1497,12 +1536,16 @@ When sending a no-cache request, a client ought to include both the pragma and c
 #+END_EXAMPLE
 
 #+BEGIN_QUOTE
-will constrain HTTP/1.1 caches to serve a response no older than 30 seconds, while precluding implementations that do not understand Cache-Control from serving a cached response.
+will constrain HTTP/1.1 caches to serve a response no older than 30 seconds, while precluding implementations that do not understand =Cache-Control= from serving a cached response.
 #+END_QUOTE
+
+上面例子将会迫使 HTTP/1.1 缓存去供应一个年龄不超过 30 秒的响应，而阻止并不理解 =Cache-Control= 的实现去供应一个已缓存的响应。
 
 #+BEGIN_QUOTE
 *Note:* Because the meaning of "Pragma: no-cache" in responses is not specified, it does not provide a reliable replacement for "Cache-Control: no-cache" in them.
 #+END_QUOTE
+
+*注意：* 因为响应中 "Pragma: no-cache" 的含义并不是明确的，因此，它并不能可靠地替代 "Cache-Control: no-cache"。
 
 ** 5.5. Warning
 :PROPERTIES:
