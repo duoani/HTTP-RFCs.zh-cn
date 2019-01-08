@@ -1715,13 +1715,19 @@ The warning text can include arbitrary information to be presented to a human us
 User agents often have history mechanisms, such as "Back" buttons and history lists, that can be used to redisplay a representation retrieved earlier in a session.
 #+END_QUOTE
 
+用户代理通常具有历史机制，比如“返回”按钮和历史列表，能够用来重新展示在会话中之前所获取到的展示形式。
+
 #+BEGIN_QUOTE
 The freshness model (Section 4.2) does not necessarily apply to history mechanisms. That is, a history mechanism can display a previous representation even if it has expired.
 #+END_QUOTE
 
+新鲜度模型（章节 4.2）并不一定要应用到这种历史机制上。也就是说，历史机制能够展示一个之前的表示形式，即使它已经过期了。
+
 #+BEGIN_QUOTE
 This does not prohibit the history mechanism from telling the user that a view might be stale or from honoring cache directives (e.g., Cache-Control: no-store).
 #+END_QUOTE
+
+这并没有阻止历史机制去告诉用户某个视图可能是陈旧的，也没有阻止它去履行缓存指令（比如，Cache-Control: no-store）。
 
 * 7. IANA 注意事项 / IANA Considerations
 ** 7.1. 缓存指令登记表 / Cache Directive Registry
