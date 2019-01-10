@@ -95,7 +95,7 @@ Although the range request mechanism is designed to allow for extensible range t
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [[[https://tools.ietf.org/html/rfc2119][RFC2119]]].
 #+END_QUOTE
 
-本文档中的关键词 *[[ruby:MUST][必须]]*、*[[ruby:MUST%20NOT][禁止]]*、*[[ruby:REQUIRED][要求]]*、*[[ruby:SHALL][必须]]*、*[[ruby:SHALL%20NOT][禁止]]*、*[[ruby:SHOULD][应该]]*、*[[ruby:SHOULD%20NOT][不应当]]*、*[[ruby:RECOMMENDED][推荐]]*、*[[ruby:MAY][可以]]* 和 *[[ruby:OPTIONAL][可选]]* 的意义与【[[https://tools.ietf.org/html/rfc2119][RFC2119]]】一致。
+本文档中的关键词 *[[ruby:MUST][必须]]*、*[[ruby:MUST%20NOT][禁止]]*、*[[ruby:REQUIRED][要求]]*、*[[ruby:SHALL][必须]]*、*[[ruby:SHALL%20NOT][禁止]]*、*[[ruby:SHOULD][应当]]*、*[[ruby:SHOULD%20NOT][不应当]]*、*[[ruby:RECOMMENDED][推荐]]*、*[[ruby:MAY][可以]]* 和 *[[ruby:OPTIONAL][可选]]* 的意义与【[[https://tools.ietf.org/html/rfc2119][RFC2119]]】一致。
 
 #+BEGIN_QUOTE
 Conformance criteria and considerations regarding error handling are defined in [[id:A0441F72-9799-4667-9477-1E05885946A1][Section 2.5]] of [RFC7230].

@@ -32,48 +32,102 @@
   ISSN: 2070-1721
 #+END_SRC
 
-* Abstract
+* 摘要 / Abstract
 
+#+BEGIN_QUOTE
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypermedia information systems. This document defines the HTTP Authentication framework.
+#+END_QUOTE
 
-* Status of This Memo
+超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP 的[[ruby:Authentication%20framework][认证框架]]。
 
+* 备忘状态 / Status of This Memo
+
+#+BEGIN_QUOTE
 This is an Internet Standards Track document.
+#+END_QUOTE
 
+这是一个 Internet Standards Track 文档。
+
+#+BEGIN_QUOTE
 This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in Section 2 of RFC 5741.
+#+END_QUOTE
 
+本文档是[[ruby:Internet%20Engineering%20Task%20Force][互联网工程任务组]]（IETF）的产品。它代表了 IETF 社区的共识。它已经接受公众审核并且已经被[[ruby:Internet%20Engineering%20Steering%20Group][互联网工程指导组]]（IESG）批准发布。有关[[ruby:Internet%20Standards][互联网标准]]的更多信息，请参阅 RFC 5741 [[https://tools.ietf.org/html/rfc5741][章节 2]]。
+
+#+BEGIN_QUOTE
 Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at http://www.rfc-editor.org/info/rfc7235.
+#+END_QUOTE
+
+关于本文档的当前状态，任何勘误以及如何提供反馈的信息可以从 http://www.rfc-editor.org/info/rfc7235 获得。
 
 * Copyright Notice
 
+#+BEGIN_QUOTE
 Copyright © 2014 IETF Trust and the persons identified as the document authors. All rights reserved.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document. Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 This document may contain material from IETF Documents or IETF Contributions published or made publicly available before November 10, 2008. The person(s) controlling the copyright in some of this material may not have granted the IETF Trust the right to allow modifications of such material outside the IETF Standards Process. Without obtaining an adequate license from the person(s) controlling the copyright in such materials, this document may not be modified outside the IETF Standards Process, and derivative works of it may not be created outside the IETF Standards Process, except to format it for publication as an RFC or to translate it into languages other than English.
+#+END_QUOTE
 
-* 1. Introduction
+* 1. 引言 / Introduction
 
-HTTP provides a general framework for access control and authentication, via an extensible set of challenge-response authentication schemes, which can be used by a server to challenge a client request and by a client to provide authentication information. This document defines HTTP/1.1 authentication in terms of the architecture defined in "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing" [RFC7230], including the general framework previously described in "HTTP Authentication: Basic and Digest Access Authentication" [RFC2617] and the related fields and status codes previously defined in "Hypertext Transfer Protocol -- HTTP/1.1" [RFC2616].
+#+BEGIN_QUOTE
+HTTP provides a general framework for access control and authentication, via an extensible set of challenge-response authentication schemes, which can be used by a server to challenge a client request and by a client to provide authentication information. This document defines HTTP/1.1 authentication in terms of the architecture defined in "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing" [[[file:RFC7230.org][RFC7230]]], including the general framework previously described in "HTTP Authentication: Basic and Digest Access Authentication" [[[https://tools.ietf.org/html/rfc2617][RFC2617]]] and the related fields and status codes previously defined in "Hypertext Transfer Protocol -- HTTP/1.1" [[[https://tools.ietf.org/html/rfc2616][RFC2616]]].
+#+END_QUOTE
 
-The IANA Authentication Scheme Registry (Section 5.1) lists registered authentication schemes and their corresponding specifications, including the "basic" and "digest" authentication schemes previously defined by RFC 2617.
+HTTP 提供了一个通用的访问控制和认证框架，经由一个可扩展的[[ruby:challenge-response][质询-作答]]认证方案的集合，服务器可以使用这种认证方案对客户端的请求进行质询，而客户端可以使用这种谁方案来向服务器提供认证信息。本文档依据《超文本传输协议（HTTP/1.1）：消息与路由》【[[file:RFC7230.org][RFC7230]]】所定义的架构来定义了 HTTP/1.1 的认证，包括：之前在《HTTP 认证：基础与数字访问认证》【[[https://tools.ietf.org/html/rfc2617][RFC2617]]】有所描述的通用框架，以及之前在《超文本传输协议——HTTP/1.1》【[[https://tools.ietf.org/html/rfc2616][RFC2616]]】所定义的相关的字段和状态码。
 
-** 1.1. Conformance and Error Handling
+#+BEGIN_QUOTE
+The IANA Authentication Scheme Registry ([[id:af1963ff-7886-492d-93cd-3d76aaf2d475][Section 5.1]]) lists registered authentication schemes and their corresponding specifications, including the "basic" and "digest" authentication schemes previously defined by RFC 2617.
+#+END_QUOTE
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
+IANA 认证方案登记表（[[id:af1963ff-7886-492d-93cd-3d76aaf2d475][章节 5.1]]）列出了已登记的认证方案及其对应的规范，包括之前由 RFC 2617 所定义的 "basic" 和 "digest" 认证方案。
 
-Conformance criteria and considerations regarding error handling are defined in Section 2.5 of [RFC7230].
+** 1.1. 一致性和错误处理 / Conformance and Error Handling
 
-** 1.2. Syntax Notation
+#+BEGIN_QUOTE
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [[[https://tools.ietf.org/html/rfc2119][RFC2119]]].
+#+END_QUOTE
 
+本文档中的关键词 *[[ruby:MUST][必须]]*、*[[ruby:MUST%20NOT][禁止]]*、*[[ruby:REQUIRED][要求]]*、*[[ruby:SHALL][必须]]*、*[[ruby:SHALL%20NOT][禁止]]*、*[[ruby:SHOULD][应当]]*、*[[ruby:SHOULD%20NOT][不应当]]*、*[[ruby:RECOMMENDED][推荐]]*、*[[ruby:MAY][可以]]* 和 *[[ruby:OPTIONAL][可选]]* 的意义与【[[https://tools.ietf.org/html/rfc2119][RFC2119]]】一致。
+
+#+BEGIN_QUOTE
+Conformance criteria and considerations regarding error handling are defined in [[id:A0441F72-9799-4667-9477-1E05885946A1][Section 2.5]] of [RFC7230].
+#+END_QUOTE
+
+关于错误处理的一致性标准以及注意事项已在[[id:A0441F72-9799-4667-9477-1E05885946A1][【RFC7230】章节 2.5]] 中定义了。
+
+** 1.2. 句法标记 / Syntax Notation
+
+#+BEGIN_QUOTE
 This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7 of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix B describes rules imported from other documents. Appendix C shows the collected grammar with all list operators expanded to standard ABNF notation.
+#+END_QUOTE
 
-* 2. Access Authentication Framework
-** 2.1. Challenge and Response
+本规范使用了[[ruby:Augmented%20Backus-Naur%20Form][扩展巴科斯范式]]（ABNF）标记法【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][章节 7]]），允许使用一个 =#= 操作符（类似于 =*= 操作符，指代“重复”）来定义一种以逗号分隔的列表。[[id:dd632d27-1596-43fe-90f8-dba848353e12][附录 B]] 描述了从其他文档中引进的规则。[[id:33ccb99a-6b09-4750-9e71-4cc1e43b49c5][附录 C]] 展示了所有已收集的包含列表扩展规则以及标准 ABNF 标记的语法。
 
+* 2. 访问认证框架 / Access Authentication Framework
+** 2.1. 质询和作答 / Challenge and Response
+
+#+BEGIN_QUOTE
 HTTP provides a simple challenge-response authentication framework that can be used by a server to challenge a client request and by a client to provide authentication information. It uses a case-insensitive token as a means to identify the authentication scheme, followed by additional information necessary for achieving authentication via that scheme. The latter can be either a comma-separated list of parameters or a single sequence of characters capable of holding base64-encoded information.
+#+END_QUOTE
 
-Authentication parameters are name=value pairs, where the name token is matched case-insensitively, and each parameter name MUST only occur once per challenge.
+HTTP 提供了一种简单的[[ruby:challenge-response][质询-作答]]认证框架，服务器可以使用它来对客户端请求进行质询，而客户端可以使用它来提供认证信息。它使用一个不区分大小写的[[ruby:token][标记]]来作为一种标识[[ruby:authentication%20scheme][认证方案]]的方法，这个标记之后紧跟的是通过这种方案来获取认证所必要的额外信息。这些额外信息要么是一个以逗号分隔的参数列表，要么是一个可以持有 base64 编码信息的字符序列。
+
+#+BEGIN_QUOTE
+译注：质询-作答，就好比一个答题游戏，主持提问参赛者一个问题，参赛者答对了就可以进入下一个环节，如果答错了就挑战失败了。又好比一个开门暗号，暗号由房间内的人设置，门外的人需要回答这个暗号。也有人将其译为“挑战-响应”。
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+Authentication parameters are =name=value= pairs, where the =name= token is matched case-insensitively, and each parameter name *MUST* only occur once per challenge.
+#+END_QUOTE
+
+认证参数是 =name=value= 键值对，其中 =name= 标记是按不区分大小写的方式来匹配的，并且在每一次质询当中，每个参数名称 *必须* 仅出现一次。
 
 #+BEGIN_SRC text
   auth-scheme    = token
@@ -84,47 +138,114 @@ Authentication parameters are name=value pairs, where the name token is matched 
                        "-" / "." / "_" / "~" / "+" / "/" ) *"=" 
 #+END_SRC
 
-The token68 syntax allows the 66 unreserved URI characters ([RFC3986]), plus a few others, so that it can hold a base64, base64url (URL and filename safe alphabet), base32, or base16 (hex) encoding, with or without padding, but excluding whitespace ([RFC4648]).
+#+BEGIN_QUOTE
+The =token68= syntax allows the 66 unreserved URI characters ([[[https://tools.ietf.org/html/rfc3986#section-2.3][RFC3986]]]), plus a few others, so that it can hold a base64, base64url (URL and filename safe alphabet), base32, or base16 (hex) encoding, with or without padding, but excluding whitespace ([[[https://tools.ietf.org/html/rfc4648][RFC4648]]]).
+#+END_QUOTE
 
-A 401 (Unauthorized) response message is used by an origin server to challenge the authorization of a user agent, including a WWW-Authenticate header field containing at least one challenge applicable to the requested resource.
+=token68= 句法允许【[[https://tools.ietf.org/html/rfc3986#section-2.3][RFC3986]]】所规定的 66 个未保留的 URI 字符，再加上一些其他的字符，以便它能够持有一个 base64、base64url（URL 和文件名安全的字母）、base32、或者 base16 (hex) 编码，带有或者不带有[[ruby:padding][填充字符]]，但是排除[[ruby:whitespace][空白]]（【[[https://tools.ietf.org/html/rfc4648][RFC4648]]】）。
 
-A 407 (Proxy Authentication Required) response message is used by a proxy to challenge the authorization of a client, including a Proxy-Authenticate header field containing at least one challenge applicable to the proxy for the requested resource.
+#+BEGIN_QUOTE
+译注：【RFC3986】中规定的未保留字符共有以下这些：
+unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+译注：base64 与 base32 编码方案一般使用等号 "=" 作为填充字符。
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+A =401 (Unauthorized)= response message is used by an origin server to challenge the authorization of a user agent, including a =WWW-Authenticate= header field containing at least one challenge applicable to the requested resource.
+#+END_QUOTE
+
+源服务器使用一个 =401 (Unauthorized)= 响应消息来向用户代理质询认证，其中带有一个 =WWW-Authenticate= 头字段包含至少一个适用于所要请求的资源的质询。
+
+#+BEGIN_QUOTE
+A =407 (Proxy Authentication Required)= response message is used by a proxy to challenge the authorization of a client, including a =Proxy-Authenticate= header field containing at least one challenge applicable to the proxy for the requested resource.
+#+END_QUOTE
+
+代理使用一个 =407 (Proxy Authentication Required)= 响应消息来向客户端质询认证，其中带有一个 =Proxy-Authenticate= 头字段包含至少一个适用于代理去请求资源的质询。
 
 #+BEGIN_SRC text
   challenge   = auth-scheme [ 1*SP ( token68 / #auth-param ) ]
 #+END_SRC
 
+#+BEGIN_QUOTE
 *Note:* Many clients fail to parse a challenge that contains an unknown scheme. A workaround for this problem is to list well-supported schemes (such as "basic") first.
+#+END_QUOTE
 
-A user agent that wishes to authenticate itself with an origin server — usually, but not necessarily, after receiving a 401 (Unauthorized) — can do so by including an Authorization header field with the request.
+*注意：* 许多客户端无法解析包含一种未知方案的质询。对于这种问题的一种变通方法是先列出良好支持的方案（比如 "basic"）。
 
-A client that wishes to authenticate itself with a proxy — usually, but not necessarily, after receiving a 407 (Proxy Authentication Required) — can do so by including a Proxy-Authorization header field with the request.
+#+BEGIN_QUOTE
+A user agent that wishes to authenticate itself with an origin server — usually, but not necessarily, after receiving a =401 (Unauthorized)= — can do so by including an =Authorization= header field with the request.
+#+END_QUOTE
 
-Both the Authorization field value and the Proxy-Authorization field value contain the client's credentials for the realm of the resource being requested, based upon a challenge received in a response (possibly at some point in the past). When creating their values, the user agent ought to do so by selecting the challenge with what it considers to be the most secure auth-scheme that it understands, obtaining credentials from the user as appropriate. Transmission of credentials within header field values implies significant security considerations regarding the confidentiality of the underlying connection, as described in Section 6.1.
+在接收到一个 =401 (Unauthorized)= 以后，如果用户代理希望通过源服务器来认证自身（通常但并非必然），可以通过在请求中带有一个 =Authentication= 头字段来达到。
+
+#+BEGIN_QUOTE
+A client that wishes to authenticate itself with a proxy — usually, but not necessarily, after receiving a =407 (Proxy Authentication Required)= — can do so by including a =Proxy-Authorization= header field with the request.
+#+END_QUOTE
+
+在接收到一个 =407 (Proxy Authentication Required)= 以后，如果用户代理希望通过代理来认证自身（通常但并非必然），可以通过在请求中带有一个 =Proxy-Authorization= 头字段来达到。
+
+#+BEGIN_QUOTE
+Both the =Authorization= field value and the =Proxy-Authorization= field value contain the client's credentials for the realm of the resource being requested, based upon a challenge received in a response (possibly at some point in the past). When creating their values, the user agent ought to do so by selecting the challenge with what it considers to be the most secure =auth-scheme= that it understands, obtaining credentials from the user as appropriate. Transmission of credentials within header field values implies significant security considerations regarding the confidentiality of the underlying connection, as described in [[id:2918532f-0cd3-451c-a1d1-ef0c089539b8][Section 6.1]].
+#+END_QUOTE
+
+=Authentication= 的字段值和 =Proxy-Authorization= 字段值都包含有客户端对所要请求的资源领域的凭证，根据（可能在过去的某个时候）接收自一个响应里的一个质询。当创建它们的值的时候，用户代理应该选择其理解的并认为是最安全的那一种 =auth-scheme= 质询，从用户那里适当地获得凭证。在头字段值里传输凭证意味着底层连接机密性方面的重大安全注意事项，正如[[id:2918532f-0cd3-451c-a1d1-ef0c089539b8][章节 6.1]] 所描述的。
 
 #+BEGIN_SRC text
   credentials = auth-scheme [ 1*SP ( token68 / #auth-param ) ]
 #+END_SRC
 
-Upon receipt of a request for a protected resource that omits credentials, contains invalid credentials (e.g., a bad password) or partial credentials (e.g., when the authentication scheme requires more than one round trip), an origin server SHOULD send a 401 (Unauthorized) response that contains a WWW-Authenticate header field with at least one (possibly new) challenge applicable to the requested resource.
+#+BEGIN_QUOTE
+Upon receipt of a request for a protected resource that omits credentials, contains invalid credentials (e.g., a bad password) or partial credentials (e.g., when the authentication scheme requires more than one round trip), an origin server *SHOULD* send a =401 (Unauthorized)= response that contains a =WWW-Authenticate= header field with at least one (possibly new) challenge applicable to the requested resource.
+#+END_QUOTE
 
-Likewise, upon receipt of a request that omits proxy credentials or contains invalid or partial proxy credentials, a proxy that requires authentication SHOULD generate a 407 (Proxy Authentication Required) response that contains a Proxy-Authenticate header field with at least one (possibly new) challenge applicable to the proxy.
+如果源服务器接收到一个访问保护资源的请求，一旦这个请求缺少凭证，或者包含有一个无效的凭证（比如，一个错误的密码），或者不完整的凭证（比如，当认证方案要求超过一个以上回合的时候），那么，源服务器 *应当* 发送一个 =401 (Unauthorized)= 响应，其内包含有一个 =WWW-Authenticate= 头字段，该字段至少带有一个（可能是新的）适用于所请求的资源的质询。
 
-A server that receives valid credentials that are not adequate to gain access ought to respond with the 403 (Forbidden) status code (Section 6.5.3 of [RFC7231]).
+#+BEGIN_QUOTE
+Likewise, upon receipt of a request that omits proxy credentials or contains invalid or partial proxy credentials, a proxy that requires authentication *SHOULD* generate a =407 (Proxy Authentication Required)= response that contains a =Proxy-Authenticate= header field with at least one (possibly new) challenge applicable to the proxy.
+#+END_QUOTE
 
+同样，如果代理接收到一个请求，一旦这个请求缺少代理凭证，或者包含有无效或不完整的代理凭证，那么，要求认证的代理 *应当* 生成一个 =407 (Proxy Authentication Required)= 响应，其内包含有一个 =Proxy-Authenticate= 头字段，该字段至少带有一个（可能是新的）适用该代理的质询。
+
+#+BEGIN_QUOTE
+A server that receives valid credentials that are not adequate to gain access ought to respond with the =403 (Forbidden)= status code ([[id:addb601c-6b2f-45a7-97f7-9d24bdb8b585][Section 6.5.3]] of [RFC7231]).
+#+END_QUOTE
+
+服务器接收到有效凭证但并不足以授权其访问资源时，应该回应一个带有 =403 (Forbidden)= 状态码的响应（[[id:addb601c-6b2f-45a7-97f7-9d24bdb8b585][【RFC7231】章节 6.5.3]]）。
+
+#+BEGIN_QUOTE
 HTTP does not restrict applications to this simple challenge-response framework for access authentication. Additional mechanisms can be used, such as authentication at the transport level or via message encapsulation, and with additional header fields specifying authentication information. However, such additional mechanisms are not defined by this specification.
+#+END_QUOTE
 
-** 2.2. Protection Space (Realm)
+HTTP 并没有将对这个简单的[[ruby:challenge-response][质询-作答]]框架上的应用限定为访问认证。可以使用其他额外的机制（比如在传输层上的认证，或者经由消息封装的认证），以及带有额外头字段所指定的认证信息。然而，本规范并没有定义这些额外的机制。
 
-The "realm" authentication parameter is reserved for use by authentication schemes that wish to indicate a scope of protection.
+** 2.2. 保护空间（领域） / Protection Space (Realm)
 
-A protection space is defined by the canonical root URI (the scheme and authority components of the effective request URI; see Section 5.5 of [RFC7230]) of the server being accessed, in combination with the realm value if present. These realms allow the protected resources on a server to be partitioned into a set of protection spaces, each with its own authentication scheme and/or authorization database. The realm value is a string, generally assigned by the origin server, that can have additional semantics specific to the authentication scheme. Note that a response can have multiple challenges with the same auth-scheme but with different realms.
+#+BEGIN_QUOTE
+The "=realm=" authentication parameter is reserved for use by authentication schemes that wish to indicate a scope of protection.
+#+END_QUOTE
 
+=realm= 是一个保留的认证参数，某些[[ruby:authentication%20schemes][认证方案]]如果希望去表明保护范围的话，可以使用它。
+
+#+BEGIN_QUOTE
+A protection space is defined by the canonical root URI (the =scheme= and =authority= components of the effective request URI; see [[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]) of the server being accessed, in combination with the =realm= value if present. These realms allow the protected resources on a server to be partitioned into a set of protection spaces, each with its own authentication scheme and/or authorization database. The =realm= value is a string, generally assigned by the origin server, that can have additional semantics specific to the authentication scheme. Note that a response can have multiple challenges with the same =auth-scheme= but with different realms.
+#+END_QUOTE
+
+[[ruby:protection%20space][保护空间]]是由被访问的服务器的[[ruby:canonical%20root%20URI][规范化根 URI]]（即实际请求 URI 的 =scheme= 和 =authority= 组件，见[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]），并结合 =realm= 的值（如果有出现的话）来进行定义的。这些[[ruby:realms][领域]]使得在服务器上要保护的各种资源可以划分为一系列的[[ruby:protection%20spaces][保护空间]]，每一个保护空间都有自己的认证方案以及/或者认证数据库。=realm= 的值是一个字符串，通常由源服务器所赋值，可以具有对应认证方案所特有的额外语义。需要注意的是，一个响应可以有多个具有相同 =auth-scheme= 但不同 =realm= 的质询。
+
+#+BEGIN_QUOTE
 The protection space determines the domain over which credentials can be automatically applied. If a prior request has been authorized, the user agent MAY reuse the same credentials for all other requests within that protection space for a period of time determined by the authentication scheme, parameters, and/or user preferences (such as a configurable inactivity timeout). Unless specifically allowed by the authentication scheme, a single protection space cannot extend outside the scope of its server.
+#+END_QUOTE
 
+保护空间决定了哪一种凭证可以被自动执行
+
+#+BEGIN_QUOTE
 For historical reasons, a sender MUST only generate the quoted-string syntax. Recipients might have to support both token and quoted-string syntax for maximum interoperability with existing clients that have been accepting both notations for a long time.
+#+END_QUOTE
 
-* 3. Status Code Definitions
+* 3. 状态码定义 / Status Code Definitions
   :PROPERTIES:
   :ID:       3a079a03-d926-4f70-95da-d8fcedbdf3ac
   :END:
@@ -133,109 +254,157 @@ For historical reasons, a sender MUST only generate the quoted-string syntax. Re
 :ID:       50ef5918-69e6-4826-9f20-db56fdd02974
 :END:
 
+#+BEGIN_QUOTE
 The 401 (Unauthorized) status code indicates that the request has not been applied because it lacks valid authentication credentials for the target resource. The server generating a 401 response MUST send a WWW-Authenticate header field (Section 4.1) containing at least one challenge applicable to the target resource.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 If the request included authentication credentials, then the 401 response indicates that authorization has been refused for those credentials. The user agent MAY repeat the request with a new or replaced Authorization header field (Section 4.2). If the 401 response contains the same challenge as the prior response, and the user agent has already attempted authentication at least once, then the user agent SHOULD present the enclosed representation to the user, since it usually contains relevant diagnostic information.
+#+END_QUOTE
 
 ** 3.2. 407 Proxy Authentication Required
 :PROPERTIES:
 :ID:       1029b0aa-9c78-463a-b3f4-a4acbfbac26f
 :END:
 
+#+BEGIN_QUOTE
 The 407 (Proxy Authentication Required) status code is similar to 401 (Unauthorized), but it indicates that the client needs to authenticate itself in order to use a proxy. The proxy MUST send a Proxy-Authenticate header field (Section 4.3) containing a challenge applicable to that proxy for the target resource. The client MAY repeat the request with a new or replaced Proxy-Authorization header field (Section 4.4).
+#+END_QUOTE
 
-* 4. Header Field Definitions
+* 4. 头字段定义 / Header Field Definitions
 
+#+BEGIN_QUOTE
 This section defines the syntax and semantics of header fields related to the HTTP authentication framework.
+#+END_QUOTE
 
 ** 4.1. WWW-Authenticate
 :PROPERTIES:
 :ID:       22f79cd1-20cc-4ac0-bd68-643e0d51fe7d
 :END:
 
+#+BEGIN_QUOTE
 The "WWW-Authenticate" header field indicates the authentication scheme(s) and parameters applicable to the target resource.
+#+END_QUOTE
 
 #+BEGIN_SRC text
   WWW-Authenticate = 1#challenge
 #+END_SRC
 
+#+BEGIN_QUOTE
 A server generating a 401 (Unauthorized) response MUST send a WWW-Authenticate header field containing at least one challenge. A server MAY generate a WWW-Authenticate header field in other response messages to indicate that supplying credentials (or different credentials) might affect the response.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A proxy forwarding a response MUST NOT modify any WWW-Authenticate fields in that response.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 User agents are advised to take special care in parsing the field value, as it might contain more than one challenge, and each challenge can contain a comma-separated list of authentication parameters. Furthermore, the header field itself can occur multiple times.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 For instance:
+#+END_QUOTE
 
 #+BEGIN_EXAMPLE
   WWW-Authenticate: Newauth realm="apps", type=1,
                     title="Login to \"apps\"", Basic realm="simple"
 #+END_EXAMPLE
 
+#+BEGIN_QUOTE
 This header field contains two challenges; one for the "Newauth" scheme with a realm value of "apps", and two additional parameters "type" and "title", and another one for the "Basic" scheme with a realm value of "simple".
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 *Note:* The challenge grammar production uses the list syntax as well. Therefore, a sequence of comma, whitespace, and comma can be considered either as applying to the preceding challenge, or to be an empty entry in the list of challenges. In practice, this ambiguity does not affect the semantics of the header field value and thus is harmless.
+#+END_QUOTE
 
 ** 4.2. Authorization
 :PROPERTIES:
 :ID:       14671c8e-e5a4-4f9d-ad1d-6460328ed7f5
 :END:
 
+#+BEGIN_QUOTE
 The "Authorization" header field allows a user agent to authenticate itself with an origin server — usually, but not necessarily, after receiving a 401 (Unauthorized) response. Its value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.
+#+END_QUOTE
 
 #+BEGIN_SRC text
   Authorization = credentials
 #+END_SRC
 
+#+BEGIN_QUOTE
 If a request is authenticated and a realm specified, the same credentials are presumed to be valid for all other requests within this realm (assuming that the authentication scheme itself does not require otherwise, such as credentials that vary according to a challenge value or using synchronized clocks).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 A proxy forwarding a request MUST NOT modify any Authorization fields in that request. See Section 3.2 of [RFC7234] for details of and requirements pertaining to handling of the Authorization field by HTTP caches.
+#+END_QUOTE
 
 ** 4.3. Proxy-Authenticate
 :PROPERTIES:
 :ID:       7f949af1-00e3-4909-adc7-219da68f0457
 :END:
 
+#+BEGIN_QUOTE
 The "Proxy-Authenticate" header field consists of at least one challenge that indicates the authentication scheme(s) and parameters applicable to the proxy for this effective request URI (Section 5.5 of [RFC7230]). A proxy MUST send at least one Proxy-Authenticate header field in each 407 (Proxy Authentication Required) response that it generates.
+#+END_QUOTE
 
 #+BEGIN_SRC text
   Proxy-Authenticate = 1#challenge
 #+END_SRC
 
+#+BEGIN_QUOTE
 Unlike WWW-Authenticate, the Proxy-Authenticate header field applies only to the next outbound client on the response chain. This is because only the client that chose a given proxy is likely to have the credentials necessary for authentication. However, when multiple proxies are used within the same administrative domain, such as office and regional caching proxies within a large corporate network, it is common for credentials to be generated by the user agent and passed through the hierarchy until consumed. Hence, in such a configuration, it will appear as if Proxy-Authenticate is being forwarded because each proxy will send the same challenge set.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Note that the parsing considerations for WWW-Authenticate apply to this header field as well; see Section 4.1 for details.
+#+END_QUOTE
 
 ** 4.4. Proxy-Authorization
 :PROPERTIES:
 :ID:       89c3125a-e7ef-48ea-a2c1-ff4c57214389
 :END:
 
+#+BEGIN_QUOTE
 The "Proxy-Authorization" header field allows the client to identify itself (or its user) to a proxy that requires authentication. Its value consists of credentials containing the authentication information of the client for the proxy and/or realm of the resource being requested.
+#+END_QUOTE
 
 #+BEGIN_SRC text
   Proxy-Authorization = credentials
 #+END_SRC
 
+#+BEGIN_QUOTE
 Unlike Authorization, the Proxy-Authorization header field applies only to the next inbound proxy that demanded authentication using the Proxy-Authenticate field. When multiple proxies are used in a chain, the Proxy-Authorization header field is consumed by the first inbound proxy that was expecting to receive credentials. A proxy MAY relay the credentials from the client request to the next proxy if that is the mechanism by which the proxies cooperatively authenticate a given request.
+#+END_QUOTE
 
-* 5. IANA Considerations
-** 5.1. Authentication Scheme Registry
+* 5. IANA 注意事项 / IANA Considerations
+** 5.1. 认证方案登记表 / Authentication Scheme Registry
+:PROPERTIES:
+:ID:       af1963ff-7886-492d-93cd-3d76aaf2d475
+:END:
 
+#+BEGIN_QUOTE
 The "Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry" defines the namespace for the authentication schemes in challenges and credentials. It has been created and is now maintained at <http://www.iana.org/assignments/http-authschemes>.
+#+END_QUOTE
 
-*** 5.1.1. Procedure
+*** 5.1.1. 手续 / Procedure
 
+#+BEGIN_QUOTE
 Registrations MUST include the following fields:
 
 - Authentication Scheme Name
 - Pointer to specification text
 - Notes (optional)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
+#+END_QUOTE
 
-*** 5.1.2. Considerations for New Authentication Schemes
+*** 5.1.2. 新的认证方案的注意事项 / Considerations for New Authentication Schemes
 
+#+BEGIN_QUOTE
 There are certain aspects of the HTTP Authentication Framework that put constraints on how new authentication schemes can work:
 
 - HTTP authentication is presumed to be stateless: all of the information necessary to authenticate a request MUST be provided in the request, rather than be dependent on the server remembering prior requests. Authentication based on, or bound to, the underlying connection is outside the scope of this specification and inherently flawed unless steps are taken to ensure that the connection cannot be used by any party other than the authenticated user (see Section 2.3 of [RFC7230]).
@@ -255,21 +424,28 @@ There are certain aspects of the HTTP Authentication Framework that put constrai
 - The credentials carried in an Authorization header field are specific to the user agent and, therefore, have the same effect on HTTP caches as the "private" Cache-Control response directive (Section 5.2.2.6 of [RFC7234]), within the scope of the request in which they appear.
 
   Therefore, new authentication schemes that choose not to carry credentials in the Authorization header field (e.g., using a newly defined header field) will need to explicitly disallow caching, by mandating the use of either Cache-Control request directives (e.g., "no-store", Section 5.2.1.5 of [RFC7234]) or response directives (e.g., "private").
+#+END_QUOTE
 
-** 5.2. Status Code Registration
+** 5.2. 状态码登记表 / Status Code Registration
 
+#+BEGIN_QUOTE
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <http://www.iana.org/assignments/http-status-codes> has been updated with the registrations below:
+#+END_QUOTE
 
 | Value | Description                   | Reference   |
 |-------+-------------------------------+-------------|
 |   401 | Unauthorized                  | Section 3.1 |
 |   407 | Proxy Authentication Required | Section 3.2 |
 
-** 5.3. Header Field Registration
+** 5.3. 头字段登记表 / Header Field Registration
 
+#+BEGIN_QUOTE
 HTTP header fields are registered within the "Message Headers" registry maintained at <http://www.iana.org/assignments/message-headers/>.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 This document defines the following HTTP header fields, so the "Permanent Message Header Field Names" registry has been updated accordingly (see [BCP90]).
+#+END_QUOTE
 
 | Header Field Name   | Protocol | Status   | Reference   |
 |---------------------+----------+----------+-------------|
@@ -278,45 +454,72 @@ This document defines the following HTTP header fields, so the "Permanent Messag
 | Proxy-Authorization | http     | standard | Section 4.4 |
 | WWW-Authenticate    | http     | standard | Section 4.1 |
 
+#+BEGIN_QUOTE
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
+#+END_QUOTE
 
-* 6. Security Considerations
+* 6. 安全注意事项 / Security Considerations
 
+#+BEGIN_QUOTE
 This section is meant to inform developers, information providers, and users of known security concerns specific to HTTP authentication. More general security considerations are addressed in HTTP messaging [RFC7230] and semantics [RFC7231].
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Everything about the topic of HTTP authentication is a security consideration, so the list of considerations below is not exhaustive. Furthermore, it is limited to security considerations regarding the authentication framework, in general, rather than discussing all of the potential considerations for specific authentication schemes (which ought to be documented in the specifications that define those schemes). Various organizations maintain topical information and links to current research on Web application security (e.g., [OWASP]), including common pitfalls for implementing and using the authentication schemes found in practice.
+#+END_QUOTE
 
 ** 6.1. Confidentiality of Credentials
+:PROPERTIES:
+:ID:       2918532f-0cd3-451c-a1d1-ef0c089539b8
+:END:
 
+#+BEGIN_QUOTE
 The HTTP authentication framework does not define a single mechanism for maintaining the confidentiality of credentials; instead, each authentication scheme defines how the credentials are encoded prior to transmission. While this provides flexibility for the development of future authentication schemes, it is inadequate for the protection of existing schemes that provide no confidentiality on their own, or that do not sufficiently protect against replay attacks. Furthermore, if the server expects credentials that are specific to each individual user, the exchange of those credentials will have the effect of identifying that user even if the content within credentials remains confidential.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 HTTP depends on the security properties of the underlying transport- or session-level connection to provide confidential transmission of header fields. In other words, if a server limits access to authenticated users using this framework, the server needs to ensure that the connection is properly secured in accordance with the nature of the authentication scheme used. For example, services that depend on individual user authentication often require a connection to be secured with TLS ("Transport Layer Security", [RFC5246]) prior to exchanging any credentials.
+#+END_QUOTE
 
 ** 6.2. Authentication Credentials and Idle Clients
 
+#+BEGIN_QUOTE
 Existing HTTP clients and user agents typically retain authentication information indefinitely. HTTP does not provide a mechanism for the origin server to direct clients to discard these cached credentials, since the protocol has no awareness of how credentials are obtained or managed by the user agent. The mechanisms for expiring or revoking credentials can be specified as part of an authentication scheme definition.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 Circumstances under which credential caching can interfere with the application's security model include but are not limited to:
 
 - Clients that have been idle for an extended period, following which the server might wish to cause the client to re-prompt the user for credentials.
 - Applications that include a session termination indication (such as a "logout" or "commit" button on a page) after which the server side of the application "knows" that there is no further reason for the client to retain the credentials.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 User agents that cache credentials are encouraged to provide a readily accessible mechanism for discarding cached credentials under user control.
+#+END_QUOTE
 
 ** 6.3. Protection Spaces
 
+#+BEGIN_QUOTE
 Authentication schemes that solely rely on the "realm" mechanism for establishing a protection space will expose credentials to all resources on an origin server. Clients that have successfully made authenticated requests with a resource can use the same authentication credentials for other resources on the same origin server. This makes it possible for a different resource to harvest authentication credentials for other resources.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 This is of particular concern when an origin server hosts resources for multiple parties under the same canonical root URI (Section 2.2). Possible mitigation strategies include restricting direct access to authentication credentials (i.e., not making the content of the Authorization request header field available), and separating protection spaces by using a different host name (or port number) for each party.
+#+END_QUOTE
 
-* 7. Acknowledgments
+* 7. 鸣谢 / Acknowledgments
 
+#+BEGIN_QUOTE
 This specification takes over the definition of the HTTP Authentication Framework, previously defined in RFC 2617. We thank John Franks, Phillip M. Hallam-Baker, Jeffery L. Hostetler, Scott D. Lawrence, Paul J. Leach, Ari Luotonen, and Lawrence C. Stewart for their work on that specification. See Section 6 of [RFC2617] for further acknowledgements.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 See Section 10 of [RFC7230] for the Acknowledgments related to this document revision.
+#+END_QUOTE
 
-* 8. References
-** 8.1. Normative References
+* 8. 参考资料 / References
+** 8.1. 规范性参考资料 / Normative References
 
 - [RFC2119] :: Bradner, S., “Key words for use in RFCs to Indicate Requirement Levels”, BCP 14, RFC 2119, March 1997.
 - [RFC5234] :: Crocker, D., Ed. and P. Overell, “Augmented BNF for Syntax Specifications: ABNF”, STD 68, RFC 5234, January 2008.
@@ -324,7 +527,7 @@ See Section 10 of [RFC7230] for the Acknowledgments related to this document rev
 - [RFC7231] :: Fielding, R., Ed. and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content”, RFC 7231, June 2014.
 - [RFC7234] :: Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke, Ed., “Hypertext Transfer Protocol (HTTP/1.1): Caching”, RFC 7234, June 2014.
 
-** 8.2. Informative References
+** 8.2. 信息性参考资料 / Informative References
 
 - [BCP90] :: Klyne, G., Nottingham, M., and J. Mogul, “Registration Procedures for Message Header Fields”, BCP 90, RFC 3864, September 2004.
 - [OWASP] :: van der Stock, A., Ed., “A Guide to Building Secure Web Applications and Web Services”, The Open Web Application Security Project (OWASP) 2.0.1, July 2005, <https://www.owasp.org/>.
@@ -335,21 +538,33 @@ See Section 10 of [RFC7230] for the Acknowledgments related to this document rev
 - [RFC5226] :: Narten, T. and H. Alvestrand, “Guidelines for Writing an IANA Considerations Section in RFCs”, BCP 26, RFC 5226, May 2008.
 - [RFC5246] :: Dierks, T. and E. Rescorla, “The Transport Layer Security (TLS) Protocol Version 1.2”, RFC 5246, August 2008.
 
-* Appendix A. Changes from RFCs 2616 and 2617
+* 附录 A：相对 RFC 2616 和 2617 的变化 / Appendix A. Changes from RFCs 2616 and 2617
 
+#+BEGIN_QUOTE
 The framework for HTTP Authentication is now defined by this document, rather than RFC 2617.
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The "realm" parameter is no longer always required on challenges; consequently, the ABNF allows challenges without any auth parameters. (Section 2)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The "token68" alternative to auth-param lists has been added for consistency with legacy authentication schemes such as "Basic". (Section 2)
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 This specification introduces the Authentication Scheme Registry, along with considerations for new authentication schemes. (Section 5.1)
+#+END_QUOTE
 
-* Appendix B. Imported ABNF
+* 附录 B：引进的 ABNF / Appendix B. Imported ABNF
 
+#+BEGIN_QUOTE
 The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+#+END_QUOTE
 
+#+BEGIN_QUOTE
 The rules below are defined in [RFC7230]:
+#+END_QUOTE
 
 #+BEGIN_SRC text
   BWS           = <BWS, see [RFC7230], Section 3.2.3>
@@ -358,9 +573,11 @@ The rules below are defined in [RFC7230]:
   token         = <token, see [RFC7230], Section 3.2.6>
 #+END_SRC
 
-* Appendix C. Collected ABNF
+* 附录 C：ABNF 集合 / Appendix C. Collected ABNF
 
+#+BEGIN_QUOTE
 In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
+#+END_QUOTE
 
 #+BEGIN_SRC text
   Authorization = credentials
@@ -391,7 +608,7 @@ In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7
    ,*"="
 #+END_SRC
 
-* Index
+* 索引 / Index
 
 * Authors' Addresses
 #+BEGIN_EXAMPLE
