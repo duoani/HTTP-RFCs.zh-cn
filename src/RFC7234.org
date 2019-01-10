@@ -1038,6 +1038,9 @@ For the cache directives defined below, no argument is defined (nor allowed) unl
 :END:
 
 **** 5.2.1.1. max-age
+:PROPERTIES:
+:ID:       ead198f3-be45-41b4-878d-9a1b1bc3ea7c
+:END:
 
 #+BEGIN_QUOTE
 Argument syntax:
@@ -1066,6 +1069,9 @@ This directive uses the =token= form of the argument syntax: e.g., 'max-age=5' n
 本指令的实参使用的是 =token= 形式的句法，比如：max-age=5，而不是 max-age="5"。发送端 *不应当* 将本指令生成为 =quoted-string= 的形式。
 
 **** 5.2.1.2. max-stale
+:PROPERTIES:
+:ID:       7eb7cf90-af8c-4592-828a-91db2a944efb
+:END:
 
 #+BEGIN_QUOTE
 Argument syntax:
@@ -1094,6 +1100,9 @@ This directive uses the =token= form of the argument syntax: e.g., 'max-stale=10
 本指令的实参使用的是 =token= 形式的句法，比如：max-stale=10，而不是 max-stale="10"。发送端 *不应当* 将本指令生成为 =quoted-string= 的形式。
 
 **** 5.2.1.3. min-fresh
+:PROPERTIES:
+:ID:       ba3e5a75-a5a9-48a8-8b30-ed66959b0113
+:END:
 
 #+BEGIN_QUOTE
 Argument syntax:
@@ -1122,6 +1131,9 @@ This directive uses the =token= form of the argument syntax: e.g., 'min-fresh=20
 本指令的实参使用的是 =token= 形式的句法，比如：max-fresh=20，而不是 max-fresh="20"。发送端 *不应当* 将本指令生成为 =quoted-string= 的形式。
 
 **** 5.2.1.4. no-cache
+:PROPERTIES:
+:ID:       bdf8eddb-fad1-4d09-a7f7-7774ddc8ab54
+:END:
 
 #+BEGIN_QUOTE
 The "=no-cache=" request directive indicates that a cache *MUST NOT* use a stored response to satisfy the request without successful validation on the origin server.
@@ -1130,6 +1142,9 @@ The "=no-cache=" request directive indicates that a cache *MUST NOT* use a store
 =no-cache= 请求指令表明，缓存在没有经源服务器成功验证的情况下，*禁止* 使用一个已存储的响应来满足这个请求。
 
 **** 5.2.1.5. no-store
+:PROPERTIES:
+:ID:       0b69ee34-0121-454f-a6b3-1d0ddacb3cba
+:END:
 
 #+BEGIN_QUOTE
 The "=no-store=" request directive indicates that a cache *MUST NOT* store any part of either this request or any response to it. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache *MUST NOT* intentionally store the information in non-volatile storage, and *MUST* make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
@@ -1162,6 +1177,9 @@ Note that if a request containing this directive is satisfied from a cache, the 
 #+END_QUOTE
 
 **** 5.2.1.6. no-transform
+:PROPERTIES:
+:ID:       18a9a88d-1cd7-4e01-a750-f33667b7ea77
+:END:
 
 #+BEGIN_QUOTE
 The "=no-transform=" request directive indicates that an intermediary (whether or not it implements a cache) *MUST NOT* transform the payload, as defined in [[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Section 5.7.2]] of [RFC7230].
@@ -1170,6 +1188,9 @@ The "=no-transform=" request directive indicates that an intermediary (whether o
 =no-transform= 请求指令表明，[[ruby:intermediary][中间人]]（无论是否有实现缓存） *禁止* 转换[[ruby:payload][有效载荷]]，正如[[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][【RFC7230】章节 5.7.2]] 所定义的。
 
 **** 5.2.1.7. only-if-cached
+:PROPERTIES:
+:ID:       4834ec55-aa22-4929-a3a7-b5ff1252b7f0
+:END:
 
 #+BEGIN_QUOTE
 The "=only-if-cached=" request directive indicates that the client only wishes to obtain a stored response. If it receives this directive, a cache *SHOULD* either respond using a stored response that is consistent with the other constraints of the request, or respond with a =504 (Gateway Timeout)= status code. If a group of caches is being operated as a unified system with good internal connectivity, a member cache *MAY* forward such a request within that group of caches.
@@ -1183,6 +1204,9 @@ The "=only-if-cached=" request directive indicates that the client only wishes t
 :END:
 
 **** 5.2.2.1. must-revalidate
+:PROPERTIES:
+:ID:       a1b2afab-2f16-4bbc-bb7a-d44c7ae8e581
+:END:
 
 #+BEGIN_QUOTE
 The "=must-revalidate=" response directive indicates that once it has become stale, a cache *MUST NOT* use the response to satisfy subsequent requests without successful validation on the origin server.
@@ -1248,6 +1272,9 @@ This directive uses the =quoted-string= form of the argument syntax. A sender *S
 *注意：* 虽然本指令已被移植到许多实现上，但是，某些 HTTP/1.0 缓存将不会识别或者不会服从它。另外，带有字段名的 =no-cache= 响应指令常常被缓存当作[[ruby:unqualified][未经限定的]] =no-cache= 来处理，也就是说，对于限定形式的特殊处理并没有得到广泛的实现。
 
 **** 5.2.2.3. no-store
+:PROPERTIES:
+:ID:       d18b883b-0ba1-47a8-b676-dd3d3e8915c7
+:END:
 
 #+BEGIN_QUOTE
 The "=no-store=" response directive indicates that a cache *MUST NOT* store any part of either the immediate request or response. This directive applies to both private and shared caches. "MUST NOT store" in this context means that the cache *MUST NOT* intentionally store the information in non-volatile storage, and *MUST* make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it.
@@ -1263,6 +1290,9 @@ This directive is *NOT* a reliable or sufficient mechanism for ensuring privacy.
 本指令并不是一个可靠的或者充分的机制来保证私密性。特别是，恶意的或者折衷的缓存可能不[[ruby:obey][服从]]或者无法[[ruby:recognize][识别]]本指令，从而通信网络可能会遭到窃听。
 
 **** 5.2.2.4. no-transform
+:PROPERTIES:
+:ID:       bdf422d2-b0fb-41fc-b91b-43ff86f30441
+:END:
 
 #+BEGIN_QUOTE
 The "=no-transform=" response directive indicates that an intermediary (regardless of whether it implements a cache) *MUST NOT* transform the payload, as defined in [[id:b6641b58-3ac6-4fce-9c44-a3715ffdc8a0][Section 5.7.2]] of [RFC7230].
@@ -1327,6 +1357,9 @@ This directive uses the =quoted-string= form of the argument syntax. A sender *S
 *注意：* 这里所使用的术语“private”（私有）仅控制响应能够存储在哪个地方，它并不能保证消息内容的隐私性。另外，带有字段名称的 =private= 响应指令常常被缓存当作[[ruby:unqualified][未经限定的]] =private= 来处理，也就是说，对于限定形式的特殊处理并没有得到广泛的实现。
 
 **** 5.2.2.7. proxy-revalidate
+:PROPERTIES:
+:ID:       78ef3c32-08c8-4cd6-87e6-8ce2ff940cde
+:END:
 
 #+BEGIN_QUOTE
 The "=proxy-revalidate=" response directive has the same meaning as the =must-revalidate= response directive, except that it does not apply to private caches.
@@ -1499,7 +1532,6 @@ The "=Pragma=" header field allows backwards compatibility with HTTP/1.0 caches,
 
 =Pragma= 头字段使得可以与 HTTP/1.0 的缓存保持向后兼容，以便客户端能够指定一个它们能够理解的 "no-cache" 请求（因为直到 HTTP/1.1 =Cache-Control= 才被定义出来）。当请求中还出现了 =Cache-Control= 头字段且被接收端所理解，那么，=Pragma= 会被忽略。
 
-
 #+BEGIN_QUOTE
 In HTTP/1.0, =Pragma= was defined as an extensible field for implementation-specified directives for recipients. This specification deprecates such extensions to improve interoperability.
 #+END_QUOTE
@@ -1652,6 +1684,9 @@ A cache *SHOULD* generate this whenever the sent response is stale.
 每当缓存所发送的响应是陈旧的（即已过期）时候，缓存就 *应当* 生成这个警告码。
 
 *** 5.5.2. Warning: 111 - "Revalidation Failed"
+:PROPERTIES:
+:ID:       e1d64598-f9eb-459c-8c0a-b9ba89c6c93f
+:END:
 
 #+BEGIN_QUOTE
 A cache *SHOULD* generate this when sending a stale response because an attempt to validate the response failed, due to an inability to reach the server.
@@ -1682,6 +1717,9 @@ A cache *SHOULD* generate this if it heuristically chose a freshness lifetime gr
 如果缓存采用启发式方法，将缓存的有效时间设定为 24 小时以上，并且响应的年龄已大于 24 小时，那么，缓存 *应当* 生成一个警告码。
 
 *** 5.5.5. Warning: 199 - "Miscellaneous Warning"
+:PROPERTIES:
+:ID:       20f4b944-38f0-461a-b6b0-b44c297668a9
+:END:
 
 #+BEGIN_QUOTE
 The warning text can include arbitrary information to be presented to a human user or logged. A system receiving this warning *MUST NOT* take any automated action, besides presenting the warning to the user.
@@ -1690,6 +1728,9 @@ The warning text can include arbitrary information to be presented to a human us
 这里的 =warn-text= （警告文本）可以包含任意信息来展示给人类用户或者用来记录日志。接收到这种警告的系统 *禁止* 执行任何自动化行为，除了将这个警告展示给用户以外。
 
 *** 5.5.6. Warning: 214 - "Transformation Applied"
+:PROPERTIES:
+:ID:       65396d1f-4156-4dd3-a505-5cabd8513776
+:END:
 
 #+BEGIN_QUOTE
 This Warning code *MUST* be added by a proxy if it applies any transformation to the representation, such as changing the content-coding, media-type, or modifying the representation data, unless this Warning code already appears in the response.
@@ -1697,8 +1738,10 @@ This Warning code *MUST* be added by a proxy if it applies any transformation to
 
 这个警告码 *必须* 由代理所添加，如果代理为表示形式执行了任何转换，比如改变 =content-coding=、媒体类型、或者修改了表示形式的数据的话，除非这个警告码已经出现在响应中。 
 
-
 *** 5.5.7. Warning: 299 - "Miscellaneous Persistent Warning"
+:PROPERTIES:
+:ID:       222a192e-985e-4b1b-a772-1fec60a0c134
+:END:
 
 #+BEGIN_QUOTE
 The warning text can include arbitrary information to be presented to a human user or logged. A system receiving this warning *MUST NOT* take any automated action.
@@ -1718,10 +1761,10 @@ User agents often have history mechanisms, such as "Back" buttons and history li
 用户代理通常具有历史机制，比如“返回”按钮和历史列表，能够用来重新展示在会话中之前所获取到的展示形式。
 
 #+BEGIN_QUOTE
-The freshness model (Section 4.2) does not necessarily apply to history mechanisms. That is, a history mechanism can display a previous representation even if it has expired.
+The freshness model ([[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][Section 4.2]]) does not necessarily apply to history mechanisms. That is, a history mechanism can display a previous representation even if it has expired.
 #+END_QUOTE
 
-新鲜度模型（章节 4.2）并不一定要应用到这种历史机制上。也就是说，历史机制能够展示一个之前的表示形式，即使它已经过期了。
+新鲜度模型（[[id:d414d2f7-d865-4b94-9efd-6b2578df86aa][章节 4.2]]）并不一定要应用到这种历史机制上。也就是说，历史机制能够展示一个之前的表示形式，即使它已经过期了。
 
 #+BEGIN_QUOTE
 This does not prohibit the history mechanism from telling the user that a view might be stale or from honoring cache directives (e.g., Cache-Control: no-store).
@@ -1731,20 +1774,35 @@ This does not prohibit the history mechanism from telling the user that a view m
 
 * 7. IANA 注意事项 / IANA Considerations
 ** 7.1. 缓存指令登记表 / Cache Directive Registry
+:PROPERTIES:
+:ID:       2e9cfd20-af05-4298-a592-5740477fe19d
+:END:
 
 #+BEGIN_QUOTE
 The "Hypertext Transfer Protocol (HTTP) Cache Directive Registry" defines the namespace for the cache directives. It has been created and is now maintained at <http://www.iana.org/assignments/http-cache-directives>.
 #+END_QUOTE
 
+《HTTP 缓存指令登记表》定义了缓存指令的命名空间，这份登记表已经创建，目前维护在 <http://www.iana.org/assignments/http-cache-directives>。
+
 *** 7.1.1. 手续 / Procedure
 
 #+BEGIN_QUOTE
-A registration MUST include the following fields:
+A registration *MUST* include the following fields:
 
 - Cache Directive Name
 - Pointer to specification text
-- Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
 #+END_QUOTE
+
+一个登记条目 *必须* 包括以下字段：
+
+- 缓存指令名称
+- 指向到规范文本的引用
+
+#+BEGIN_QUOTE
+Values to be added to this namespace require IETF Review (see [RFC5226], [[https://tools.ietf.org/html/rfc5226#section-4.1][Section 4.1]]).
+#+END_QUOTE
+
+添加到 HTTP 状态码命名空间的值要求由 IETF 复审（见[[https://tools.ietf.org/html/rfc5226#section-4.1][【RFC5226】章节 4.1]]）。
 
 *** 7.1.2. 新的缓存控制指令的注意事项 / Considerations for New Cache Control Directives
 
@@ -1757,9 +1815,18 @@ New extension directives ought to consider defining:
 - Whether the directive is specific to requests, responses, or able to be used in either.
 #+END_QUOTE
 
+新的扩展指令应该考虑定义：
+
+- 指令被指定多次的时候是什么含义，
+- 如果指令没有定义实参，当指令出现实参时是什么含义，
+- 如果指令要求带有实参，当指令没带有实参时是什么含义，
+- 指令是否专门用于请求消息、响应消息，还是能用于两者。
+
 #+BEGIN_QUOTE
-See also Section 5.2.3.
+See also [[id:eb7efc79-3c1d-439b-b0b3-d901848ad800][Section 5.2.3]].
 #+END_QUOTE
+
+见[[id:eb7efc79-3c1d-439b-b0b3-d901848ad800][章节 5.2.3]]。
 
 *** 7.1.3. 登记 / Registrations
 
@@ -1767,28 +1834,35 @@ See also Section 5.2.3.
 The registry has been populated with the registrations below:
 #+END_QUOTE
 
+登记表已填充以下条目：
+
 | Cache Directive        | Reference                        |
 |------------------------+----------------------------------|
-| max-age                | Section 5.2.1.1, Section 5.2.2.8 |
-| max-stale              | Section 5.2.1.2                  |
-| min-fresh              | Section 5.2.1.3                  |
-| must-revalidate        | Section 5.2.2.1                  |
-| no-cache               | Section 5.2.1.4, Section 5.2.2.2 |
-| no-store               | Section 5.2.1.5, Section 5.2.2.3 |
-| no-transform           | Section 5.2.1.6, Section 5.2.2.4 |
-| only-if-cached         | Section 5.2.1.7                  |
-| private                | Section 5.2.2.6                  |
-| proxy-revalidate       | Section 5.2.2.7                  |
-| public                 | Section 5.2.2.5                  |
-| s-maxage               | Section 5.2.2.9                  |
-| stale-if-error         | [RFC5861], Section 4             |
-| stale-while-revalidate | [RFC5861], Section 3             |
+| max-age                | [[id:ead198f3-be45-41b4-878d-9a1b1bc3ea7c][Section 5.2.1.1]], [[id:eb09a1c7-0ad4-4c20-9e07-4792ee9ce0fb][Section 5.2.2.8]] |
+| max-stale              | [[id:7eb7cf90-af8c-4592-828a-91db2a944efb][Section 5.2.1.2]]                  |
+| min-fresh              | [[id:ba3e5a75-a5a9-48a8-8b30-ed66959b0113][Section 5.2.1.3]]                  |
+| must-revalidate        | [[id:a1b2afab-2f16-4bbc-bb7a-d44c7ae8e581][Section 5.2.2.1]]                  |
+| no-cache               | [[id:bdf8eddb-fad1-4d09-a7f7-7774ddc8ab54][Section 5.2.1.4]], [[id:9c7307c8-5bc0-4812-ade1-d3080a39bf80][Section 5.2.2.2]] |
+| no-store               | [[id:0b69ee34-0121-454f-a6b3-1d0ddacb3cba][Section 5.2.1.5]], [[id:d18b883b-0ba1-47a8-b676-dd3d3e8915c7][Section 5.2.2.3]] |
+| no-transform           | [[id:18a9a88d-1cd7-4e01-a750-f33667b7ea77][Section 5.2.1.6]], [[id:bdf422d2-b0fb-41fc-b91b-43ff86f30441][Section 5.2.2.4]] |
+| only-if-cached         | [[id:4834ec55-aa22-4929-a3a7-b5ff1252b7f0][Section 5.2.1.7]]                  |
+| private                | [[id:f740b5a2-4331-423d-b196-137d9b9e4d02][Section 5.2.2.6]]                  |
+| proxy-revalidate       | [[id:78ef3c32-08c8-4cd6-87e6-8ce2ff940cde][Section 5.2.2.7]]                  |
+| public                 | [[id:ad0dea37-836f-4c82-9241-3e6ce0d6fc51][Section 5.2.2.5]]                  |
+| s-maxage               | [[id:5296bb87-1709-4827-bef2-69177bbe3544][Section 5.2.2.9]]                  |
+| stale-if-error         | [RFC5861], [[https://tools.ietf.org/html/rfc5861#section-4][Section 4]]             |
+| stale-while-revalidate | [RFC5861], [[https://tools.ietf.org/html/rfc5861#section-3][Section 3]]             |
 
 ** 7.2. 警告码登记表 / Warn Code Registry
+:PROPERTIES:
+:ID:       e5314ae5-e30e-4cb5-8830-72576409284a
+:END:
 
 #+BEGIN_QUOTE
 The "Hypertext Transfer Protocol (HTTP) Warn Codes" registry defines the namespace for warn codes. It has been created and is now maintained at <http://www.iana.org/assignments/http-warn-codes>.
 #+END_QUOTE
+
+《HTTP 警告码登记表》定义了警告码的命名空间，这份登记表已经创建，目前维护在 <http://www.iana.org/assignments/http-warn-codes>。
 
 *** 7.2.1. 手续 / Procedure
 :PROPERTIES:
@@ -1796,16 +1870,24 @@ The "Hypertext Transfer Protocol (HTTP) Warn Codes" registry defines the namespa
 :END:
 
 #+BEGIN_QUOTE
-A registration MUST include the following fields:
+A registration *MUST* include the following fields:
 
 - Warn Code (3 digits)
 - Short Description
 - Pointer to specification text
 #+END_QUOTE
 
+一个登记条目 *必须* 包括以下字段：
+
+- 警告码（3 位数字）
+- 简短的描述
+- 指向到规范文本的引用
+
 #+BEGIN_QUOTE
-Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
+Values to be added to this namespace require IETF Review (see [RFC5226], [[https://tools.ietf.org/html/rfc5226#section-4.1][Section 4.1]]).
 #+END_QUOTE
+
+添加到 HTTP 本命名空间的值要求由 IETF 复审（见[[https://tools.ietf.org/html/rfc5226#section-4.1][【RFC5226】章节 4.1]]）。
 
 *** 7.2.2. 登记 / Registrations
 
@@ -1813,15 +1895,17 @@ Values to be added to this namespace require IETF Review (see [RFC5226], Section
 The registry has been populated with the registrations below:
 #+END_QUOTE
 
+登记表已填充以下条目：
+
 | Warn Code | Short Description                | Reference    |
 |-----------+----------------------------------+--------------|
-|       110 | Response is Stale                | Section 5.5.1 |
-|       111 | Revalidation Failed              | Section 5.5.2 |
-|       112 | Disconnected Operation           | Section 5.5.3 |
-|       113 | Heuristic Expiration             | Section 5.5.4 |
-|       199 | Miscellaneous Warning            | Section 5.5.5 |
-|       214 | Transformation Applied           | Section 5.5.6 |
-|       299 | Miscellaneous Persistent Warning | Section 5.5.7 |
+|       110 | Response is Stale                | [[id:de825a8a-6078-407b-b9f5-04547f6aa999][Section 5.5.1]] |
+|       111 | Revalidation Failed              | [[id:e1d64598-f9eb-459c-8c0a-b9ba89c6c93f][Section 5.5.2]] |
+|       112 | Disconnected Operation           | [[id:92abeb74-8480-43e6-9313-a585f36847de][Section 5.5.3]] |
+|       113 | Heuristic Expiration             | [[id:cc9f6df6-f45c-43c5-bd4f-d7fc929df890][Section 5.5.4]] |
+|       199 | Miscellaneous Warning            | [[id:20f4b944-38f0-461a-b6b0-b44c297668a9][Section 5.5.5]] |
+|       214 | Transformation Applied           | [[id:65396d1f-4156-4dd3-a505-5cabd8513776][Section 5.5.6]] |
+|       299 | Miscellaneous Persistent Warning | [[id:222a192e-985e-4b1b-a772-1fec60a0c134][Section 5.5.7]] |
 
 ** 7.3. 头字段登记 / Header Field Registration
 
@@ -1829,21 +1913,27 @@ The registry has been populated with the registrations below:
 HTTP header fields are registered within the "Message Headers" registry maintained at <http://www.iana.org/assignments/message-headers/>.
 #+END_QUOTE
 
+HTTP 头字段登记有 《消息头登记表》中，目前维护在 <http://www.iana.org/assignments/message-headers/>。
+
 #+BEGIN_QUOTE
 This document defines the following HTTP header fields, so the "Permanent Message Header Field Names" registry has been updated accordingly (see [BCP90]).
 #+END_QUOTE
 
+本文档定义了以下 HTTP 头字段，因此，《永久消息头字段名称登记表》已经相应地更新过了（见【[[https://tools.ietf.org/html/rfc3864][BCP90]]】）。
+
 | Header Field Name | Protocol | Status   | Reference   |
 |-------------------+----------+----------+-------------|
-| Age               | http     | standard | Section 5.1 |
-| Cache-Control     | http     | standard | Section 5.2 |
-| Expires           | http     | standard | Section 5.3 |
-| Pragma            | http     | standard | Section 5.4 |
-| Warning           | http     | standard | Section 5.5 |
+| Age               | http     | standard | [[id:0fda7a59-2592-493d-9ce1-01e72543c6c0][Section 5.1]] |
+| Cache-Control     | http     | standard | [[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][Section 5.2]] |
+| Expires           | http     | standard | [[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][Section 5.3]] |
+| Pragma            | http     | standard | [[id:8414ec2d-e5b5-4f9c-8160-c354c12b7504][Section 5.4]] |
+| Warning           | http     | standard | [[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][Section 5.5]] |
 
 #+BEGIN_QUOTE
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 #+END_QUOTE
+
+主管以上条目的变更的是 "IETF (iesg@ietf.org) - Internet Engineering Task Force"。
 
 * 8. 安全注意事项 / Security Considerations
 :PROPERTIES:
@@ -1851,34 +1941,48 @@ The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Forc
 :END:
 
 #+BEGIN_QUOTE
-This section is meant to inform developers, information providers, and users of known security concerns specific to HTTP caching. More general security considerations are addressed in HTTP messaging [RFC7230] and semantics [RFC7231].
+This section is meant to inform developers, information providers, and users of known security concerns specific to HTTP caching. More general security considerations are addressed in HTTP messaging [[[file:RFC7230.org][RFC7230]]] and semantics [[[file:RFC7231.org][RFC7231]]].
 #+END_QUOTE
+
+本章节是为了告诉开发者、信息提供商、以及用户，HTTP 缓存相关的安全注意事项。《消息句法和路由》【[[file:RFC7230.org][RFC7230]]】以及《语义和内容》【[[file:RFC7231.org][RFC7231]]】有更广泛的安全注意事项。
 
 #+BEGIN_QUOTE
 Caches expose additional potential vulnerabilities, since the contents of the cache represent an attractive target for malicious exploitation. Because cache contents persist after an HTTP request is complete, an attack on the cache can reveal information long after a user believes that the information has been removed from the network. Therefore, cache contents need to be protected as sensitive information.
 #+END_QUOTE
 
+缓存暴露了额外的可能的安全弱点，因为缓存的内容代表着一种有吸引力的恶意利用的目标。由于缓存的内容在 HTTP 请求完成以后仍然保留，因此，针对缓存的攻击能够长久暴露用户相信已经从网络中移除掉的那些信息。所以，缓存内容需要作为敏感信息来进行保护。
+
 #+BEGIN_QUOTE
-In particular, various attacks might be amplified by being stored in a shared cache; such "cache poisoning" attacks use the cache to distribute a malicious payload to many clients, and are especially effective when an attacker can use implementation flaws, elevated privileges, or other techniques to insert such a response into a cache. One common attack vector for cache poisoning is to exploit differences in message parsing on proxies and in user agents; see Section 3.3.3 of [RFC7230] for the relevant requirements.
+In particular, various attacks might be amplified by being stored in a shared cache; such "cache poisoning" attacks use the cache to distribute a malicious payload to many clients, and are especially effective when an attacker can use implementation flaws, elevated privileges, or other techniques to insert such a response into a cache. One common attack vector for cache poisoning is to exploit differences in message parsing on proxies and in user agents; see [[id:5fee24c5-74b9-4016-b7ed-a4831cafbe69][Section 3.3.3]] of [RFC7230] for the relevant requirements.
 #+END_QUOTE
+
+特别是，如果信息被存储到共享缓存的话，这种攻击可能会扩展为更多样的攻击，比如“[[ruby:cache%20poisoning][缓存中毒]]”攻击使用缓存来将某种恶意的有效载荷分发到许多客户端上，当攻击者能够使用实现缺陷、提升权限、或其他技术来植入这种恶意响应到缓存上的时候，这种攻击会特别有效。一个常见的缓存攻击的途径是利用在代理和在用户代理上[[ruby:message%20parsing][消息解析]]上的差异来达到，见章节[[id:5fee24c5-74b9-4016-b7ed-a4831cafbe69][【RFC7230】3.3.3]] 的相关要求。
 
 #+BEGIN_QUOTE
 Likewise, implementation flaws (as well as misunderstanding of cache operation) might lead to caching of sensitive information (e.g., authentication credentials) that is thought to be private, exposing it to unauthorized parties.
 #+END_QUOTE
 
+同样，实现缺陷（和其他缓存操作上的误解）可能导致缓存了理应是私有的敏感信息（比如，身份凭证），暴露到未经认证的群体当中。
+
 #+BEGIN_QUOTE
 Furthermore, the very use of a cache can bring about privacy concerns. For example, if two users share a cache, and the first one browses to a site, the second may be able to detect that the other has been to that site, because the resources from it load more quickly, thanks to the cache.
 #+END_QUOTE
 
+而且，缓存的方便带来了隐私方面的问题。例如，如果两个用户共享一个缓存，第一个用户浏览了一个网站，那么第二个用户可能能够检测到对方访问过那个网站，因为加载这个网站的资源很快，多亏了缓存。
+
 #+BEGIN_QUOTE
-Note that the Set-Cookie response header field [RFC6265] does not inhibit caching; a cacheable response with a Set-Cookie header field can be (and often is) used to satisfy subsequent requests to caches. Servers who wish to control caching of these responses are encouraged to emit appropriate Cache-Control response header fields.
+Note that the =Set-Cookie= response header field [[[https://tools.ietf.org/html/rfc6265][RFC6265]]] does not inhibit caching; a cacheable response with a =Set-Cookie= header field can be (and often is) used to satisfy subsequent requests to caches. Servers who wish to control caching of these responses are encouraged to emit appropriate =Cache-Control= response header fields.
 #+END_QUOTE
+
+需要注意的是，=Set-Cookie= 响应头字段【[[https://tools.ietf.org/html/rfc6265][RFC6265]]】并没有禁止缓存操作，一个带有 =Set-Cookie= 头字段的可缓存的响应可以用来（并且通常用来）满足后续对缓存的请求。如果服务器希望控制对这些响应的缓存操作，最好发送合适的 =Cache-Control= 响应头字段。
 
 * 9. 鸣谢 / Acknowledgments
 
 #+BEGIN_QUOTE
-See Section 10 of [RFC7230].
+See [[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][Section 10]] of [RFC7230].
 #+END_QUOTE
+
+见[[id:ccf5090b-19c1-4f1a-a7ac-2e94a6dfa626][【RFC7230】章节 10]]。
 
 * 10. 参考资料 / References
 ** 10.1. 规范性参考资料 / Normative References
@@ -1906,65 +2010,97 @@ See Section 10 of [RFC7230].
 The specification has been substantially rewritten for clarity.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The conditions under which an authenticated response can be cached have been clarified. (Section 3.2)
-#+END_QUOTE
+为了明确，本规范已经大幅度重写了。
 
 #+BEGIN_QUOTE
-New status codes can now define that caches are allowed to use heuristic freshness with them. Caches are now allowed to calculate heuristic freshness for URIs with query components. (Section 4.2.2)
+The conditions under which an authenticated response can be cached have been clarified. ([[id:d6b247ad-fe70-4ddf-9bd3-ebc35ea6ac99][Section 3.2]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The algorithm for calculating age is now less conservative. Caches are now required to handle dates with time zones as if they're invalid, because it's not possible to accurately guess. (Section 4.2.3)
-#+END_QUOTE
+明确了在什么条件下，能够缓存一个已认证的响应。（[[id:d6b247ad-fe70-4ddf-9bd3-ebc35ea6ac99][章节 3.2]]）
 
 #+BEGIN_QUOTE
-The Content-Location response header field is no longer used to determine the appropriate response to use when validating. (Section 4.3)
+New status codes can now define that caches are allowed to use heuristic freshness with them. Caches are now allowed to calculate heuristic freshness for URIs with =query= components. ([[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][Section 4.2.2]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The algorithm for selecting a cached negotiated response to use has been clarified in several ways. In particular, it now explicitly allows header-specific canonicalization when processing selecting header fields. (Section 4.1)
-#+END_QUOTE
+新的状态码现在可以将缓存定义为允许对它们使用启发式新鲜度。现在允许缓存去计算带有 =query= 组件的 URI 的启发式新鲜度。（[[id:9bcea6ca-bab6-4324-9cdb-cf7855aeba01][章节 4.2.2]]）
 
 #+BEGIN_QUOTE
-Requirements regarding denial-of-service attack avoidance when performing invalidation have been clarified. (Section 4.4)
+The algorithm for calculating age is now less conservative. Caches are now required to handle dates with time zones as if they're invalid, because it's not possible to accurately guess. ([[id:80278eea-c1e4-478a-b972-ca42270c1fd0][Section 4.2.3]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-Cache invalidation only occurs when a successful response is received. (Section 4.4)
-#+END_QUOTE
+现在计算年龄的算法不会那么保守了。现在要求缓存将带有时区的日期当作无效日期来处理，因为无法精确地猜测。（[[id:80278eea-c1e4-478a-b972-ca42270c1fd0][章节 4.2.3]]）
 
 #+BEGIN_QUOTE
-Cache directives are explicitly defined to be case-insensitive. Handling of multiple instances of cache directives when only one is expected is now defined. (Section 5.2)
+The =Content-Location= response header field is no longer used to determine the appropriate response to use when validating. ([[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][Section 4.3]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The "no-store" request directive doesn't apply to responses; i.e., a cache can satisfy a request with no-store on it and does not invalidate it. (Section 5.2.1.5)
-#+END_QUOTE
+=Content-Location= 响应头字段已不再使用来决定在验证的时候哪一个响应才是恰当的。（[[id:47a8482e-e33f-435a-8abd-9a82f117f7a0][章节 4.3]]）
 
 #+BEGIN_QUOTE
-The qualified forms of the private and no-cache cache directives are noted to not be widely implemented; for example, "private=foo" is interpreted by many caches as simply "private". Additionally, the meaning of the qualified form of no-cache has been clarified. (Section 5.2.2)
+The algorithm for selecting a cached negotiated response to use has been clarified in several ways. In particular, it now explicitly allows header-specific canonicalization when processing selecting header fields. ([[id:352eb301-a424-48e9-9027-3c6633da4b77][Section 4.1]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The "no-cache" response directive's meaning has been clarified. (Section 5.2.2.2)
-#+END_QUOTE
+明确了关于选择一个缓存协商响应来使用的算法为多种方式。特别是，当处理选择头字段的时候，它现在显式允许头部指定的标准。（[[id:352eb301-a424-48e9-9027-3c6633da4b77][章节 4.1]]）
 
 #+BEGIN_QUOTE
-The one-year limit on Expires header field values has been removed; instead, the reasoning for using a sensible value is given. (Section 5.3)
+Requirements regarding denial-of-service attack avoidance when performing invalidation have been clarified. ([[id:f0828803-68c6-4dae-a418-6a6b4b57189e][Section 4.4]])
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The Pragma header field is now only defined for backwards compatibility; future pragmas are deprecated. (Section 5.4)
-#+END_QUOTE
+明确了当[[ruby:performing%20invalidation][执行缓存失效操作]]时如何避免拒绝服务攻击的相关要求。（[[id:f0828803-68c6-4dae-a418-6a6b4b57189e][章节 4.4]]）
 
 #+BEGIN_QUOTE
-Some requirements regarding production and processing of the Warning header fields have been relaxed, as it is not widely implemented. Furthermore, the Warning header field no longer uses RFC 2047 encoding, nor does it allow multiple languages, as these aspects were not implemented. (Section 5.5)
+Cache invalidation only occurs when a successful response is received. ([[id:f0828803-68c6-4dae-a418-6a6b4b57189e][Section 4.4]])
 #+END_QUOTE
 
+缓存失效仅会发生于接收到一个成功响应的时候。（[[id:f0828803-68c6-4dae-a418-6a6b4b57189e][章节 4.4]]）
+
 #+BEGIN_QUOTE
-This specification introduces the Cache Directive and Warn Code Registries, and defines considerations for new cache directives. (Section 7.1 and Section 7.2)
+Cache directives are explicitly defined to be case-insensitive. Handling of multiple instances of cache directives when only one is expected is now defined. ([[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][Section 5.2]])
 #+END_QUOTE
+
+显式定义缓存指令为不区别大小写。现在已定义了当仅期望一个缓存指令时，如何处理出现多个缓存指令实例的情况。（[[id:03c2dad4-a6d2-4d3c-b087-d08717bf09ec][章节 5.2]]）
+
+#+BEGIN_QUOTE
+The "=no-store=" request directive doesn't apply to responses; i.e., a cache can satisfy a request with =no-store= on it and does not invalidate it. ([[id:0b69ee34-0121-454f-a6b3-1d0ddacb3cba][Section 5.2.1.5]])
+#+END_QUOTE
+
+=no-store= 请求指令并不适用于响应消息，也就是说，缓存可以满足一个带有 =no-store= 指令的请求而不用将其设为失效。（[[id:0b69ee34-0121-454f-a6b3-1d0ddacb3cba][章节 5.2.1.5]]）
+
+#+BEGIN_QUOTE
+The qualified forms of the =private= and =no-cache= cache directives are noted to not be widely implemented; for example, "private=foo" is interpreted by many caches as simply "private". Additionally, the meaning of the qualified form of =no-cache= has been clarified. ([[id:3b667767-3efc-4487-b0a4-5234780e5de2][Section 5.2.2]])
+#+END_QUOTE
+
+目前已知 =private= 和 =no-cache= 缓存指令的[[ruby:qualified%20forms][限定形式]]并未广泛实现，例如，许多缓存只会将 "private=foo" 简单解释为 "private"。另外，明确了 =no-cache= 的限定形式的含义。（[[id:3b667767-3efc-4487-b0a4-5234780e5de2][章节 5.2.2]]）
+
+#+BEGIN_QUOTE
+The "no-cache" response directive's meaning has been clarified. ([[id:9c7307c8-5bc0-4812-ade1-d3080a39bf80][Section 5.2.2.2]])
+#+END_QUOTE
+
+明确了 =no-cache= 响应指令的含义。（[[id:9c7307c8-5bc0-4812-ade1-d3080a39bf80][章节 5.2.2.2]]）
+
+#+BEGIN_QUOTE
+The one-year limit on =Expires= header field values has been removed; instead, the reasoning for using a sensible value is given. ([[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][Section 5.3]])
+#+END_QUOTE
+
+移除了 =Expires= 头字段值的一年限制，另外还给出了使用一个合理值的原因。（[[id:18d3caca-869d-4ae8-8038-2c57cd36fef5][章节 5.3]]）
+
+#+BEGIN_QUOTE
+The =Pragma= header field is now only defined for backwards compatibility; future pragmas are deprecated. ([[id:8414ec2d-e5b5-4f9c-8160-c354c12b7504][Section 5.4]])
+#+END_QUOTE
+
+现在，=Pragma= 头字段仅为向后兼容而定义，废弃了以后（定义）的杂注。（[[id:8414ec2d-e5b5-4f9c-8160-c354c12b7504][章节 5.4]]）
+
+#+BEGIN_QUOTE
+Some requirements regarding production and processing of the =Warning= header fields have been relaxed, as it is not widely implemented. Furthermore, the =Warning= header field no longer uses RFC 2047 encoding, nor does it allow multiple languages, as these aspects were not implemented. ([[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][Section 5.5]])
+#+END_QUOTE
+
+放宽了 =Warning= 头字段的产生以及处理的某些相关要求，因为它并未得到广泛实现。而且，=Warning= 头字段不再使用 RFC 2047 编码，也不允许多语言，因为这些方面都没有得到实现。（[[id:84f5867e-4a3e-45fa-b085-dd23e8598a6b][章节 5.5]]）
+
+#+BEGIN_QUOTE
+This specification introduces the Cache Directive and Warn Code Registries, and defines considerations for new cache directives. ([[id:2e9cfd20-af05-4298-a592-5740477fe19d][Section 7.1]] and [[id:e5314ae5-e30e-4cb5-8830-72576409284a][Section 7.2]])
+#+END_QUOTE
+
+本规范引入了缓存指令以及警告码登记表，并定义了新缓存指令时的注意事项。（[[id:2e9cfd20-af05-4298-a592-5740477fe19d][章节 7.1]] 和[[id:e5314ae5-e30e-4cb5-8830-72576409284a][章节 7.2]]）
 
 * 附录 B：引进的 ABNF / Appendix B. Imported ABNF
 :PROPERTIES:
@@ -1972,12 +2108,16 @@ This specification introduces the Cache Directive and Warn Code Registries, and 
 :END:
 
 #+BEGIN_QUOTE
-The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+The following core rules are included by reference, as defined in [[https://tools.ietf.org/html/rfc5234#appendix-B.1][Appendix B.1]] of [RFC5234]: =ALPHA= (letters), =CR= (carriage return), =CRLF= (CR LF), =CTL= (controls), =DIGIT= (decimal 0-9), =DQUOTE= (double quote), =HEXDIG= (hexadecimal 0-9/A-F/a-f), =LF= (line feed), =OCTET= (any 8-bit sequence of data), =SP= (space), and =VCHAR= (any visible US-ASCII character).
 #+END_QUOTE
 
+本规范引用了以下定义在[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：=ALPHA= （字母）、=CR= （回车符）、=CRLF= （回车换行符）、=CTL= （控制字符）、=DIGIT= （十进制数字 0-9）、=DQUOTE= （双引号）、=HEXDIG= （十六进制数字 0-9/A-F/a-f）、=HTAB= （水平制表符）、=LF= （换行符）、=OCTET= （八位组字节）、=SP= （空白）以及 =VCHAR= （【USASCII】可见字符）。
+
 #+BEGIN_QUOTE
-The rules below are defined in [RFC7230]:
+The rules below are defined in [[[file:RFC7230.org][RFC7230]]]:
 #+END_QUOTE
+
+下列规则定义在【[[file:RFC7230.org][RFC7230]]】：
 
 #+BEGIN_SRC text
   OWS           = <OWS, see [RFC7230], Section 3.2.3>
@@ -1994,6 +2134,8 @@ The rules below are defined in [RFC7230]:
 The rules below are defined in other parts:
 #+END_QUOTE
 
+下列规则定义在 HTTP/1.1 规范的其他部分中：
+
 #+BEGIN_SRC text
   HTTP-date     = <HTTP-date, see [RFC7231], Section 7.1.1.1>
 #+END_SRC
@@ -2004,8 +2146,10 @@ The rules below are defined in other parts:
 :END:
 
 #+BEGIN_QUOTE
-In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
+In the collected ABNF below, list rules are expanded as per [[id:f8234cb5-154d-4daf-82fd-ed54ac75cf8b][Section 1.2]] of [RFC7230].
 #+END_QUOTE
+
+下列 ABNF 规则集合中，列表规则是在[[id:f8234cb5-154d-4daf-82fd-ed54ac75cf8b][【RFC7230】章节 1.2]] 所扩充的。
 
 #+BEGIN_SRC text
   Age = delta-seconds
@@ -2204,4 +2348,8 @@ In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7
   Germany
   Email: julian.reschke@greenbytes.de
   URI: http://greenbytes.de/tech/webdav/
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+阿多（译者）
 #+END_EXAMPLE

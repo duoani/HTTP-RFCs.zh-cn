@@ -785,7 +785,7 @@ For example:
 The "HTTP Range Unit Registry" defines the namespace for the range unit names and refers to their corresponding specifications. The registry has been created and is now maintained at <http://www.iana.org/assignments/http-parameters>.
 #+END_QUOTE
 
-《HTTP 范围单位登记表》为范围单位定义了命名空间，并引用到它们对应的规范上。这份登记表已经被创建，目前维护在 <http://www.iana.org/assignments/http-parameters>。
+《HTTP 范围单位登记表》定义了范围单位的命名空间，并引用到它们对应的规范上。这份登记表已经创建，目前维护在 <http://www.iana.org/assignments/http-parameters>。
 
 *** 5.1.1. 手续 / Procedure
 
