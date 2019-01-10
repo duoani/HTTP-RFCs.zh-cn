@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-07 Mon 12:10 -->
+<!-- 2019-01-10 Thu 19:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7235: Hypertext Transfer Protocol (HTTP/1.1): Authentication</title>
@@ -394,28 +394,28 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8e32b47">Abstract</a></li>
-<li><a href="#org115cf30">Status of This Memo</a></li>
+<li><a href="#orgc48f5f7">摘要 / Abstract</a></li>
+<li><a href="#org0bd7803">备忘状态 / Status of This Memo</a></li>
 <li><a href="#orgb9ee303">Copyright Notice</a></li>
-<li><a href="#org748a880">1. Introduction</a>
+<li><a href="#org0b30b70">1. 引言 / Introduction</a>
 <ul>
-<li><a href="#orgb0b89dc">1.1. Conformance and Error Handling</a></li>
-<li><a href="#org9ea3870">1.2. Syntax Notation</a></li>
+<li><a href="#orgb3fce96">1.1. 一致性和错误处理 / Conformance and Error Handling</a></li>
+<li><a href="#orgd1879ca">1.2. 句法标记 / Syntax Notation</a></li>
 </ul>
 </li>
-<li><a href="#orgc21c938">2. Access Authentication Framework</a>
+<li><a href="#org1ddac1d">2. 访问认证框架 / Access Authentication Framework</a>
 <ul>
-<li><a href="#org4f8fa21">2.1. Challenge and Response</a></li>
-<li><a href="#orgaa058ee">2.2. Protection Space (Realm)</a></li>
+<li><a href="#orgc624cd6">2.1. 质询和作答 / Challenge and Response</a></li>
+<li><a href="#org080522a">2.2. 保护空间（领域） / Protection Space (Realm)</a></li>
 </ul>
 </li>
-<li><a href="#org169ea9f">3. Status Code Definitions</a>
+<li><a href="#org1986578">3. 状态码定义 / Status Code Definitions</a>
 <ul>
 <li><a href="#orgea53663">3.1. 401 Unauthorized</a></li>
 <li><a href="#org0638ce0">3.2. 407 Proxy Authentication Required</a></li>
 </ul>
 </li>
-<li><a href="#orged22948">4. Header Field Definitions</a>
+<li><a href="#orgd1611ca">4. 头字段定义 / Header Field Definitions</a>
 <ul>
 <li><a href="#orgfa32f4b">4.1. WWW-Authenticate</a></li>
 <li><a href="#org83ecc17">4.2. Authorization</a></li>
@@ -423,36 +423,36 @@ for the JavaScript code in this tag.
 <li><a href="#org18ce3e0">4.4. Proxy-Authorization</a></li>
 </ul>
 </li>
-<li><a href="#org396dcde">5. IANA Considerations</a>
+<li><a href="#org6acf1bf">5. IANA 注意事项 / IANA Considerations</a>
 <ul>
-<li><a href="#org09866cf">5.1. Authentication Scheme Registry</a>
+<li><a href="#org6d7ca52">5.1. 认证方案登记表 / Authentication Scheme Registry</a>
 <ul>
-<li><a href="#orgad56a5c">5.1.1. Procedure</a></li>
-<li><a href="#orgf47efa8">5.1.2. Considerations for New Authentication Schemes</a></li>
+<li><a href="#org2e368a3">5.1.1. 手续 / Procedure</a></li>
+<li><a href="#org57cfa52">5.1.2. 新的认证方案的注意事项 / Considerations for New Authentication Schemes</a></li>
 </ul>
 </li>
-<li><a href="#orgcaddb17">5.2. Status Code Registration</a></li>
-<li><a href="#orgacc48fd">5.3. Header Field Registration</a></li>
+<li><a href="#orgea27146">5.2. 状态码登记表 / Status Code Registration</a></li>
+<li><a href="#orgb3ce7fc">5.3. 头字段登记表 / Header Field Registration</a></li>
 </ul>
 </li>
-<li><a href="#org406cec4">6. Security Considerations</a>
+<li><a href="#org14b4942">6. 安全注意事项 / Security Considerations</a>
 <ul>
 <li><a href="#orgaae2d5d">6.1. Confidentiality of Credentials</a></li>
 <li><a href="#orge70ad28">6.2. Authentication Credentials and Idle Clients</a></li>
 <li><a href="#org95ac9af">6.3. Protection Spaces</a></li>
 </ul>
 </li>
-<li><a href="#orgc19ca01">7. Acknowledgments</a></li>
-<li><a href="#org0c44926">8. References</a>
+<li><a href="#orgaabb94b">7. 鸣谢 / Acknowledgments</a></li>
+<li><a href="#orgadc8467">8. 参考资料 / References</a>
 <ul>
-<li><a href="#org5f2d67b">8.1. Normative References</a></li>
-<li><a href="#orgb2adf3d">8.2. Informative References</a></li>
+<li><a href="#org3b0c3db">8.1. 规范性参考资料 / Normative References</a></li>
+<li><a href="#org5a54f2f">8.2. 信息性参考资料 / Informative References</a></li>
 </ul>
 </li>
-<li><a href="#orga042983">Appendix A. Changes from RFCs 2616 and 2617</a></li>
-<li><a href="#org24b2db8">Appendix B. Imported ABNF</a></li>
-<li><a href="#org03ee50a">Appendix C. Collected ABNF</a></li>
-<li><a href="#org4e188e3">Index</a></li>
+<li><a href="#org1994bab">附录 A：相对 RFC 2616 和 2617 的变化 / Appendix A. Changes from RFCs 2616 and 2617</a></li>
+<li><a href="#org48a9208">附录 B：引进的 ABNF / Appendix B. Imported ABNF</a></li>
+<li><a href="#orgacfc244">附录 C：ABNF 集合 / Appendix C. Collected ABNF</a></li>
+<li><a href="#org9358a53">索引 / Index</a></li>
 <li><a href="#org6c1e403">Authors' Addresses</a></li>
 </ul>
 </div>
@@ -481,28 +481,52 @@ ISSN: 2070-1721
 </pre>
 </div>
 
-<div id="outline-container-org8e32b47" class="outline-2">
-<h2 id="org8e32b47">Abstract</h2>
-<div class="outline-text-2" id="text-org8e32b47">
+<div id="outline-container-orgc48f5f7" class="outline-2">
+<h2 id="orgc48f5f7">摘要 / Abstract</h2>
+<div class="outline-text-2" id="text-orgc48f5f7">
+<blockquote>
 <p>
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypermedia information systems. This document defines the HTTP Authentication framework.
 </p>
+</blockquote>
+
+<p>
+超文本传输协议（HTTP）是一种<ruby>无状态<rt>stateless</rt></ruby>的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP 的<ruby>认证框架<rt>Authentication framework</rt></ruby>。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org115cf30" class="outline-2">
-<h2 id="org115cf30">Status of This Memo</h2>
-<div class="outline-text-2" id="text-org115cf30">
+<div id="outline-container-org0bd7803" class="outline-2">
+<h2 id="org0bd7803">备忘状态 / Status of This Memo</h2>
+<div class="outline-text-2" id="text-org0bd7803">
+<blockquote>
 <p>
 This is an Internet Standards Track document.
 </p>
+</blockquote>
 
+<p>
+这是一个 Internet Standards Track 文档。
+</p>
+
+<blockquote>
 <p>
 This document is a product of the Internet Engineering Task Force (IETF). It represents the consensus of the IETF community. It has received public review and has been approved for publication by the Internet Engineering Steering Group (IESG). Further information on Internet Standards is available in Section 2 of RFC 5741.
 </p>
+</blockquote>
 
 <p>
+本文档是<ruby>互联网工程任务组<rt>Internet Engineering Task Force</rt></ruby>（IETF）的产品。它代表了 IETF 社区的共识。它已经接受公众审核并且已经被<ruby>互联网工程指导组<rt>Internet Engineering Steering Group</rt></ruby>（IESG）批准发布。有关<ruby>互联网标准<rt>Internet Standards</rt></ruby>的更多信息，请参阅 RFC 5741 <a href="https://tools.ietf.org/html/rfc5741">章节 2</a>。
+</p>
+
+<blockquote>
+<p>
 Information about the current status of this document, any errata, and how to provide feedback on it may be obtained at <a href="http://www.rfc-editor.org/info/rfc7235">http://www.rfc-editor.org/info/rfc7235</a>.
+</p>
+</blockquote>
+
+<p>
+关于本文档的当前状态，任何勘误以及如何提供反馈的信息可以从 <a href="http://www.rfc-editor.org/info/rfc7235">http://www.rfc-editor.org/info/rfc7235</a> 获得。
 </p>
 </div>
 </div>
@@ -510,68 +534,122 @@ Information about the current status of this document, any errata, and how to pr
 <div id="outline-container-orgb9ee303" class="outline-2">
 <h2 id="orgb9ee303">Copyright Notice</h2>
 <div class="outline-text-2" id="text-orgb9ee303">
+<blockquote>
 <p>
 Copyright © 2014 IETF Trust and the persons identified as the document authors. All rights reserved.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (<a href="http://trustee.ietf.org/license-info">http://trustee.ietf.org/license-info</a>) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document. Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This document may contain material from IETF Documents or IETF Contributions published or made publicly available before November 10, 2008. The person(s) controlling the copyright in some of this material may not have granted the IETF Trust the right to allow modifications of such material outside the IETF Standards Process. Without obtaining an adequate license from the person(s) controlling the copyright in such materials, this document may not be modified outside the IETF Standards Process, and derivative works of it may not be created outside the IETF Standards Process, except to format it for publication as an RFC or to translate it into languages other than English.
 </p>
+</blockquote>
 </div>
 </div>
 
-<div id="outline-container-org748a880" class="outline-2">
-<h2 id="org748a880">1. Introduction</h2>
-<div class="outline-text-2" id="text-org748a880">
+<div id="outline-container-org0b30b70" class="outline-2">
+<h2 id="org0b30b70">1. 引言 / Introduction</h2>
+<div class="outline-text-2" id="text-org0b30b70">
+<blockquote>
 <p>
-HTTP provides a general framework for access control and authentication, via an extensible set of challenge-response authentication schemes, which can be used by a server to challenge a client request and by a client to provide authentication information. This document defines HTTP/1.1 authentication in terms of the architecture defined in "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing" [RFC7230], including the general framework previously described in "HTTP Authentication: Basic and Digest Access Authentication" [RFC2617] and the related fields and status codes previously defined in "Hypertext Transfer Protocol &#x2013; HTTP/1.1" [RFC2616].
+HTTP provides a general framework for access control and authentication, via an extensible set of challenge-response authentication schemes, which can be used by a server to challenge a client request and by a client to provide authentication information. This document defines HTTP/1.1 authentication in terms of the architecture defined in "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing" [<a href="RFC7230.html">RFC7230</a>], including the general framework previously described in "HTTP Authentication: Basic and Digest Access Authentication" [<a href="https://tools.ietf.org/html/rfc2617">RFC2617</a>] and the related fields and status codes previously defined in "Hypertext Transfer Protocol &#x2013; HTTP/1.1" [<a href="https://tools.ietf.org/html/rfc2616">RFC2616</a>].
 </p>
-
-<p>
-The IANA Authentication Scheme Registry (Section 5.1) lists registered authentication schemes and their corresponding specifications, including the "basic" and "digest" authentication schemes previously defined by RFC 2617.
-</p>
-</div>
-
-<div id="outline-container-orgb0b89dc" class="outline-3">
-<h3 id="orgb0b89dc">1.1. Conformance and Error Handling</h3>
-<div class="outline-text-3" id="text-orgb0b89dc">
-<p>
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
-</p>
+</blockquote>
 
 <p>
-Conformance criteria and considerations regarding error handling are defined in Section 2.5 of [RFC7230].
+HTTP 提供了一个通用的访问控制和认证框架，经由一个可扩展的<ruby>质询-作答<rt>challenge-response</rt></ruby>认证方案的集合，服务器可以使用这种认证方案对客户端的请求进行质询，而客户端可以使用这种谁方案来向服务器提供认证信息。本文档依据《超文本传输协议（HTTP/1.1）：消息与路由》【<a href="RFC7230.html">RFC7230</a>】所定义的架构来定义了 HTTP/1.1 的认证，包括：之前在《HTTP 认证：基础与数字访问认证》【<a href="https://tools.ietf.org/html/rfc2617">RFC2617</a>】有所描述的通用框架，以及之前在《超文本传输协议——HTTP/1.1》【<a href="https://tools.ietf.org/html/rfc2616">RFC2616</a>】所定义的相关的字段和状态码。
+</p>
+
+<blockquote>
+<p>
+The IANA Authentication Scheme Registry (<a href="#org6d7ca52">Section 5.1</a>) lists registered authentication schemes and their corresponding specifications, including the "basic" and "digest" authentication schemes previously defined by RFC 2617.
+</p>
+</blockquote>
+
+<p>
+IANA 认证方案登记表（<a href="#org6d7ca52">章节 5.1</a>）列出了已登记的认证方案及其对应的规范，包括之前由 RFC 2617 所定义的 "basic" 和 "digest" 认证方案。
+</p>
+</div>
+
+<div id="outline-container-orgb3fce96" class="outline-3">
+<h3 id="orgb3fce96">1.1. 一致性和错误处理 / Conformance and Error Handling</h3>
+<div class="outline-text-3" id="text-orgb3fce96">
+<blockquote>
+<p>
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [<a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>].
+</p>
+</blockquote>
+
+<p>
+本文档中的关键词 <b><ruby>必须<rt>MUST</rt></ruby></b>、<b><ruby>禁止<rt>MUST NOT</rt></ruby></b>、<b><ruby>要求<rt>REQUIRED</rt></ruby></b>、<b><ruby>必须<rt>SHALL</rt></ruby></b>、<b><ruby>禁止<rt>SHALL NOT</rt></ruby></b>、<b><ruby>应当<rt>SHOULD</rt></ruby></b>、<b><ruby>不应当<rt>SHOULD NOT</rt></ruby></b>、<b><ruby>推荐<rt>RECOMMENDED</rt></ruby></b>、<b><ruby>可以<rt>MAY</rt></ruby></b> 和 <b><ruby>可选<rt>OPTIONAL</rt></ruby></b> 的意义与【<a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>】一致。
+</p>
+
+<blockquote>
+<p>
+Conformance criteria and considerations regarding error handling are defined in <a href="RFC7230.html#ID-A0441F72-9799-4667-9477-1E05885946A1">Section 2.5</a> of [RFC7230].
+</p>
+</blockquote>
+
+<p>
+关于错误处理的一致性标准以及注意事项已在<a href="RFC7230.html#ID-A0441F72-9799-4667-9477-1E05885946A1">【RFC7230】章节 2.5</a> 中定义了。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9ea3870" class="outline-3">
-<h3 id="org9ea3870">1.2. Syntax Notation</h3>
-<div class="outline-text-3" id="text-org9ea3870">
+<div id="outline-container-orgd1879ca" class="outline-3">
+<h3 id="orgd1879ca">1.2. 句法标记 / Syntax Notation</h3>
+<div class="outline-text-3" id="text-orgd1879ca">
+<blockquote>
 <p>
 This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC5234] with a list extension, defined in Section 7 of [RFC7230], that allows for compact definition of comma-separated lists using a '#' operator (similar to how the '*' operator indicates repetition). Appendix B describes rules imported from other documents. Appendix C shows the collected grammar with all list operators expanded to standard ABNF notation.
 </p>
+</blockquote>
+
+<p>
+本规范使用了<ruby>扩展巴科斯范式<rt>Augmented Backus-Naur Form</rt></ruby>（ABNF）标记法【<a href="https://tools.ietf.org/html/rfc5234">RFC5234</a>】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见<a href="RFC7230.html#ID-b9db011d-fe47-4781-929a-4b1b0aa55aec">章节 7</a>），允许使用一个 <code>#</code> 操作符（类似于 <code>*</code> 操作符，指代“重复”）来定义一种以逗号分隔的列表。<a href="RFC7234.html#ID-dd632d27-1596-43fe-90f8-dba848353e12">附录 B</a> 描述了从其他文档中引进的规则。<a href="RFC7234.html#ID-33ccb99a-6b09-4750-9e71-4cc1e43b49c5">附录 C</a> 展示了所有已收集的包含列表扩展规则以及标准 ABNF 标记的语法。
+</p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc21c938" class="outline-2">
-<h2 id="orgc21c938">2. Access Authentication Framework</h2>
-<div class="outline-text-2" id="text-orgc21c938">
+<div id="outline-container-org1ddac1d" class="outline-2">
+<h2 id="org1ddac1d">2. 访问认证框架 / Access Authentication Framework</h2>
+<div class="outline-text-2" id="text-org1ddac1d">
 </div>
-<div id="outline-container-org4f8fa21" class="outline-3">
-<h3 id="org4f8fa21">2.1. Challenge and Response</h3>
-<div class="outline-text-3" id="text-org4f8fa21">
+<div id="outline-container-orgc624cd6" class="outline-3">
+<h3 id="orgc624cd6">2.1. 质询和作答 / Challenge and Response</h3>
+<div class="outline-text-3" id="text-orgc624cd6">
+<blockquote>
 <p>
 HTTP provides a simple challenge-response authentication framework that can be used by a server to challenge a client request and by a client to provide authentication information. It uses a case-insensitive token as a means to identify the authentication scheme, followed by additional information necessary for achieving authentication via that scheme. The latter can be either a comma-separated list of parameters or a single sequence of characters capable of holding base64-encoded information.
 </p>
+</blockquote>
 
 <p>
-Authentication parameters are name=value pairs, where the name token is matched case-insensitively, and each parameter name MUST only occur once per challenge.
+HTTP 提供了一种简单的<ruby>质询-作答<rt>challenge-response</rt></ruby>认证框架，服务器可以使用它来对客户端请求进行质询，而客户端可以使用它来提供认证信息。它使用一个不区分大小写的<ruby>标记<rt>token</rt></ruby>来作为一种标识<ruby>认证方案<rt>authentication scheme</rt></ruby>的方法，这个标记之后紧跟的是通过这种方案来获取认证所必要的额外信息。这些额外信息要么是一个以逗号分隔的参数列表，要么是一个可以持有 base64 编码信息的字符序列。
+</p>
+
+<blockquote>
+<p>
+译注：质询-作答，就好比一个答题游戏，主持提问参赛者一个问题，参赛者答对了就可以进入下一个环节，如果答错了就挑战失败了。又好比一个开门暗号，暗号由房间内的人设置，门外的人需要回答这个暗号。也有人将其译为“挑战-响应”。
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Authentication parameters are <code>name=value</code> pairs, where the <code>name</code> token is matched case-insensitively, and each parameter name <b>MUST</b> only occur once per challenge.
+</p>
+</blockquote>
+
+<p>
+认证参数是 <code>name=value</code> 键值对，其中 <code>name</code> 标记是按不区分大小写的方式来匹配的，并且在每一次质询当中，每个参数名称 <b>必须</b> 仅出现一次。
 </p>
 
 <div class="org-src-container">
@@ -584,16 +662,47 @@ token68        = 1*( ALPHA / DIGIT /
 </pre>
 </div>
 
+<blockquote>
 <p>
-The token68 syntax allows the 66 unreserved URI characters ([RFC3986]), plus a few others, so that it can hold a base64, base64url (URL and filename safe alphabet), base32, or base16 (hex) encoding, with or without padding, but excluding whitespace ([RFC4648]).
+The <code>token68</code> syntax allows the 66 unreserved URI characters ([<a href="https://tools.ietf.org/html/rfc3986#section-2.3">RFC3986</a>]), plus a few others, so that it can hold a base64, base64url (URL and filename safe alphabet), base32, or base16 (hex) encoding, with or without padding, but excluding whitespace ([<a href="https://tools.ietf.org/html/rfc4648">RFC4648</a>]).
 </p>
+</blockquote>
 
 <p>
-A 401 (Unauthorized) response message is used by an origin server to challenge the authorization of a user agent, including a WWW-Authenticate header field containing at least one challenge applicable to the requested resource.
+<code>token68</code> 句法允许【<a href="https://tools.ietf.org/html/rfc3986#section-2.3">RFC3986</a>】所规定的 66 个未保留的 URI 字符，再加上一些其他的字符，以便它能够持有一个 base64、base64url（URL 和文件名安全的字母）、base32、或者 base16 (hex) 编码，带有或者不带有<ruby>填充字符<rt>padding</rt></ruby>，但是排除<ruby>空白<rt>whitespace</rt></ruby>（【<a href="https://tools.ietf.org/html/rfc4648">RFC4648</a>】）。
 </p>
 
+<blockquote>
 <p>
-A 407 (Proxy Authentication Required) response message is used by a proxy to challenge the authorization of a client, including a Proxy-Authenticate header field containing at least one challenge applicable to the proxy for the requested resource.
+译注：【RFC3986】中规定的未保留字符共有以下这些：
+unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+译注：base64 与 base32 编码方案一般使用等号 "=" 作为填充字符。
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+A <code>401 (Unauthorized)</code> response message is used by an origin server to challenge the authorization of a user agent, including a <code>WWW-Authenticate</code> header field containing at least one challenge applicable to the requested resource.
+</p>
+</blockquote>
+
+<p>
+源服务器使用一个 <code>401 (Unauthorized)</code> 响应消息来向用户代理质询认证，其中带有一个 <code>WWW-Authenticate</code> 头字段包含至少一个适用于所要请求的资源的质询。
+</p>
+
+<blockquote>
+<p>
+A <code>407 (Proxy Authentication Required)</code> response message is used by a proxy to challenge the authorization of a client, including a <code>Proxy-Authenticate</code> header field containing at least one challenge applicable to the proxy for the requested resource.
+</p>
+</blockquote>
+
+<p>
+代理使用一个 <code>407 (Proxy Authentication Required)</code> 响应消息来向客户端质询认证，其中带有一个 <code>Proxy-Authenticate</code> 头字段包含至少一个适用于代理去请求资源的质询。
 </p>
 
 <div class="org-src-container">
@@ -601,20 +710,44 @@ A 407 (Proxy Authentication Required) response message is used by a proxy to cha
 </pre>
 </div>
 
+<blockquote>
 <p>
 <b>Note:</b> Many clients fail to parse a challenge that contains an unknown scheme. A workaround for this problem is to list well-supported schemes (such as "basic") first.
 </p>
+</blockquote>
 
 <p>
-A user agent that wishes to authenticate itself with an origin server — usually, but not necessarily, after receiving a 401 (Unauthorized) — can do so by including an Authorization header field with the request.
+<b>注意：</b> 许多客户端无法解析包含一种未知方案的质询。对于这种问题的一种变通方法是先列出良好支持的方案（比如 "basic"）。
 </p>
 
+<blockquote>
 <p>
-A client that wishes to authenticate itself with a proxy — usually, but not necessarily, after receiving a 407 (Proxy Authentication Required) — can do so by including a Proxy-Authorization header field with the request.
+A user agent that wishes to authenticate itself with an origin server — usually, but not necessarily, after receiving a <code>401 (Unauthorized)</code> — can do so by including an <code>Authorization</code> header field with the request.
 </p>
+</blockquote>
 
 <p>
-Both the Authorization field value and the Proxy-Authorization field value contain the client's credentials for the realm of the resource being requested, based upon a challenge received in a response (possibly at some point in the past). When creating their values, the user agent ought to do so by selecting the challenge with what it considers to be the most secure auth-scheme that it understands, obtaining credentials from the user as appropriate. Transmission of credentials within header field values implies significant security considerations regarding the confidentiality of the underlying connection, as described in Section 6.1.
+在接收到一个 <code>401 (Unauthorized)</code> 以后，如果用户代理希望通过源服务器来认证自身（通常但并非必然），可以通过在请求中带有一个 <code>Authentication</code> 头字段来达到。
+</p>
+
+<blockquote>
+<p>
+A client that wishes to authenticate itself with a proxy — usually, but not necessarily, after receiving a <code>407 (Proxy Authentication Required)</code> — can do so by including a <code>Proxy-Authorization</code> header field with the request.
+</p>
+</blockquote>
+
+<p>
+在接收到一个 <code>407 (Proxy Authentication Required)</code> 以后，如果用户代理希望通过代理来认证自身（通常但并非必然），可以通过在请求中带有一个 <code>Proxy-Authorization</code> 头字段来达到。
+</p>
+
+<blockquote>
+<p>
+Both the <code>Authorization</code> field value and the <code>Proxy-Authorization</code> field value contain the client's credentials for the realm of the resource being requested, based upon a challenge received in a response (possibly at some point in the past). When creating their values, the user agent ought to do so by selecting the challenge with what it considers to be the most secure <code>auth-scheme</code> that it understands, obtaining credentials from the user as appropriate. Transmission of credentials within header field values implies significant security considerations regarding the confidentiality of the underlying connection, as described in <a href="#orgaae2d5d">Section 6.1</a>.
+</p>
+</blockquote>
+
+<p>
+<code>Authentication</code> 的字段值和 <code>Proxy-Authorization</code> 字段值都包含有客户端对所要请求的资源领域的凭证，根据（可能在过去的某个时候）接收自一个响应里的一个质询。当创建它们的值的时候，用户代理应该选择其理解的并认为是最安全的那一种 <code>auth-scheme</code> 质询，从用户那里适当地获得凭证。在头字段值里传输凭证意味着底层连接机密性方面的重大安全注意事项，正如<a href="#orgaae2d5d">章节 6.1</a> 所描述的。
 </p>
 
 <div class="org-src-container">
@@ -622,202 +755,287 @@ Both the Authorization field value and the Proxy-Authorization field value conta
 </pre>
 </div>
 
+<blockquote>
 <p>
-Upon receipt of a request for a protected resource that omits credentials, contains invalid credentials (e.g., a bad password) or partial credentials (e.g., when the authentication scheme requires more than one round trip), an origin server SHOULD send a 401 (Unauthorized) response that contains a WWW-Authenticate header field with at least one (possibly new) challenge applicable to the requested resource.
+Upon receipt of a request for a protected resource that omits credentials, contains invalid credentials (e.g., a bad password) or partial credentials (e.g., when the authentication scheme requires more than one round trip), an origin server <b>SHOULD</b> send a <code>401 (Unauthorized)</code> response that contains a <code>WWW-Authenticate</code> header field with at least one (possibly new) challenge applicable to the requested resource.
 </p>
+</blockquote>
 
 <p>
-Likewise, upon receipt of a request that omits proxy credentials or contains invalid or partial proxy credentials, a proxy that requires authentication SHOULD generate a 407 (Proxy Authentication Required) response that contains a Proxy-Authenticate header field with at least one (possibly new) challenge applicable to the proxy.
+如果源服务器接收到一个访问保护资源的请求，一旦这个请求缺少凭证，或者包含有一个无效的凭证（比如，一个错误的密码），或者不完整的凭证（比如，当认证方案要求超过一个以上回合的时候），那么，源服务器 <b>应当</b> 发送一个 <code>401 (Unauthorized)</code> 响应，其内包含有一个 <code>WWW-Authenticate</code> 头字段，该字段至少带有一个（可能是新的）适用于所请求的资源的质询。
 </p>
+
+<blockquote>
+<p>
+Likewise, upon receipt of a request that omits proxy credentials or contains invalid or partial proxy credentials, a proxy that requires authentication <b>SHOULD</b> generate a <code>407 (Proxy Authentication Required)</code> response that contains a <code>Proxy-Authenticate</code> header field with at least one (possibly new) challenge applicable to the proxy.
+</p>
+</blockquote>
 
 <p>
-A server that receives valid credentials that are not adequate to gain access ought to respond with the 403 (Forbidden) status code (Section 6.5.3 of [RFC7231]).
+同样，如果代理接收到一个请求，一旦这个请求缺少代理凭证，或者包含有无效或不完整的代理凭证，那么，要求认证的代理 <b>应当</b> 生成一个 <code>407 (Proxy Authentication Required)</code> 响应，其内包含有一个 <code>Proxy-Authenticate</code> 头字段，该字段至少带有一个（可能是新的）适用该代理的质询。
 </p>
 
+<blockquote>
+<p>
+A server that receives valid credentials that are not adequate to gain access ought to respond with the <code>403 (Forbidden)</code> status code (<a href="RFC7231.html#ID-addb601c-6b2f-45a7-97f7-9d24bdb8b585">Section 6.5.3</a> of [RFC7231]).
+</p>
+</blockquote>
+
+<p>
+服务器接收到有效凭证但并不足以授权其访问资源时，应该回应一个带有 <code>403 (Forbidden)</code> 状态码的响应（<a href="RFC7231.html#ID-addb601c-6b2f-45a7-97f7-9d24bdb8b585">【RFC7231】章节 6.5.3</a>）。
+</p>
+
+<blockquote>
 <p>
 HTTP does not restrict applications to this simple challenge-response framework for access authentication. Additional mechanisms can be used, such as authentication at the transport level or via message encapsulation, and with additional header fields specifying authentication information. However, such additional mechanisms are not defined by this specification.
 </p>
+</blockquote>
+
+<p>
+HTTP 并没有将对这个简单的<ruby>质询-作答<rt>challenge-response</rt></ruby>框架上的应用限定为访问认证。可以使用其他额外的机制（比如在传输层上的认证，或者经由消息封装的认证），以及带有额外头字段所指定的认证信息。然而，本规范并没有定义这些额外的机制。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgaa058ee" class="outline-3">
-<h3 id="orgaa058ee">2.2. Protection Space (Realm)</h3>
-<div class="outline-text-3" id="text-orgaa058ee">
+<div id="outline-container-org080522a" class="outline-3">
+<h3 id="org080522a">2.2. 保护空间（领域） / Protection Space (Realm)</h3>
+<div class="outline-text-3" id="text-org080522a">
+<blockquote>
 <p>
-The "realm" authentication parameter is reserved for use by authentication schemes that wish to indicate a scope of protection.
+The "<code>realm</code>" authentication parameter is reserved for use by authentication schemes that wish to indicate a scope of protection.
 </p>
+</blockquote>
 
 <p>
-A protection space is defined by the canonical root URI (the scheme and authority components of the effective request URI; see Section 5.5 of [RFC7230]) of the server being accessed, in combination with the realm value if present. These realms allow the protected resources on a server to be partitioned into a set of protection spaces, each with its own authentication scheme and/or authorization database. The realm value is a string, generally assigned by the origin server, that can have additional semantics specific to the authentication scheme. Note that a response can have multiple challenges with the same auth-scheme but with different realms.
+<code>realm</code> 是一个保留的认证参数，某些<ruby>认证方案<rt>authentication schemes</rt></ruby>如果希望去表明保护范围的话，可以使用它。
 </p>
 
+<blockquote>
+<p>
+A protection space is defined by the canonical root URI (the <code>scheme</code> and <code>authority</code> components of the effective request URI; see <a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">Section 5.5</a> of [RFC7230]) of the server being accessed, in combination with the <code>realm</code> value if present. These realms allow the protected resources on a server to be partitioned into a set of protection spaces, each with its own authentication scheme and/or authorization database. The <code>realm</code> value is a string, generally assigned by the origin server, that can have additional semantics specific to the authentication scheme. Note that a response can have multiple challenges with the same <code>auth-scheme</code> but with different realms.
+</p>
+</blockquote>
+
+<p>
+<ruby>保护空间<rt>protection space</rt></ruby>是由被访问的服务器的<ruby>规范化根 URI<rt>canonical root URI</rt></ruby>（即实际请求 URI 的 <code>scheme</code> 和 <code>authority</code> 组件，见<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>），并结合 <code>realm</code> 的值（如果有出现的话）来进行定义的。这些<ruby>领域<rt>realms</rt></ruby>使得在服务器上要保护的各种资源可以划分为一系列的<ruby>保护空间<rt>protection spaces</rt></ruby>，每一个保护空间都有自己的认证方案以及/或者认证数据库。<code>realm</code> 的值是一个字符串，通常由源服务器所赋值，可以具有对应认证方案所特有的额外语义。需要注意的是，一个响应可以有多个具有相同 <code>auth-scheme</code> 但不同 <code>realm</code> 的质询。
+</p>
+
+<blockquote>
 <p>
 The protection space determines the domain over which credentials can be automatically applied. If a prior request has been authorized, the user agent MAY reuse the same credentials for all other requests within that protection space for a period of time determined by the authentication scheme, parameters, and/or user preferences (such as a configurable inactivity timeout). Unless specifically allowed by the authentication scheme, a single protection space cannot extend outside the scope of its server.
 </p>
+</blockquote>
 
+<p>
+保护空间决定了哪一种凭证可以被自动执行
+</p>
+
+<blockquote>
 <p>
 For historical reasons, a sender MUST only generate the quoted-string syntax. Recipients might have to support both token and quoted-string syntax for maximum interoperability with existing clients that have been accepting both notations for a long time.
 </p>
+</blockquote>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org169ea9f" class="outline-2">
-<h2 id="org169ea9f"><a id="ID-3a079a03-d926-4f70-95da-d8fcedbdf3ac"></a>3. Status Code Definitions</h2>
-<div class="outline-text-2" id="text-org169ea9f">
+<div id="outline-container-org1986578" class="outline-2">
+<h2 id="org1986578"><a id="ID-3a079a03-d926-4f70-95da-d8fcedbdf3ac"></a>3. 状态码定义 / Status Code Definitions</h2>
+<div class="outline-text-2" id="text-org1986578">
 </div>
 <div id="outline-container-orgea53663" class="outline-3">
 <h3 id="orgea53663"><a id="ID-50ef5918-69e6-4826-9f20-db56fdd02974"></a>3.1. 401 Unauthorized</h3>
 <div class="outline-text-3" id="text-orgea53663">
+<blockquote>
 <p>
 The 401 (Unauthorized) status code indicates that the request has not been applied because it lacks valid authentication credentials for the target resource. The server generating a 401 response MUST send a WWW-Authenticate header field (Section 4.1) containing at least one challenge applicable to the target resource.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 If the request included authentication credentials, then the 401 response indicates that authorization has been refused for those credentials. The user agent MAY repeat the request with a new or replaced Authorization header field (Section 4.2). If the 401 response contains the same challenge as the prior response, and the user agent has already attempted authentication at least once, then the user agent SHOULD present the enclosed representation to the user, since it usually contains relevant diagnostic information.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org0638ce0" class="outline-3">
 <h3 id="org0638ce0"><a id="ID-1029b0aa-9c78-463a-b3f4-a4acbfbac26f"></a>3.2. 407 Proxy Authentication Required</h3>
 <div class="outline-text-3" id="text-org0638ce0">
+<blockquote>
 <p>
 The 407 (Proxy Authentication Required) status code is similar to 401 (Unauthorized), but it indicates that the client needs to authenticate itself in order to use a proxy. The proxy MUST send a Proxy-Authenticate header field (Section 4.3) containing a challenge applicable to that proxy for the target resource. The client MAY repeat the request with a new or replaced Proxy-Authorization header field (Section 4.4).
 </p>
+</blockquote>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orged22948" class="outline-2">
-<h2 id="orged22948">4. Header Field Definitions</h2>
-<div class="outline-text-2" id="text-orged22948">
+<div id="outline-container-orgd1611ca" class="outline-2">
+<h2 id="orgd1611ca">4. 头字段定义 / Header Field Definitions</h2>
+<div class="outline-text-2" id="text-orgd1611ca">
+<blockquote>
 <p>
 This section defines the syntax and semantics of header fields related to the HTTP authentication framework.
 </p>
+</blockquote>
 </div>
 
 <div id="outline-container-orgfa32f4b" class="outline-3">
 <h3 id="orgfa32f4b"><a id="ID-22f79cd1-20cc-4ac0-bd68-643e0d51fe7d"></a>4.1. WWW-Authenticate</h3>
 <div class="outline-text-3" id="text-orgfa32f4b">
+<blockquote>
 <p>
 The "WWW-Authenticate" header field indicates the authentication scheme(s) and parameters applicable to the target resource.
 </p>
+</blockquote>
 
 <div class="org-src-container">
 <pre class="src src-text">WWW-Authenticate = 1#challenge
 </pre>
 </div>
 
+<blockquote>
 <p>
 A server generating a 401 (Unauthorized) response MUST send a WWW-Authenticate header field containing at least one challenge. A server MAY generate a WWW-Authenticate header field in other response messages to indicate that supplying credentials (or different credentials) might affect the response.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A proxy forwarding a response MUST NOT modify any WWW-Authenticate fields in that response.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 User agents are advised to take special care in parsing the field value, as it might contain more than one challenge, and each challenge can contain a comma-separated list of authentication parameters. Furthermore, the header field itself can occur multiple times.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 For instance:
 </p>
+</blockquote>
 
 <pre class="example">
 WWW-Authenticate: Newauth realm="apps", type=1,
                   title="Login to \"apps\"", Basic realm="simple"
 </pre>
 
+<blockquote>
 <p>
 This header field contains two challenges; one for the "Newauth" scheme with a realm value of "apps", and two additional parameters "type" and "title", and another one for the "Basic" scheme with a realm value of "simple".
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 <b>Note:</b> The challenge grammar production uses the list syntax as well. Therefore, a sequence of comma, whitespace, and comma can be considered either as applying to the preceding challenge, or to be an empty entry in the list of challenges. In practice, this ambiguity does not affect the semantics of the header field value and thus is harmless.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org83ecc17" class="outline-3">
 <h3 id="org83ecc17"><a id="ID-14671c8e-e5a4-4f9d-ad1d-6460328ed7f5"></a>4.2. Authorization</h3>
 <div class="outline-text-3" id="text-org83ecc17">
+<blockquote>
 <p>
 The "Authorization" header field allows a user agent to authenticate itself with an origin server — usually, but not necessarily, after receiving a 401 (Unauthorized) response. Its value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.
 </p>
+</blockquote>
 
 <div class="org-src-container">
 <pre class="src src-text">Authorization = credentials
 </pre>
 </div>
 
+<blockquote>
 <p>
 If a request is authenticated and a realm specified, the same credentials are presumed to be valid for all other requests within this realm (assuming that the authentication scheme itself does not require otherwise, such as credentials that vary according to a challenge value or using synchronized clocks).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 A proxy forwarding a request MUST NOT modify any Authorization fields in that request. See Section 3.2 of [RFC7234] for details of and requirements pertaining to handling of the Authorization field by HTTP caches.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org440e962" class="outline-3">
 <h3 id="org440e962"><a id="ID-7f949af1-00e3-4909-adc7-219da68f0457"></a>4.3. Proxy-Authenticate</h3>
 <div class="outline-text-3" id="text-org440e962">
+<blockquote>
 <p>
 The "Proxy-Authenticate" header field consists of at least one challenge that indicates the authentication scheme(s) and parameters applicable to the proxy for this effective request URI (Section 5.5 of [RFC7230]). A proxy MUST send at least one Proxy-Authenticate header field in each 407 (Proxy Authentication Required) response that it generates.
 </p>
+</blockquote>
 
 <div class="org-src-container">
 <pre class="src src-text">Proxy-Authenticate = 1#challenge
 </pre>
 </div>
 
+<blockquote>
 <p>
 Unlike WWW-Authenticate, the Proxy-Authenticate header field applies only to the next outbound client on the response chain. This is because only the client that chose a given proxy is likely to have the credentials necessary for authentication. However, when multiple proxies are used within the same administrative domain, such as office and regional caching proxies within a large corporate network, it is common for credentials to be generated by the user agent and passed through the hierarchy until consumed. Hence, in such a configuration, it will appear as if Proxy-Authenticate is being forwarded because each proxy will send the same challenge set.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Note that the parsing considerations for WWW-Authenticate apply to this header field as well; see Section 4.1 for details.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org18ce3e0" class="outline-3">
 <h3 id="org18ce3e0"><a id="ID-89c3125a-e7ef-48ea-a2c1-ff4c57214389"></a>4.4. Proxy-Authorization</h3>
 <div class="outline-text-3" id="text-org18ce3e0">
+<blockquote>
 <p>
 The "Proxy-Authorization" header field allows the client to identify itself (or its user) to a proxy that requires authentication. Its value consists of credentials containing the authentication information of the client for the proxy and/or realm of the resource being requested.
 </p>
+</blockquote>
 
 <div class="org-src-container">
 <pre class="src src-text">Proxy-Authorization = credentials
 </pre>
 </div>
 
+<blockquote>
 <p>
 Unlike Authorization, the Proxy-Authorization header field applies only to the next inbound proxy that demanded authentication using the Proxy-Authenticate field. When multiple proxies are used in a chain, the Proxy-Authorization header field is consumed by the first inbound proxy that was expecting to receive credentials. A proxy MAY relay the credentials from the client request to the next proxy if that is the mechanism by which the proxies cooperatively authenticate a given request.
 </p>
+</blockquote>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org396dcde" class="outline-2">
-<h2 id="org396dcde">5. IANA Considerations</h2>
-<div class="outline-text-2" id="text-org396dcde">
+<div id="outline-container-org6acf1bf" class="outline-2">
+<h2 id="org6acf1bf">5. IANA 注意事项 / IANA Considerations</h2>
+<div class="outline-text-2" id="text-org6acf1bf">
 </div>
-<div id="outline-container-org09866cf" class="outline-3">
-<h3 id="org09866cf">5.1. Authentication Scheme Registry</h3>
-<div class="outline-text-3" id="text-org09866cf">
+<div id="outline-container-org6d7ca52" class="outline-3">
+<h3 id="org6d7ca52"><a id="ID-af1963ff-7886-492d-93cd-3d76aaf2d475"></a>5.1. 认证方案登记表 / Authentication Scheme Registry</h3>
+<div class="outline-text-3" id="text-org6d7ca52">
+<blockquote>
 <p>
 The "Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry" defines the namespace for the authentication schemes in challenges and credentials. It has been created and is now maintained at <a href="http://www.iana.org/assignments/http-authschemes">http://www.iana.org/assignments/http-authschemes</a>.
 </p>
+</blockquote>
 </div>
 
-<div id="outline-container-orgad56a5c" class="outline-4">
-<h4 id="orgad56a5c">5.1.1. Procedure</h4>
-<div class="outline-text-4" id="text-orgad56a5c">
+<div id="outline-container-org2e368a3" class="outline-4">
+<h4 id="org2e368a3">5.1.1. 手续 / Procedure</h4>
+<div class="outline-text-4" id="text-org2e368a3">
+<blockquote>
 <p>
 Registrations MUST include the following fields:
 </p>
@@ -827,16 +1045,20 @@ Registrations MUST include the following fields:
 <li>Pointer to specification text</li>
 <li>Notes (optional)</li>
 </ul>
+</blockquote>
 
+<blockquote>
 <p>
 Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
 </p>
+</blockquote>
 </div>
 </div>
 
-<div id="outline-container-orgf47efa8" class="outline-4">
-<h4 id="orgf47efa8">5.1.2. Considerations for New Authentication Schemes</h4>
-<div class="outline-text-4" id="text-orgf47efa8">
+<div id="outline-container-org57cfa52" class="outline-4">
+<h4 id="org57cfa52">5.1.2. 新的认证方案的注意事项 / Considerations for New Authentication Schemes</h4>
+<div class="outline-text-4" id="text-org57cfa52">
+<blockquote>
 <p>
 There are certain aspects of the HTTP Authentication Framework that put constraints on how new authentication schemes can work:
 </p>
@@ -868,16 +1090,19 @@ The credentials carried in an Authorization header field are specific to the use
 Therefore, new authentication schemes that choose not to carry credentials in the Authorization header field (e.g., using a newly defined header field) will need to explicitly disallow caching, by mandating the use of either Cache-Control request directives (e.g., "no-store", Section 5.2.1.5 of [RFC7234]) or response directives (e.g., "private").
 </p></li>
 </ul>
+</blockquote>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgcaddb17" class="outline-3">
-<h3 id="orgcaddb17">5.2. Status Code Registration</h3>
-<div class="outline-text-3" id="text-orgcaddb17">
+<div id="outline-container-orgea27146" class="outline-3">
+<h3 id="orgea27146">5.2. 状态码登记表 / Status Code Registration</h3>
+<div class="outline-text-3" id="text-orgea27146">
+<blockquote>
 <p>
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <a href="http://www.iana.org/assignments/http-status-codes">http://www.iana.org/assignments/http-status-codes</a> has been updated with the registrations below:
 </p>
+</blockquote>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -913,16 +1138,20 @@ The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <a href
 </div>
 </div>
 
-<div id="outline-container-orgacc48fd" class="outline-3">
-<h3 id="orgacc48fd">5.3. Header Field Registration</h3>
-<div class="outline-text-3" id="text-orgacc48fd">
+<div id="outline-container-orgb3ce7fc" class="outline-3">
+<h3 id="orgb3ce7fc">5.3. 头字段登记表 / Header Field Registration</h3>
+<div class="outline-text-3" id="text-orgb3ce7fc">
+<blockquote>
 <p>
 HTTP header fields are registered within the "Message Headers" registry maintained at <a href="http://www.iana.org/assignments/message-headers/">http://www.iana.org/assignments/message-headers/</a>.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This document defines the following HTTP header fields, so the "Permanent Message Header Field Names" registry has been updated accordingly (see [BCP90]).
 </p>
+</blockquote>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -975,45 +1204,58 @@ This document defines the following HTTP header fields, so the "Permanent Messag
 </tbody>
 </table>
 
+<blockquote>
 <p>
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 </p>
+</blockquote>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org406cec4" class="outline-2">
-<h2 id="org406cec4">6. Security Considerations</h2>
-<div class="outline-text-2" id="text-org406cec4">
+<div id="outline-container-org14b4942" class="outline-2">
+<h2 id="org14b4942">6. 安全注意事项 / Security Considerations</h2>
+<div class="outline-text-2" id="text-org14b4942">
+<blockquote>
 <p>
 This section is meant to inform developers, information providers, and users of known security concerns specific to HTTP authentication. More general security considerations are addressed in HTTP messaging [RFC7230] and semantics [RFC7231].
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Everything about the topic of HTTP authentication is a security consideration, so the list of considerations below is not exhaustive. Furthermore, it is limited to security considerations regarding the authentication framework, in general, rather than discussing all of the potential considerations for specific authentication schemes (which ought to be documented in the specifications that define those schemes). Various organizations maintain topical information and links to current research on Web application security (e.g., [OWASP]), including common pitfalls for implementing and using the authentication schemes found in practice.
 </p>
+</blockquote>
 </div>
 
 <div id="outline-container-orgaae2d5d" class="outline-3">
-<h3 id="orgaae2d5d">6.1. Confidentiality of Credentials</h3>
+<h3 id="orgaae2d5d"><a id="ID-2918532f-0cd3-451c-a1d1-ef0c089539b8"></a>6.1. Confidentiality of Credentials</h3>
 <div class="outline-text-3" id="text-orgaae2d5d">
+<blockquote>
 <p>
 The HTTP authentication framework does not define a single mechanism for maintaining the confidentiality of credentials; instead, each authentication scheme defines how the credentials are encoded prior to transmission. While this provides flexibility for the development of future authentication schemes, it is inadequate for the protection of existing schemes that provide no confidentiality on their own, or that do not sufficiently protect against replay attacks. Furthermore, if the server expects credentials that are specific to each individual user, the exchange of those credentials will have the effect of identifying that user even if the content within credentials remains confidential.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 HTTP depends on the security properties of the underlying transport- or session-level connection to provide confidential transmission of header fields. In other words, if a server limits access to authenticated users using this framework, the server needs to ensure that the connection is properly secured in accordance with the nature of the authentication scheme used. For example, services that depend on individual user authentication often require a connection to be secured with TLS ("Transport Layer Security", [RFC5246]) prior to exchanging any credentials.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-orge70ad28" class="outline-3">
 <h3 id="orge70ad28">6.2. Authentication Credentials and Idle Clients</h3>
 <div class="outline-text-3" id="text-orge70ad28">
+<blockquote>
 <p>
 Existing HTTP clients and user agents typically retain authentication information indefinitely. HTTP does not provide a mechanism for the origin server to direct clients to discard these cached credentials, since the protocol has no awareness of how credentials are obtained or managed by the user agent. The mechanisms for expiring or revoking credentials can be specified as part of an authentication scheme definition.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 Circumstances under which credential caching can interfere with the application's security model include but are not limited to:
 </p>
@@ -1022,47 +1264,58 @@ Circumstances under which credential caching can interfere with the application'
 <li>Clients that have been idle for an extended period, following which the server might wish to cause the client to re-prompt the user for credentials.</li>
 <li>Applications that include a session termination indication (such as a "logout" or "commit" button on a page) after which the server side of the application "knows" that there is no further reason for the client to retain the credentials.</li>
 </ul>
+</blockquote>
 
+<blockquote>
 <p>
 User agents that cache credentials are encouraged to provide a readily accessible mechanism for discarding cached credentials under user control.
 </p>
+</blockquote>
 </div>
 </div>
 
 <div id="outline-container-org95ac9af" class="outline-3">
 <h3 id="org95ac9af">6.3. Protection Spaces</h3>
 <div class="outline-text-3" id="text-org95ac9af">
+<blockquote>
 <p>
 Authentication schemes that solely rely on the "realm" mechanism for establishing a protection space will expose credentials to all resources on an origin server. Clients that have successfully made authenticated requests with a resource can use the same authentication credentials for other resources on the same origin server. This makes it possible for a different resource to harvest authentication credentials for other resources.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This is of particular concern when an origin server hosts resources for multiple parties under the same canonical root URI (Section 2.2). Possible mitigation strategies include restricting direct access to authentication credentials (i.e., not making the content of the Authorization request header field available), and separating protection spaces by using a different host name (or port number) for each party.
 </p>
+</blockquote>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc19ca01" class="outline-2">
-<h2 id="orgc19ca01">7. Acknowledgments</h2>
-<div class="outline-text-2" id="text-orgc19ca01">
+<div id="outline-container-orgaabb94b" class="outline-2">
+<h2 id="orgaabb94b">7. 鸣谢 / Acknowledgments</h2>
+<div class="outline-text-2" id="text-orgaabb94b">
+<blockquote>
 <p>
 This specification takes over the definition of the HTTP Authentication Framework, previously defined in RFC 2617. We thank John Franks, Phillip M. Hallam-Baker, Jeffery L. Hostetler, Scott D. Lawrence, Paul J. Leach, Ari Luotonen, and Lawrence C. Stewart for their work on that specification. See Section 6 of [RFC2617] for further acknowledgements.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 See Section 10 of [RFC7230] for the Acknowledgments related to this document revision.
 </p>
+</blockquote>
 </div>
 </div>
 
-<div id="outline-container-org0c44926" class="outline-2">
-<h2 id="org0c44926">8. References</h2>
-<div class="outline-text-2" id="text-org0c44926">
+<div id="outline-container-orgadc8467" class="outline-2">
+<h2 id="orgadc8467">8. 参考资料 / References</h2>
+<div class="outline-text-2" id="text-orgadc8467">
 </div>
-<div id="outline-container-org5f2d67b" class="outline-3">
-<h3 id="org5f2d67b">8.1. Normative References</h3>
-<div class="outline-text-3" id="text-org5f2d67b">
+<div id="outline-container-org3b0c3db" class="outline-3">
+<h3 id="org3b0c3db">8.1. 规范性参考资料 / Normative References</h3>
+<div class="outline-text-3" id="text-org3b0c3db">
 <dl class="org-dl">
 <dt>[RFC2119]</dt><dd>Bradner, S., “Key words for use in RFCs to Indicate Requirement Levels”, BCP 14, RFC 2119, March 1997.</dd>
 <dt>[RFC5234]</dt><dd>Crocker, D., Ed. and P. Overell, “Augmented BNF for Syntax Specifications: ABNF”, STD 68, RFC 5234, January 2008.</dd>
@@ -1073,9 +1326,9 @@ See Section 10 of [RFC7230] for the Acknowledgments related to this document rev
 </div>
 </div>
 
-<div id="outline-container-orgb2adf3d" class="outline-3">
-<h3 id="orgb2adf3d">8.2. Informative References</h3>
-<div class="outline-text-3" id="text-orgb2adf3d">
+<div id="outline-container-org5a54f2f" class="outline-3">
+<h3 id="org5a54f2f">8.2. 信息性参考资料 / Informative References</h3>
+<div class="outline-text-3" id="text-org5a54f2f">
 <dl class="org-dl">
 <dt>[BCP90]</dt><dd>Klyne, G., Nottingham, M., and J. Mogul, “Registration Procedures for Message Header Fields”, BCP 90, RFC 3864, September 2004.</dd>
 <dt>[OWASP]</dt><dd>van der Stock, A., Ed., “A Guide to Building Secure Web Applications and Web Services”, The Open Web Application Security Project (OWASP) 2.0.1, July 2005, <a href="https://www.owasp.org/">https://www.owasp.org/</a>.</dd>
@@ -1090,37 +1343,49 @@ See Section 10 of [RFC7230] for the Acknowledgments related to this document rev
 </div>
 </div>
 
-<div id="outline-container-orga042983" class="outline-2">
-<h2 id="orga042983">Appendix A. Changes from RFCs 2616 and 2617</h2>
-<div class="outline-text-2" id="text-orga042983">
+<div id="outline-container-org1994bab" class="outline-2">
+<h2 id="org1994bab">附录 A：相对 RFC 2616 和 2617 的变化 / Appendix A. Changes from RFCs 2616 and 2617</h2>
+<div class="outline-text-2" id="text-org1994bab">
+<blockquote>
 <p>
 The framework for HTTP Authentication is now defined by this document, rather than RFC 2617.
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The "realm" parameter is no longer always required on challenges; consequently, the ABNF allows challenges without any auth parameters. (Section 2)
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The "token68" alternative to auth-param lists has been added for consistency with legacy authentication schemes such as "Basic". (Section 2)
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 This specification introduces the Authentication Scheme Registry, along with considerations for new authentication schemes. (Section 5.1)
 </p>
+</blockquote>
 </div>
 </div>
 
-<div id="outline-container-org24b2db8" class="outline-2">
-<h2 id="org24b2db8">Appendix B. Imported ABNF</h2>
-<div class="outline-text-2" id="text-org24b2db8">
+<div id="outline-container-org48a9208" class="outline-2">
+<h2 id="org48a9208">附录 B：引进的 ABNF / Appendix B. Imported ABNF</h2>
+<div class="outline-text-2" id="text-org48a9208">
+<blockquote>
 <p>
 The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
 </p>
+</blockquote>
 
+<blockquote>
 <p>
 The rules below are defined in [RFC7230]:
 </p>
+</blockquote>
 
 <div class="org-src-container">
 <pre class="src src-text">BWS           = &lt;BWS, see [RFC7230], Section 3.2.3&gt;
@@ -1132,12 +1397,14 @@ token         = &lt;token, see [RFC7230], Section 3.2.6&gt;
 </div>
 </div>
 
-<div id="outline-container-org03ee50a" class="outline-2">
-<h2 id="org03ee50a">Appendix C. Collected ABNF</h2>
-<div class="outline-text-2" id="text-org03ee50a">
+<div id="outline-container-orgacfc244" class="outline-2">
+<h2 id="orgacfc244">附录 C：ABNF 集合 / Appendix C. Collected ABNF</h2>
+<div class="outline-text-2" id="text-orgacfc244">
+<blockquote>
 <p>
 In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
 </p>
+</blockquote>
 
 <div class="org-src-container">
 <pre class="src src-text">Authorization = credentials
@@ -1171,8 +1438,8 @@ token68 = 1*( ALPHA / DIGIT / "-" / "." / "_" / "~" / "+" / "/" )
 </div>
 </div>
 
-<div id="outline-container-org4e188e3" class="outline-2">
-<h2 id="org4e188e3">Index</h2>
+<div id="outline-container-org9358a53" class="outline-2">
+<h2 id="org9358a53">索引 / Index</h2>
 </div>
 
 <div id="outline-container-org6c1e403" class="outline-2">
