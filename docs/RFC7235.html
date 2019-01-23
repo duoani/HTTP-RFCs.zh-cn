@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-10 Thu 19:10 -->
+<!-- 2019-01-23 Wed 19:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7235: Hypertext Transfer Protocol (HTTP/1.1): Authentication</title>
@@ -807,7 +807,7 @@ The "<code>realm</code>" authentication parameter is reserved for use by authent
 </blockquote>
 
 <p>
-<code>realm</code> 是一个保留的认证参数，某些<ruby>认证方案<rt>authentication schemes</rt></ruby>如果希望去表明保护范围的话，可以使用它。
+<code>realm</code> 是一个保留的认证参数，某些<ruby>认证方案<rt>authentication schemes</rt></ruby>如果希望去表明保护范围的话，可以使用它来实现目的。
 </p>
 
 <blockquote>
@@ -822,19 +822,23 @@ A protection space is defined by the canonical root URI (the <code>scheme</code>
 
 <blockquote>
 <p>
-The protection space determines the domain over which credentials can be automatically applied. If a prior request has been authorized, the user agent MAY reuse the same credentials for all other requests within that protection space for a period of time determined by the authentication scheme, parameters, and/or user preferences (such as a configurable inactivity timeout). Unless specifically allowed by the authentication scheme, a single protection space cannot extend outside the scope of its server.
+The protection space determines the domain over which credentials can be automatically applied. If a prior request has been authorized, the user agent <b>MAY</b> reuse the same credentials for all other requests within that protection space for a period of time determined by the authentication scheme, parameters, and/or user preferences (such as a configurable inactivity timeout). Unless specifically allowed by the authentication scheme, a single protection space cannot extend outside the scope of its server.
 </p>
 </blockquote>
 
 <p>
-保护空间决定了哪一种凭证可以被自动执行
+保护空间决定了哪一种凭证可以被自动执行。某个之前的请求假如已经经过授权，那么，对于这个保护空间内的所有其他请求，用户代理 <b>可以</b> 在一段时间内复用同一个凭证，而这个具体时间为多久，取决于<ruby>认证方案<rt>authentication scheme</rt></ruby>、参数，以及/或者用户的偏好设置（比如一个可配置的闲置超时时间）。除非认证方案明确允许，单个保护空间的范围不能超出它的服务器的范围。
 </p>
 
 <blockquote>
 <p>
-For historical reasons, a sender MUST only generate the quoted-string syntax. Recipients might have to support both token and quoted-string syntax for maximum interoperability with existing clients that have been accepting both notations for a long time.
+For historical reasons, a sender <b>MUST</b> only generate the <code>quoted-string</code> syntax. Recipients might have to support both <code>token</code> and <code>quoted-string</code> syntax for maximum interoperability with existing clients that have been accepting both notations for a long time.
 </p>
 </blockquote>
+
+<p>
+出于历史遗留的原因，发送端 <b>必须</b> 仅生成 <code>quoted-string</code> 句法。而为了最大化与现存的很早就接受两种标记法的客户端的可交互性，接收端可能得同时支持 <code>token</code> 和 <code>quoted-string</code> 两种句法。
+</p>
 </div>
 </div>
 </div>
