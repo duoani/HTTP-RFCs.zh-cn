@@ -227,7 +227,7 @@ HTTP 并没有将对这个简单的[[ruby:challenge-response][质询-作答]]框
 The "=realm=" authentication parameter is reserved for use by authentication schemes that wish to indicate a scope of protection.
 #+END_QUOTE
 
-=realm= 是一个保留的认证参数，某些[[ruby:authentication%20schemes][认证方案]]如果希望去表明保护范围的话，可以使用它。
+=realm= 是一个保留的认证参数，某些[[ruby:authentication%20schemes][认证方案]]如果希望去表明保护范围的话，可以使用它来实现目的。
 
 #+BEGIN_QUOTE
 A protection space is defined by the canonical root URI (the =scheme= and =authority= components of the effective request URI; see [[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]) of the server being accessed, in combination with the =realm= value if present. These realms allow the protected resources on a server to be partitioned into a set of protection spaces, each with its own authentication scheme and/or authorization database. The =realm= value is a string, generally assigned by the origin server, that can have additional semantics specific to the authentication scheme. Note that a response can have multiple challenges with the same =auth-scheme= but with different realms.
@@ -236,14 +236,16 @@ A protection space is defined by the canonical root URI (the =scheme= and =autho
 [[ruby:protection%20space][保护空间]]是由被访问的服务器的[[ruby:canonical%20root%20URI][规范化根 URI]]（即实际请求 URI 的 =scheme= 和 =authority= 组件，见[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]），并结合 =realm= 的值（如果有出现的话）来进行定义的。这些[[ruby:realms][领域]]使得在服务器上要保护的各种资源可以划分为一系列的[[ruby:protection%20spaces][保护空间]]，每一个保护空间都有自己的认证方案以及/或者认证数据库。=realm= 的值是一个字符串，通常由源服务器所赋值，可以具有对应认证方案所特有的额外语义。需要注意的是，一个响应可以有多个具有相同 =auth-scheme= 但不同 =realm= 的质询。
 
 #+BEGIN_QUOTE
-The protection space determines the domain over which credentials can be automatically applied. If a prior request has been authorized, the user agent MAY reuse the same credentials for all other requests within that protection space for a period of time determined by the authentication scheme, parameters, and/or user preferences (such as a configurable inactivity timeout). Unless specifically allowed by the authentication scheme, a single protection space cannot extend outside the scope of its server.
+The protection space determines the domain over which credentials can be automatically applied. If a prior request has been authorized, the user agent *MAY* reuse the same credentials for all other requests within that protection space for a period of time determined by the authentication scheme, parameters, and/or user preferences (such as a configurable inactivity timeout). Unless specifically allowed by the authentication scheme, a single protection space cannot extend outside the scope of its server.
 #+END_QUOTE
 
-保护空间决定了哪一种凭证可以被自动执行
+保护空间决定了哪一种凭证可以被自动执行。某个之前的请求假如已经经过授权，那么，对于这个保护空间内的所有其他请求，用户代理 *可以* 在一段时间内复用同一个凭证，而这个具体时间为多久，取决于[[ruby:authentication%20scheme][认证方案]]、参数，以及/或者用户的偏好设置（比如一个可配置的闲置超时时间）。除非认证方案明确允许，单个保护空间的范围不能超出它的服务器的范围。
 
 #+BEGIN_QUOTE
-For historical reasons, a sender MUST only generate the quoted-string syntax. Recipients might have to support both token and quoted-string syntax for maximum interoperability with existing clients that have been accepting both notations for a long time.
+For historical reasons, a sender *MUST* only generate the =quoted-string= syntax. Recipients might have to support both =token= and =quoted-string= syntax for maximum interoperability with existing clients that have been accepting both notations for a long time.
 #+END_QUOTE
+
+出于历史遗留的原因，发送端 *必须* 仅生成 =quoted-string= 句法。而为了最大化与现存的很早就接受两种标记法的客户端的可交互性，接收端可能得同时支持 =token= 和 =quoted-string= 两种句法。
 
 * 3. 状态码定义 / Status Code Definitions
   :PROPERTIES:
