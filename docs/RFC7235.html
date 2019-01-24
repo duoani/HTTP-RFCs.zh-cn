@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-24 Thu 12:44 -->
+<!-- 2019-01-24 Thu 16:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7235: Hypertext Transfer Protocol (HTTP/1.1): Authentication</title>
@@ -972,7 +972,7 @@ This header field contains two challenges; one for the "Newauth" scheme with a r
 </blockquote>
 
 <p>
-这个头字段包含有两个质询：一个是 "Newauth" 方案，它的保护空间 <code>realm</code> 为 "apps"，还有两个额外的参数 "type" 和 "title"；另一个是 "Basic" 方案，它的保护空间 <code>realm</code> 是 "simple"。
+这个头字段包含有两个质询：一个是 "Newauth" 方案，它的领域 <code>realm</code> 为 "apps"，还有两个额外的参数 "type" 和 "title"；另一个是 "Basic" 方案，它的领域 <code>realm</code> 是 "simple"。
 </p>
 
 <blockquote>
@@ -992,9 +992,13 @@ This header field contains two challenges; one for the "Newauth" scheme with a r
 <div class="outline-text-3" id="text-org83ecc17">
 <blockquote>
 <p>
-The "Authorization" header field allows a user agent to authenticate itself with an origin server — usually, but not necessarily, after receiving a 401 (Unauthorized) response. Its value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.
+The "<code>Authorization</code>" header field allows a user agent to authenticate itself with an origin server — usually, but not necessarily, after receiving a <code>401 (Unauthorized)</code> response. Its value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.
 </p>
 </blockquote>
+
+<p>
+<code>Authorization</code> 头字段让用户代理可以在（通常但并非必然）接收到一个 <code>401 (Unauthorized)</code> 响应以后，向源服务器证明自身身份。它的值由<ruby>凭证<rt>credentials</rt></ruby>组成，这些凭证包含有对于被请求资源所在的<ruby>领域<rt>realm</rt></ruby>的用户代理身份验证信息。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Authorization = credentials
@@ -1007,11 +1011,19 @@ If a request is authenticated and a realm specified, the same credentials are pr
 </p>
 </blockquote>
 
+<p>
+如果一个请求已经经过身份验证并指定了一个<ruby>领域<rt>realm</rt></ruby>，那么同一个凭证可假定为有效于在这个领域中的所有其他请求（假设该身份验证方案自身并没有要求其他，比如凭证的值依赖质询的值或者同步时钟的变化而变化）。
+</p>
+
 <blockquote>
 <p>
-A proxy forwarding a request MUST NOT modify any Authorization fields in that request. See Section 3.2 of [RFC7234] for details of and requirements pertaining to handling of the Authorization field by HTTP caches.
+A proxy forwarding a request <b>MUST NOT</b> modify any <code>Authorization</code> fields in that request. See <a href="RFC7234.html#ID-d6b247ad-fe70-4ddf-9bd3-ebc35ea6ac99">Section 3.2</a> of [RFC7234] for details of and requirements pertaining to handling of the <code>Authorization</code> field by HTTP caches.
 </p>
 </blockquote>
+
+<p>
+代理在转发一个请求的时候 <b>禁止</b> 修改这个请求里的任何 <code>Authorization</code> 字段。关于 HTTP 缓存如何处理 <code>Authorization</code> 字段的相关细节和要求，见<a href="RFC7234.html#ID-d6b247ad-fe70-4ddf-9bd3-ebc35ea6ac99">【RFC7234】章节 3.2</a>。
+</p>
 </div>
 </div>
 
@@ -1020,9 +1032,13 @@ A proxy forwarding a request MUST NOT modify any Authorization fields in that re
 <div class="outline-text-3" id="text-org440e962">
 <blockquote>
 <p>
-The "Proxy-Authenticate" header field consists of at least one challenge that indicates the authentication scheme(s) and parameters applicable to the proxy for this effective request URI (Section 5.5 of [RFC7230]). A proxy MUST send at least one Proxy-Authenticate header field in each 407 (Proxy Authentication Required) response that it generates.
+The "<code>Proxy-Authenticate</code>" header field consists of at least one challenge that indicates the authentication scheme(s) and parameters applicable to the proxy for this effective request URI (<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">Section 5.5</a> of [RFC7230]). A proxy <b>MUST</b> send at least one <code>Proxy-Authenticate</code> header field in each <code>407 (Proxy Authentication Required)</code> response that it generates.
 </p>
 </blockquote>
+
+<p>
+<code>Proxy-Authenticate</code> 头字段由至少一个质询组成，这些质询表明这个实际请求 URI（<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>）的代理所适用的身份验证方案及其参数。代理 <b>必须</b> 在它所生成的每一个 <code>407 (Proxy Authentication)</code> 响应中发送至少一个 <code>Proxy-Authenticate</code> 头字段。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Proxy-Authenticate = 1#challenge
@@ -1031,15 +1047,23 @@ The "Proxy-Authenticate" header field consists of at least one challenge that in
 
 <blockquote>
 <p>
-Unlike WWW-Authenticate, the Proxy-Authenticate header field applies only to the next outbound client on the response chain. This is because only the client that chose a given proxy is likely to have the credentials necessary for authentication. However, when multiple proxies are used within the same administrative domain, such as office and regional caching proxies within a large corporate network, it is common for credentials to be generated by the user agent and passed through the hierarchy until consumed. Hence, in such a configuration, it will appear as if Proxy-Authenticate is being forwarded because each proxy will send the same challenge set.
+Unlike <code>WWW-Authenticate</code>, the <code>Proxy-Authenticate</code> header field applies only to the next outbound client on the response chain. This is because only the client that chose a given proxy is likely to have the credentials necessary for authentication. However, when multiple proxies are used within the same administrative domain, such as office and regional caching proxies within a large corporate network, it is common for credentials to be generated by the user agent and passed through the hierarchy until consumed. Hence, in such a configuration, it will appear as if <code>Proxy-Authenticate</code> is being forwarded because each proxy will send the same challenge set.
 </p>
 </blockquote>
 
+<p>
+不同于 <code>WWW-Authenticate</code>，<code>Proxy-Authenticate</code> 头字段只适用于响应链路中的下一个<ruby>出站客户端<rt>outbound client</rt></ruby>。那是因为只有选择某个给定代理的那个客户才有可能有身份验证所必要的凭证。但是，当在同一个管理域内使用了多个代理的话，比如在一个大的企业网络内的办公室或区域性缓存代理，常常会见到用户代理生成凭证并将它在层次结构中传递直到它被使用。因此，在这种配置中，它看起来就像 <code>Proxy-Authenticate</code> 被转发了，因为每个代理将会发送同一个质询集合。
+</p>
+
 <blockquote>
 <p>
-Note that the parsing considerations for WWW-Authenticate apply to this header field as well; see Section 4.1 for details.
+Note that the parsing considerations for <code>WWW-Authenticate</code> apply to this header field as well; see <a href="#orgfa32f4b">Section 4.1</a> for details.
 </p>
 </blockquote>
+
+<p>
+需要注意的是，<code>WWW-Authenticate</code> 相关的<ruby>解析注意事项<rt>parsing considerations</rt></ruby>同样也适用于本头字段，详细信息见<a href="#orgfa32f4b">章节 4.1</a>。
+</p>
 </div>
 </div>
 
@@ -1048,9 +1072,13 @@ Note that the parsing considerations for WWW-Authenticate apply to this header f
 <div class="outline-text-3" id="text-org18ce3e0">
 <blockquote>
 <p>
-The "Proxy-Authorization" header field allows the client to identify itself (or its user) to a proxy that requires authentication. Its value consists of credentials containing the authentication information of the client for the proxy and/or realm of the resource being requested.
+The "<code>Proxy-Authorization</code>" header field allows the client to identify itself (or its user) to a proxy that requires authentication. Its value consists of credentials containing the authentication information of the client for the proxy and/or realm of the resource being requested.
 </p>
 </blockquote>
+
+<p>
+<code>Proxy-Authorization</code> 头字段让客户可以向要求身份验证的代理验证自身（或它的用户）。它的值由凭证组成，每个凭证包含有客户端的身份验证信息，以及/或者被请求资源的<ruby>领域<rt>realm</rt></ruby>。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Proxy-Authorization = credentials
@@ -1059,9 +1087,13 @@ The "Proxy-Authorization" header field allows the client to identify itself (or 
 
 <blockquote>
 <p>
-Unlike Authorization, the Proxy-Authorization header field applies only to the next inbound proxy that demanded authentication using the Proxy-Authenticate field. When multiple proxies are used in a chain, the Proxy-Authorization header field is consumed by the first inbound proxy that was expecting to receive credentials. A proxy MAY relay the credentials from the client request to the next proxy if that is the mechanism by which the proxies cooperatively authenticate a given request.
+Unlike <code>Authorization</code>, the <code>Proxy-Authorization</code> header field applies only to the next inbound proxy that demanded authentication using the <code>Proxy-Authenticate</code> field. When multiple proxies are used in a chain, the <code>Proxy-Authorization</code> header field is consumed by the first inbound proxy that was expecting to receive credentials. A proxy <b>MAY</b> relay the credentials from the client request to the next proxy if that is the mechanism by which the proxies cooperatively authenticate a given request.
 </p>
 </blockquote>
+
+<p>
+不同于 <code>Authorization</code>，<code>Proxy-Authorization</code> 头字段只适用于响应链路中的下一个入站代理（其使用 <code>Proxy-Authenticate</code> 字段来要求身份验证）。当在一个链路中使用了多个代理，<code>Proxy-Authorization</code> 头字段由第一个期望接收凭证的入站代理所使用。代理 <b>可以</b> 将客户端请求里的凭证<ruby>中转<rt>relay</rt></ruby>到下一个代理中，如果这是这些代理的合作验证一个给定的请求的机制的话。
+</p>
 </div>
 </div>
 </div>
