@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-23 Wed 19:02 -->
+<!-- 2019-01-24 Thu 12:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7235: Hypertext Transfer Protocol (HTTP/1.1): Authentication</title>
@@ -403,7 +403,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgd1879ca">1.2. 句法标记 / Syntax Notation</a></li>
 </ul>
 </li>
-<li><a href="#org1ddac1d">2. 访问认证框架 / Access Authentication Framework</a>
+<li><a href="#orgd266e6f">2. 访问身份验证框架 / Access Authentication Framework</a>
 <ul>
 <li><a href="#orgc624cd6">2.1. 质询和作答 / Challenge and Response</a></li>
 <li><a href="#org080522a">2.2. 保护空间（领域） / Protection Space (Realm)</a></li>
@@ -425,10 +425,10 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#org6acf1bf">5. IANA 注意事项 / IANA Considerations</a>
 <ul>
-<li><a href="#org6d7ca52">5.1. 认证方案登记表 / Authentication Scheme Registry</a>
+<li><a href="#orgedcd1d9">5.1. 身份验证方案登记表 / Authentication Scheme Registry</a>
 <ul>
 <li><a href="#org2e368a3">5.1.1. 手续 / Procedure</a></li>
-<li><a href="#org57cfa52">5.1.2. 新的认证方案的注意事项 / Considerations for New Authentication Schemes</a></li>
+<li><a href="#orgff3113e">5.1.2. 新的身份验证方案的注意事项 / Considerations for New Authentication Schemes</a></li>
 </ul>
 </li>
 <li><a href="#orgea27146">5.2. 状态码登记表 / Status Code Registration</a></li>
@@ -491,7 +491,7 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol
 </blockquote>
 
 <p>
-超文本传输协议（HTTP）是一种<ruby>无状态<rt>stateless</rt></ruby>的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP 的<ruby>认证框架<rt>Authentication framework</rt></ruby>。
+超文本传输协议（HTTP）是一种<ruby>无状态<rt>stateless</rt></ruby>的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP 的<ruby>身份验证框架<rt>Authentication framework</rt></ruby>。
 </p>
 </div>
 </div>
@@ -564,17 +564,17 @@ HTTP provides a general framework for access control and authentication, via an 
 </blockquote>
 
 <p>
-HTTP 提供了一个通用的访问控制和认证框架，经由一个可扩展的<ruby>质询-作答<rt>challenge-response</rt></ruby>认证方案的集合，服务器可以使用这种认证方案对客户端的请求进行质询，而客户端可以使用这种谁方案来向服务器提供认证信息。本文档依据《超文本传输协议（HTTP/1.1）：消息与路由》【<a href="RFC7230.html">RFC7230</a>】所定义的架构来定义了 HTTP/1.1 的认证，包括：之前在《HTTP 认证：基础与数字访问认证》【<a href="https://tools.ietf.org/html/rfc2617">RFC2617</a>】有所描述的通用框架，以及之前在《超文本传输协议——HTTP/1.1》【<a href="https://tools.ietf.org/html/rfc2616">RFC2616</a>】所定义的相关的字段和状态码。
+HTTP 提供了一个通用的访问控制和身份验证框架，经由一个可扩展的<ruby>质询-作答<rt>challenge-response</rt></ruby>身份验证方案的集合，服务器可以使用这种身份验证方案对客户端的请求进行质询，而客户端可以使用这种谁方案来向服务器提供身份验证信息。本文档依据《超文本传输协议（HTTP/1.1）：消息与路由》【<a href="RFC7230.html">RFC7230</a>】所定义的架构来定义了 HTTP/1.1 的身份验证，包括：之前在《HTTP 身份验证：基础与数字访问身份验证》【<a href="https://tools.ietf.org/html/rfc2617">RFC2617</a>】有所描述的通用框架，以及之前在《超文本传输协议——HTTP/1.1》【<a href="https://tools.ietf.org/html/rfc2616">RFC2616</a>】所定义的相关的字段和状态码。
 </p>
 
 <blockquote>
 <p>
-The IANA Authentication Scheme Registry (<a href="#org6d7ca52">Section 5.1</a>) lists registered authentication schemes and their corresponding specifications, including the "basic" and "digest" authentication schemes previously defined by RFC 2617.
+The IANA Authentication Scheme Registry (<a href="#orgedcd1d9">Section 5.1</a>) lists registered authentication schemes and their corresponding specifications, including the "basic" and "digest" authentication schemes previously defined by RFC 2617.
 </p>
 </blockquote>
 
 <p>
-IANA 认证方案登记表（<a href="#org6d7ca52">章节 5.1</a>）列出了已登记的认证方案及其对应的规范，包括之前由 RFC 2617 所定义的 "basic" 和 "digest" 认证方案。
+IANA 身份验证方案登记表（<a href="#orgedcd1d9">章节 5.1</a>）列出了已登记的身份验证方案及其对应的规范，包括之前由 RFC 2617 所定义的 "basic" 和 "digest" 身份验证方案。
 </p>
 </div>
 
@@ -619,9 +619,9 @@ This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC52
 </div>
 </div>
 
-<div id="outline-container-org1ddac1d" class="outline-2">
-<h2 id="org1ddac1d">2. 访问认证框架 / Access Authentication Framework</h2>
-<div class="outline-text-2" id="text-org1ddac1d">
+<div id="outline-container-orgd266e6f" class="outline-2">
+<h2 id="orgd266e6f">2. 访问身份验证框架 / Access Authentication Framework</h2>
+<div class="outline-text-2" id="text-orgd266e6f">
 </div>
 <div id="outline-container-orgc624cd6" class="outline-3">
 <h3 id="orgc624cd6">2.1. 质询和作答 / Challenge and Response</h3>
@@ -633,7 +633,7 @@ HTTP provides a simple challenge-response authentication framework that can be u
 </blockquote>
 
 <p>
-HTTP 提供了一种简单的<ruby>质询-作答<rt>challenge-response</rt></ruby>认证框架，服务器可以使用它来对客户端请求进行质询，而客户端可以使用它来提供认证信息。它使用一个不区分大小写的<ruby>标记<rt>token</rt></ruby>来作为一种标识<ruby>认证方案<rt>authentication scheme</rt></ruby>的方法，这个标记之后紧跟的是通过这种方案来获取认证所必要的额外信息。这些额外信息要么是一个以逗号分隔的参数列表，要么是一个可以持有 base64 编码信息的字符序列。
+HTTP 提供了一种简单的<ruby>质询-作答<rt>challenge-response</rt></ruby>身份验证框架，服务器可以使用它来对客户端请求进行质询，而客户端可以使用它来提供身份验证信息。它使用一个不区分大小写的<ruby>标记<rt>token</rt></ruby>来作为一种标识<ruby>身份验证方案<rt>authentication scheme</rt></ruby>的方法，这个标记之后紧跟的是通过这种方案来获取身份验证所必要的额外信息。这些额外信息要么是一个以逗号分隔的参数列表，要么是一个可以持有 base64 编码信息的字符序列。
 </p>
 
 <blockquote>
@@ -649,7 +649,7 @@ Authentication parameters are <code>name=value</code> pairs, where the <code>nam
 </blockquote>
 
 <p>
-认证参数是 <code>name=value</code> 键值对，其中 <code>name</code> 标记是按不区分大小写的方式来匹配的，并且在每一次质询当中，每个参数名称 <b>必须</b> 仅出现一次。
+身份验证参数是 <code>name=value</code> 键值对，其中 <code>name</code> 标记是按不区分大小写的方式来匹配的，并且在每一次质询当中，每个参数名称 <b>必须</b> 仅出现一次。
 </p>
 
 <div class="org-src-container">
@@ -692,7 +692,7 @@ A <code>401 (Unauthorized)</code> response message is used by an origin server t
 </blockquote>
 
 <p>
-源服务器使用一个 <code>401 (Unauthorized)</code> 响应消息来向用户代理质询认证，其中带有一个 <code>WWW-Authenticate</code> 头字段包含至少一个适用于所要请求的资源的质询。
+源服务器使用一个 <code>401 (Unauthorized)</code> 响应消息来向用户代理质询身份验证，其中带有一个 <code>WWW-Authenticate</code> 头字段包含至少一个适用于所要请求的资源的质询。
 </p>
 
 <blockquote>
@@ -702,7 +702,7 @@ A <code>407 (Proxy Authentication Required)</code> response message is used by a
 </blockquote>
 
 <p>
-代理使用一个 <code>407 (Proxy Authentication Required)</code> 响应消息来向客户端质询认证，其中带有一个 <code>Proxy-Authenticate</code> 头字段包含至少一个适用于代理去请求资源的质询。
+代理使用一个 <code>407 (Proxy Authentication Required)</code> 响应消息来向客户端质询身份验证，其中带有一个 <code>Proxy-Authenticate</code> 头字段包含至少一个适用于代理去请求资源的质询。
 </p>
 
 <div class="org-src-container">
@@ -727,7 +727,7 @@ A user agent that wishes to authenticate itself with an origin server — usuall
 </blockquote>
 
 <p>
-在接收到一个 <code>401 (Unauthorized)</code> 以后，如果用户代理希望通过源服务器来认证自身（通常但并非必然），可以通过在请求中带有一个 <code>Authentication</code> 头字段来达到。
+在接收到一个 <code>401 (Unauthorized)</code> 以后，如果用户代理希望通过源服务器来证明自身身份（通常但并非必然），可以通过在请求中带有一个 <code>Authentication</code> 头字段来达到。
 </p>
 
 <blockquote>
@@ -737,7 +737,7 @@ A client that wishes to authenticate itself with a proxy — usually, but not ne
 </blockquote>
 
 <p>
-在接收到一个 <code>407 (Proxy Authentication Required)</code> 以后，如果用户代理希望通过代理来认证自身（通常但并非必然），可以通过在请求中带有一个 <code>Proxy-Authorization</code> 头字段来达到。
+在接收到一个 <code>407 (Proxy Authentication Required)</code> 以后，如果用户代理希望通过代理来证明自身身份（通常但并非必然），可以通过在请求中带有一个 <code>Proxy-Authorization</code> 头字段来达到。
 </p>
 
 <blockquote>
@@ -762,7 +762,7 @@ Upon receipt of a request for a protected resource that omits credentials, conta
 </blockquote>
 
 <p>
-如果源服务器接收到一个访问保护资源的请求，一旦这个请求缺少凭证，或者包含有一个无效的凭证（比如，一个错误的密码），或者不完整的凭证（比如，当认证方案要求超过一个以上回合的时候），那么，源服务器 <b>应当</b> 发送一个 <code>401 (Unauthorized)</code> 响应，其内包含有一个 <code>WWW-Authenticate</code> 头字段，该字段至少带有一个（可能是新的）适用于所请求的资源的质询。
+如果源服务器接收到一个访问保护资源的请求，一旦这个请求缺少凭证，或者包含有一个无效的凭证（比如，一个错误的密码），或者不完整的凭证（比如，当身份验证方案要求超过一个以上回合的时候），那么，源服务器 <b>应当</b> 发送一个 <code>401 (Unauthorized)</code> 响应，其内包含有一个 <code>WWW-Authenticate</code> 头字段，该字段至少带有一个（可能是新的）适用于所请求的资源的质询。
 </p>
 
 <blockquote>
@@ -772,7 +772,7 @@ Likewise, upon receipt of a request that omits proxy credentials or contains inv
 </blockquote>
 
 <p>
-同样，如果代理接收到一个请求，一旦这个请求缺少代理凭证，或者包含有无效或不完整的代理凭证，那么，要求认证的代理 <b>应当</b> 生成一个 <code>407 (Proxy Authentication Required)</code> 响应，其内包含有一个 <code>Proxy-Authenticate</code> 头字段，该字段至少带有一个（可能是新的）适用该代理的质询。
+同样，如果代理接收到一个请求，一旦这个请求缺少代理凭证，或者包含有无效或不完整的代理凭证，那么，要求身份验证的代理 <b>应当</b> 生成一个 <code>407 (Proxy Authentication Required)</code> 响应，其内包含有一个 <code>Proxy-Authenticate</code> 头字段，该字段至少带有一个（可能是新的）适用该代理的质询。
 </p>
 
 <blockquote>
@@ -792,7 +792,7 @@ HTTP does not restrict applications to this simple challenge-response framework 
 </blockquote>
 
 <p>
-HTTP 并没有将对这个简单的<ruby>质询-作答<rt>challenge-response</rt></ruby>框架上的应用限定为访问认证。可以使用其他额外的机制（比如在传输层上的认证，或者经由消息封装的认证），以及带有额外头字段所指定的认证信息。然而，本规范并没有定义这些额外的机制。
+HTTP 并没有将对这个简单的<ruby>质询-作答<rt>challenge-response</rt></ruby>框架上的应用限定为访问身份验证。可以使用其他额外的机制（比如在传输层上的身份验证，或者经由消息封装的身份验证），以及带有额外头字段所指定的身份验证信息。然而，本规范并没有定义这些额外的机制。
 </p>
 </div>
 </div>
@@ -807,7 +807,7 @@ The "<code>realm</code>" authentication parameter is reserved for use by authent
 </blockquote>
 
 <p>
-<code>realm</code> 是一个保留的认证参数，某些<ruby>认证方案<rt>authentication schemes</rt></ruby>如果希望去表明保护范围的话，可以使用它来实现目的。
+<code>realm</code> 是一个保留的身份验证参数，某些<ruby>身份验证方案<rt>authentication schemes</rt></ruby>如果希望去表明保护范围的话，可以使用它来实现目的。
 </p>
 
 <blockquote>
@@ -817,7 +817,7 @@ A protection space is defined by the canonical root URI (the <code>scheme</code>
 </blockquote>
 
 <p>
-<ruby>保护空间<rt>protection space</rt></ruby>是由被访问的服务器的<ruby>规范化根 URI<rt>canonical root URI</rt></ruby>（即实际请求 URI 的 <code>scheme</code> 和 <code>authority</code> 组件，见<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>），并结合 <code>realm</code> 的值（如果有出现的话）来进行定义的。这些<ruby>领域<rt>realms</rt></ruby>使得在服务器上要保护的各种资源可以划分为一系列的<ruby>保护空间<rt>protection spaces</rt></ruby>，每一个保护空间都有自己的认证方案以及/或者认证数据库。<code>realm</code> 的值是一个字符串，通常由源服务器所赋值，可以具有对应认证方案所特有的额外语义。需要注意的是，一个响应可以有多个具有相同 <code>auth-scheme</code> 但不同 <code>realm</code> 的质询。
+<ruby>保护空间<rt>protection space</rt></ruby>是由被访问的服务器的<ruby>规范化根 URI<rt>canonical root URI</rt></ruby>（即实际请求 URI 的 <code>scheme</code> 和 <code>authority</code> 组件，见<a href="RFC7230.html#ID-3265c21d-0d3b-4776-8e28-38278d168779">【RFC7230】章节 5.5</a>），并结合 <code>realm</code> 的值（如果有出现的话）来进行定义的。这些<ruby>领域<rt>realms</rt></ruby>使得在服务器上要保护的各种资源可以划分为一系列的<ruby>保护空间<rt>protection spaces</rt></ruby>，每一个保护空间都有自己的身份验证方案以及/或者身份验证数据库。<code>realm</code> 的值是一个字符串，通常由源服务器所赋值，可以具有对应身份验证方案所特有的额外语义。需要注意的是，一个响应可以有多个具有相同 <code>auth-scheme</code> 但不同 <code>realm</code> 的质询。
 </p>
 
 <blockquote>
@@ -827,7 +827,7 @@ The protection space determines the domain over which credentials can be automat
 </blockquote>
 
 <p>
-保护空间决定了哪一种凭证可以被自动执行。某个之前的请求假如已经经过授权，那么，对于这个保护空间内的所有其他请求，用户代理 <b>可以</b> 在一段时间内复用同一个凭证，而这个具体时间为多久，取决于<ruby>认证方案<rt>authentication scheme</rt></ruby>、参数，以及/或者用户的偏好设置（比如一个可配置的闲置超时时间）。除非认证方案明确允许，单个保护空间的范围不能超出它的服务器的范围。
+保护空间决定了哪一种凭证可以被自动执行。某个之前的请求假如已经经过授权，那么，对于这个保护空间内的所有其他请求，用户代理 <b>可以</b> 在一段时间内复用同一个凭证，而这个具体时间为多久，取决于<ruby>身份验证方案<rt>authentication scheme</rt></ruby>、参数，以及/或者用户的偏好设置（比如一个可配置的闲置超时时间）。除非身份验证方案明确允许，单个保护空间的范围不能超出它的服务器的范围。
 </p>
 
 <blockquote>
@@ -852,15 +852,23 @@ For historical reasons, a sender <b>MUST</b> only generate the <code>quoted-stri
 <div class="outline-text-3" id="text-orgea53663">
 <blockquote>
 <p>
-The 401 (Unauthorized) status code indicates that the request has not been applied because it lacks valid authentication credentials for the target resource. The server generating a 401 response MUST send a WWW-Authenticate header field (Section 4.1) containing at least one challenge applicable to the target resource.
+The <code>401 (Unauthorized)</code> status code indicates that the request has not been applied because it lacks valid authentication credentials for the target resource. The server generating a <code>401</code> response <b>MUST</b> send a <code>WWW-Authenticate</code> header field (<a href="#orgfa32f4b">Section 4.1</a>) containing at least one challenge applicable to the target resource.
 </p>
 </blockquote>
 
+<p>
+<code>401 (Unauthorized)</code> 状态码表明：请求未被执行，因为它缺少目标资源的有效身份验证凭证。服务器在生成一个 <code>401</code> 响应的时候，<b>必须</b> 发送一个 <code>WWW-Authenticate</code> 头字段（<a href="#orgfa32f4b">章节 4.1</a>），其包含至少一个适用于该目标资源的<ruby>质询<rt>challenge</rt></ruby>。
+</p>
+
 <blockquote>
 <p>
-If the request included authentication credentials, then the 401 response indicates that authorization has been refused for those credentials. The user agent MAY repeat the request with a new or replaced Authorization header field (Section 4.2). If the 401 response contains the same challenge as the prior response, and the user agent has already attempted authentication at least once, then the user agent SHOULD present the enclosed representation to the user, since it usually contains relevant diagnostic information.
+If the request included authentication credentials, then the <code>401</code> response indicates that authorization has been refused for those credentials. The user agent <b>MAY</b> repeat the request with a new or replaced <code>Authorization</code> header field (<a href="#org83ecc17">Section 4.2</a>). If the <code>401</code> response contains the same challenge as the prior response, and the user agent has already attempted authentication at least once, then the user agent <b>SHOULD</b> present the enclosed representation to the user, since it usually contains relevant diagnostic information.
 </p>
 </blockquote>
+
+<p>
+如果该请求带有身份验证凭证（一个或多个），那么，这个 <code>401</code> 响应表明服务器拒绝授权给这些凭证。用户代理 <b>可以</b> 重新发起这个请求，带有一个新的或者替换过的 <code>Authorization</code> 头字段（<a href="#org83ecc17">章节 4.2</a>）。重新发起请求之后，如果仍然返回的是 <code>401</code> 响应，且响应带有与之前的 <code>401</code> 响应相同的质询，而且用户代理已经试过至少一次身份验证了，那么，用户代理 <b>应当</b> 将响应内的表示形式展示给用户，因为这种响应通常包含有相关的诊断信息。
+</p>
 </div>
 </div>
 
@@ -869,9 +877,13 @@ If the request included authentication credentials, then the 401 response indica
 <div class="outline-text-3" id="text-org0638ce0">
 <blockquote>
 <p>
-The 407 (Proxy Authentication Required) status code is similar to 401 (Unauthorized), but it indicates that the client needs to authenticate itself in order to use a proxy. The proxy MUST send a Proxy-Authenticate header field (Section 4.3) containing a challenge applicable to that proxy for the target resource. The client MAY repeat the request with a new or replaced Proxy-Authorization header field (Section 4.4).
+The <code>407 (Proxy Authentication Required)</code> status code is similar to <code>401 (Unauthorized)</code>, but it indicates that the client needs to authenticate itself in order to use a proxy. The proxy <b>MUST</b> send a <code>Proxy-Authenticate</code> header field (<a href="#org440e962">Section 4.3</a>) containing a challenge applicable to that proxy for the target resource. The client <b>MAY</b> repeat the request with a new or replaced <code>Proxy-Authorization</code> header field (<a href="#org18ce3e0">Section 4.4</a>).
 </p>
 </blockquote>
+
+<p>
+<code>407 (Proxy Authentication Required)</code> 状态码类似于 <code>401 (Unauthorized)</code>，但它表明：为了使用代理，客户端需要证明自身身份。代理 <b>必须</b> 发送一个 <code>Proxy-Authenticate</code> 头字段（<a href="#org440e962">章节 4.3</a>），其包含至少一个适用于代理去请求资源的质询。客户端 <b>可以</b> 重新发起这个请求，带有一个新的或者替换过的 <code>Proxy-Authorization</code> 头字段（<a href="#org18ce3e0">章节 4.4</a>）。
+</p>
 </div>
 </div>
 </div>
@@ -884,6 +896,10 @@ The 407 (Proxy Authentication Required) status code is similar to 401 (Unauthori
 This section defines the syntax and semantics of header fields related to the HTTP authentication framework.
 </p>
 </blockquote>
+
+<p>
+本章节定义了 HTTP 身份验证框架相关的头字段的句法和语义。
+</p>
 </div>
 
 <div id="outline-container-orgfa32f4b" class="outline-3">
@@ -891,9 +907,13 @@ This section defines the syntax and semantics of header fields related to the HT
 <div class="outline-text-3" id="text-orgfa32f4b">
 <blockquote>
 <p>
-The "WWW-Authenticate" header field indicates the authentication scheme(s) and parameters applicable to the target resource.
+The "<code>WWW-Authenticate</code>" header field indicates the authentication scheme(s) and parameters applicable to the target resource.
 </p>
 </blockquote>
+
+<p>
+<code>WWW-Authenticate</code> 头字段指出了适用于目标资源的（一个或多个）身份验证方案及其参数。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">WWW-Authenticate = 1#challenge
@@ -902,15 +922,23 @@ The "WWW-Authenticate" header field indicates the authentication scheme(s) and p
 
 <blockquote>
 <p>
-A server generating a 401 (Unauthorized) response MUST send a WWW-Authenticate header field containing at least one challenge. A server MAY generate a WWW-Authenticate header field in other response messages to indicate that supplying credentials (or different credentials) might affect the response.
+A server generating a <code>401 (Unauthorized)</code> response <b>MUST</b> send a <code>WWW-Authenticate</code> header field containing at least one challenge. A server <b>MAY</b> generate a <code>WWW-Authenticate</code> header field in other response messages to indicate that supplying credentials (or different credentials) might affect the response.
 </p>
 </blockquote>
 
+<p>
+服务器在生成一个 <code>401 (Unauthorized)</code> 响应的时候，<b>必须</b> 发送一个 <code>WWW-Authenticate</code> 头字段，其包含至少一个质询。服务器 <b>可以</b> 在其他响应消息中生成一个 <code>WWW-Authenticate</code> 头字段来表明：提供凭证（或者不同的凭证）可能会响应到这个响应。
+</p>
+
 <blockquote>
 <p>
-A proxy forwarding a response MUST NOT modify any WWW-Authenticate fields in that response.
+A proxy forwarding a response <b>MUST NOT</b> modify any <code>WWW-Authenticate</code> fields in that response.
 </p>
 </blockquote>
+
+<p>
+代理在转发一个响应的时候，<b>禁止</b> 修改响应里的任何 <code>WWW-Authenticate</code> 字段。
+</p>
 
 <blockquote>
 <p>
@@ -918,11 +946,19 @@ User agents are advised to take special care in parsing the field value, as it m
 </p>
 </blockquote>
 
+<p>
+建议用户代理在解析这个头字段值的时候要特别小心，因为它可能包含有超过一个以上的质询，并且每一个质询都能够包含有一个<ruby>以逗号分隔<rt>comma-separated</rt></ruby>的身份验证参数列表。此外，这个头字段自身还能够在消息中出现多次。
+</p>
+
 <blockquote>
 <p>
 For instance:
 </p>
 </blockquote>
+
+<p>
+例如：
+</p>
 
 <pre class="example">
 WWW-Authenticate: Newauth realm="apps", type=1,
@@ -935,11 +971,19 @@ This header field contains two challenges; one for the "Newauth" scheme with a r
 </p>
 </blockquote>
 
+<p>
+这个头字段包含有两个质询：一个是 "Newauth" 方案，它的保护空间 <code>realm</code> 为 "apps"，还有两个额外的参数 "type" 和 "title"；另一个是 "Basic" 方案，它的保护空间 <code>realm</code> 是 "simple"。
+</p>
+
 <blockquote>
 <p>
 <b>Note:</b> The challenge grammar production uses the list syntax as well. Therefore, a sequence of comma, whitespace, and comma can be considered either as applying to the preceding challenge, or to be an empty entry in the list of challenges. In practice, this ambiguity does not affect the semantics of the header field value and thus is harmless.
 </p>
 </blockquote>
+
+<p>
+<b>注意：</b> 质询的语法规则中还使用了列表句法。因此，号号序列、空白、以及逗号可被视为要么执行之前的质询，要么是质询列表中的一个空的条目。实践过程中，这种歧义并不会影响到这个头字段值的语义，因此它是无害的。
+</p>
 </div>
 </div>
 
@@ -1026,9 +1070,9 @@ Unlike Authorization, the Proxy-Authorization header field applies only to the n
 <h2 id="org6acf1bf">5. IANA 注意事项 / IANA Considerations</h2>
 <div class="outline-text-2" id="text-org6acf1bf">
 </div>
-<div id="outline-container-org6d7ca52" class="outline-3">
-<h3 id="org6d7ca52"><a id="ID-af1963ff-7886-492d-93cd-3d76aaf2d475"></a>5.1. 认证方案登记表 / Authentication Scheme Registry</h3>
-<div class="outline-text-3" id="text-org6d7ca52">
+<div id="outline-container-orgedcd1d9" class="outline-3">
+<h3 id="orgedcd1d9"><a id="ID-af1963ff-7886-492d-93cd-3d76aaf2d475"></a>5.1. 身份验证方案登记表 / Authentication Scheme Registry</h3>
+<div class="outline-text-3" id="text-orgedcd1d9">
 <blockquote>
 <p>
 The "Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry" defines the namespace for the authentication schemes in challenges and credentials. It has been created and is now maintained at <a href="http://www.iana.org/assignments/http-authschemes">http://www.iana.org/assignments/http-authschemes</a>.
@@ -1059,9 +1103,9 @@ Values to be added to this namespace require IETF Review (see [RFC5226], Section
 </div>
 </div>
 
-<div id="outline-container-org57cfa52" class="outline-4">
-<h4 id="org57cfa52">5.1.2. 新的认证方案的注意事项 / Considerations for New Authentication Schemes</h4>
-<div class="outline-text-4" id="text-org57cfa52">
+<div id="outline-container-orgff3113e" class="outline-4">
+<h4 id="orgff3113e">5.1.2. 新的身份验证方案的注意事项 / Considerations for New Authentication Schemes</h4>
+<div class="outline-text-4" id="text-orgff3113e">
 <blockquote>
 <p>
 There are certain aspects of the HTTP Authentication Framework that put constraints on how new authentication schemes can work:
