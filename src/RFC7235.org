@@ -38,7 +38,7 @@
 The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypermedia information systems. This document defines the HTTP Authentication framework.
 #+END_QUOTE
 
-超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP 的[[ruby:Authentication%20framework][认证框架]]。
+超文本传输协议（HTTP）是一种[[ruby:stateless][无状态]]的应用层协议，适用于分布式、协作式的超文本信息系统。本文档定义了 HTTP 的[[ruby:Authentication%20framework][身份验证框架]]。
 
 * 备忘状态 / Status of This Memo
 
@@ -80,13 +80,13 @@ This document may contain material from IETF Documents or IETF Contributions pub
 HTTP provides a general framework for access control and authentication, via an extensible set of challenge-response authentication schemes, which can be used by a server to challenge a client request and by a client to provide authentication information. This document defines HTTP/1.1 authentication in terms of the architecture defined in "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing" [[[file:RFC7230.org][RFC7230]]], including the general framework previously described in "HTTP Authentication: Basic and Digest Access Authentication" [[[https://tools.ietf.org/html/rfc2617][RFC2617]]] and the related fields and status codes previously defined in "Hypertext Transfer Protocol -- HTTP/1.1" [[[https://tools.ietf.org/html/rfc2616][RFC2616]]].
 #+END_QUOTE
 
-HTTP 提供了一个通用的访问控制和认证框架，经由一个可扩展的[[ruby:challenge-response][质询-作答]]认证方案的集合，服务器可以使用这种认证方案对客户端的请求进行质询，而客户端可以使用这种谁方案来向服务器提供认证信息。本文档依据《超文本传输协议（HTTP/1.1）：消息与路由》【[[file:RFC7230.org][RFC7230]]】所定义的架构来定义了 HTTP/1.1 的认证，包括：之前在《HTTP 认证：基础与数字访问认证》【[[https://tools.ietf.org/html/rfc2617][RFC2617]]】有所描述的通用框架，以及之前在《超文本传输协议——HTTP/1.1》【[[https://tools.ietf.org/html/rfc2616][RFC2616]]】所定义的相关的字段和状态码。
+HTTP 提供了一个通用的访问控制和身份验证框架，经由一个可扩展的[[ruby:challenge-response][质询-作答]]身份验证方案的集合，服务器可以使用这种身份验证方案对客户端的请求进行质询，而客户端可以使用这种谁方案来向服务器提供身份验证信息。本文档依据《超文本传输协议（HTTP/1.1）：消息与路由》【[[file:RFC7230.org][RFC7230]]】所定义的架构来定义了 HTTP/1.1 的身份验证，包括：之前在《HTTP 身份验证：基础与数字访问身份验证》【[[https://tools.ietf.org/html/rfc2617][RFC2617]]】有所描述的通用框架，以及之前在《超文本传输协议——HTTP/1.1》【[[https://tools.ietf.org/html/rfc2616][RFC2616]]】所定义的相关的字段和状态码。
 
 #+BEGIN_QUOTE
 The IANA Authentication Scheme Registry ([[id:af1963ff-7886-492d-93cd-3d76aaf2d475][Section 5.1]]) lists registered authentication schemes and their corresponding specifications, including the "basic" and "digest" authentication schemes previously defined by RFC 2617.
 #+END_QUOTE
 
-IANA 认证方案登记表（[[id:af1963ff-7886-492d-93cd-3d76aaf2d475][章节 5.1]]）列出了已登记的认证方案及其对应的规范，包括之前由 RFC 2617 所定义的 "basic" 和 "digest" 认证方案。
+IANA 身份验证方案登记表（[[id:af1963ff-7886-492d-93cd-3d76aaf2d475][章节 5.1]]）列出了已登记的身份验证方案及其对应的规范，包括之前由 RFC 2617 所定义的 "basic" 和 "digest" 身份验证方案。
 
 ** 1.1. 一致性和错误处理 / Conformance and Error Handling
 
@@ -110,14 +110,14 @@ This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC52
 
 本规范使用了[[ruby:Augmented%20Backus-Naur%20Form][扩展巴科斯范式]]（ABNF）标记法【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][章节 7]]），允许使用一个 =#= 操作符（类似于 =*= 操作符，指代“重复”）来定义一种以逗号分隔的列表。[[id:dd632d27-1596-43fe-90f8-dba848353e12][附录 B]] 描述了从其他文档中引进的规则。[[id:33ccb99a-6b09-4750-9e71-4cc1e43b49c5][附录 C]] 展示了所有已收集的包含列表扩展规则以及标准 ABNF 标记的语法。
 
-* 2. 访问认证框架 / Access Authentication Framework
+* 2. 访问身份验证框架 / Access Authentication Framework
 ** 2.1. 质询和作答 / Challenge and Response
 
 #+BEGIN_QUOTE
 HTTP provides a simple challenge-response authentication framework that can be used by a server to challenge a client request and by a client to provide authentication information. It uses a case-insensitive token as a means to identify the authentication scheme, followed by additional information necessary for achieving authentication via that scheme. The latter can be either a comma-separated list of parameters or a single sequence of characters capable of holding base64-encoded information.
 #+END_QUOTE
 
-HTTP 提供了一种简单的[[ruby:challenge-response][质询-作答]]认证框架，服务器可以使用它来对客户端请求进行质询，而客户端可以使用它来提供认证信息。它使用一个不区分大小写的[[ruby:token][标记]]来作为一种标识[[ruby:authentication%20scheme][认证方案]]的方法，这个标记之后紧跟的是通过这种方案来获取认证所必要的额外信息。这些额外信息要么是一个以逗号分隔的参数列表，要么是一个可以持有 base64 编码信息的字符序列。
+HTTP 提供了一种简单的[[ruby:challenge-response][质询-作答]]身份验证框架，服务器可以使用它来对客户端请求进行质询，而客户端可以使用它来提供身份验证信息。它使用一个不区分大小写的[[ruby:token][标记]]来作为一种标识[[ruby:authentication%20scheme][身份验证方案]]的方法，这个标记之后紧跟的是通过这种方案来获取身份验证所必要的额外信息。这些额外信息要么是一个以逗号分隔的参数列表，要么是一个可以持有 base64 编码信息的字符序列。
 
 #+BEGIN_QUOTE
 译注：质询-作答，就好比一个答题游戏，主持提问参赛者一个问题，参赛者答对了就可以进入下一个环节，如果答错了就挑战失败了。又好比一个开门暗号，暗号由房间内的人设置，门外的人需要回答这个暗号。也有人将其译为“挑战-响应”。
@@ -127,7 +127,7 @@ HTTP 提供了一种简单的[[ruby:challenge-response][质询-作答]]认证框
 Authentication parameters are =name=value= pairs, where the =name= token is matched case-insensitively, and each parameter name *MUST* only occur once per challenge.
 #+END_QUOTE
 
-认证参数是 =name=value= 键值对，其中 =name= 标记是按不区分大小写的方式来匹配的，并且在每一次质询当中，每个参数名称 *必须* 仅出现一次。
+身份验证参数是 =name=value= 键值对，其中 =name= 标记是按不区分大小写的方式来匹配的，并且在每一次质询当中，每个参数名称 *必须* 仅出现一次。
 
 #+BEGIN_SRC text
   auth-scheme    = token
@@ -157,13 +157,13 @@ unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
 A =401 (Unauthorized)= response message is used by an origin server to challenge the authorization of a user agent, including a =WWW-Authenticate= header field containing at least one challenge applicable to the requested resource.
 #+END_QUOTE
 
-源服务器使用一个 =401 (Unauthorized)= 响应消息来向用户代理质询认证，其中带有一个 =WWW-Authenticate= 头字段包含至少一个适用于所要请求的资源的质询。
+源服务器使用一个 =401 (Unauthorized)= 响应消息来向用户代理质询身份验证，其中带有一个 =WWW-Authenticate= 头字段包含至少一个适用于所要请求的资源的质询。
 
 #+BEGIN_QUOTE
 A =407 (Proxy Authentication Required)= response message is used by a proxy to challenge the authorization of a client, including a =Proxy-Authenticate= header field containing at least one challenge applicable to the proxy for the requested resource.
 #+END_QUOTE
 
-代理使用一个 =407 (Proxy Authentication Required)= 响应消息来向客户端质询认证，其中带有一个 =Proxy-Authenticate= 头字段包含至少一个适用于代理去请求资源的质询。
+代理使用一个 =407 (Proxy Authentication Required)= 响应消息来向客户端质询身份验证，其中带有一个 =Proxy-Authenticate= 头字段包含至少一个适用于代理去请求资源的质询。
 
 #+BEGIN_SRC text
   challenge   = auth-scheme [ 1*SP ( token68 / #auth-param ) ]
@@ -179,13 +179,13 @@ A =407 (Proxy Authentication Required)= response message is used by a proxy to c
 A user agent that wishes to authenticate itself with an origin server — usually, but not necessarily, after receiving a =401 (Unauthorized)= — can do so by including an =Authorization= header field with the request.
 #+END_QUOTE
 
-在接收到一个 =401 (Unauthorized)= 以后，如果用户代理希望通过源服务器来认证自身（通常但并非必然），可以通过在请求中带有一个 =Authentication= 头字段来达到。
+在接收到一个 =401 (Unauthorized)= 以后，如果用户代理希望通过源服务器来证明自身身份（通常但并非必然），可以通过在请求中带有一个 =Authentication= 头字段来达到。
 
 #+BEGIN_QUOTE
 A client that wishes to authenticate itself with a proxy — usually, but not necessarily, after receiving a =407 (Proxy Authentication Required)= — can do so by including a =Proxy-Authorization= header field with the request.
 #+END_QUOTE
 
-在接收到一个 =407 (Proxy Authentication Required)= 以后，如果用户代理希望通过代理来认证自身（通常但并非必然），可以通过在请求中带有一个 =Proxy-Authorization= 头字段来达到。
+在接收到一个 =407 (Proxy Authentication Required)= 以后，如果用户代理希望通过代理来证明自身身份（通常但并非必然），可以通过在请求中带有一个 =Proxy-Authorization= 头字段来达到。
 
 #+BEGIN_QUOTE
 Both the =Authorization= field value and the =Proxy-Authorization= field value contain the client's credentials for the realm of the resource being requested, based upon a challenge received in a response (possibly at some point in the past). When creating their values, the user agent ought to do so by selecting the challenge with what it considers to be the most secure =auth-scheme= that it understands, obtaining credentials from the user as appropriate. Transmission of credentials within header field values implies significant security considerations regarding the confidentiality of the underlying connection, as described in [[id:2918532f-0cd3-451c-a1d1-ef0c089539b8][Section 6.1]].
@@ -201,13 +201,13 @@ Both the =Authorization= field value and the =Proxy-Authorization= field value c
 Upon receipt of a request for a protected resource that omits credentials, contains invalid credentials (e.g., a bad password) or partial credentials (e.g., when the authentication scheme requires more than one round trip), an origin server *SHOULD* send a =401 (Unauthorized)= response that contains a =WWW-Authenticate= header field with at least one (possibly new) challenge applicable to the requested resource.
 #+END_QUOTE
 
-如果源服务器接收到一个访问保护资源的请求，一旦这个请求缺少凭证，或者包含有一个无效的凭证（比如，一个错误的密码），或者不完整的凭证（比如，当认证方案要求超过一个以上回合的时候），那么，源服务器 *应当* 发送一个 =401 (Unauthorized)= 响应，其内包含有一个 =WWW-Authenticate= 头字段，该字段至少带有一个（可能是新的）适用于所请求的资源的质询。
+如果源服务器接收到一个访问保护资源的请求，一旦这个请求缺少凭证，或者包含有一个无效的凭证（比如，一个错误的密码），或者不完整的凭证（比如，当身份验证方案要求超过一个以上回合的时候），那么，源服务器 *应当* 发送一个 =401 (Unauthorized)= 响应，其内包含有一个 =WWW-Authenticate= 头字段，该字段至少带有一个（可能是新的）适用于所请求的资源的质询。
 
 #+BEGIN_QUOTE
 Likewise, upon receipt of a request that omits proxy credentials or contains invalid or partial proxy credentials, a proxy that requires authentication *SHOULD* generate a =407 (Proxy Authentication Required)= response that contains a =Proxy-Authenticate= header field with at least one (possibly new) challenge applicable to the proxy.
 #+END_QUOTE
 
-同样，如果代理接收到一个请求，一旦这个请求缺少代理凭证，或者包含有无效或不完整的代理凭证，那么，要求认证的代理 *应当* 生成一个 =407 (Proxy Authentication Required)= 响应，其内包含有一个 =Proxy-Authenticate= 头字段，该字段至少带有一个（可能是新的）适用该代理的质询。
+同样，如果代理接收到一个请求，一旦这个请求缺少代理凭证，或者包含有无效或不完整的代理凭证，那么，要求身份验证的代理 *应当* 生成一个 =407 (Proxy Authentication Required)= 响应，其内包含有一个 =Proxy-Authenticate= 头字段，该字段至少带有一个（可能是新的）适用该代理的质询。
 
 #+BEGIN_QUOTE
 A server that receives valid credentials that are not adequate to gain access ought to respond with the =403 (Forbidden)= status code ([[id:addb601c-6b2f-45a7-97f7-9d24bdb8b585][Section 6.5.3]] of [RFC7231]).
@@ -219,7 +219,7 @@ A server that receives valid credentials that are not adequate to gain access ou
 HTTP does not restrict applications to this simple challenge-response framework for access authentication. Additional mechanisms can be used, such as authentication at the transport level or via message encapsulation, and with additional header fields specifying authentication information. However, such additional mechanisms are not defined by this specification.
 #+END_QUOTE
 
-HTTP 并没有将对这个简单的[[ruby:challenge-response][质询-作答]]框架上的应用限定为访问认证。可以使用其他额外的机制（比如在传输层上的认证，或者经由消息封装的认证），以及带有额外头字段所指定的认证信息。然而，本规范并没有定义这些额外的机制。
+HTTP 并没有将对这个简单的[[ruby:challenge-response][质询-作答]]框架上的应用限定为访问身份验证。可以使用其他额外的机制（比如在传输层上的身份验证，或者经由消息封装的身份验证），以及带有额外头字段所指定的身份验证信息。然而，本规范并没有定义这些额外的机制。
 
 ** 2.2. 保护空间（领域） / Protection Space (Realm)
 
@@ -227,19 +227,19 @@ HTTP 并没有将对这个简单的[[ruby:challenge-response][质询-作答]]框
 The "=realm=" authentication parameter is reserved for use by authentication schemes that wish to indicate a scope of protection.
 #+END_QUOTE
 
-=realm= 是一个保留的认证参数，某些[[ruby:authentication%20schemes][认证方案]]如果希望去表明保护范围的话，可以使用它来实现目的。
+=realm= 是一个保留的身份验证参数，某些[[ruby:authentication%20schemes][身份验证方案]]如果希望去表明保护范围的话，可以使用它来实现目的。
 
 #+BEGIN_QUOTE
 A protection space is defined by the canonical root URI (the =scheme= and =authority= components of the effective request URI; see [[id:3265c21d-0d3b-4776-8e28-38278d168779][Section 5.5]] of [RFC7230]) of the server being accessed, in combination with the =realm= value if present. These realms allow the protected resources on a server to be partitioned into a set of protection spaces, each with its own authentication scheme and/or authorization database. The =realm= value is a string, generally assigned by the origin server, that can have additional semantics specific to the authentication scheme. Note that a response can have multiple challenges with the same =auth-scheme= but with different realms.
 #+END_QUOTE
 
-[[ruby:protection%20space][保护空间]]是由被访问的服务器的[[ruby:canonical%20root%20URI][规范化根 URI]]（即实际请求 URI 的 =scheme= 和 =authority= 组件，见[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]），并结合 =realm= 的值（如果有出现的话）来进行定义的。这些[[ruby:realms][领域]]使得在服务器上要保护的各种资源可以划分为一系列的[[ruby:protection%20spaces][保护空间]]，每一个保护空间都有自己的认证方案以及/或者认证数据库。=realm= 的值是一个字符串，通常由源服务器所赋值，可以具有对应认证方案所特有的额外语义。需要注意的是，一个响应可以有多个具有相同 =auth-scheme= 但不同 =realm= 的质询。
+[[ruby:protection%20space][保护空间]]是由被访问的服务器的[[ruby:canonical%20root%20URI][规范化根 URI]]（即实际请求 URI 的 =scheme= 和 =authority= 组件，见[[id:3265c21d-0d3b-4776-8e28-38278d168779][【RFC7230】章节 5.5]]），并结合 =realm= 的值（如果有出现的话）来进行定义的。这些[[ruby:realms][领域]]使得在服务器上要保护的各种资源可以划分为一系列的[[ruby:protection%20spaces][保护空间]]，每一个保护空间都有自己的身份验证方案以及/或者身份验证数据库。=realm= 的值是一个字符串，通常由源服务器所赋值，可以具有对应身份验证方案所特有的额外语义。需要注意的是，一个响应可以有多个具有相同 =auth-scheme= 但不同 =realm= 的质询。
 
 #+BEGIN_QUOTE
 The protection space determines the domain over which credentials can be automatically applied. If a prior request has been authorized, the user agent *MAY* reuse the same credentials for all other requests within that protection space for a period of time determined by the authentication scheme, parameters, and/or user preferences (such as a configurable inactivity timeout). Unless specifically allowed by the authentication scheme, a single protection space cannot extend outside the scope of its server.
 #+END_QUOTE
 
-保护空间决定了哪一种凭证可以被自动执行。某个之前的请求假如已经经过授权，那么，对于这个保护空间内的所有其他请求，用户代理 *可以* 在一段时间内复用同一个凭证，而这个具体时间为多久，取决于[[ruby:authentication%20scheme][认证方案]]、参数，以及/或者用户的偏好设置（比如一个可配置的闲置超时时间）。除非认证方案明确允许，单个保护空间的范围不能超出它的服务器的范围。
+保护空间决定了哪一种凭证可以被自动执行。某个之前的请求假如已经经过授权，那么，对于这个保护空间内的所有其他请求，用户代理 *可以* 在一段时间内复用同一个凭证，而这个具体时间为多久，取决于[[ruby:authentication%20scheme][身份验证方案]]、参数，以及/或者用户的偏好设置（比如一个可配置的闲置超时时间）。除非身份验证方案明确允许，单个保护空间的范围不能超出它的服务器的范围。
 
 #+BEGIN_QUOTE
 For historical reasons, a sender *MUST* only generate the =quoted-string= syntax. Recipients might have to support both =token= and =quoted-string= syntax for maximum interoperability with existing clients that have been accepting both notations for a long time.
@@ -257,12 +257,16 @@ For historical reasons, a sender *MUST* only generate the =quoted-string= syntax
 :END:
 
 #+BEGIN_QUOTE
-The 401 (Unauthorized) status code indicates that the request has not been applied because it lacks valid authentication credentials for the target resource. The server generating a 401 response MUST send a WWW-Authenticate header field (Section 4.1) containing at least one challenge applicable to the target resource.
+The =401 (Unauthorized)= status code indicates that the request has not been applied because it lacks valid authentication credentials for the target resource. The server generating a =401= response *MUST* send a =WWW-Authenticate= header field ([[id:22f79cd1-20cc-4ac0-bd68-643e0d51fe7d][Section 4.1]]) containing at least one challenge applicable to the target resource.
 #+END_QUOTE
 
+=401 (Unauthorized)= 状态码表明：请求未被执行，因为它缺少目标资源的有效身份验证凭证。服务器在生成一个 =401= 响应的时候，*必须* 发送一个 =WWW-Authenticate= 头字段（[[id:22f79cd1-20cc-4ac0-bd68-643e0d51fe7d][章节 4.1]]），其包含至少一个适用于该目标资源的[[ruby:challenge][质询]]。
+
 #+BEGIN_QUOTE
-If the request included authentication credentials, then the 401 response indicates that authorization has been refused for those credentials. The user agent MAY repeat the request with a new or replaced Authorization header field (Section 4.2). If the 401 response contains the same challenge as the prior response, and the user agent has already attempted authentication at least once, then the user agent SHOULD present the enclosed representation to the user, since it usually contains relevant diagnostic information.
+If the request included authentication credentials, then the =401= response indicates that authorization has been refused for those credentials. The user agent *MAY* repeat the request with a new or replaced =Authorization= header field ([[id:14671c8e-e5a4-4f9d-ad1d-6460328ed7f5][Section 4.2]]). If the =401= response contains the same challenge as the prior response, and the user agent has already attempted authentication at least once, then the user agent *SHOULD* present the enclosed representation to the user, since it usually contains relevant diagnostic information.
 #+END_QUOTE
+
+如果该请求带有身份验证凭证（一个或多个），那么，这个 =401= 响应表明服务器拒绝授权给这些凭证。用户代理 *可以* 重新发起这个请求，带有一个新的或者替换过的 =Authorization= 头字段（[[id:14671c8e-e5a4-4f9d-ad1d-6460328ed7f5][章节 4.2]]）。重新发起请求之后，如果仍然返回的是 =401= 响应，且响应带有与之前的 =401= 响应相同的质询，而且用户代理已经试过至少一次身份验证了，那么，用户代理 *应当* 将响应内的表示形式展示给用户，因为这种响应通常包含有相关的诊断信息。
 
 ** 3.2. 407 Proxy Authentication Required
 :PROPERTIES:
@@ -270,8 +274,10 @@ If the request included authentication credentials, then the 401 response indica
 :END:
 
 #+BEGIN_QUOTE
-The 407 (Proxy Authentication Required) status code is similar to 401 (Unauthorized), but it indicates that the client needs to authenticate itself in order to use a proxy. The proxy MUST send a Proxy-Authenticate header field (Section 4.3) containing a challenge applicable to that proxy for the target resource. The client MAY repeat the request with a new or replaced Proxy-Authorization header field (Section 4.4).
+The =407 (Proxy Authentication Required)= status code is similar to =401 (Unauthorized)=, but it indicates that the client needs to authenticate itself in order to use a proxy. The proxy *MUST* send a =Proxy-Authenticate= header field ([[id:7f949af1-00e3-4909-adc7-219da68f0457][Section 4.3]]) containing a challenge applicable to that proxy for the target resource. The client *MAY* repeat the request with a new or replaced =Proxy-Authorization= header field ([[id:89c3125a-e7ef-48ea-a2c1-ff4c57214389][Section 4.4]]).
 #+END_QUOTE
+
+=407 (Proxy Authentication Required)= 状态码类似于 =401 (Unauthorized)=，但它表明：为了使用代理，客户端需要证明自身身份。代理 *必须* 发送一个 =Proxy-Authenticate= 头字段（[[id:7f949af1-00e3-4909-adc7-219da68f0457][章节 4.3]]），其包含至少一个适用于代理去请求资源的质询。客户端 *可以* 重新发起这个请求，带有一个新的或者替换过的 =Proxy-Authorization= 头字段（[[id:89c3125a-e7ef-48ea-a2c1-ff4c57214389][章节 4.4]]）。
 
 * 4. 头字段定义 / Header Field Definitions
 
@@ -279,34 +285,46 @@ The 407 (Proxy Authentication Required) status code is similar to 401 (Unauthori
 This section defines the syntax and semantics of header fields related to the HTTP authentication framework.
 #+END_QUOTE
 
+本章节定义了 HTTP 身份验证框架相关的头字段的句法和语义。
+
 ** 4.1. WWW-Authenticate
 :PROPERTIES:
 :ID:       22f79cd1-20cc-4ac0-bd68-643e0d51fe7d
 :END:
 
 #+BEGIN_QUOTE
-The "WWW-Authenticate" header field indicates the authentication scheme(s) and parameters applicable to the target resource.
+The "=WWW-Authenticate=" header field indicates the authentication scheme(s) and parameters applicable to the target resource.
 #+END_QUOTE
+
+=WWW-Authenticate= 头字段指出了适用于目标资源的（一个或多个）身份验证方案及其参数。
 
 #+BEGIN_SRC text
   WWW-Authenticate = 1#challenge
 #+END_SRC
 
 #+BEGIN_QUOTE
-A server generating a 401 (Unauthorized) response MUST send a WWW-Authenticate header field containing at least one challenge. A server MAY generate a WWW-Authenticate header field in other response messages to indicate that supplying credentials (or different credentials) might affect the response.
+A server generating a =401 (Unauthorized)= response *MUST* send a =WWW-Authenticate= header field containing at least one challenge. A server *MAY* generate a =WWW-Authenticate= header field in other response messages to indicate that supplying credentials (or different credentials) might affect the response.
 #+END_QUOTE
 
+服务器在生成一个 =401 (Unauthorized)= 响应的时候，*必须* 发送一个 =WWW-Authenticate= 头字段，其包含至少一个质询。服务器 *可以* 在其他响应消息中生成一个 =WWW-Authenticate= 头字段来表明：提供凭证（或者不同的凭证）可能会响应到这个响应。
+
 #+BEGIN_QUOTE
-A proxy forwarding a response MUST NOT modify any WWW-Authenticate fields in that response.
+A proxy forwarding a response *MUST NOT* modify any =WWW-Authenticate= fields in that response.
 #+END_QUOTE
+
+代理在转发一个响应的时候，*禁止* 修改响应里的任何 =WWW-Authenticate= 字段。
 
 #+BEGIN_QUOTE
 User agents are advised to take special care in parsing the field value, as it might contain more than one challenge, and each challenge can contain a comma-separated list of authentication parameters. Furthermore, the header field itself can occur multiple times.
 #+END_QUOTE
 
+建议用户代理在解析这个头字段值的时候要特别小心，因为它可能包含有超过一个以上的质询，并且每一个质询都能够包含有一个[[ruby:comma-separated][以逗号分隔]]的身份验证参数列表。此外，这个头字段自身还能够在消息中出现多次。
+
 #+BEGIN_QUOTE
 For instance:
 #+END_QUOTE
+
+例如：
 
 #+BEGIN_EXAMPLE
   WWW-Authenticate: Newauth realm="apps", type=1,
@@ -317,9 +335,13 @@ For instance:
 This header field contains two challenges; one for the "Newauth" scheme with a realm value of "apps", and two additional parameters "type" and "title", and another one for the "Basic" scheme with a realm value of "simple".
 #+END_QUOTE
 
+这个头字段包含有两个质询：一个是 "Newauth" 方案，它的保护空间 =realm= 为 "apps"，还有两个额外的参数 "type" 和 "title"；另一个是 "Basic" 方案，它的保护空间 =realm= 是 "simple"。
+
 #+BEGIN_QUOTE
 *Note:* The challenge grammar production uses the list syntax as well. Therefore, a sequence of comma, whitespace, and comma can be considered either as applying to the preceding challenge, or to be an empty entry in the list of challenges. In practice, this ambiguity does not affect the semantics of the header field value and thus is harmless.
 #+END_QUOTE
+
+*注意：* 质询的语法规则中还使用了列表句法。因此，号号序列、空白、以及逗号可被视为要么执行之前的质询，要么是质询列表中的一个空的条目。实践过程中，这种歧义并不会影响到这个头字段值的语义，因此它是无害的。
 
 ** 4.2. Authorization
 :PROPERTIES:
@@ -381,7 +403,7 @@ Unlike Authorization, the Proxy-Authorization header field applies only to the n
 #+END_QUOTE
 
 * 5. IANA 注意事项 / IANA Considerations
-** 5.1. 认证方案登记表 / Authentication Scheme Registry
+** 5.1. 身份验证方案登记表 / Authentication Scheme Registry
 :PROPERTIES:
 :ID:       af1963ff-7886-492d-93cd-3d76aaf2d475
 :END:
@@ -404,7 +426,7 @@ Registrations MUST include the following fields:
 Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
 #+END_QUOTE
 
-*** 5.1.2. 新的认证方案的注意事项 / Considerations for New Authentication Schemes
+*** 5.1.2. 新的身份验证方案的注意事项 / Considerations for New Authentication Schemes
 
 #+BEGIN_QUOTE
 There are certain aspects of the HTTP Authentication Framework that put constraints on how new authentication schemes can work:
