@@ -222,6 +222,9 @@ HTTP does not restrict applications to this simple challenge-response framework 
 HTTP 并没有将对这个简单的[[ruby:challenge-response][质询-作答]]框架上的应用限定为访问身份验证。可以使用其他额外的机制（比如在传输层上的身份验证，或者经由消息封装的身份验证），以及带有额外头字段所指定的身份验证信息。然而，本规范并没有定义这些额外的机制。
 
 ** 2.2. 保护空间（领域） / Protection Space (Realm)
+:PROPERTIES:
+:ID:       3f8b1d00-3d63-48e3-9be3-bd0251515d12
+:END:
 
 #+BEGIN_QUOTE
 The "=realm=" authentication parameter is reserved for use by authentication schemes that wish to indicate a scope of protection.
@@ -428,43 +431,65 @@ Unlike =Authorization=, the =Proxy-Authorization= header field applies only to t
 The "Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry" defines the namespace for the authentication schemes in challenges and credentials. It has been created and is now maintained at <http://www.iana.org/assignments/http-authschemes>.
 #+END_QUOTE
 
+《HTTP 身份验证方案登记表》定义了质询和凭证方面的身份验证方案的命名空间，这份登记表已经创建，目前维护在 <http://www.iana.org/assignments/http-authschemes>。
+
 *** 5.1.1. 手续 / Procedure
 
 #+BEGIN_QUOTE
-Registrations MUST include the following fields:
+Registrations *MUST* include the following fields:
 
 - Authentication Scheme Name
 - Pointer to specification text
 - Notes (optional)
 #+END_QUOTE
 
+登记条目 *必须* 包括以下字段：
+
+- 身份验证方案的名称
+- 指向到规范文本的引用
+- 备注（可选）
+
 #+BEGIN_QUOTE
-Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
+Values to be added to this namespace require IETF Review (see [RFC5226], [[https://tools.ietf.org/html/rfc5226#section-4.1][Section 4.1]]).
 #+END_QUOTE
+
+添加到 HTTP 状态码命名空间的值要求由 IETF 复审（见[[https://tools.ietf.org/html/rfc5226#section-4.1][【RFC5226】章节 4.1]]）。
 
 *** 5.1.2. 新的身份验证方案的注意事项 / Considerations for New Authentication Schemes
 
 #+BEGIN_QUOTE
 There are certain aspects of the HTTP Authentication Framework that put constraints on how new authentication schemes can work:
 
-- HTTP authentication is presumed to be stateless: all of the information necessary to authenticate a request MUST be provided in the request, rather than be dependent on the server remembering prior requests. Authentication based on, or bound to, the underlying connection is outside the scope of this specification and inherently flawed unless steps are taken to ensure that the connection cannot be used by any party other than the authenticated user (see Section 2.3 of [RFC7230]).
+- HTTP authentication is presumed to be stateless: all of the information necessary to authenticate a request *MUST* be provided in the request, rather than be dependent on the server remembering prior requests. Authentication based on, or bound to, the underlying connection is outside the scope of this specification and inherently flawed unless steps are taken to ensure that the connection cannot be used by any party other than the authenticated user (see [[id:e2d9bed8-d6ca-4b5d-ab4a-6b2b2576393e][Section 2.3]] of [RFC7230]).
 
-- The authentication parameter "realm" is reserved for defining protection spaces as described in Section 2.2. New schemes MUST NOT use it in a way incompatible with that definition.
+- The authentication parameter "realm" is reserved for defining protection spaces as described in [[id:3f8b1d00-3d63-48e3-9be3-bd0251515d12][Section 2.2]]. New schemes *MUST NOT* use it in a way incompatible with that definition.
 
-- The "token68" notation was introduced for compatibility with existing authentication schemes and can only be used once per challenge or credential. Thus, new schemes ought to use the auth-param syntax instead, because otherwise future extensions will be impossible.
+- The "token68" notation was introduced for compatibility with existing authentication schemes and can only be used once per challenge or credential. Thus, new schemes ought to use the =auth-param= syntax instead, because otherwise future extensions will be impossible.
 
-- The parsing of challenges and credentials is defined by this specification and cannot be modified by new authentication schemes. When the auth-param syntax is used, all parameters ought to support both token and quoted-string syntax, and syntactical constraints ought to be defined on the field value after parsing (i.e., quoted-string processing). This is necessary so that recipients can use a generic parser that applies to all authentication schemes.
+- The parsing of challenges and credentials is defined by this specification and cannot be modified by new authentication schemes. When the =auth-param= syntax is used, all parameters ought to support both =token= and =quoted-string= syntax, and syntactical constraints ought to be defined on the field value after parsing (i.e., =quoted-string= processing). This is necessary so that recipients can use a generic parser that applies to all authentication schemes.
 
-  *Note:* The fact that the value syntax for the "realm" parameter is restricted to quoted-string was a bad design choice not to be repeated for new parameters.
+  *Note:* The fact that the value syntax for the "realm" parameter is restricted to =quoted-string= was a bad design choice not to be repeated for new parameters.
 
 - Definitions of new schemes ought to define the treatment of unknown extension parameters. In general, a "must-ignore" rule is preferable to a "must-understand" rule, because otherwise it will be hard to introduce new parameters in the presence of legacy recipients. Furthermore, it's good to describe the policy for defining new parameters (such as "update the specification" or "use this registry").
 
-- Authentication schemes need to document whether they are usable in origin-server authentication (i.e., using WWW-Authenticate), and/or proxy authentication (i.e., using Proxy-Authenticate).
+- Authentication schemes need to document whether they are usable in origin-server authentication (i.e., using =WWW-Authenticate=), and/or proxy authentication (i.e., using =Proxy-Authenticate=).
 
-- The credentials carried in an Authorization header field are specific to the user agent and, therefore, have the same effect on HTTP caches as the "private" Cache-Control response directive (Section 5.2.2.6 of [RFC7234]), within the scope of the request in which they appear.
+- The credentials carried in an =Authorization= header field are specific to the user agent and, therefore, have the same effect on HTTP caches as the "private" =Cache-Control= response directive (Section 5.2.2.6 of [RFC7234]), within the scope of the request in which they appear.
 
-  Therefore, new authentication schemes that choose not to carry credentials in the Authorization header field (e.g., using a newly defined header field) will need to explicitly disallow caching, by mandating the use of either Cache-Control request directives (e.g., "no-store", Section 5.2.1.5 of [RFC7234]) or response directives (e.g., "private").
+  Therefore, new authentication schemes that choose not to carry credentials in the =Authorization= header field (e.g., using a newly defined header field) will need to explicitly disallow caching, by mandating the use of either =Cache-Control= request directives (e.g., "no-store", [[id:0b69ee34-0121-454f-a6b3-1d0ddacb3cba][Section 5.2.1.5]] of [RFC7234]) or response directives (e.g., "private").
 #+END_QUOTE
+
+HTTP 身份验证框架的某些方面会对新的身份验证方案是否可行进行了约束：
+
+- HTTP 身份验证假定是无状态的，即验证一个请求的所有必要的信息 *必须* 提供在该请求当中，而不是依赖服务器记住之前的请求。身份验证基于或受限于底层连接方面的内容已超出本规范的范畴，以及除非采取措施来确保连接不能够被非验证的用户所使用，否则本质上是有缺陷的（见[[id:e2d9bed8-d6ca-4b5d-ab4a-6b2b2576393e][【RFC7230】章节 2.3]]）。
+- 身份验证参数 =realm= 是用作定义保护空间（[[id:3f8b1d00-3d63-48e3-9be3-bd0251515d12][章节 2.2]]）而保留的。新的方案 *禁止* 以其定义不相容的方式来使用这个参数。
+- =token68= 标记的引入是为了兼容目前已存在的身份验证方案，在每一个质询或凭证当中它只能使用一次。所以，新的方案应该使用 =auth-param= 句法来替代，否则将来不可能再扩展。
+- 对质询和凭证的解析是由本规范所定义的，新的身份验证方案不能够更改它。当使用了 =auth-param= 句法，所有参数应该都支持 =token= 和 =quoted-string= 两种句法，并且句法上的约束应该定义在解析后的字段值上（也就是说，=quoted-string= 处理）。为了接收端能够使用通用的解析器来应用到所有身份验证方案当中，这是非常必要的。
+  *注意：* 事实上将 =realm= 参数的值的句法限制为 =quoted-string= 确实是一个糟糕的设计选择，不应该在新的参数再重复使用这种设计。
+- 定义新方案时应该定义对未知的扩展参数的处置方式。通常情况下，“[[ruby:must-ignore][必须忽略]]”的规则的优先级要高于“[[ruby:must-understand][必须理解]]”的规则，否则的话在遗留的旧接收端面前引入新参数时将变得非常困难。还有，最好描述一下定义新参数的策略（比如“更新规范”或者“使用这个条目”）。
+- 身份验证方案需要注明它们是否可以用于[[ruby:origin-server%20authentication][源服务器的身份验证]]（即，使用 =WWW-Authenticate=），以及/或者[[ruby:proxy%20authentication][代理身份验证]]（即，使用 =Proxy-Authenticate=）。
+- =Authorization= 头字段所装载的凭证是特定于用户代理的，因此，与作为 "private" 的 Cache-Control 响应指令的 HTTP 缓存具有相同的效果，在它们出现的请求范围内。
+  所以，选择不在 =Authorization= 头字段中装载凭证（比如，使用一个新定义的头字段来装载）的那些新身份验证方案将需要显式地禁用缓存，可以通过使用 =Cache-Control= 请求指令（比如，"no-store"，[[id:0b69ee34-0121-454f-a6b3-1d0ddacb3cba][【RFC7234】章节 5.2.1.5]]）或者响应指令（比如，"private"）。
 
 ** 5.2. 状态码登记表 / Status Code Registration
 
@@ -472,10 +497,12 @@ There are certain aspects of the HTTP Authentication Framework that put constrai
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <http://www.iana.org/assignments/http-status-codes> has been updated with the registrations below:
 #+END_QUOTE
 
+《超文本传输协议（HTTP）状态码登记表》位于 <http://www.iana.org/assignments/http-status-codes>，已经更新了以下登记项。
+
 | Value | Description                   | Reference   |
 |-------+-------------------------------+-------------|
-|   401 | Unauthorized                  | Section 3.1 |
-|   407 | Proxy Authentication Required | Section 3.2 |
+|   401 | Unauthorized                  | [[id:50ef5918-69e6-4826-9f20-db56fdd02974][Section 3.1]] |
+|   407 | Proxy Authentication Required | [[id:1029b0aa-9c78-463a-b3f4-a4acbfbac26f][Section 3.2]] |
 
 ** 5.3. 头字段登记表 / Header Field Registration
 
@@ -483,20 +510,26 @@ The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <http:/
 HTTP header fields are registered within the "Message Headers" registry maintained at <http://www.iana.org/assignments/message-headers/>.
 #+END_QUOTE
 
+HTTP 头字段被登记在《消息头部》登记表中，并维护在 <http://www.iana.org/assignments/message-headers/>。
+
 #+BEGIN_QUOTE
 This document defines the following HTTP header fields, so the "Permanent Message Header Field Names" registry has been updated accordingly (see [BCP90]).
 #+END_QUOTE
 
+本文档定义了以下 HTTP 头字段，因此它们相关联的登记项已经根据以下永久登记条目进行更新（见【[[https://tools.ietf.org/html/rfc3864][BCP90]]】）：
+
 | Header Field Name   | Protocol | Status   | Reference   |
 |---------------------+----------+----------+-------------|
-| Authorization       | http     | standard | Section 4.2 |
-| Proxy-Authenticate  | http     | standard | Section 4.3 |
-| Proxy-Authorization | http     | standard | Section 4.4 |
-| WWW-Authenticate    | http     | standard | Section 4.1 |
+| Authorization       | http     | standard | [[id:14671c8e-e5a4-4f9d-ad1d-6460328ed7f5][Section 4.2]] |
+| Proxy-Authenticate  | http     | standard | [[id:7f949af1-00e3-4909-adc7-219da68f0457][Section 4.3]] |
+| Proxy-Authorization | http     | standard | [[id:89c3125a-e7ef-48ea-a2c1-ff4c57214389][Section 4.4]] |
+| WWW-Authenticate    | http     | standard | [[id:22f79cd1-20cc-4ac0-bd68-643e0d51fe7d][Section 4.1]] |
 
 #+BEGIN_QUOTE
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 #+END_QUOTE
+
+主管以上条目的变更的是 "IETF (iesg@ietf.org) - Internet Engineering Task Force"。
 
 * 6. 安全注意事项 / Security Considerations
 
