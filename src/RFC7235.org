@@ -111,6 +111,9 @@ This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC52
 本规范使用了[[ruby:Augmented%20Backus-Naur%20Form][扩展巴科斯范式]]（ABNF）标记法【[[https://tools.ietf.org/html/rfc5234][RFC5234]]】，另外，出于定义的紧凑性的考虑，本规范对 ABNF 规则进行了扩展（见[[id:b9db011d-fe47-4781-929a-4b1b0aa55aec][章节 7]]），允许使用一个 =#= 操作符（类似于 =*= 操作符，指代“重复”）来定义一种以逗号分隔的列表。[[id:dd632d27-1596-43fe-90f8-dba848353e12][附录 B]] 描述了从其他文档中引进的规则。[[id:33ccb99a-6b09-4750-9e71-4cc1e43b49c5][附录 C]] 展示了所有已收集的包含列表扩展规则以及标准 ABNF 标记的语法。
 
 * 2. 访问身份验证框架 / Access Authentication Framework
+:PROPERTIES:
+:ID:       64839e69-dd3b-4f66-b97b-61b3e23d6818
+:END:
 ** 2.1. 质询和作答 / Challenge and Response
 
 #+BEGIN_QUOTE
@@ -592,15 +595,19 @@ User agents that cache credentials are encouraged to provide a readily accessibl
 
 鼓励用户代理在缓存证书凭证的同时，可以提供一种便捷的撤销证书凭证的机制给到用户来控制。
 
-** 6.3. Protection Spaces
+** 6.3. 保护空间 / Protection Spaces
 
 #+BEGIN_QUOTE
 Authentication schemes that solely rely on the "realm" mechanism for establishing a protection space will expose credentials to all resources on an origin server. Clients that have successfully made authenticated requests with a resource can use the same authentication credentials for other resources on the same origin server. This makes it possible for a different resource to harvest authentication credentials for other resources.
 #+END_QUOTE
 
+如果身份验证方案仅仅依靠 "realm" 机制来建立保持空间，那么证书凭证会暴露给源服务器里的所有资源当中。客户端向某一个资源发起身份验证请求成功以后，就可以使用同一个身份验证凭证访问同一个源服务器里的其他资源。这样使得一个不同的资源来收割其他资源的身份验证凭证成为可能。
+
 #+BEGIN_QUOTE
-This is of particular concern when an origin server hosts resources for multiple parties under the same canonical root URI (Section 2.2). Possible mitigation strategies include restricting direct access to authentication credentials (i.e., not making the content of the Authorization request header field available), and separating protection spaces by using a different host name (or port number) for each party.
+This is of particular concern when an origin server hosts resources for multiple parties under the same canonical root URI (Section 2.2). Possible mitigation strategies include restricting direct access to authentication credentials (i.e., not making the content of the =Authorization= request header field available), and separating protection spaces by using a different host name (or port number) for each party.
 #+END_QUOTE
+
+当一个源服务器在同一个[[ruby:canonical%20root%20URI][规范化根 URI]] （[[id:3f8b1d00-3d63-48e3-9be3-bd0251515d12][章节 2.2]]）上为多个团体托管资源的时候，上述这种现象更值得重视。可以缓解上述问题的策略包括：限制直接访问身份验证凭证（也就是说，不要公开 =Authorization= 请求头字段），以及为每一个团体分配一个不同的主机名称（或者端口号）来分隔保护空间。
 
 * 7. 鸣谢 / Acknowledgments
 
@@ -638,27 +645,39 @@ See Section 10 of [RFC7230] for the Acknowledgments related to this document rev
 The framework for HTTP Authentication is now defined by this document, rather than RFC 2617.
 #+END_QUOTE
 
-#+BEGIN_QUOTE
-The "realm" parameter is no longer always required on challenges; consequently, the ABNF allows challenges without any auth parameters. (Section 2)
-#+END_QUOTE
+HTTP 身份验证框架现在由本文档所定义，不再是 RFC 2617。
 
 #+BEGIN_QUOTE
-The "token68" alternative to auth-param lists has been added for consistency with legacy authentication schemes such as "Basic". (Section 2)
+The "realm" parameter is no longer always required on challenges; consequently, the ABNF allows challenges without any auth parameters. ([[id:64839e69-dd3b-4f66-b97b-61b3e23d6818][Section 2]])
 #+END_QUOTE
+
+=realm= 参数不再总是要求无质询，因此，它的 ABNF 规则允许在没有任何 auth 参数的情况下的 challenges。（[[id:64839e69-dd3b-4f66-b97b-61b3e23d6818][章节2]]）
+
+#+BEGIN_QUOTE
+The "token68" alternative to =auth-param= lists has been added for consistency with legacy authentication schemes such as "Basic". ([[id:64839e69-dd3b-4f66-b97b-61b3e23d6818][Section 2]])
+#+END_QUOTE
+
+为了与遗留的身份验证方案（比如，"Basic"）一致，添加了替换 =auth-param= 列表的 "token68"。（[[id:64839e69-dd3b-4f66-b97b-61b3e23d6818][章节2]]）
 
 #+BEGIN_QUOTE
 This specification introduces the Authentication Scheme Registry, along with considerations for new authentication schemes. (Section 5.1)
 #+END_QUOTE
 
+本规范引进了身份验证方案登记表，以及对于新的身份验证方案的注意事项。
+
 * 附录 B：引进的 ABNF / Appendix B. Imported ABNF
 
 #+BEGIN_QUOTE
-The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+The following core rules are included by reference, as defined in [[https://tools.ietf.org/html/rfc5234#appendix-B.1][Appendix B.1]] of [RFC5234]: =ALPHA= (letters), =CR= (carriage return), =CRLF= (CR LF), =CTL= (controls), =DIGIT= (decimal 0-9), =DQUOTE= (double quote), =HEXDIG= (hexadecimal 0-9/A-F/a-f), =LF= (line feed), =OCTET= (any 8-bit sequence of data), =SP= (space), and =VCHAR= (any visible US-ASCII character).
 #+END_QUOTE
+
+本规范引用了以下定义在[[https://tools.ietf.org/html/rfc5234#appendix-B.1][【RFC5234】附录 B.1]] 中的核心规则：=ALPHA= （字母）、=CR= （回车符）、=CRLF= （回车换行符）、=CTL= （控制字符）、=DIGIT= （十进制数字 0-9）、=DQUOTE= （双引号）、=HEXDIG= （十六进制数字 0-9/A-F/a-f）、=HTAB= （水平制表符）、=LF= （换行符）、=OCTET= （八位组字节）、=SP= （空白）以及 =VCHAR= （【USASCII】可见字符）。
 
 #+BEGIN_QUOTE
 The rules below are defined in [RFC7230]:
 #+END_QUOTE
+
+以下规则定义在【[[file:RFC7230.org][RFC7230]]】中：
 
 #+BEGIN_SRC text
   BWS           = <BWS, see [RFC7230], Section 3.2.3>
@@ -672,6 +691,8 @@ The rules below are defined in [RFC7230]:
 #+BEGIN_QUOTE
 In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
 #+END_QUOTE
+
+下列 ABNF 规则集合中，列表规则是在[[id:f8234cb5-154d-4daf-82fd-ed54ac75cf8b][【RFC7230】章节 1.2]] 所扩充的。
 
 #+BEGIN_SRC text
   Authorization = credentials
@@ -723,4 +744,8 @@ In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7
   Germany
   Email: julian.reschke@greenbytes.de
   URI: http://greenbytes.de/tech/webdav/
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+阿多（译者）
 #+END_EXAMPLE
