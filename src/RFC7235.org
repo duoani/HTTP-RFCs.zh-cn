@@ -545,7 +545,7 @@ Everything about the topic of HTTP authentication is a security consideration, s
 
 所有关于 HTTP 身份验证的话题可以概括为一种安全性的考虑，因此，下文中所列举的注意事项并不能囊括所有。再者，下文仅讨论[[ruby:authentication%20framework][身份验证框架]]相关的宏观安全注意事项，而不是针对[[ruby:specific%20authentication%20schemes][具体的身份验证方案]]来讨论其所有潜在的风险（这应该由定义该方案的规范文档来记录）。网络应用安全性相关（包括实现或者实践使用某种身份验证方案时常见的陷阱）的最新研究的专题信息和链接由许多组织共同维护（比如，【[[https://www.owasp.org/index.php/Main_Page][OWASP]]】）。
 
-** 6.1. Confidentiality of Credentials
+** 6.1. 证书凭证的保密性 / Confidentiality of Credentials
 :PROPERTIES:
 :ID:       2918532f-0cd3-451c-a1d1-ef0c089539b8
 :END:
@@ -554,15 +554,25 @@ Everything about the topic of HTTP authentication is a security consideration, s
 The HTTP authentication framework does not define a single mechanism for maintaining the confidentiality of credentials; instead, each authentication scheme defines how the credentials are encoded prior to transmission. While this provides flexibility for the development of future authentication schemes, it is inadequate for the protection of existing schemes that provide no confidentiality on their own, or that do not sufficiently protect against replay attacks. Furthermore, if the server expects credentials that are specific to each individual user, the exchange of those credentials will have the effect of identifying that user even if the content within credentials remains confidential.
 #+END_QUOTE
 
+HTTP 身份验证框架并没不是定义一种单一的机制来维护证书凭证的机密性，而是由每一种身份验证方案自己来定义证书凭证在传输之前是如何编码的。默认这种设计为未来开发新的身份验证方案提供了灵活性，但是，对于现有的自身没有设计保密机制的方案（或者没有足够能力对抗[[ruby:replay%20attack][重放攻击]]的那些方案）来说，它并不能提供足够的保护。再者，如果服务器要求每一个独立用户都有专门的证书凭证，那么，在交换证书凭证的过程中，用户可能会因此被唯一标识出，即使证书的内容仍然具有保密性。
+
+#+BEGIN_QUOTE
+译注：重放攻击可看[[https://baike.baidu.com/item/%25E9%2587%258D%25E6%2594%25BE%25E6%2594%25BB%25E5%2587%25BB][百度百科对它的解释]]。
+#+END_QUOTE
+
 #+BEGIN_QUOTE
 HTTP depends on the security properties of the underlying transport- or session-level connection to provide confidential transmission of header fields. In other words, if a server limits access to authenticated users using this framework, the server needs to ensure that the connection is properly secured in accordance with the nature of the authentication scheme used. For example, services that depend on individual user authentication often require a connection to be secured with TLS ("Transport Layer Security", [RFC5246]) prior to exchanging any credentials.
 #+END_QUOTE
 
-** 6.2. Authentication Credentials and Idle Clients
+HTTP 依赖以 =transport-= 为前缀的安全属性或者[[ruby:session-level%20connection][会话级别的连接]]来为头字段提供保密传输。也就是说，如果一个服务器限制了对使用本框架的已验证用户的访问，服务器需要确保连接的安全性与所使用身份验证方案的性质一致。例如，依赖独立用户身份验证的服务通常会要求在交换任何证书凭证之前，使用 TLS 连接（"Transport Layer Security"，【[[https://tools.ietf.org/html/rfc5246][RFC5246]]】）。
+
+** 6.2. 身份验证证书凭证和空闲客户端 / Authentication Credentials and Idle Clients
 
 #+BEGIN_QUOTE
 Existing HTTP clients and user agents typically retain authentication information indefinitely. HTTP does not provide a mechanism for the origin server to direct clients to discard these cached credentials, since the protocol has no awareness of how credentials are obtained or managed by the user agent. The mechanisms for expiring or revoking credentials can be specified as part of an authentication scheme definition.
 #+END_QUOTE
+
+现有的 HTTP 客户端和用户代理常常会无限期保留身份验证信息。HTTP 并没有提供任何机制来让源服务器去引导客户端丢弃那些缓存过的证书凭证，这是因为协议本身并不清楚用户代理是如何获得或者管理证书凭证的。对证书凭证的过期或者撤销机制可以作为一种身份验证方案定义的一部分。
 
 #+BEGIN_QUOTE
 Circumstances under which credential caching can interfere with the application's security model include but are not limited to:
@@ -571,9 +581,16 @@ Circumstances under which credential caching can interfere with the application'
 - Applications that include a session termination indication (such as a "logout" or "commit" button on a page) after which the server side of the application "knows" that there is no further reason for the client to retain the credentials.
 #+END_QUOTE
 
+以下证书凭证的缓存行为会妨碍到应用程序的安全模型，包括但不限于：
+
+- 客户端已经闲置了很长一段时间，随后服务器可能希望让客户端对用户重新认证。
+- 应用程序包含一种会话终止的指令（比如页面中的“退出登录”或者“提交”按钮），之后服务端程序“知道”客户端不再有保留证书凭证的必要了。
+
 #+BEGIN_QUOTE
 User agents that cache credentials are encouraged to provide a readily accessible mechanism for discarding cached credentials under user control.
 #+END_QUOTE
+
+鼓励用户代理在缓存证书凭证的同时，可以提供一种便捷的撤销证书凭证的机制给到用户来控制。
 
 ** 6.3. Protection Spaces
 
