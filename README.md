@@ -13,8 +13,7 @@
 - [x] [RFC7232: HTTP/1.1: Conditional Requests](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7232.html)
 - [x] [RFC7233: HTTP/1.1: Range Requests](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7233.html)
 - [x] [RFC7234: HTTP/1.1: Caching](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7234.html)
-- [ ] [RFC7235: HTTP/1.1: Authentication](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7235.html)
-- [ ] RFC7260: Hypertext Transfer Protocol Version 2 (HTTP/2)
+- [x] [RFC7235: HTTP/1.1: Authentication](https://duoani.github.io/HTTP-RFCs.zh-cn/RFC7235.html)
 
 另外，目前 RFC723* 系列文档已有多个堪误表（Errata），目前还未有计划对其进行翻译。如果要查看最新的堪误，[请移步这里](https://datatracker.ietf.org/wg/httpbis/documents/)。
 

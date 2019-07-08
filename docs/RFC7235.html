@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-24 Thu 16:34 -->
+<!-- 2019-07-08 Mon 15:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RFC7235: Hypertext Transfer Protocol (HTTP/1.1): Authentication</title>
@@ -183,6 +183,13 @@ table tbody tr:nth-child(odd){
 
 .org-right {
   text-align: right;
+}
+
+img {
+  border: 1px solid #ddd;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 pre,
@@ -437,9 +444,9 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#org14b4942">6. 安全注意事项 / Security Considerations</a>
 <ul>
-<li><a href="#orgaae2d5d">6.1. Confidentiality of Credentials</a></li>
-<li><a href="#orge70ad28">6.2. Authentication Credentials and Idle Clients</a></li>
-<li><a href="#org95ac9af">6.3. Protection Spaces</a></li>
+<li><a href="#orgb74e19f">6.1. 证书凭证的保密性 / Confidentiality of Credentials</a></li>
+<li><a href="#org069b25f">6.2. 身份验证证书凭证和空闲客户端 / Authentication Credentials and Idle Clients</a></li>
+<li><a href="#org282f653">6.3. 保护空间 / Protection Spaces</a></li>
 </ul>
 </li>
 <li><a href="#orgaabb94b">7. 鸣谢 / Acknowledgments</a></li>
@@ -620,7 +627,7 @@ This specification uses the Augmented Backus-Naur Form (ABNF) notation of [RFC52
 </div>
 
 <div id="outline-container-orgd266e6f" class="outline-2">
-<h2 id="orgd266e6f">2. 访问身份验证框架 / Access Authentication Framework</h2>
+<h2 id="orgd266e6f"><a id="ID-64839e69-dd3b-4f66-b97b-61b3e23d6818"></a>2. 访问身份验证框架 / Access Authentication Framework</h2>
 <div class="outline-text-2" id="text-orgd266e6f">
 </div>
 <div id="outline-container-orgc624cd6" class="outline-3">
@@ -742,12 +749,12 @@ A client that wishes to authenticate itself with a proxy — usually, but not ne
 
 <blockquote>
 <p>
-Both the <code>Authorization</code> field value and the <code>Proxy-Authorization</code> field value contain the client's credentials for the realm of the resource being requested, based upon a challenge received in a response (possibly at some point in the past). When creating their values, the user agent ought to do so by selecting the challenge with what it considers to be the most secure <code>auth-scheme</code> that it understands, obtaining credentials from the user as appropriate. Transmission of credentials within header field values implies significant security considerations regarding the confidentiality of the underlying connection, as described in <a href="#orgaae2d5d">Section 6.1</a>.
+Both the <code>Authorization</code> field value and the <code>Proxy-Authorization</code> field value contain the client's credentials for the realm of the resource being requested, based upon a challenge received in a response (possibly at some point in the past). When creating their values, the user agent ought to do so by selecting the challenge with what it considers to be the most secure <code>auth-scheme</code> that it understands, obtaining credentials from the user as appropriate. Transmission of credentials within header field values implies significant security considerations regarding the confidentiality of the underlying connection, as described in <a href="#orgb74e19f">Section 6.1</a>.
 </p>
 </blockquote>
 
 <p>
-<code>Authentication</code> 的字段值和 <code>Proxy-Authorization</code> 字段值都包含有客户端对所要请求的资源领域的凭证，根据（可能在过去的某个时候）接收自一个响应里的一个质询。当创建它们的值的时候，用户代理应该选择其理解的并认为是最安全的那一种 <code>auth-scheme</code> 质询，从用户那里适当地获得凭证。在头字段值里传输凭证意味着底层连接机密性方面的重大安全注意事项，正如<a href="#orgaae2d5d">章节 6.1</a> 所描述的。
+<code>Authentication</code> 的字段值和 <code>Proxy-Authorization</code> 字段值都包含有客户端对所要请求的资源领域的凭证，根据（可能在过去的某个时候）接收自一个响应里的一个质询。当创建它们的值的时候，用户代理应该选择其理解的并认为是最安全的那一种 <code>auth-scheme</code> 质询，从用户那里适当地获得凭证。在头字段值里传输凭证意味着底层连接机密性方面的重大安全注意事项，正如<a href="#orgb74e19f">章节 6.1</a> 所描述的。
 </p>
 
 <div class="org-src-container">
@@ -798,7 +805,7 @@ HTTP 并没有将对这个简单的<ruby>质询-作答<rt>challenge-response</rt
 </div>
 
 <div id="outline-container-org080522a" class="outline-3">
-<h3 id="org080522a">2.2. 保护空间（领域） / Protection Space (Realm)</h3>
+<h3 id="org080522a"><a id="ID-3f8b1d00-3d63-48e3-9be3-bd0251515d12"></a>2.2. 保护空间（领域） / Protection Space (Realm)</h3>
 <div class="outline-text-3" id="text-org080522a">
 <blockquote>
 <p>
@@ -1110,6 +1117,10 @@ Unlike <code>Authorization</code>, the <code>Proxy-Authorization</code> header f
 The "Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry" defines the namespace for the authentication schemes in challenges and credentials. It has been created and is now maintained at <a href="http://www.iana.org/assignments/http-authschemes">http://www.iana.org/assignments/http-authschemes</a>.
 </p>
 </blockquote>
+
+<p>
+《HTTP 身份验证方案登记表》定义了质询和凭证方面的身份验证方案的命名空间，这份登记表已经创建，目前维护在 <a href="http://www.iana.org/assignments/http-authschemes">http://www.iana.org/assignments/http-authschemes</a>。
+</p>
 </div>
 
 <div id="outline-container-org2e368a3" class="outline-4">
@@ -1117,7 +1128,7 @@ The "Hypertext Transfer Protocol (HTTP) Authentication Scheme Registry" defines 
 <div class="outline-text-4" id="text-org2e368a3">
 <blockquote>
 <p>
-Registrations MUST include the following fields:
+Registrations <b>MUST</b> include the following fields:
 </p>
 
 <ul class="org-ul">
@@ -1127,11 +1138,25 @@ Registrations MUST include the following fields:
 </ul>
 </blockquote>
 
+<p>
+登记条目 <b>必须</b> 包括以下字段：
+</p>
+
+<ul class="org-ul">
+<li>身份验证方案的名称</li>
+<li>指向到规范文本的引用</li>
+<li>备注（可选）</li>
+</ul>
+
 <blockquote>
 <p>
-Values to be added to this namespace require IETF Review (see [RFC5226], Section 4.1).
+Values to be added to this namespace require IETF Review (see [RFC5226], <a href="https://tools.ietf.org/html/rfc5226#section-4.1">Section 4.1</a>).
 </p>
 </blockquote>
+
+<p>
+添加到 HTTP 状态码命名空间的值要求由 IETF 复审（见<a href="https://tools.ietf.org/html/rfc5226#section-4.1">【RFC5226】章节 4.1</a>）。
+</p>
 </div>
 </div>
 
@@ -1144,33 +1169,49 @@ There are certain aspects of the HTTP Authentication Framework that put constrai
 </p>
 
 <ul class="org-ul">
-<li>HTTP authentication is presumed to be stateless: all of the information necessary to authenticate a request MUST be provided in the request, rather than be dependent on the server remembering prior requests. Authentication based on, or bound to, the underlying connection is outside the scope of this specification and inherently flawed unless steps are taken to ensure that the connection cannot be used by any party other than the authenticated user (see Section 2.3 of [RFC7230]).</li>
+<li>HTTP authentication is presumed to be stateless: all of the information necessary to authenticate a request <b>MUST</b> be provided in the request, rather than be dependent on the server remembering prior requests. Authentication based on, or bound to, the underlying connection is outside the scope of this specification and inherently flawed unless steps are taken to ensure that the connection cannot be used by any party other than the authenticated user (see <a href="RFC7230.html#ID-e2d9bed8-d6ca-4b5d-ab4a-6b2b2576393e">Section 2.3</a> of [RFC7230]).</li>
 
-<li>The authentication parameter "realm" is reserved for defining protection spaces as described in Section 2.2. New schemes MUST NOT use it in a way incompatible with that definition.</li>
+<li>The authentication parameter "realm" is reserved for defining protection spaces as described in <a href="#org080522a">Section 2.2</a>. New schemes <b>MUST NOT</b> use it in a way incompatible with that definition.</li>
 
-<li>The "token68" notation was introduced for compatibility with existing authentication schemes and can only be used once per challenge or credential. Thus, new schemes ought to use the auth-param syntax instead, because otherwise future extensions will be impossible.</li>
+<li>The "token68" notation was introduced for compatibility with existing authentication schemes and can only be used once per challenge or credential. Thus, new schemes ought to use the <code>auth-param</code> syntax instead, because otherwise future extensions will be impossible.</li>
 
 <li><p>
-The parsing of challenges and credentials is defined by this specification and cannot be modified by new authentication schemes. When the auth-param syntax is used, all parameters ought to support both token and quoted-string syntax, and syntactical constraints ought to be defined on the field value after parsing (i.e., quoted-string processing). This is necessary so that recipients can use a generic parser that applies to all authentication schemes.
+The parsing of challenges and credentials is defined by this specification and cannot be modified by new authentication schemes. When the <code>auth-param</code> syntax is used, all parameters ought to support both <code>token</code> and <code>quoted-string</code> syntax, and syntactical constraints ought to be defined on the field value after parsing (i.e., <code>quoted-string</code> processing). This is necessary so that recipients can use a generic parser that applies to all authentication schemes.
 </p>
 
 <p>
-<b>Note:</b> The fact that the value syntax for the "realm" parameter is restricted to quoted-string was a bad design choice not to be repeated for new parameters.
+<b>Note:</b> The fact that the value syntax for the "realm" parameter is restricted to <code>quoted-string</code> was a bad design choice not to be repeated for new parameters.
 </p></li>
 
 <li>Definitions of new schemes ought to define the treatment of unknown extension parameters. In general, a "must-ignore" rule is preferable to a "must-understand" rule, because otherwise it will be hard to introduce new parameters in the presence of legacy recipients. Furthermore, it's good to describe the policy for defining new parameters (such as "update the specification" or "use this registry").</li>
 
-<li>Authentication schemes need to document whether they are usable in origin-server authentication (i.e., using WWW-Authenticate), and/or proxy authentication (i.e., using Proxy-Authenticate).</li>
+<li>Authentication schemes need to document whether they are usable in origin-server authentication (i.e., using <code>WWW-Authenticate</code>), and/or proxy authentication (i.e., using <code>Proxy-Authenticate</code>).</li>
 
 <li><p>
-The credentials carried in an Authorization header field are specific to the user agent and, therefore, have the same effect on HTTP caches as the "private" Cache-Control response directive (Section 5.2.2.6 of [RFC7234]), within the scope of the request in which they appear.
+The credentials carried in an <code>Authorization</code> header field are specific to the user agent and, therefore, have the same effect on HTTP caches as the "private" <code>Cache-Control</code> response directive (Section 5.2.2.6 of [RFC7234]), within the scope of the request in which they appear.
 </p>
 
 <p>
-Therefore, new authentication schemes that choose not to carry credentials in the Authorization header field (e.g., using a newly defined header field) will need to explicitly disallow caching, by mandating the use of either Cache-Control request directives (e.g., "no-store", Section 5.2.1.5 of [RFC7234]) or response directives (e.g., "private").
+Therefore, new authentication schemes that choose not to carry credentials in the <code>Authorization</code> header field (e.g., using a newly defined header field) will need to explicitly disallow caching, by mandating the use of either <code>Cache-Control</code> request directives (e.g., "no-store", <a href="RFC7234.html#ID-0b69ee34-0121-454f-a6b3-1d0ddacb3cba">Section 5.2.1.5</a> of [RFC7234]) or response directives (e.g., "private").
 </p></li>
 </ul>
 </blockquote>
+
+<p>
+HTTP 身份验证框架的某些方面会对新的身份验证方案是否可行进行了约束：
+</p>
+
+<ul class="org-ul">
+<li>HTTP 身份验证假定是无状态的，即验证一个请求的所有必要的信息 <b>必须</b> 提供在该请求当中，而不是依赖服务器记住之前的请求。身份验证基于或受限于底层连接方面的内容已超出本规范的范畴，以及除非采取措施来确保连接不能够被非验证的用户所使用，否则本质上是有缺陷的（见<a href="RFC7230.html#ID-e2d9bed8-d6ca-4b5d-ab4a-6b2b2576393e">【RFC7230】章节 2.3</a>）。</li>
+<li>身份验证参数 <code>realm</code> 是用作定义保护空间（<a href="#org080522a">章节 2.2</a>）而保留的。新的方案 <b>禁止</b> 以其定义不相容的方式来使用这个参数。</li>
+<li><code>token68</code> 标记的引入是为了兼容目前已存在的身份验证方案，在每一个质询或凭证当中它只能使用一次。所以，新的方案应该使用 <code>auth-param</code> 句法来替代，否则将来不可能再扩展。</li>
+<li>对质询和凭证的解析是由本规范所定义的，新的身份验证方案不能够更改它。当使用了 <code>auth-param</code> 句法，所有参数应该都支持 <code>token</code> 和 <code>quoted-string</code> 两种句法，并且句法上的约束应该定义在解析后的字段值上（也就是说，<code>quoted-string</code> 处理）。为了接收端能够使用通用的解析器来应用到所有身份验证方案当中，这是非常必要的。
+<b>注意：</b> 事实上将 <code>realm</code> 参数的值的句法限制为 <code>quoted-string</code> 确实是一个糟糕的设计选择，不应该在新的参数再重复使用这种设计。</li>
+<li>定义新方案时应该定义对未知的扩展参数的处置方式。通常情况下，“<ruby>必须忽略<rt>must-ignore</rt></ruby>”的规则的优先级要高于“<ruby>必须理解<rt>must-understand</rt></ruby>”的规则，否则的话在遗留的旧接收端面前引入新参数时将变得非常困难。还有，最好描述一下定义新参数的策略（比如“更新规范”或者“使用这个条目”）。</li>
+<li>身份验证方案需要注明它们是否可以用于<ruby>源服务器的身份验证<rt>origin-server authentication</rt></ruby>（即，使用 <code>WWW-Authenticate</code>），以及/或者<ruby>代理身份验证<rt>proxy authentication</rt></ruby>（即，使用 <code>Proxy-Authenticate</code>）。</li>
+<li><code>Authorization</code> 头字段所装载的凭证是特定于用户代理的，因此，与作为 "private" 的 Cache-Control 响应指令的 HTTP 缓存具有相同的效果，在它们出现的请求范围内。
+所以，选择不在 <code>Authorization</code> 头字段中装载凭证（比如，使用一个新定义的头字段来装载）的那些新身份验证方案将需要显式地禁用缓存，可以通过使用 <code>Cache-Control</code> 请求指令（比如，"no-store"，<a href="RFC7234.html#ID-0b69ee34-0121-454f-a6b3-1d0ddacb3cba">【RFC7234】章节 5.2.1.5</a>）或者响应指令（比如，"private"）。</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1183,6 +1224,10 @@ Therefore, new authentication schemes that choose not to carry credentials in th
 The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <a href="http://www.iana.org/assignments/http-status-codes">http://www.iana.org/assignments/http-status-codes</a> has been updated with the registrations below:
 </p>
 </blockquote>
+
+<p>
+《超文本传输协议（HTTP）状态码登记表》位于 <a href="http://www.iana.org/assignments/http-status-codes">http://www.iana.org/assignments/http-status-codes</a>，已经更新了以下登记项。
+</p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1205,13 +1250,13 @@ The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located at <a href
 <tr>
 <td class="org-right">401</td>
 <td class="org-left">Unauthorized</td>
-<td class="org-left">Section 3.1</td>
+<td class="org-left"><a href="#orgea53663">Section 3.1</a></td>
 </tr>
 
 <tr>
 <td class="org-right">407</td>
 <td class="org-left">Proxy Authentication Required</td>
-<td class="org-left">Section 3.2</td>
+<td class="org-left"><a href="#org0638ce0">Section 3.2</a></td>
 </tr>
 </tbody>
 </table>
@@ -1227,11 +1272,19 @@ HTTP header fields are registered within the "Message Headers" registry maintain
 </p>
 </blockquote>
 
+<p>
+HTTP 头字段被登记在《消息头部》登记表中，并维护在 <a href="http://www.iana.org/assignments/message-headers/">http://www.iana.org/assignments/message-headers/</a>。
+</p>
+
 <blockquote>
 <p>
 This document defines the following HTTP header fields, so the "Permanent Message Header Field Names" registry has been updated accordingly (see [BCP90]).
 </p>
 </blockquote>
+
+<p>
+本文档定义了以下 HTTP 头字段，因此它们相关联的登记项已经根据以下永久登记条目进行更新（见【<a href="https://tools.ietf.org/html/rfc3864">BCP90</a>】）：
+</p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1258,28 +1311,28 @@ This document defines the following HTTP header fields, so the "Permanent Messag
 <td class="org-left">Authorization</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 4.2</td>
+<td class="org-left"><a href="#org83ecc17">Section 4.2</a></td>
 </tr>
 
 <tr>
 <td class="org-left">Proxy-Authenticate</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 4.3</td>
+<td class="org-left"><a href="#org440e962">Section 4.3</a></td>
 </tr>
 
 <tr>
 <td class="org-left">Proxy-Authorization</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 4.4</td>
+<td class="org-left"><a href="#org18ce3e0">Section 4.4</a></td>
 </tr>
 
 <tr>
 <td class="org-left">WWW-Authenticate</td>
 <td class="org-left">http</td>
 <td class="org-left">standard</td>
-<td class="org-left">Section 4.1</td>
+<td class="org-left"><a href="#orgfa32f4b">Section 4.1</a></td>
 </tr>
 </tbody>
 </table>
@@ -1289,6 +1342,10 @@ This document defines the following HTTP header fields, so the "Permanent Messag
 The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Force".
 </p>
 </blockquote>
+
+<p>
+主管以上条目的变更的是 "IETF (iesg@ietf.org) - Internet Engineering Task Force"。
+</p>
 </div>
 </div>
 </div>
@@ -1302,19 +1359,37 @@ This section is meant to inform developers, information providers, and users of 
 </p>
 </blockquote>
 
+<p>
+本章节是为了告诉开发者、信息提供商、以及用户，HTTP 身份验证相关的安全注意事项。《消息句法和路由》【<a href="RFC7230.html">RFC7230</a>】以及《语义和内容》【<a href="RFC7231.html">RFC7231</a>】有更广泛的安全注意事项。
+</p>
+
 <blockquote>
 <p>
 Everything about the topic of HTTP authentication is a security consideration, so the list of considerations below is not exhaustive. Furthermore, it is limited to security considerations regarding the authentication framework, in general, rather than discussing all of the potential considerations for specific authentication schemes (which ought to be documented in the specifications that define those schemes). Various organizations maintain topical information and links to current research on Web application security (e.g., [OWASP]), including common pitfalls for implementing and using the authentication schemes found in practice.
 </p>
 </blockquote>
+
+<p>
+所有关于 HTTP 身份验证的话题可以概括为一种安全性的考虑，因此，下文中所列举的注意事项并不能囊括所有。再者，下文仅讨论<ruby>身份验证框架<rt>authentication framework</rt></ruby>相关的宏观安全注意事项，而不是针对<ruby>具体的身份验证方案<rt>specific authentication schemes</rt></ruby>来讨论其所有潜在的风险（这应该由定义该方案的规范文档来记录）。网络应用安全性相关（包括实现或者实践使用某种身份验证方案时常见的陷阱）的最新研究的专题信息和链接由许多组织共同维护（比如，【<a href="https://www.owasp.org/index.php/Main_Page">OWASP</a>】）。
+</p>
 </div>
 
-<div id="outline-container-orgaae2d5d" class="outline-3">
-<h3 id="orgaae2d5d"><a id="ID-2918532f-0cd3-451c-a1d1-ef0c089539b8"></a>6.1. Confidentiality of Credentials</h3>
-<div class="outline-text-3" id="text-orgaae2d5d">
+<div id="outline-container-orgb74e19f" class="outline-3">
+<h3 id="orgb74e19f"><a id="ID-2918532f-0cd3-451c-a1d1-ef0c089539b8"></a>6.1. 证书凭证的保密性 / Confidentiality of Credentials</h3>
+<div class="outline-text-3" id="text-orgb74e19f">
 <blockquote>
 <p>
 The HTTP authentication framework does not define a single mechanism for maintaining the confidentiality of credentials; instead, each authentication scheme defines how the credentials are encoded prior to transmission. While this provides flexibility for the development of future authentication schemes, it is inadequate for the protection of existing schemes that provide no confidentiality on their own, or that do not sufficiently protect against replay attacks. Furthermore, if the server expects credentials that are specific to each individual user, the exchange of those credentials will have the effect of identifying that user even if the content within credentials remains confidential.
+</p>
+</blockquote>
+
+<p>
+HTTP 身份验证框架并没不是定义一种单一的机制来维护证书凭证的机密性，而是由每一种身份验证方案自己来定义证书凭证在传输之前是如何编码的。默认这种设计为未来开发新的身份验证方案提供了灵活性，但是，对于现有的自身没有设计保密机制的方案（或者没有足够能力对抗<ruby>重放攻击<rt>replay attack</rt></ruby>的那些方案）来说，它并不能提供足够的保护。再者，如果服务器要求每一个独立用户都有专门的证书凭证，那么，在交换证书凭证的过程中，用户可能会因此被唯一标识出，即使证书的内容仍然具有保密性。
+</p>
+
+<blockquote>
+<p>
+译注：重放攻击可看<a href="https://baike.baidu.com/item/%E9%87%8D%E6%94%BE%E6%94%BB%E5%87%BB">百度百科对它的解释</a>。
 </p>
 </blockquote>
 
@@ -1323,17 +1398,25 @@ The HTTP authentication framework does not define a single mechanism for maintai
 HTTP depends on the security properties of the underlying transport- or session-level connection to provide confidential transmission of header fields. In other words, if a server limits access to authenticated users using this framework, the server needs to ensure that the connection is properly secured in accordance with the nature of the authentication scheme used. For example, services that depend on individual user authentication often require a connection to be secured with TLS ("Transport Layer Security", [RFC5246]) prior to exchanging any credentials.
 </p>
 </blockquote>
+
+<p>
+HTTP 依赖以 <code>transport-</code> 为前缀的安全属性或者<ruby>会话级别的连接<rt>session-level connection</rt></ruby>来为头字段提供保密传输。也就是说，如果一个服务器限制了对使用本框架的已验证用户的访问，服务器需要确保连接的安全性与所使用身份验证方案的性质一致。例如，依赖独立用户身份验证的服务通常会要求在交换任何证书凭证之前，使用 TLS 连接（"Transport Layer Security"，【<a href="https://tools.ietf.org/html/rfc5246">RFC5246</a>】）。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orge70ad28" class="outline-3">
-<h3 id="orge70ad28">6.2. Authentication Credentials and Idle Clients</h3>
-<div class="outline-text-3" id="text-orge70ad28">
+<div id="outline-container-org069b25f" class="outline-3">
+<h3 id="org069b25f">6.2. 身份验证证书凭证和空闲客户端 / Authentication Credentials and Idle Clients</h3>
+<div class="outline-text-3" id="text-org069b25f">
 <blockquote>
 <p>
 Existing HTTP clients and user agents typically retain authentication information indefinitely. HTTP does not provide a mechanism for the origin server to direct clients to discard these cached credentials, since the protocol has no awareness of how credentials are obtained or managed by the user agent. The mechanisms for expiring or revoking credentials can be specified as part of an authentication scheme definition.
 </p>
 </blockquote>
+
+<p>
+现有的 HTTP 客户端和用户代理常常会无限期保留身份验证信息。HTTP 并没有提供任何机制来让源服务器去引导客户端丢弃那些缓存过的证书凭证，这是因为协议本身并不清楚用户代理是如何获得或者管理证书凭证的。对证书凭证的过期或者撤销机制可以作为一种身份验证方案定义的一部分。
+</p>
 
 <blockquote>
 <p>
@@ -1346,28 +1429,49 @@ Circumstances under which credential caching can interfere with the application'
 </ul>
 </blockquote>
 
+<p>
+以下证书凭证的缓存行为会妨碍到应用程序的安全模型，包括但不限于：
+</p>
+
+<ul class="org-ul">
+<li>客户端已经闲置了很长一段时间，随后服务器可能希望让客户端对用户重新认证。</li>
+<li>应用程序包含一种会话终止的指令（比如页面中的“退出登录”或者“提交”按钮），之后服务端程序“知道”客户端不再有保留证书凭证的必要了。</li>
+</ul>
+
 <blockquote>
 <p>
 User agents that cache credentials are encouraged to provide a readily accessible mechanism for discarding cached credentials under user control.
 </p>
 </blockquote>
+
+<p>
+鼓励用户代理在缓存证书凭证的同时，可以提供一种便捷的撤销证书凭证的机制给到用户来控制。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org95ac9af" class="outline-3">
-<h3 id="org95ac9af">6.3. Protection Spaces</h3>
-<div class="outline-text-3" id="text-org95ac9af">
+<div id="outline-container-org282f653" class="outline-3">
+<h3 id="org282f653">6.3. 保护空间 / Protection Spaces</h3>
+<div class="outline-text-3" id="text-org282f653">
 <blockquote>
 <p>
 Authentication schemes that solely rely on the "realm" mechanism for establishing a protection space will expose credentials to all resources on an origin server. Clients that have successfully made authenticated requests with a resource can use the same authentication credentials for other resources on the same origin server. This makes it possible for a different resource to harvest authentication credentials for other resources.
 </p>
 </blockquote>
 
+<p>
+如果身份验证方案仅仅依靠 "realm" 机制来建立保持空间，那么证书凭证会暴露给源服务器里的所有资源当中。客户端向某一个资源发起身份验证请求成功以后，就可以使用同一个身份验证凭证访问同一个源服务器里的其他资源。这样使得一个不同的资源来收割其他资源的身份验证凭证成为可能。
+</p>
+
 <blockquote>
 <p>
-This is of particular concern when an origin server hosts resources for multiple parties under the same canonical root URI (Section 2.2). Possible mitigation strategies include restricting direct access to authentication credentials (i.e., not making the content of the Authorization request header field available), and separating protection spaces by using a different host name (or port number) for each party.
+This is of particular concern when an origin server hosts resources for multiple parties under the same canonical root URI (Section 2.2). Possible mitigation strategies include restricting direct access to authentication credentials (i.e., not making the content of the <code>Authorization</code> request header field available), and separating protection spaces by using a different host name (or port number) for each party.
 </p>
 </blockquote>
+
+<p>
+当一个源服务器在同一个<ruby>规范化根 URI<rt>canonical root URI</rt></ruby> （<a href="#org080522a">章节 2.2</a>）上为多个团体托管资源的时候，上述这种现象更值得重视。可以缓解上述问题的策略包括：限制直接访问身份验证凭证（也就是说，不要公开 <code>Authorization</code> 请求头字段），以及为每一个团体分配一个不同的主机名称（或者端口号）来分隔保护空间。
+</p>
 </div>
 </div>
 </div>
@@ -1432,23 +1536,39 @@ The framework for HTTP Authentication is now defined by this document, rather th
 </p>
 </blockquote>
 
-<blockquote>
 <p>
-The "realm" parameter is no longer always required on challenges; consequently, the ABNF allows challenges without any auth parameters. (Section 2)
+HTTP 身份验证框架现在由本文档所定义，不再是 RFC 2617。
 </p>
-</blockquote>
 
 <blockquote>
 <p>
-The "token68" alternative to auth-param lists has been added for consistency with legacy authentication schemes such as "Basic". (Section 2)
+The "realm" parameter is no longer always required on challenges; consequently, the ABNF allows challenges without any auth parameters. (<a href="#orgd266e6f">Section 2</a>)
 </p>
 </blockquote>
+
+<p>
+<code>realm</code> 参数不再总是要求无质询，因此，它的 ABNF 规则允许在没有任何 auth 参数的情况下的 challenges。（<a href="#orgd266e6f">章节2</a>）
+</p>
+
+<blockquote>
+<p>
+The "token68" alternative to <code>auth-param</code> lists has been added for consistency with legacy authentication schemes such as "Basic". (<a href="#orgd266e6f">Section 2</a>)
+</p>
+</blockquote>
+
+<p>
+为了与遗留的身份验证方案（比如，"Basic"）一致，添加了替换 <code>auth-param</code> 列表的 "token68"。（<a href="#orgd266e6f">章节2</a>）
+</p>
 
 <blockquote>
 <p>
 This specification introduces the Authentication Scheme Registry, along with considerations for new authentication schemes. (Section 5.1)
 </p>
 </blockquote>
+
+<p>
+本规范引进了身份验证方案登记表，以及对于新的身份验证方案的注意事项。
+</p>
 </div>
 </div>
 
@@ -1457,15 +1577,23 @@ This specification introduces the Authentication Scheme Registry, along with con
 <div class="outline-text-2" id="text-org48a9208">
 <blockquote>
 <p>
-The following core rules are included by reference, as defined in Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return), CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any 8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII character).
+The following core rules are included by reference, as defined in <a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">Appendix B.1</a> of [RFC5234]: <code>ALPHA</code> (letters), <code>CR</code> (carriage return), <code>CRLF</code> (CR LF), <code>CTL</code> (controls), <code>DIGIT</code> (decimal 0-9), <code>DQUOTE</code> (double quote), <code>HEXDIG</code> (hexadecimal 0-9/A-F/a-f), <code>LF</code> (line feed), <code>OCTET</code> (any 8-bit sequence of data), <code>SP</code> (space), and <code>VCHAR</code> (any visible US-ASCII character).
 </p>
 </blockquote>
+
+<p>
+本规范引用了以下定义在<a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">【RFC5234】附录 B.1</a> 中的核心规则：<code>ALPHA</code> （字母）、<code>CR</code> （回车符）、<code>CRLF</code> （回车换行符）、<code>CTL</code> （控制字符）、<code>DIGIT</code> （十进制数字 0-9）、<code>DQUOTE</code> （双引号）、<code>HEXDIG</code> （十六进制数字 0-9/A-F/a-f）、<code>HTAB</code> （水平制表符）、<code>LF</code> （换行符）、<code>OCTET</code> （八位组字节）、<code>SP</code> （空白）以及 <code>VCHAR</code> （【USASCII】可见字符）。
+</p>
 
 <blockquote>
 <p>
 The rules below are defined in [RFC7230]:
 </p>
 </blockquote>
+
+<p>
+以下规则定义在【<a href="RFC7230.html">RFC7230</a>】中：
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">BWS           = &lt;BWS, see [RFC7230], Section 3.2.3&gt;
@@ -1485,6 +1613,10 @@ token         = &lt;token, see [RFC7230], Section 3.2.6&gt;
 In the collected ABNF below, list rules are expanded as per Section 1.2 of [RFC7230].
 </p>
 </blockquote>
+
+<p>
+下列 ABNF 规则集合中，列表规则是在<a href="RFC7230.html#ID-f8234cb5-154d-4daf-82fd-ed54ac75cf8b">【RFC7230】章节 1.2</a> 所扩充的。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-text">Authorization = credentials
@@ -1543,6 +1675,10 @@ Muenster, NW 48155
 Germany
 Email: julian.reschke@greenbytes.de
 URI: http://greenbytes.de/tech/webdav/
+</pre>
+
+<pre class="example">
+阿多（译者）
 </pre>
 </div>
 </div>
