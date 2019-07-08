@@ -537,9 +537,13 @@ The change controller is: "IETF (iesg@ietf.org) - Internet Engineering Task Forc
 This section is meant to inform developers, information providers, and users of known security concerns specific to HTTP authentication. More general security considerations are addressed in HTTP messaging [RFC7230] and semantics [RFC7231].
 #+END_QUOTE
 
+本章节是为了告诉开发者、信息提供商、以及用户，HTTP 身份验证相关的安全注意事项。《消息句法和路由》【[[file:RFC7230.org][RFC7230]]】以及《语义和内容》【[[file:RFC7231.org][RFC7231]]】有更广泛的安全注意事项。
+
 #+BEGIN_QUOTE
 Everything about the topic of HTTP authentication is a security consideration, so the list of considerations below is not exhaustive. Furthermore, it is limited to security considerations regarding the authentication framework, in general, rather than discussing all of the potential considerations for specific authentication schemes (which ought to be documented in the specifications that define those schemes). Various organizations maintain topical information and links to current research on Web application security (e.g., [OWASP]), including common pitfalls for implementing and using the authentication schemes found in practice.
 #+END_QUOTE
+
+所有关于 HTTP 身份验证的话题可以概括为一种安全性的考虑，因此，下文中所列举的注意事项并不能囊括所有。再者，下文仅讨论[[ruby:authentication%20framework][身份验证框架]]相关的宏观安全注意事项，而不是针对[[ruby:specific%20authentication%20schemes][具体的身份验证方案]]来讨论其所有潜在的风险（这应该由定义该方案的规范文档来记录）。网络应用安全性相关（包括实现或者实践使用某种身份验证方案时常见的陷阱）的最新研究的专题信息和链接由许多组织共同维护（比如，【[[https://www.owasp.org/index.php/Main_Page][OWASP]]】）。
 
 ** 6.1. Confidentiality of Credentials
 :PROPERTIES:
